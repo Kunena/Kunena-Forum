@@ -1936,26 +1936,9 @@ class KunenaControllerTopic extends KunenaController
 					$body = trim($layout->render());
 					$mail->setBody($body);
 				}
-
 				catch (Exception $e)
 				{
-					// TODO: Deprecated in K4.0, remove in K5.0
-					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RREASON') . " " . $reason;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $text;
-					$mailmessage .= "\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_POSTER') . " {$baduser->username} ({$baduser->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $topic->subject;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_MESSAGE') . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
-					$mailmessage .= "\n-----\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_LINK') . " " . $msglink;
-					$mailmessage = JMailHelper::cleanBody(strtr($mailmessage, array('&#32;' => '')));
-
-					$mail->setBody($mailmessage);
+					
 				}
 
 				$receivers = array();

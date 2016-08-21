@@ -1166,18 +1166,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('url', $url)
 				->set('target', $target);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
-
-		if (strpos($url, '/index.php') !== 0)
-		{
-			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
-		}
-		else
-		{
-			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
-		}
 	}
 
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -1206,23 +1194,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('size', $default);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$size_css = array(1 => 'kmsgtext-xs', 'kmsgtext-s', 'kmsgtext-m', 'kmsgtext-l', 'kmsgtext-xl', 'kmsgtext-xxl');
-
-		if (isset($size_css[$default]))
-		{
-			$size = "class=\"{$size_css[$default]}\"";
-		}
-		elseif ($default)
-		{
-			$size = "style=\"font-size:{$default}\"";
-		}
-		else {
-			$size = "class=\"{$size_css[3]}\"";
-		}
-
-		return "<span {$size}>{$content}</span>";
 	}
 
 	// Format a [list] tag, which is complicated by the number of different
@@ -1370,19 +1341,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('params', $params);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		if (!$hidden)
-		{
-			// Static version
-			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-			. '</span> <span class="kspoiler-hide">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE')
-			. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
-		}
-
-		return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-		. '</span> <span class="kspoiler-expand">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND') . '</span><span class="kspoiler-hide" style="display:none">'
-		. JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	/**
@@ -1423,18 +1381,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('me', $me)
 				->set('content', $content)
 				->set('params', $params);
-		}
-
-		// TODO: Remove in Kunena 4.0
-		if ($me->userid == 0)
-		{
-			// Hide between content from non registered users
-			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
-		}
-		else
-		{
-			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE') . '</b><div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 
@@ -1882,12 +1828,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $vizualization)
 					->set('toolbar', $toolbar);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			return '<script type="text/javascript" src="'.$tableauserver.
-			'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$maxwidth.
-			'" height="'.$maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
-			'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
 		}
 
 		return '';
@@ -2494,11 +2434,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('params', $params);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$colortext = isset($params ["colortext"]) ? $params ["colortext"] : '#ffffff';
-
-		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}
 
 	/**

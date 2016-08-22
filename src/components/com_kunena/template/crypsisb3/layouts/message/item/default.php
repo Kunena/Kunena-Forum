@@ -44,7 +44,7 @@ $list = array();
 </small>
 
 <div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . mb_substr($message->displayField('subject'), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . mb_substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :

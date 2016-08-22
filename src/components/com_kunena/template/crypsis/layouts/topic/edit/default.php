@@ -180,7 +180,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<div class="control-group">
+						<div class="control-group" id="kpost-subject">
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
@@ -191,7 +191,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>
-							<div class="control-group">
+							<div class="control-group" id="kpost-topicicons">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">

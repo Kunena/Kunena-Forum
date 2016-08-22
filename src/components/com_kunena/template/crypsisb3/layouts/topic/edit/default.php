@@ -163,7 +163,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<div class="form-group">
+						<div class="form-group" id="kpost-subject">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
 								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
@@ -174,7 +174,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						</div>
 
 						<?php if (!empty($this->topicIcons)) : ?>
-							<div class="form-group">
+							<div class="form-group" id="kpost-topicicons">
 								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">

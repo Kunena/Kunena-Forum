@@ -570,7 +570,8 @@ class KunenaUpload
 		}
 		else
 		{
-			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
+			$pathInfo = pathinfo($fileInput['tmp_name']);
+			$file->tmp_name = $pathInfo['dirname'] . '/' . JFile::makeSafe($pathInfo['basename']);
 		}
 
 		$file->error = $fileInput['error'];

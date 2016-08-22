@@ -54,7 +54,7 @@ if ($topic->moved_id > 0)
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $topic->subject, 'hasTooltip', $category, true, true); ?>
 	<?php else :  ?>
 	<td class="col-md-1 hidden-xs center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset), $topic->subject, 'hasTooltip', $category, true, false); ?>
+		<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), $topic->subject, 'hasTooltip', $category, true, false); ?>
 	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
@@ -67,7 +67,7 @@ if ($topic->moved_id > 0)
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, $this->message, null, null, 'hasTooltip topictitle', $category, true, false);
 			}
 
 			if ($topic->getUserTopic()->favorite) {

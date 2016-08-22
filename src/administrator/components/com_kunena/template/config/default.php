@@ -510,6 +510,11 @@ JHtml::_('behavior.tabstate');
 											</thead>
 											<tbody>
 											<tr>
+												<td><?php echo JText::_('COM_KUNENA_EMAIL_HEADER') ?></td>
+												<td><input name="cfg_emailheader" type="text" value="<?php echo $this->escape($this->config->emailheader) ?>"></td>
+												<td><?php echo JText::_('COM_KUNENA_EMAIL_HEADER_DESC') ?></td>
+											</tr>
+											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
 												<td><?php echo $this->lists ['allowsubscriptions'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC') ?></td>

@@ -153,8 +153,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$pagesText = ($pages > 1  && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 
-		$parentText   = $this->category->getParent()->displayField('name');
-		$categoryText = $this->category->displayField('name');
+		$parentText   = $this->category->getParent()->name;
+		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
 
 		$app       = JFactory::getApplication();

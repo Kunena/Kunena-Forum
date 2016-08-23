@@ -21,23 +21,6 @@ $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
-$mbString = extension_loaded('mbstring');
-
-if ($mbString)
-{
-	$title = mb_substr($message->subject, 0, $subjectlengthmessage);
-}
-else
-{
-	$title2 = substr($message->subject, 0, $subjectlengthmessage);
-	$title  = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
-		'|[\x00-\x7F][\x80-\xBF]+'.
-		'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
-		'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
-		'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-		'', $title2);
-}
-
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;
@@ -63,7 +46,7 @@ else
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 	</div>
 	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?> message-<?php echo $this->message->getState(); ?>"
-		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . $title : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . $title; ?>">
+		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 			<div class="kmessage">
 				<p class="kmsg">

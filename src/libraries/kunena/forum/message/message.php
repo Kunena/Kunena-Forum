@@ -1579,4 +1579,36 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		$mail->setBody($msg);
 	}
+
+	/**
+	 * Get the substring
+	 *
+	 * @param $string
+	 * @param $start
+	 * @param $length
+	 *
+	 * @return string
+	 * @since K5.0.2
+	 */
+	public function getsubstr($string, $start, $length)
+	{
+		$mbString = extension_loaded('mbstring');
+
+		if ($mbString)
+		{
+			$title = mb_substr($string, $start, $length);
+		}
+		else
+		{
+			$title2 = substr($string, $start, $length);
+			$title  = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
+				'|[\x00-\x7F][\x80-\xBF]+'.
+				'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
+				'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
+				'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+				'', $title2);
+		}
+
+		return $title;
+	}
 }

@@ -25,12 +25,13 @@ $str_counts = substr_count($this->topic->subject, 'solved');
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;
-} else {
+}
+else
+{
 	$this->numLink = $message->replynum;
 }
 
 $list = array();
-
 ?>
 
 <small class="text-muted pull-right hidden-xs">
@@ -44,7 +45,7 @@ $list = array();
 </small>
 
 <div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
+	data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :

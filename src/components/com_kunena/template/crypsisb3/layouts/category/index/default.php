@@ -46,7 +46,12 @@ foreach ($this->sections as $section) :
 
 		<h1 class="btn-link">
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', true, false); ?>
-			<small class="hidden-xs nowrap">(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
+			<small class="hidden-xs nowrap">
+				<?php if ($section->getTopics() > 0) : ?>
+					(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
+				<?php else : ?>
+					(<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>)
+				<?php endif; ?>
 			</small>
 		</h1>
 
@@ -92,7 +97,11 @@ foreach ($this->sections as $section) :
 									<h3>
 										<?php echo $this->getCategoryLink($category, null, null, null, true, false); ?>
 										<small class="hidden-xs nowrap">
-											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
+											<?php if ($category->getTopics() > 0) : ?>
+												(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())); ?>)
+											<?php else : ?>
+												(<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>)
+											<?php endif; ?>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
 													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>)</sup>
@@ -125,9 +134,11 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, null, true, false) . '<small class="hidden-xs muted"> ('
-														. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
-														. ')</small>';
+													<?php $totaltopics = $category->getTopics() > 0 ?  JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
+
+													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, null, true, false) . '<small class="hidden-phone muted"> ('
+														. $totaltopics . ')</small>';
+
 													if (($new = $subcategory->getNewCount()) > 0)
 													{
 														echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';

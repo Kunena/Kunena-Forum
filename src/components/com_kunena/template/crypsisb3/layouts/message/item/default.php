@@ -42,12 +42,13 @@ else
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;
-} else {
+}
+else
+{
 	$this->numLink = $message->replynum;
 }
 
 $list = array();
-
 ?>
 
 <small class="text-muted pull-right hidden-xs">

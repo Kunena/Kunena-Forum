@@ -42,11 +42,10 @@ if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;
 }
-else {
+else
+{
 	$this->numLink = $message->replynum;
 }
-
-$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
 <small class="text-muted pull-right hidden-phone">

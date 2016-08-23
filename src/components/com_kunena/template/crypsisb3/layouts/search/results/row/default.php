@@ -32,7 +32,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	<div class="col-md-10">
 		<small class="text-muted pull-right hidden-xs" style="margin-top:-5px;"> <span class="icon glyphicon glyphicon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
 		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
-		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $name . ' created the topic: ' : $name . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $name . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $name . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'); ?><?php echo $message->displayField('subject'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>

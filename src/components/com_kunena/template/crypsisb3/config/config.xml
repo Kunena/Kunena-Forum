@@ -105,6 +105,7 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="breadcrumb_characters_max" type="text" default="30" label="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB_CHARACTERS_MAX" description="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB_CHARACTERS_MAX_DESC" />
 	</fieldset>
 
 	<fieldset name="colors">

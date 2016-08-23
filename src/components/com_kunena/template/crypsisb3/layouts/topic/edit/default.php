@@ -50,6 +50,9 @@ JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
+// Need to be defined before loading main.js file
+$this->addScriptDeclaration("breadcrumb_characters_max = '" . $this->template->get('breadcrumb_characters_max') . "';");
+
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');

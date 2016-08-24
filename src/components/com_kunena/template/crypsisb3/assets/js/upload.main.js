@@ -62,7 +62,7 @@ jQuery(function ($) {
 
 				$.ajax({
 					url    : kunena_upload_files_rem + '&fil_id=' + file.id,
-					type   : 'DELETE',
+					type   : 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}
@@ -90,7 +90,7 @@ jQuery(function ($) {
 
 				$.ajax({
 					url    : kunena_upload_files_rem + '&fil_id=' + fileid,
-					type   : 'DELETE',
+					type   : 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}

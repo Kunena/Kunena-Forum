@@ -186,7 +186,7 @@ jQuery(function ($) {
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
 				url    : kunena_upload_files_rem + '&fil_id=' + file_id,
-				type: 'DELETE',
+				type: 'POST',
 				success: function (result) {
 					$this.parent().remove();
 				}

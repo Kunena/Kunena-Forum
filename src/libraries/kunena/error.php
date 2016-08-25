@@ -99,7 +99,7 @@ abstract class KunenaError
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
-	
+
 	/**
 	  * Return different error if it's an admin or a simple user
 	  *
@@ -110,7 +110,8 @@ abstract class KunenaError
 	public static function displayDatabaseError()
 	{
 		$app = JFactory::getApplication();
-	
+		$db = JFactory::getDBO();
+
 		if (JFactory::getApplication()->isAdmin())
 		{
 			$app->enqueueMessage($db->getErrorMsg(), 'error');
@@ -127,9 +128,9 @@ abstract class KunenaError
 
 	/**
 	 * Return the error in the database query (deprecated use exception in queries instead)
-	 * 
+	 *
 	 * @deprecated
-	 * 
+	 *
 	 * @return boolean
 	 * @throws Exception
 	 */
@@ -162,9 +163,9 @@ abstract class KunenaError
 
 	/**
 	 * Get the last error message from database
-	 * 
+	 *
 	 * @deprecated
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getDatabaseError()

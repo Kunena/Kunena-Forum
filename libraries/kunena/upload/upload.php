@@ -329,19 +329,22 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') !== true)
-				{
-					if (!$this->checkFileSizeFileAttachment($size))
-					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-					}
-				}
+				$image = stripos($type, 'image/');
+				$files = stripos($type, 'application/');
 
-				if (stripos($type, 'image/') !== false)
+				if ($image)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{
 						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+					}
+				}
+
+				if ($files)
+				{
+					if (!$this->checkFileSizeFileAttachment($size))
+					{
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
 			}
@@ -621,7 +624,10 @@ class KunenaUpload
 				}
 			}
 
-			if (!$file->isAvatar && stripos($type, 'image/') !== false)
+			$image = stripos($type, 'image/');
+			$files = stripos($type, 'application/');
+
+			if (!$file->isAvatar && $image)
 			{
 				if (!$this->checkFileSizeImageAttachment($file->size))
 				{
@@ -629,7 +635,7 @@ class KunenaUpload
 				}
 			}
 
-			if (!$file->isAvatar && stripos($type, 'image/') !== true)
+			if (!$file->isAvatar && $files)
 			{
 				if (!$this->checkFileSizeFileAttachment($file->size))
 				{

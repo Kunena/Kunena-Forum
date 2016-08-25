@@ -28,20 +28,25 @@
   .jssocials-share-email .jssocials-share-link:hover {
     background: #0e76e6; }
 
+.jssocials-share-stumbleupon .jssocials-share-link {
+  background: #eb4823; }
+  .jssocials-share-stumbleupon .jssocials-share-link:hover {
+    background: #c93412; }
+
 .jssocials-share-whatsapp .jssocials-share-link {
   background: #29a628; }
   .jssocials-share-whatsapp .jssocials-share-link:hover {
     background: #1f7d1e; }
 
+.jssocials-share-telegram .jssocials-share-link {
+  background: #2ca5e0; }
+  .jssocials-share-telegram .jssocials-share-link:hover {
+    background: #1c88bd; }
+
 .jssocials-share-line .jssocials-share-link {
   background: #25af00; }
   .jssocials-share-line .jssocials-share-link:hover {
     background: #1a7c00; }
-
-.jssocials-share-stumbleupon .jssocials-share-link {
-  background: #eb4823; }
-  .jssocials-share-stumbleupon .jssocials-share-link:hover {
-    background: #c93412; }
 
 .jssocials-share-link {
   padding: .5em .6em;

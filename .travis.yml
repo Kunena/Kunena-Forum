@@ -9,6 +9,7 @@ matrix:
   allow_failures:
     - php: 7.1
 before_script:
+- sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts
 - sudo apt-get update -qq
 - sudo apt-get install -y --force-yes apache2 libapache2-mod-fastcgi php5-curl php5-mysql php5-intl php5-gd > /dev/null
 - sudo mkdir $(pwd)/.run

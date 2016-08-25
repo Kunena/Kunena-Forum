@@ -46,7 +46,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 
-		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
+		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
 	}
 

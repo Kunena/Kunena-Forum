@@ -115,7 +115,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php endif; ?>
 
 			<div>
-				<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
+				<a href="<?php echo $this->profile_edit_url; ?>" class="btn btn-link">
 					<i class="icon-cog"></i>
 					<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 				</a>

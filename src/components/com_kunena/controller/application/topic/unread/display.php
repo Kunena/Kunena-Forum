@@ -55,4 +55,15 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
+	protected function prepareDocument()
+	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+	}
 }

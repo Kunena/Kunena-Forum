@@ -6,6 +6,7 @@
 		<field name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
+		<field name="DefaultIconset" type="text" default="default" label="COM_KUNENA_TEMPLATE_ICON_SET" description="COM_KUNENA_TEMPLATE_ICON_SET_DESC" />
 		<field name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
@@ -64,6 +65,11 @@
 			<option value="0">COM_KUNENA_DISABLED</option>
 			<option value="1">COM_KUNENA_ENABLED_TOPIC</option>
 			<option value="2">COM_KUNENA_ENABLED_LABEL</option>
+		</field>
+		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>
+			<option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
+			<option value="both">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_BOTH</option>
 		</field>
 		<field name="avatarType" type="list" default="img-rounded" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>

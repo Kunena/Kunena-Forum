@@ -96,12 +96,12 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function getFilterUserFields()
 	{
 		$filterFields = array();
-		$filterFields[] = JHtml::_('select.option', 0, 'Guests');
-		$filterFields[] = JHtml::_('select.option', 1, 'Registered users');
-		$filterFields[] = JHtml::_('select.option', 2, 'Regular members');
-		$filterFields[] = JHtml::_('select.option', 3, 'Moderators');
-		$filterFields[] = JHtml::_('select.option', 4, 'Administrators');
-		$filterFields[] = JHtml::_('select.option', 5, 'Mods and Admins');
+		$filterFields[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 3, JText::_('COM_KUNENA_LOG_MODERATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_LOG_ADMINISTRATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 5, JText::_('COM_KUNENA_LOG_MOD_AND_ADMIN_FILTER_USERTYPE_LABEL'));
 		
 		return $filterFields;
 	}
@@ -109,14 +109,14 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields = array();
-		// TODO: translate
-		$sortFields[] = JHtml::_('select.option', 'id', 'Id');
-		$sortFields[] = JHtml::_('select.option', 'type', 'Type (by id)');
-		$sortFields[] = JHtml::_('select.option', 'user', 'User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'category', 'Category (by id)');
-		$sortFields[] = JHtml::_('select.option', 'topic', 'Topic (by id)');
-		$sortFields[] = JHtml::_('select.option', 'target_user', 'Target User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'time', 'Time (by id)');
+		
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'type', JText::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'user', JText::_('COM_KUNENA_LOG_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_LOG_CATEGORY_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'topic', JText::_('COM_KUNENA_LOG_TOPIC_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'target_user', JText::_('COM_KUNENA_LOG_TARGET_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_LOG_TIME_SORT_FIELD_LABEL'));
 
 		return $sortFields;
 	}

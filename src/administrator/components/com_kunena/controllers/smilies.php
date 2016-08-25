@@ -120,10 +120,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}
@@ -135,10 +140,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
 				WHERE id = '$smileyid'");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}
@@ -166,12 +176,10 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+		$file   = $this->app->input->files->get('Filedata');
 
-		// File upload
-		$format = JFactory::getApplication()->input->getCmd('format', 'html');
-
-		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
+		// TODO : change this part to use other method than KunenaUploadHelper::upload()
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
 
 		if ($upload)
 		{
@@ -215,10 +223,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}

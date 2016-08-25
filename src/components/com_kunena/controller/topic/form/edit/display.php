@@ -54,6 +54,26 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = $this->topic->getUrl();
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
+
 		// Run onKunenaPrepare event.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
@@ -105,12 +125,16 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -140,6 +164,12 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			else
 			{
 				$this->setDescription($this->headerText);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

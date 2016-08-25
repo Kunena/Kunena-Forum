@@ -1172,6 +1172,12 @@ class KunenaConfig extends JObject
 	public $autoembedsoundcloud = 1;
 
 	/**
+	 * @var string to define the image location
+	 * @since  K5.0.2
+	 */
+	public $emailheader = '/media/kunena/email/hero-wide.png';
+
+	/**
 	 *
 	 */
 	public function __construct()

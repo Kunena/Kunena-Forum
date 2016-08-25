@@ -56,11 +56,11 @@ if (!empty($this->spacing)) : ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt;?>">
 	<?php if ($topic->unread) : ?>
-	<td class="hidden-xs center topic-item-unread">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<td class="hidden-xs col-md-1 center topic-item-unread">
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $topic->subject, 'hasTooltip', $category, true, true); ?>
 	<?php else :  ?>
 	<td class="col-md-1 hidden-xs center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset), $topic->subject, 'hasTooltip', $category, true, false); ?>
 	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
@@ -72,13 +72,12 @@ if (!empty($this->spacing)) : ?>
 
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink(
-     $topic, 'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+				echo $this->getTopicLink($topic, 'unread', $topic->subject .
+					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true, false);
 			}
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
@@ -105,7 +104,7 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-			<?php echo $topic->getAuthor()->getLink(); ?>
+			<?php echo $topic->getAuthor()->getLink(null, null, '', '', null, $category->id); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -122,7 +121,7 @@ if (!empty($this->spacing)) : ?>
 		<div class="visible-sm">
 			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
 			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
-			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id);?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -150,14 +149,14 @@ if (!empty($this->spacing)) : ?>
 		<div class="container-fluid">
 				<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
-						<?php echo $author->getLink($avatar, null, 'nofollow', '', null, $category->id); ?>
+						<?php echo $author->getLink($avatar, null, '', '', null, $category->id); ?>
 					</div>
 					<div class="col-md-9">
 				<?php else : ?>
 					<div class="col-md-12">
 					<?php endif; ?>
-					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $category, false, true); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', 'hasTooltip', $category->id);?>
 					</span>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

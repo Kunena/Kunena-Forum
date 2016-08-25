@@ -255,7 +255,7 @@ class KunenaController extends JControllerLegacy
 			if (!$this->redirect)
 			{
 				// If controller didn't set a new redirect, try if request has return url in it.
-				$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+				$return = base64_decode($app->input->get('return', '', 'BASE64'));
 
 				// Only allow internal urls to be used.
 				if ($return && JUri::isInternal($return))

@@ -111,12 +111,35 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 
+		$doc = JFactory::getDocument();
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -142,13 +165,19 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description');
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title;
+				$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

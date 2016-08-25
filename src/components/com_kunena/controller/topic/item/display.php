@@ -140,6 +140,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->prepareMessages($mesid);
 
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
 		// Run events.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
@@ -356,6 +362,27 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
+
+		$app = JFactory::getApplication('site');
+		$componentParams = $app->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;

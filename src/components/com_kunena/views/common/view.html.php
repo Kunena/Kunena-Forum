@@ -137,10 +137,10 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$catid  = JRequest::getInt('catid', 0);
-		$id     = JRequest::getInt('id', 0);
-		$view   = JRequest::getWord('view', 'default');
-		$layout = JRequest::getWord('layout', 'default');
+		$catid  = $this->app->input->getInt('catid', 0);
+		$id     = $this->app->input->getInt('id', 0);
+		$view   = $this->app->input->getWord('view', 'default');
+		$layout = $this->app->input->getWord('layout', 'default');
 
 		$this->breadcrumb = $pathway = $this->app->getPathway();
 		$active           = $this->app->getMenu()->getActive();

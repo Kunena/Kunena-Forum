@@ -66,8 +66,9 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
-		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" />
-		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" /></p>
+		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE_PLACEHOLDER') ?>" />
+		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt" id="modal-picture-alt" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>" />
+		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>" /></p>
 	</div>
 	<div class="modal-footer">
 		<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -120,7 +121,7 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 <div id="modal-video-urlprovider" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER') ?></h3>
+		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
 	</div>
 	<div class="modal-body">
 		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input name="modal-video-urlprovider-input" id="modal-video-urlprovider-input" type="text" value="" /></p>
@@ -143,10 +144,8 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 					<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 							maxlength="100" size="40"
 							value="<?php echo $this->escape($this->poll->title) ?>" />
-					<i id="kbutton-poll-add" class="icon-plus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-					<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
 				</div>
 				<div>
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
@@ -193,9 +192,17 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 	<div class="modal-body">
 		<p><div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+<<<<<<< HEAD:src/components/com_kunena/template/crypsis/layouts/widget/editor/wysibb_quick.php
 			foreach ($emoticons as $emo_code => $emo_url)
 			{
 				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="20" height="20" alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+=======
+			foreach ($emoticons as $emo_code => $emo_url) {
+				$data = getimagesize(JPATH_ROOT . '/' . $emo_url);
+				$width = $data[0];
+				$height = $data[1];
+				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width .'" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+>>>>>>> refs/remotes/Kunena/K5.0:src/components/com_kunena/template/crypsis/layouts/topic/edit/editor/default.php
 			}
 			?>
 			</div></p>

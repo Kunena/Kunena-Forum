@@ -51,17 +51,14 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->template = KunenaFactory::getTemplate();
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$fullactions = $this->ktemplate->params->get('fullactions');
+		$kemplate = KunenaFactory::getTemplate();
+		$fullactions = $kemplate->params->get('fullactions');
+		$topicicontype = $kemplate->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
-
-		$ktemplate = KunenaFactory::getTemplate();
-		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($config->read_only)
 		{

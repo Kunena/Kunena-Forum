@@ -77,9 +77,11 @@ class KunenaAdminControllerConfig extends KunenaController
 		}
 
 		$properties = $this->config->getProperties();
-
-		// Todo: fix depricated value
-		foreach (JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue)
+		
+		$post_config = $this->app->input->post->getArray();
+		
+		// TODO: fix depricated value
+		foreach ($post_config as $postsetting => $postvalue)
 		{
 			if (Joomla\String\StringHelper::strpos($postsetting, 'cfg_') === 0)
 			{

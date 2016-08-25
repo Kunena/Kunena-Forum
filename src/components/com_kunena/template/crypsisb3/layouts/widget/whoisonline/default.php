@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kwho"></div>
+			<div class="btn btn-small" data-toggle="collapse" data-target="#kwho"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -28,61 +28,50 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h2>
 
-	<div class="row collapse in" id="kwho">
+	<div class="row-fluid collapse in" id="kwho">
 		<div class="well-small">
 			<ul class="unstyled col-md-1 btn-link">
 				<?php echo KunenaIcons::members(); ?>
 			</ul>
-			<ul class="unstyled col-md-11">
+			<ul class="unstyled ol-md-11">
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</span>
-				<?php if (!empty($this->onlineList)) : ?>
-				<div>
-					<?php
-					foreach ($this->onlineList as $user)
-					{
-						$onlinelist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $onlinelist); ?>
-				</div>
-				<?php endif; ?>
+				<?php
+				$template = KunenaTemplate::getInstance();
+				$direction = $template->params->get('whoisonlineName');
 
-				<?php if (!empty($this->hiddenList)) : ?>
-				<div>
-					<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
-
-					<?php
-					foreach ($this->hiddenList as $user)
-					{
-						$hiddenlist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $hiddenlist); ?>
-				</div>
-				<?php endif; ?>
+				if ($direction == 'both') : ?>
+					<div><?php echo $this->setLayout('both'); ?></div>
+				<?php
+				elseif ($direction == 'avatar') : ?>
+					<div><?php echo $this->setLayout('avatar'); ?></div>
+				<?php else : ?>
+					<div><?php echo $this->setLayout('name'); ?></div>
+				<?php
+					endif;
+				?>
 
 				<?php if (!empty($this->onlineList)) : ?>
-				<div class="legend">
+				<div>
 					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 					<span class="kwho-admin">
-						<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 					</span>
 					<span class="kwho-globalmoderator">
-						<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 					</span>
 					<span class="kwho-moderator">
-						<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 					</span>
 					<span class="kwho-banned">
-						<?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
 					</span>
 					<span class="kwho-user">
-						<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
 					</span>
 					<span class="kwho-guest">
-						<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 					</span>
 				</div>
 				<?php endif; ?>

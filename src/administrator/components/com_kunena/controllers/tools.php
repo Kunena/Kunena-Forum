@@ -232,10 +232,15 @@ class KunenaAdminControllerTools extends KunenaController
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
 					WHERE b.userid IS NULL");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 
@@ -249,10 +254,15 @@ class KunenaAdminControllerTools extends KunenaController
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
 					WHERE b.username IS NULL");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 
@@ -272,10 +282,15 @@ class KunenaAdminControllerTools extends KunenaController
 			"DELETE a
 			FROM #__users AS a
 			WHERE block='1'");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+			
 				return;
 			}
 
@@ -291,10 +306,15 @@ class KunenaAdminControllerTools extends KunenaController
 					SET m.name = u.{$queryName}
 					WHERE m.userid = u.id";
 			$db->setQuery($query);
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 
@@ -307,10 +327,15 @@ class KunenaAdminControllerTools extends KunenaController
 			$db->execute();
 
 			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 
@@ -667,8 +692,17 @@ class KunenaAdminControllerTools extends KunenaController
 			$db    = JFactory::getDbo();
 			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try 
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
+				return;
+			}
 
 			$count = $db->getAffectedRows();
 
@@ -721,8 +755,17 @@ class KunenaAdminControllerTools extends KunenaController
 		$db    = JFactory::getDbo();
 		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
 		$db->setQuery($query);
-		$db->execute();
-		KunenaError::checkDatabaseError();
+		
+		try 
+		{
+			$db->execute();
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			
+			return;
+		}
 
 		$count = $db->getAffectedRows();
 

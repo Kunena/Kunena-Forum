@@ -294,6 +294,14 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setDescription($description)
 	{
-		$this->document->setMetadata('description',  $description);
+		$this->document->setMetadata('description', $description);
+	}
+
+	/**
+	 * @param $robots
+	 */
+	protected function setRobots($robots)
+	{
+		$this->document->setMetaData('robots', $robots, 'robots');
 	}
 }

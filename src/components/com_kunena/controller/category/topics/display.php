@@ -151,22 +151,52 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$pages        = $this->pagination->pagesTotal;
 
 		$pagesText = ($pages > 1  && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
-
-
-		$parentText   = $this->category->getParent()->displayField('name');
-		$categoryText = $this->category->displayField('name');
+		$parentText   = $this->category->getParent()->name;
+		$categoryText = $this->category->name;
+		$categorydesc = $this->category->description;
 
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
+
+		$doc = JFactory::getDocument();
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
-			$title = JText::sprintf("{$categoryText}{$pagesText}");
-			$this->setTitle($title);
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title') . $pagesText;
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::sprintf("{$categoryText}{$pagesText}");
+				$this->setTitle($title);
+			}
 
 			if (!empty($params_keywords))
 			{
@@ -182,12 +212,25 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
+				$description = substr($description, 0, 140) . '... ' . $pagesText;
 				$this->setDescription($description);
+			}
+			elseif (!empty($categorydesc))
+			{
+				$categorydesc = substr($categorydesc, 0, 140) . '... ' . $pagesText;
+				$this->setDescription($categorydesc);
 			}
 			else
 			{
 				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+				$description = substr($description, 0, 140) . '...';
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

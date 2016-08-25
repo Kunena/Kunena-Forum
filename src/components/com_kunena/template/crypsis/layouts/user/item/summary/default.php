@@ -60,7 +60,7 @@ if ($this->config->showuserstats)
 									<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
 								</li>
 							<?php endif ?>
-							<?php if ($this->config->showuserstats) : ?>
+							<?php if ($this->config->showuserstats && $this->config->showranking) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
@@ -133,7 +133,7 @@ if ($this->config->showuserstats)
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -169,7 +169,7 @@ if ($this->config->showuserstats)
 								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><?php echo KunenaIcons::email(); ?></a>
+								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>" rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
 								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?> <?php echo $websiteName ?></a>

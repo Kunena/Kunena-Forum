@@ -1166,18 +1166,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('url', $url)
 				->set('target', $target);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
-
-		if (strpos($url, '/index.php') !== 0)
-		{
-			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
-		}
-		else
-		{
-			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
-		}
 	}
 
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -1206,23 +1194,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('size', $default);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$size_css = array(1 => 'kmsgtext-xs', 'kmsgtext-s', 'kmsgtext-m', 'kmsgtext-l', 'kmsgtext-xl', 'kmsgtext-xxl');
-
-		if (isset($size_css[$default]))
-		{
-			$size = "class=\"{$size_css[$default]}\"";
-		}
-		elseif ($default)
-		{
-			$size = "style=\"font-size:{$default}\"";
-		}
-		else {
-			$size = "class=\"{$size_css[3]}\"";
-		}
-
-		return "<span {$size}>{$content}</span>";
 	}
 
 	// Format a [list] tag, which is complicated by the number of different
@@ -1370,19 +1341,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('params', $params);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		if (!$hidden)
-		{
-			// Static version
-			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-			. '</span> <span class="kspoiler-hide">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE')
-			. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
-		}
-
-		return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-		. '</span> <span class="kspoiler-expand">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND') . '</span><span class="kspoiler-hide" style="display:none">'
-		. JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	/**
@@ -1423,18 +1381,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('me', $me)
 				->set('content', $content)
 				->set('params', $params);
-		}
-
-		// TODO: Remove in Kunena 4.0
-		if ($me->userid == 0)
-		{
-			// Hide between content from non registered users
-			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
-		}
-		else
-		{
-			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE') . '</b><div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 
@@ -1882,12 +1828,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $vizualization)
 					->set('toolbar', $toolbar);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			return '<script type="text/javascript" src="'.$tableauserver.
-			'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$maxwidth.
-			'" height="'.$maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
-			'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
 		}
 
 		return '';
@@ -1920,6 +1860,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if (!empty($bbcode->parent->forceMinimal))
 		{
 			return '[video]';
+		}
+
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
 		}
 
 		$vid_minwidth = 200;
@@ -1990,7 +1936,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			'videojug' => array ('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', '' ),
 
-			'vimeo' => array ('flash', 400, 321, 0, 0, 'http://www.vimeo.com/moogaloop.swf?clip_id=%vcode%&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=', '\.com\/(\d*)', '' ),
+			'vimeo' => array ('iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', '' ),
 
 			'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
@@ -2080,25 +2026,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		if ($vid_width < $vid_minwidth)
-		{
-			$vid_width = $vid_minwidth;
-		}
 
-		if ($vid_width > $vid_maxwidth)
-		{
-			$vid_width = $vid_maxwidth;
-		}
-
-		if ($vid_height < $vid_minheight)
-		{
-			$vid_height = $vid_minheight;
-		}
-
-		if ($vid_height > $vid_maxheight)
-		{
-			$vid_height = $vid_maxheight;
-		}
 
 		switch ($vid_type)
 		{
@@ -2111,14 +2039,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$vid_allowpar = array ('flashvars', 'wmode', 'bgcolor', 'quality' );
 				break;
 			case 'iframe' :
-				if ($vid ["type"] == 'youtube' )
-				{
-					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="425" height="344"  allowfullscreen></iframe></div>';
-				}
-				else
-				{
 					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe></div>';
-				}
 				break;
 			case 'mediaplayer' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95' ), array (1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab' ), array (4, 'type', 'application/x-mplayer2' ), array (4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/' ), array (6, 'src', $vid_source ), array (6, 'autostart', 'false' ), array (6, 'autosize', 'true' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
@@ -2209,7 +2130,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return true;
 		}
-
+		
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
+		
 		$attachments = null;
 
 		if ($bbcode->parent instanceof KunenaForumMessage)
@@ -2452,6 +2379,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
+			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 
@@ -2512,11 +2440,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('content', $content)
 				->set('params', $params);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		$colortext = isset($params ["colortext"]) ? $params ["colortext"] : '#ffffff';
-
-		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}
 
 	/**
@@ -2808,7 +2731,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric($ItemID)  && $config->ebay_api_key)
+		if (is_numeric($ItemID)  && $config->ebay_api_key && ini_get('allow_url_fopen'))
 		{
 			$options = new JRegistry;
 
@@ -2865,6 +2788,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		if ( !empty($content)  )
+		{
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
@@ -2873,7 +2798,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$content = strip_tags($content);
 
-		return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+		$url = trim($content);
+
+		if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
+		{
+				// Add scheme to raw domain URLs.
+				$url = "http://{$content}";
+			}
+
+  			$url_parsed = parse_url($url);
+
+
+			if ( $url_parsed['host'] == 'soundcloud.com' )
+			{
+			return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+			}
+		}
 	}
 
 	/**
@@ -2893,15 +2833,30 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal))
+		if ( !empty($content) )
 		{
-			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+
+			// Display tag in activity streams etc..
+			if (!empty($bbcode->parent->forceMinimal))
+			{
+				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+			}
+
+			$content = strip_tags($content);
+
+			$content = trim($content);
+
+			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+			{
+        		if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+        		{
+					// Add scheme to raw domain URLs.
+					$url = "http://{$content}";
+				}
+
+				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
+			}
 		}
-
-		$content = strip_tags($content);
-
-		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
 	}
 
 	/**
@@ -2930,15 +2885,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			$ebay = SELF::getEbayItemFromCache($ItemID);
 
-			return (string) $layout
-				->set('content', $ItemID)
-				//->set('params', $params)
-				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-				->set('pictureurl', $ebay->Item->PictureURL[0])
-				->set('status', $ebay->Item->ListingStatus)
-				->set('ack', $ebay->Ack)
-				->set('title', $ebay->Item->Title)
-				->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			if (is_object($ebay))
+			{
+				return (string) $layout
+					->set('content', $ItemID)
+					//->set('params', $params)
+					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+					->set('pictureurl', $ebay->Item->PictureURL[0])
+					->set('status', $ebay->Item->ListingStatus)
+					->set('ack', $ebay->Ack)
+					->set('title', $ebay->Item->Title)
+					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			}
 		}
 	}
 }

@@ -25,6 +25,15 @@ JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
 JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 
+JText::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
+JText::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
+JText::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
+JText::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
+JText::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
+JText::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
+JText::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
+JText::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
+
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...

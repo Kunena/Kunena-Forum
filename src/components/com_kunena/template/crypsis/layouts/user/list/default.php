@@ -162,7 +162,7 @@ $this->addScript('assets/js/search.js');
 				<?php endif; ?>
 
 				<td class="span2">
-					<?php echo $user->getLink(); ?>
+					<?php echo $user->getLink(null, null, ''); ?>
 				</td>
 
 				<?php if ($config->userlist_posts) : ?>

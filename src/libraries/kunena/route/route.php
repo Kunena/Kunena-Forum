@@ -515,7 +515,10 @@ abstract class KunenaRoute
 
 		$jinput = JFactory::getApplication()->input;
 		// If values are both in GET and POST, they are only stored in POST
-		foreach (JRequest::get('post') as $key => $value)
+		
+		$post = $jinput->post->getArray();
+		
+		foreach ($post as $key => $value)
 		{
 			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 			{
@@ -524,7 +527,9 @@ abstract class KunenaRoute
 		}
 
 		// Make sure that request URI is not broken
-		foreach (JRequest::get('get') as $key => $value)
+		$get = JFactory::getApplication()->input->post->getArray();
+		
+		foreach ($get as $key => $value)
 		{
 			if (preg_match('/[^a-zA-Z]/', $key))
 			{

@@ -447,11 +447,16 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 
 		$db->setQuery($query);
-		$template = $db->loadResult();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
-			return false;
+			$template = $db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
+			return;
 		}
 
 		$xml = simplexml_load_file(JPATH_SITE . '/templates/' . $template . '/templateDetails.xml');
@@ -549,12 +554,17 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		{
 			if (preg_match('`_kunena_`', $table))
 			{
-				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");
-				$fullfields = $kunena_db->loadObjectList();
+				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");	
 
-				if (KunenaError::checkDatabaseError())
+				try
 				{
-					return null;
+					$fullfields = $kunena_db->loadObjectList();
+				}
+				catch (RuntimeException $e)
+				{
+					JFactory::getApplication()->enqueueMessage($e->getMessage());
+					
+					return;
 				}
 
 				$fieldTypes = array('tinytext', 'text', 'char', 'varchar');

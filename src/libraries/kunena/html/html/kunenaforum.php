@@ -188,7 +188,7 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @return string
 	 */
-	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '')
+	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
 		if ($title)

@@ -25,6 +25,13 @@ class KunenaLayout extends KunenaLayoutBase
 	protected $after = array();
 
 	/**
+	 * Object KunenaView
+	 *
+	 * @var unknown
+	 */
+	protected $legacy;
+
+	/**
 	 * Append HTML after the layout content.
 	 *
 	 * @param   string  $content
@@ -145,7 +152,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -165,7 +172,25 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -182,7 +207,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -195,25 +220,76 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
+			$cloak = JPluginHelper::isEnabled('content', 'emailcloak');
+
+			$first = $topic->first_post_message;
+			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
+			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
+			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
+			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
+			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
+
+			$last = $topic->last_post_message;
+			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
+			$last = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $last);
+			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
+			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
+			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
+
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+				if ($cloak)
+				{
+					$title = KunenaHtmlParser::parseText($first, 200, false);
+				}
+				else
+				{
+					$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+				}
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 						break;
 					case 'last':
-						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					case 'unread':
-						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					default:
-						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 				}
 			}
 
@@ -224,7 +300,25 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -240,7 +334,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -269,6 +363,39 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);
+	}
+
+	/**
+	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
+	 *
+	 * @param KunenaView $view
+	 *
+	 * @since 4.0
+	 *
+	 * @deprecated 5.0
+	 */
+	public function setLegacy(KunenaView $view = null) {
+		$this->legacy = $view;
+
+		return $this;
 	}
 }

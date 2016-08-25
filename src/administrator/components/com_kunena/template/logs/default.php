@@ -92,10 +92,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<?php echo !$this->group ? JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering) : 'Count'; ?>
 			</th>
 			<th class="nowrap center" width="1%" style="width: 130px;">
-				<?php echo JHtml::_('grid.sort', 'Time', 'time', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->listDirection, $this->listOrdering); ?>
 			</th>
 			<th class="nowrap" width="1%">
-				<?php echo JHtml::_('grid.sort', 'Type', 'type', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('type'); ?>
 			</th>
 			<th class="nowrap center">
@@ -103,19 +103,19 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<?php echo $this->getGroupCheckbox('operation'); ?>
 			</th>
 			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'User', 'user', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('user'); ?>
 			</th>
 			<th class="nowrap">
-				<?php echo JHTML::_('grid.sort', 'Category', 'category', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('category'); ?>
 			</th>
 			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'Topic', 'topic', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('topic'); ?>
 			</th>
 			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'Target User', 'target_user', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('target_user'); ?>
 			</th>
 			<th class="nowrap center">
@@ -148,23 +148,23 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				</select>
 			</td>
 			<td>
-				<label for="filter_user" class="element-invisible"><?php echo 'User';?></label>
+				<label for="filter_user" class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_USER_FILTER_LABEL');?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_user" id="filter_user" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterUser; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
 			<td>
-				<label for="filter_category" class="element-invisible"><?php echo 'Category';?></label>
+				<label for="filter_category" class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_CATEGORY_FILTER_LABEL');?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
 			<td>
-				<label for="filter_topic" class="element-invisible"><?php echo 'Topic';?></label>
+				<label for="filter_topic" class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_TOPIC_FILTER_LABEL');?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_topic" id="filter_topic" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTopic; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
 			<td>
-				<label for="filter_target_user" class="element-invisible"><?php echo 'Target User';?></label>
+				<label for="filter_target_user" class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_TARGET_USER_FILTER_LABEL');?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_target_user" id="filter_target_user" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTargetUser; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
 			<td>
-				<label for="filter_ip" class="element-invisible"><?php echo 'IP';?></label>
+				<label for="filter_ip" class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_IP_FILTER_LABEL');?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterIp; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
 			<?php if (!$this->group) : ?>

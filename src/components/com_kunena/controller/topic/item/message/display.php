@@ -57,6 +57,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
 		$this->captchaEnabled = false;
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
@@ -151,7 +157,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			if (!empty($this->message->ip))
 			{
 				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip
-					. '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					. '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 			}
 			else
 			{

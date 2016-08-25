@@ -478,7 +478,7 @@ class KunenaUserBan extends JObject
 			return false;
 		}
 
-		if ($user->isModerator())
+		if ($user->isModerator()&& !$me->isAdmin())
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
 			return false;

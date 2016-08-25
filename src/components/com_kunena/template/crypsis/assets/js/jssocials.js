@@ -1,4 +1,4 @@
-/*! jssocials - v1.2.1 - 2016-04-10
+/*! jssocials - v1.3.1 - 2016-08-20
 * http://js-socials.com
 * Copyright (c) 2016 Artem Tabalin; Licensed MIT */
 (function(window, $, undefined) {
@@ -13,7 +13,7 @@
         return value;
     };
 
-    var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp)$|^data:image\/(jpeg|png|gif|bmp);base64)/i;
+    var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp|svg\+xml)$|^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64)/i;
     var URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g;
 
     var MEASURES = {
@@ -449,11 +449,9 @@
             label: "Share",
             logo: "fa fa-facebook",
             shareUrl: "https://facebook.com/sharer/sharer.php?u={url}",
-            countUrl: function() {
-                return "https://graph.facebook.com/fql?q=SELECT total_count FROM link_stat WHERE url='" + window.encodeURIComponent(this.url) + "'";
-            },
+            countUrl: "http://graph.facebook.com/?id={url}",
             getCount: function(data) {
-                return (data.data.length && data.data[0].total_count) || 0;
+                return data.share && data.share.share_count || 0;
             }
         },
 
@@ -461,9 +459,7 @@
             label: "Share",
             logo: "fa fa-google",
             shareUrl: "https://plus.google.com/share?url={url}",
-            countUrl: function() {
-                return "https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url="+ window.encodeURIComponent(this.url);
-            },
+            countUrl: "https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url={url}",
             getCount: function(data) {
                 return parseFloat((data.match(/\{c: ([.0-9E]+)/) || [])[1]);
             }
@@ -497,6 +493,14 @@
             getCount: function(data) {
                 return data.result.views;
             }
+        },
+
+        telegram: {
+            label: "Telegram",
+            logo: "fa fa-paper-plane",
+            shareUrl: "tg://msg?text={url} {text}",
+            countUrl: "",
+            shareIn: "self"
         },
 
         whatsapp: {

@@ -35,12 +35,12 @@ if ($show)
 ?>
 <ul class="unstyled center profilebox">
 	<li>
-		<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
+		<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 	</li>
 
 	<?php if ($avatar) : ?>
 	<li>
-		<?php echo $user->getLink($avatar); ?>
+		<?php echo $user->getLink($avatar, null, ''); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 				<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 		<?php endif;?>

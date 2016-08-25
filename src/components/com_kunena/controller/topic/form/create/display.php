@@ -172,12 +172,16 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -207,6 +211,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			else
 			{
 				$this->setDescription($this->headerText);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

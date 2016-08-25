@@ -66,7 +66,7 @@ $attachments = $this->attachments;
 					</td>
 				</tr>
 			<?php else :
-				$i = 0;
+				$i = $this->pagination->limitstart;
 				foreach ($attachments as $attachment) :
 					$message = $attachment->getMessage();
 					$canDelete = $attachment->isAuthorised('delete');
@@ -86,7 +86,7 @@ $attachments = $this->attachments;
 							<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 						</td>
 						<td>
-							<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
+							<?php echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true); ?>
 						</td>
 						<td class="center">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
@@ -105,6 +105,11 @@ $attachments = $this->attachments;
 			<?php endif; ?>
 		</tbody>
 	</table>
+	<div class="pull-left">
+		<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true);	?>
+	</div>
 	<?php if ($attachments) : ?>
 		<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
 	<?php endif; ?>

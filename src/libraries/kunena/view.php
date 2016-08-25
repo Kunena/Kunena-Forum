@@ -473,13 +473,13 @@ class KunenaView extends JViewLegacy
 				$output = trim($output);
 				$output = "\n<!-- START {$templatefile} -->\n{$output}\n<!-- END {$templatefile} -->\n";
 			}
-			
+
 			return $output;
 		}
 		else
 		{
 			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-			
+
 			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
 		}
 	}
@@ -501,7 +501,7 @@ class KunenaView extends JViewLegacy
 			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
 		}
 
-		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
@@ -513,12 +513,10 @@ class KunenaView extends JViewLegacy
 			$content = KunenaHtmlParser::parseText($topic->subject);
 		}
 
-		$rel = 'follow';
+		$rel = '';
 
 		if ($title === null)
 		{
-			$rel = 'nofollow';
-
 			if ($action instanceof KunenaForumMessage)
 			{
 				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));

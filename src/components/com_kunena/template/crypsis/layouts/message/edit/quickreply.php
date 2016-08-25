@@ -76,9 +76,6 @@ if ($me->canDoCaptcha() )
 	}
 }
 
-$this->config = KunenaFactory::getConfig();
-$this->ktemplate = KunenaFactory::getTemplate();
-$editor = $this->ktemplate->params->get('editor');
 $template = KunenaTemplate::getInstance();
 $quick = $template->params->get('quick');
 
@@ -113,14 +110,14 @@ $quick = $template->params->get('quick');
 					<label>
 						<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 					</label>
-					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
 				</div>
 			<?php endif; ?>
 
 			<?php if ($config->askemail && !$me->exists()): ?>
 				<div class="controls">
 					<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="35" value="" required />
+					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="45" value="" required />
 				</div>
 			<?php endif; ?>
 
@@ -129,9 +126,9 @@ $quick = $template->params->get('quick');
 					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 				</label>
 				<input type="text" id="subject" name="subject" class="inputbox span12"
-						maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
-						<?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
-						value="<?php echo $message->displayField('subject'); ?>" />
+				       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
+				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+				       value="<?php echo $message->displayField('subject'); ?>" />
 			</div>
 			<div class="controls">
 				<label>

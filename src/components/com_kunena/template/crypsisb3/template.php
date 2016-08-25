@@ -97,6 +97,14 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
+
+		if (file_exists($filenameless) && 0 != filesize($filenameless))
+		{
+			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
+			$this->addStyleSheet('kunena-custom.css');
+		}
+
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';
 		if (file_exists($filename))
 		{

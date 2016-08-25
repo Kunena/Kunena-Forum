@@ -23,7 +23,7 @@ $announcement = $this->announcement;
 		<div class="overflow">
 			<?php echo JHtml::_(
 	'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-null, 'follow'); ?>
+null, null, ''); ?>
 		</div>
 	</td>
 

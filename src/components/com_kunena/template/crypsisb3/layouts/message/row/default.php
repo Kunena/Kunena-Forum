@@ -50,11 +50,11 @@ if ($topic->moved_id > 0)
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
-	<td class="hidden-phone center topic-item-unread">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<td class="hidden-phone col-md-1 center topic-item-unread">
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $message->message, 'hasTooltip', $category, true, true); ?>
 	<?php else :  ?>
 	<td class="col-md-1 hidden-xs center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), $message->message, 'hasTooltip', $category, true, false); ?>
 	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
@@ -62,12 +62,11 @@ if ($topic->moved_id > 0)
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink(
-     $topic, 'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+     $topic, 'unread', $message->message . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
+				echo $this->getTopicLink($topic, $this->message, null, $message->message, 'hasTooltip topictitle', $category, true, false);
 			}
 
 			if ($topic->getUserTopic()->favorite) {
@@ -81,7 +80,7 @@ if ($topic->moved_id > 0)
 			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
 		</div>
 		<div class="hidden-xs">
-			<?php echo $topic->getAuthor()->getLink(); ?>,
+			<?php echo $topic->getAuthor()->getLink(null, null, '', '', null, $category->id); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 			<div class="pull-right">
@@ -110,8 +109,8 @@ if ($topic->moved_id > 0)
 			<?php endif; ?>
 				<div class="col-md-9">
 					<span>
-						<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+						<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $category, true, true); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id);?>
 					</span>
 					<br />
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

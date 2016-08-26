@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 			<ul class="unstyled col-md-1 btn-link">
 				<?php echo KunenaIcons::members(); ?>
 			</ul>
-			<ul class="unstyled ol-md-11">
+			<ul class="unstyled col-md-11">
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</span>

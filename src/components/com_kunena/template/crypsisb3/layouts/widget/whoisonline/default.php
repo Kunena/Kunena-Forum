@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-small" data-toggle="collapse" data-target="#kwho"></div>
+			<div class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kwho"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 			<ul class="unstyled col-md-1 btn-link">
 				<?php echo KunenaIcons::members(); ?>
 			</ul>
-			<ul class="unstyled ol-md-11">
+			<ul class="unstyled col-md-11">
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</span>

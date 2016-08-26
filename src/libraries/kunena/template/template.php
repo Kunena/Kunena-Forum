@@ -991,9 +991,9 @@ HTML;
 	/**
 	 * @param KunenaForumTopic $topic
 	 *
-	 * @param string           $category_iconset
-	 *
 	 * @return string
+	 * @internal param string $category_iconset
+	 *
 	 */
 	public function getTopicIcon($topic)
 	{

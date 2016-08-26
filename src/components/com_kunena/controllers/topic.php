@@ -65,7 +65,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			
+
 			if ($attach->protected)
 			{
 				$object->path    = $attach->getUrl();
@@ -74,7 +74,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$object->path    = JURI::root(true) . '/' . $attach->getUrl();
 			}
-			
+
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
@@ -920,9 +920,11 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check if title of topic or message contains URL to limit part of spam
 	 *
-	 * @param string $usbject
+	 * @param $subject
 	 *
-	 * @return boolean
+	 * @return bool
+	 * @internal param string $usbject
+	 *
 	 */
 	protected function checkURLInSubject($subject)
 	{
@@ -1938,7 +1940,7 @@ class KunenaControllerTopic extends KunenaController
 				}
 				catch (Exception $e)
 				{
-					
+
 				}
 
 				$receivers = array();

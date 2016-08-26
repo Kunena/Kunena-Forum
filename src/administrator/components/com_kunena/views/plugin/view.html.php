@@ -43,8 +43,6 @@ class KunenaAdminViewPlugin extends KunenaView
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode("\n", $errors), 500);
-
-			return true;
 		}
 
 		$this->addToolbar();

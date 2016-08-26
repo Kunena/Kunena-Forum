@@ -50,9 +50,11 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param   string	$prefix
-	 * @param   mixed	$config
-	 * @return	KunenaController
+	 * @param   string $prefix
+	 * @param   mixed  $config
+	 *
+	 * @return KunenaController
+	 * @throws Exception
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{

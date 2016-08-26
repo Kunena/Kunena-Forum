@@ -150,6 +150,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $title
 	 * @param   null                $class
 	 *
+	 * @param bool                  $follow
+	 * @param null                  $canonical
+	 *
 	 * @return mixed
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
@@ -204,6 +207,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $title
 	 * @param   null                $class
 	 * @param   KunenaForumCategory $category
+	 *
+	 * @param bool                  $follow
+	 * @param bool                  $canonical
 	 *
 	 * @return mixed
 	 */
@@ -326,11 +332,14 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param      $category
+	 * @param        $category
 	 * @param   null $content
 	 * @param   null $title
 	 * @param   null $class
 	 * @param   int  $length
+	 *
+	 * @param bool   $follow
+	 * @param null   $canonical
 	 *
 	 * @return mixed
 	 */
@@ -389,9 +398,10 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param KunenaView $view
 	 *
-	 * @since 4.0
+	 * @since      4.0
 	 *
 	 * @deprecated 5.0
+	 * @return $this
 	 */
 	public function setLegacy(KunenaView $view = null) {
 		$this->legacy = $view;

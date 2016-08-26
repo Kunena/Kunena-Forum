@@ -50,6 +50,7 @@ abstract class KunenaMenuFix
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
 	 * @return array
+	 * @throws Exception
 	 */
 	protected static function load()
 	{
@@ -72,8 +73,6 @@ abstract class KunenaMenuFix
 		if (!(self::$items = $db->loadObjectList('id')))
 		{
 			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
-
-			return false;
 		}
 
 		foreach (self::$items as &$item)

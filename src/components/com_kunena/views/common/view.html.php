@@ -519,8 +519,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
 	 *
-	 * @param   string $params Add extras params to the URL
-	 * @param   string $xhtml  Replace & by & for XML compilance.
+	 * @param   string    $params Add extras params to the URL
+	 * @param bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
 	 */

@@ -14,25 +14,24 @@ jQuery(document).ready(function($) {
 	// Initialize
 	(function init() {
 		var topic_id = $("#topic_id").val();
-		
+
 		if ($('#krating').length > 0) {
 			$.ajax({
 				 dataType: "json",
 				 url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
-				 data: 'topic_id=' + topic_id 
+				 data: 'topic_id=' + topic_id
 			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function(reponse) {
-			
+
 			});
 		}
-	})(); 
+	})();
 
 	// Build krating item
 	function buildItem(){
 		var ratingItem = document.createElement('div');
-		var html = '<ul class="c-rating"></ul>';
-		ratingItem.innerHTML = html;
+		ratingItem.innerHTML = '<ul class="c-rating"></ul>';
 		krating.appendChild(ratingItem);
 		return ratingItem;
 	}
@@ -46,7 +45,7 @@ jQuery(document).ready(function($) {
 			$.ajax({
 				dataType: "json",
 				url: $('#krating_submit_url').val(),
-				data: 'starid=' + rating + '&topic_id=' + topicid  
+				data: 'starid=' + rating + '&topic_id=' + topicid
 				}).done(function(response) {
 					if (response.success)
 					{
@@ -58,7 +57,7 @@ jQuery(document).ready(function($) {
 					}
 				}).fail(function(reponse) {
 					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+reponse+'</div>').appendTo('#system-message-container');
-				});  
+				});
 		};
 		var r = rating(ratingElement, currentRating, maxRating, callback);
 	}

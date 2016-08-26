@@ -79,7 +79,7 @@ $quick = $template->params->get('quick');
 		<div class="modal-content">
 
 <?php elseif ($quick == 0) : ?>
-<div class="col-md-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"  style="position: relative; top: 10px; left: -20px; right: -10px; width:100%; z-index: 1;display: none">
+<div class="col-md-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"  style="position: relative; top: 10px; left: -20px; right: -10px; width:100%; z-index: 1;display: none;">
 	<div class="panel panel-default">
 		<div class="panel-body">
 <?php endif;?>

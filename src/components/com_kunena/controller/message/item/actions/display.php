@@ -442,14 +442,16 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Get button.
 	 *
-	 * @param   string  $url     Target link (do not route it).
-	 * @param   string  $name    Name of the button.
-	 * @param   string  $scope   Scope of the button.
-	 * @param   string  $type    Type of the button.
-	 * @param   int     $id      Id of the button.
-	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
+	 * @param   string $url    Target link (do not route it).
+	 * @param   string $name   Name of the button.
+	 * @param   string $scope  Scope of the button.
+	 * @param   string $type   Type of the button.
+	 * @param   int    $id     Id of the button.
+	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
-	 * @return  string
+	 * @param string   $icon
+	 *
+	 * @return string
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{

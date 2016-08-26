@@ -2130,13 +2130,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return true;
 		}
-		
+
 		// Display nothing in subscription mails
 		if (!empty($bbcode->context))
 		{
 			return '';
 		}
-		
+
 		$attachments = null;
 
 		if ($bbcode->parent instanceof KunenaForumMessage)
@@ -2861,6 +2861,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	/**
 	 * Render eBay layout from template
+	 *
+	 * @param $ItemID
+	 *
+	 * @return bool|string
 	 */
 	public static function renderEbayLayout($ItemID)
 	{

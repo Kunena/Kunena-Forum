@@ -189,6 +189,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<tr>
 						<td colspan="10">
 							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+							<?php //Load the batch processing form. ?>
+							<?php echo $this->loadTemplate('batch'); ?>
 						</td>
 					</tr>
 				</tfoot>

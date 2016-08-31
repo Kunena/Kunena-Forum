@@ -56,7 +56,9 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
-
+		
+		$this->batch_categories = $this->get('BatchCategories');
+		
 		// Preprocess the list of items to find ordering divisions.
 		$this->ordering = array();
 
@@ -135,6 +137,15 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::spacer();
 		$help_url  = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		
+		// Get the toolbar object instance
+		$bar = JToolBar::getInstance('toolbar');
+		JHtml::_('bootstrap.modal', 'collapseModal');
+		$title = JText::_('JTOOLBAR_BATCH');
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
+		<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
+		$title</button>";
+		$bar->appendButton('Custom', $dhtml, 'batch');
 	}
 
 	/**

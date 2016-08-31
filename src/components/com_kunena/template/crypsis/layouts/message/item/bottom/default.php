@@ -17,6 +17,7 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
+$attachs = $message->getNbAttachments();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);

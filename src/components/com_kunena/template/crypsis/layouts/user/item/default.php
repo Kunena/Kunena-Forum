@@ -41,7 +41,7 @@ echo $this->subLayout('User/Item/Summary')
 
 		<?php foreach ($tabs as $name => $tab) : ?>
 		<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-			<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
+			<a href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 		</li>
 		<?php endforeach; ?>
 

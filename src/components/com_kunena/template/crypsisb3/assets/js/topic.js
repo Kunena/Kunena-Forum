@@ -43,6 +43,28 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('[id^="login-link"]').click(function() {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$(this).addClass('kdelay');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
+			}
+		});
+	});
+
+	$(document).click(function() {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
+	});
+
+	$('#userdropdown').click(function(e){
+		e.stopPropagation();
+	});
+
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();
@@ -63,7 +85,38 @@ jQuery(document).ready(function ($) {
 		$("#share").jsSocials({
 			showCount: true,
 			showLabel: true,
-			shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+			shares: [
+			{
+				share: "email",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
+			}, 
+			{
+				share: "twitter",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+			}, 
+			{
+				share: "facebook",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL') 
+			}, 
+			{
+				share: "googleplus",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL') 
+			}, 
+			{
+				share: "linkedin",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL') 
+			}, {
+				share: "pinterest",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL') 
+			}, 
+			{
+				share: "stumbleupon",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL') 
+			}, 
+			{
+				share: "whatsapp",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL') 
+			}]
 		});
 		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
 	}

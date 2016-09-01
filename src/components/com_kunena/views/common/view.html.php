@@ -45,11 +45,6 @@ class KunenaViewCommon extends KunenaView
 
 		$result = $this->loadTemplateFile($tpl);
 
-		if (JError::isError($result))
-		{
-			return $result;
-		}
-
 		echo $result;
 	}
 
@@ -92,11 +87,6 @@ class KunenaViewCommon extends KunenaView
 
 				$result = $this->loadTemplateFile($tpl);
 
-				if (JError::isError($result))
-				{
-					return $result;
-				}
-
 				echo $result;
 			}
 			else
@@ -135,11 +125,6 @@ class KunenaViewCommon extends KunenaView
 
 		$result = $this->loadTemplateFile($tpl);
 
-		if (JError::isError($result))
-		{
-			return $result;
-		}
-
 		echo $result;
 
 		$cache->end();
@@ -152,10 +137,10 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$catid  = JRequest::getInt('catid', 0);
-		$id     = JRequest::getInt('id', 0);
-		$view   = JRequest::getWord('view', 'default');
-		$layout = JRequest::getWord('layout', 'default');
+		$catid  = $this->app->input->getInt('catid', 0);
+		$id     = $this->app->input->getInt('id', 0);
+		$view   = $this->app->input->getWord('view', 'default');
+		$layout = $this->app->input->getWord('layout', 'default');
 
 		$this->breadcrumb = $pathway = $this->app->getPathway();
 		$active           = $this->app->getMenu()->getActive();
@@ -240,11 +225,6 @@ class KunenaViewCommon extends KunenaView
 
 		$result = $this->loadTemplateFile($tpl, array('pathway' => $this->pathway));
 
-		if (JError::isError($result))
-		{
-			return $result;
-		}
-
 		echo $result;
 	}
 
@@ -321,11 +301,6 @@ class KunenaViewCommon extends KunenaView
 		// Fall back to old template file.
 		$result = $this->loadTemplateFile($tpl);
 
-		if (JError::isError($result))
-		{
-			return $result;
-		}
-
 		echo $result;
 
 		$cache->end();
@@ -357,11 +332,6 @@ class KunenaViewCommon extends KunenaView
 		$this->moreLink         = $this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
 
 		$result = $this->loadTemplateFile($tpl);
-
-		if (JError::isError($result))
-		{
-			return $result;
-		}
 
 		echo $result;
 		$cache->end();
@@ -401,11 +371,6 @@ class KunenaViewCommon extends KunenaView
 		}
 		$result = $this->loadTemplateFile($tpl);
 
-		if (JError::isError($result))
-		{
-			return $result;
-		}
-
 		echo $result;
 	}
 
@@ -421,11 +386,6 @@ class KunenaViewCommon extends KunenaView
 		$this->pm_link           = $private->getInboxURL();
 		$this->announcesListLink = KunenaForumAnnouncementHelper::getUrl('list');
 		$result                  = $this->loadTemplateFile($tpl);
-
-		if (JError::isError($result))
-		{
-			return $result;
-		}
 
 		echo $result;
 	}
@@ -516,10 +476,6 @@ class KunenaViewCommon extends KunenaView
 			}
 			$contents = $this->loadTemplateFile($tpl);
 
-			if (JError::isError($contents))
-			{
-				return $contents;
-			}
 			// FIXME: enable caching after fixing the issues
 			//$cache->store($contents, $cachekey, $cachegroup);
 		}

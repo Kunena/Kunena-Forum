@@ -188,22 +188,22 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @return string
 	 */
-	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '')
+	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
 		if ($title)
 		{
-			$list['title'] = $title;
+			$list['title'] = htmlspecialchars($title);
 		}
 
 		if ($class)
 		{
-			$list['class'] = $class;
+			$list['class'] = htmlspecialchars($class);
 		}
 
 		if ($rel)
 		{
-			$list['rel'] = $rel;
+			$list['rel'] = htmlspecialchars($rel);
 		}
 
 		if (is_array($attributes))

@@ -65,7 +65,16 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+
+			if ($attach->protected)
+			{
+				$object->path    = $attach->getUrl();
+			}
+			else
+			{
+				$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+			}
+
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
@@ -897,7 +906,15 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_MODERATED'));
 		}
 
-		$this->setRedirect($message->getUrl($this->return, false));
+		// Redirect edit first message when category is under review
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
+		{
+			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
+		}
+		else
+		{
+			$this->setRedirect($message->getUrl($this->return, false));
+		}
 	}
 
 	/**
@@ -911,7 +928,7 @@ class KunenaControllerTopic extends KunenaController
 	{
 		if ($this->config->url_subject_topic)
 		{
-			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
 			$ignore = false;
 
@@ -1763,7 +1780,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
 		}
 
 		if ($targetobject)
@@ -1919,26 +1936,9 @@ class KunenaControllerTopic extends KunenaController
 					$body = trim($layout->render());
 					$mail->setBody($body);
 				}
-
 				catch (Exception $e)
 				{
-					// TODO: Deprecated in K4.0, remove in K5.0
-					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RREASON') . " " . $reason;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $text;
-					$mailmessage .= "\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_POSTER') . " {$baduser->username} ({$baduser->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $topic->subject;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_MESSAGE') . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
-					$mailmessage .= "\n-----\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_LINK') . " " . $msglink;
-					$mailmessage = JMailHelper::cleanBody(strtr($mailmessage, array('&#32;' => '')));
 
-					$mail->setBody($mailmessage);
 				}
 
 				$receivers = array();

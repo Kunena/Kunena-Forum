@@ -262,8 +262,18 @@ class KunenaAdminModelCategories extends KunenaModel
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO();
 				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
-				$sections = $db->loadObjectList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$sections = $db->loadObjectList();
+				}
+				catch (RuntimeException $e)
+				{
+					JFactory::getApplication()->enqueueMessage($e->getMessage());
+
+					return;
+				}
+
 				$category->parent_id     = $this->getState('item.parent_id');
 				$category->published     = 0;
 				$category->ordering      = 9999;
@@ -366,13 +376,21 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$topicicons = array ();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
-
 		foreach ($topiciconslist as $icon)
 		{
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 
-		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset);
+		if (empty($category->iconset))
+		{
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
+		}
+		else
+		{
+			$value = $category->iconset;
+		}
+
+		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $value);
 
 		return $lists;
 	}
@@ -471,5 +489,26 @@ class KunenaAdminModelCategories extends KunenaModel
 		$this->cleanCache();
 
 		return true;
+	}
+	
+	/**
+	 * Get list of categories to be displayed in drop-down select in batch
+	 *
+	 * @since 5.1.0
+	 */
+	public function getBatchCategories()
+	{
+		$categories = $this->getAdminCategories();
+		$batch_categories = array();
+		$batch_categories[] = JHtml::_('select.option', 'select', JText::_('JSELECT'));
+		
+		foreach($categories as $category)
+		{
+			$batch_categories [] = JHtml::_('select.option', $category->id, str_repeat ( '...', count($category->indent)-1 ).' '.$category->name);
+		}
+		
+		$list = JHtml::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox" size="1"', 'value', 'text', 'select');
+		
+		return $list;
 	}
 }

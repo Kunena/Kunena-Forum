@@ -25,6 +25,15 @@ JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
 JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 
+JText::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
+JText::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
+JText::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
+JText::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
+JText::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
+JText::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
+JText::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
+JText::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
+
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
@@ -82,9 +91,17 @@ $quick = $this->ktemplate->params->get('quick');
 <?php endif; ?>
 
 <?php
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
+if ($this->ktemplate->params->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
+}
+
 echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
+
+if ($this->ktemplate->params->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
+}
 
 $count = 1;
 foreach ($this->messages as $id => $message)
@@ -93,8 +110,11 @@ foreach ($this->messages as $id => $message)
 		->set('mesid', $message->id)
 		->set('location', $id);
 
-	echo $this->subLayout('Widget/Module')
-		->set('position', 'kunena_msg_row_' . $count++);
+	if ($this->ktemplate->params->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')
+			->set('position', 'kunena_msg_row_' . $count++);
+	}
 }
 
 if ($quick == 2)

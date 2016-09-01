@@ -308,15 +308,15 @@ EOS;
 		// Find all update sites.
 		$query = $db->getQuery(true)
 			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
-			->where($db->quoteName('location') . ' LIKE ' . $db->quote('http://update.kunena.org/%'))
+			->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'))
 			->order($db->quoteName('update_site_id') . ' ASC');
 		$db->setQuery($query);
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name') . '=' . $db->quote('Kunena 4.0 Update Site'))
+			->set($db->quoteName('name') . '=' . $db->quote('Kunena 5.0 Update Site'))
 			->set($db->quoteName('type') . '=' . $db->quote('collection'))
-			->set($db->quoteName('location') . '=' . $db->quote('http://update.kunena.org/5.0/list.xml'))
+			->set($db->quoteName('location') . '=' . $db->quote('https://update.kunena.org/5.0/list.xml'))
 			->set($db->quoteName('enabled') . '=1')
 			->set($db->quoteName('last_check_timestamp') . '=0');
 

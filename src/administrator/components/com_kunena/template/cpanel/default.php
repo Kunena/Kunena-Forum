@@ -44,6 +44,14 @@ defined('_JEXEC') or die();
 								<i class="icon-big icon-star-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></span>
 							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=labels">
+								<i class="icon-big icon-tags-2" alt="<?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?></span>
+							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=icons">
+								<i class="icon-big icon-grid-2" alt="<?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER') ?></span>
+							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
 								<i class="icon-big icon-color-palette" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?></span>
@@ -55,6 +63,10 @@ defined('_JEXEC') or die();
 							<a class="btn" href="index.php?option=com_kunena&view=plugins">
 								<i class="icon-big icon-puzzle" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
+							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=email">
+								<i class="icon-big icon-mail" alt="<?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=logs">
 								<i class="icon-big icon-search" alt="<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>"></i><br/>
@@ -117,24 +129,19 @@ defined('_JEXEC') or die();
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
 							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons();?></dd>
+							<hr class="hr-condensed">
+							<dt>Donate:</dt>
+							<dd>
+								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+									<input name="cmd" type="hidden" value="_s-xclick">
+									<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
+									<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!" src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+									<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
+								</form>
+							</dd>
 						</dl>
 					</div>
 				</div>
 		</section>
-		<div tabindex="-1" class="modal hide fade" id="kunena_changelog" role="dialog">
-			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">×</button>
-				<h3>Changelog</h3>
-			</div>
-			<div class="modal-body">
-				<iframe src="https://www.kunena.org/docs/en/changelog" width="100%" height="400px" frameborder="0"></iframe>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-		<div class="pull-right small">
-			<?php echo KunenaVersion::getLongVersionHTML(); ?>
-		</div>
 	</div>
 </div>

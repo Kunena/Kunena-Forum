@@ -20,7 +20,7 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	protected $filename;
-
+	
 	/**
 	 * Get new instance of upload class.
 	 *
@@ -344,6 +344,11 @@ class KunenaUpload
 						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
+
+				// Get filename from stream
+				$meta_data = stream_get_meta_data($out);
+				$filename  = $meta_data['uri'];
+				KunenaImage::correctImageOrientation($filename);
 			}
 		}
 		catch (Exception $exception)
@@ -558,16 +563,17 @@ class KunenaUpload
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
 		$config = KunenaFactory::getConfig();
-		
+
 		if ($type != 'attachment' && $config->attachment_utf8)
 		{
 			$file->tmp_name = $fileInput['tmp_name'];
 		}
 		else
 		{
-			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
+			$pathInfo = pathinfo($fileInput['tmp_name']);
+			$file->tmp_name = $pathInfo['dirname'] . '/' . JFile::makeSafe($pathInfo['basename']);
 		}
-		
+
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
@@ -647,7 +653,8 @@ class KunenaUpload
 				}
 			}
 		}
-
+		
+		KunenaImage::correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{

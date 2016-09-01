@@ -33,11 +33,11 @@ if ($show)
 <div class="span2">
 	<ul class="profilebox center">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
 		</li>
 		<?php if ($avatar) : ?>
 			<li>
-				<?php echo $user->getLink($avatar); ?>
+				<?php echo $user->getLink($avatar, null, ''); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;?>

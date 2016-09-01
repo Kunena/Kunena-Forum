@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 <ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="klogin">
-			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
-			<b class="caret"></b>
+			<?php echo KunenaIcons::user();?>
+			<span class="login-text"><?php echo JText::_('JLOGIN');?></span>
 		</a>
 		<ul class="dropdown-menu card card-container dropdown-menu-right" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline form-signin">
@@ -33,13 +33,12 @@ defined('_JEXEC') or die;
 					size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required/>
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php if ($login->getTwoFactorMethods() > 1) : ?>
-						<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-large" tabindex="3"
+						<input id="k-lgn-secretkey" type="text" name="secretkey" class="form-control input-lg" tabindex="3"
 							size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
-						<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 				<?php endif; ?>
 					<div id="remember" class="checkbox">
 						<label>
-							<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+							<input id="login-remember" type="checkbox" name="remember" value="yes" />
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 						</label>
 					</div>

@@ -133,42 +133,179 @@ class Com_KunenaInstallerScript
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
 		}
-		
+
 		// Remove Blue Eagle template on K5.0
-		$this->deleteFolder($sitePath . '/template/blue_eagle');
-		
-		// Delete languages files related to blue eagle in en-gb and others languages
-		$kunena_language_folders = JFolder::folders($sitePath . '/language');
-		
-		foreach($kunena_language_folders as $folder)
+		$oldblue = $sitePath . '/template/blue_eagle';
+		if (is_dir($oldblue))
 		{
-			if ( JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			$this->deleteKfolder($sitePath . '/template/blue_eagle');
+		}
+
+		// Delete languages files related to blue eagle in en-gb and others languages
+		if (JFolder::exists($sitePath . '/language'))
+		{
+			$kunena_language_folders = JFolder::folders($sitePath . '/language');
+
+			foreach ($kunena_language_folders as $folder)
 			{
-				JFile::delete($sitePath . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				if (JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+				{
+					JFile::delete($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				}
 			}
 		}
-		
+
+		// Copy files to new dir for Crypsis
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsis/assets/less');
+				$src = $sitePath . '/template/crypsis/less/custom.less';
+				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsis/assets/css');
+				$src = $sitePath . '/template/crypsis/css/custom.css';
+				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/config/params.ini');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsis/config');
+				$src = $sitePath . '/template/crypsis/params.ini';
+				$dest = $sitePath . '/template/crypsis/config/params.ini';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
+		}
+
+		// Copy files to new dir for Crypsisb3
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsisb3/assets/less');
+				$src = $sitePath . '/template/crypsisb3/less/custom.less';
+				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsisb3/assets/css');
+				$src = $sitePath . '/template/crypsisb3/css/custom.css';
+				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini'))
+		{
+			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/config/params.ini');
+
+			if (!empty($file) && !$filenew)
+			{
+				JFolder::create($sitePath . '/template/crypsisb3/config');
+				$src = $sitePath . '/template/crypsisb3/params.ini';
+				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
+				KunenaFile::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
+		}
+
+		// Remove old Crypsis files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsis/template.xml'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsis/css');
+			$this->deleteKfolder($sitePath . '/template/crypsis/images');
+			$this->deleteKfolder($sitePath . '/template/crypsis/less');
+			$this->deleteKfolder($sitePath . '/template/crypsis/media');
+			$this->deleteFile($sitePath . '/template/crypsis/config.xml');
+			$this->deleteFile($sitePath . '/template/crypsis/kunena_tmpl_crypsis.xml');
+			$this->deleteFile($sitePath . '/template/crypsis/template.xml');
+		}
+
+		// Remove old Crypsisb3 files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/template.xml'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsisb3/css');
+			$this->deleteKfolder($sitePath . '/template/crypsisb3/images');
+			$this->deleteKfolder($sitePath . '/template/crypsisb3/less');
+			$this->deleteKfolder($sitePath . '/template/crypsisb3/media');
+			$this->deleteFile($sitePath . '/template/crypsisb3/config.xml');
+			$this->deleteFile($sitePath . '/template/crypsisb3/kunena_tmpl_crypsis.xml');
+			$this->deleteFile($sitePath . '/template/crypsisb3/template.xml');
+		}
+
 		$language_folders = JFolder::folders(JPATH_ROOT . '/language');
 
-		foreach($language_folders as $folder)
+		foreach ($language_folders as $folder)
 		{
 			if ( JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
 			{
-				JFile::delete(JPATH_ROOT . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				JFile::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
 			}
 		}
-		
+
 		// Remove old system directory
 		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
 		{
-			$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
-			$foldernew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/system';
-			JFolder::copy($folder, $foldernew);
-			JFolder::delete($folder);
+			if (!is_file(JPATH_ROOT . '/media/kunena/archive/topic_icons/system/topicicons.xml'))
+			{
+				JFolder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
+				$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
+				$foldernew = JPATH_ROOT . '/media/kunena/archive/topic_icons/system';
+				JFolder::copy($folder, $foldernew);
+				JFolder::delete($folder);
+			}
 
-			$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
-			$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
-			JFile::copy($file, $filenew);
+			if (!is_file(JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml'))
+			{
+				JFolder::create(JPATH_ROOT . '/media/kunena/topic_icons/systemold');
+				$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+				$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
+				JFile::copy($file, $filenew);
+			}
 
 			$db    = JFactory::getDBO();
 			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
@@ -401,6 +538,18 @@ class Com_KunenaInstallerScript
 	 * @param       $path
 	 * @param   array $ignore
 	 */
+	public function deleteFile($path)
+	{
+		if (JFile::exists($path))
+		{
+			JFile::delete($path);
+		}
+	}
+
+	/**
+	 * @param       $path
+	 * @param   array $ignore
+	 */
 	public function deleteFiles($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -446,4 +595,14 @@ class Com_KunenaInstallerScript
 		$this->deleteFiles($path, $ignore);
 		$this->deleteFolders($path, $ignore);
 	}
+
+	/**
+	 * @param       $path
+	 * @param   array $ignore
+	 */
+	public function deleteKfolder($path)
+	{
+		JFolder::delete($path);
+	}
 }
+

@@ -200,8 +200,15 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 		$_db = JFactory::getDBO();
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		$userpoints = $_db->loadResult();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$userpoints = $_db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError();
+		}
 
 		return $userpoints;
 	}

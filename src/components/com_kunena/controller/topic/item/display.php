@@ -140,6 +140,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->prepareMessages($mesid);
 
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
 		// Run events.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
@@ -357,6 +363,27 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 
+		$app = JFactory::getApplication('site');
+		$componentParams = $app->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
@@ -367,19 +394,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($headerText);
-			}
+			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))
 			{
@@ -392,14 +409,16 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$this->setKeywords($headerText);
 			}
 
-			if (!empty($params_description))
+
+			if ($total > 1 && $page > 1)
 			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
+				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
-				$this->setDescription($headerText);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
+				$this->setDescription($small);
 			}
 		}
 	}

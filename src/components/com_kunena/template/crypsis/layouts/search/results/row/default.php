@@ -18,6 +18,7 @@ $category = $topic->getCategory();
 $author = $message->getAuthor();
 $isReply = $message->id != $topic->first_post_id;
 $config = KunenaFactory::getConfig();
+$name = $config->username ? $author->username : $author->name;
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 ?>
 <div id="kunena_search_results" class="row-fluid">
@@ -31,7 +32,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	<div class="span10">
 		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
 		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
-		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $name . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $name . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'); ?><?php echo $message->displayField('subject'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message, null, null, 'hasTooltip'); ?>
 			</h3>

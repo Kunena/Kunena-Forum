@@ -147,6 +147,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=topics';
 				break;
 			case 'sticky' :
 				if (!empty($title) && $pageheading)
@@ -157,6 +159,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=sticky';
 				break;
 			case 'locked' :
 				if (!empty($title) && $pageheading)
@@ -167,6 +171,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=locked';
 				break;
 			case 'noreplies' :
 				if (!empty($title) && $pageheading)
@@ -177,6 +183,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=noreplies';
 				break;
 			case 'unapproved' :
 				if (!empty($title) && $pageheading)
@@ -187,6 +195,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=unapproved';
 				break;
 			case 'deleted' :
 				if (!empty($title) && $pageheading)
@@ -197,6 +207,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=deleted';
 				break;
 			case 'replies' :
 			default :
@@ -208,7 +220,27 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
-				break;
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=replies';
+			break;
+		}
+
+		$doc = JFactory::getDocument();
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
 		}
 
 		$this->actions = $this->getTopicActions($this->topics, $actions);
@@ -225,8 +257,30 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
+		$doc = JFactory::getDocument();
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
+
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		if ($menu_item)
 		{
@@ -234,10 +288,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
-				$title = $params->get('page_title'). ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setTitle($title);
 			}
 			else
@@ -259,13 +314,19 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description');
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');;
+				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

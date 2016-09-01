@@ -833,7 +833,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool   $silent
 	 *
 	 * @return boolean
-	 * @deprecated K4.0
+	 *
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

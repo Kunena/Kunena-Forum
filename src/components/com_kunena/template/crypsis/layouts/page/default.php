@@ -35,11 +35,6 @@ $config = KunenaFactory::getTemplate()->params;
 		echo $this->subRequest('Widget/Announcement');
 	}
 
-	if ($config->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
-	}
-
 	// Display current view/layout
 	echo $this->content;
 

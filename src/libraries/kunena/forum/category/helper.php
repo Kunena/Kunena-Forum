@@ -773,7 +773,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * Check if alias is already taken.
+	 * Check in existing categories if the alias is already taken.
 	 *
 	 * @param $category_id
 	 * @param $alias
@@ -783,21 +783,26 @@ abstract class KunenaForumCategoryHelper
 	static public function getAlias($category_id, $alias)
 	{
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$query = $db->getQuery(true);
+		$query->select('*')->from($db->quoteName('#__kunena_categories'))->where($db->quoteName('alias') . " = " . $db->quote($alias));
 		$db->setQuery($query);
-		$category_items = $db->loadAssoc();
-
-		// Check for an error message.
-		if ($db->getErrorNum())
+		 
+		try
 		{
-			return false;
+			$category_items = $db->loadAssoc();
 		}
-
+		catch(RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			 
+			return;
+		}
+	
 		if (is_array($category_items))
 		{
 			return true;
 		}
-
+	
 		return false;
 	}
 

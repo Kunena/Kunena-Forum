@@ -172,17 +172,29 @@ img {
 	border-radius : 4px;
 }
 
+.thumbnails li {
+	margin: 0;
+	padding: 0;
+	width: 23%;
+	padding-right: 2%;
+	float: left;
+	display: inline-block;
+}
+
+.topic-starter-circle,
+.topic-moderator-circle {
+	padding-top   : 30px !important;
+	margin-top    : -20px !important;
+}
+
 .topic-starter {
-	background     : rgba(229, 229, 229, 0.4);
 	display        : inline-block;
-	height         : 15px;
+	height         : auto;
 	border-radius  : 0 0 4px 4px;
 	white-space    : nowrap;
-	padding-top    : 4px;
 	border         : 1px solid #ddd;
 	border-top     : 0 none;
-	padding-left   : 8px;
-	padding-right  : 8px;
+	padding        : 4px 8px 10px;
 	color          : #3a87ad;
 	line-height    : 1em;
 	font-size      : 10px;
@@ -191,16 +203,13 @@ img {
 }
 
 .topic-moderator {
-	background     : rgba(229, 229, 229, 0.4);
 	display        : inline-block;
-	height         : 15px;
+	height         : auto;
 	border-radius  : 0 0 4px 4px;
 	white-space    : nowrap;
-	padding-top    : 4px;
 	border         : 1px solid #ddd;
 	border-top     : 0 none;
-	padding-left   : 8px;
-	padding-right  : 8px;
+	padding        : 4px 8px 10px;
 	color          : red;
 	line-height    : 1em;
 	font-size      : 10px;
@@ -228,9 +237,15 @@ hr {
 
 .unstyled,
 .inline li,
-#kstats li,
+#kstats li {
+	list-style : none;
+}
+
 .profilebox li {
 	list-style : none;
+	padding: 0;
+	margin: 0;
+	line-height: 1.4em;
 }
 
 .viewsnum,
@@ -948,6 +963,10 @@ div.pagination a.disabled:hover {
 	padding : 10px;
 }
 
+.dropdown-menu {
+	min-width : 220px;
+}
+
 #filter-time {
 	margin-top : 25px;
 }
@@ -1218,4 +1237,18 @@ div.moderators {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.kmessagepadding {
+	padding-bottom: 20px;
+}
+
+#poll-results {
+	padding-bottom: 40px;
+}
+
+#ann-date .date,
+#ann-date2 .date,
+#ann-date3 .date {
+	display: inline-block !important;
 }

@@ -104,6 +104,34 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the user icon
+	 *
+	 * @return string
+	 */
+	static public function user()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-user" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-user"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-user"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-user"></span>';
+		}
+	}
+
+	/**
 	 * Return the stats icon
 	 *
 	 * @return string
@@ -446,6 +474,45 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the rss icon
+	 *
+	 * @return string
+	 */
+	static public function rss($text = null)
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($text)
+		{
+			$title = 'data-original-title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"';
+			$class = ' hasTooltip';
+		}
+		else
+		{
+			$title = '';
+			$class = '';
+		}
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-rss ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+		}
+	}
+
+	/**
 	 * Return the upload icon
 	 *
 	 * @return string
@@ -601,22 +668,22 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i id="kbutton-poll-add" class="fa fa-minus btn btn-xs btn-small btn-default"
+			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-minus btn btn-xs btn-default"
+			return '<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		else
 		{
-			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 	}

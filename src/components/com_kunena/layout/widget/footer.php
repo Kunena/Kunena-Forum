@@ -65,8 +65,11 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 					break;
 			}
 
-			return '<a href="' . KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}", true)
-				. '"><span class="icon-feed hasTooltip" data-original-title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span></a>';
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}", true);
+			$doc = JFactory::getDocument();
+			$doc->addHeadLink($url, 'alternate', 'rel', array('type' => 'application/rss+xml'));
+
+			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';
 		}
 		else
 		{

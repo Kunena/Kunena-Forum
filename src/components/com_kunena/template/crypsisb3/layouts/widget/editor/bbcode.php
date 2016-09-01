@@ -33,7 +33,7 @@ $this->getBBcodesEnabled();
 			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
-		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 
 	<!-- Hidden preview placeholder -->
@@ -89,8 +89,9 @@ $this->getBBcodesEnabled();
 				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input class="form-control" name="modal-picture-size" id="modal-picture-size" type="text" value="" />
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input class="form-control" name="modal-picture-url" id="modal-picture-url" type="text" value="" /></p>
+				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE_PLACEHOLDER') ?>" />
+				<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt" id="modal-picture-alt" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>" />
+				<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>" /></p>
 			</div>
 			<div class="modal-footer">
 				<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -155,7 +156,7 @@ $this->getBBcodesEnabled();
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER') ?></h3>
+				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
 			</div>
 			<div class="modal-body">
 				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input class="form-control" name="modal-video-urlprovider-input" id="modal-video-urlprovider-input" type="text" value="" /></p>
@@ -197,18 +198,19 @@ $this->getBBcodesEnabled();
 							</span>
 							</div>
 						</div>
-						<br>
-						<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
-						</div>
-						<?php
-						if($this->poll->exists()) {
-							$x = 1;
-							foreach ($this->poll->getOptions() as $poll_option) {
-								echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
-								$x++;
-							}
+					</div>
+					<div class="clearfix"></div>
+					<br />
+					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
+					</div>
+					<?php
+					if ($this->poll->exists()) {
+						$x = 1;
+						foreach ($this->poll->getOptions() as $poll_option) {
+							echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
+							$x++;
 						}
 						?>
 						<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>" />

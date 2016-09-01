@@ -569,11 +569,49 @@ class KunenaUser extends JObject
 			}
 
 			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
+
+			if (!empty($class))
+			{
+				if ($class == 'btn')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'btn btn-default')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'btn pull-right')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'btn btn-default pull-right')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'hasTooltip')
+				{
+					$class = $class . ' ' . $this->getType($catid, 'class');
+				}
+				else
+				{
+					$class = $this->getType($catid, 'class');
+				}
+			}
+
 			$link = $this->getURL(true, $task);
 
-			if (! empty ( $link ))
+			if (!empty($rel))
 			{
-				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+				$rels = 'rel="' . $rel .'"';
+			}
+			else
+			{
+				$rels = '';
+			}
+
+			if (!empty($link))
+			{
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";
 			}
 			else
 			{
@@ -1297,6 +1335,10 @@ class KunenaUser extends JObject
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', $layout->getLayout());
+
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaSidebar');
 
 		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}

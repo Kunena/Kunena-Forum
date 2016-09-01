@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $message = $this->message;
+$template = KunenaTemplate::getInstance();
 
 if (!$message->isAuthorised('reply'))
 {
@@ -78,7 +79,7 @@ if ($me->canDoCaptcha() )
 							<label class="col-md-12 control-label">
 								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 							</label>
-							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
 						</div>
 					<?php endif; ?>
 
@@ -94,7 +95,7 @@ if ($me->canDoCaptcha() )
 							<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 						</label>
 						<input type="text" id="subject" name="subject" class="form-control"
-								maxlength="<?php echo (int) $config->maxsubject; ?>"
+								maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
 								<?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
 								value="<?php echo $message->displayField('subject'); ?>" />
 					</div>

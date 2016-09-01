@@ -409,11 +409,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPosts))
 		{
-			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'user' => $user->userid);
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
@@ -452,16 +452,20 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JFactory::getApplication()->input->post->get('username', '');
-		$password  = JFactory::getApplication()->input->post->get('password', '', 'raw');
-		$remember  = JFactory::getApplication()->input->post->get('remember', false);
-		$secretkey  = JFactory::getApplication()->input->post->get('secretkey', null);
+		$app    = JFactory::getApplication();
+		$input  = $app->input;
+		$method = $input->getMethod();
+
+		$username  = $input->$method->get('username', '', 'USERNAME');
+		$password  = $input->$method->get('password', '', 'RAW');
+		$remember  = $this->input->getBool('remember', false);
+		$secretkey  = $input->$method->get('secretkey', '', 'RAW');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{
@@ -679,25 +683,25 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Clean request
-		$post              = JRequest::get('post');
-		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
-		if (empty($post['password']) || empty($post['password2']))
+		$post       = $this->app->input->post->getArray();
+		$post_password = $this->app->input->post->get('password', '','raw');
+		$post_password2 = $this->app->input->post->get('password2', '','raw');
+		
+		if (empty($post_password) || empty($post_password2))
 		{
 			unset($post['password'], $post['password2']);
 		}
 		else
 		{
 			// Do a password safety check.
-			if ($post['password'] != $post['password2'])
+			if ($post_password != $post_password2)
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH'), 'notice');
 
 				return false;
 			}
 
-			if (strlen($post['password']) < 5)
+			if (strlen($post_password) < 5)
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'notice');
 
@@ -752,10 +756,11 @@ class KunenaControllerUser extends KunenaController
 		$this->user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
 		$birthdate              = JFactory::getApplication()->input->getString('birthdate');
 
-		if (!$birthdate)
+		if ($birthdate)
 		{
-			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000')
-				. '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
+			$date = JFactory::getDate($birthdate);
+
+			$birthdate = $date->format('Y-m-d');
 		}
 
 		$this->user->birthdate   = $birthdate;

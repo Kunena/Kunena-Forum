@@ -163,7 +163,7 @@ $this->addScript('assets/js/search.js');
 				<?php endif; ?>
 
 				<td class="col-md-2">
-					<?php echo $user->getLink(); ?>
+					<?php echo $user->getLink(null, null, ''); ?>
 				</td>
 
 				<?php if ($config->userlist_posts) : ?>

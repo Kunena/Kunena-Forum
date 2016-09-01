@@ -341,7 +341,8 @@ class KunenaViewTopic extends KunenaView
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
-		$quote          = (bool) JRequest::getBool('quote', false);
+
+		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false))
@@ -424,7 +425,7 @@ class KunenaViewTopic extends KunenaView
 
 		$this->render('Topic/Edit', $tpl);
 	}
-	
+
 	function displayMessageProfile()
 	{
 		echo $this->getMessageProfileBox();
@@ -808,7 +809,7 @@ class KunenaViewTopic extends KunenaView
 				{
 					if (!empty ($this->message->ip))
 					{
-						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 					}
 					else
 					{
@@ -1224,7 +1225,7 @@ class KunenaViewTopic extends KunenaView
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
-  
+
 	public function setTitle($title)
 	{
 		if ($this->inLayout)

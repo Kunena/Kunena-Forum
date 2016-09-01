@@ -34,7 +34,6 @@ $more = ($this->once ?
 		<meta name="format-detection" content="telephone=no" />
 
 		<style>
-			/* Reset styles */
 			body {
 				margin: 0;
 				padding: 0;
@@ -82,7 +81,6 @@ $more = ($this->once ?
 				line-height: 100%;
 			}
 
-			/* Rounded corners for advanced mail clients only */
 			@media all and (min-width: 560px) {
 				.container {
 					border-radius: 8px;
@@ -92,7 +90,6 @@ $more = ($this->once ?
 				}
 			}
 
-			/* Set color for auto links (addresses, dates, etc.) */
 			a, a:hover {
 				color: #127DB3;
 			}
@@ -147,7 +144,7 @@ $more = ($this->once ?
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
-									src="<?php echo JUri::base() . '/media/kunena/email/hero-wide.png';?>"
+									src="<?php echo JUri::base() . KunenaConfig::getInstance()->emailheader;?>"
 									alt="Please enable images to view this content" title="Forum"
 									width="560" style="
 			width: 100%;
@@ -163,7 +160,7 @@ $more = ($this->once ?
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+								<p>URL : <a href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -220,7 +217,6 @@ $more = ($this->once ?
 	</body>
 </html>
 <?php
-// Email as plain text:
 
 $full = !$config->mailfull ? '' : <<<EOS
 {$this->text('COM_KUNENA_MESSAGE')}

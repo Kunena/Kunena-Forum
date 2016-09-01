@@ -22,11 +22,15 @@ class KunenaAdminControllerTemplates extends KunenaController
 {
 	/**
 	 * @var null|string
+	 *
+	 * @since    2.0
 	 */
 	protected $baseurl = null;
 
 	/**
 	 * @var array
+	 *
+	 * @since    2.0
 	 */
 	protected $locked = array('crypsis');
 
@@ -34,6 +38,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -43,8 +49,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Publish
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function publish()
+	public function publish()
 	{
 		$cid = $this->app->input->get('cid', array(), 'method', 'array');
 		$id  = array_shift($cid);
@@ -72,8 +82,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Add
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function add()
+	public function add()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -88,8 +102,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Edit
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function edit()
+	public function edit()
 	{
 		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
 		$template = array_shift($cid);
@@ -120,6 +138,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * Install
 	 *
 	 * @return boolean
+	 *
+	 * @since    2.0
 	 */
 	public function install()
 	{
@@ -228,8 +248,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Uninstall
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function uninstall()
+	public function uninstall()
 	{
 		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
 		$id       = array_shift($cid);
@@ -292,8 +316,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Choose less
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function chooseless()
+	public function chooseless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -313,8 +341,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Edit Less
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function editless()
+	public function editless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -335,8 +367,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Choose Css
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function choosecss()
+	public function choosecss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -348,8 +384,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Apply less
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function applyless()
+	public function applyless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -389,8 +429,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Save Less
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function saveless()
+	public function saveless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -433,8 +477,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Edit Css
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function editcss()
+	public function editcss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -455,8 +503,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Apply Css
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function applycss()
+	public function applycss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -494,8 +546,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Save Css
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function savecss()
+	public function savecss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
@@ -535,8 +591,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Apply
+	 *
+	 * @return  void
+	 *
+	 * @since    2.0
 	 */
-	function apply()
+	public function apply()
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
@@ -566,8 +626,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	/**
 	 * Save
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function save()
+	public function save()
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
@@ -600,6 +664,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @param   string  $template  The name of the template.
 	 *
+	 * @return void
 	 *
 	 * @since  3.0.0
 	 */

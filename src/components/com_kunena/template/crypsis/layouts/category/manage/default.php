@@ -22,40 +22,15 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="category" />
 				<input type="hidden" name="task" value="" />
-				<input type="hidden" name="filter_order" value="<?php echo intval($this->state->get('list.ordering')) ?>" />
-				<input type="hidden" name="filter_order_Dir" value="<?php echo intval($this->state->get('list.direction')) ?>" />
+
 				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>" />
 				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHtml::_('form.token'); ?>
-				<table class="kadmin-sort">
-					<tr>
-						<td class="kleft">
-							<?php echo JText::_('COM_KUNENA_FILTER'); ?>:
-							<input type="text" name="search" value="<?php echo $this->escape($this->state->get('list.search')); ?>" class="text_area" onchange="document.adminForm.submit();" />
-							<button onclick="this.form.submit();"><?php echo JText::_('COM_KUNENA_GO'); ?></button>
-							<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_RESET'); ?></button>
-						</td>
-						<td class="kright">
-							<button onclick="submitbutton('add')"><?php echo JText::_('COM_KUNENA_NEW'); ?></button>
-							<button onclick="submitbutton('edit')"><?php echo JText::_('COM_KUNENA_EDIT'); ?></button>
-							<button onclick="submitbutton('remove')"><?php echo JText::_('COM_KUNENA_DELETE'); ?></button>
-						</td>
-					</tr>
-				</table>
 				<table class="adminlist table table-striped">
 					<thead>
 					<tr>
 						<th class="kcenter" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
-						</th>
-						<th class="title"><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
-						<th>
-							<small><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></small>
-						</th>
-						<th width="100" class="center nowrap">
-							<small>
-								<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-								<?php echo JHtml::_('grid.order', $this->state->get('list.count.admin')); ?></small>
 						</th>
 						<th class="kcenter">
 							<small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small>
@@ -81,15 +56,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 					</tr>
 					</thead>
 					<tfoot>
-					<tr>
-						<td colspan="14">
-							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?><?php echo $this->navigation->getLimitBox(); ?></div>
-								<?php echo $this->navigation->getPagesLinks(); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter(); ?></div>
-							</div>
-						</td>
-					</tr>
+
 					</tfoot>
 					<?php
 					$k       = 0;

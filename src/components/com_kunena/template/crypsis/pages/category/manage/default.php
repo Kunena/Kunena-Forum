@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $content = $this->execute('Category/Manage');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT'),
+	JText::_('COM_KUNENA_MENU_CATEGORY_MANAGE'),
 	'index.php?option=com_kunena&view=category&layout=manage'
 );
 

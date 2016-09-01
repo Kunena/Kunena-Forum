@@ -22,7 +22,7 @@ defined('_JEXEC') or die();
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_FORUM_TOOLS') ?></div>
+			<div class="module-title nav-header"><i class="icon-tools" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?></div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=report">

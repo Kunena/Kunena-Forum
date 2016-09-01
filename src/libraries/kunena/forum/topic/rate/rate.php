@@ -52,11 +52,11 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param int $pid
 	 * @param int $userid
 	 *
 	 * @return int userid if hes in table else empty
-	 * @since 2.0
+	 * @internal param int $pid
+	 * @since    2.0
 	 */
 	public function exists($userid)
 	{

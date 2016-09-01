@@ -75,7 +75,7 @@ class KunenaAdminViewUsers extends KunenaView
 
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolBarHelper::deleteList();
+		JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		JToolBarHelper::spacer();

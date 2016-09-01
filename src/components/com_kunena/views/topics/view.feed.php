@@ -18,6 +18,8 @@ class KunenaViewTopics extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -77,6 +79,8 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayUser($tpl = null)
 	{
@@ -118,6 +122,8 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayPosts($tpl = null)
 	{

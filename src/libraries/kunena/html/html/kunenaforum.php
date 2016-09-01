@@ -63,28 +63,45 @@ abstract class JHtmlKunenaForum
 
 		if (!isset($categories))
 		{
-			$category = KunenaForumCategoryHelper::get($parent);
-			$children = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
-
-			if ($params['action'] == 'topic.create')
+			if (!is_array($parent))
 			{
-				$channels = $category->getChannels();
-
-				if (empty($children) && !isset($channels[$category->id]))
-				{
-					$category = KunenaForumCategoryHelper::get();
-				}
-
-				foreach ($channels as $id => $channel)
-				{
-					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
-					{
-						unset($channels[$id]);
-					}
-				}
+				$parent = array($parent);
 			}
 
-			$categories = $category->id > 0 ? array($category->id => $category) + $children : $children;
+			$categories = array();
+			$channels   = array();
+
+			foreach ($parent as $p)
+			{
+				$channels_local = array();
+				$category       = KunenaForumCategoryHelper::get($p);
+				$children       = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
+
+				if ($params['action'] == 'topic.create')
+				{
+					$channels_local = $category->getChannels();
+
+					if (empty($children) && !isset($channels_local[$category->id]))
+					{
+						$category = KunenaForumCategoryHelper::get();
+					}
+
+					foreach ($channels_local as $id => $channel)
+					{
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
+						{
+							unset ($channels_local[$id]);
+						}
+					}
+				}
+
+				$categories += $category->id > 0 ? array($category->id => $category) + $children : $children;
+
+				if (!empty($channels_local))
+				{
+					$channels += $channels_local;
+				}
+			}
 
 			if ($hide_lonely && count($categories) + count($channels) <= 1)
 			{

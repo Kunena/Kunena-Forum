@@ -16,6 +16,7 @@ $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
+$attachs = $message->getNbAttachments();
 $avatarname = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();

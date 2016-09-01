@@ -145,7 +145,7 @@ abstract class KunenaFactory
 	 * @param string $file
 	 * @param string $client
 	 *
-	 * @return
+	 * @return mixed
 	 */
 	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
 	{

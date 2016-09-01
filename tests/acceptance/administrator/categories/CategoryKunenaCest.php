@@ -39,7 +39,7 @@ class CategoryKunenaCest
 		$I->fillField(['id' => 'headerdesc'], 'headerdesc');
 		$I->clickToolbarButton('save');
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category name updated', '5', ['id' => 'system-message-container']);
+		$I->waitForText('Category name updated', '15', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -73,7 +73,7 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category category4 updated', '5', ['id' => 'system-message-container']);
+		$I->waitForText('Category category4 updated', '15', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -107,7 +107,7 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category subcategory1 updated', '5', ['id' => 'system-message-container']);
+		$I->waitForText('Category subcategory1 updated', '15', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 

@@ -920,9 +920,11 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check if title of topic or message contains URL to limit part of spam
 	 *
-	 * @param string $usbject
+	 * @param $subject
 	 *
-	 * @return boolean
+	 * @return bool
+	 * @internal param string $usbject
+	 *
 	 */
 	protected function checkURLInSubject($subject)
 	{

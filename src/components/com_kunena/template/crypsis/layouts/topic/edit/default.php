@@ -276,7 +276,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<button type="submit" class="btn btn-success" tabindex="8">
+			<button id="form_submit_button" type="submit" class="btn btn-success" tabindex="8">
 				<?php echo KunenaIcons::save();?>
 				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>

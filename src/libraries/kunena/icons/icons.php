@@ -476,6 +476,8 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
+	 * @param null $text
+	 *
 	 * @return string
 	 */
 	static public function rss($text = null)

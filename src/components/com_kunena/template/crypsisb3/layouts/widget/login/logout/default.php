@@ -38,7 +38,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</a>
 				<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 				<p>
-					<i class="glyphicon glyphicon-clock"></i>
+					<i class="glyphicon glyphicon-time"></i>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>

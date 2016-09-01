@@ -18,10 +18,13 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminViewCategories extends KunenaView
 {
+	/**
+	 *
+	 */
 	public function displayChkAliases()
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
-       
+
 		$db = JFactory::getDbo();
 		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);

@@ -56,7 +56,7 @@ if ($me->canDoCaptcha() )
 }
 ?>
 
-<div class="kreply col-md-12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block">
+<div class="kreply col-md-12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block;">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
 				enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 				<input type="hidden" name="task" value="post" />

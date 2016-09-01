@@ -2130,13 +2130,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return true;
 		}
-		
+
 		// Display nothing in subscription mails
 		if (!empty($bbcode->context))
 		{
 			return '';
 		}
-		
+
 		$attachments = null;
 
 		if ($bbcode->parent instanceof KunenaForumMessage)
@@ -2848,8 +2848,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
-        		if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
-        		{
+				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+				{
 					// Add scheme to raw domain URLs.
 					$url = "http://{$content}";
 				}
@@ -2861,6 +2861,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	/**
 	 * Render eBay layout from template
+	 *
+	 * @param $ItemID
+	 *
+	 * @return bool|string
 	 */
 	public static function renderEbayLayout($ItemID)
 	{

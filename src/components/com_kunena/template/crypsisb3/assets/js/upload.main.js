@@ -231,6 +231,8 @@ jQuery(function ($) {
 			}
 		})
 		.bind('fileuploadchange', function (e, data) {
+			$('#form_submit_button').prop('disabled', true);
+			
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -289,6 +291,8 @@ jQuery(function ($) {
 			.wrap(link);
 
 		if (data.result.success == true) {
+			$('#form_submit_button').prop('disabled', false);
+			
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
 			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');

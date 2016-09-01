@@ -44,6 +44,14 @@ defined('_JEXEC') or die();
 								<i class="icon-big icon-star-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></span>
 							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=labels">
+								<i class="icon-big icon-tags-2" alt="<?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?></span>
+							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=icons">
+								<i class="icon-big icon-grid-2" alt="<?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER') ?></span>
+							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
 								<i class="icon-big icon-color-palette" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?></span>
@@ -55,6 +63,10 @@ defined('_JEXEC') or die();
 							<a class="btn" href="index.php?option=com_kunena&view=plugins">
 								<i class="icon-big icon-puzzle" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
+							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=email">
+								<i class="icon-big icon-mail" alt="<?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=logs">
 								<i class="icon-big icon-search" alt="<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>"></i><br/>

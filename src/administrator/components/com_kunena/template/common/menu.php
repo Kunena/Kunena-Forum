@@ -56,6 +56,20 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=ranks'); ?>">
 			<i class="icon-star-2"></i> <?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?>
 		</a></li>
+	<li<?php if ($view == 'labels' || $view == 'label')
+	{
+		echo ' class="active"';
+	} ?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=labels'); ?>">
+			<i class="icon-tags-2"></i> <?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER'); ?>
+		</a></li>
+	<li<?php if ($view == 'icons' || $view == 'icon')
+	{
+		echo ' class="active"';
+	} ?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=icons'); ?>">
+			<i class="icon-grid-2"></i> <?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER'); ?>
+		</a></li>
 	<li<?php if ($view == 'templates' || $view == 'template')
 	{
 		echo ' class="active"';
@@ -77,6 +91,13 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>">
 			<i class="icon-puzzle"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?>
 		</a></li>
+	<li<?php if ($view == 'email')
+	{
+		echo ' class="active"';
+	} ?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=email'); ?>">
+			<i class="icon-mail"></i> <?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER'); ?>
+		</a></li>
 	<li<?php if ($view == 'logs')
 	{
 		echo ' class="active"';
@@ -89,7 +110,7 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 	?>>
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=statistics'); ?>">
 			<i class="icon-chart"></i> <?php echo JText::_('COM_KUNENA_MENU_STATISTICS'); ?>
-		</a></li>		
+		</a></li>
 	<li<?php if ($view == 'tools')
 	{
 		echo ' class="active"';

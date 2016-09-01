@@ -118,7 +118,7 @@ defined('_JEXEC') or die();
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
 							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons();?></dd>
 							<hr class="hr-condensed">
-							<dt>Donate:</dt>
+							<dt><?php echo JText::_('COM_KUNENA_DONATE');?></dt>
 							<dd>
 								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 									<input name="cmd" type="hidden" value="_s-xclick">

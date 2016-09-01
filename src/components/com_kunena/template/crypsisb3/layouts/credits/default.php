@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 			</dd>
 			<hr class="hr-condensed">
 			<?php endforeach ?>
-			<dt><a>Donate:</a></dt>
+			<dt><a><?php echo JText::_('COM_KUNENA_DONATE');?></a></dt>
 			<dd>
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 					<input name="cmd" type="hidden" value="_s-xclick">

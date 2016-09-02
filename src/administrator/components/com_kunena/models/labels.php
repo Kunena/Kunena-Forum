@@ -14,11 +14,11 @@ defined('_JEXEC') or die();
 jimport('joomla.application.component.model');
 
 /**
- * Labels Model for Kunena
+ * Badwords Model for Kunena
  *
- * @since 5.0
+ * @since 5.1
  */
-class KunenaAdminModelLabels extends JModelList
+class KunenaAdminModelBadword extends JModelList
 {
 	/**
 	 * Constructor.

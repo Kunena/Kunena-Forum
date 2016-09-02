@@ -16,7 +16,7 @@ jimport('joomla.application.component.model');
 /**
  * Email Model for Kunena
  *
- * @since 5.0
+ * @since 5.1
  */
 class KunenaAdminModelEmail extends JModelList
 {

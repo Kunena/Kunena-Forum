@@ -14,11 +14,11 @@ defined('_JEXEC') or die();
 jimport('joomla.application.component.model');
 
 /**
- * Icons Model for Kunena
+ * Block IPs Model for Kunena
  *
  * @since 5.1
  */
-class KunenaAdminModelIcons extends JModelList
+class KunenaAdminModelBlockips extends JModelList
 {
 	/**
 	 * Constructor.

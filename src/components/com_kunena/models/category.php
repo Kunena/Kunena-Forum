@@ -207,9 +207,16 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
-
+				
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError();
+				}
+				
 				foreach ($pending as $item)
 				{
 					if ($item ['count'])

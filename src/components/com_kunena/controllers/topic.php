@@ -408,9 +408,17 @@ class KunenaControllerTopic extends KunenaController
 
 			$db = JFactory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
-			$count = $db->loadResult();
-
-			if (KunenaError::checkDatabaseError() || $count)
+			
+			try 
+			{
+				$count = $db->loadResult();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError();	
+			}
+			
+			if ($count)
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection));
 				$this->setRedirectBack();

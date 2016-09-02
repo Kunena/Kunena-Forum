@@ -105,7 +105,7 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=blockips'); ?>">
 			<i class="icon-compass"></i> <?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER'); ?>
 		</a></li>
-	<li<?php if ($view == 'icons' || $view == 'icon')
+	<li<?php if ($view == 'badwords' || $view == 'badword')
 	{
 		echo ' class="active"';
 	} ?>>

@@ -227,10 +227,20 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
+		
+		try
+		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
+			return array();
+		}
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		if (!$total)
 		{
 			return array();
 		}
@@ -343,11 +353,21 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
-		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
+		$db->setQuery($cquery);	
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		try
+		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
+			return array();
+		}
+
+		if (!$total)
 		{
 			return array();
 		}

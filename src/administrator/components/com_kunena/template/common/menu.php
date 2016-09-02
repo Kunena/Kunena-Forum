@@ -98,6 +98,20 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=email'); ?>">
 			<i class="icon-mail"></i> <?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER'); ?>
 		</a></li>
+	<li<?php if ($view == 'blockips' || $view == 'blockip')
+	{
+		echo ' class="active"';
+	} ?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=blockips'); ?>">
+			<i class="icon-compass"></i> <?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER'); ?>
+		</a></li>
+	<li<?php if ($view == 'icons' || $view == 'icon')
+	{
+		echo ' class="active"';
+	} ?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=badwords'); ?>">
+			<i class="icon-smiley-sad-2"></i> <?php echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER'); ?>
+		</a></li>
 	<li<?php if ($view == 'logs')
 	{
 		echo ' class="active"';

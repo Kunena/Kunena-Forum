@@ -60,6 +60,10 @@ if ($me->canDoCaptcha() )
 		}
 	}
 }
+
+$template = KunenaTemplate::getInstance();
+$quick = $template->params->get('quick');
+$editor = $template->params->get('editor');
 ?>
 
 <div class="kreply span12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block">
@@ -111,7 +115,14 @@ if ($me->canDoCaptcha() )
 				<label>
 					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
-				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+				<?php if ($editor == 1)
+				{
+					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
+				}
+				else
+				{
+					echo '<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>';
+				}?>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>

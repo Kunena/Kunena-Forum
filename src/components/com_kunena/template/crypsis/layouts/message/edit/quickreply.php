@@ -78,6 +78,7 @@ if ($me->canDoCaptcha() )
 
 $template = KunenaTemplate::getInstance();
 $quick = $template->params->get('quick');
+$editor = $template->params->get('editor');
 
 ?>
 
@@ -136,7 +137,7 @@ $quick = $template->params->get('quick');
 				</label>
 				<?php if ($editor == 1)
 				{
-					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $this->config);
+					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
 				}
 				else
 				{

@@ -192,17 +192,11 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 	<div class="modal-body">
 		<p><div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-<<<<<<< HEAD:src/components/com_kunena/template/crypsis/layouts/widget/editor/wysibb_quick.php
-			foreach ($emoticons as $emo_code => $emo_url)
-			{
-				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="20" height="20" alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
-=======
 			foreach ($emoticons as $emo_code => $emo_url) {
 				$data = getimagesize(JPATH_ROOT . '/' . $emo_url);
 				$width = $data[0];
 				$height = $data[1];
 				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width .'" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
->>>>>>> refs/remotes/Kunena/K5.0:src/components/com_kunena/template/crypsis/layouts/topic/edit/editor/default.php
 			}
 			?>
 			</div></p>

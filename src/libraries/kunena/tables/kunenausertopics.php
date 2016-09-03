@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena User Topics Table
@@ -19,13 +19,21 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaUserTopics extends KunenaTable
 {
 	public $user_id = null;
+
 	public $topic_id = null;
+
 	public $category_id = null;
+
 	public $posts = null;
+
 	public $last_post_id = null;
+
 	public $owner = null;
+
 	public $favorite = null;
+
 	public $subscribed = null;
+
 	public $params = null;
 
 	/**

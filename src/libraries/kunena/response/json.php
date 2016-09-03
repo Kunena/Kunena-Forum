@@ -6,7 +6,7 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 only
  */
 
-// no direct access
+// No direct access
 defined('_JEXEC') or die;
 
 /**
@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
 	public $code = 200;
+
 	public $location;
 
 	/**

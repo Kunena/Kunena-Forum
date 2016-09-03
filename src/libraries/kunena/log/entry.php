@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Implements Kunena log entry.
- * 
+ *
  * @since 5.0
  */
 class KunenaLogEntry
@@ -23,9 +23,9 @@ class KunenaLogEntry
 	 * @param                     $type
 	 * @param                     $operation
 	 * @param                     $data
-	 * @param KunenaForumCategory $category
-	 * @param KunenaForumTopic    $topic
-	 * @param KunenaUser          $user
+	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumTopic    $topic
+	 * @param   KunenaUser          $user
 	 */
 	public function __construct(
 		$type,

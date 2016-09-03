@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Polls
  * Provides access to the #__kunena_polls table
@@ -18,8 +18,11 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaPolls extends KunenaTable
 {
 	public $id = null;
+
 	public $title = null;
+
 	public $threadid = null;
+
 	public $polltimetolive = null;
 
 	/**

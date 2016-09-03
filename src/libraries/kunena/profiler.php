@@ -7,9 +7,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-jimport ('joomla.error.profiler');
+jimport('joomla.error.profiler');
 
 /**
  * Class KunenaProfiler
@@ -26,7 +26,7 @@ class KunenaProfiler extends JProfiler
 	protected $_heap = array();
 
 	/**
-	 * @param string $prefix
+	 * @param   string $prefix
 	 *
 	 * @return KunenaProfiler
 	 *
@@ -76,7 +76,7 @@ class KunenaProfiler extends JProfiler
 
 		if (!$item || $item->name != $name)
 		{
-			trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
+			trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
 		}
 
 		$delta = $item->stop($this->getmicrotime());
@@ -102,14 +102,14 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @param        $array
-	 * @param string $property
+	 * @param   string $property
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	function sort(&$array, $property = 'total')
 	{
-		return usort($array, function($a, $b) use ($property)
-		{
+		return usort($array, function ($a, $b) use ($property)
+			{
 			if ($a->$property == $b->$property)
 			{
 				return 0;
@@ -144,7 +144,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string $name
 	 * @return KunenaProfilerItem
 	 */
 	public static function getInstance($name)

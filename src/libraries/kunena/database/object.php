@@ -18,8 +18,11 @@ abstract class KunenaDatabaseObject extends JObject
 	public $id = null;
 
 	protected $_name = null;
+
 	protected $_table = null;
+
 	protected $_exists = false;
+
 	protected $_saving = false;
 
 	/**
@@ -142,6 +145,7 @@ abstract class KunenaDatabaseObject extends JObject
 		if (! $table->check())
 		{
 			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
@@ -155,6 +159,7 @@ abstract class KunenaDatabaseObject extends JObject
 		if (in_array(false, $result, true))
 		{
 			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
@@ -162,6 +167,7 @@ abstract class KunenaDatabaseObject extends JObject
 		if (!$table->store())
 		{
 			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
@@ -177,6 +183,7 @@ abstract class KunenaDatabaseObject extends JObject
 		$dispatcher->trigger('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
 		$this->_saving = false;
+
 		return true;
 	}
 
@@ -204,14 +211,18 @@ abstract class KunenaDatabaseObject extends JObject
 
 		// Trigger the onKunenaBeforeDelete event.
 		$result = $dispatcher->trigger('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));
+
 		if (in_array(false, $result, true))
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
-		if (!$table->delete()) {
+		if (!$table->delete())
+		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 

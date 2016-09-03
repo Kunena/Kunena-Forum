@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Rate
@@ -19,8 +19,11 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaRate extends KunenaTable
 {
 	public $topic_id = null;
+
 	public $userid = null;
+
 	public $rate = null;
+
 	public $time = null;
 
 	/**

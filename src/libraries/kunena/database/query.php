@@ -532,9 +532,10 @@ class KunenaDatabaseQuery
 			case 'select':
 				$query .= (string) $this->_select;
 				$query .= (string) $this->_from;
+
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;
@@ -568,7 +569,7 @@ class KunenaDatabaseQuery
 
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;
@@ -586,7 +587,7 @@ class KunenaDatabaseQuery
 
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;

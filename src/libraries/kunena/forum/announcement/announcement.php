@@ -415,6 +415,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 		if ($banned)
 		{
 			$banned = KunenaUserBan::getInstanceByUserid($user->userid, true);
+
 			if (!$banned->isLifetime())
 			{
 				return new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);

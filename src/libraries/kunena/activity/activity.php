@@ -23,7 +23,8 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onBeforePost($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after posting a new topic.
@@ -31,7 +32,8 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onAfterPost($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered before replying to a topic.
@@ -39,7 +41,8 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onBeforeReply($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after replying to a topic.
@@ -47,7 +50,8 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onAfterReply($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered before editing a post.
@@ -55,7 +59,8 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onBeforeEdit($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after editing a post.
@@ -63,26 +68,30 @@ class KunenaActivity
 	 * @param $message
 	 */
 	public function onAfterEdit($message)
-{}
+	{
+	}
 
 	/** TODO: Looks like these aren't fully working..
 	 *
 	 * @param $message
 	 */
 	public function onAfterDelete($message)
-{}
+	{
+	}
 
 	/**
 	 * @param $message
 	 */
 	public function onAfterUndelete($message)
-{}
+	{
+	}
 
 	/**
 	 * @param $message
 	 */
 	public function onAfterDeleteTopic($message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after (un)subscribing a topic.
@@ -91,7 +100,8 @@ class KunenaActivity
 	 * @param   int  $action   1 = subscribe, 0 = unsuscribe.
 	 */
 	public function onAfterSubscribe($topicid, $action)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after (un)favoriting a topic.
@@ -100,7 +110,8 @@ class KunenaActivity
 	 * @param   int  $action   1 = favorite, 0 = unfavorite.
 	 */
 	public function onAfterFavorite($topicid, $action)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after (un)stickying a topic.
@@ -109,7 +120,8 @@ class KunenaActivity
 	 * @param   int  $action   1 = sticky, 0 = unsticky.
 	 */
 	public function onAfterSticky($topicid, $action)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after (un)locking a topic.
@@ -118,7 +130,8 @@ class KunenaActivity
 	 * @param   int  $action   1 = lock, 0 = unlock.
 	 */
 	public function onAfterLock($topicid, $action)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after giving thankyou to a message.
@@ -128,7 +141,8 @@ class KunenaActivity
 	 * @param   int  $message  Message Id.
 	 */
 	public function onAfterThankyou($actor, $target, $message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after removing thankyou from a message.
@@ -138,7 +152,8 @@ class KunenaActivity
 	 * @param   int  $message  Message Id.
 	 */
 	public function onAfterUnThankyou($actor, $target, $message)
-{}
+	{
+	}
 
 	/**
 	 * Triggered after changing user karma.
@@ -148,7 +163,8 @@ class KunenaActivity
 	 * @param   int  $delta   Points added / removed.
 	 */
 	public function onAfterKarma($target, $actor, $delta)
-{}
+	{
+	}
 
 	/**
 	 * Get list of medals.
@@ -158,7 +174,8 @@ class KunenaActivity
 	 * @return void
 	 */
 	public function getUserMedals($userid)
-{}
+	{
+	}
 
 	/**
 	 * Get user points.
@@ -168,5 +185,6 @@ class KunenaActivity
 	 * @return  integer|void  Number of points.
 	 */
 	public function getUserPoints($userid)
-{}
+	{
+	}
 }

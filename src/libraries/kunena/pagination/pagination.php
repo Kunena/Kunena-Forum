@@ -730,6 +730,7 @@ class KunenaPagination
 		$limitstartKey = $this->prefix . 'limitstart';
 
 		$data->all = new JPaginationObject(JText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
+
 		if (!$this->viewall)
 		{
 			$this->uri->delVar($limitstartKey, '');

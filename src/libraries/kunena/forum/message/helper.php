@@ -19,6 +19,7 @@ abstract class KunenaForumMessageHelper
 	 * @var KunenaForumMessage[]
 	 */
 	protected static $_instances = array();
+
 	protected static $_location = array();
 
 	/**
@@ -46,6 +47,7 @@ abstract class KunenaForumMessageHelper
 		if (empty(self::$_instances[$id]))
 		{
 			$instance = new KunenaForumMessage;
+
 			// Only load messages which haven't been preloaded before (including missing ones).
 			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
 			$instance->id = $id;
@@ -83,6 +85,7 @@ abstract class KunenaForumMessageHelper
 		self::loadMessages($ids);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
 			// TODO: authorisation needs topics to be loaded, make sure that they are! (performance increase)
@@ -108,6 +111,7 @@ abstract class KunenaForumMessageHelper
 	static public function getMessagesByTopic($topic, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false)
 	{
 		$topic = KunenaForumTopicHelper::get($topic);
+
 		if (!$topic->exists())
 		{
 			return array();
@@ -279,6 +283,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$messages = array();
+
 		foreach ($results as $result)
 		{
 			$instance = new KunenaForumMessage($result);
@@ -361,9 +366,10 @@ abstract class KunenaForumMessageHelper
 				$id = (int) $id;
 			}
 
-			if (!isset(self::$_location [$id])) {
+			if (!isset(self::$_location [$id]))
+			{
 				$ids[$id] = $id;
-				self::$_location [$id] = new stdClass();
+				self::$_location [$id] = new stdClass;
 				self::$_location [$id]->hold = array('before' => 0, 'after' => 0);
 			}
 		}
@@ -376,7 +382,7 @@ abstract class KunenaForumMessageHelper
 		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO();
 		$db->setQuery(
-   "SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
+			"SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count
 			FROM #__kunena_messages AS m

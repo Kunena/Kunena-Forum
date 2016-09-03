@@ -42,23 +42,37 @@ abstract class KunenaRoute
 
 	// Use category name only in these views
 	static $sefviews = array ('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
+
 	static $parsevars = array ('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1 );
 
 	static $time = 0;
+
 	static $adminApp = false;
+
 	static $config = false;
+
 	static $menus = false;
+
 	static $menu = false;
+
 	static $default = false;
+
 	static $active = null;
+
 	static $home = false;
+
 	static $search = false;
+
 	static $current = null;
 
 	static $childlist = false;
+
 	static $subtree = array();
+
 	static $parent = array();
+
 	static $uris = array();
+
 	static $urisSave = false;
 
 	static protected $filtered = array();
@@ -159,13 +173,16 @@ abstract class KunenaRoute
 		if (isset(self::$uris[$key]))
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 			return self::$uris[$key];
 		}
 
 		$uri = self::prepare($uri);
+
 		if (!$uri)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 			return false;
 		}
 
@@ -450,6 +467,7 @@ abstract class KunenaRoute
 		$aliases = $db->loadObjectList();
 
 		$vars = array();
+
 		foreach ($aliases as $object)
 		{
 			if (Joomla\String\StringHelper::strtolower($alias) == Joomla\String\StringHelper::strtolower($object->alias))
@@ -541,9 +559,9 @@ abstract class KunenaRoute
 			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
 			elseif (gettype($value) == 'string')
 			{
-				if(preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+				if (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
 				{
-				// Illegal value
+					// Illegal value
 					continue;
 				}
 			}
@@ -612,7 +630,8 @@ abstract class KunenaRoute
 		{
 			// Nothing to do
 		}
-		else {
+		else
+		{
 			$uri = new JUri((string) $uri);
 		}
 
@@ -655,9 +674,13 @@ abstract class KunenaRoute
 		}
 
 		// Check URI
-		switch ($uri->getVar('view', 'home')) {
+		switch ($uri->getVar('view', 'home'))
+		{
 			case 'announcement':
-				if ($legacy_urls) { KunenaRouteLegacy::convert($uri); }
+				if ($legacy_urls)
+				{
+					KunenaRouteLegacy::convert($uri);
+				}
 				break;
 
 			case 'attachment':
@@ -678,6 +701,7 @@ abstract class KunenaRoute
 				if (!$legacy_urls || !KunenaRouteLegacy::convert($uri))
 				{
 					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 					return false;
 				}
 		}
@@ -710,14 +734,15 @@ abstract class KunenaRoute
 			if (self::$search === false)
 			{
 				self::$search['home'] = array();
+
 				foreach (self::$menu as $item)
 				{
 					// Skip menu items that aren't pointing to Kunena or are using wrong language.
 					if (($item->component != 'com_kunena' && $item->type != 'alias')
 						|| ($item->language != '*' && strtolower($item->language) != $language)
-)
+					)
 					{
-						continue;
+										continue;
 					}
 
 					// Follow links.
@@ -729,6 +754,7 @@ abstract class KunenaRoute
 						}
 
 						$item = self::$menu[$item->query['Itemid']];
+
 						if ($item->component != 'com_kunena' || ($item->language != '*' && strtolower($item->language) != $language))
 						{
 							continue;
@@ -853,6 +879,7 @@ abstract class KunenaRoute
 			}
 
 			$search = array();
+
 			if (self::$home)
 			{
 				// Search from the current home menu
@@ -870,6 +897,7 @@ abstract class KunenaRoute
 
 			// Find all potential candidates
 			$candidates[$key] = array();
+
 			foreach ($search as $id => $dummy)
 			{
 				$follow = !empty(self::$menu[$id]) ? self::$menu[$id] : null;
@@ -1040,7 +1068,8 @@ abstract class KunenaRoute
 
 		foreach ($item->query as $var => $value)
 		{
-			if ($value != $uri->getVar($var)) {
+			if ($value != $uri->getVar($var))
+			{
 				return 0;
 			}
 

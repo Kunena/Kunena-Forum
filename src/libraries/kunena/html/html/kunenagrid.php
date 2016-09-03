@@ -259,6 +259,7 @@ abstract class JHtmlKunenaGrid
 		}
 
 		$checked = '';
+
 		if ($result)
 		{
 			$checked = self::_checkedOut($row);

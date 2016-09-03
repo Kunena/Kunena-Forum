@@ -43,7 +43,7 @@ class KunenaProfile
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaProfile();
+				self::$instance = new KunenaProfile;
 			}
 		}
 

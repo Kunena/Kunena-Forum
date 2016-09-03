@@ -26,6 +26,7 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 		// Define HMVC controller and execute it.
 		$controllerClass = 'ComponentKunenaControllerApplication' . ucfirst($view) . ucfirst($subview) . ucfirst($task);
 		$controllerDefault = 'KunenaControllerApplication' . ucfirst($task);
+
 		// @var KunenaControllerApplicationDisplay $controller
 
 		$controller = class_exists($controllerClass)

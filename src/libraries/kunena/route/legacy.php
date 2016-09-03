@@ -50,7 +50,7 @@ abstract class KunenaRouteLegacy
 		'help' => 1,
 		'review' => 1,
 		'rules' => 1,
-//		'search'=>1,
+	//      'search'=>1,
 		'advsearch' => 1,
 		'markallcatsread' => 1,
 		'markthisread' => 1,
@@ -162,6 +162,7 @@ abstract class KunenaRouteLegacy
 			case 'deleted' :
 				$changed = true;
 				$uri->setVar('view', 'topics');
+
 				// Handle both &func=noreplies and &func=latest&do=noreplies
 				$mode = $uri->getVar('layout') ? $uri->getVar('layout') : $uri->getVar('view');
 
@@ -205,6 +206,7 @@ abstract class KunenaRouteLegacy
 						break;
 					case 'userposts' :
 						$uri->setVar('userid', '0');
+
 						// Continue in latestposts
 					case 'latestposts' :
 						$uri->setVar('layout', 'posts');
@@ -267,7 +269,10 @@ abstract class KunenaRouteLegacy
 				}
 				break;
 			case 'moderateuser' :
-				if ($uri->getVar('view') == 'moderateuser') { $uri->setVar('layout', 'moderate'); }
+				if ($uri->getVar('view') == 'moderateuser')
+				{
+					$uri->setVar('layout', 'moderate');
+				}
 
 				// Continue to user profile
 			case 'myprofile' :
@@ -425,6 +430,7 @@ abstract class KunenaRouteLegacy
 					// Handle &do=xxx
 					$layout = $uri->getVar('layout');
 					$uri->delVar('layout');
+
 					switch ($layout)
 					{
 						// Create, reply, quote and edit:
@@ -442,6 +448,7 @@ abstract class KunenaRouteLegacy
 							break;
 						case 'edit' :
 							$uri->setVar('layout', 'edit');
+
 							// Always add &mesid=x
 							if (!$mesid)
 							{
@@ -452,6 +459,7 @@ abstract class KunenaRouteLegacy
 						// Topic moderation:
 						case 'moderatethread' :
 							$uri->setVar('layout', 'moderate');
+
 							// Always remove &mesid=x
 							$uri->delVar('mesid');
 							break;
@@ -627,6 +635,7 @@ abstract class KunenaRouteLegacy
 
 				// Convert URI to have both id and mesid
 				$id = $uri->getVar('pid');
+
 				if ($id)
 				{
 					$changed = true;

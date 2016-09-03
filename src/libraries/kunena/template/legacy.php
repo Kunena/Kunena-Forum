@@ -19,7 +19,8 @@ class KunenaTemplateLegacy
 	 *
 	 */
 	public static function load()
-{}
+	{
+	}
 }
 
 $app = JFactory::getApplication('Site');
@@ -90,5 +91,5 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
  */
 class CKunenaTools
 {
-	
+
 }

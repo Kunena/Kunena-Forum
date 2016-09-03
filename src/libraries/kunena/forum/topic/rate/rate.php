@@ -19,11 +19,17 @@ defined('_JEXEC') or die();
 class KunenaForumTopicRate extends JObject
 {
 	protected $_exists = false;
+
 	protected $_db = null;
+
 	public $topic_id = 0;
+
 	public $stars = 0;
+
 	public $userid = null;
+
 	public $time = null;
+
 	protected $users = array();
 
 	/**
@@ -41,8 +47,8 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param int  $identifier The message to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   int  $identifier The message to load - Can be only an integer.
+	 * @param   bool $reload
 	 *
 	 * @return    KunenaForumMessage        The message object.
 	 */
@@ -52,7 +58,7 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param int $userid
+	 * @param   int $userid
 	 *
 	 * @return int userid if hes in table else empty
 	 * @internal param int $pid
@@ -82,7 +88,8 @@ class KunenaForumTopicRate extends JObject
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
-		/*if ($this->users === false)
+		/*
+		if ($this->users === false)
 			{  */
 		$query = $this->_db->getQuery(true);
 		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
@@ -91,14 +98,15 @@ class KunenaForumTopicRate extends JObject
 
 		KunenaError::checkDatabaseError();
 
-		foreach($users as $user)
+		foreach ($users as $user)
 		{
-		$this->_add($user->userid, $user->time);
+			$this->_add($user->userid, $user->time);
 		}
-			//}
 
-			//return $this->users;
-		}
+			// }
+
+			// Return $this->users;
+	}
 
 	/**
 	 * Perform insert the rate into table
@@ -157,7 +165,7 @@ class KunenaForumTopicRate extends JObject
 
 			$response = new JResponseJson(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			$response = new JResponseJson($e);
 		}
@@ -167,12 +175,12 @@ class KunenaForumTopicRate extends JObject
 
 	/**
 	 * Get rate for the specified topic and user
-	*/
+	 */
 	public function getTopicUserRate()
 	{
 		$me  = KunenaFactory::getUser();
 
-		if ( $this->userid == $me->userid )
+		if ($this->userid == $me->userid)
 		{
 			return $this->rate;
 		}
@@ -192,7 +200,7 @@ class KunenaForumTopicRate extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
 			$tabletype ['name'] = $type;

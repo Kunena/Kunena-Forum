@@ -102,6 +102,7 @@ class KunenaLayoutPage extends KunenaLayout
 		}
 
 		$templatePaths = array();
+
 		foreach ($paths as $path)
 		{
 			if (!$path)
@@ -120,6 +121,7 @@ class KunenaLayoutPage extends KunenaLayout
 
 		// Go through all the matching layouts.
 		$path = 'Undefined';
+
 		foreach ($paths as $path)
 		{
 			if (!$path)

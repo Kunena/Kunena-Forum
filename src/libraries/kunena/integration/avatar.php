@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 class KunenaAvatar
 {
 	public $avatarSizes = null;
+
 	protected $resize = false;
 
 	protected static $instance = false;
@@ -46,7 +47,7 @@ class KunenaAvatar
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaAvatar();
+				self::$instance = new KunenaAvatar;
 			}
 		}
 
@@ -89,7 +90,7 @@ class KunenaAvatar
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
-		$size = new StdClass();
+		$size = new StdClass;
 		$size->x = intval($sizex);
 		$size->y = intval($sizey);
 
@@ -154,7 +155,7 @@ class KunenaAvatar
 			$class = ' class="' . $class . '"';
 		}
 
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 
 		return $link;
 	}

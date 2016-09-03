@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaLogFinder
- * 
+ *
  * @since 5.0
  */
 class KunenaLogFinder extends KunenaDatabaseObjectFinder
@@ -30,17 +30,17 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param JDate $starting  Starting date or null if older than ending date.
-	 * @param JDate $ending    Ending date or null if newer than starting date.
+	 * @param   JDate $starting  Starting date or null if older than ending date.
+	 * @param   JDate $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
-		if ($starting && $ending) 
+		if ($starting && $ending)
 		{
 			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
-		} 
+		}
 		elseif ($starting)
 		{
 			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");

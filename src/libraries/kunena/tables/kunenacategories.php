@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Categories
@@ -19,38 +19,71 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaCategories extends KunenaTable
 {
 	public $id = null;
+
 	public $parent_id = null;
+
 	public $name = null;
+
 	public $alias = null;
+
 	public $icon = null;
+
 	public $icon_id = null;
+
 	public $locked = null;
+
 	public $accesstype = null;
+
 	public $access = null;
+
 	public $pub_access = null;
+
 	public $pub_recurse = null;
+
 	public $admin_access = null;
+
 	public $admin_recurse = null;
+
 	public $ordering = null;
+
 	public $published = null;
+
 	public $channels = null;
+
 	public $checked_out = null;
+
 	public $checked_out_time = null;
+
 	public $review = null;
+
 	public $allow_anonymous = null;
+
 	public $post_anonymous = null;
+
 	public $hits = null;
+
 	public $description = null;
+
 	public $headerdesc = null;
+
 	public $class_sfx = null;
+
 	public $allow_polls = null;
+
 	public $topic_ordering = null;
+
 	public $iconset = null;
+
 	public $numTopics = null;
+
 	public $numPosts = null;
+
 	public $last_topic_id = null;
+
 	public $last_post_id = null;
+
 	public $last_post_time = null;
+
 	public $params = null;
 
 	/**
@@ -124,6 +157,7 @@ class TableKunenaCategories extends KunenaTable
 		if ($this->$k === null || intval($this->$k) < 1)
 		{
 			$this->$k = 0;
+
 			return false;
 		}
 
@@ -136,12 +170,14 @@ class TableKunenaCategories extends KunenaTable
 		if ($this->_db->getErrorNum())
 		{
 			$this->setError($this->_db->getErrorMsg());
+
 			return false;
 		}
 
-		if(!$data)
+		if (!$data)
 		{
 			$this->$k = 0;
+
 			return false;
 		}
 
@@ -153,7 +189,7 @@ class TableKunenaCategories extends KunenaTable
 		return $this->_exists;
 	}
 
-	// check for potential problems
+	// Check for potential problems
 	/**
 	 * @return boolean
 	 */
@@ -172,18 +208,21 @@ class TableKunenaCategories extends KunenaTable
 		}
 
 		$this->name = trim($this->name);
-		if (!$this->name) {
+
+		if (!$this->name)
+		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
-		if ($this->params instanceof JRegistry) {
+		if ($this->params instanceof JRegistry)
+		{
 			$this->params = $this->params->toString();
 		}
 
 		return ($this->getError() == '');
 	}
 
-	// check if given forum is one of its own childs
+	// Check if given forum is one of its own childs
 	/**
 	 * @param $id
 	 *
@@ -204,23 +243,31 @@ class TableKunenaCategories extends KunenaTable
 			}
 
 			$recurse = array ();
+
 			while ($id)
 			{
 				if (in_array($id, $recurse))
 				{
 					$this->setError(get_class($this) . JText::_('COM_KUNENA_RECURSION'));
+
 					return 0;
 				}
 
 				$recurse [] = $id;
-				if (!isset($list [$id])) {
+
+				if (!isset($list [$id]))
+				{
 					$this->setError(get_class($this) . JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
+
 					return 0;
 				}
 
 				$id = $list [$id]->parent_id;
-				if ($id != 0 && $id == $this->id) {
-					return 1; }
+
+				if ($id != 0 && $id == $this->id)
+				{
+					return 1;
+				}
 			}
 		}
 
@@ -241,6 +288,7 @@ class TableKunenaCategories extends KunenaTable
 			$db->setQuery($query);
 			$parents = $db->loadColumn();
 			$success = true;
+
 			foreach ($parents as $parent_id)
 			{
 				$success &= parent::reorder("parent_id={$db->quote($parent_id)}");

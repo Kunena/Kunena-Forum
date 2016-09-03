@@ -76,16 +76,21 @@ abstract class KunenaForumCategoryUserHelper
 		// Convert category objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof KunenaForumCategory) { $ids[$i] = $id->id; }
+			if ($id instanceof KunenaForumCategory)
+			{
+				$ids[$i] = $id->id;
+			}
 		}
 
 		$ids = array_unique($ids);
 		self::loadCategories($ids, $user);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
-			if (!empty(self::$_instances [$user->userid][$id])) {
+			if (!empty(self::$_instances [$user->userid][$id]))
+			{
 				$list [$id] = self::$_instances [$user->userid][$id];
 			}
 		}
@@ -154,6 +159,7 @@ abstract class KunenaForumCategoryUserHelper
 		foreach ($ids as $i => $id)
 		{
 			$iid = intval($id);
+
 			if ($iid != $id || isset(self::$_instances [$user->userid][$id]))
 			{
 				unset($ids[$i]);
@@ -176,7 +182,7 @@ abstract class KunenaForumCategoryUserHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new KunenaForumCategoryUser();
+				$instance = new KunenaForumCategoryUser;
 				$instance->bind($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;

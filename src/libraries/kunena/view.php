@@ -14,7 +14,6 @@ defined('_JEXEC') or die();
  */
 class KunenaView extends JViewLegacy
 {
-
 	public $document = null;
 
 	public $app = null;
@@ -247,7 +246,7 @@ class KunenaView extends JViewLegacy
 	{
 		$document = JFactory::getDocument();
 
-		return method_exists($document, 'countModules') ? $document->countModules ( $position ) : 0;
+		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
 
 	public function getModulePosition($position)
@@ -255,12 +254,12 @@ class KunenaView extends JViewLegacy
 		$html = '';
 		$document = JFactory::getDocument();
 
-		if (method_exists($document, 'countModules') && $document->countModules($position ))
+		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{
-			$renderer = $document->loadRenderer ( 'modules' );
+			$renderer = $document->loadRenderer('modules');
 			$options = array ('style' => 'xhtml' );
-			$html .= '<div class="'.$position.'">';
-			$html .= $renderer->render ( $position, $options, null );
+			$html .= '<div class="' . $position . '">';
+			$html .= $renderer->render($position, $options, null);
 			$html .= '</div>';
 		}
 
@@ -462,6 +461,7 @@ class KunenaView extends JViewLegacy
 
 			// Start capturing output into a buffer
 			ob_start();
+
 			// Include the requested template filename in the local scope
 			// (this will execute the view logic).
 			include $this->_template;
@@ -489,7 +489,7 @@ class KunenaView extends JViewLegacy
 
 	public function getTemplateMD5()
 	{
-		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
+		return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
 	}
 
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
@@ -507,7 +507,7 @@ class KunenaView extends JViewLegacy
 		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
 	}
 
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
 		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
 
@@ -549,7 +549,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Method to display title in page
 	 *
-	 * @param unknown $title
+	 * @param   unknown $title
 	 * @throws LogicException
 	 */
 	public function setTitle($title)
@@ -566,7 +566,7 @@ class KunenaView extends JViewLegacy
 
 			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $title . ' - ' .$this->config->board_title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
 			{

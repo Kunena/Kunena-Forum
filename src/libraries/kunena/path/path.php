@@ -20,7 +20,9 @@ jimport('joomla.filesystem.path');
 class KunenaPath extends JPath
 {
 	static public $tmpdir = null;
+
 	static public $apache = null;
+
 	static public $owner = null;
 
 	/**

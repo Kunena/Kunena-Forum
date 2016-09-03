@@ -204,7 +204,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Set/override debug mode.
 	 *
-	 * @param array $data
+	 * @param   array $data
 	 *
 	 * @return KunenaLayoutBase Instance of $this to allow chaining.
 	 * @internal param bool $value
@@ -237,7 +237,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			}
 
 			if (isset($caller['class']) && isset($caller['function'])
-				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__)
+				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__
+			)
 			{
 				break;
 			}
@@ -344,6 +345,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		$paths = array();
+
 		foreach ($this->includePaths as $path)
 		{
 			$paths[] = $path;
@@ -379,7 +381,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function setLayout($layout)
 	{
-		if (!$layout) { $layout = 'default'; }
+		if (!$layout)
+		{
+			$layout = 'default';
+		}
 
 		$this->layout = $layout;
 
@@ -618,6 +623,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		$templatePaths = array();
+
 		foreach ($paths as $path)
 		{
 			if (!$path)
@@ -636,6 +642,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		// Go through all the matching layouts.
 		$path = 'Undefined';
+
 		foreach ($paths as $path)
 		{
 			if (!$path)

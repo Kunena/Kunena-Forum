@@ -291,7 +291,7 @@ class plgSystemKunena extends JPlugin
 		// Old version detected: emulate failed installation
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.',
-			KunenaForum::version(), $manifest->version), 'warning');
+		KunenaForum::version(), $manifest->version), 'warning');
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
 		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');

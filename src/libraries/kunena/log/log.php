@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Implements Kunena Log.
- * 
+ *
  * @since 5.0
  */
 class KunenaLog
@@ -44,9 +44,9 @@ class KunenaLog
 	const LOG_POST_REPORT = 'LOG_POST_REPORT';
 	const LOG_POST_THANKYOU = 'LOG_POST_THANKYOU';
 	const LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
-	
+
 	const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
-	
+
 	const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 	const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 	const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
@@ -140,12 +140,12 @@ class KunenaLog
 	/**
 	 * Log new entry.
 	 *
-	 * @param int                 $type         Log entry type.
-	 * @param string              $operation    Performed operation.
-	 * @param string              $data         JSON encoded string.
-	 * @param KunenaForumCategory $category     Target category.
-	 * @param KunenaForumTopic    $topic        Target topic.
-	 * @param KunenaUser          $user         Target user.
+	 * @param   int                 $type         Log entry type.
+	 * @param   string              $operation    Performed operation.
+	 * @param   string              $data         JSON encoded string.
+	 * @param   KunenaForumCategory $category     Target category.
+	 * @param   KunenaForumTopic    $topic        Target topic.
+	 * @param   KunenaUser          $user         Target user.
 	 *
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ class KunenaLog
 	/**
 	 * Add a KunenaLogEntry entry to the Kunena log.
 	 *
-	 * @param KunenaLogEntry  $entry  An instance of an entry to be logged.
+	 * @param   KunenaLogEntry  $entry  An instance of an entry to be logged.
 	 *
 	 * @return void
 	 */

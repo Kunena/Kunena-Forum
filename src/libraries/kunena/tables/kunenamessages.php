@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Messages
@@ -19,25 +19,45 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaMessages extends KunenaTable
 {
 	public $id = null;
+
 	public $parent = null;
+
 	public $thread = null;
+
 	public $catid = null;
+
 	public $name = null;
+
 	public $userid = null;
+
 	public $email = null;
+
 	public $subject = null;
+
 	public $time = null;
+
 	public $ip = null;
+
 	public $topic_emoticon = null;
+
 	public $locked = null;
+
 	public $hold = null;
+
 	public $ordering = null;
+
 	public $hits = null;
+
 	public $moved = null;
+
 	public $modified_by = null;
+
 	public $modified_time = null;
+
 	public $modified_reason = null;
+
 	public $params = null;
+
 	public $message = null;
 
 	/**
@@ -101,7 +121,7 @@ class TableKunenaMessages extends KunenaTable
 			return false;
 		}
 
-		if(!$data)
+		if (!$data)
 		{
 			$this->$k = 0;
 
@@ -134,12 +154,14 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		$this->subject = trim($this->subject);
+
 		if (!$this->subject)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
 		}
 
 		$this->message = trim($this->message);
+
 		if (!$this->message)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));

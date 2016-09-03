@@ -20,13 +20,14 @@ class JFormFieldKunenaCategoryList extends JFormField
 	protected $type = 'KunenaCategoryList';
 
 	/**
-	* @return string
-  */
+	 * @return string
+	 */
 	protected function getInput()
 	{
 		if (!class_exists('KunenaForum') || !KunenaForum::installed())
 		{
 			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
+
 			return '';
 		}
 
@@ -51,7 +52,8 @@ class JFormFieldKunenaCategoryList extends JFormField
 			$attribs .= 'class="inputbox"';
 		}
 
-		if (!empty($this->element['multiple'])) {
+		if (!empty($this->element['multiple']))
+		{
 			$attribs .= ' multiple="multiple"';
 		}
 

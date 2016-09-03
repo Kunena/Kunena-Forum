@@ -7,7 +7,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaFactory
@@ -50,7 +50,7 @@ abstract class KunenaFactory
 	 */
 	public static function getAdminTemplate()
 	{
-		require_once KPATH_ADMIN.'/template/template.php';
+		require_once KPATH_ADMIN . '/template/template.php';
 		$template = new KunenaAdminTemplate;
 
 		return $template;
@@ -76,17 +76,17 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array|bool $update	An array containing session options
+	 * @param   array|bool $update	An array containing session options
 	 * @return KunenaSession
 	 */
 	public static function getSession($update = false)
 	{
-		if (!is_object(KunenaFactory::$session))
+		if (!is_object(self::$session))
 		{
-			KunenaFactory::$session = KunenaSession::getInstance($update);
+			self::$session = KunenaSession::getInstance($update);
 		}
 
-		return KunenaFactory::$session;
+		return self::$session;
 	}
 
 	/**
@@ -142,15 +142,15 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param string $file
-	 * @param string $client
+	 * @param   string $file
+	 * @param   string $client
 	 *
 	 * @return mixed
 	 */
 	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
 	{
 		static $loaded = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($client == 'site')
 		{
@@ -171,7 +171,8 @@ abstract class KunenaFactory
 			$english = false;
 
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english'))
+				&& !self::getConfig()->get('debug') && self::getConfig()->get('fallback_english')
+			)
 			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);
 				$english = true;
@@ -181,16 +182,16 @@ abstract class KunenaFactory
 				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $loaded[$file];
-}
+	}
 
 	/**
 	 * @param $lang
 	 * @param $filename
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected static function parseLanguage($lang, $filename)
 	{

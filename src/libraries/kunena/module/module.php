@@ -25,6 +25,7 @@ abstract class KunenaModule
 	 * @var stdClass
 	 */
 	protected $module = null;
+
 	/**
 	 * @var JRegistry
 	 */

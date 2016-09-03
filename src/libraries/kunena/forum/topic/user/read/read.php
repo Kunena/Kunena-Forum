@@ -22,6 +22,7 @@ defined('_JEXEC') or die();
 class KunenaForumTopicUserRead extends JObject
 {
 	protected $_exists = false;
+
 	protected $_db = null;
 
 	/**
@@ -97,7 +98,7 @@ class KunenaForumTopicUserRead extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
 			$tabletype ['name'] = $type;
@@ -186,10 +187,11 @@ class KunenaForumTopicUserRead extends JObject
 		if (! $table->check())
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
-		//are we creating a new topic
+		// Are we creating a new topic
 		$isnew = ! $this->_exists;
 
 		// If we aren't allowed to create new topic return
@@ -198,7 +200,7 @@ class KunenaForumTopicUserRead extends JObject
 			return true;
 		}
 
-		//Store the topic data in the database
+		// Store the topic data in the database
 		if (! $result = $table->store())
 		{
 			$this->setError($table->getError());

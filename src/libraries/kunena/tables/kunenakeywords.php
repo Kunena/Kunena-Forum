@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Keywords Table
@@ -19,8 +19,11 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaKeywords extends KunenaTable
 {
 	public $id = null;
+
 	public $name = null;
+
 	public $public_count = null;
+
 	public $total_count = null;
 
 	/**
@@ -37,6 +40,7 @@ class TableKunenaKeywords extends KunenaTable
 	public function check()
 	{
 		$this->name = trim($this->name);
+
 		if (!$this->name)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_KEYWORDS_ERROR_EMPTY'));

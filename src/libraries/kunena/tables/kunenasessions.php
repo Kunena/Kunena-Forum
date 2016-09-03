@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Sessions
@@ -19,11 +19,17 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaSessions extends KunenaTable
 {
 	public $userid = 0;
+
 	public $allowed = 'na';
+
 	public $allowedcats = null;
+
 	public $lasttime = 0;
+
 	public $readtopics = 0;
+
 	public $currvisit = 0;
+
 	protected $_exists = false;
 
 	public function __construct($db)
@@ -53,6 +59,7 @@ class TableKunenaSessions extends KunenaTable
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->userid);
+
 		if (!$user->exists())
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));

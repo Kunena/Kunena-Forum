@@ -203,7 +203,7 @@ class KunenaController extends JControllerLegacy
 		try
 		{
 			// TODO: This would be great, but we would need to store POST before doing it in here...
-/*
+			/*
 			if ($task != 'display')
 			{
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
@@ -218,7 +218,7 @@ class KunenaController extends JControllerLegacy
 					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
 			}
-*/
+			*/
 
 			// Execute the task.
 			$content = static::executeTask($task);
@@ -329,7 +329,7 @@ class KunenaController extends JControllerLegacy
 
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
-			$version = new KunenaVersion();
+			$version = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
 
 			if (!empty($version_warning))
@@ -364,7 +364,7 @@ class KunenaController extends JControllerLegacy
 
 			// Joomla 2.5+ multi-language support
 			/*
-  // FIXME:
+			// FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = JFactory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {

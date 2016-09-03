@@ -20,11 +20,11 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	protected $filename;
-	
+
 	/**
 	 * Get new instance of upload class.
 	 *
-	 * @param  array  $extensions  List of allowed file extensions.
+	 * @param   array  $extensions  List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
 	 */
@@ -43,7 +43,7 @@ class KunenaUpload
 	/**
 	 * Add file extensions to allowed list.
 	 *
-	 * @param array $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
+	 * @param   array $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
 	 */
@@ -68,7 +68,7 @@ class KunenaUpload
 	/**
 	 * Split filename by valid extension.
 	 *
-	 * @param  string  $filename  Name of the file.
+	 * @param   string  $filename  Name of the file.
 	 *
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
@@ -109,7 +109,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string  $filename  Original filename.
+	 * @param   string  $filename  Original filename.
 	 *
 	 * @return string  Path pointing to the protected file.
 	 */
@@ -121,7 +121,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string  $filename  Original filename.
+	 * @param   string  $filename  Original filename.
 	 *
 	 * @return string     Protected filename.
 	 */
@@ -152,7 +152,7 @@ class KunenaUpload
 	/**
 	 * Convert value into bytes.
 	 *
-	 * @param  string  $value  Value, for example: 1G, 10M, 120k...
+	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return int  Value in bytes.
 	 */
@@ -168,6 +168,7 @@ class KunenaUpload
 		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $value, $matches);
 
 		$last = '';
+
 		if (isset($matches[2]))
 		{
 			$last = $matches[2];
@@ -183,10 +184,12 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
+
 				// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
+
 				// Continue.
 			case 'k':
 			case 'kb':
@@ -199,7 +202,7 @@ class KunenaUpload
 	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
-	 * @param  array $options Upload options.
+	 * @param   array $options Upload options.
 	 *
 	 * @return array Updated options.
 	 * @throws null
@@ -260,7 +263,6 @@ class KunenaUpload
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK'), 400);
 			}
 
-
 			if (strpos($contentType, 'multipart') !== false)
 			{
 				// Older WebKit browsers didn't support multi-part in HTML5.
@@ -295,13 +297,15 @@ class KunenaUpload
 			// Get current size for the file.
 			$stat = fstat($out);
 
-			if (!$stat) {
+			if (!$stat)
+			{
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
 			}
 
 			$size = $stat['size'];
 
-			if ($options['chunkStart'] > $size) {
+			if ($options['chunkStart'] > $size)
+			{
 				throw new RuntimeException(JText::sprintf('Missing data chunk at location %d.', $size), 500);
 			}
 
@@ -388,7 +392,6 @@ class KunenaUpload
 		{
 			$options['mime'] = KunenaFile::getMime($outFile);
 			$options['hash'] = md5_file($outFile);
-
 		}
 		else
 		{
@@ -419,7 +422,7 @@ class KunenaUpload
 	/**
 	 * Return AJAX response in JSON.
 	 *
-	 * @param mixed $content
+	 * @param   mixed $content
 	 *
 	 * @return string
 	 */
@@ -487,12 +490,12 @@ class KunenaUpload
 		}
 
 		return (int) max(
-				0,
-				min(
-						$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-						$this->toBytes(ini_get('post_max_size')) - 1024,
-						$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-				)
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
 		);
 	}
 
@@ -513,12 +516,12 @@ class KunenaUpload
 		}
 
 		return (int) max(
-				0,
-				min(
-						$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-						$this->toBytes(ini_get('post_max_size')) - 1024,
-						$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-				)
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
 		);
 	}
 
@@ -539,12 +542,12 @@ class KunenaUpload
 		}
 
 		return (int) max(
-				0,
-				min(
-						$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-						$this->toBytes(ini_get('post_max_size')) - 1024,
-						$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-				)
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
 		);
 	}
 
@@ -653,7 +656,7 @@ class KunenaUpload
 				}
 			}
 		}
-		
+
 		KunenaImage::correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
@@ -673,7 +676,7 @@ class KunenaUpload
 	/**
 	 * Check for upload errors.
 	 *
-	 * @param  array  $file  Entry from $_FILES array.
+	 * @param   array  $file  Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
 	 */

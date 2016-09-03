@@ -43,7 +43,7 @@ class KunenaPrivate
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaPrivate();
+				self::$instance = new KunenaPrivate;
 			}
 		}
 
@@ -101,8 +101,8 @@ class KunenaPrivate
 
 	/**
 	 * @param        $userid
-	 * @param string $class
-	 * @param string $icon
+	 * @param   string $class
+	 * @param   string $icon
 	 *
 	 * @return string
 	 * @internal param $text
@@ -125,6 +125,7 @@ class KunenaPrivate
 			$this->pmCount = $this->getUnreadCount($my->id);
 			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
 			$url = $this->getInboxURL();
+
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}
 

@@ -53,6 +53,7 @@ class KunenaRequest
 
 		// Attempt to load controller.
 		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
+
 		if (!class_exists($class))
 		{
 			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $class), 404);

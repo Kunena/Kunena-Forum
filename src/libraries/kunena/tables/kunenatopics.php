@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Topics
@@ -19,27 +19,49 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaTopics extends KunenaTable
 {
 	public $id = null;
+
 	public $category_id = null;
+
 	public $subject = null;
+
 	public $icon_id = null;
+
 	public $locked = null;
+
 	public $hold = null;
+
 	public $ordering = null;
+
 	public $posts = null;
+
 	public $hits = null;
+
 	public $attachments = null;
+
 	public $poll_id = null;
+
 	public $moved_id = null;
+
 	public $first_post_id = null;
+
 	public $first_post_time = null;
+
 	public $first_post_userid = null;
+
 	public $first_post_message = null;
+
 	public $first_post_guest_name = null;
+
 	public $last_post_id = null;
+
 	public $last_post_time = null;
+
 	public $last_post_userid = null;
+
 	public $last_post_message = null;
+
 	public $last_post_guest_name = null;
+
 	public $params = null;
 
 	/**
@@ -62,12 +84,16 @@ class TableKunenaTopics extends KunenaTable
 		$k = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($id !== null) {
+		if ($id !== null)
+		{
 			$this->$k = $id;
 		}
 
 		// Reset the table.
-		if ($reset) { $this->reset(); }
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -90,7 +116,7 @@ class TableKunenaTopics extends KunenaTable
 			return false;
 		}
 
-		if(!$data)
+		if (!$data)
 		{
 			$this->$k = 0;
 
@@ -122,6 +148,7 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		$this->subject = trim($this->subject);
+
 		if (!$this->subject)
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));

@@ -60,7 +60,7 @@ class KunenaLogin
 	{
 		if (self::$instance === false)
 		{
-			self::$instance = new KunenaLogin();
+			self::$instance = new KunenaLogin;
 		}
 
 		return self::$instance;

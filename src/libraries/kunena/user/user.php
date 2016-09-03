@@ -8,9 +8,9 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
-defined ('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-jimport ( 'joomla.utilities.date' );
+jimport('joomla.utilities.date');
 
 /**
  * Class KunenaUser
@@ -75,20 +75,27 @@ class KunenaUser extends JObject
 	protected static $_ranks = null;
 
 	protected $_allowed = null;
+
 	protected $_link = array();
 
 	protected $_time;
+
 	protected $_pm;
+
 	protected $_email;
+
 	protected $_website;
+
 	protected $_personalText;
+
 	protected $_signature;
 
 	protected $_exists = false;
+
 	protected $_db = null;
 
 	/**
-	 * @param int $identifier
+	 * @param   int $identifier
 	 *
 	 * @internal
 	 */
@@ -97,7 +104,7 @@ class KunenaUser extends JObject
 		// Always load the user -- if user does not exist: fill empty data
 		if ($identifier !== false)
 		{
-			$this->load ( $identifier );
+			$this->load($identifier);
 		}
 
 		if (!isset($this->userid))
@@ -105,16 +112,16 @@ class KunenaUser extends JObject
 			$this->userid = 0;
 		}
 
-		$this->_db = JFactory::getDBO ();
-		$this->_app = JFactory::getApplication ();
-		$this->_config = KunenaFactory::getConfig ();
+		$this->_db = JFactory::getDBO();
+		$this->_app = JFactory::getApplication();
+		$this->_config = KunenaFactory::getConfig();
 	}
 
 	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param null|int $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @param bool $reload		Reload user from database.
+	 * @param   null|int $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param   bool $reload		Reload user from database.
 	 *
 	 * @return KunenaUser
 	 */
@@ -124,9 +131,9 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param null|bool $exists
+	 * @param   null|bool $exists
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists($exists = null)
 	{
@@ -143,7 +150,7 @@ class KunenaUser extends JObject
 	/**
 	 * Is the user me?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isMyself()
 	{
@@ -155,10 +162,10 @@ class KunenaUser extends JObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
-	 * @param KunenaUser $user
+	 * @param   string     $action
+	 * @param   KunenaUser $user
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since  K4.0
 	 */
@@ -170,9 +177,9 @@ class KunenaUser extends JObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
-	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   string     $action
+	 * @param   KunenaUser $user
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws null
@@ -211,9 +218,10 @@ class KunenaUser extends JObject
 				break;
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
+
 				if (!$banInfo->canBan())
 				{
-					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
 				}
 				break;
 			default :
@@ -241,7 +249,7 @@ class KunenaUser extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
 			$tabletype ['name'] = $type;
@@ -249,17 +257,17 @@ class KunenaUser extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
+		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
-	 * @param mixed $data
-	 * @param array $ignore
+	 * @param   mixed $data
+	 * @param   array $ignore
 	 */
 	public function bind($data, array $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties ( $data );
+		$this->setProperties($data);
 	}
 
 	/**
@@ -272,7 +280,7 @@ class KunenaUser extends JObject
 	public function load($id)
 	{
 		// Create the user table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Load the KunenaTableUser object based on the user id
 		if ($id > 0)
@@ -281,7 +289,7 @@ class KunenaUser extends JObject
 		}
 
 		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 
 		// Set showOnline if user doesn't exists (if we will save the user)
 		if (!$this->_exists)
@@ -302,19 +310,20 @@ class KunenaUser extends JObject
 	public function save($updateOnly = false)
 	{
 		// Create the user table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
-		$table->bind ( $this->getProperties (), $ignore );
-		$table->exists ( $this->_exists );
+		$table->bind($this->getProperties(), $ignore);
+		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (!$table->check ())
+		if (!$table->check())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
+
 			return false;
 		}
 
-		//are we creating a new user
+		// Are we creating a new user
 		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new users return
@@ -323,10 +332,10 @@ class KunenaUser extends JObject
 			return true;
 		}
 
-		//Store the user data in the database
-		if (!$result = $table->store ())
+		// Store the user data in the database
+		if (!$result = $table->store())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		$access = KunenaAccess::getInstance();
@@ -335,8 +344,9 @@ class KunenaUser extends JObject
 		// Set the id for the KunenaUser object in case we created a new user.
 		if ($result && $isnew)
 		{
-			$this->load ($table->get('userid'));
-			//self::$_instances [$table->get ( 'id' )] = $this;
+			$this->load($table->get('userid'));
+
+			// Self::$_instances [$table->get ( 'id' )] = $this;
 		}
 
 		return $result;
@@ -350,12 +360,13 @@ class KunenaUser extends JObject
 	public function delete()
 	{
 		// Delete user table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
-		$result = $table->delete ( $this->userid );
+		$result = $table->delete($this->userid);
+
 		if (!$result)
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		$access = KunenaAccess::getInstance();
@@ -366,8 +377,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param bool   $yes
-	 * @param string $no
+	 * @param   bool   $yes
+	 * @param   string $no
 	 *
 	 * @return string
 	 */
@@ -377,12 +388,12 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	* @return int
+	 * @return integer
 	 */
 	public function getStatus()
 	{
 		return KunenaUserHelper::getStatus($this->userid);
- 	}
+	}
 
 	/**
 	 * @return string
@@ -417,7 +428,7 @@ class KunenaUser extends JObject
 			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 		}
 
-		if ( $this->exists() )
+		if ($this->exists())
 		{
 			return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
 		}
@@ -432,13 +443,13 @@ class KunenaUser extends JObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isAdmin(KunenaForumCategory $category = null)
 	{
-		return KunenaAccess::getInstance()->isAdmin ( $this, $category && $category->exists() ? $category->id : null );
+		return KunenaAccess::getInstance()->isAdmin($this, $category && $category->exists() ? $category->id : null);
 	}
 
 	/**
@@ -446,17 +457,17 @@ class KunenaUser extends JObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isModerator(KunenaForumCategory $category = null)
 	{
-		return KunenaAccess::getInstance()->isModerator ( $this, $category && $category->exists() ? $category->id : null );
+		return KunenaAccess::getInstance()->isModerator($this, $category && $category->exists() ? $category->id : null);
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isBanned()
 	{
@@ -465,19 +476,19 @@ class KunenaUser extends JObject
 			return false;
 		}
 
-		if ($this->blocked || $this->banned == $this->_db->getNullDate ())
+		if ($this->blocked || $this->banned == $this->_db->getNullDate())
 		{
 			return true;
 		}
 
-		$ban = new JDate ($this->banned);
-		$now = new JDate ();
+		$ban = new JDate($this->banned);
+		$now = new JDate;
 
-		return ($ban->toUnix () > $now->toUnix ());
+		return ($ban->toUnix() > $now->toUnix());
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isBlocked()
 	{
@@ -490,8 +501,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $visitorname
-	 * @param bool   $escape
+	 * @param   string $visitorname
+	 * @param   bool   $escape
 	 *
 	 * @return string
 	 */
@@ -515,40 +526,40 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $class
-	 * @param string|int $sizex
-	 * @param int	$sizey
+	 * @param   string $class
+	 * @param   string|int $sizex
+	 * @param   int	$sizey
 	 *
 	 * @return string
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90)
 	{
-		$avatars = KunenaFactory::getAvatarIntegration ();
+		$avatars = KunenaFactory::getAvatarIntegration();
 
-		return $avatars->getLink ( $this, $class, $sizex, $sizey );
+		return $avatars->getLink($this, $class, $sizex, $sizey);
 	}
 
 	/**
-	 * @param string|int $sizex
-	 * @param int	$sizey
+	 * @param   string|int $sizex
+	 * @param   int	$sizey
 	 *
 	 * @return string
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90)
 	{
-		$avatars = KunenaFactory::getAvatarIntegration ();
+		$avatars = KunenaFactory::getAvatarIntegration();
 
-		return $avatars->getURL ( $this, $sizex, $sizey );
+		return $avatars->getURL($this, $sizex, $sizey);
 	}
 
 	/**
-	 * @param null|string $name
-	 * @param null|string $title
-	 * @param string      $rel
-	 * @param string      $task
-	 * @param string      $class
+	 * @param   null|string $name
+	 * @param   null|string $title
+	 * @param   string      $rel
+	 * @param   string      $task
+	 * @param   string      $class
 	 *
-	 * @param int         $catid
+	 * @param   int         $catid
 	 *
 	 * @return string
 	 */
@@ -602,7 +613,7 @@ class KunenaUser extends JObject
 
 			if (!empty($rel))
 			{
-				$rels = 'rel="' . $rel .'"';
+				$rels = 'rel="' . $rel . '"';
 			}
 			else
 			{
@@ -623,8 +634,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param bool   $xhtml
-	 * @param string $task
+	 * @param   bool   $xhtml
+	 * @param   string $task
 	 *
 	 * @return mixed
 	 */
@@ -638,33 +649,34 @@ class KunenaUser extends JObject
 
 		$config = KunenaConfig::getInstance();
 		$me = KunenaUserHelper::getMyself();
+
 		if (!$config->pubprofile && !$me->exists())
 		{
 			return false;
 		}
 
-		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
+		return KunenaFactory::getProfile()->getProfileURL($this->userid, $task, $xhtml);
 	}
 
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @param int  $catid   Category id or 0 for global.
-	 * @param bool $code    True if we want to return the code, otherwise return translation key.
+	 * @param   int  $catid   Category id or 0 for global.
+	 * @param   bool $code    True if we want to return the code, otherwise return translation key.
 	 *
 	 * @return string
 	 */
 	public function getType($catid = 0, $code = false)
 	{
 		static $types = array(
-			'admin'=>'COM_KUNENA_VIEW_ADMIN',
-			'localadmin'=>'COM_KUNENA_VIEW_ADMIN',
-			'globalmod'=>'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
-			'moderator'=>'COM_KUNENA_VIEW_MODERATOR',
-			'user'=>'COM_KUNENA_VIEW_USER',
-			'guest'=>'COM_KUNENA_VIEW_VISITOR',
-			'banned'=>'COM_KUNENA_VIEW_BANNED',
-			'blocked'=>'COM_KUNENA_VIEW_BLOCKED'
+			'admin' => 'COM_KUNENA_VIEW_ADMIN',
+			'localadmin' => 'COM_KUNENA_VIEW_ADMIN',
+			'globalmod' => 'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
+			'moderator' => 'COM_KUNENA_VIEW_MODERATOR',
+			'user' => 'COM_KUNENA_VIEW_USER',
+			'guest' => 'COM_KUNENA_VIEW_VISITOR',
+			'banned' => 'COM_KUNENA_VIEW_BANNED',
+			'blocked' => 'COM_KUNENA_VIEW_BLOCKED'
 		);
 
 		$adminCategories = KunenaAccess::getInstance()->getAdminStatus($this);
@@ -711,16 +723,16 @@ class KunenaUser extends JObject
 		{
 			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
 
-			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0].$type;
+			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0] . $type;
 		}
 
 		return $code ? $type : $types[$type];
 	}
 
 	/**
-	 * @param int        $catid    Category Id for the rank (user can have different rank in different categories).
-	 * @param string     $type     Possible values: 'title' | 'image' | false (for object).
-	 * @param bool|null  $special  True if special only, false if post count, otherwise combined.
+	 * @param   int        $catid    Category Id for the rank (user can have different rank in different categories).
+	 * @param   string     $type     Possible values: 'title' | 'image' | false (for object).
+	 * @param   bool|null  $special  True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|null
 	 */
@@ -757,7 +769,7 @@ class KunenaUser extends JObject
 		else
 		{
 			// Generate user rank.
-			$rank = new stdClass();
+			$rank = new stdClass;
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
 			$rank->rank_min = 0;
@@ -769,6 +781,7 @@ class KunenaUser extends JObject
 				case 'guest' :
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
 					$rank->rank_special = 1;
+
 					foreach (self::$_ranks as $cur)
 					{
 						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'guest'))
@@ -783,6 +796,7 @@ class KunenaUser extends JObject
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_BLOCKED');
 					$rank->rank_special = 1;
 					$rank->rank_image = 'rankdisabled.gif';
+
 					foreach (self::$_ranks as $cur)
 					{
 						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'disabled'))
@@ -797,6 +811,7 @@ class KunenaUser extends JObject
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
 					$rank->rank_special = 1;
 					$rank->rank_image = 'rankbanned.gif';
+
 					foreach (self::$_ranks as $cur)
 					{
 						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'banned'))
@@ -812,6 +827,7 @@ class KunenaUser extends JObject
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_ADMINISTRATOR');
 					$rank->rank_special = 1;
 					$rank->rank_image = 'rankadmin.gif';
+
 					foreach (self::$_ranks as $cur)
 					{
 						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'admin'))
@@ -827,13 +843,15 @@ class KunenaUser extends JObject
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_MODERATOR');
 					$rank->rank_special = 1;
 					$rank->rank_image = 'rankmod.gif';
+
 					foreach (self::$_ranks as $cur)
 					{
 						if ($cur->rank_special == 1
-							&& (strstr($cur->rank_image, 'rankmod') || strstr($cur->rank_image, 'moderator')))
+							&& (strstr($cur->rank_image, 'rankmod') || strstr($cur->rank_image, 'moderator'))
+						)
 						{
-							$rank = $cur;
-							break;
+												$rank = $cur;
+												break;
 						}
 					}
 					break;
@@ -948,7 +966,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param null|string $layout
+	 * @param   null|string $layout
 	 *
 	 * @return string
 	 */
@@ -961,7 +979,7 @@ class KunenaUser extends JObject
 
 		if (!$layout)
 		{
-			$layout = $this->_app->getUserState ( 'com_kunena.topic_layout' );
+			$layout = $this->_app->getUserState('com_kunena.topic_layout');
 		}
 
 		if (!$layout)
@@ -983,7 +1001,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $layout
+	 * @param   string $layout
 	 */
 	public function setTopicLayout($layout = 'default')
 	{
@@ -992,7 +1010,7 @@ class KunenaUser extends JObject
 			$layout = $this->getTopicLayout($layout);
 		}
 
-		$this->_app->setUserState ('com_kunena.topic_layout', $layout);
+		$this->_app->setUserState('com_kunena.topic_layout', $layout);
 
 		if ($this->userid && $this->view != $layout)
 		{
@@ -1063,7 +1081,7 @@ class KunenaUser extends JObject
 				$count = $private->getUnreadCount($this->userid);
 				$this->_pm = $private->getInboxLink($count
 					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
-					: JText::_('COM_KUNENA_PMS_INBOX'));
+				: JText::_('COM_KUNENA_PMS_INBOX'));
 			}
 			else
 			{
@@ -1158,7 +1176,7 @@ class KunenaUser extends JObject
 	/**
 	 * Output gender.
 	 *
-	 * @param  bool  $translate
+	 * @param   bool  $translate
 	 *
 	 * @return string  One of: male, female or unknown.
 	 *
@@ -1264,7 +1282,7 @@ class KunenaUser extends JObject
 	/**
 	 * Render user sidebar.
 	 *
-	 * @param KunenaLayout $layout
+	 * @param   KunenaLayout $layout
 	 *
 	 * @return string
 	 *
@@ -1331,7 +1349,7 @@ class KunenaUser extends JObject
 
 		$view->personalText = $this->getPersonalText();
 
-		$params = new \Joomla\Registry\Registry();
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', $layout->getLayout());
@@ -1344,7 +1362,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string $name
 	 *
 	 * @return string
 	 */
@@ -1364,32 +1382,38 @@ class KunenaUser extends JObject
 					default :
 						$gender = 'unknown';
 				}
-				$title = JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER' ) . ': ' . JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER_' . $gender );
-				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" title="' . $title . '"></span>';
+
+				$title = JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender);
+
+return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" title="' . $title . '"></span>';
 				break;
 			case 'birthdate' :
 				if ($this->birthdate)
 				{
 					$date = new KunenaDate($this->birthdate);
+
 					if ($date->format('%Y') < 1902)
 					{
 						break;
 					}
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
+
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
 				if ($this->location)
 				{
-					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION') . ': ' . $this->escape($this->location) . '"></span>';
 				}
 				break;
 			case 'website' :
 				$url = $this->websiteurl;
+
 				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
 				{
 					$url = 'http://' . $this->websiteurl;
 				}
+
 				if (!$this->websitename)
 				{
 					$websitename = $this->websiteurl;
@@ -1398,14 +1422,16 @@ class KunenaUser extends JObject
 				{
 					$websitename = $this->websitename;
 				}
+
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape($url) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' . $this->escape($websitename) . '"></span></a>';
 				}
 				break;
 			case 'private' :
-				$pms = KunenaFactory::getPrivateMessaging ();
-				return $pms->showIcon($this->userid);
+				$pms = KunenaFactory::getPrivateMessaging();
+
+return $pms->showIcon($this->userid);
 				break;
 			case 'email' :
 				// TODO: show email
@@ -1416,43 +1442,44 @@ class KunenaUser extends JObject
 				{
 					return;
 				}
-				return $this->getLink('<span class="profile" title="' . JText::_ ( 'COM_KUNENA_VIEW_PROFILE' ) . '"></span>');
+
+return $this->getLink('<span class="profile" title="' . JText::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');
 				break;
 		}
 	}
 
 	/**
-	 * @param string $name
-	 * @param bool $gray
+	 * @param   string $name
+	 * @param   bool $gray
 	 *
 	 * @return string
 	 */
 	public function socialButton($name, $gray = false)
 	{
-		$social = array ('twitter' => array ('url' => 'http://twitter.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TWITTER' ), 'nourl' => '0' ),
-			'facebook' => array ('url' => 'http://www.facebook.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FACEBOOK' ), 'nourl' => '0' ),
-			'myspace' => array ('url' => 'http://www.myspace.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MYSPACE' ), 'nourl' => '0' ),
-			'linkedin' => array ('url' => 'http://www.linkedin.com/in/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_LINKEDIN' ), 'nourl' => '0' ),
-			'delicious' => array ('url' => 'http://delicious.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DELICIOUS' ), 'nourl' => '0' ),
-			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FRIENDFEED' ), 'nourl' => '0' ),
-			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DIGG' ), 'nourl' => '0' ),
-			'skype' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '1' ),
-			'yim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_YIM' ), 'nourl' => '1' ),
-			'aim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_AIM' ), 'nourl' => '1' ),
-			'google' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '1' ),
-			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MICROSOFT' ), 'nourl' => '1' ),
-			'icq' => array ('url' => 'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_ICQ' ), 'nourl' => '0' ),
-			'blogspot' => array ('url' => 'http://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
-			'flickr' => array ('url' => 'http://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
-			'bebo' => array ('url' => 'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' ),
-			'istagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
-			'qq' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QQ' ), 'nourl' => '1' ),
-			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
-			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),
-			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WECHAT' ), 'nourl' => '1' ),
-			'vk' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '1' ),
-			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '1' ),
-			'apple' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_APPLE' ), 'nourl' => '1' )
+		$social = array ('twitter' => array ('url' => 'http://twitter.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0' ),
+			'facebook' => array ('url' => 'http://www.facebook.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0' ),
+			'myspace' => array ('url' => 'http://www.myspace.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0' ),
+			'linkedin' => array ('url' => 'http://www.linkedin.com/in/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0' ),
+			'delicious' => array ('url' => 'http://delicious.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'), 'nourl' => '0' ),
+			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0' ),
+			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0' ),
+			'skype' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '1' ),
+			'yim' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1' ),
+			'aim' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_AIM'), 'nourl' => '1' ),
+			'google' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1' ),
+			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1' ),
+			'icq' => array ('url' => 'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0' ),
+			'blogspot' => array ('url' => 'http://##VALUE##.blogspot.com/', 'title' => JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0' ),
+			'flickr' => array ('url' => 'http://www.flickr.com/photos/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0' ),
+			'bebo' => array ('url' => 'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0' ),
+			'istagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0' ),
+			'qq' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QQ'), 'nourl' => '1' ),
+			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1' ),
+			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1' ),
+			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1' ),
+			'vk' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '1' ),
+			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '1' ),
+			'apple' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1' )
 		);
 
 		if (!isset($social [$name]))
@@ -1461,14 +1488,14 @@ class KunenaUser extends JObject
 		}
 
 		$title = $social [$name] ['title'];
-		$value = $this->escape ( $this->$name );
-		$url = strtr ( $social [$name] ['url'], array ('##VALUE##' => $value ) );
+		$value = $this->escape($this->$name);
+		$url = strtr($social [$name] ['url'], array ('##VALUE##' => $value ));
 
 		if ($social [$name] ['nourl'] == '0')
 		{
 			if (!empty($this->$name))
 			{
-				return '<a href="' . $this->escape ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . $this->escape($url) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 			}
 		}
 		else
@@ -1478,6 +1505,7 @@ class KunenaUser extends JObject
 				return '<span class="kicon-profile kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
 			}
 		}
+
 		if ($gray)
 		{
 			return '<span class="kicon-profile kicon-profile-' . $name . '-off"></span>';
@@ -1489,7 +1517,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $var
+	 * @param   string $var
 	 *
 	 * @return string
 	 */
@@ -1499,7 +1527,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string $name
 	 *
 	 * @return string
 	 */
@@ -1517,7 +1545,7 @@ class KunenaUser extends JObject
 			'Undefined property via __get(): ' . $name .
 			' in ' . $trace[0]['file'] .
 			' on line ' . $trace[0]['line'],
-			E_USER_NOTICE);
+		E_USER_NOTICE);
 
 		return null;
 	}
@@ -1531,12 +1559,12 @@ class KunenaUser extends JObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ( !$this->exists() && $config->captcha == 1 )
+		if (!$this->exists() && $config->captcha == 1)
 		{
 			return true;
 		}
 
-		if ( $this->exists() && !$this->isModerator() && $config->captcha >= 0)
+		if ($this->exists() && !$this->isModerator() && $config->captcha >= 0)
 		{
 			if ($config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
 			{
@@ -1544,7 +1572,7 @@ class KunenaUser extends JObject
 			}
 		}
 
-		if ( $config->captcha == '-1' )
+		if ($config->captcha == '-1')
 		{
 			return false;
 		}

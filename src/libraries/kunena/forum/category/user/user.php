@@ -24,6 +24,7 @@ defined('_JEXEC') or die();
 class KunenaForumCategoryUser extends JObject
 {
 	protected $_exists = false;
+
 	protected $_db = null;
 
 	/**
@@ -100,7 +101,7 @@ class KunenaForumCategoryUser extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
 			$tabletype ['name'] = $type;
@@ -173,10 +174,11 @@ class KunenaForumCategoryUser extends JObject
 		if (! $table->check())
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
-		//are we creating a new category
+		// Are we creating a new category
 		$isnew = ! $this->_exists;
 
 		// If we aren't allowed to create new category return
@@ -185,7 +187,7 @@ class KunenaForumCategoryUser extends JObject
 			return true;
 		}
 
-		//Store the category data in the database
+		// Store the category data in the database
 		if (! $result = $table->store())
 		{
 			$this->setError($table->getError());
@@ -216,6 +218,7 @@ class KunenaForumCategoryUser extends JObject
 		$table = $this->getTable();
 
 		$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
+
 		if (! $result)
 		{
 			$this->setError($table->getError());

@@ -116,12 +116,14 @@ class KunenaImage extends KunenaCompatImage
 		{
 			$trnprt_indx = imagecolortransparent($this->handle);
 
-			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle)) {
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
+			{
 				// Get the transparent color values for the current image.
 				$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
 				$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
 			}
-			else {
+			else
+			{
 				$color = imageColorAllocateAlpha($handle, 255, 255, 255, 127);
 			}
 
@@ -196,19 +198,24 @@ class KunenaImage extends KunenaCompatImage
 		$rX = $src_w / $dst_w;
 		$rY = $src_h / $dst_h;
 		$w = 0;
+
 		for ($y = 0; $y < $dst_h; $y++)
 		{
 			$ow = $w;
-$w = round(($y + 1) * $rY);
+			$w = round(($y + 1) * $rY);
 			$t = 0;
+
 			for ($x = 0; $x < $dst_w; $x++)
 			{
 				$r = $g = $b = 0;
-$a = 0;
+				$a = 0;
 				$ot = $t;
-$t = round(($x + 1) * $rX);
-				for ($u = 0; $u < ($w - $ow); $u++)  {
-					for ($p = 0; $p < ($t - $ot); $p++)  {
+				$t = round(($x + 1) * $rX);
+
+				for ($u = 0; $u < ($w - $ow); $u++)
+				{
+					for ($p = 0; $p < ($t - $ot); $p++)
+					{
 						$c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
 						$r += $c['red'];
 						$g += $c['green'];
@@ -227,7 +234,7 @@ $t = round(($x + 1) * $rX);
 		// We should return true since ImageCopyResampled/ImageCopyResized do it
 		return true;
 	}
-	
+
 	/**
 	 * Correct Image Orientation
 	 *
@@ -238,7 +245,7 @@ $t = round(($x + 1) * $rX);
 	public static function correctImageOrientation($filename)
 	{
 		$testForJpg = @getimagesize($filename);
-	
+
 		if ($testForJpg[2] == 2)
 		{
 			if (function_exists('exif_read_data'))
@@ -247,45 +254,52 @@ $t = round(($x + 1) * $rX);
 				$exif = @exif_read_data($filename);
 				$flip = '';
 				$img  = '';
-	
+
 				if ($exif && isset($exif['Orientation']))
 				{
 					$orientation = $exif['Orientation'];
-	
+
 					if ($orientation != 1)
 					{
 						$img = @imagecreatefromjpeg($filename);
-	
+
 						switch ($orientation)
 						{
-							case 1: // nothing
+							case 1: // Nothing
 								$deg  = 0;
 								$flip = 0;
 								break;
-							case 2: // horizontal flip
+
+							case 2: // Horizontal flip
 								$deg  = 0;
 								$flip = 1;
 								break;
+
 							case 3: // 180 rotate left
 								$deg  = 180;
 								$flip = 0;
 								break;
-							case 4: // vertical flip
+
+							case 4: // Vertical flip
 								$deg  = 0;
 								$flip = 2;
 								break;
-							case 5: // vertical flip + 90 rotate
+
+							case 5: // Vertical flip + 90 rotate
 								$deg  = 90;
 								$flip = 2;
 								break;
+
 							case 6: // 270 rotate left
 								$deg  = 270;
 								$flip = 0;
 								break;
-							case 7: // horizontal flip + 90 rotate
+
+							case 7: // Horizontal flip + 90 rotate
 								$deg  = 90;
 								$flip = 1;
 								break;
+
 							case 8: // 90 rotate left
 								$deg  = 90;
 								$flip = 0;
@@ -293,12 +307,12 @@ $t = round(($x + 1) * $rX);
 						}
 					}
 				}
-	
+
 				if ($deg > 0)
 				{
 					$img = @imagerotate($img, $deg, 0);
 				}
-	
+
 				if ($flip != 0)
 				{
 					if ($flip == 1)
@@ -310,10 +324,10 @@ $t = round(($x + 1) * $rX);
 						@imageflip($img, IMG_FLIP_VERTICAL);
 					}
 				}
-	
+
 				@imagejpeg($img, $filename, 95);
 			}
 		}
 	}
-	
+
 }

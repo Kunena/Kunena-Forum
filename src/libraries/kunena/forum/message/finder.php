@@ -16,7 +16,9 @@ defined('_JEXEC') or die();
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
 	protected $table = '#__kunena_messages';
+
 	protected $hold = array(0);
+
 	protected $moved = null;
 
 	/**
@@ -203,6 +205,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		// TODO: remove the field..
 		$query->where("a.moved=0");
+
 		if (!empty($this->hold))
 		{
 			Joomla\Utilities\ArrayHelper::toInteger($this->hold, 0);

@@ -53,10 +53,10 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	}
 
 	/**
-	* Get the last item from the collection.
-  *
-  * @return mixed|null
-  */
+	 * Get the last item from the collection.
+	 *
+	 * @return mixed|null
+	 */
 	public function last()
 	{
 		return !empty($this->items) ? end($this->items) : null;

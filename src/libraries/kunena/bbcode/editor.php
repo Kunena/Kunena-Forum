@@ -211,7 +211,7 @@ class KunenaBbcodeEditor
 
 		$js .= $itemjs;
 
-		$js .=	']};';
+		$js .= ']};';
 
 		// Write the js elements into editor.markitup.js file
 		file_put_contents(KPATH_SITE . '/template/' . $this->template->name . '/assets/js/markitup.editor.js', $js);
@@ -254,10 +254,15 @@ abstract class KunenaBbcodeEditorElement
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
 	protected $tag;
+
 	protected $config;
+
 	protected $title;
+
 	protected $alt;
+
 	protected $class;
+
 	protected $actions = array();
 
 	/**

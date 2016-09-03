@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Attachments Table
@@ -19,15 +19,25 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaAttachments extends KunenaTable
 {
 	public $id = null;
+
 	public $userid = null;
+
 	public $mesid = null;
+
 	public $protected = null;
+
 	public $hash = null;
+
 	public $size = null;
+
 	public $folder = null;
+
 	public $filetype = null;
+
 	public $filename = null;
+
 	public $filename_real = null;
+
 	public $comment = null;
 
 	/**
@@ -57,6 +67,7 @@ class TableKunenaAttachments extends KunenaTable
 		}
 
 		$this->folder = trim($this->folder, '/');
+
 		if (!$this->folder)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FOLDER'));
@@ -73,6 +84,7 @@ class TableKunenaAttachments extends KunenaTable
 		}
 
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
+
 		if (!is_file($file))
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING', "{$this->folder}/{$this->filename}"));

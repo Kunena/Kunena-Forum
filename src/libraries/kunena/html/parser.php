@@ -89,7 +89,7 @@ abstract class KunenaHtmlParser
 	 * @param   null $parent
 	 * @param   int  $len
 	 *
-	 * @param string $context
+	 * @param   string $context
 	 *
 	 * @return mixed|void
 	 */

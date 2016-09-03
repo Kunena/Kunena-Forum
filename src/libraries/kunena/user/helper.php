@@ -24,6 +24,7 @@ abstract class KunenaUserHelper
 	 * @var array|KunenaUser[]
 	 */
 	protected static $_instances = array ();
+
 	/**
 	 * @var array|KunenaUser[]
 	 */
@@ -78,12 +79,14 @@ abstract class KunenaUserHelper
 		if ($identifier === null || $identifier === false)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 			return self::$_me;
 		}
 
 		if ($identifier instanceof KunenaUser)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 			return $identifier;
 		}
 
@@ -176,7 +179,7 @@ abstract class KunenaUserHelper
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 
-		foreach($userids as $userid)
+		foreach ($userids as $userid)
 		{
 			// Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
 			if ($userid > 0 && empty(self::$_instances[$userid]))
@@ -215,7 +218,10 @@ abstract class KunenaUserHelper
 
 		foreach ($userids as $userid)
 		{
-			if (isset(self::$_instances [$userid])) { $list [$userid] = self::$_instances [$userid]; }
+			if (isset(self::$_instances [$userid]))
+			{
+				$list [$userid] = self::$_instances [$userid];
+			}
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -344,7 +350,7 @@ abstract class KunenaUserHelper
 	 * @param	array		$userIds	List of User Ids (null for all).
 	 * @param	boolean		$recursive	Recursively include all child groups (optional)
 	 *
-	 * @return  array  List of userid => array(group, group, ...).
+	 * @return  array
 	 * @throws  BadMethodCallException  If first two parameters are both null.
 	 *
 	 * @since 5.0
@@ -364,13 +370,14 @@ abstract class KunenaUserHelper
 		}
 
 		$test = $recursive ? '>=' : '=';
+
 		// Find users and their groups.
 		$db = JFactory::getDbo();
 		$query	= $db->getQuery(true)
-		->select('m.*')
-		->from('#__usergroups AS ug1')
-		->join('INNER','#__usergroups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt')
-		->join('INNER','#__user_usergroup_map AS m ON ug2.id=m.group_id');
+			->select('m.*')
+			->from('#__usergroups AS ug1')
+			->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt')
+			->join('INNER', '#__user_usergroup_map AS m ON ug2.id=m.group_id');
 
 		if ($groupIds)
 		{

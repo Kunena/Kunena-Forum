@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
@@ -18,15 +18,25 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaAnnouncements extends KunenaTable
 {
 	public $id = null;
+
 	public $title = null;
+
 	public $created_by = null;
+
 	public $sdescription = null;
+
 	public $description = null;
+
 	public $created = null;
+
 	public $publish_up = null;
+
 	public $publish_down = null;
+
 	public $published = null;
+
 	public $ordering = null;
+
 	public $showdate = null;
 
 	/**
@@ -45,6 +55,7 @@ class TableKunenaAnnouncements extends KunenaTable
 		if ($this->created_by)
 		{
 			$user = KunenaUserHelper::get($this->created_by);
+
 			if (!$user->exists())
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_USER_INVALID', (int) $user->userid));
@@ -71,6 +82,7 @@ class TableKunenaAnnouncements extends KunenaTable
 		}
 
 		$this->title = trim($this->title);
+
 		if (!$this->title)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_TITLE'));

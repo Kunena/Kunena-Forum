@@ -71,6 +71,7 @@ class KunenaTableMap
 
 		// Initialise the table properties.
 		$fields = $this->getFields();
+
 		foreach ($fields as $name => $v)
 		{
 			// Add the field if it is not already present.
@@ -93,6 +94,7 @@ class KunenaTableMap
 		static $cache = array();
 
 		$name = $this->_tbl;
+
 		if (!isset($cache[$name]))
 		{
 			// Lookup the fields for this table only once.
@@ -118,9 +120,13 @@ class KunenaTableMap
 	{
 		$properties = (array) $this;
 		$list = array();
+
 		foreach ($properties as $property => $value)
 		{
-			if ($property[0] != "\0") { $list[$property] = $value; }
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
 		}
 
 		return $list;
@@ -134,6 +140,7 @@ class KunenaTableMap
 		static $instance = array();
 
 		$key = md5(serialize(array($this->_tbl, $this->_tbl_mapped, $this->_tbl_key)));
+
 		if (!isset($instance[$key]))
 		{
 			$c = get_called_class();
@@ -393,7 +400,8 @@ class KunenaTableMap
 			$keys = array($this->_tbl_key => $keys);
 		}
 
-		if ($reset) {
+		if ($reset)
+		{
 			$this->reset();
 		}
 
@@ -461,6 +469,7 @@ class KunenaTableMap
 
 		$id = $this->{$k};
 		$items = $this->{$m};
+
 		if (!empty($items))
 		{
 			// Load currently mapped variables from database.
@@ -475,6 +484,7 @@ class KunenaTableMap
 			if ($added)
 			{
 				$values = array();
+
 				foreach ($added as $var)
 				{
 					$values[] = (int) $id . ',' . (int) $var;
@@ -489,7 +499,8 @@ class KunenaTableMap
 			}
 
 			// Remove all deleted items.
-			if ($deleted) {
+			if ($deleted)
+			{
 				$query = $this->_db->getQuery(true);
 				$query->delete($this->_db->qn($this->_tbl));
 				$query->where($this->_db->qn($this->_tbl_key) . '=' . (int) $id);

@@ -52,7 +52,7 @@ class KunenaModel extends JModelLegacy
 	protected $state = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $embedded = false;
 

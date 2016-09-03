@@ -19,6 +19,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @var array|KunenaForumTopicUserRead[]
 	 */
 	protected static $_instances = array();
+
 	/**
 	 * @var array|KunenaForumTopicUserRead[]
 	 */
@@ -84,16 +85,21 @@ abstract class KunenaForumTopicUserReadHelper
 		// Convert topic objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof KunenaForumTopic) { $ids[$i] = $id->id; }
+			if ($id instanceof KunenaForumTopic)
+			{
+				$ids[$i] = $id->id;
+			}
 		}
 
 		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
-			if (!empty(self::$_instances [$user->userid][$id])) {
+			if (!empty(self::$_instances [$user->userid][$id]))
+			{
 				$list [$id] = self::$_instances [$user->userid][$id];
 			}
 		}
@@ -260,7 +266,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new KunenaForumTopicUserRead();
+				$instance = new KunenaForumTopicUserRead;
 				$instance->bind($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;

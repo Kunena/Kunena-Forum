@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena User Bans
@@ -19,17 +19,29 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaUserBans extends JTable
 {
 	public $id = null;
+
 	public $userid = null;
+
 	public $ip = null;
+
 	public $blocked = null;
+
 	public $expiration = null;
+
 	public $created_by = null;
+
 	public $created_time = null;
+
 	public $reason_private = null;
+
 	public $reason_public = null;
+
 	public $modified_by = null;
+
 	public $modified_time = null;
+
 	public $comments = null;
+
 	public $params = null;
 
 	const ANY = 0;
@@ -62,7 +74,8 @@ class TableKunenaUserBans extends JTable
 			return false;
 		}
 
-		$now = new JDate();
+		$now = new JDate;
+
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE userid = {$this->_db->quote($userid)}
@@ -106,11 +119,13 @@ class TableKunenaUserBans extends JTable
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($ip === null || !is_string($ip)) {
+		if ($ip === null || !is_string($ip))
+		{
 			return false;
 		}
 
-		$now = new JDate();
+		$now = new JDate;
+
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
@@ -148,6 +163,7 @@ class TableKunenaUserBans extends JTable
 		if (!$this->ip)
 		{
 			$user = KunenaUserHelper::get($this->userid);
+
 			if (!$user->exists())
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));

@@ -25,8 +25,8 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param null     $identifier
-	 * @param bool     $reload
+	 * @param   null     $identifier
+	 * @param   bool     $reload
 	 *
 	 * @return KunenaForumTopicRate The rate object.
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
@@ -44,7 +44,7 @@ abstract class KunenaForumTopicRateHelper
 
 		if ($id < 1)
 		{
-			return new KunenaForumTopicRate();
+			return new KunenaForumTopicRate;
 		}
 
 		if ($reload || empty(self::$_instances [$id]))

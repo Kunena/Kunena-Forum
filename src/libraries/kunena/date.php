@@ -201,7 +201,7 @@ class KunenaDate extends JDate
 			// Same day of the year, same year.... Today!
 			if ($then ['yday'] == $now ['yday']
 				&& $then ['year'] == $now ['year']
-)
+			)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}
@@ -209,7 +209,7 @@ class KunenaDate extends JDate
 			// Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
 			if (($then ['yday'] == $now ['yday'] - 1 && $then ['year'] == $now ['year'])
 				|| ($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31
-)
+			)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}

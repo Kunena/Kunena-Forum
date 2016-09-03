@@ -121,7 +121,7 @@ abstract class KunenaTemplateHelper
 	 *
 	 * @param   $path
 	 *
-	 * @return bool|stdClass
+	 * @return boolean|stdClass
 	 */
 	public static function parseKunenaInstallFile($path)
 	{
@@ -182,7 +182,7 @@ abstract class KunenaTemplateHelper
 	 */
 	public static function templateCanBeUsed($templatename)
 	{
-		if ($templatename == 'Crypsis' || $templatename == 'Crypsisb3' )
+		if ($templatename == 'Crypsis' || $templatename == 'Crypsisb3')
 		{
 			return false;
 		}

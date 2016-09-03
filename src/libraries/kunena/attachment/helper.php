@@ -19,6 +19,7 @@ abstract class KunenaAttachmentHelper
 	 * @var KunenaAttachment[]
 	 */
 	protected static $_instances = array();
+
 	protected static $_messages = array();
 
 	/**
@@ -101,6 +102,7 @@ abstract class KunenaAttachmentHelper
 		self::loadById($ids);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
 			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise))
@@ -115,7 +117,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param bool|string $ids
+	 * @param   bool|string $ids
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -126,6 +128,7 @@ abstract class KunenaAttachmentHelper
 		self::loadByMessage($ids);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
 			if (!empty(self::$_messages [$id]))
@@ -178,6 +181,7 @@ abstract class KunenaAttachmentHelper
 		self::loadByMessage($ids);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
 			if (!empty(self::$_messages [$id]))
@@ -219,7 +223,8 @@ abstract class KunenaAttachmentHelper
 		if ($protected)
 		{
 			// Ignore proposed filename and return totally random and unique name without file extension.
-			do {
+			do
+			{
 				$name = md5(rand());
 			}
 			while (file_exists(JPATH_ROOT . "/$folder/$name"));
@@ -381,7 +386,10 @@ abstract class KunenaAttachmentHelper
 		}
 
 		// For now on we only allow registered users
-		if (!$user->exists()) { return false; }
+		if (!$user->exists())
+		{
+			return false;
+		}
 
 		if ($config->file_upload == 'registered')
 		{
@@ -419,6 +427,7 @@ abstract class KunenaAttachmentHelper
 	static public function cleanup()
 	{
 		$db = JFactory::getDBO();
+
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
@@ -464,6 +473,7 @@ abstract class KunenaAttachmentHelper
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
 		$len = mb_strlen($filename);
+
 		if ($len > ($front + strlen($filler) + $back))
 		{
 			$output = substr($filename, 0, $front) . $filler . substr($filename, $len - $back, $back);
@@ -517,6 +527,7 @@ abstract class KunenaAttachmentHelper
 		KunenaError::checkDatabaseError();
 
 		$list = array();
+
 		foreach ($results as $instance)
 		{
 			if (!isset(self::$_instances[$instance->id]))

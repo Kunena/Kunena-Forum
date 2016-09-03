@@ -21,9 +21,10 @@ defined('_JEXEC') or die();
 class KunenaForumMessageThankyou extends JObject
 {
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	protected $id = 0;
+
 	protected $users = array();
 
 	/**
@@ -83,18 +84,21 @@ class KunenaForumMessageThankyou extends JObject
 		if (!$user->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+
 			return false;
 		}
 
 		if ($user->userid == $message->userid)
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
+
 			return false;
 		}
 
 		if ($this->exists($user->userid))
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
+
 			return false;
 		}
 
@@ -109,6 +113,7 @@ class KunenaForumMessageThankyou extends JObject
 		if ($db->getErrorNum())
 		{
 			$this->setError($db->getErrorMsg());
+
 			return false;
 		}
 
@@ -134,6 +139,7 @@ class KunenaForumMessageThankyou extends JObject
 		if ($db->getErrorNum())
 		{
 			$this->setError($db->getErrorMsg());
+
 			return false;
 		}
 
@@ -164,12 +170,14 @@ class KunenaForumMessageThankyou extends JObject
 		if (!$user->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+
 			return false;
 		}
 
 		if (!$this->exists($user->userid))
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+
 			return false;
 		}
 
@@ -186,6 +194,7 @@ class KunenaForumMessageThankyou extends JObject
 		if ($db->getErrorNum())
 		{
 			$this->setError($db->getErrorMsg());
+
 			return false;
 		}
 

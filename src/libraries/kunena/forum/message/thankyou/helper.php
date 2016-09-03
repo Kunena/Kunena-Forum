@@ -197,6 +197,7 @@ abstract class KunenaForumMessageThankyouHelper
 		foreach ($ids as $i => $id)
 		{
 			$id = intval($id);
+
 			if (!$id || isset(self::$_instances [$id]))
 			{
 				unset($ids[$i]);
@@ -311,7 +312,8 @@ abstract class KunenaForumMessageThankyouHelper
 		self::loadMessages($ids);
 
 		$list = array();
-		foreach($ids as $id)
+
+		foreach ($ids as $id)
 		{
 			if (!empty(self::$_instances [$id]))
 			{

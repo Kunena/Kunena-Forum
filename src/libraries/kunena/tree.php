@@ -93,6 +93,7 @@ class KunenaTree implements Iterator
 
 		// Add children into the beginning of the array
 		$this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
+
 		// Skip missing items
 		$id = reset($this->heap);
 
@@ -155,6 +156,7 @@ class KunenaTree implements Iterator
 		if (empty($this->_levels))
 		{
 			$heap = array(0);
+
 			while (($parent = array_shift($heap)) !== null)
 			{
 				$heap = array_merge($heap, array_keys($this->_tree[$parent]));
@@ -210,6 +212,7 @@ class KunenaTree implements Iterator
 		$last_id = key($parent_tree);
 
 		$list = array();
+
 		foreach ($parent_tree as $id => $tree)
 		{
 			$indent = $itemIndent;

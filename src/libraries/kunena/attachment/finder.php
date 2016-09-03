@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAttachmentFinder
- * 
+ *
  * @since 5.0
  */
 class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder

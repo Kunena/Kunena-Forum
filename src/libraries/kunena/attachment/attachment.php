@@ -33,7 +33,7 @@ defined('_JEXEC') or die();
 class KunenaAttachment extends KunenaDatabaseObject
 {
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	public $id = null;
 
@@ -48,7 +48,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected $shortname;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 */
 	public $disabled = false;
 
@@ -247,15 +247,15 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$filename = urlencode($this->getFilename(false));
 
 		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
-		
+
 		if (JApplicationCms::getInstance('site')->get('sef_suffix'))
 		{
 			$url = preg_replace('/.html/', '', $url);
 		}
-		
+
 		return $url;
 	}
-	
+
 	/**
 	 * Get attachment layout.
 	 *

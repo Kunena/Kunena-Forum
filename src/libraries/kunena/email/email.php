@@ -40,7 +40,7 @@ abstract class KunenaEmail
 		if ($email_recipient_count > 1
 			&& $email_recipient_privacy == 'bcc'
 			&& JMailHelper::isEmailAddress($config->get('email_visible_address'))
-)
+		)
 		{
 			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
 
@@ -54,6 +54,7 @@ abstract class KunenaEmail
 		$chunks = array_chunk($receivers, $email_recipient_count);
 
 		$success = true;
+
 		foreach ($chunks as $emails)
 		{
 			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')

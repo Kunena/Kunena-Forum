@@ -15,8 +15,11 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected $name = 'Empty';
 
 	public $output = null;
+
 	public $layout = 'default';
+
 	public $config;
+
 	protected $primary = false;
 
 	/**
@@ -25,6 +28,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function execute()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
 		try
 		{
 			// Run before executing action.
@@ -33,6 +37,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			if ($result === false)
 			{
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 
@@ -104,7 +109,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function after()
 	{
-		if ($this->primary) { $this->prepareDocument(); }
+		if ($this->primary)
+		{
+			$this->prepareDocument();
+		}
 	}
 
 	/**
@@ -143,7 +151,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		catch (Exception $e)
 		{
 			// TODO: error message?
-			if (!$this->primary) {
+			if (!$this->primary)
+			{
 				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
 			}
 
@@ -167,6 +176,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function getLayout()
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+
 		return $layout ? $layout : 'default';
 	}
 
@@ -179,7 +189,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setLayout($layout)
 	{
-		if (!$layout) { $layout = 'default'; }
+		if (!$layout)
+		{
+			$layout = 'default';
+		}
 
 		$this->layout = $layout;
 
@@ -195,9 +208,13 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	{
 		$properties = (array) $this;
 		$list = array();
+
 		foreach ($properties as $property => $value)
 		{
-			if ($property[0] != "\0") { $list[$property] = $value; }
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
 		}
 
 		return $list;
@@ -220,7 +237,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			throw new \InvalidArgumentException('Parameter should be either array or an object.');
 		}
 
-		foreach ((array) $properties as $k => $v) {
+		foreach ((array) $properties as $k => $v)
+		{
 			// Use the set function which might be overridden.
 			if ($k[0] != "\0")
 			{
@@ -241,6 +259,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function set($key, $value)
 	{
 		$this->input->set($key, $value);
+
 		return $this;
 	}
 

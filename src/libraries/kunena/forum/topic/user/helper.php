@@ -19,6 +19,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @var array|KunenaForumTopicUser[]
 	 */
 	protected static $_instances = array();
+
 	/**
 	 * @var array|KunenaForumTopicUser[]
 	 */
@@ -79,13 +80,17 @@ abstract class KunenaForumTopicUserHelper
 		// Convert topic objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof KunenaForumTopic) { $ids[$i] = $id->id; }
+			if ($id instanceof KunenaForumTopic)
+			{
+				$ids[$i] = $id->id;
+			}
 		}
 
 		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
 		$list = array ();
+
 		foreach ($ids as $id)
 		{
 			if (!empty(self::$_instances [$user->userid][$id]))
@@ -111,8 +116,14 @@ abstract class KunenaForumTopicUserHelper
 
 		foreach ($topics as $id)
 		{
-			if ($id instanceof KunenaForumTopic) { $ids[(int) $id->id] = (int) $id->id; }
-			else { $ids[(int) $id] = (int) $id; }
+			if ($id instanceof KunenaForumTopic)
+			{
+				$ids[(int) $id->id] = (int) $id->id;
+			}
+			else
+			{
+				$ids[(int) $id] = (int) $id;
+			}
 		}
 
 		$idlist = implode(',', $ids);
@@ -131,6 +142,7 @@ abstract class KunenaForumTopicUserHelper
 		KunenaError::checkDatabaseError();
 
 		$list = array();
+
 		foreach ($results as $result)
 		{
 			$list[$result->topic_id][$result->user_id] = $result->{$value};
@@ -348,7 +360,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new KunenaForumTopicUser();
+				$instance = new KunenaForumTopicUser;
 				$instance->bind($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
@@ -387,7 +399,8 @@ abstract class KunenaForumTopicUserHelper
 				$instance->bind($results[$instance->user_id]);
 				$instance->exists(true);
 			}
-			else {
+			else
+			{
 				$instance->reset();
 			}
 		}

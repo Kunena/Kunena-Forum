@@ -21,7 +21,6 @@ defined('_JEXEC') or die();
  */
 class KunenaConfig extends JObject
 {
-
 	/**
 	 * @var    integer  ID; input, hidden
 	 * @since  1.5.2
@@ -201,7 +200,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User edit time Grace; input, number
 	 * @since  1.0.0
 	 */
-	public $useredittimegrace = 600; // input, number, time
+	public $useredittimegrace = 600; // Input, number, time
 
 	/**
 	 * @var    integer  Edit markup; select, boolean
@@ -316,7 +315,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Image width; input, number
 	 * @since  1.0.0
 	 */
-	public $imagewidth = 800; // input, number
+	public $imagewidth = 800; // Input, number
 
 	/**
 	 * @var    integer  Image size
@@ -970,7 +969,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Send emails; select, boolean
 	 * @since  2.0.0
 	 */
-	public $send_emails = 1; // select, boolean
+	public $send_emails = 1; // Select, boolean
 
 	/**
 	 * @var    integer  Fallback english; select, boolean
@@ -1007,7 +1006,6 @@ class KunenaConfig extends JObject
 	 * @since  2.0.3
 	 */
 	public $rss_feedburner_url = '';
-	// New for 3.0.0
 
 	/**
 	 * @var    integer  Auto link; select, boolean
@@ -1298,7 +1296,7 @@ class KunenaConfig extends JObject
 	 */
 	public function getPlugin($name)
 	{
-		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry;
 	}
 
 	/**

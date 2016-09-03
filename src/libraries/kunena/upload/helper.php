@@ -21,7 +21,8 @@ class KunenaUploadHelper
 	 *
 	 */
 	private function __construct()
-{}
+	{
+	}
 
 	/**
 	 * @param $file
@@ -33,7 +34,7 @@ class KunenaUploadHelper
 	public static function upload($file, $uploadfolder, $format)
 	{
 		jimport('joomla.filesystem.folder');
-		require_once(JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php');
+		require_once JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php';
 
 		$err = null;
 
@@ -59,7 +60,8 @@ class KunenaUploadHelper
 		{
 			$filepath = JPath::clean($uploadfolder . '/' . strtolower($file['name']));
 
-			/* This part doesn't work
+			/*
+			 This part doesn't work
 			if (!JHelperMedia::canUpload($file, $err))
 			{
 				if ($format == 'json')
@@ -80,9 +82,9 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance('upload.error.php');
-					//$log->addEntry(array('comment' => 'File already exists: '.$filepath));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance('upload.error.php');
+					// $log->addEntry(array('comment' => 'File already exists: '.$filepath));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
 				}
@@ -105,9 +107,9 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance('upload.error.php');
-					//$log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance('upload.error.php');
+					// $log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
 				}
@@ -120,9 +122,9 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance();
-					//$log->addEntry(array('comment' => $uploadfolder));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance();
+					// $log->addEntry(array('comment' => $uploadfolder));
 					jexit('Upload complete');
 				}
 				else

@@ -25,7 +25,7 @@ abstract class KunenaTableObject
 	 * Store all instances of this type by Id.
 	 * Always override this variable in your own class!
 	 *
-	 * @var array  If you want to store instances, initialise to array()
+	 * @var array
 	 * @since  K4.0
 	 */
 	static protected $instances = null;
@@ -76,7 +76,7 @@ abstract class KunenaTableObject
 	/**
 	 * Flag whether the object exists in the database or not.
 	 *
-	 * @var bool
+	 * @var boolean
 	 * @since  K4.0
 	 */
 	protected $_exists = false;
@@ -125,6 +125,7 @@ abstract class KunenaTableObject
 				{
 					// Yes, we are in the special case.
 					$this->_key = count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
+
 					if (isset(static::$instances[$this->_key]))
 					{
 						// If we already had loaded the object, we can stop now.
@@ -142,6 +143,7 @@ abstract class KunenaTableObject
 		if (!$exists)
 		{
 			$exists = $this->load($keys);
+
 			if ($exists)
 			{
 				// Build storage key for the object.
@@ -155,6 +157,7 @@ abstract class KunenaTableObject
 		if ($exists && is_array(static::$instances))
 		{
 			$this->_key = count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
+
 			if (!isset(static::$instances[$this->_key]))
 			{
 				// Add the new object into the instances.
@@ -265,14 +268,17 @@ abstract class KunenaTableObject
 	static public function getInstance($keys)
 	{
 		$k = json_encode(self::resolveKeys($keys));
+
 		// FIXME:
 		$k = (int) $keys;
 
 		// If we are creating or loading a new item or we load instance by alternative keys,
 		// we need to create a new object.
-		if (!isset(static::$instances[$k])) {
+		if (!isset(static::$instances[$k]))
+		{
 			$c = get_called_class();
 			$instance = new $c($keys);
+
 			// @var KunenaTableObject $instance
 
 			if (!$instance->exists())
@@ -387,6 +393,7 @@ abstract class KunenaTableObject
 	{
 		// Use closure to return public variables only.
 		$self = $this;
+
 		return function () use ($self) {
 
 			return get_object_vars($self);
@@ -472,7 +479,8 @@ abstract class KunenaTableObject
 			throw $e;
 		}
 
-		if ($reset) {
+		if ($reset)
+		{
 			$this->reset();
 		}
 
@@ -569,7 +577,7 @@ abstract class KunenaTableObject
 	 *
 	 * @since  K4.0
 	 */
-/*
+	/*
  	public function save($src, $orderingFilter = '', $ignore = '')
 	{
 		// Attempt to bind the source to the instance.
@@ -609,7 +617,7 @@ abstract class KunenaTableObject
 
 		return true;
 	}
-*/
+	*/
 
 	/**
 	 * Method to delete a row from the database table by primary key value.
@@ -636,7 +644,9 @@ abstract class KunenaTableObject
 
 		// Delete the row by given keys/fields.
 		$query = static::$db->getQuery(true)->delete()->from(static::$tbl);
-		foreach ($keys as $key => $value) {
+
+		foreach ($keys as $key => $value)
+		{
 			$query->where(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
 		}
 
@@ -866,7 +876,7 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 *
-	 * @param JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query
 	 *
 	 * @return array
 	 */
@@ -888,7 +898,7 @@ abstract class KunenaTableObject
 	 * Returns all keys and their values as an array.
 	 *
 	 * @param   array|string $fields
-	 * @param bool           $throw
+	 * @param   bool           $throw
 	 *
 	 * @return array
 	 * @since  K4.0
@@ -901,6 +911,7 @@ abstract class KunenaTableObject
 		$tableKeys = static::$tbl_keys;
 
 		$keys = array();
+
 		if (is_null($fields))
 		{
 			// No fields were given as parameter: use table instance.
@@ -910,7 +921,7 @@ abstract class KunenaTableObject
 				$keys[$keyName] = $keyValue;
 
 				// If null primary keys aren't allowed
-				if($throw && is_null($keyValue))
+				if ($throw && is_null($keyValue))
 				{
 					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', get_class($this), $keyName), 0);
 				}

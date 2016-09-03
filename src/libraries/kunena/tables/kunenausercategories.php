@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena User Categories Table
@@ -19,10 +19,15 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaUserCategories extends KunenaTable
 {
 	public $user_id = null;
+
 	public $category_id = null;
+
 	public $role = null;
+
 	public $allreadtime = null;
+
 	public $subscribed = null;
+
 	public $params = null;
 
 	/**
@@ -39,12 +44,14 @@ class TableKunenaUserCategories extends KunenaTable
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->user_id);
+
 		if (!$user->exists())
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
 		$category = KunenaForumCategoryHelper::get($this->category_id);
+
 		if ($this->category_id && !$category->exists())
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_CATEGORY_INVALID', (int) $category->id));

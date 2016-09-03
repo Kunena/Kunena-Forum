@@ -36,7 +36,7 @@ abstract class KunenaForumTopicPollHelper
 
 		if ($id < 1)
 		{
-			return new KunenaForumTopicPoll();
+			return new KunenaForumTopicPoll;
 		}
 
 		if ($reload || empty(self::$_instances [$id]))

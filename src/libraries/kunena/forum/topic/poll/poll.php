@@ -21,13 +21,21 @@ defined('_JEXEC') or die();
 class KunenaForumTopicPoll extends JObject
 {
 	protected $_exists = false;
+
 	protected $_db = null;
+
 	protected $_total = null;
+
 	protected $options = false;
+
 	protected $newOptions = false;
+
 	protected $usercount = false;
+
 	protected $users = false;
+
 	protected $myvotes = array();
+
 	protected $mytime = array();
 
 	/**
@@ -249,6 +257,7 @@ class KunenaForumTopicPoll extends JObject
 		if (!$this->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
+
 			return false;
 		}
 
@@ -257,6 +266,7 @@ class KunenaForumTopicPoll extends JObject
 		if (!isset($options[$option]))
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
+
 			return false;
 		}
 
@@ -265,6 +275,7 @@ class KunenaForumTopicPoll extends JObject
 		if (!$user->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
+
 			return false;
 		}
 
@@ -274,14 +285,14 @@ class KunenaForumTopicPoll extends JObject
 		if (!$myvotes)
 		{
 			// First vote
-			$votes = new StdClass();
+			$votes = new StdClass;
 			$votes->new = true;
 			$votes->pollid = $this->id;
 			$votes->votes = 1;
 		}
 		elseif ($change && isset($lastVoteId))
 		{
-			$votes = new StdClass();
+			$votes = new StdClass;
 			$votes->new = false;
 			$votes->lasttime = null;
 			$votes->lastvote = null;
@@ -296,7 +307,7 @@ class KunenaForumTopicPoll extends JObject
 		}
 		else
 		{
-			$votes = new StdClass();
+			$votes = new StdClass;
 			$votes->new = false;
 
 			// Add a vote to the user
@@ -321,6 +332,7 @@ class KunenaForumTopicPoll extends JObject
 			if (KunenaError::checkDatabaseError())
 			{
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
+
 				return false;
 			}
 		}
@@ -336,6 +348,7 @@ class KunenaForumTopicPoll extends JObject
 			if (KunenaError::checkDatabaseError())
 			{
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+
 				return false;
 			}
 		}
@@ -369,6 +382,7 @@ class KunenaForumTopicPoll extends JObject
 		if (KunenaError::checkDatabaseError())
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
+
 			return false;
 		}
 
@@ -387,7 +401,7 @@ class KunenaForumTopicPoll extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
 			$tabletype ['name'] = $type;
@@ -404,7 +418,10 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function bind(array $data, array $allow = array())
 	{
-		if (!empty($allow)) { $data = array_intersect_key($data, array_flip($allow)); }
+		if (!empty($allow))
+		{
+			$data = array_intersect_key($data, array_flip($allow));
+		}
 
 		$this->setProperties($data);
 	}
@@ -505,12 +522,13 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function save($updateOnly = false)
 	{
-		//are we creating a new poll
+		// Are we creating a new poll
 		$isnew = ! $this->_exists;
 
 		if ($isnew && empty($this->newOptions))
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
+
 			return false;
 		}
 
@@ -519,10 +537,11 @@ class KunenaForumTopicPoll extends JObject
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
 
-		//Store the topic data in the database
+		// Store the topic data in the database
 		if (! $table->store())
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
@@ -551,6 +570,7 @@ class KunenaForumTopicPoll extends JObject
 				$this->_db->setQuery($query);
 				$this->_db->execute();
 				KunenaError::checkDatabaseError();
+
 				// TODO: Votes in #__kunena_polls_users will be off and there's no way we can fix that
 				// Maybe we should allow option to reset votes when option gets removed
 				// Or we could prevent users from editing poll..
@@ -559,6 +579,7 @@ class KunenaForumTopicPoll extends JObject
 
 		// Go though new and changed options
 		ksort($this->newOptions);
+
 		foreach ($this->newOptions as $key => $value)
 		{
 			if (!$value)

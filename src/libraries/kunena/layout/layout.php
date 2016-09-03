@@ -150,8 +150,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $title
 	 * @param   null                $class
 	 *
-	 * @param bool                  $follow
-	 * @param null                  $canonical
+	 * @param   bool                  $follow
+	 * @param   null                  $canonical
 	 *
 	 * @return mixed
 	 */
@@ -208,12 +208,12 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $class
 	 * @param   KunenaForumCategory $category
 	 *
-	 * @param bool                  $follow
-	 * @param bool                  $canonical
+	 * @param   bool                  $follow
+	 * @param   bool                  $canonical
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = true, $canonical = false)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -338,8 +338,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $class
 	 * @param   int  $length
 	 *
-	 * @param bool   $follow
-	 * @param null   $canonical
+	 * @param   bool   $follow
+	 * @param   null   $canonical
 	 *
 	 * @return mixed
 	 */
@@ -396,14 +396,15 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
 	 *
-	 * @param KunenaView $view
+	 * @param   KunenaView $view
 	 *
 	 * @since      4.0
 	 *
 	 * @deprecated 5.0
 	 * @return $this
 	 */
-	public function setLegacy(KunenaView $view = null) {
+	public function setLegacy(KunenaView $view = null)
+	{
 		$this->legacy = $view;
 
 		return $this;

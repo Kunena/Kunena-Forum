@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Users Table
@@ -20,19 +20,23 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaUsers extends KunenaTable
 {
-
 	/**
 	 * User ID
-	 * @var int
+	 * @var integer
 	 **/
 	public $userid = null;
 
 	// From Joomla
 	public $name = null;
+
 	public $username = null;
+
 	public $email = null;
+
 	public $blocked = null;
+
 	public $registerDate = null;
+
 	public $lastvisitDate = null;
 
 	public $view = null;
@@ -45,25 +49,25 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Is moderator?
-	 * @var int
+	 * @var integer
 	 **/
 	public $moderator = null;
 
 	/**
 	 * Banned until timestamp
-	 * @var int
+	 * @var integer
 	 **/
 	public $banned = null;
 
 	/**
 	 * Ordering of posts
-	 * @var int
+	 * @var integer
 	 **/
 	public $ordering = null;
 
 	/**
 	 * User post count
-	 * @var int
+	 * @var integer
 	 **/
 	public $posts = null;
 
@@ -75,7 +79,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User karma
-	 * @var int
+	 * @var integer
 	 **/
 	public $karma = null;
 
@@ -83,13 +87,13 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Kunena Group ID
-	 * @var int
+	 * @var integer
 	 **/
 	public $group_id = null;
 
 	/**
 	 * Kunena Profile hits
-	 * @var int
+	 * @var integer
 	 **/
 	public $uhits = null;
 
@@ -101,7 +105,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Gender
-	 * @var int
+	 * @var integer
 	 **/
 	public $gender = null;
 
@@ -131,19 +135,19 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User rank
-	 * @var int
+	 * @var integer
 	 **/
 	public $rank = null;
 
 	/**
 	 * Hide Email address
-	 * @var int
+	 * @var integer
 	 **/
 	public $hideEmail = null;
 
 	/**
 	 * Show online
-	 * @var int
+	 * @var integer
 	 **/
 	public $showOnline = null;
 
@@ -245,25 +249,25 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Thankyou count
-	 * @var int
+	 * @var integer
 	 **/
 	public $thankyou = null;
 
 	/**
 	 * canSubscribe
-	 * @var int
+	 * @var integer
 	 **/
 	public $canSubscribe = null;
 
 	/**
 	 * userListtime
-	 * @var int
+	 * @var integer
 	 **/
 	public $userListtime = null;
 
 	/**
 	 * Status
-	 * @var int
+	 * @var integer
 	 **/
 	public $status = null;
 
@@ -275,49 +279,49 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Instagram
-	 * @var int
+	 * @var integer
 	 **/
 	public $instagram = null;
 
 	/**
 	 * QQ
-	 * @var int
+	 * @var integer
 	 **/
 	public $qq = null;
 
 	/**
 	 * Qzone
-	 * @var int
+	 * @var integer
 	 **/
 	public $qzone = null;
 
 	/**
 	 * Weibo
-	 * @var int
+	 * @var integer
 	 **/
 	public $weibo = null;
 
 	/**
 	 * Wechat
-	 * @var int
+	 * @var integer
 	 **/
 	public $wechat = null;
 
 	/**
 	 * Apple
-	 * @var int
+	 * @var integer
 	 **/
 	public $apple = null;
 
 	/**
 	 * Vk
-	 * @var int
+	 * @var integer
 	 **/
 	public $vk = null;
 
 	/**
 	 * telegram
-	 * @var int
+	 * @var integer
 	 **/
 	public $telegram = null;
 
@@ -341,12 +345,16 @@ class TableKunenaUsers extends KunenaTable
 		$k = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($userid !== null) {
+		if ($userid !== null)
+		{
 			$this->$k = $userid;
 		}
 
 		// Reset the table.
-		if ($reset) { $this->reset(); }
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -381,7 +389,10 @@ class TableKunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data['posts'] !== null) { $this->_exists = true; }
+		if ($data['posts'] !== null)
+		{
+			$this->_exists = true;
+		}
 
 		// Bind the data to the table.
 		$this->bind($data);
@@ -416,7 +427,10 @@ class TableKunenaUsers extends KunenaTable
 
 		foreach ($fields as $field)
 		{
-			if (isset($data[$field]) && !in_array($field, $ignore)) { $this->$field = $data[$field]; }
+			if (isset($data[$field]) && !in_array($field, $ignore))
+			{
+				$this->$field = $data[$field];
+			}
 		}
 	}
 

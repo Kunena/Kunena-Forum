@@ -90,7 +90,7 @@ abstract class JHtmlKunenaForum
 					{
 						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
 						{
-							unset ($channels_local[$id]);
+							unset($channels_local[$id]);
 						}
 					}
 				}
@@ -154,6 +154,7 @@ abstract class JHtmlKunenaForum
 		}
 
 		$disabled = false;
+
 		foreach ($channels as $category)
 		{
 			if ($preselect && empty($selected))
@@ -182,6 +183,7 @@ abstract class JHtmlKunenaForum
 		$id = str_replace(']', '', $id);
 
 		$html = '';
+
 		if (!empty($options))
 		{
 			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
@@ -208,6 +210,7 @@ abstract class JHtmlKunenaForum
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
+
 		if ($title)
 		{
 			$list['title'] = htmlspecialchars($title);
@@ -230,6 +233,7 @@ abstract class JHtmlKunenaForum
 
 		// Parse attributes
 		$attr = array();
+
 		foreach ($list as $key => $value)
 		{
 			$attr[] = "{$key}=\"{$value}\"";

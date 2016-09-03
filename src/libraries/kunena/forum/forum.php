@@ -21,8 +21,11 @@ defined('_JEXEC') or die();
 abstract class KunenaForum
 {
 	protected static $version = false;
+
 	protected static $version_major = false;
+
 	protected static $version_date = false;
+
 	protected static $version_name = false;
 
 	const PUBLISHED = 0;
@@ -188,7 +191,8 @@ abstract class KunenaForum
 		}
 
 		// Development version support.
-		if ($version == '4.0') {
+		if ($version == '4.0')
+		{
 			return true;
 		}
 
@@ -288,7 +292,7 @@ abstract class KunenaForum
 	 */
 	public static function getVersionInfo()
 	{
-		$version = new stdClass();
+		$version = new stdClass;
 		$version->version = self::version();
 		$version->major = self::versionMajor(); // New in K2.0.0-BETA2
 		$version->date = self::versionDate();
@@ -353,6 +357,7 @@ abstract class KunenaForum
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+
 		// @var KunenaView $view
 
 		if ($params instanceof JRegistry)
@@ -367,7 +372,8 @@ abstract class KunenaForum
 		$params->set('layout', $layout);
 
 		// Push the model into the view (as default).
-		$model = new $model();
+		$model = new;
+
 		// @var KunenaModel $model
 
 		$model->initialize($params);

@@ -372,7 +372,7 @@ abstract class KunenaForum
 		$params->set('layout', $layout);
 
 		// Push the model into the view (as default).
-		$model = new;
+		$model = new $model;
 
 		// @var KunenaModel $model
 

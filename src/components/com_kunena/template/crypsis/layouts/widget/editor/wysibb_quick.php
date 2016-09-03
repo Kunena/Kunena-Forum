@@ -21,11 +21,11 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 ?>
 <script>
 	jQuery(function($) {
-		$("#editor").wysibb();
+		$('[id^=editor-]').wysibb();
 	})
 </script>
 
-<textarea class="span12" name="message" id="editor" rows="12" tabindex="7" required="required"></textarea>
+<textarea class="span12" name="message" id="editor-<?php echo $this->message->id ;?>" rows="12" tabindex="7" required="required"></textarea>
 
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

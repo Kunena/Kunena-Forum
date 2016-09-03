@@ -173,7 +173,7 @@ class KunenaUserBan extends JObject
 
 		if (intval($identifier) < 1)
 		{
-			return new;
+			return new $c;
 		}
 
 		if (!isset(self::$_instances[$identifier]))
@@ -200,12 +200,12 @@ class KunenaUserBan extends JObject
 
 		if (intval($identifier) < 1)
 		{
-			return new;
+			return new $c;
 		}
 
 		if (!isset(self::$_instancesByUserid[$identifier]))
 		{
-			$instance = new;
+			$instance = new $c;
 			$instance->loadByUserid($identifier);
 			self::storeInstance($instance);
 		}
@@ -229,12 +229,12 @@ class KunenaUserBan extends JObject
 
 		if (empty($identifier))
 		{
-			return new;
+			return new $c;
 		}
 
 		if (!isset(self::$_instancesByIP[$identifier]))
 		{
-			$instance = new;
+			$instance = new $c;
 			$instance->loadByIP($identifier);
 			self::storeInstance($instance);
 		}
@@ -266,7 +266,7 @@ class KunenaUserBan extends JObject
 
 		foreach ($results as $ban)
 		{
-			$instance = new;
+			$instance = new $c;
 			$instance->bind($ban);
 			$instance->_exists = true;
 			self::storeInstance($instance);
@@ -302,7 +302,7 @@ class KunenaUserBan extends JObject
 
 		foreach ($results as $ban)
 		{
-			$instance = new;
+			$instance = new $c;
 			$instance->bind($ban);
 			$instance->_exists = true;
 			self::storeInstance($instance);

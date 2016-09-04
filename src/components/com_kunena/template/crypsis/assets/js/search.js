@@ -10,8 +10,8 @@
 jQuery(document).ready(function($) {
 
 	/* Provide autocomplete user list in search form and in user list */
-	if ( $( '#kurl_users' ).length > 0 ) {
-		var users_url = $( '#kurl_users' ).val();
+	if ($('#kurl_users').length > 0) {
+		var users_url = $('#kurl_users').val();
 
 		var NameObjs = {};
 		var UserNames = [];
@@ -19,49 +19,48 @@ jQuery(document).ready(function($) {
 		$("#kusersearch").typeahead({
 			source: function ( query, process ) {
 
-			$.ajax({
-				url: users_url
-				,cache: false
-				,success: function(data){
-					//reset these containers every time the user searches
-					//because we're potentially getting entirely different results from the api
-					NameObjs = {};
-					UserNames = [];
+				$.ajax({
+					url: users_url
+					,cache: false
+					,success: function(data){
+						//reset these containers every time the user searches
+						//because we're potentially getting entirely different results from the api
+						NameObjs = {};
+						UserNames = [];
 
-					$.each( data, function( index, item ){
+						$.each( data, function( index, item ){
 
-						//for each iteration of this loop the "item" argument contains
-						//1 user object from the array in our json, such as:
-						// { "id":7, "name":"Pierce Brosnan" }
+							//for each iteration of this loop the "item" argument contains
+							//1 user object from the array in our json, such as:
+							// { "id":7, "name":"Pierce Brosnan" }
 
-						//add the label to the display array
-						UserNames.push( item.name );
+							//add the label to the display array
+							UserNames.push(item.name);
 
-						//also store a hashmap so that when bootstrap gives us the selected
-						//name we can map that back to an id value
-						NameObjs[ item.name ] = item;
-					});
+							//also store a hashmap so that when bootstrap gives us the selected
+							//name we can map that back to an id value
+							NameObjs[ item.name ] = item;
+						});
 
-					//send the array of results to bootstrap for display
-					process( UserNames );
-				}
-			});
+						//send the array of results to bootstrap for display
+						process(UserNames);
+					}
+				});
 
 			}
 			,highlighter: function( item ){
 				var user = NameObjs[ item ];
 
 				return '<div class="bond">'
-					+'<img src="' + user.photo + '" title="" />'
-					+'<br/><strong>' + user.name + '</strong>'
-					+'</div>';
-				}
+					+ '<img src="' + user.photo + '" title="" />'
+					+ '<br/><strong>' + user.name + '</strong>'
+					+ '</div>';
+			}
 		});
 	}
 
 	/* Hide search form when there are search results found */
-	if ( $('#kunena_search_results').is(':visible') ) {
+	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");
 	}
 });
-

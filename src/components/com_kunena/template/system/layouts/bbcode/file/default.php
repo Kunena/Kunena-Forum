@@ -20,7 +20,9 @@ $size = $this->size;
 		<?php echo $title; ?>
 	</h4>
 
-	<?php if ($url) : ?>
+	<?php if ($url)
+	:
+	?>
 
 	<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
 	<a href="<?php echo $url; ?>" title="<?php echo $this->escape($filename); ?>">

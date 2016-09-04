@@ -14,19 +14,19 @@ jQuery(document).ready(function($) {
 	// Initialize
 	(function init() {
 		var topic_id = $("#topic_id").val();
-		
+
 		if ($('#krating').length > 0) {
 			$.ajax({
-				 dataType: "json",
-				 url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
-				 data: 'topic_id=' + topic_id 
+				dataType: "json",
+				url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
+				data: 'topic_id=' + topic_id
 			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function(reponse) {
-			
+
 			});
 		}
-	})(); 
+	})();
 
 	// Build krating item
 	function buildItem(){
@@ -46,19 +46,19 @@ jQuery(document).ready(function($) {
 			$.ajax({
 				dataType: "json",
 				url: $('#krating_submit_url').val(),
-				data: 'starid=' + rating + '&topic_id=' + topicid  
-				}).done(function(response) {
-					if (response.success)
+				data: 'starid=' + rating + '&topic_id=' + topicid
+			}).done(function(response) {
+				if (response.success)
 					{
-						$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+Joomla.JText._(response.message)+'</div>').appendTo('#system-message-container');
-					}
-					else
+					$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
+				}
+				else
 					{
-						$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+Joomla.JText._(response.message)+'</div>').appendTo('#system-message-container');
-					}
-				}).fail(function(reponse) {
-					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+reponse+'</div>').appendTo('#system-message-container');
-				});  
+					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
+				}
+			}).fail(function(reponse) {
+				$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>' + reponse + '</div>').appendTo('#system-message-container');
+			});
 		};
 		var r = rating(ratingElement, currentRating, maxRating, callback);
 	}

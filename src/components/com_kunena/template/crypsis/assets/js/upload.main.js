@@ -30,12 +30,13 @@ jQuery(function ($) {
 					var startPos = this.selectionStart;
 					var endPos = this.selectionEnd;
 					var scrollTop = this.scrollTop;
-					this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+					this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos,this.value.length);
 					this.focus();
 					this.selectionStart = startPos + myValue.length;
 					this.selectionEnd = startPos + myValue.length;
 					this.scrollTop = scrollTop;
-				} else {
+				}
+				else {
 					this.value += myValue;
 					this.focus();
 				}
@@ -110,6 +111,7 @@ jQuery(function ($) {
 				insertInMessage(file.id, file.name);
 			});
 		}
+
 		filesedit = null;
 
 		var child = $('#kattach-list').find('input');
@@ -146,7 +148,8 @@ jQuery(function ($) {
 			if (data.result != undefined) {
 				file_id = data.result.data.id;
 				filename = data.result.data.filename;
-			} else {
+			}
+			else {
 				file_id = data.id;
 				filename = data.name;
 			}
@@ -168,7 +171,8 @@ jQuery(function ($) {
 			if (data.uploaded == true) {
 				if (data.result != false) {
 					file_id = data.result.data.id;
-				} else {
+				}
+				else {
 					file_id = data.file_id;
 				}
 			}
@@ -200,7 +204,7 @@ jQuery(function ($) {
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
-		disableImageResize: /Android(?!.*Chrome)|Opera/
+		disableImageResize: / Android( ?!.*Chrome) |Opera /
 			.test(window.navigator.userAgent),
 		previewMaxWidth   : 100,
 		previewMaxHeight  : 100,
@@ -217,10 +221,10 @@ jQuery(function ($) {
 			});
 
 			data.formData = params;
-		})
+	})
 		.bind('fileuploaddrop', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
-			
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -234,7 +238,7 @@ jQuery(function ($) {
 		})
 		.bind('fileuploadchange', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
-			
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -261,110 +265,116 @@ jQuery(function ($) {
 					node
 						.append('<br>');
 				}
+
 				node.appendTo(data.context);
 			});
 		}).on('fileuploadprocessalways', function (e, data) {
-		var index = data.index,
+			var index = data.index,
 			file = data.files[index],
 			node = $(data.context.children()[index]);
-		if (file.preview) {
-			node
+			if (file.preview) {
+				node
 				.prepend('<br>')
 				.prepend(file.preview);
-		}
-		if (file.error) {
-			node
+			}
+
+			if (file.error) {
+				node
 				.append('<br>')
 				.append($('<span class="text-danger"/>').text(file.error));
-		}
-		if (index + 1 === data.files.length) {
-			data.context.find('button.btn-primary')
+			}
+
+			if (index + 1 === data.files.length) {
+				data.context.find('button.btn-primary')
 				.text(Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON'))
 				.prop('disabled', !!data.files.error);
-		}
-	}).on('fileuploaddone', function (e, data) {
-		// $.each(data.result.data, function (index, file)
+			}
+		}).on('fileuploaddone', function (e, data) {
+			// $.each(data.result.data, function (index, file)
 
-		var link = $('<a>')
+			var link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
 
-		data.context.find('span')
+			data.context.find('span')
 			.wrap(link);
 
-		if (data.result.success == true) {
-			$('#form_submit_button').prop('disabled', false);
-			
-			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
-			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
-			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
+			if (data.result.success == true) {
+				$('#form_submit_button').prop('disabled', false);
 
-			data.uploaded = true;
+				// The attachment has been right uploaded, so now we need to put into input hidden to added to message
+				$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
+				$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
 
-			data.context.append(insertButton.clone(true).data(data));
-			if (data.context.find('button').hasClass('btn-danger')) {
-				data.context.find('button.btn-danger').remove();
+				data.uploaded = true;
+
+				data.context.append(insertButton.clone(true).data(data));
+				if (data.context.find('button').hasClass('btn-danger')) {
+					data.context.find('button.btn-danger').remove();
+				}
+
+				data.context.append(removeButton.clone(true).data(data));
 			}
-			data.context.append(removeButton.clone(true).data(data));
-		} else if (data.result.message) {
-			$('#form_submit_button').prop('disabled', false);
-			
-			data.uploaded = false;
-			data.context.append(removeButton.clone(true).data(data));
+			else if (data.result.message) {
+				$('#form_submit_button').prop('disabled', false);
 
-			var error = null;
-			$.each(data.result.data.exceptions, function (index, error) {
-				error = $('<div class="alert alert-error"/>').text(error.message);
-				data.context.find('span')
+				data.uploaded = false;
+				data.context.append(removeButton.clone(true).data(data));
+
+				var error = null;
+				$.each(data.result.data.exceptions, function (index, error) {
+					error = $('<div class="alert alert-error"/>').text(error.message);
+					data.context.find('span')
 					.append('<br>')
 					.append(error);
-			});
-		}
-	}).on('fileuploadfail', function (e, data) {
-		$.each(data.files, function (index, file) {
-			// TODO: replace text with error message from server if possible
-			var error = $('<span class="text-danger"/>').text('File upload failed.');
-			$(data.context.children()[index])
+				});
+			}
+		}).on('fileuploadfail', function (e, data) {
+			$.each(data.files, function (index, file) {
+				// TODO: replace text with error message from server if possible
+				var error = $('<span class="text-danger"/>').text('File upload failed.');
+				$(data.context.children()[index])
 				.append('<br>')
 				.append(error);
-		});
-	}).prop('disabled', !$.support.fileInput)
+			});
+		}).prop('disabled', !$.support.fileInput)
 		.parent().addClass($.support.fileInput ? undefined : 'disabled');
 
-	// Load attachments when the message is edited
-	if ($('#kmessageid').val() > 0) {
-		$.ajax({
-			type    : 'POST',
-			url     : kunena_upload_files_preload,
-			async   : false,
-			dataType: 'json',
-			data    : {mes_id: $('#kmessageid').val()},
-			success : function (data) {
-				if ($.isEmptyObject(data.files) == false) {
-					fileCount = Object.keys(data.files).length;
+		// Load attachments when the message is edited
+		if ($('#kmessageid').val() > 0) {
+			$.ajax({
+				type    : 'POST',
+				url     : kunena_upload_files_preload,
+				async   : false,
+				dataType: 'json',
+				data    : {mes_id: $('#kmessageid').val()},
+				success : function (data) {
+					if ($.isEmptyObject(data.files) == false) {
+						fileCount = Object.keys(data.files).length;
 
-					filesedit = data.files;
+						filesedit = data.files;
 
-					$(data.files).each(function (index, file) {
-						var image = '';
-						if (file.image === true) {
-							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
-						} else {
-							image = '<i class="icon-flag-2 icon-big"></i><br />';
-						}
+						$(data.files).each(function (index, file) {
+							var image = '';
+							if (file.image === true) {
+								image = '<img src="' + file.path + '" width="100" height="100" /><br />';
+							}
+							else {
+								image = '<i class="icon-flag-2 icon-big"></i><br />';
+							}
 
-						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
-						data.uploaded = true;
-						data.result = false;
-						data.file_id = file.id;
+							var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
+							data.uploaded = true;
+							data.result = false;
+							data.file_id = file.id;
 
-						object.append(insertButton.clone(true).data(file));
-						object.append(removeButton.clone(true).data(data));
+							object.append(insertButton.clone(true).data(file));
+							object.append(removeButton.clone(true).data(data));
 
-						object.appendTo("#files");
-					});
+							object.appendTo("#files");
+						});
+					}
 				}
-			}
-		});
-	}
+			});
+		}
 });

@@ -10,8 +10,8 @@
 jQuery(document).ready(function($) {
 
 	/* Provide autocomplete user list in search form and in user list */
-	if ( $( '#kurl_users' ).length > 0 ) {
-		var users_url = $( '#kurl_users' ).val();
+	if ($('#kurl_users').length > 0) {
+		var users_url = $('#kurl_users').val();
 
 		$('#kusersearch').atwho({
 			at: "",
@@ -34,9 +34,8 @@ jQuery(document).ready(function($) {
 	}
 
 	/* Hide search form when there are search results found */
-	if ( $('#kunena_search_results').is(':visible') ) {
+	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");
 	}
 
 });
-

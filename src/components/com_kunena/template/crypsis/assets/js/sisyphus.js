@@ -32,9 +32,11 @@
 		if (typeof $.jStorage === "object") {
 			return true;
 		}
+
 		try {
 			return localStorage.getItem;
-		} catch (e) {
+		}
+		catch (e) {
 			return false;
 		}
 	};
@@ -50,10 +52,12 @@
 	browserStorage.set = function (key, value) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.set(key, value + "");
-		} else {
+		}
+		else {
 			try {
 				localStorage.setItem(key, value + "");
-			} catch (e) {
+			}
+			catch (e) {
 				//QUOTA_EXCEEDED_ERR
 			}
 		}
@@ -70,7 +74,8 @@
 		if (typeof $.jStorage === "object") {
 			var result = $.jStorage.get(key);
 			return result ? result.toString() : result;
-		} else {
+		}
+		else {
 			return localStorage.getItem(key);
 		}
 	};
@@ -85,7 +90,8 @@
 	browserStorage.remove = function (key) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.deleteKey(key);
-		} else {
+		}
+		else {
 			localStorage.removeItem(key);
 		}
 	};
@@ -164,9 +170,11 @@
 					this.targets = this.targets || [];
 					if (self.options.name) {
 						this.href = self.options.name;
-					} else {
+					}
+					else {
 						this.href = location.hostname + location.pathname + location.search + location.hash;
 					}
+
 					this.targets = $.merge(this.targets, targets);
 					this.targets = $.unique(this.targets);
 					this.targets = $(this.targets);
@@ -192,7 +200,8 @@
 									params.started[self.getInstanceIdentifier()] = true;
 								}
 							}, 100);
-						} else {
+						}
+						else {
 							self.bindSaveData();
 							params.started[self.getInstanceIdentifier()] = true;
 						}
@@ -206,7 +215,8 @@
 							CKEDITOR.isLoaded = true;
 						});
 						return true;
-					} else {
+					}
+					else {
 						return false;
 					}
 				},
@@ -238,6 +248,7 @@
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
+
 							var field = $(this);
 							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 							if (field.is(":text") || field.is("textarea")) {
@@ -245,6 +256,7 @@
 									self.bindSaveDataImmediately(field, prefix);
 								}
 							}
+
 							self.bindSaveDataOnChange(field);
 						});
 					});
@@ -269,6 +281,7 @@
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
+
 							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 							var value = field.val();
 
@@ -278,30 +291,37 @@
 									if (multiCheckboxCache[name] === true) {
 										return;
 									}
+
 									value = [];
 									$("[name='" + name + "']:checked").each(function () {
 										value.push($(this).val());
 									});
 									multiCheckboxCache[name] = true;
-								} else {
+								}
+								else {
 									value = field.is(":checked");
 								}
+
 								self.saveToBrowserStorage(prefix, value, false);
-							} else if (field.is(":radio")) {
+							}
+							else if (field.is(":radio")) {
 								if (field.is(":checked")) {
 									value = field.val();
 									self.saveToBrowserStorage(prefix, value, false);
 								}
-							} else {
+							}
+							else {
 								if (self.isCKEditorExists()) {
 									var editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
 									if (editor) {
 										editor.updateElement();
 										self.saveToBrowserStorage(prefix, field.val(), false);
-									} else {
+									}
+									else {
 										self.saveToBrowserStorage(prefix, value, false);
 									}
-								} else {
+								}
+								else {
 									self.saveToBrowserStorage(prefix, value, false);
 								}
 							}
@@ -328,6 +348,7 @@
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
+
 							var field = $(this);
 							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 							var resque = self.browserStorage.get(prefix);
@@ -355,21 +376,26 @@
 					if (field.attr("name") === undefined && field.attr("id") === undefined) {
 						return false;
 					}
+
 					var name = field.attr("name");
 					if (field.is(":checkbox") && resque !== "false" && ( name === undefined || name.indexOf("[") === -1 )) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.prop("checked", true);
-					} else if (field.is(":checkbox") && resque === "false" && ( name === undefined || name.indexOf("[") === -1 )) {
+					}
+					else if (field.is(":checkbox") && resque === "false" && ( name === undefined || name.indexOf("[") === -1 )) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.prop("checked", false);
-					} else if (field.is(":radio")) {
+					}
+					else if (field.is(":radio")) {
 						if (field.val() === resque) {
 							field.prop("checked", true);
 						}
-					} else if (name === undefined || name.indexOf("[") === -1) {
+					}
+					else if (name === undefined || name.indexOf("[") === -1) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.val(resque);
-					} else {
+					}
+					else {
 						resque = resque.split(",");
 						field.val(resque);
 					}
@@ -389,11 +415,13 @@
 						field.get(0).onpropertychange = function () {
 							self.saveToBrowserStorage(prefix, field.val());
 						};
-					} else {
+					}
+					else {
 						field.get(0).oninput = function () {
 							self.saveToBrowserStorage(prefix, field.val());
 						};
 					}
+
 					if (this.isCKEditorExists()) {
 						var editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
 						if (editor) {
@@ -512,6 +540,7 @@
 							// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 							return true;
 						}
+
 						var field = $(this);
 						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 						self.browserStorage.remove(prefix);
@@ -533,9 +562,11 @@
 					params.instantiated[identifier].setInstanceIdentifier(identifier);
 					params.instantiated[identifier].setInitialOptions();
 				}
+
 				if (identifier) {
 					return params.instantiated[identifier];
 				}
+
 				return params.instantiated[identifier];
 			},
 

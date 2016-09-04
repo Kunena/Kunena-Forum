@@ -98,7 +98,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-						. $captcha_pubkey . '" data-theme="light"'));
+					. $captcha_pubkey . '" data-theme="light"'));
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
@@ -208,7 +208,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
 		{
 			return false;
 		}

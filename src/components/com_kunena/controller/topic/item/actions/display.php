@@ -230,6 +230,6 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name,
-				'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => ''));
+			'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => ''));
 	}
 }

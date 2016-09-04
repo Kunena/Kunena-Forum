@@ -167,7 +167,7 @@ class KunenaViewTopic extends KunenaView
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
 
-		if ( $user->id ==0 )
+		if ($user->id == 0)
 		{
 			$response = KunenaForumTopicRateHelper::getSelected($topicid);
 		}
@@ -188,7 +188,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Save rate for user logged in by JSON call
 	 *
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayRate($tpl = null)
 	{

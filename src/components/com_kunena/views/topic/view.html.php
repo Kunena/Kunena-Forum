@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topic View
@@ -17,12 +17,17 @@ defined('_JEXEC') or die ();
 class KunenaViewTopic extends KunenaView
 {
 	public $topicButtons = null;
+
 	public $messageButtons = null;
+
 	public $inline_attachments = array();
 
 	var $poll = null;
+
 	var $mmm = 0;
+
 	var $k = 0;
+
 	var $cache = true;
 
 	public function displayDefault($tpl = null)
@@ -45,23 +50,21 @@ class KunenaViewTopic extends KunenaView
 		{
 			// User is not allowed to see the category
 			$this->setError($this->category->getError());
-
 		}
 		elseif (!$this->topic)
 		{
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
 			$this->setError(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'));
-
 		}
 		elseif (!$this->topic->authorise('read'))
 		{
 			// User is not allowed to see the topic
 			$this->setError($this->topic->getError());
-
 		}
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
-			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid')))
+			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))
+		)
 		{
 			// We need to redirect: message has been moved or we have permalink
 			$mesid = $this->state->get('item.mesid');
@@ -76,7 +79,10 @@ class KunenaViewTopic extends KunenaView
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
 			{
-				while (@ob_end_clean()) ;
+				while (@ob_end_clean())
+				{
+				}
+
 				$this->app->redirect($message->getUrl(null, false));
 			}
 		}
@@ -103,12 +109,15 @@ class KunenaViewTopic extends KunenaView
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start'))
 		{
-			while (@ob_end_clean()) ;
+			while (@ob_end_clean())
+			{
+			}
+
 			$this->app->redirect($this->topic->getUrl(null, false, (int) (($this->total - 1) / $this->state->get('list.limit'))));
 		}
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -140,7 +149,8 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Get keywords, captcha & quick reply
-		/*$this->captcha    = KunenaSpamRecaptcha::getInstance();
+		/*
+		$this->captcha    = KunenaSpamRecaptcha::getInstance();
 		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());     */
 		$this->keywords   = $this->topic->getKeywords(false, ', ');
 
@@ -159,7 +169,10 @@ class KunenaViewTopic extends KunenaView
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean())
+		{
+		}
+
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
 
@@ -281,7 +294,7 @@ class KunenaViewTopic extends KunenaView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -331,7 +344,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -340,7 +353,6 @@ class KunenaViewTopic extends KunenaView
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
-
 
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
@@ -356,7 +368,7 @@ class KunenaViewTopic extends KunenaView
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -388,7 +400,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -418,7 +430,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->edit($saved);
 		}
 
-		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->modified_reason      = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
@@ -437,10 +449,11 @@ class KunenaViewTopic extends KunenaView
 
 		$key = $this->profile->userid . '.' . $this->profile->username;
 
-		if (!isset ($profiles [$key]))
+		if (!isset($profiles [$key]))
 		{
 			// Run events
-			$params = new JRegistry();
+			$params = new JRegistry;
+
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
@@ -450,7 +463,7 @@ class KunenaViewTopic extends KunenaView
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
-			//karma points and buttons
+			// Karma points and buttons
 			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
 
 			if ($this->config->showkarma && $this->profile->userid)
@@ -479,7 +492,7 @@ class KunenaViewTopic extends KunenaView
 			$cachegroup = 'com_kunena.messages';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; //$cache->get($cachekey, $cachegroup);
+			$contents = false; // $cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
@@ -518,7 +531,7 @@ class KunenaViewTopic extends KunenaView
 				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array('topic.profile', $this, $params)));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
-				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 
 			$profiles [$key] = $contents;
@@ -545,36 +558,36 @@ class KunenaViewTopic extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
-		$this->topicButtons = new JObject();
+		$this->topicButtons = new JObject;
 
 		// Reply topic
 		if ($this->topic->authorise('reply'))
 		{
-			// this user is allowed to reply to this topic
+			// This user is allowed to reply to this topic
 			$this->topicButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication'));
 		}
 
 		// Subscribe topic
 		if ($this->usertopic->subscribed)
 		{
-			// this user is allowed to unsubscribe
+			// This user is allowed to unsubscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user'));
 		}
 		elseif ($this->topic->authorise('subscribe'))
 		{
-			// this user is allowed to subscribe
+			// This user is allowed to subscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user'));
 		}
 
 		// Favorite topic
 		if ($this->usertopic->favorite)
 		{
-			// this user is allowed to unfavorite
+			// This user is allowed to unfavorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user'));
 		}
 		elseif ($this->topic->authorise('favorite'))
 		{
-			// this user is allowed to add a favorite
+			// This user is allowed to add a favorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user'));
 		}
 
@@ -600,7 +613,6 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->enable_threaded_layouts)
 		{
-
 			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
@@ -641,7 +653,7 @@ class KunenaViewTopic extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->messageButtons = new JObject();
+		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
 		// Reply / Quote
@@ -650,7 +662,6 @@ class KunenaViewTopic extends KunenaView
 			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
 			$this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
-
 		}
 		elseif (!$this->me->isModerator($this->topic->getCategory()))
 		{
@@ -734,7 +745,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
 
-				// for normal users, show only limited number of thankyou (config->thankyou_max)
+				// For normal users, show only limited number of thankyou (config->thankyou_max)
 				if (!$this->me->isAdmin() && !$this->me->isModerator())
 				{
 					if (count($message->thankyou) > $this->config->thankyou_max)
@@ -799,15 +810,16 @@ class KunenaViewTopic extends KunenaView
 		// Get number of attachments to display error messages
 		$this->attachs = $this->message->getNbAttachments();
 
-		$contents = false; //$cache->get($cachekey, $cachegroup);
+		$contents = false; // $cache->get($cachekey, $cachegroup);
+
 		if (!$contents)
 		{
-			//Show admins the IP address of the user:
+			// Show admins the IP address of the user:
 			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))
 			{
 				if ($this->message->ip)
 				{
-					if (!empty ($this->message->ip))
+					if (!empty($this->message->ip))
 					{
 						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 					}
@@ -865,8 +877,9 @@ class KunenaViewTopic extends KunenaView
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			}
+
 			// FIXME: enable caching after fixing the issues
-			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+			// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		}
 		elseif ($usertype == 'guest')
 		{
@@ -964,7 +977,7 @@ class KunenaViewTopic extends KunenaView
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
@@ -983,7 +996,7 @@ class KunenaViewTopic extends KunenaView
 	 * If there's no referrer or it's external, Kunena will return to forum home page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $anchor
+	 * @param   string $anchor
 	 */
 	protected function redirectBack($anchor = '')
 	{
@@ -1058,11 +1071,11 @@ class KunenaViewTopic extends KunenaView
 	protected function _prepareDocument($type)
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$menu_item   = $app->getMenu()->getActive(); // Get the active item
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params; // get the params
+			$params             = $menu_item->params; // Get the params
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
@@ -1107,12 +1120,14 @@ class KunenaViewTopic extends KunenaView
 					// Create Meta Description form the content of the first message
 					// better for search results display but NOT for search ranking!
 					$description = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 182);
-					$description = preg_replace('/\s+/', ' ', $description); // remove newlines
+					$description = preg_replace('/\s+/', ' ', $description); // Remove newlines
 					$description = trim($description); // Remove trailing spaces and beginning
+
 					if ($page)
 					{
-						$description .= " ({$page}/{$pages})";  //avoid the "duplicate meta description" error in google webmaster tools
+						$description .= " ({$page}/{$pages})";  // Avoid the "duplicate meta description" error in google webmaster tools
 					}
+
 					$this->setDescription($description);
 				}
 			}
@@ -1232,23 +1247,26 @@ class KunenaViewTopic extends KunenaView
 		{
 			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 		}
+
 		if (!$this->state->get('embedded'))
 		{
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
+
 			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title . ' - ' . $title);
 			}
 			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->getCfg('sitename'));
 			}
 			else
 			{
 				// TODO: allow translations/overrides (also above)
-				$title = KunenaFactory::getConfig()->board_title .': '. $title;
+				$title = KunenaFactory::getConfig()->board_title . ': ' . $title;
 			}
+
 			$this->document->setTitle($title);
 		}
 	}
@@ -1258,11 +1276,12 @@ class KunenaViewTopic extends KunenaView
 		{
 			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 		}
+
 		if (!$this->state->get('embedded'))
 		{
 			if (!empty($keywords))
 			{
-				$this->document->setMetadata ( 'keywords', $keywords );
+				$this->document->setMetadata('keywords', $keywords);
 			}
 		}
 	}
@@ -1272,16 +1291,19 @@ class KunenaViewTopic extends KunenaView
 		{
 			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 		}
+
 		if (!$this->state->get('embedded'))
 		{
 			// TODO: allow translations/overrides
 			$lang = JFactory::getLanguage();
 			$length = JString::strlen($lang->getName());
 			$length = 137 - $length;
+
 			if (JString::strlen($description) > $length)
 			{
 				$description = JString::substr($description, 0, $length) . '...';
 			}
+
 			$this->document->setMetadata('description', $description);
 		}
 	}

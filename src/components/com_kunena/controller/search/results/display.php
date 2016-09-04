@@ -25,7 +25,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	public $model;
 
 	/**
-	 * @var int
+	 * @var integer
 	 */
 	public $total;
 

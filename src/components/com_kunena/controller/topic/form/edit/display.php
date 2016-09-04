@@ -92,7 +92,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit'))
+			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')
+		)
 		{
 			$this->poll = $this->topic->getPoll();
 		}
@@ -182,7 +183,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
 		{
 			return false;
 		}

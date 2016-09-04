@@ -175,10 +175,10 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   string              $title    The title of the link
 	 * @param   string              $class    The class attribute of the link
 	 *
-	 * @param int                   $length
+	 * @param   int                   $length
 	 *
-	 * @param bool                  $follow
-	 * @param bool                  $canonical
+	 * @param   bool                  $follow
+	 * @param   bool                  $canonical
 	 *
 	 * @return string
 	 * @see KunenaLayout::getLastPostLink()

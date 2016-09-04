@@ -203,7 +203,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$catlist = implode(',', $modcats);
 				$db      = JFactory::getDBO();
 				$db->setQuery(
-				"SELECT catid, COUNT(*) AS count
+					"SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");

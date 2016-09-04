@@ -136,7 +136,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * Method to retrieve the URL of category RSS feed
 	 *
 	 * @param   int       $catid The Id of category
-	 * @param bool|string $xhtml Replace & by & for XML compliance.
+	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return null|string
 	 */

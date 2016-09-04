@@ -71,7 +71,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		$cache   = JFactory::getCache('com_kunena', 'output');
 
-		/*if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		/*
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		 {
 		 return;
 		 }*/
@@ -80,7 +81,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
-
 
 		// Load topic and message.
 		if ($mesid)
@@ -116,7 +116,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$channels = $this->category->getChannels();
 
 			if ($this->message->thread != $this->topic->id
-				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id])))
+				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
+			)
 			{
 				$this->app->redirect($this->message->getUrl(null, false));
 			}
@@ -408,7 +409,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			{
 				$this->setKeywords($headerText);
 			}
-
 
 			if ($total > 1 && $page > 1)
 			{

@@ -684,9 +684,9 @@ class KunenaControllerUser extends KunenaController
 
 		// Clean request
 		$post       = $this->app->input->post->getArray();
-		$post_password = $this->app->input->post->get('password', '','raw');
-		$post_password2 = $this->app->input->post->get('password2', '','raw');
-		
+		$post_password = $this->app->input->post->get('password', '', 'raw');
+		$post_password2 = $this->app->input->post->get('password2', '', 'raw');
+
 		if (empty($post_password) || empty($post_password2))
 		{
 			unset($post['password'], $post['password2']);
@@ -865,7 +865,7 @@ class KunenaControllerUser extends KunenaController
 					}
 
 					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' .
-						$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
+					$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
 				}
 
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));

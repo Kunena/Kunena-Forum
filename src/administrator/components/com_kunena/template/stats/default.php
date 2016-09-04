@@ -83,7 +83,9 @@ if (JFactory::getLanguage()->isRTL())
 $tabclass = array("row1","row2");
 $k = 0;
 ?>
-<?php foreach ($this->top as $top) : ?>
+<?php foreach ($this->top as $top)
+:
+	?>
 <h2><?php echo $top[0]->title ?></h2>
 <table class="kadmin-stat">
 	<tbody>
@@ -93,7 +95,9 @@ $k = 0;
 			<th>&nbsp;</th>
 			<th><?php echo $top[0]->titleCount ?></th>
 		</tr>
-		<?php foreach ($top as $id => $item) : ?>
+		<?php foreach ($top as $id => $item)
+	:
+	?>
 		<tr>
 			<td><?php echo $id + 1 ?></td>
 			<td>

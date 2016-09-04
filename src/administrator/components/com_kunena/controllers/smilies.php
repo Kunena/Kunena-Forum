@@ -116,19 +116,19 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if (!$smileyid)
 		{
 			$db->setQuery(
-					"INSERT INTO #__kunena_smileys SET
+				"INSERT INTO #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -140,15 +140,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
 				WHERE id = '$smileyid'");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -223,15 +223,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}

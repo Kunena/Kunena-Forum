@@ -94,6 +94,7 @@ class KunenaLoginJoomla
 	public function getRegistrationURL()
 	{
 		$usersConfig = JComponentHelper::getParams('com_users');
+
 		if ($usersConfig->get('allowUserRegistration'))
 		{
 			$Itemid = UsersHelperRoute::getRegistrationRoute();

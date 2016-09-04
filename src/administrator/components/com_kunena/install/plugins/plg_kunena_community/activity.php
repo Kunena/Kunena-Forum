@@ -46,7 +46,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->title   = JText::_(
 			'{actor} ' . JText::sprintf(
 				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+			' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
 		);
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.post';
@@ -116,7 +116,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act          = new stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
-		$act->target  = 0; // no target
+		$act->target  = 0; // No target
 		$act->title   = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>'));
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.reply';
@@ -146,9 +146,9 @@ class KunenaActivityCommunity extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -220,7 +220,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $category
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected function getAccess($category)
 	{
@@ -235,13 +235,15 @@ class KunenaActivityCommunity extends KunenaActivity
 
 		// FIXME: Joomla 2.5 can mix up groups and access levels
 		if (($accesstype == 'joomla.level' && $category->access == 1)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1)))
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))
+		)
 		{
 			// Public
 			$access = 0;
 		}
 		elseif (($accesstype == 'joomla.level' && $category->access == 2)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2)))
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))
+		)
 		{
 			// Registered
 			$access = 20;

@@ -52,8 +52,8 @@ class KunenaAdminModelLogs extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param   null $ordering
+	 * @param   null $direction
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -61,70 +61,85 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+
 		if ($layout)
 		{
-			$this->context .= '.'.$layout;
+			$this->context .= '.' . $layout;
 		}
 
 		$filter_active = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.id', 'filter_id', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string');
 		$this->setState('filter.id', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
 		$this->setState('filter.type', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.user', 'filter_user', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
 		$this->setState('filter.user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.category', 'filter_category', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string');
 		$this->setState('filter.category', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.topic', 'filter_topic', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.topic', 'filter_topic', '', 'string');
 		$this->setState('filter.topic', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.target_user', 'filter_target_user', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.target_user', 'filter_target_user', '', 'string');
 		$this->setState('filter.target_user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.ip', 'filter_ip', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
 		$this->setState('filter.ip', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_start', 'filter_time_start', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', '', 'string');
 		$this->setState('filter.time_start', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_stop', 'filter_time_stop', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
 		$this->setState('filter.time_stop', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.operation', 'filter_operation', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.operation', 'filter_operation', '', 'string');
 		$this->setState('filter.operation', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.usertypes', 'filter_usertypes', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
 		$this->setState('filter.usertypes', $value);
 
 		$this->setState('filter.active', !empty($filter_active));
 
 		$group = array();
 
-		if ($this->getUserStateFromRequest($this->context.'.group.type', 'group_type', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.type', 'group_type', false, 'bool'))
+		{
 			$group['type'] = 'a.type';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.user', 'group_user', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.user', 'group_user', false, 'bool'))
+		{
 			$group['user'] = 'a.user_id';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.category', 'group_category', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.category', 'group_category', false, 'bool'))
+		{
 			$group['category'] = 'a.category_id';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.topic', 'group_topic', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.topic', 'group_topic', false, 'bool'))
+		{
 			$group['topic'] = 'a.topic_id';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.target_user', 'group_target_user', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.target_user', 'group_target_user', false, 'bool'))
+		{
 			$group['target_user'] = 'a.target_user';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.ip', 'group_ip', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.ip', 'group_ip', false, 'bool'))
+		{
 			$group['ip'] = 'a.ip';
+		}
 
-		if ($this->getUserStateFromRequest($this->context.'.group.operation', 'group_operation', false, 'bool'))
+		if ($this->getUserStateFromRequest($this->context . '.group.operation', 'group_operation', false, 'bool'))
+		{
 			$group['operation'] = 'a.operation';
+		}
 
 		$this->setState('group', $group);
 
@@ -146,18 +161,18 @@ class KunenaAdminModelLogs extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':'.$this->getState('filter.id');
-		$id	.= ':'.$this->getState('filter.type');
-		$id	.= ':'.$this->getState('filter.user');
-		$id	.= ':'.$this->getState('filter.category');
-		$id	.= ':'.$this->getState('filter.topic');
-		$id	.= ':'.$this->getState('filter.target_user');
-		$id	.= ':'.$this->getState('filter.ip');
-		$id	.= ':'.$this->getState('filter.time_start');
-		$id	.= ':'.$this->getState('filter.time_stop');
-		$id	.= ':'.$this->getState('filter.operation');
-		$id	.= ':'.$this->getState('filter.usertypes');
-		$id	.= ':'.json_encode($this->getState('group'));
+		$id	.= ':' . $this->getState('filter.id');
+		$id	.= ':' . $this->getState('filter.type');
+		$id	.= ':' . $this->getState('filter.user');
+		$id	.= ':' . $this->getState('filter.category');
+		$id	.= ':' . $this->getState('filter.topic');
+		$id	.= ':' . $this->getState('filter.target_user');
+		$id	.= ':' . $this->getState('filter.ip');
+		$id	.= ':' . $this->getState('filter.time_start');
+		$id	.= ':' . $this->getState('filter.time_stop');
+		$id	.= ':' . $this->getState('filter.operation');
+		$id	.= ':' . $this->getState('filter.usertypes');
+		$id	.= ':' . json_encode($this->getState('group'));
 
 		return parent::getStoreId($id);
 	}
@@ -213,6 +228,7 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Filter by type.
 		$filter = $this->getState('filter.type');
+
 		if (!empty($filter))
 		{
 			$finder->where('a.type', '=', $filter);
@@ -220,51 +236,57 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__users AS u ON u.id=a.user_id');
 			$finder->where('u.username',  'LIKE', $filter, false);
 		}
 
 		// Filter by category.
 		$filter = $this->getState('filter.category');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__kunena_categories AS c ON c.id=a.category_id');
 			$finder->where('c.name', 'LIKE', $filter, false);
 		}
 
 		// Filter by topic.
 		$filter = $this->getState('filter.topic');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__kunena_topics AS t ON t.id=a.topic_id');
 			$finder->where('t.subject', 'LIKE', $filter, false);
 		}
 
 		// Filter by target username or name.
 		$filter = $this->getState('filter.target_user');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__users AS tu ON tu.id=a.target_user');
 			$finder->where('tu.username', 'LIKE', $filter, false);
 		}
 
 		// Filter by IP address.
 		$filter = $this->getState('filter.ip');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->where('a.ip', 'LIKE', $filter, false);
 		}
 
 		// Filter by time.
 		$start = $this->getState('filter.time_start');
 		$stop = $this->getState('filter.time_stop');
+
 		if ($start || $stop)
 		{
 			$start = $start ? new JDate($start) : null;
@@ -274,6 +296,7 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Filter by operation.
 		$filter = $this->getState('filter.operation');
+
 		if (!empty($filter))
 		{
 			$finder->where('a.operation', '=', $filter);
@@ -281,6 +304,7 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Add the list ordering clause.
 		$direction = $this->state->get('list.direction') == 'asc' ? 1 : -1;
+
 		switch ($this->state->get('list.ordering'))
 		{
 			case 'type':
@@ -314,6 +338,7 @@ class KunenaAdminModelLogs extends JModelList
 		}
 
 		$usertypes = $this->state->get('filter.usertypes');
+
 		// Filter by user type.
 
 		if (is_numeric($usertypes))
@@ -386,13 +411,23 @@ class KunenaAdminModelLogs extends JModelList
 			->limit((int) $this->getState('list.limit'))
 			->find();
 
-		$userIds1 = $items->map(function ($item, $key) { return $item->user_id; });
-		$userIds2 = $items->map(function ($item, $key) { return $item->target_user; });
+		$userIds1 = $items->map(function ($item, $key) {
+			return $item->user_id;
+
+		});
+		$userIds2 = $items->map(function ($item, $key) {
+
+			return $item->target_user;
+
+		});
 		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
 		KunenaUserHelper::loadUsers($userIds);
 
-		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) { return $item->topic_id; })->all());
+		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) {
+			return $item->topic_id;
+
+		})->all());
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $items;

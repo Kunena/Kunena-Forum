@@ -86,30 +86,55 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	protected $jconfig_smtpuser = null;
+
 	protected $jconfig_ftp = null;
+
 	protected $jconfig_sef = null;
+
 	protected $jconfig_sef_rewrite = null;
+
 	protected $htaccess = null;
+
 	protected $register_globals = null;
+
 	protected $safe_mode = null;
+
 	protected $mbstring = null;
+
 	protected $gd_info = null;
+
 	protected $gd_support = null;
+
 	protected $maxExecTime = null;
+
 	protected $maxExecMem = null;
+
 	protected $fileuploads = null;
+
 	protected $kunenaVersionInfo = null;
+
 	protected $ktemplate = null;
+
 	protected $ktemplatedetails = null;
+
 	protected $jtemplatedetails = null;
+
 	protected $joomlamenudetails = null;
+
 	protected $collation = null;
+
 	protected $kconfigsettings = null;
+
 	protected $joomlalanguages = null;
+
 	protected $plgtext = null;
+
 	protected $modtext = null;
+
 	protected $thirdpartytext = null;
+
 	protected $seftext = null;
+
 	protected $integration_settings = null;
 
 	/**
@@ -447,7 +472,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$template = $db->loadResult();
@@ -455,7 +480,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -554,7 +579,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		{
 			if (preg_match('`_kunena_`', $table))
 			{
-				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");	
+				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");
 
 				try
 				{
@@ -563,7 +588,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 				catch (RuntimeException $e)
 				{
 					JFactory::getApplication()->enqueueMessage($e->getMessage());
-					
+
 					return;
 				}
 

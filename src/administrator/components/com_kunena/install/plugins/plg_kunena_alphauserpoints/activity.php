@@ -46,7 +46,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 	/**
 	 * @param        $plugin_function
-	 * @param string $spc
+	 * @param   string $spc
 	 *
 	 * @return mixed
 	 *
@@ -60,7 +60,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -132,9 +132,9 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 *
 	 * @deprecated  5.0
 	 */
@@ -184,7 +184,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $userid
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -212,9 +212,9 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $userid
+	 * @param   int $userid
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -228,7 +228,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		$_db = JFactory::getDBO();
 
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		
+
 		try
 		{
 			$userpoints = $_db->loadResult();
@@ -244,7 +244,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -252,6 +252,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	{
 		$category   = $message->getCategory();
 		$accesstype = $category->accesstype;
+
 		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
 		{
 			return false;
@@ -277,7 +278,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $ruleName
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -298,6 +299,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
+
 		if (!empty($ruleEnabled[0]->published))
 		{
 			return $ruleEnabled[0]->points2;

@@ -70,6 +70,7 @@ class KunenaLoginComprofiler
 	public function getRememberMe()
 	{
 		$db = JFactory::getDbo();
+
 		// TODO: test if works (see #1079)
 		$db->setQuery("SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1);
 		$raw_params = $db->loadResult();
@@ -108,7 +109,8 @@ class KunenaLoginComprofiler
 		$usersConfig = JComponentHelper::getParams('com_comprofiler');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
-			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
+			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))
+		)
 		{
 			return $_CB_framework->viewUrl('registers');
 		}

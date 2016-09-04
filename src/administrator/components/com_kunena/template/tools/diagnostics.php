@@ -29,7 +29,8 @@ defined('_JEXEC') or die();
 		</form>
 
 		<?php
-		if (!empty($task)) :
+		if (!empty($task))
+		:
 			$rows = KunenaForumDiagnostics::getItems($task);
 			$info = KunenaForumDiagnostics::getFieldInfo($task);
 			$fields = array_keys((array) reset($rows));
@@ -41,32 +42,47 @@ defined('_JEXEC') or die();
 					<th><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_DIAG_ON', $task); ?></th>
 				</tr>
 			</thead>
-			<?php if ($rows) : ?>
+			<?php if ($rows)
+			:
+	?>
 			<tr>
-				<?php foreach ($fields as $field) : ?>
+				<?php foreach ($fields as $field)
+				:
+	?>
 				<th><?php echo $this->escape($field) ?></th>
 				<?php endforeach ?>
 			</tr>
-			<?php foreach (KunenaForumDiagnostics::getItems($task) as $row) : ?>
+			<?php foreach (KunenaForumDiagnostics::getItems($task) as $row)
+			:
+	?>
 			<tr>
-				<?php foreach ($row as $field => $value) : ?>
+				<?php foreach ($row as $field => $value)
+				:
+	?>
 				<?php $special = isset($info[$field]) ? $info[$field] : '' ?>
 				<td<?php echo $special && $special[0] != '_' ? ' class="' . $special . '"' : '' ?>><?php
-					if ($special &&  $special[0] == '_') {
-						echo $info[$special] . $this->escape($value);
-					} else {
-						echo $this->escape($value);
-					}
+				if ($special &&  $special[0] == '_')
+				{
+					echo $info[$special] . $this->escape($value);
+				}
+				else
+				{
+					echo $this->escape($value);
+				}
 				?></td>
 				<?php endforeach ?>
 			</tr>
 			<?php endforeach ?>
-			<?php else : ?>
+			<?php else
+:
+	?>
 			<tr><td><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td></tr>
 			<?php endif ?>
 		</table>
 
-		<?php else : ?>
+		<?php                                                                                                                                                                                                                 else
+:
+	?>
 
 		<table class="table table-striped">
 			<thead>
@@ -74,17 +90,23 @@ defined('_JEXEC') or die();
 					<th><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?></th>
 				</tr>
 			</thead>
-			<?php foreach (KunenaForumDiagnostics::getList() as $item) : ?>
+			<?php foreach (KunenaForumDiagnostics::getList() as $item)
+			:
+	?>
 			<?php $count = KunenaForumDiagnostics::count($item) ?>
 			<tr>
 				<td><?php echo $item ?></td>
-				<?php if ($count) : ?>
+				<?php if ($count)
+				:
+	?>
 				<td style="color:red;"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_FAILED') ?></td>
 				<td><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></td>
 				<td>
 					<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_FIX_ISSUES') . '</a>' : '' ?>
 					<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DELETE_BROKEN_ITEMS') . '</a>' : '' ?></td>
-				<?php else : ?>
+				<?php else
+:
+	?>
 				<td style="color:green;"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_PASSED') ?></td>
 				<td><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td>
 				<?php endif ?>

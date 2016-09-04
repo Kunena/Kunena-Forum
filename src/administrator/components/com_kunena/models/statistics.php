@@ -8,9 +8,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
-defined( '_JEXEC') or die();
+defined('_JEXEC') or die();
 
-jimport( 'joomla.application.component.model');
+jimport('joomla.application.component.model');
 
 /**
  * Statistics Model for Kunena
@@ -44,31 +44,33 @@ class KunenaAdminModelStatistics extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param   null $ordering
+	 * @param   null $direction
 	 */
-	protected function populateState($ordering = null, $direction = null) {
+	protected function populateState($ordering = null, $direction = null)
+	{
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+
 		if ($layout)
 		{
-			$this->context .= '.'.$layout;
+			$this->context .= '.' . $layout;
 		}
 
-		$now = new JDate();
+		$now = new JDate;
 		$month = new JDate('-1 month');
 
 		$filter_active = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.user', 'filter_user', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
 		$this->setState('filter.user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
 		$this->setState('filter.time_start', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_stop', 'filter_time_stop', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
 		$this->setState('filter.time_stop', $value);
 
 		$this->setState('filter.active', !empty($filter_active));
@@ -91,9 +93,9 @@ class KunenaAdminModelStatistics extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':'.$this->getState('filter.user');
-		$id	.= ':'.$this->getState('filter.time_start');
-		$id	.= ':'.$this->getState('filter.time_stop');
+		$id	.= ':' . $this->getState('filter.user');
+		$id	.= ':' . $this->getState('filter.time_start');
+		$id	.= ':' . $this->getState('filter.time_stop');
 
 		return parent::getStoreId($id);
 	}
@@ -130,14 +132,14 @@ class KunenaAdminModelStatistics extends JModelList
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @param string $field
+	 * @param   string $field
 	 *
 	 * @return KunenaLogFinder
 	 */
 	protected function getFinder($field = 'user_id')
 	{
 		// Get a storage key.
-		$store = $this->getStoreId('getFinder_'.$field);
+		$store = $this->getStoreId('getFinder_' . $field);
 
 		// Try to load the data from internal storage.
 		if (isset($this->cache[$store]))
@@ -151,9 +153,10 @@ class KunenaAdminModelStatistics extends JModelList
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');
+
 		if (!empty($filter))
 		{
-			$filter = $db->quote('%'.$db->escape($filter, true).'%');
+			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__users AS u ON u.id=a.' . $field);
 			$finder->where('u.username',  'LIKE', $filter, false);
 		}
@@ -161,6 +164,7 @@ class KunenaAdminModelStatistics extends JModelList
 		// Filter by time.
 		$start = $this->getState('filter.time_start');
 		$stop = $this->getState('filter.time_stop');
+
 		if ($start || $stop)
 		{
 			$start = $start ? new JDate($start) : null;
@@ -208,9 +212,10 @@ class KunenaAdminModelStatistics extends JModelList
 		$userIds = array_keys($access->getAdmins() + $access->getModerators());
 
 		$data = array();
+
 		foreach ($userIds as $id)
 		{
-			$class = new stdClass();
+			$class = new stdClass;
 			$class->user_id = $id;
 			$class->posts = 0;
 			$class->moves = 0;
@@ -230,7 +235,8 @@ class KunenaAdminModelStatistics extends JModelList
 		{
 			$class = $data[$item->user_id];
 
-			switch ($item->operation) {
+			switch ($item->operation)
+			{
 				case KunenaLog::LOG_TOPIC_CREATE:
 				case KunenaLog::LOG_POST_CREATE:
 					$class->posts += $item->count;
@@ -244,13 +250,19 @@ class KunenaAdminModelStatistics extends JModelList
 				case KunenaLog::LOG_TOPIC_EDIT:
 				case KunenaLog::LOG_POST_EDIT:
 				case KunenaLog::LOG_PRIVATE_POST_EDIT:
-					if ($item->type == KunenaLog::TYPE_MODERATION) $class->edits += $item->count;
+					if ($item->type == KunenaLog::TYPE_MODERATION)
+					{
+						$class->edits += $item->count;
+					}
 					break;
 
 				case KunenaLog::LOG_POST_DELETE:
 				case KunenaLog::LOG_POST_DELETE:
 				case KunenaLog::LOG_PRIVATE_POST_DELETE:
-					if ($item->type == KunenaLog::TYPE_MODERATION) $class->deletes += $item->count;
+					if ($item->type == KunenaLog::TYPE_MODERATION)
+					{
+						$class->deletes += $item->count;
+					}
 					break;
 			}
 		}
@@ -266,7 +278,7 @@ class KunenaAdminModelStatistics extends JModelList
 		{
 			if (!isset($data[$item->user_id]))
 			{
-				$class = new stdClass();
+				$class = new stdClass;
 				$class->user_id = $item->user_id;
 				$class->posts = 0;
 				$class->moves = 0;
@@ -278,7 +290,8 @@ class KunenaAdminModelStatistics extends JModelList
 
 			$class = $data[$item->user_id];
 
-			switch ($item->operation) {
+			switch ($item->operation)
+			{
 				case KunenaLog::LOG_POST_THANKYOU:
 					$class->thanks += $item->count;
 					break;

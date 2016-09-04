@@ -56,7 +56,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function setToolbar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart' );
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
 	}
 
 	protected function getFilterUserFields()
@@ -74,6 +74,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields = array();
+
 		// TODO: translate
 		$sortFields[] = JHtml::_('select.option', 'id', $this->group ? 'Count' : 'Id');
 		$sortFields[] = JHtml::_('select.option', 'type', 'Type (by id)');
@@ -89,8 +90,9 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
-//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		//      $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		//      $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 		// TODO: remove it when J2.5 support is dropped
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
@@ -138,6 +140,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	public function getGroupCheckbox($name)
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';
-		return '<input type="checkbox" name="group_'.$name.'" value="1" title="Group By" '.$checked.' class="filter" />';
+
+		return '<input type="checkbox" name="group_' . $name . '" value="1" title="Group By" ' . $checked . ' class="filter" />';
 	}
 }

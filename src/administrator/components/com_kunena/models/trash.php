@@ -21,8 +21,11 @@ jimport('joomla.application.component.model');
 class KunenaAdminModelTrash extends KunenaModel
 {
 	protected $__state_set = false;
+
 	protected $_items = false;
+
 	protected $_items_order = false;
+
 	protected $_object = false;
 
 	/**

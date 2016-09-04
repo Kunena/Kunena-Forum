@@ -89,7 +89,7 @@ class Com_KunenaInstallerScript
 
 		if (file_exists($model))
 		{
-			require_once($model);
+			require_once $model;
 			$installer = new KunenaModelInstall;
 			$installer->uninstall();
 		}
@@ -136,6 +136,7 @@ class Com_KunenaInstallerScript
 
 		// Remove Blue Eagle template on K5.0
 		$oldblue = $sitePath . '/template/blue_eagle';
+
 		if (is_dir($oldblue))
 		{
 			$this->deleteKfolder($sitePath . '/template/blue_eagle');
@@ -281,7 +282,7 @@ class Com_KunenaInstallerScript
 
 		foreach ($language_folders as $folder)
 		{
-			if ( JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			if (JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
 			{
 				JFile::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
 			}
@@ -318,7 +319,7 @@ class Com_KunenaInstallerScript
 
 		if (file_exists($model))
 		{
-			require_once($model);
+			require_once $model;
 			$installer = new KunenaModelInstall;
 			$installer->install();
 		}
@@ -360,7 +361,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
 	 *
-	 * @param string $version The PHP version to clean
+	 * @param   string $version The PHP version to clean
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -477,7 +478,8 @@ class Com_KunenaInstallerScript
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
-			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()))
+			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
+		)
 		{
 			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
 

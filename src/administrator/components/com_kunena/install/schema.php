@@ -766,6 +766,7 @@ class KunenaModelSchema extends JModelLegacy
 			$str       = '';
 			$tablename = $this->db->getPrefix() . $table->getAttribute('name');
 			$fields    = array();
+
 			switch ($action = $table->getAttribute('action'))
 			{
 				case 'unknown':
@@ -773,7 +774,8 @@ class KunenaModelSchema extends JModelLegacy
 				case 'drop':
 					$str .= 'DROP TABLE ' . $this->db->quoteName($tablename) . ';';
 					break;
-//				case 'rename':
+
+				//              case 'rename':
 				case 'alter':
 
 					if ($action == 'alter')
@@ -781,7 +783,7 @@ class KunenaModelSchema extends JModelLegacy
 						$str .= 'ALTER TABLE ' . $this->db->quoteName($tablename) . ' ' . "\n";
 					}
 
-//					else $str .= 'ALTER TABLE '.$this->db->quoteName($field->getAttribute('from')).' RENAME '.$this->db->quoteName($tablename).' '."\n";
+					//                  else $str .= 'ALTER TABLE '.$this->db->quoteName($field->getAttribute('from')).' RENAME '.$this->db->quoteName($tablename).' '."\n";
 					foreach ($table->childNodes as $field)
 					{
 						if ($field->hasAttribute('after'))
@@ -839,7 +841,7 @@ class KunenaModelSchema extends JModelLegacy
 							case '':
 								break;
 							default:
-								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo ("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
 						}
 					}
 
@@ -856,6 +858,7 @@ class KunenaModelSchema extends JModelLegacy
 				case '':
 					$action = 'create';
 					$str .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
+
 					foreach ($table->childNodes as $field)
 					{
 						$sqlpart = $this->getSchemaSQLField($field);
@@ -867,6 +870,7 @@ class KunenaModelSchema extends JModelLegacy
 					}
 
 					$collation = $this->db->getCollation();
+
 					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 					{
 						$collation = 'utf8_general_ci';
@@ -882,7 +886,7 @@ class KunenaModelSchema extends JModelLegacy
 					}
 					break;
 				default:
-					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo ("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}
 
 			if (!empty($str))
@@ -1104,6 +1108,7 @@ class KunenaModelSchema extends JModelLegacy
 		{
 			$action     = $tag;
 			$attributes = array('field', 'key', 'table');
+
 			foreach ($attributes as $attribute)
 			{
 				if ($node->hasAttribute($attribute))

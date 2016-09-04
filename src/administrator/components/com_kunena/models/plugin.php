@@ -389,9 +389,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 *
 	 * @since   1.6
 	 *
-	 * @param null $group
+	 * @param   null $group
 	 *
-	 * @param int  $client_id
+	 * @param   int  $client_id
 	 *
 	 */
 	protected function cleanCache($group = null, $client_id = 0)

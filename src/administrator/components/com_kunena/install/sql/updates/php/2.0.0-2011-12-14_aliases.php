@@ -113,9 +113,9 @@ function kunena_200_2011_12_14_aliases($parent)
  * @param     $type
  * @param     $item
  * @param     $alias
- * @param int $state
+ * @param   int $state
  *
- * @return bool
+ * @return boolean
  */
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
@@ -139,9 +139,9 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 /**
  * @param     $category
  * @param     $alias
- * @param int $state
+ * @param   int $state
  *
- * @return bool
+ * @return boolean
  */
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {

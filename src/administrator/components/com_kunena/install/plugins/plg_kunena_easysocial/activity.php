@@ -28,7 +28,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * @param      $command
 	 * @param      $message
-	 * @param null $target
+	 * @param   null $target
 	 *
 	 * @return mixed
 	 */
@@ -42,7 +42,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param      $command
-	 * @param null $target
+	 * @param   null $target
 	 *
 	 * @return mixed
 	 */
@@ -149,7 +149,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 * @internal  param $string
 	 */
 	public function getSubscribers($message)
@@ -223,9 +223,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{

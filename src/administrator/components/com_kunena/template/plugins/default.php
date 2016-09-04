@@ -143,12 +143,15 @@ $user = JFactory::getUser();
 							<?php
 							$i = 0;
 							$k = 0;
-							if ($this->pagination->total > 0) :
-							foreach ($this->items as $i => $item) :
-							$canEdit = $user->authorise('core.edit', 'com_plugins');
-							$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
-							$canChange = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
-							?>
+
+							if ($this->pagination->total > 0)
+:
+								foreach ($this->items as $i => $item)
+	:
+									$canEdit = $user->authorise('core.edit', 'com_plugins');
+									$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
+									$canChange = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
+									?>
 								<tr>
 									<td class="center hidden-phone">
 										<?php echo JHtml::_('grid.id', $i, $item->extension_id); ?>
@@ -157,14 +160,21 @@ $user = JFactory::getUser();
 										<?php echo JHtml::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
 									</td>
 									<td>
-										<?php if ($item->checked_out) : ?>
+										<?php if ($item->checked_out)
+		:
+	?>
 											<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
 										<?php endif; ?>
-										<?php if ($canEdit) : ?>
+										<?php
+										if ($canEdit)
+		:
+	?>
 											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','plugin.edit')">
 												<?php echo $this->escape($item->name); ?>
 											</a>
-										<?php else : ?>
+										<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         else
+		:
+	?>
 												<?php echo $item->name; ?>
 										<?php endif; ?>
 									</td>
@@ -178,23 +188,28 @@ $user = JFactory::getUser();
 										<?php echo (int) $item->extension_id;?>
 									</td>
 								</tr>
-							<?php
-							$i++;
-							$k = 1 - $k;
-							endforeach;
-							else : ?>
+								<?php
+								$i++;
+								$k = 1 - $k;
+								endforeach;
+							else
+:
+	?>
 								<tr>
 									<td colspan="10">
 										<div class="well center filter-state">
 											<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-												<?php if($this->filterActive || $this->pagination->total > 0) : ?>
-													<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-												<?php endif; ?>
+												<?php
+												if ($this->filterActive || $this->pagination->total > 0)
+	:
+	?>
+																									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+																								<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 											</span>
 										</div>
 									</td>
 								</tr>
-							<?php endif; ?>
+							<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif; ?>
 						</tbody>
 					</table>
 				</form>

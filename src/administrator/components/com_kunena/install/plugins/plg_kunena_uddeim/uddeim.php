@@ -33,9 +33,9 @@ class PlgKunenaUddeIM extends JPlugin
 			return;
 		}
 
-		include_once($path);
+		include_once $path;
 
-		$uddeim = new uddeIMAPI();
+		$uddeim = new uddeIMAPI;
 
 		if ($uddeim->version() < 1)
 		{

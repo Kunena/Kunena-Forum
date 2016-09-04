@@ -90,10 +90,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 			$db         = JFactory::getDbo();
 
 			$query = $db->getQuery(true)
-					->select('*')
-					->from($db->qn('#__updates'))
-					->where($db->qn('extension_id') . ' > 0')
-					->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
+				->select('*')
+				->from($db->qn('#__updates'))
+				->where($db->qn('extension_id') . ' > 0')
+				->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
 			$db->setQuery($query);
 			$list = (array) $db->loadObjectList();
 
@@ -118,10 +118,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 			else
 			{
 				$query = $db->getQuery(true)
-						->select('update_site_id')
-						->from($db->qn('#__update_sites'))
-						->where($db->qn('enabled') . ' = 0')
-						->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
+					->select('update_site_id')
+					->from($db->qn('#__update_sites'))
+					->where($db->qn('enabled') . ' = 0')
+					->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
 				$db->setQuery($query);
 				$updateInfo = !$db->loadResult();
 			}

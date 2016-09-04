@@ -29,7 +29,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	 *
 	 * @param   null  $tpl
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws Exception
 	 */
@@ -52,7 +52,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   1.6
 	 */

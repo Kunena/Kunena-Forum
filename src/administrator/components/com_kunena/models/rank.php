@@ -57,7 +57,7 @@ class KunenaAdminModelRank extends KunenaModel
 		if ($id)
 		{
 			$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_id={$db->quote($id)}");
-			
+
 			try
 			{
 				$selected = $db->loadObject();
@@ -65,7 +65,7 @@ class KunenaAdminModelRank extends KunenaModel
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-					
+
 				return;
 			}
 

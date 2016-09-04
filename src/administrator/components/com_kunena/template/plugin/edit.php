@@ -35,14 +35,19 @@ $this->fieldsets = $this->form->getFieldsets('params');
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS'); ?></a></li>
-							<?php if (count($this->fieldsets)) : ?>
-								<?php foreach ($this->fieldsets as $fieldset) : ?>
+							<?php
+							if (count($this->fieldsets))
+							:
+	?>
+								<?php foreach ($this->fieldsets as $fieldset)
+								:
+	?>
 									<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
 									<li>
 										<a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a>
 									</li>
 								<?php endforeach; ?>
-							<?php endif; ?>
+							<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 						</ul>
 
 						<div class="tab-content">
@@ -104,7 +109,9 @@ $this->fieldsets = $this->form->getFieldsets('params');
 											<?php echo $this->form->getInput('element'); ?>
 										</td>
 									</tr>
-									<?php if ($this->item->extension_id) : ?>
+									<?php if ($this->item->extension_id)
+									:
+	?>
 										<tr>
 											<td>
 												<?php echo $this->form->getLabel('extension_id'); ?>
@@ -115,8 +122,12 @@ $this->fieldsets = $this->form->getFieldsets('params');
 										</tr>
 									<?php endif; ?>
 									<!-- Plugin metadata -->
-									<?php if ($this->item->xml) : ?>
-										<?php if (($text = trim($this->item->xml->description))) : ?>
+									<?php if ($this->item->xml)
+									:
+	?>
+										<?php if (($text = trim($this->item->xml->description)))
+										:
+	?>
 											<tr>
 												<td>
 													<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
@@ -126,7 +137,9 @@ $this->fieldsets = $this->form->getFieldsets('params');
 												</td>
 											</tr>
 										<?php endif; ?>
-									<?php else : ?>
+									<?php else
+:
+	?>
 										<div class="alert alert-error">
 											<?php echo JText::_('COM_PLUGINS_XML_ERR'); ?>
 										</div>

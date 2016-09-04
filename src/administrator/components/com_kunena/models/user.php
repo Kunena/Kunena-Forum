@@ -67,7 +67,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1");
-		
+
 		try
 		{
 			$subslist = (array) $db->loadObjectList();
@@ -75,7 +75,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -119,7 +119,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip");
-		
+
 		try
 		{
 			$iplist = implode("','", (array) $db->loadColumn());
@@ -127,7 +127,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -137,7 +137,7 @@ class KunenaAdminModelUser extends KunenaModel
 		{
 			$iplist = "'{$iplist}'";
 			$db->setQuery("SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip");
-			
+
 			try
 			{
 				$list = (array) $db->loadObjectlist();
@@ -145,7 +145,7 @@ class KunenaAdminModelUser extends KunenaModel
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -198,9 +198,10 @@ class KunenaAdminModelUser extends KunenaModel
 	{
 		$db   = JFactory::getDBO();
 		$user = $this->getUser();
-		//grab all special ranks
+
+		// Grab all special ranks
 		$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_special = '1'");
-		
+
 		try
 		{
 			$specialRanks = (array) $db->loadObjectList();
@@ -208,7 +209,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -219,7 +220,7 @@ class KunenaAdminModelUser extends KunenaModel
 			$yesnoRank [] = JHtml::_('select.option', $ranks->rank_id, $ranks->rank_title);
 		}
 
-		//build special ranks select list
+		// Build special ranks select list
 		$selectRank = JHtml::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank);
 
 		return $selectRank;
@@ -251,7 +252,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 		$userids = implode(',', $userids);
 		$db->setQuery("SELECT id,username FROM #__users WHERE id IN(" . $userids . ")");
-		
+
 		try
 		{
 			$userids = (array) $db->loadObjectList();
@@ -259,7 +260,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 

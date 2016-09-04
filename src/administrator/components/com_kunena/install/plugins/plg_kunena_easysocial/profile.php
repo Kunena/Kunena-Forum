@@ -26,10 +26,10 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -46,8 +46,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
 	 * @return string
 	 */
@@ -70,7 +70,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			// If it's not configured for simple urls, just set the alias
 			$alias = $user->getAlias();
-
 		}
 		else
 		{
@@ -90,7 +89,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array|void
 	 */
@@ -158,7 +157,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
 	 * @return mixed
 	 */

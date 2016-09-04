@@ -62,7 +62,9 @@ defined('_JEXEC') or die();
 					<span><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?></span>
 				</a>
 
-				<?php if (KunenaForum::isDev()) : ?>
+				<?php if (KunenaForum::isDev())
+				:
+	?>
 					<a class="btn" href="index.php?option=com_kunena&view=install">
 						<i class="icon-big icon-tree-2" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>"></i><br />
 						<span><?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?></span>

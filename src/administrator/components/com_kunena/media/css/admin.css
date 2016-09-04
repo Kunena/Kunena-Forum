@@ -10,7 +10,7 @@
 /** Joomla 1.6 backend fix **/
 DIV#element-box,
 DIV.m {
-	background-color : #FFF !important;
+	background-color: #FFF !important;
 }
 
 .jgrid SPAN.state {

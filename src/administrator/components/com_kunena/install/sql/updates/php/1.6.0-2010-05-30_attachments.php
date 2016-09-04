@@ -64,7 +64,8 @@ function kunena_160_2010_05_30_attachments($parent)
 	{
 		$str = 'utf8mb4';
 	}
-	else {
+	else
+	{
 		$str = 'utf8';
 	}
 

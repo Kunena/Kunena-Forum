@@ -31,10 +31,10 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -53,10 +53,10 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */
@@ -82,7 +82,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 *
@@ -97,7 +97,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 			WHERE a.profileviews>0
 			ORDER BY a.profileviews DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();
@@ -122,9 +122,9 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
 	 */

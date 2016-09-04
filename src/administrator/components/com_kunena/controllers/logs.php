@@ -72,8 +72,8 @@ class KunenaAdminControllerLogs extends KunenaController
 
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
-		->delete('#__kunena_logs')
-		->where('time < ' . $timestamp->toUnix());
+			->delete('#__kunena_logs')
+			->where('time < ' . $timestamp->toUnix());
 
 		$db->setQuery($query);
 

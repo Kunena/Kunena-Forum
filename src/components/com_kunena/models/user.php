@@ -169,7 +169,7 @@ class KunenaModelUser extends KunenaModel
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -200,7 +200,7 @@ class KunenaModelUser extends KunenaModel
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -269,7 +269,7 @@ class KunenaModelUser extends KunenaModel
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations

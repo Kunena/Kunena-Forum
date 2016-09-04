@@ -111,7 +111,7 @@ class KunenaProfileKunena extends KunenaProfile
 		}
 		catch (RuntimeException $e)
 		{
-			KunenaError::displayDatabaseError();
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $top;

@@ -271,11 +271,16 @@ class KunenaForumTopicUser extends JObject
 			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
-			$this->_db->setQuery($query, 0, 1);
-			$info = $this->_db->loadAssocList();
-
-			if (KunenaError::checkDatabaseError())
+			$this->_db->setQuery($query, 0, 1);	
+			
+			try
 			{
+				$info = $this->_db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+				
 				return null;
 			}
 

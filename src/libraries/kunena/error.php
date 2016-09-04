@@ -107,14 +107,14 @@ abstract class KunenaError
 	  *
 	  * @since 5.0
 	  */
-	public static function displayDatabaseError()
+	public static function displayDatabaseError($exception)
 	{
 		$app = JFactory::getApplication();
 		$db = JFactory::getDBO();
 
 		if (JFactory::getApplication()->isAdmin())
 		{
-			$app->enqueueMessage($db->getErrorMsg(), 'error');
+			$app->enqueueMessage($exception->getMessage(), 'error');
 		}
 		elseif (self::$debug || self::$admin)
 		{

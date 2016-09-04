@@ -87,8 +87,15 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		$db->setQuery($query);
-		$results = (int) $db->loadResult();
-		KunenaError::checkDatabaseError();
+		
+		try 
+		{
+			$results = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -119,9 +126,16 @@ abstract class KunenaForumMessageThankyouHelper
 				GROUP BY s.{$field}
 				ORDER BY countid DESC";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
-
+		
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+		
 		return $results;
 	}
 
@@ -147,8 +161,15 @@ abstract class KunenaForumMessageThankyouHelper
 				ORDER BY countid DESC";
 
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -181,8 +202,15 @@ abstract class KunenaForumMessageThankyouHelper
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
 				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -215,8 +243,15 @@ abstract class KunenaForumMessageThankyouHelper
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -246,10 +281,15 @@ abstract class KunenaForumMessageThankyouHelper
 			SET u.thankyou = 0
 			WHERE t.targetuserid IS NULL";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 
@@ -262,10 +302,15 @@ abstract class KunenaForumMessageThankyouHelper
 			GROUP BY targetuserid
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 

@@ -207,7 +207,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		}
 		catch (RuntimeException $e)
 		{
-			KunenaError::displayDatabaseError();
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $userpoints;

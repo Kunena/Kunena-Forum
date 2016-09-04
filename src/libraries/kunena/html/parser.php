@@ -37,8 +37,15 @@ abstract class KunenaHtmlParser
 		}
 
 		$db->setQuery($sql);
-		$smilies = $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$smilies = $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$smileyArray = array ();
 		$template = KunenaFactory::getTemplate();

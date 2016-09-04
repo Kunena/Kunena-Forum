@@ -55,7 +55,9 @@ defined('_JEXEC') or die();
 							</div>
 						</td>
 					</tr>
-					<?php if ($this->isTFAEnabled) : ?>
+					<?php if ($this->isTFAEnabled)
+					:
+	?>
 					<tr>
 						<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_SECRETKEY') ?></td>
 						<td>

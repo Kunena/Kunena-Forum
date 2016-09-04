@@ -18,7 +18,8 @@ defined('_JEXEC') or die();
 
 <ul class="menu<?php echo $this->class_sfx; ?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
 	<?php
-	foreach ($this->list as $i => $item) :
+	foreach ($this->list as $i => $item)
+	:
 		$class = 'item-' . $item->id;
 		$class .= ($item->id == $this->active_id) ? ' current' : '';
 
@@ -73,7 +74,7 @@ defined('_JEXEC') or die();
 				$extra = ' target="_blank"';
 				break;
 			case 2:
-				// window.open
+				// Window.open
 				$extra = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes\');return false;"';
 				break;
 		}
@@ -104,6 +105,5 @@ defined('_JEXEC') or die();
 			// The next item is on the same level.
 			echo '</li>';
 		}
-
 	endforeach;
 	?></ul>

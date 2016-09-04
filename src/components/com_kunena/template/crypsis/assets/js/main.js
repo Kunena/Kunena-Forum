@@ -9,34 +9,34 @@
 
 /* Function used to ordering the data by clicking on column title */
 function kunenatableOrdering( order, dir, task, form ) {
-	var form=document.getElementById(form);
-	form.filter_order.value=order;
-	form.filter_order_Dir.value=dir;
-	form.submit( task );
+	var form = document.getElementById(form);
+	form.filter_order.value = order;
+	form.filter_order_Dir.value = dir;
+	form.submit(task);
 }
 
 jQuery(document).ready(function($) {
 	/* To hide or open collapse localStorage */
 	$('.collapse').on('hidden', function() {
 		if (this.id) {
-			if (this.id!='search')
+			if (this.id != 'search')
 			{
 				localStorage[this.id] = 'true';
 			}
 		}
-		}).on('shown', function() {
-			if (this.id) {
-				localStorage.removeItem(this.id);
+	}).on('shown', function() {
+		if (this.id) {
+			localStorage.removeItem(this.id);
 		}
-		}).each(function() {
-			if (this.id && localStorage[this.id] === 'true' ) {
-				$(this).collapse('hide');
+	}).each(function() {
+		if (this.id && localStorage[this.id] === 'true') {
+			$(this).collapse('hide');
 		}
 	});
 
 	/* To check or uncheck boxes to select items */
 	$('input.kcheckall').click(function() {
-		$( '.kcheck' ).each(function( ) {
+		$('.kcheck').each(function( ) {
 			$(this).prop('checked',!$(this).prop('checked'));
 		});
 	});
@@ -44,9 +44,10 @@ jQuery(document).ready(function($) {
 	/* Allow to make working drop-down choose destination */
 	$('#kchecktask').change(function() {
 		var task = $("select#kchecktask").val();
-		if (task=='move') {
+		if (task == 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
-		} else {
+		}
+		else {
 			$("#kchecktarget").attr('disabled', true);
 		}
 	});
@@ -73,13 +74,13 @@ jQuery(document).ready(function($) {
 
 		// Get the list of images from the gallery selected drop-down above
 		$.ajax({
-			 dataType: "json",
-			 url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
-			 data: 'gallery_name=' + gallery_selected
+			dataType: "json",
+			url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
+			data: 'gallery_name=' + gallery_selected
 		}).done(function(response) {
-       $.each(response, function( key, value ) {
-				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
-			  });
+			$.each(response, function( key, value ) {
+				  gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');
+			});
 		}).fail(function(response) {
 
 		});
@@ -103,4 +104,3 @@ jQuery(document).ready(function($) {
 		});
 	}
 });
-

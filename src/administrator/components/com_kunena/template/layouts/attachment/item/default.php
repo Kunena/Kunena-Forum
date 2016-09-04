@@ -18,8 +18,9 @@ if ($config->access_component)
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
-		<?php if ($attachment->isImage())
-		{
+		<?php
+		if ($attachment->isImage())
+	{
 			echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';
 		}
 		else
@@ -40,4 +41,4 @@ else
 	{
 		echo '<i class="icon-flag-2 icon-big"></i>';
 	}
-} ?>
+}

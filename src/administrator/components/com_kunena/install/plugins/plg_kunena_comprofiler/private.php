@@ -75,8 +75,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @param        $userid
-	 * @param string $class
-	 * @param string $icon
+	 * @param   string $class
+	 * @param   string $icon
 	 *
 	 * @return string
 	 */
@@ -143,7 +143,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if (file_exists($cbpath))
 		{
-			require_once($cbpath);
+			require_once $cbpath;
 		}
 		else
 		{

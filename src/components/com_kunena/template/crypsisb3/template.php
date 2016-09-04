@@ -106,6 +106,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';
+
 		if (file_exists($filename))
 		{
 			$this->addStyleSheet('assets/css/custom.css');
@@ -121,6 +122,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
+
 		if ($icons)
 		{
 			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
@@ -131,7 +133,9 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		/* Kunena Custom CSS */
 EOF;
 		$iconcolor = $this->ktemplate->params->get('IconColor');
-		if ($iconcolor) {
+
+		if ($iconcolor)
+		{
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
 		.layout#kunena .glyphicon-topic,
@@ -141,7 +145,9 @@ EOF;
 		}
 
 		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
-		if ($iconcolornew) {
+
+		if ($iconcolornew)
+		{
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }

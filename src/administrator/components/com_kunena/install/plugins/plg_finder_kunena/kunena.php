@@ -88,7 +88,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		// If a category will be change, we want to see, if the accesstype and access level has changed
 		if (($row instanceof TableKunenaCategories) && !$isNew)
 		{
-			$old_table = clone($row);
+			$old_table = clone $row;
 			$old_table->load();
 			$this->old_cataccess     = $old_table->access;
 			$this->old_cataccesstype = $old_table->accesstype;
@@ -177,6 +177,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		elseif ($table instanceof TableKunenaTopics)
 		{
 			$messages = $this->getMessagesByTopic($table->id);
+
 			foreach ($messages as $message)
 			{
 				$this->remove($message->id);
@@ -470,8 +471,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Set other information.
 		$item->published = intval($message->hold == 0);
+
 		// TODO: add topic state
-		//$item->state = intval($message->getCategory()->published == 1);
+		// $item->state = intval($message->getCategory()->published == 1);
 		$item->state    = $item->published;
 		$item->language = '*';
 
@@ -593,7 +595,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * @param $item
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected function getAccessLevel($item)
 	{

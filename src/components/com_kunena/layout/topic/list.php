@@ -22,7 +22,7 @@ class KunenaLayoutTopicList extends KunenaLayout
 	/**
 	 * Method to return HTML select list for time filter
 	 *
-	 * @param int|string $id     Id of the HTML select list
+	 * @param   int|string $id     Id of the HTML select list
 	 * @param   string   $attrib Extra attribute to apply to the list
 	 *
 	 */

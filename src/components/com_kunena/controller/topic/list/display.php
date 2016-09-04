@@ -86,7 +86,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		$cache   = JFactory::getCache('com_kunena', 'output');
 
-		/*if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		/*
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
 			return;
 		}*/
@@ -185,8 +186,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
-	 * @param array $topics
-	 * @param array $actions
+	 * @param   array $topics
+	 * @param   array $actions
 	 *
 	 * @return array
 	 */
@@ -233,7 +234,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$actions = array_filter($actions, function ($item)
-		{
+			{
 			return !empty($item);
 		});
 
@@ -248,8 +249,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
-	 * @param array $messages
-	 * @param array $actions
+	 * @param   array $messages
+	 * @param   array $actions
 	 *
 	 * @return array
 	 */
@@ -286,7 +287,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$actions = array_filter($actions, function ($item)
-		{
+			{
 			return !empty($item);
 		});
 

@@ -376,6 +376,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$topicicons = array ();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
+
 		foreach ($topiciconslist as $icon)
 		{
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
@@ -490,7 +491,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		return true;
 	}
-	
+
 	/**
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
@@ -501,14 +502,14 @@ class KunenaAdminModelCategories extends KunenaModel
 		$categories = $this->getAdminCategories();
 		$batch_categories = array();
 		$batch_categories[] = JHtml::_('select.option', 'select', JText::_('JSELECT'));
-		
-		foreach($categories as $category)
+
+		foreach ($categories as $category)
 		{
-			$batch_categories [] = JHtml::_('select.option', $category->id, str_repeat ( '...', count($category->indent)-1 ).' '.$category->name);
+			$batch_categories [] = JHtml::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
 		}
-		
+
 		$list = JHtml::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox" size="1"', 'value', 'text', 'select');
-		
+
 		return $list;
 	}
 }

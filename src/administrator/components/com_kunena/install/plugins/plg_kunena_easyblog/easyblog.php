@@ -10,7 +10,7 @@
  * @link        https://www.kunena.org
  **/
 
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class plgKunenaEasyblog extends JPlugin
 {
@@ -36,7 +36,7 @@ class plgKunenaEasyblog extends JPlugin
 			return;
 		}
 
-		include_once($path);
+		include_once $path;
 
 		parent::__construct($subject, $config);
 

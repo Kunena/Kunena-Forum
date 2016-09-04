@@ -8,7 +8,7 @@
  **/
 
 .jgrid span.state {
-	float:right;
+	float: right;
 }
 div.header {
 	/* TODO: override left rule */

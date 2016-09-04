@@ -27,10 +27,10 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -47,10 +47,10 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -64,7 +64,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 */
@@ -77,7 +77,7 @@ class KunenaProfileCommunity extends KunenaProfile
 			WHERE cu.view>0
 			ORDER BY cu.view DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();
@@ -100,9 +100,9 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

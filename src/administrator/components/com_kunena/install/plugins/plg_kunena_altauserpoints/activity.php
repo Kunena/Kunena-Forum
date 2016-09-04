@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 jimport('joomla.utilities.string');
 
 /**
@@ -41,7 +41,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param        $plugin_function
-	 * @param string $spc
+	 * @param   string $spc
 	 *
 	 * @return mixed
 	 */
@@ -53,7 +53,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function onAfterPost($message)
 	{
@@ -116,9 +116,9 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -139,6 +139,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 				{
 					AltaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
 				}
+
 				// For who has gived the thank you
 				if ($aupactor)
 				{
@@ -161,7 +162,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $userid
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	public function getUserMedals($userid)
 	{
@@ -187,9 +188,9 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $userid
+	 * @param   int $userid
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getUserPoints($userid)
 	{
@@ -200,7 +201,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 		$_db = JFactory::getDBO();
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		
+
 		try
 		{
 			$userpoints = $_db->loadResult();
@@ -216,7 +217,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function _checkPermissions($message)
 	{
@@ -248,7 +249,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $ruleName
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function _checkRuleEnabled($ruleName)
 	{

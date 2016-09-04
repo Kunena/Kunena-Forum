@@ -159,8 +159,8 @@ class KunenaAccessComprofiler
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param KunenaForumCategory $category
-	 * @param int                 $userid
+	 * @param   KunenaForumCategory $category
+	 * @param   int                 $userid
 	 *
 	 * @return array
 	 */
@@ -199,6 +199,7 @@ class KunenaAccessComprofiler
 		}
 
 		$allowed = (array) array_flip($allowed);
+
 		foreach ($allowed as $id => &$value)
 		{
 			$value = $id;

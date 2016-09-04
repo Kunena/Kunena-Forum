@@ -8,7 +8,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 // Display offline message if Kunena hasn't been fully installed.
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
@@ -69,6 +69,7 @@ if ($ksession->userid > 0)
 	{
 		$kuser->save();
 	}
+
 	// Save session
 	if (!$ksession->save())
 	{
@@ -95,7 +96,6 @@ if ($controller)
 	KunenaRoute::cacheLoad();
 	$contents = $controller->execute();
 	KunenaRoute::cacheStore();
-
 }
 elseif (is_file(KPATH_SITE . "/controllers/{$view}.php"))
 {
@@ -146,7 +146,7 @@ if (KUNENA_PROFILER)
 	foreach ($kunena_profiler->getAll() as $item)
 	{
 		echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
-			$item->getTotalTime(), $item->calls);
+		$item->getTotalTime(), $item->calls);
 	}
 
 	echo '</div>';

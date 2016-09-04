@@ -28,41 +28,44 @@ defined('_JEXEC') or die();
 					<th><?php echo JText::_('Active Category Subscriptions'); ?></th>
 				</tr>
 				<?php
-					foreach ($this->cat_subscribers_users as $user) :
+				foreach ($this->cat_subscribers_users as $user)
+				:
 				?>
 				<tr>
-					<td><?php echo $user->id ?></td>
-					<td><?php echo $user->username ?></td>
-					<td><?php echo $user->email ?></td>
+				<td><?php echo $user->id ?></td>
+				<td><?php echo $user->username ?></td>
+				<td><?php echo $user->email ?></td>
 				</tr>
-				<?php endforeach ?>
+				<?php                                                                                                                                                                                                                                                                                                                                                                                                                                     endforeach ?>
 				<tr>
 					<th><?php echo JText::_('Active Topic Subscriptions'); ?></th>
 				</tr>
 				<?php
-					foreach ($this->topic_subscribers_users as $user) :
+				foreach ($this->topic_subscribers_users as $user)
+				:
 				?>
 				<tr>
-					<td><?php echo $user->id ?></td>
-					<td><?php echo $user->username ?></td>
-					<td><?php echo $user->email ?></td>
+				<td><?php echo $user->id ?></td>
+				<td><?php echo $user->username ?></td>
+				<td><?php echo $user->email ?></td>
 				</tr>
-				<?php endforeach ?>
+				<?php                                                                                                                                                                                                                                                                                                                                                                                                                                     endforeach ?>
 				<tr>
 					<th><?php echo JText::_('E-mails sent to'); ?></th>
 				</tr>
 				<?php
-					foreach ($this->cat_topic_subscribers as $sub) :
+				foreach ($this->cat_topic_subscribers as $sub)
+				:
 				?>
 				<tr>
-					<td><?php echo $sub->id ?></td>
-					<td><?php echo $sub->username ?></td>
-					<td><?php echo $sub->email ?></td>
-					<td><?php echo intval($sub->subscription) ?></td>
-					<td><?php echo intval($sub->moderator) ?></td>
-					<td><?php echo intval($sub->admin) ?></td>
+				<td><?php echo $sub->id ?></td>
+				<td><?php echo $sub->username ?></td>
+				<td><?php echo $sub->email ?></td>
+				<td><?php echo intval($sub->subscription) ?></td>
+				<td><?php echo intval($sub->moderator) ?></td>
+				<td><?php echo intval($sub->admin) ?></td>
 				</tr>
-				<?php endforeach ?>
+				<?php                                                                                                                                                                                                                                                                                                                                                                                                                                     endforeach ?>
 			</table>
 		</div>
 

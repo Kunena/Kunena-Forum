@@ -34,7 +34,7 @@ class plgKunenaComprofiler extends JPlugin
 		$app = JFactory::getApplication();
 
 		// Do not load if CommunityBuilder is not installed
-		if ((!file_exists( JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
+		if ((!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
 			return;
 		}
@@ -58,8 +58,8 @@ class plgKunenaComprofiler extends JPlugin
 
 	/**
 	 * @param      $type
-	 * @param null $view
-	 * @param null $params
+	 * @param   null $view
+	 * @param   null $params
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
 	{
@@ -84,7 +84,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * @param     $context
 	 * @param     $item
 	 * @param     $params
-	 * @param int $page
+	 * @param   int $page
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
 	{

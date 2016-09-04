@@ -59,7 +59,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)
 		{
-			$filter = JAccess::getUsersByGroup(8);	
+			$filter = JAccess::getUsersByGroup(8);
 		}
 		else
 		{

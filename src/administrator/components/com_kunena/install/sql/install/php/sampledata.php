@@ -26,7 +26,7 @@ class KText
 }
 
 /**
- * @return int
+ * @return integer
  * @throws KunenaInstallerException
  */
 function installSampleData()

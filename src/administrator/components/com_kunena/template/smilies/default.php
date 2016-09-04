@@ -139,8 +139,11 @@ JHtml::_('behavior.tabstate');
 										<tbody>
 										<?php
 										$i = 0;
-										if ($this->pagination->total > 0) :
-											foreach ($this->items as $id => $row) :
+
+										if ($this->pagination->total > 0)
+:
+											foreach ($this->items as $id => $row)
+	:
 												?>
 												<tr>
 													<td class="hidden-phone center">
@@ -163,21 +166,28 @@ JHtml::_('behavior.tabstate');
 												</tr>
 											<?php
 											endforeach;
-										else : ?>
+										else
+:
+	?>
 											<tr>
 												<td colspan="10">
 													<div class="well center filter-state">
 														<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-															<?php if ($this->filterActive) : ?>
+															<?php
+															if ($this->filterActive)
+															:
+	?>
 																<button class="btn" type="button" onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-															<?php else : ?>
+															<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     else
+	:
+	?>
 																<button class="btn btn-success" type="button" onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_SMILIE'); ?></button>
 															<?php endif; ?>
 														</span>
 													</div>
 												</td>
 											</tr>
-										<?php endif; ?>
+										<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 										</tbody>
 									</table>
 								</form>

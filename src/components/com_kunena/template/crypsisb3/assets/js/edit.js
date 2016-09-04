@@ -59,11 +59,12 @@ jQuery(document).ready(function ($) {
 	});
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if ($('#kemojis_allowed').val()==1) {
+	if ($('#kemojis_allowed').val() == 1) {
 		var item = '';
 		if ($('#kbbcode-message').length > 0 && $('.qreply').length == 0) {
 			item = '#kbbcode-message';
-		} else if ($('.qreply').length > 0) {
+		}
+		else if ($('.qreply').length > 0) {
 			item = '.qreply';
 		}
 
@@ -131,7 +132,8 @@ jQuery(document).ready(function ($) {
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
-			} else {
+			}
+			else {
 				$('#kanynomous-check').hide();
 				$('#kanonymous').prop('checked', false);
 			}
@@ -171,7 +173,7 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (kunena_topicicontype=='B3') {
+						if (kunena_topicicontype == 'B3') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for'  : 'radio' + value.id
@@ -180,7 +182,8 @@ jQuery(document).ready(function ($) {
 								'border': '0',
 								'al'    : ''
 							}));
-						} else if(kunena_topicicontype=='fa') {
+						}
+						else if (kunena_topicicontype == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for'  : 'radio' + value.id
@@ -189,7 +192,8 @@ jQuery(document).ready(function ($) {
 								'border': '0',
 								'al'    : ''
 							}));
-						} else {
+						}
+						else {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for'  : 'radio' + value.id

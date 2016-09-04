@@ -23,7 +23,7 @@ class KunenaAdminModelIcons extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param    array $config An optional associative array of configuration settings.
+	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
 	 */

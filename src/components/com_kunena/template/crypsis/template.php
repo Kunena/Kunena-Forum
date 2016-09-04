@@ -72,7 +72,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		if ($bootstrap)
 		{
 			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$doc->addStyleSheet(JUri::base(true). '/media/jui/css/bootstrap-extended.css');
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-extended.css');
 			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
 		}

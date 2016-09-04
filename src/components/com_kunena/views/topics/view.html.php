@@ -9,7 +9,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics View
@@ -122,7 +122,7 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
@@ -145,7 +145,7 @@ class KunenaViewTopics extends KunenaView
 			$cachegroup  = 'com_kunena.topics';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; //$cache->get($cachekey, $cachegroup);
+			$contents = false; // $cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
@@ -180,8 +180,9 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
-				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 
 			if ($usertype != 'guest')
@@ -217,7 +218,7 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
@@ -241,7 +242,7 @@ class KunenaViewTopics extends KunenaView
 			$cachegroup  = 'com_kunena.posts';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; //$cache->get($cachekey, $cachegroup);
+			$contents = false; // $cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
@@ -265,8 +266,9 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
-				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 
 			if ($usertype != 'guest')

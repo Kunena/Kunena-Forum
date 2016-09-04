@@ -69,10 +69,10 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @see JModelForm::getForm()
 	 *
-	 * @param array $data
-	 * @param bool  $loadData
+	 * @param   array $data
+	 * @param   bool  $loadData
 	 *
-	 * @return bool|mixed
+	 * @return boolean|mixed
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -114,10 +114,10 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 */
 	function getTemplates()
 	{
-		//get template xml file info
+		// Get template xml file info
 		$rows = KunenaTemplateHelper::parseXmlFiles();
 
-		// set dynamic template information
+		// Set dynamic template information
 		foreach ($rows as $row)
 		{
 			$row->published = KunenaTemplateHelper::isDefault($row->directory);

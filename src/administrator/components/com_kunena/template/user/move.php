@@ -51,7 +51,7 @@ defined('_JEXEC') or die();
 								<strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
 								<ol>
 								<?php
-								foreach($this->users as $user)
+								foreach ($this->users as $user)
 								{
 									echo '<li>' . $this->escape($user->username) . ' (' . JText::_('COM_KUNENA_TRASH_AUTHOR_USERID') . ' ' . $this->escape($user->id) . ')</li> ';
 								}

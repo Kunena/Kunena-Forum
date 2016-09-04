@@ -29,7 +29,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 			return;
 		}
 
-		$this->uddeim = new uddeIMAPI();
+		$this->uddeim = new uddeIMAPI;
 
 		if ($this->uddeim->version() < 1)
 		{

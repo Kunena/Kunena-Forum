@@ -58,7 +58,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			}
 		}
 
-
 		if ($this->config->read_only)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
@@ -98,7 +97,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-						. $captcha_pubkey . '" data-theme="light"'));
+					. $captcha_pubkey . '" data-theme="light"'));
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
@@ -112,7 +111,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		if (!$this->topic->category_id)
 		{
 			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
-				$this->topic->getError()), $this->me->exists() ? 403 : 401);
+			$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
 		$options = array();
@@ -140,7 +139,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->selectcatlist = JHtml::_(
 			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
-			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
+		'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';
 
@@ -229,7 +228,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	protected function canSubscribe()
 	{
 		if (! $this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
 		{
 			return false;
 		}

@@ -36,7 +36,7 @@ class plgKunenaCommunity extends JPlugin
 			return;
 		}
 
-		include_once($path);
+		include_once $path;
 
 		parent::__construct($subject, $config);
 

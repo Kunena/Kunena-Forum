@@ -77,9 +77,9 @@ class KunenaAdminControllerConfig extends KunenaController
 		}
 
 		$properties = $this->config->getProperties();
-		
+
 		$post_config = $this->app->input->post->getArray();
-		
+
 		// TODO: fix depricated value
 		foreach ($post_config as $postsetting => $postvalue)
 		{

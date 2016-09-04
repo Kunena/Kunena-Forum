@@ -59,7 +59,7 @@
 	min-width: 72px;
 	overflow: hidden;
 	background-color: transparent;
-	border: 1px solid #e5e5e5 ;
+	border: 1px solid #e5e5e5;
 	outline: 0 !important;
 }
 #kunena.admin.override #dashboard-icons .btn:focus,

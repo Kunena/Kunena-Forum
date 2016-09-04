@@ -118,7 +118,6 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-
 		$value = JFactory::getApplication()->input->getInt('show', 0);
 		$this->setState('query.show', $value);
 

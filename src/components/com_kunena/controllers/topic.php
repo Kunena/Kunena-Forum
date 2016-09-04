@@ -500,6 +500,7 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
+
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
 		if (!$maxlinks)
@@ -531,12 +532,12 @@ class KunenaControllerTopic extends KunenaController
 		if ($this->me->isModerator($category) && $this->config->log_moderation)
 		{
 			KunenaLog::log(
-					KunenaLog::TYPE_ACTION,
-					$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-					array('mesid' => $message->id, 'parent_id' => $this->id),
-					$category,
-					$topic
-					);
+				KunenaLog::TYPE_ACTION,
+				$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
+				array('mesid' => $message->id, 'parent_id' => $this->id),
+				$category,
+				$topic
+			);
 		}
 
 		if (!$success)
@@ -922,7 +923,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @param $subject
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @internal param string $usbject
 	 *
 	 */
@@ -954,7 +955,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $text
 	 * @param $topic
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -1445,6 +1446,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$category = $topic->getCategory();
+
 		if ($target->authorise('delete') && $target->publish($hold))
 		{
 			if ($this->config->log_moderation)
@@ -1511,6 +1513,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$category = $topic->getCategory();
+
 		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
@@ -1569,6 +1572,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$category = $topic->getCategory();
+
 		if ($target->authorise('permdelete') && $target->delete())
 		{
 			if ($this->config->log_moderation)
@@ -1637,17 +1641,18 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = $message->getTopic();
 		$category = $topic->getCategory();
+
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
 			{
 				KunenaLog::log(
-						$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-						$log,
-						array('mesid' => $message->id),
-						$category,
-						$topic,
-						$message->getAuthor()
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					array('mesid' => $message->id),
+					$category,
+					$topic,
+					$message->getAuthor()
 				);
 			}
 
@@ -1940,7 +1945,6 @@ class KunenaControllerTopic extends KunenaController
 				}
 				catch (Exception $e)
 				{
-
 				}
 
 				$receivers = array();

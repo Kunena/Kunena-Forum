@@ -9,7 +9,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
@@ -31,10 +31,10 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -51,10 +51,10 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -78,9 +78,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -116,9 +116,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

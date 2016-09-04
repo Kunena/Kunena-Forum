@@ -86,7 +86,9 @@ jQuery(document).ready(function($) {
 												<?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
 											</a>
 										</li>
-										<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+										<?php if (!$this->category->id || !$this->category->isSection())
+										:
+	?>
 										<li>
 											<a href="#tab-settings" data-toggle="tab">
 												<?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
@@ -98,7 +100,9 @@ jQuery(document).ready(function($) {
 												<?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
 											</a>
 										</li>
-										<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+										<?php if (!$this->category->id || !$this->category->isSection())
+										:
+	?>
 										<li>
 											<a href="#tab-mods" data-toggle="tab">
 												<?php echo JText::_('COM_KUNENA_MODHEADER'); ?>
@@ -127,9 +131,12 @@ jQuery(document).ready(function($) {
 														<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 														<td>
 															<input class="inputbox" id="jform_aliases" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
-															<?php if ($this->options ['aliases']) : ?>
+															<?php
+															if ($this->options ['aliases'])
+															:
+	?>
 																<?php echo '<span id="aliascheck">' . $this->options ['aliases'] . '</span>'; ?>
-															<?php endif ?>
+															<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif ?>
 														</td>
 													</tr>
 													<tr>
@@ -178,19 +185,23 @@ jQuery(document).ready(function($) {
 													</thead>
 													<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist)
 													{
-														foreach ($accesslist as $accessinput) : ?>
+														foreach ($accesslist as $accessinput)
+														:
+	?>
 															<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 																<td><?php echo $accessinput['title'] ?></td>
 																<td><?php echo $accessinput['input'] ?></td>
 																<td><?php echo $accessinput['desc'] ?></td>
 															</tr>
-														<?php endforeach;
-													}; ?>
+														<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endforeach;
+}; ?>
 												</table>
 											</fieldset>
 										</div>
 
-										<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+										<?php if (!$this->category->id || !$this->category->isSection())
+										:
+	?>
 										<div class="tab-pane" id="tab-settings">
 											<fieldset>
 												<table class="table table-striped">
@@ -260,7 +271,9 @@ jQuery(document).ready(function($) {
 												</table>
 											</fieldset>
 										</div>
-										<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+										<?php if (!$this->category->id || !$this->category->isSection())
+										:
+	?>
 										<div class="tab-pane" id="tab-mods">
 											<fieldset>
 												<legend><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
@@ -275,18 +288,24 @@ jQuery(document).ready(function($) {
 													</thead>
 
 													<tbody>
-													<?php $i = 0; if (empty($this->moderators)) : ?>
+													<?php $i = 0; if (empty($this->moderators))
+													:
+	?>
 														<tr>
 															<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
 														</tr>
-													<?php else : foreach ($this->moderators as $ml) : ?>
+													<?php else
+:
+	foreach ($this->moderators as $ml)
+		:
+	?>
 														<tr>
 															<td><?php echo $this->escape($ml->username); ?></td>
 															<td><?php echo $this->escape($ml->name); ?></td>
 															<td><?php echo $this->escape($ml->userid); ?></td>
 														</tr>
-													<?php endforeach;
-													endif; ?>
+													<?php                                                                                                 endforeach;
+endif; ?>
 													</tbody>
 												</table>
 											</fieldset>

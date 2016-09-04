@@ -28,7 +28,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $userid
+	 * @param   int $userid
 	 *
 	 * @return null
 	 */
@@ -116,9 +116,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -127,8 +127,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $topic
-	 * @param int $action
+	 * @param   int $topic
+	 * @param   int $action
 	 */
 	public function onAfterSubscribe($topic, $action)
 	{
@@ -138,8 +138,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $topic
-	 * @param int $action
+	 * @param   int $topic
+	 * @param   int $action
 	 */
 	public function onAfterFavorite($topic, $action)
 	{
@@ -149,8 +149,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $topic
-	 * @param int $action
+	 * @param   int $topic
+	 * @param   int $action
 	 */
 	public function onAfterSticky($topic, $action)
 	{
@@ -160,8 +160,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $topic
-	 * @param int $action
+	 * @param   int $topic
+	 * @param   int $action
 	 */
 	public function onAfterLock($topic, $action)
 	{
@@ -171,9 +171,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param int $target
-	 * @param int $actor
-	 * @param int $delta
+	 * @param   int $target
+	 * @param   int $actor
+	 * @param   int $delta
 	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{

@@ -13,12 +13,13 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 class plgKunenaEasySocial extends JPlugin
 {
-	/***
+	/**
+	 *
 	 * Determines if EasySocial exists on the site.
 	 *
 	 * @since     1.0
 	 * @access    public
-	 * @return    bool
+	 * @return    boolean
 	 */
 	public function exists()
 	{
@@ -31,7 +32,7 @@ class plgKunenaEasySocial extends JPlugin
 			return false;
 		}
 
-		include_once($file);
+		include_once $file;
 
 		return true;
 	}
@@ -122,7 +123,7 @@ class plgKunenaEasySocial extends JPlugin
 			return null;
 		}
 
-		require_once(__DIR__ . "/profile.php");
+		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileEasySocial($this->params);
 	}

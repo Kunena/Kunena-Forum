@@ -86,7 +86,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-				
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -148,7 +148,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -210,7 +210,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -273,7 +273,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -331,7 +331,7 @@ class KunenaControllerTopics extends KunenaController
 							$this->app->enqueueMessage($topic->getError(), 'notice');
 						}
 					}
-				} 
+				}
 				else
 				{
 					foreach ($messages as $message)
@@ -339,14 +339,14 @@ class KunenaControllerTopics extends KunenaController
 						$topic = $message->getTopic();
 
 						if ($message->authorise('move') && $topic->move($target, $message->id))
-  						{
-  							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
-  						}
-  						else
-  						{
-  							$this->app->enqueueMessage($message->getError(), 'notice');
-  						}
-  					}
+						{
+								$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+						}
+						else
+						{
+							$this->app->enqueueMessage($message->getError(), 'notice');
+						}
+					}
 				}
 			}
 		}
@@ -370,7 +370,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -399,7 +399,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			if ($this->config->log_moderation)
 			{
-				foreach($topics as $topic)
+				foreach ($topics as $topic)
 				{
 					KunenaLog::log(
 						$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
@@ -411,7 +411,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else

@@ -46,9 +46,10 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		// Get sections to display.
 		$catid = $this->input->getInt('catid', 0);
 
-
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		/*$cache   = JFactory::getCache('com_kunena', 'output');
+
+		/*
+		$cache   = JFactory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{

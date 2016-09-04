@@ -15,7 +15,8 @@ jQuery(document).ready(function ($){
 
 	if ($('#modal-code').length == 0) {
 		$('.codemodalboxbutton').hide();
-	} else {
+	}
+	else {
 		$('.codesimplebutton').hide();
 	}
 
@@ -24,8 +25,8 @@ jQuery(document).ready(function ($){
 		var codetype = $("#kcodetype option:selected").val();
 
 		$.markItUp(
-			{ openWith:'[code type="'+codetype+'"]',
-			  closeWith:'[/code]' }
+			{ openWith:'[code type="' + codetype + '"]',
+				closeWith:'[/code]' }
 		);
 		return false;
 	});
@@ -38,19 +39,19 @@ jQuery(document).ready(function ($){
 		var type = '';
 		var zoom = '';
 
-		if (modaltype!=undefined)
+		if (modaltype != undefined)
 		{
-			type = 'type='+modaltype;
+			type = 'type=' + modaltype;
 		}
 
-		if (modalzoom!=undefined)
+		if (modalzoom != undefined)
 		{
-			zoom = 'zoom='+modalzoom;
+			zoom = 'zoom=' + modalzoom;
 		}
 
 		$.markItUp(
-		{ openWith:'[map '+type+' '+zoom+']'+modalcity,
-		  closeWith:'[/map]' }
+			{ openWith:'[map ' + type + ' ' + zoom + ']' + modalcity,
+				closeWith:'[/map]' }
 		);
 		return false;
 	});
@@ -62,21 +63,21 @@ jQuery(document).ready(function ($){
 		var modalpicturealt = $('#modal-picture-alt').val();
 
 		var size = '';
-		if ( modalpicturesize.length > 0 ) {
-			size = 'size='+modalpicturesize;
+		if (modalpicturesize.length > 0) {
+			size = 'size=' + modalpicturesize;
 		}
 
 		var alt = '';
-		if ( modalpicturealt.length > 0 ) {
-			alt = 'alt='+modalpicturealt;
+		if (modalpicturealt.length > 0) {
+			alt = 'alt=' + modalpicturealt;
 		}
 
-		if ( modalpictureurl.length > 0 ) {
+		if (modalpictureurl.length > 0) {
 			$.markItUp(
-				{ openWith:'[img '+size+' '+alt+']'+modalpictureurl,
-				closeWith:'[/img]' }
+				{ openWith:'[img ' + size + ' ' + alt + ']' + modalpictureurl,
+					closeWith:'[/img]' }
 			);
-		return false;
+			return false;
 		}
 	});
 
@@ -86,20 +87,20 @@ jQuery(document).ready(function ($){
 		var modallinktext = $('#modal-link-text').val();
 
 		var text = '';
-		if ( modallinktext.length > 0 ) {
+		if (modallinktext.length > 0) {
 			text = modallinktext;
 		}
 		else {
 			text = modallinkurl;
 		}
 
-		if ( modallinkurl.length > 0 ) {
+		if (modallinkurl.length > 0) {
 			$.markItUp(
-			{ openWith:'[url='+modallinkurl+']'+text,
-				closeWith:'[/url]' }
+				{ openWith:'[url=' + modallinkurl + ']' + text,
+					closeWith:'[/url]' }
 			);
 
-		return false;
+			return false;
 		}
 	});
 
@@ -114,25 +115,26 @@ jQuery(document).ready(function ($){
 
 		var width = '425';
 		var height = '344';
-		if ( videowidth.length > 0 && videoheight.length > 0 ) {
-			width = 'width='+videowidth;
-			height = 'height='+videoheight;
-		} else {
-			width = 'width='+width;
-			height = 'height='+height;
+		if (videowidth.length > 0 && videoheight.length > 0) {
+			width = 'width=' + videowidth;
+			height = 'height=' + videoheight;
+		}
+		else {
+			width = 'width=' + width;
+			height = 'height=' + height;
 		}
 
 		var size = '';
 		if (videosize.length > 0) {
-			size = 'size='+videosize;
+			size = 'size=' + videosize;
 		}
 
 		if ($('#kvideoprovider-modal').length > 0)
 		{
-			if ( kvideoprovider.lentgth > 0 && providerid.length > 0 ) {
+			if (kvideoprovider.lentgth > 0 && providerid.length > 0) {
 				$.markItUp(
-					{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoprovider+']'+providerid,
-					closeWith:'[/video]' }
+					{ openWith:'[video ' + size + ' ' + width + ' ' + height + ' type=' + kvideoprovider + ']' + providerid,
+						closeWith:'[/video]' }
 				);
 				return false;
 			}
@@ -140,8 +142,8 @@ jQuery(document).ready(function ($){
 		else
 		{
 			$.markItUp(
-				{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoproviderlist+']'+providerid,
-				closeWith:'[/video]' }
+				{ openWith:'[video ' + size + ' ' + width + ' ' + height + ' type=' + kvideoproviderlist + ']' + providerid,
+					closeWith:'[/video]' }
 			);
 			return false;
 		}
@@ -152,8 +154,8 @@ jQuery(document).ready(function ($){
 		var providerurl = $('#modal-video-urlprovider-input').val();
 
 		$.markItUp(
-			{ openWith:'[video]'+providerurl,
-			closeWith:'[/video]' }
+			{ openWith:'[video]' + providerurl,
+				closeWith:'[/video]' }
 		);
 		return false;
 	});
@@ -163,8 +165,8 @@ jQuery(document).ready(function ($){
 		var smiley = $(this).attr('alt');
 
 		$.markItUp(
-			 { openWith:smiley,
-			closeWith:'' }
+			{ openWith:smiley,
+				closeWith:'' }
 		);
 		return false;
 	});

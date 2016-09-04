@@ -14,7 +14,10 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
-if (!$attachment->isImage()) { return; }
+if (!$attachment->isImage())
+{
+	return;
+}
 
 $config = KunenaConfig::getInstance();
 

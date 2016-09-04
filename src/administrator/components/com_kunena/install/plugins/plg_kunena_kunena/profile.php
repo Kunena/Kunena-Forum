@@ -104,7 +104,7 @@ class KunenaProfileKunena extends KunenaProfile
 			WHERE ku.uhits>0
 			ORDER BY ku.uhits DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();

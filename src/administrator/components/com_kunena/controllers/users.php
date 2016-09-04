@@ -38,7 +38,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @throws Exception
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since    2.0
 	 */

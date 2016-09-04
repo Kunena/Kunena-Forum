@@ -53,8 +53,8 @@ class KunenaAdminModelUsers extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param   null $ordering
+	 * @param   null $direction
 	 *
 	 * @throws Exception
 	 */

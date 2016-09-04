@@ -56,7 +56,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 		if ($id)
 		{
 			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
-			
+
 			try
 			{
 				$selected = $db->loadObject();
@@ -64,7 +64,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-					
+
 				return;
 			}
 

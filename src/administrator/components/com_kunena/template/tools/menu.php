@@ -35,7 +35,9 @@ defined('_JEXEC') or die();
 						<th width="20%"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
 						<th colspan="3"><?php echo count($this->legacy) ?></th>
 					</tr>
-					<?php foreach ($this->legacy as $item) : ?>
+					<?php foreach ($this->legacy as $item)
+					:
+	?>
 					<tr>
 						<td></td>
 						<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
@@ -47,7 +49,9 @@ defined('_JEXEC') or die();
 						<th><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
 						<th colspan="2"><?php echo count($this->conflicts) ?></th>
 					</tr>
-					<?php foreach ($this->conflicts as $item) : ?>
+					<?php foreach ($this->conflicts as $item)
+					:
+	?>
 					<tr>
 						<td></td>
 						<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
@@ -59,7 +63,9 @@ defined('_JEXEC') or die();
 						<th><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
 						<th colspan="2"><?php echo count($this->invalid) ?></th>
 					</tr>
-					<?php foreach ($this->invalid as $item) : ?>
+					<?php foreach ($this->invalid as $item)
+					:
+	?>
 					<tr>
 						<td></td>
 						<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>

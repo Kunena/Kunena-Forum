@@ -117,8 +117,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 		<tbody>
 		<?php
 		$i = 0;
-		if($this->pagination->total > 0) :
-			foreach($this->items as $item) :
+
+		if ($this->pagination->total > 0)
+:
+			foreach ($this->items as $item)
+	:
 				$user = KunenaUserHelper::get($item->user_id);
 				?>
 				<tr>
@@ -147,19 +150,25 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<?php
 				$i++;
 			endforeach;
-		else : ?>
+		else
+
+		:
+	?>
 				<tr>
 					<td colspan="10">
 						<div class="well center filter-state">
 							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-								<?php if($this->filterActive) : ?>
-									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-								<?php endif; ?>
+								<?php
+								if ($this->filterActive)
+								:
+	?>
+																	<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+																<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 							</span>
 						</div>
 					</td>
 				</tr>
-			<?php endif; ?>
+			<?php                                                                                                                                                                                 endif; ?>
 			</tbody>
 		</table>
 		</form>

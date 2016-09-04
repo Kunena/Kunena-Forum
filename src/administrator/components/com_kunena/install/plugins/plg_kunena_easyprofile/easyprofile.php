@@ -9,7 +9,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class plgKunenaEasyprofile extends JPlugin
 {
@@ -35,7 +35,7 @@ class plgKunenaEasyprofile extends JPlugin
 			return;
 		}
 
-		include_once($path);
+		include_once $path;
 
 		parent::__construct($subject, $config);
 

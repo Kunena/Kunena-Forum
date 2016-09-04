@@ -28,7 +28,6 @@ class KunenaViewTopics extends KunenaView
 			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
-
 		KunenaHtmlParser::$relative = false;
 
 		$cache = JFactory::getCache('com_kunena_rss');

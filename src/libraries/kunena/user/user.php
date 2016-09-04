@@ -743,8 +743,15 @@ class KunenaUser extends JObject
 		if (self::$_ranks === null)
 		{
 			$this->_db->setQuery("SELECT * FROM #__kunena_ranks");
-			self::$_ranks = $this->_db->loadObjectList('rank_id');
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				self::$_ranks = $this->_db->loadObjectList('rank_id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		$userType = $special !== false ? $this->getType($catid, true) : 'count';

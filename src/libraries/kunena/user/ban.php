@@ -253,8 +253,15 @@ class KunenaUserBan extends JObject
 			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
 			ORDER BY b.created_time DESC";
 		$db->setQuery($query, $start, $limit);
-		$results = $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 
@@ -289,8 +296,15 @@ class KunenaUserBan extends JObject
 			WHERE `userid`={$db->quote($userid)}
 			ORDER BY id DESC";
 		$db->setQuery($query);
-		$results = $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 

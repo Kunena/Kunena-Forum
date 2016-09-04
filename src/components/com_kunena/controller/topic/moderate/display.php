@@ -117,7 +117,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 				
 				return;
 			}

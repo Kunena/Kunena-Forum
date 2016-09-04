@@ -125,8 +125,15 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query, $start, $limit);
-		$results = (array) $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		self::$_instances = array();
 		$list = array();
@@ -181,8 +188,15 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $total;
 	}

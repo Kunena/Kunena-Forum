@@ -137,7 +137,7 @@ class KunenaAccessCommunity
 		}
 		catch (RuntimeException $e)
 		{
-			KunenaError::displayDatabaseError();
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $list;
@@ -174,7 +174,7 @@ class KunenaAccessCommunity
 			}
 			catch (RuntimeException $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 
 			foreach ($list as $catid)
@@ -217,7 +217,7 @@ class KunenaAccessCommunity
 		}
 		catch (RuntimeException $e)
 		{
-			KunenaError::displayDatabaseError();
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return array($allow, $deny);
@@ -242,7 +242,7 @@ class KunenaAccessCommunity
 			}
 			catch (RuntimeException $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 			
 			$this->tree = new KunenaTree($this->categories);
@@ -273,7 +273,7 @@ class KunenaAccessCommunity
 			}
 			catch (RuntimeException $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 
 			if ($this->categories !== false)

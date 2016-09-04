@@ -415,7 +415,7 @@ class KunenaControllerTopic extends KunenaController
 			}
 			catch(JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();	
+				KunenaError::displayDatabaseError($e);	
 			}
 			
 			if ($count)

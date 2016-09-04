@@ -229,7 +229,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 				catch (JDatabaseExceptionExecuting $e)
 				{
-					KunenaError::displayDatabaseError();
+					KunenaError::displayDatabaseError($e);
 				}
 
 				foreach ($pending as $item)

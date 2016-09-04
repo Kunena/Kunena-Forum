@@ -67,7 +67,7 @@ class KunenaViewTopic extends KunenaView
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError();
+				KunenaError::displayDatabaseError($e);
 			}
 
 			foreach ($smileys as $smiley)

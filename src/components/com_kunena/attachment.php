@@ -58,12 +58,31 @@ require_once JPATH_LIBRARIES . '/cms.php';
 
 require_once JPATH_BASE . '/includes/framework.php';
 
+/**
+ *  Kunena Application
+ *
+ * @package  Kunena
+ *
+ * @since    K2.0
+ */
 class KunenaApplication extends JApplicationWeb
 {
+	/**
+	 * @var string
+	 * @since K2.0
+	 */
 	protected $_name = 'site';
 
+	/**
+	 * @var int
+	 * @since K2.0
+	 */
 	protected $_clientId = 0;
 
+	/**
+	 * @var array
+	 * @since K2.0
+	 */
 	protected $userstate = array();
 
 	/**

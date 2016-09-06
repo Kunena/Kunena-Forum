@@ -18,13 +18,13 @@ if ($item) : ?>
 <ul class="breadcrumb">
 	<li class="active">
 		<span class="divider icon-location"></span>
-		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
+		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
 	</li>
 
 	<?php foreach($pathway as $item) : ?>
 	<li class="divider"><i class="icon-chevron-right"></i></li>
 	<li>
-		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
+		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
 	</li>
 	<?php endforeach; ?>
 

@@ -37,7 +37,7 @@ abstract class KunenaHtmlParser
 		}
 
 		$db->setQuery($sql);
-		
+
 		try
 		{
 			$smilies = $db->loadObjectList();
@@ -85,7 +85,7 @@ abstract class KunenaHtmlParser
 		}
 
 		$txt = self::escape($txt);
-		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
+		$txt = preg_replace('/(\S{30})/u', '\1', $txt);
 		$txt = self::prepareContent($txt, 'title');
 
 		return $txt;

@@ -22,7 +22,8 @@ $quick = $this->ktemplate->params->get('quick');
 <div class="kmessagepadding">
 	<?php if($this->quickreply && $quick != 2) : ?>
 		<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-			data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+			data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
+				<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 		</a>
 	<?php endif; ?>
 
@@ -62,12 +63,13 @@ $quick = $this->ktemplate->params->get('quick');
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if($this->quickreply  && $quick != 2) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-					data-toggle="modal" rel="nofollow"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					data-toggle="modal" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
 				<button class="btn" data-toggle="dropdown">
-					<i class="icon-pencil"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
+					<?php echo KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
 				<button class="btn dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
@@ -85,7 +87,7 @@ $quick = $this->ktemplate->params->get('quick');
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
 					<button class="btn" data-toggle="dropdown">
-						<i class="icon-shuffle"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+						<?php echo KunenaIcons::shuffle() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
 					<button class="btn dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>

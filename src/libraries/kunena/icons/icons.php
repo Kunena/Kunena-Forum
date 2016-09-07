@@ -23,6 +23,8 @@ class KunenaIcons
 	 * Return the arrow down icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function arrowdown()
 	{
@@ -51,6 +53,8 @@ class KunenaIcons
 	 * Return the arrwo up icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function arrowup()
 	{
@@ -79,6 +83,8 @@ class KunenaIcons
 	 * Return the members icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function members()
 	{
@@ -107,6 +113,8 @@ class KunenaIcons
 	 * Return the user icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function user()
 	{
@@ -135,6 +143,8 @@ class KunenaIcons
 	 * Return the stats icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function stats()
 	{
@@ -164,6 +174,8 @@ class KunenaIcons
 	 * Return the search icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function search()
 	{
@@ -192,6 +204,8 @@ class KunenaIcons
 	 * Return the collapse icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function collapse()
 	{
@@ -220,6 +234,8 @@ class KunenaIcons
 	 * Return the cancel icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function cancel()
 	{
@@ -248,6 +264,8 @@ class KunenaIcons
 	 * Return the ip icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function ip()
 	{
@@ -281,6 +299,8 @@ class KunenaIcons
 	 * Return the email icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function email()
 	{
@@ -309,6 +329,8 @@ class KunenaIcons
 	 * Return the bookmark icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function bookmark()
 	{
@@ -337,6 +359,8 @@ class KunenaIcons
 	 * Return the back icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function back()
 	{
@@ -365,6 +389,8 @@ class KunenaIcons
 	 * Return the save icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function save()
 	{
@@ -393,6 +419,8 @@ class KunenaIcons
 	 * Return the edit icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function edit()
 	{
@@ -421,6 +449,8 @@ class KunenaIcons
 	 * Return the attach icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function attach()
 	{
@@ -449,6 +479,8 @@ class KunenaIcons
 	 * Return the plus icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function plus()
 	{
@@ -479,6 +511,8 @@ class KunenaIcons
 	 * @param null $text
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function rss($text = null)
 	{
@@ -518,6 +552,8 @@ class KunenaIcons
 	 * Return the upload icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function upload()
 	{
@@ -546,6 +582,8 @@ class KunenaIcons
 	 * Return the picture icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function picture()
 	{
@@ -574,6 +612,8 @@ class KunenaIcons
 	 * Return the file icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function file()
 	{
@@ -602,6 +642,8 @@ class KunenaIcons
 	 * Return the delete icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function delete()
 	{
@@ -630,6 +672,8 @@ class KunenaIcons
 	 * Return the poll add icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function poll_add()
 	{
@@ -662,6 +706,8 @@ class KunenaIcons
 	 * Return the poll rem icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function poll_rem()
 	{
@@ -687,6 +733,66 @@ class KunenaIcons
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+	}
+
+	/**
+	 * Return the undo icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function undo()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-reply"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-undo"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-share-alt"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-undo"></i>';
+		}
+	}
+
+	/**
+	 * Return the shuffle icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function shuffle()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-random"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-shuffel"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-random"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-shuffel"></i>';
 		}
 	}
 }

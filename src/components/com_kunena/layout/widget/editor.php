@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.widget
+ * @package         Kunena.Site
+ * @subpackage      Layout.widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -44,8 +44,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 				continue;
 			}
 
-			$files = KunenaFolder::files($path, ".php");
-			$options = array();
+			$files     = KunenaFolder::files($path, ".php");
+			$options   = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
@@ -68,7 +68,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 */
 	public function getBBcodesEnabled()
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->ktemplate  = KunenaFactory::getTemplate();
 		$templatesettings = $this->ktemplate->params;
 
 		if ($templatesettings->get('showvideotag') && $templatesettings->get('video'))

@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -67,10 +67,10 @@ class KunenaModel extends JModelLegacy
 		$this->option = 'com_kunena';
 		parent::__construct($config);
 
-		$this->app = JFactory::getApplication();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->app    = JFactory::getApplication();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
-		$this->input = $input ? $input : $this->app->input;
+		$this->input  = $input ? $input : $this->app->input;
 	}
 
 	/**
@@ -116,6 +116,7 @@ class KunenaModel extends JModelLegacy
 	 * Escapes a value for output in a view script.
 	 *
 	 * @param   mixed $var The output to escape.
+	 *
 	 * @return mixed The escaped value.
 	 */
 	public function escape($var)
@@ -137,8 +138,8 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $key
-	 * @param        $request
+	 * @param          $key
+	 * @param          $request
 	 * @param   null   $default
 	 * @param   string $type
 	 *
@@ -157,7 +158,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   null   $default
 	 * @param   string $hash
 	 * @param   string $type
@@ -183,7 +184,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   bool   $default
 	 * @param   string $hash
 	 *
@@ -195,7 +196,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $default
 	 * @param   string $hash
 	 *
@@ -207,7 +208,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   float  $default
 	 * @param   string $hash
 	 *
@@ -219,7 +220,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   int    $default
 	 * @param   string $hash
 	 *
@@ -231,7 +232,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $default
 	 * @param   string $hash
 	 *
@@ -243,7 +244,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $default
 	 * @param   string $hash
 	 *

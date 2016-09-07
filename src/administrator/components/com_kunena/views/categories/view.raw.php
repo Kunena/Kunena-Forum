@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -25,18 +25,18 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);
 		$result = $db->loadObject();
 
 		if ($result)
 		{
-			$response['msg']  = 0;
+			$response['msg'] = 0;
 		}
 		else
 		{
-			$response['msg']  = 1;
+			$response['msg'] = 1;
 		}
 
 		echo json_encode($response);

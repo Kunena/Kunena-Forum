@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -34,7 +34,7 @@ class KunenaControllerSearch extends KunenaController
 		$model = $this->getModel('Search');
 		$this->setRedirect(
 			$model->getSearchURL(
-			'search', $model->getState('searchwords'),
-			$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
+				'search', $model->getState('searchwords'),
+				$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
 	}
 }

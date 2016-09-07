@@ -2,13 +2,13 @@
 /**
  * Kunena Menu Module
  *
- * @package     Kunena.Modules
- * @subpackage  Menu
+ * @package         Kunena.Modules
+ * @subpackage      Menu
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 <ul class="menu<?php echo $this->class_sfx; ?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
 	<?php
 	foreach ($this->list as $i => $item)
-	:
+		:
 		$class = 'item-' . $item->id;
 		$class .= ($item->id == $this->active_id) ? ' current' : '';
 

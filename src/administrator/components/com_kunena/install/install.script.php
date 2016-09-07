@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,7 +16,7 @@ jimport('joomla.filesystem.file');
 class Com_KunenaInstallerScript
 {
 	protected $versions = array(
-		'PHP' => array (
+		'PHP'     => array(
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
 			'5.5' => '5.5.9',
@@ -24,13 +24,13 @@ class Com_KunenaInstallerScript
 			'5.3' => '5.3.10',
 			'0'   => '7.0.4' // Preferred version
 		),
-		'MySQL' => array (
+		'MySQL'   => array(
 			'5.1' => '5.1',
-			'0' => '5.5' // Preferred version
+			'0'   => '5.5' // Preferred version
 		),
-		'Joomla!' => array (
+		'Joomla!' => array(
 			'3.5' => '3.5.0-beta',
-			'0' => '3.5.0' // Preferred version
+			'0'   => '3.5.0' // Preferred version
 		)
 	);
 
@@ -159,13 +159,13 @@ class Com_KunenaInstallerScript
 		// Copy files to new dir for Crypsis
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/assets/less');
-				$src = $sitePath . '/template/crypsis/less/custom.less';
+				$src  = $sitePath . '/template/crypsis/less/custom.less';
 				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
 			}
@@ -175,13 +175,13 @@ class Com_KunenaInstallerScript
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/assets/css');
-				$src = $sitePath . '/template/crypsis/css/custom.css';
+				$src  = $sitePath . '/template/crypsis/css/custom.css';
 				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
 			}
@@ -191,13 +191,13 @@ class Com_KunenaInstallerScript
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/config/params.ini');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/config');
-				$src = $sitePath . '/template/crypsis/params.ini';
+				$src  = $sitePath . '/template/crypsis/params.ini';
 				$dest = $sitePath . '/template/crypsis/config/params.ini';
 				KunenaFile::copy($src, $dest);
 			}
@@ -208,13 +208,13 @@ class Com_KunenaInstallerScript
 		// Copy files to new dir for Crypsisb3
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/assets/less');
-				$src = $sitePath . '/template/crypsisb3/less/custom.less';
+				$src  = $sitePath . '/template/crypsisb3/less/custom.less';
 				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
 			}
@@ -224,13 +224,13 @@ class Com_KunenaInstallerScript
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/assets/css');
-				$src = $sitePath . '/template/crypsisb3/css/custom.css';
+				$src  = $sitePath . '/template/crypsisb3/css/custom.css';
 				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
 			}
@@ -240,13 +240,13 @@ class Com_KunenaInstallerScript
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini'))
 		{
-			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
 			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/config/params.ini');
 
 			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/config');
-				$src = $sitePath . '/template/crypsisb3/params.ini';
+				$src  = $sitePath . '/template/crypsisb3/params.ini';
 				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
 				KunenaFile::copy($src, $dest);
 			}
@@ -537,7 +537,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param       $path
+	 * @param         $path
 	 * @param   array $ignore
 	 */
 	public function deleteFile($path)
@@ -549,7 +549,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param       $path
+	 * @param         $path
 	 * @param   array $ignore
 	 */
 	public function deleteFiles($path, $ignore = array())
@@ -569,7 +569,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param       $path
+	 * @param         $path
 	 * @param   array $ignore
 	 */
 	public function deleteFolders($path, $ignore = array())
@@ -589,7 +589,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param       $path
+	 * @param         $path
 	 * @param   array $ignore
 	 */
 	public function deleteFolder($path, $ignore = array())
@@ -599,7 +599,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param       $path
+	 * @param         $path
 	 * @param   array $ignore
 	 */
 	public function deleteKfolder($path)

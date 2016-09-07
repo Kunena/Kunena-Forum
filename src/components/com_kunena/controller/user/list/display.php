@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -50,7 +50,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();
 
 		$start = $this->state->get('list.start');
@@ -71,10 +71,10 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
-		$this->total = $finder->count();
+		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
-		$alias = 'ku';
+		$alias     = 'ku';
 		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
 
 		if (in_array($this->state->get('list.ordering'), $aliasList))
@@ -83,7 +83,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		}
 
 		$this->users = $finder
-			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : - 1, $alias)
+			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1, $alias)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();

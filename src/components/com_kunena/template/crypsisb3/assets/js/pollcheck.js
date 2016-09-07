@@ -2,12 +2,12 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 	if (typeof pollcategoriesid != 'undefined' && $('#poll_exist_edit').length == 0) {
 		var catid = $('#kcategory_poll').val();
 

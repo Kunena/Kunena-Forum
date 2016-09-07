@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Route
+ * @package       Kunena.Framework
+ * @subpackage    Route
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,27 +23,27 @@ abstract class KunenaRoute
 {
 	// List of views: array of default variable=>value pairs, which can be removed from URI
 	static $views = array(
-		'attachment' => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
+		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
 		'announcement' => array('layout' => 'default'),
-		'category' => array('layout' => 'default', 'catid' => '0'),
-		'common' => array('layout' => 'default'),
-		'credits' => array('layout' => 'default'),
-		'home' => array(),
-		'misc' => array('layout' => 'default'),
-		'search' => array('layout' => 'default'),
-		'statistics' => array('layout' => 'default'),
-		'topic' => array('layout' => 'default'),
-		'topics' => array('layout' => 'default'),
-		'user' => array('layout' => 'default', 'userid' => '0'),
+		'category'     => array('layout' => 'default', 'catid' => '0'),
+		'common'       => array('layout' => 'default'),
+		'credits'      => array('layout' => 'default'),
+		'home'         => array(),
+		'misc'         => array('layout' => 'default'),
+		'search'       => array('layout' => 'default'),
+		'statistics'   => array('layout' => 'default'),
+		'topic'        => array('layout' => 'default'),
+		'topics'       => array('layout' => 'default'),
+		'user'         => array('layout' => 'default', 'userid' => '0'),
 	);
 
 	// Reserved layout names for category view
-	static $layouts = array ('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
+	static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	// Use category name only in these views
-	static $sefviews = array ('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
+	static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
-	static $parsevars = array ('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1 );
+	static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
 	static $time = 0;
 
@@ -141,7 +141,7 @@ abstract class KunenaRoute
 	 *
 	 * @return boolean
 	 */
-	public static function _($uri = null, $xhtml = true, $ssl=0)
+	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
 		if (self::$adminApp)
 		{
@@ -207,8 +207,8 @@ abstract class KunenaRoute
 	 * If there's no referrer or it's external, Kunena will return default page.
 	 * Also referrers back to tasks are removed.
 	 *
-	 * @param   string $default  Default page to return into.
-	 * @param   string $anchor   Anchor (location in the page).
+	 * @param   string $default Default page to return into.
+	 * @param   string $anchor  Anchor (location in the page).
 	 *
 	 * @return string
 	 */
@@ -245,7 +245,7 @@ abstract class KunenaRoute
 			}
 
 			$default = self::_($default);
-			$uri = new JUri($default);
+			$uri     = new JUri($default);
 		}
 
 		if ($anchor)
@@ -321,8 +321,8 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				$parentId = $item->parent_id;
-				$parent = isset(self::$menu[$parentId]) ? self::$menu[$parentId] : null;
+				$parentId          = $item->parent_id;
+				$parent            = isset(self::$menu[$parentId]) ? self::$menu[$parentId] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}
@@ -344,7 +344,7 @@ abstract class KunenaRoute
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user = KunenaUserHelper::getMyself();
+		$user  = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
@@ -375,8 +375,8 @@ abstract class KunenaRoute
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user = KunenaUserHelper::getMyself();
-		$data = array(self::$subtree, self::$uris);
+		$user  = KunenaUserHelper::getMyself();
+		$data  = array(self::$subtree, self::$uris);
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
@@ -393,7 +393,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param      $string
+	 * @param        $string
 	 * @param   null $default
 	 *
 	 * @return mixed
@@ -424,7 +424,7 @@ abstract class KunenaRoute
 	 * This method implements unicode slugs instead of transliteration.
 	 * It has taken from Joomla 1.7.3 with the difference that urls are not lower case.
 	 *
-	 * @param   string  $string  String to process
+	 * @param   string $string String to process
 	 *
 	 * @return  string  Processed string
 	 */
@@ -461,7 +461,7 @@ abstract class KunenaRoute
 	public static function resolveAlias($alias)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
 		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
@@ -472,7 +472,7 @@ abstract class KunenaRoute
 		{
 			if (Joomla\String\StringHelper::strtolower($alias) == Joomla\String\StringHelper::strtolower($object->alias))
 			{
-				$var = $object->type != 'legacy' ? $object->type : 'view';
+				$var         = $object->type != 'legacy' ? $object->type : 'view';
 				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 
 				if ($var == 'catid')
@@ -505,10 +505,10 @@ abstract class KunenaRoute
 			return;
 		}
 
-		self::$menus = JFactory::getApplication()->getMenu();
-		self::$menu = self::$menus->getMenu();
+		self::$menus   = JFactory::getApplication()->getMenu();
+		self::$menu    = self::$menus->getMenu();
 		self::$default = self::$menus->getDefault();
-		$active = self::$menus->getActive();
+		$active        = self::$menus->getActive();
 
 		// Get the full request URI.
 		$uri = clone JUri::getInstance();
@@ -586,7 +586,7 @@ abstract class KunenaRoute
 	public static function cleanup()
 	{
 		self::$filtered = array();
-		self::$uris = array();
+		self::$uris     = array();
 	}
 
 	/**
@@ -624,7 +624,7 @@ abstract class KunenaRoute
 			}
 
 			$item = self::$menu[intval($uri)];
-			$uri = JUri::getInstance("{$item->link}&Itemid={$item->id}");
+			$uri  = JUri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
 		elseif ($uri instanceof JUri)
 		{
@@ -720,14 +720,14 @@ abstract class KunenaRoute
 
 		if (self::$search === false)
 		{
-			$user = KunenaUserHelper::getMyself();
-			$language = strtolower(JFactory::getDocument()->getLanguage());
+			$user         = KunenaUserHelper::getMyself();
+			$language     = strtolower(JFactory::getDocument()->getLanguage());
 			self::$search = false;
 
 			if (KunenaConfig::getInstance()->get('cache_mid'))
 			{
 				// FIXME: Experimental caching.
-				$cache = self::getCache();
+				$cache        = self::getCache();
 				self::$search = unserialize($cache->get('search', "com_kunena.route.v1.{$language}.{$user->userid}"));
 			}
 
@@ -742,7 +742,7 @@ abstract class KunenaRoute
 						|| ($item->language != '*' && strtolower($item->language) != $language)
 					)
 					{
-										continue;
+						continue;
 					}
 
 					// Follow links.
@@ -768,7 +768,7 @@ abstract class KunenaRoute
 					}
 
 					// Save Kunena menu items so that we can make fast searches
-					$home = self::getHome($item);
+					$home                                                                 = self::getHome($item);
 					self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 				}
 
@@ -866,10 +866,10 @@ abstract class KunenaRoute
 		static $candidates = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$view = $uri->getVar('view');
-		$catid = (int) $uri->getVar('catid');
+		$view   = $uri->getVar('view');
+		$catid  = (int) $uri->getVar('catid');
 		$Itemid = (int) $uri->getVar('Itemid');
-		$key = $view . $catid;
+		$key    = $view . $catid;
 
 		if (!isset($candidates[$key]))
 		{
@@ -926,18 +926,18 @@ abstract class KunenaRoute
 
 		// Check current menu item first
 		$bestcount = ($Itemid && isset(self::$menu[$Itemid])) ? self::checkItem(self::$menu[$Itemid], $uri) : 0;
-		$bestid = $bestcount ? $Itemid : 0;
+		$bestid    = $bestcount ? $Itemid : 0;
 
 		// Then go through all candidates
 		foreach ($candidates[$key] as $id)
 		{
-			$item = self::$menu[$id];
+			$item       = self::$menu[$id];
 			$matchcount = self::checkItem($item, $uri);
 
 			if ($matchcount > $bestcount)
 			{
 				// This is our best candidate this far
-				$bestid = $item->id;
+				$bestid    = $item->id;
 				$bestcount = $matchcount;
 			}
 		}
@@ -949,7 +949,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param      $item
+	 * @param        $item
 	 * @param   JUri $uri
 	 *
 	 * @return integer
@@ -1026,7 +1026,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param      $item
+	 * @param        $item
 	 * @param   JUri $uri
 	 *
 	 * @return integer
@@ -1048,7 +1048,7 @@ abstract class KunenaRoute
 
 			if (!empty($item->query['catid']))
 			{
-				$cache[$item->id] = KunenaForumCategoryHelper::getChildren($item->query['catid']);
+				$cache[$item->id]                        = KunenaForumCategoryHelper::getChildren($item->query['catid']);
 				$cache[$item->id][$item->query['catid']] = KunenaForumCategoryHelper::get($item->query['catid']);
 			}
 		}
@@ -1057,7 +1057,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param      $item
+	 * @param        $item
 	 * @param   JUri $uri
 	 *
 	 * @return integer

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Search
+ * @package         Kunena.Site
+ * @subpackage      Controller.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -45,14 +45,14 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me               = KunenaUserHelper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array();
-		$this->total = $this->model->getTotal();
+		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 
 		$doc = JFactory::getDocument();
@@ -66,7 +66,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = 'index.php?option=com_kunena&view=search';
+						$canonicalUrl               = 'index.php?option=com_kunena&view=search';
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

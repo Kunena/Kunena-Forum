@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Message.Thankyou
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -27,7 +27,7 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * @param   int  $identifier	The message to load - Can be only an integer.
+	 * @param   int  $identifier The message to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
@@ -59,29 +59,29 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get total number of Thank yous.
 	 *
-	 * @param   int $starttime	Starting time as unix timestamp.
-	 * @param   int $endtime		Ending time as unix timestamp.
+	 * @param   int $starttime Starting time as unix timestamp.
+	 * @param   int $endtime   Ending time as unix timestamp.
 	 *
 	 * @return integer
 	 */
 	static public function getTotal($starttime = null, $endtime = null)
 	{
-		$db = JFactory::getDBO();
-		$where = array ();
+		$db    = JFactory::getDBO();
+		$where = array();
 
-		if (! empty($starttime))
+		if (!empty($starttime))
 		{
 			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(intval($starttime))})";
 		}
 
-		if (! empty($endtime))
+		if (!empty($endtime))
 		{
 			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
 		}
 
 		$query = "SELECT COUNT(*) FROM #__kunena_thankyou";
 
-		if (! empty($where))
+		if (!empty($where))
 		{
 			$query .= " WHERE " . implode(" AND ", $where);
 		}
@@ -111,7 +111,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
 				FROM #__kunena_thankyou AS s
 				INNER JOIN #__users AS u
@@ -135,10 +135,10 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function getTopMessages($limitstart = 0, $limit = 10)
 	{
-		$db = JFactory::getDBO();
+		$db         = JFactory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
-		$catlist = implode(',', array_keys($categories));
-		$query = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
+		$catlist    = implode(',', array_keys($categories));
+		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
 				FROM #__kunena_thankyou AS s
 				INNER JOIN #__kunena_messages AS m ON s.postid=m.id
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
@@ -165,7 +165,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$field = 'targetuserid';
 
 		if (!$target)
@@ -174,8 +174,8 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		$categories = KunenaForumCategoryHelper::getCategories();
-		$catlist = implode(',', array_keys($categories));
-		$query = "SELECT m.catid, m.thread, m.id
+		$catlist    = implode(',', array_keys($categories));
+		$query      = "SELECT m.catid, m.thread, m.id
 				FROM #__kunena_thankyou AS t
 				INNER JOIN #__kunena_messages AS m ON m.id=t.postid
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
@@ -211,7 +211,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$idlist = implode(',', $ids);
 
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "SELECT *
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
@@ -235,7 +235,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous.
 	 *
-	 * @return boolean|int	Number of rows is successful, false on error.
+	 * @return boolean|int    Number of rows is successful, false on error.
 	 */
 	static public function recount()
 	{

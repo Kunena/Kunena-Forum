@@ -47,7 +47,7 @@
 			// prevents warning popups on HTTPS in IE6:
 			/*jshint scripturl: true */
 			var initialIframeSrc = options.initialIframeSrc || 'javascript:false;',
-			/*jshint scripturl: false */
+				/*jshint scripturl: false */
 				form,
 				iframe,
 				addParamChar;
@@ -76,11 +76,11 @@
 					counter += 1;
 					iframe = $(
 						'<iframe src="' + initialIframeSrc +
-							'" name="iframe-transport-' + counter + '"></iframe>'
+						'" name="iframe-transport-' + counter + '"></iframe>'
 					).bind('load', function () {
 						var fileInputClones,
 							paramNames = $.isArray(options.paramName) ?
-									options.paramName : [options.paramName];
+								options.paramName : [options.paramName];
 						iframe
 							.unbind('load')
 							.bind('load', function () {
@@ -217,7 +217,7 @@
 			'iframe xml': function (iframe) {
 				var xmlDoc = iframe && iframe[0];
 				return xmlDoc && $.isXMLDoc(xmlDoc) ? xmlDoc :
-						$.parseXML((xmlDoc.XMLDocument && xmlDoc.XMLDocument.xml) ||
+					$.parseXML((xmlDoc.XMLDocument && xmlDoc.XMLDocument.xml) ||
 						$(xmlDoc.body).html());
 			},
 			'iframe script': function (iframe) {

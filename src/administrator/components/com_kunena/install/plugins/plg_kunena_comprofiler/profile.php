@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -134,7 +134,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			WHERE cu.hits>0
 			ORDER BY cu.hits DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();

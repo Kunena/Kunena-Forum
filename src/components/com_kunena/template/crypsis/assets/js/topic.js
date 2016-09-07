@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -10,8 +10,8 @@
 jQuery(document).ready(function ($) {
 
 	/* To hide or open spoiler on click */
-	$('.kspoiler').each(function( index ) {
-		$(this).click(function() {
+	$('.kspoiler').each(function (index) {
+		$(this).click(function () {
 			if (!$(this).find('.kspoiler-content').is(':visible')) {
 				$(this).find('.kspoiler-content').show();
 				$(this).find('.kspoiler-expand').hide();
@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
 		$(boxToOpen).css('visibility', 'visible');
 	});
 
-	$('[id^="login-link"]').click(function() {
+	$('[id^="login-link"]').click(function () {
 		$(this).ready(function () {
 			if ($('#userdropdown').is(":visible")) {
 				$(this).addClass('kdelay');
@@ -45,11 +45,11 @@ jQuery(document).ready(function ($) {
 		});
 	});
 
-	$(document).click(function() {
-			$('.kdelay').css('display', 'none').removeClass('kdelay');
+	$(document).click(function () {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
 	});
 
-	$('#userdropdown').click(function(e){
+	$('#userdropdown').click(function (e) {
 		e.stopPropagation();
 	});
 
@@ -90,37 +90,37 @@ jQuery(document).ready(function ($) {
 			showCount: true,
 			showLabel: true,
 			shares: [
-			{
-				share: "email",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
-			},
-			{
-				share: "twitter",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
-			},
-			{
-				share: "facebook",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
-			},
-			{
-				share: "googleplus",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
-			},
-			{
-				share: "linkedin",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
-			}, {
-				share: "pinterest",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
-			},
-			{
-				share: "stumbleupon",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
-			},
-			{
-				share: "whatsapp",
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
-			}]
+				{
+					share: "email",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
+				},
+				{
+					share: "twitter",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+				},
+				{
+					share: "facebook",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
+				},
+				{
+					share: "googleplus",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
+				},
+				{
+					share: "linkedin",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
+				}, {
+					share: "pinterest",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
+				},
+				{
+					share: "stumbleupon",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
+				},
+				{
+					share: "whatsapp",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
+				}]
 		});
 		$('.jssocials-share-whatsapp').addClass('visible-phone');
 	}

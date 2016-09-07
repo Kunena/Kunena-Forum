@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  construct
+	 * @param   array $config construct
 	 *
 	 * @since    2.0.0-BETA2
 	 */
@@ -41,8 +41,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Display
 	 *
-	 * @param   bool  $cachable   cachable
-	 * @param   bool  $urlparams  urlparams
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 *

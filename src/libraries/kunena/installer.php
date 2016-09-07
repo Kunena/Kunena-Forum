@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,7 +22,8 @@ class KunenaInstaller
 	/**
 	 * Check if we are allowed to downgrade from the new to the old version.
 	 *
-	 * @param   string  $version
+	 * @param   string $version
+	 *
 	 * @return  boolean  True if version can be safely downgraded.
 	 */
 	public static function canDowngrade($version)
@@ -72,9 +73,9 @@ class KunenaInstaller
 	/**
 	 * Detect if table exists in the database.
 	 *
-	 * @param   string  $table   Table name to be found.
-	 * @param   string  $prefix  Database prefix.
-	 * @param   bool    $reload  Reload all tables.
+	 * @param   string $table  Table name to be found.
+	 * @param   string $prefix Database prefix.
+	 * @param   bool   $reload Reload all tables.
 	 *
 	 * @return boolean  True if the table exists in the database.
 	 */
@@ -107,10 +108,10 @@ class KunenaInstaller
 	/**
 	 * Get column type in the table.
 	 *
-	 * @param   string  $table   Table name to be found.
-	 * @param   string  $column  Table column to be searched.
-	 * @param   string  $prefix  Database prefix.
-	 * @param   boolean $reload  Reload all tables.
+	 * @param   string  $table  Table name to be found.
+	 * @param   string  $column Table column to be searched.
+	 * @param   string  $prefix Database prefix.
+	 * @param   boolean $reload Reload all tables.
 	 *
 	 * @return string|null  Column type or NULL if either table or column does not exist.
 	 */

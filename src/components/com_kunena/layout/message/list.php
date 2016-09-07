@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -23,7 +23,7 @@ class KunenaLayoutMessageList extends KunenaLayout
 	 * Method to display the time filter
 	 *
 	 * @param   int|string $id     The HTML id for the select list
-	 * @param   string   $attrib The extras attributes for the select list
+	 * @param   string     $attrib The extras attributes for the select list
 	 *
 	 */
 	public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-control filter" onchange="this.form.submit()"')

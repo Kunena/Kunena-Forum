@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Controller
+ * @package       Kunena.Framework
+ * @subpackage    Controller
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -156,7 +156,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
 			}
 
-			$title = '500 Internal Server Error';
+			$title    = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
 			JFactory::getApplication()->setHeader('Status', $title, true);
@@ -183,7 +183,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Method to set the view layout.
 	 *
-	 * @param   string  $layout  The layout name.
+	 * @param   string $layout The layout name.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
@@ -207,7 +207,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function getProperties()
 	{
 		$properties = (array) $this;
-		$list = array();
+		$list       = array();
 
 		foreach ($properties as $property => $value)
 		{
@@ -223,7 +223,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Set the object properties based on a named array/hash.
 	 *
-	 * @param   mixed  $properties  Either an associative array or another object.
+	 * @param   mixed $properties Either an associative array or another object.
 	 *
 	 * @return  KunenaControllerDisplay  Method supports chaining.
 	 *
@@ -254,6 +254,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @param $key
 	 * @param $value
+	 *
 	 * @return $this
 	 */
 	public function set($key, $value)
@@ -264,7 +265,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param      $title
+	 * @param        $title
 	 * @param   bool $replace
 	 */
 	protected function setTitle($title, $replace = false)

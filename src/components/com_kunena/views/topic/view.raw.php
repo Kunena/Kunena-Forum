@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Views
+ * @package         Kunena.Site
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -198,15 +198,15 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->me->exists() || $this->config->ratingenabled)
 		{
-			$rate        = KunenaForumTopicRateHelper::get($topicid);
-			$rate->stars = $starid;
+			$rate           = KunenaForumTopicRateHelper::get($topicid);
+			$rate->stars    = $starid;
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
 
 			$selected = KunenaForumTopicRateHelper::getSelected($topicid);
 
-			$topic = KunenaForumTopicHelper::get($topicid);
+			$topic         = KunenaForumTopicHelper::get($topicid);
 			$topic->rating = $selected;
 			$topic->save();
 		}

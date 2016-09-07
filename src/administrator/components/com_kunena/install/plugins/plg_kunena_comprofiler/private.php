@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -53,7 +53,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		outputCbTemplate($_CB_framework->getUi());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
-		$url = $_CB_framework->userProfileUrl($userid);
+		$url         = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
@@ -74,13 +74,13 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param        $userid
+	 * @param          $userid
 	 * @param   string $class
 	 * @param   string $icon
 	 *
 	 * @return string
 	 */
-	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
+	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
 		global $_CB_framework, $_CB_PMS;
 
@@ -92,15 +92,15 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return '';
 		}
 
-		$url = $_CB_framework->userProfileUrl($userid);
-		$html        = '<a class="' . $class . '" href="' . $url . '" title="' .
+		$url  = $_CB_framework->userProfileUrl($userid);
+		$html = '<a class="' . $class . '" href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 
 		if ($userid == $myid)
 		{
 			$this->pmCount = $this->getUnreadCount($myid);
-			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
-			$url = $this->getInboxURL();
+			$text          = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$url           = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}

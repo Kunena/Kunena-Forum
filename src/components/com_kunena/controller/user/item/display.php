@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -64,8 +64,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->user = JFactory::getUser($userid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->user    = JFactory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 
@@ -105,10 +105,10 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
-		$config = JFactory::getApplication('site');
+		$doc             = JFactory::getDocument();
+		$config          = JFactory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$robots          = $componentParams->get('robots');
 
 		if ($robots == '')
 		{
@@ -165,7 +165,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			else
 			{
 				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
-				$this->config->board_title, $this->profile->getName(), $this->config->board_title);
+					$this->config->board_title, $this->profile->getName(), $this->config->board_title);
 				$this->setDescription($description);
 			}
 

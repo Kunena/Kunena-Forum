@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  User
+ * @package         Kunena.Framework
+ * @subpackage      User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,12 +23,12 @@ abstract class KunenaUserHelper
 	/**
 	 * @var array|KunenaUser[]
 	 */
-	protected static $_instances = array ();
+	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaUser[]
 	 */
-	protected static $_instances_name = array ();
+	protected static $_instances_name = array();
 
 	protected static $_online = null;
 
@@ -47,7 +47,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
+		self::$_instances      = array();
 		self::$_instances_name = array();
 	}
 
@@ -56,7 +56,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function initialize()
 	{
-		$id = JFactory::getUser()->id;
+		$id        = JFactory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser($id);
 
 		// Initialize avatar if configured.
@@ -67,8 +67,8 @@ abstract class KunenaUserHelper
 	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param   mixed $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @param   bool $reload		Reload user from database.
+	 * @param   mixed $identifier The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param   bool  $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
 	 */
@@ -128,7 +128,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int $id
+	 * @param   int    $id
 	 * @param   string $name
 	 *
 	 * @return KunenaUser
@@ -192,7 +192,7 @@ abstract class KunenaUserHelper
 		{
 			$userlist = implode(',', $e_userids);
 
-			$db = JFactory::getDBO();
+			$db    = JFactory::getDBO();
 			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid
 				FROM #__users AS u
 				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
@@ -214,7 +214,7 @@ abstract class KunenaUserHelper
 			$avatars->load($e_userids);
 		}
 
-		$list = array ();
+		$list = array();
 
 		foreach ($userids as $userid)
 		{
@@ -249,7 +249,7 @@ abstract class KunenaUserHelper
 	{
 		if (self::$_total === null)
 		{
-			$db = JFactory::getDBO();
+			$db     = JFactory::getDBO();
 			$config = KunenaFactory::getConfig();
 
 			if ($config->userlist_count_users == '1')
@@ -282,13 +282,13 @@ abstract class KunenaUserHelper
 	 *
 	 * @return array
 	 */
-	public static function getTopPosters($limit=0)
+	public static function getTopPosters($limit = 0)
 	{
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 
 		if (count(self::$_topposters) < $limit)
 		{
-			$db = JFactory::getDBO();
+			$db    = JFactory::getDBO();
 			$query = "SELECT u.id, ku.posts AS count
 				FROM #__kunena_users AS ku
 				INNER JOIN #__users AS u ON u.id=ku.userid
@@ -311,10 +311,10 @@ abstract class KunenaUserHelper
 	{
 		if (self::$_online === null)
 		{
-			$app = JFactory::getApplication();
+			$app    = JFactory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true);
+			$db     = JFactory::getDbo();
+			$query  = $db->getQuery(true);
 			$query
 				->select('userid, MAX(time) AS time')
 				->from('#__session')
@@ -346,9 +346,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
-	 * @param	array		$groupIds	List of Group Ids (null for all).
-	 * @param	array		$userIds	List of User Ids (null for all).
-	 * @param	boolean		$recursive	Recursively include all child groups (optional)
+	 * @param    array   $groupIds  List of Group Ids (null for all).
+	 * @param    array   $userIds   List of User Ids (null for all).
+	 * @param    boolean $recursive Recursively include all child groups (optional)
 	 *
 	 * @return  array
 	 * @throws  BadMethodCallException  If first two parameters are both null.
@@ -372,8 +372,8 @@ abstract class KunenaUserHelper
 		$test = $recursive ? '>=' : '=';
 
 		// Find users and their groups.
-		$db = JFactory::getDbo();
-		$query	= $db->getQuery(true)
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true)
 			->select('m.*')
 			->from('#__usergroups AS ug1')
 			->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt')
@@ -395,7 +395,7 @@ abstract class KunenaUserHelper
 
 		$db->setQuery($query);
 		$results = (array) $db->loadObjectList();
-		$list = array();
+		$list    = array();
 
 		// Make sure that we list all given users (if provided).
 		if ($userIds)
@@ -426,10 +426,10 @@ abstract class KunenaUserHelper
 
 		if ($counts === null)
 		{
-			$app = JFactory::getApplication();
+			$app    = JFactory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true);
+			$db     = JFactory::getDbo();
+			$query  = $db->getQuery(true);
 			$query
 				->select('COUNT(*)')
 				->from('#__session')
@@ -452,8 +452,8 @@ abstract class KunenaUserHelper
 			$count = $db->loadResult();
 			KunenaError::checkDatabaseError();
 
-			$counts = array();
-			$counts['user'] = count(self::getOnlineUsers());
+			$counts          = array();
+			$counts['user']  = count(self::getOnlineUsers());
 			$counts['guest'] = $count;
 		}
 
@@ -463,13 +463,13 @@ abstract class KunenaUserHelper
 	/**
 	 * Returns the status of a user. If as session exists, we can return the type of status the user set.
 	 *
-	 * @param   mixed  $user  The user object to get the status
+	 * @param   mixed $user The user object to get the status
 	 *
 	 * @return integer
 	 */
 	public static function getStatus($user)
 	{
-		$user = self::get($user);
+		$user   = self::get($user);
 		$online = false;
 
 		if (intval($user->userid) > 0)

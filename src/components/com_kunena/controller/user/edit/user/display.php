@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -47,11 +47,11 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 
 			JPluginHelper::importPlugin('user');
 
-			$registry = new JRegistry($this->user->params);
-			$form = JForm::getInstance('com_users.profile', 'frontend');
-			$data = new StdClass;
+			$registry     = new JRegistry($this->user->params);
+			$form         = JForm::getInstance('com_users.profile', 'frontend');
+			$data         = new StdClass;
 			$data->params = $registry->toArray();
-			$dispatcher = JEventDispatcher::getInstance();
+			$dispatcher   = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 
 			$form->bind($data);

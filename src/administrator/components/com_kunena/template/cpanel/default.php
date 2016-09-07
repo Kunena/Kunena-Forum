@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  CPanel
+ * @package         Kunena.Administrator.Template
+ * @subpackage      CPanel
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 ?>
@@ -99,9 +99,15 @@ defined('_JEXEC') or die();
 						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 						<hr class="hr-condensed">
 						<ul class="pull-left">
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup/sections-categories" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup"
+							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
+							</li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup/sections-categories"
+							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
+							</li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum"
+							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
+							</li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -136,14 +142,15 @@ defined('_JEXEC') or die();
 							<dd><a href="https://www.kunena.org/terms-of-use" target="_blank">https://www.kunena.org/terms-of-use</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
-							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons();?></dd>
+							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons(); ?></dd>
 							<hr class="hr-condensed">
 							<dt>Donate:</dt>
 							<dd>
 								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 									<input name="cmd" type="hidden" value="_s-xclick">
 									<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
-									<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!" src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+									<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!"
+									       src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
 									<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
 								</form>
 							</dd>

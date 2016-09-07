@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
+ * @package       Kunena.Administrator.Template
+ * @subpackage    Categories
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -48,6 +48,7 @@ class KunenaLayoutPage extends KunenaLayout
 
 	/**
 	 * Add path to breadcrumbs.
+	 *
 	 * @param $text
 	 * @param $uri
 	 * @param $ignore
@@ -59,7 +60,7 @@ class KunenaLayoutPage extends KunenaLayout
 		if ($ignore)
 		{
 			$active = KunenaRoute::$active;
-			$view = isset($active->query['view']) ? $active->query['view'] : '';
+			$view   = isset($active->query['view']) ? $active->query['view'] : '';
 			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
 
 			if ($active && $active->component == 'com_kunena' && strtolower("{$view}/{$layout}") == strtolower($this->_name))
@@ -77,12 +78,13 @@ class KunenaLayoutPage extends KunenaLayout
 	 * Returns layout class.
 	 *
 	 * <code>
-	 *	// Output pagination/pages layout with current cart instance.
-	 *	echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
+	 *    // Output pagination/pages layout with current cart instance.
+	 *    echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
 	 * </code>
 	 *
-	 * @param   mixed $paths String or array of strings.
-	 * @param   string $base Base path.
+	 * @param   mixed  $paths String or array of strings.
+	 * @param   string $base  Base path.
+	 *
 	 * @return  KunenaLayout
 	 */
 	public static function factory($paths, $base = 'pages')
@@ -110,7 +112,7 @@ class KunenaLayoutPage extends KunenaLayout
 				continue;
 			}
 
-			$path = (string) preg_replace('|\\\|', '/', strtolower($path));
+			$path   = (string) preg_replace('|\\\|', '/', strtolower($path));
 			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
 
 			foreach ($lookup as $loc)

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Icons
+ * @package         Kunena.Framework
+ * @subpackage      Icons
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -26,8 +26,8 @@ class KunenaIcons
 	 */
 	static public function arrowdown()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -54,8 +54,8 @@ class KunenaIcons
 	 */
 	static public function arrowup()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -82,8 +82,8 @@ class KunenaIcons
 	 */
 	static public function members()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -110,8 +110,8 @@ class KunenaIcons
 	 */
 	static public function user()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -138,8 +138,8 @@ class KunenaIcons
 	 */
 	static public function stats()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -167,8 +167,8 @@ class KunenaIcons
 	 */
 	static public function search()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -195,8 +195,8 @@ class KunenaIcons
 	 */
 	static public function collapse()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -223,8 +223,8 @@ class KunenaIcons
 	 */
 	static public function cancel()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -251,8 +251,8 @@ class KunenaIcons
 	 */
 	static public function ip()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if (!KunenaUserHelper::getMyself()->isModerator())
 		{
@@ -284,8 +284,8 @@ class KunenaIcons
 	 */
 	static public function email()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -312,8 +312,8 @@ class KunenaIcons
 	 */
 	static public function bookmark()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -340,8 +340,8 @@ class KunenaIcons
 	 */
 	static public function back()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -368,8 +368,8 @@ class KunenaIcons
 	 */
 	static public function save()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -396,8 +396,8 @@ class KunenaIcons
 	 */
 	static public function edit()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -424,8 +424,8 @@ class KunenaIcons
 	 */
 	static public function attach()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -452,8 +452,8 @@ class KunenaIcons
 	 */
 	static public function plus()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -482,8 +482,8 @@ class KunenaIcons
 	 */
 	static public function rss($text = null)
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($text)
 		{
@@ -521,8 +521,8 @@ class KunenaIcons
 	 */
 	static public function upload()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -549,8 +549,8 @@ class KunenaIcons
 	 */
 	static public function picture()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -577,8 +577,8 @@ class KunenaIcons
 	 */
 	static public function file()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -605,8 +605,8 @@ class KunenaIcons
 	 */
 	static public function delete()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -633,8 +633,8 @@ class KunenaIcons
 	 */
 	static public function poll_add()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -665,8 +665,8 @@ class KunenaIcons
 	 */
 	static public function poll_rem()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{

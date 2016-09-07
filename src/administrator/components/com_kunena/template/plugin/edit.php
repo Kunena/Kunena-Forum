@@ -28,7 +28,9 @@ $this->fieldsets = $this->form->getFieldsets('params');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id=' . (int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
+		<form
+			action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id=' . (int) $this->item->extension_id); ?>"
+			method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
 			<fieldset>
 				<div class="tabbable-panel">
 					<div class="tabbable-line">
@@ -37,17 +39,17 @@ $this->fieldsets = $this->form->getFieldsets('params');
 								<a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS'); ?></a></li>
 							<?php
 							if (count($this->fieldsets))
-							:
-	?>
+								:
+								?>
 								<?php foreach ($this->fieldsets as $fieldset)
 								:
-	?>
-									<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
-									<li>
-										<a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a>
-									</li>
-								<?php endforeach; ?>
-							<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
+								?>
+								<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
+								<li>
+									<a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a>
+								</li>
+							<?php endforeach; ?>
+							<?php endif; ?>
 						</ul>
 
 						<div class="tab-content">
@@ -110,8 +112,8 @@ $this->fieldsets = $this->form->getFieldsets('params');
 										</td>
 									</tr>
 									<?php if ($this->item->extension_id)
-									:
-	?>
+										:
+										?>
 										<tr>
 											<td>
 												<?php echo $this->form->getLabel('extension_id'); ?>
@@ -123,23 +125,23 @@ $this->fieldsets = $this->form->getFieldsets('params');
 									<?php endif; ?>
 									<!-- Plugin metadata -->
 									<?php if ($this->item->xml)
-									:
-	?>
+										:
+										?>
 										<?php if (($text = trim($this->item->xml->description)))
 										:
-	?>
-											<tr>
-												<td>
-													<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
-												</td>
-												<td>
-													<?php echo JText::_($text); ?>
-												</td>
-											</tr>
-										<?php endif; ?>
+										?>
+										<tr>
+											<td>
+												<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
+											</td>
+											<td>
+												<?php echo JText::_($text); ?>
+											</td>
+										</tr>
+									<?php endif; ?>
 									<?php else
-:
-	?>
+										:
+										?>
 										<div class="alert alert-error">
 											<?php echo JText::_('COM_PLUGINS_XML_ERR'); ?>
 										</div>
@@ -152,7 +154,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 					</div>
 				</div>
 			</fieldset>
-			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="task" value=""/>
 			<?php echo JHtml::_('form.token'); ?>
 		</form>
 	</div>

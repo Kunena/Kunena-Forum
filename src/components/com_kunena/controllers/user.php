@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -166,7 +166,7 @@ class KunenaControllerUser extends KunenaController
 			$this->user = JFactory::getUser($userid);
 		}
 
-		$success    = $this->saveUser();
+		$success = $this->saveUser();
 
 		if (!$success)
 		{
@@ -294,12 +294,12 @@ class KunenaControllerUser extends KunenaController
 			{
 				$this->app->logout($user->userid);
 				$message = JText::_('COM_KUNENA_USER_BLOCKED_DONE');
-				$log = KunenaLog::LOG_USER_BLOCK;
+				$log     = KunenaLog::LOG_USER_BLOCK;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBLOCKED_DONE');
-				$log = KunenaLog::LOG_USER_UNBLOCK;
+				$log     = KunenaLog::LOG_USER_UNBLOCK;
 			}
 		}
 		else
@@ -307,12 +307,12 @@ class KunenaControllerUser extends KunenaController
 			if ($ban->isEnabled())
 			{
 				$message = JText::_('COM_KUNENA_USER_BANNED_DONE');
-				$log = KunenaLog::LOG_USER_BAN;
+				$log     = KunenaLog::LOG_USER_BAN;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBANNED_DONE');
-				$log = KunenaLog::LOG_USER_UNBAN;
+				$log     = KunenaLog::LOG_USER_UNBAN;
 			}
 		}
 
@@ -328,15 +328,15 @@ class KunenaControllerUser extends KunenaController
 					KunenaLog::TYPE_MODERATION,
 					$log,
 					array(
-						'expiration' => $delban ? 'NOW' : $expiration,
+						'expiration'     => $delban ? 'NOW' : $expiration,
 						'reason_private' => $reason_private,
-						'reason_public' => $reason_public,
-						'comment' => $comment,
-						'options' => array(
-							'resetProfile' => (bool) $DelProfileInfo,
+						'reason_public'  => $reason_public,
+						'comment'        => $comment,
+						'options'        => array(
+							'resetProfile'   => (bool) $DelProfileInfo,
 							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
-							'deleteAvatar' => (bool) $DelAvatar || $DelProfileInfo,
-							'deletePosts' => (bool) $banDelPosts
+							'deleteAvatar'   => (bool) $DelAvatar || $DelProfileInfo,
+							'deletePosts'    => (bool) $banDelPosts
 						)
 					),
 					null,
@@ -459,7 +459,7 @@ class KunenaControllerUser extends KunenaController
 		$username  = $input->$method->get('username', '', 'USERNAME');
 		$password  = $input->$method->get('password', '', 'RAW');
 		$remember  = $this->input->getBool('remember', false);
-		$secretkey  = $input->$method->get('secretkey', '', 'RAW');
+		$secretkey = $input->$method->get('secretkey', '', 'RAW');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
@@ -594,7 +594,7 @@ class KunenaControllerUser extends KunenaController
 		// 14400 seconds = 6 hours
 		$karma_delay = '14400';
 
-		$userid      = JFactory::getApplication()->input->getInt('userid', 0);
+		$userid = JFactory::getApplication()->input->getInt('userid', 0);
 
 		$target = KunenaFactory::getUser($userid);
 
@@ -683,8 +683,8 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Clean request
-		$post       = $this->app->input->post->getArray();
-		$post_password = $this->app->input->post->get('password', '', 'raw');
+		$post           = $this->app->input->post->getArray();
+		$post_password  = $this->app->input->post->get('password', '', 'raw');
 		$post_password2 = $this->app->input->post->get('password2', '', 'raw');
 
 		if (empty($post_password) || empty($post_password2))
@@ -717,7 +717,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-		$user = new JUser($this->user->id);
+		$user     = new JUser($this->user->id);
 
 		// Bind the form fields to the user table and save.
 		if (!($user->bind($post) && $user->save(true)))
@@ -754,7 +754,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$this->user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
-		$birthdate              = JFactory::getApplication()->input->getString('birthdate');
+		$birthdate                = JFactory::getApplication()->input->getString('birthdate');
 
 		if ($birthdate)
 		{
@@ -865,7 +865,7 @@ class KunenaControllerUser extends KunenaController
 					}
 
 					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' .
-					$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
+						$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
 				}
 
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
@@ -928,11 +928,11 @@ class KunenaControllerUser extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment = KunenaAttachmentHelper::get($id);
-				$message = $attachment->getMessage();
+				$attachment  = KunenaAttachmentHelper::get($id);
+				$message     = $attachment->getMessage();
 				$attachments = array($attachment->id, 1);
-				$attach = array();
-				$removeList = array_keys(array_diff_key($attachments, $attach));
+				$attach      = array();
+				$removeList  = array_keys(array_diff_key($attachments, $attach));
 				Joomla\Utilities\ArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 

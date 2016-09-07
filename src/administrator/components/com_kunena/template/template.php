@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Template
+ * @package         Kunena.Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -47,7 +47,7 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   JPaginationObject  $item  The current pagination object
+	 * @param   JPaginationObject $item The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *

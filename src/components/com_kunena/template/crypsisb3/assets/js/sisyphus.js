@@ -99,7 +99,7 @@
 	Sisyphus = (function () {
 		var params = {
 			instantiated: [],
-			started     : []
+			started: []
 		};
 		var CKEDITOR = window.CKEDITOR;
 
@@ -123,20 +123,20 @@
 				 */
 				setInitialOptions: function (options) {
 					var defaults = {
-						excludeFields  : [],
+						excludeFields: [],
 						customKeySuffix: "",
-						locationBased  : false,
-						timeout        : 0,
-						autoRelease    : true,
-						onBeforeSave   : function () {
+						locationBased: false,
+						timeout: 0,
+						autoRelease: true,
+						onBeforeSave: function () {
 						},
-						onSave         : function () {
+						onSave: function () {
 						},
 						onBeforeRestore: function () {
 						},
-						onRestore      : function () {
+						onRestore: function () {
 						},
-						onRelease      : function () {
+						onRelease: function () {
 						}
 					};
 					this.options = this.options || $.extend(defaults, options);
@@ -570,10 +570,10 @@
 				return params.instantiated[identifier];
 			},
 
-			free   : function () {
+			free: function () {
 				params = {
 					instantiated: [],
-					started     : []
+					started: []
 				};
 				return null;
 			},

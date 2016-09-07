@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Search
+ * @package         Kunena.Site
+ * @subpackage      Controller.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -41,7 +41,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$this->error = $this->model->getError();
+		$this->error       = $this->model->getError();
 	}
 
 	/**
@@ -54,10 +54,10 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
-		$config = JFactory::getApplication('site');
+		$doc             = JFactory::getDocument();
+		$config          = JFactory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$robots          = $componentParams->get('robots');
 
 		if ($robots == '')
 		{

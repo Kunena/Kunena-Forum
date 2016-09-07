@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -114,8 +114,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		}
 
 		unset($users);
-	}
-	while ($sessions);
+	} while ($sessions);
 
 	// Update missing information
 	$query = "UPDATE #__kunena_user_read AS ur

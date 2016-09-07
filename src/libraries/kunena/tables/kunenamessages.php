@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -86,7 +86,7 @@ class TableKunenaMessages extends KunenaTable
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
 		if ($id !== null)
@@ -179,13 +179,14 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @param   boolean $updateNulls has no effect.
+	 *
 	 * @return boolean
 	 * @see KunenaTable::store()
 	 */
 	public function store($updateNulls = false)
 	{
-		$k = $this->_tbl_key;
-		$update = $this->_exists;
+		$k       = $this->_tbl_key;
+		$update  = $this->_exists;
 		$message = $this->message;
 		unset($this->message);
 

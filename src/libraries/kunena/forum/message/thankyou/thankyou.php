@@ -1,21 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Message.Thankyou
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumMessageThankyou
  *
- * @property int $postid
- * @property int $userid
- * @property int $targetuserid
+ * @property int    $postid
+ * @property int    $userid
+ * @property int    $targetuserid
  * @property string $time
  */
 class KunenaForumMessageThankyou extends JObject
@@ -61,7 +61,7 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param   int $userid
+	 * @param   int    $userid
 	 * @param   string $time
 	 */
 	public function _add($userid, $time)
@@ -78,7 +78,7 @@ class KunenaForumMessageThankyou extends JObject
 	 */
 	public function save($user)
 	{
-		$user = KunenaFactory::getUser($user);
+		$user    = KunenaFactory::getUser($user);
 		$message = KunenaForumMessageHelper::get($this->id);
 
 		if (!$user->exists())
@@ -102,8 +102,8 @@ class KunenaForumMessageThankyou extends JObject
 			return false;
 		}
 
-		$db = JFactory::getDBO();
-		$time = JFactory::getDate();
+		$db    = JFactory::getDBO();
+		$time  = JFactory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery($query);
@@ -129,7 +129,7 @@ class KunenaForumMessageThankyou extends JObject
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
@@ -164,7 +164,7 @@ class KunenaForumMessageThankyou extends JObject
 	 */
 	public function delete($user)
 	{
-		$user = KunenaFactory::getUser($user);
+		$user    = KunenaFactory::getUser($user);
 		$message = KunenaForumMessageHelper::get($this->id);
 
 		if (!$user->exists())
@@ -181,7 +181,7 @@ class KunenaForumMessageThankyou extends JObject
 			return false;
 		}
 
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
 		$db->setQuery($query);
 		$db->execute();

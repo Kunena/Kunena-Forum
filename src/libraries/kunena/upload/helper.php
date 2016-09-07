@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Upload
+ * @package       Kunena.Framework
+ * @subpackage    Upload
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
  */
 class KunenaUploadHelper
 {
-	protected static $_instances = array ();
+	protected static $_instances = array();
 
 	/**
 	 *
@@ -90,8 +90,8 @@ class KunenaUploadHelper
 				}
 				else
 				{
-					$ext = JFile::getExt($file['name']);
-					$name = JFile::stripExt($file['name']);
+					$ext         = JFile::getExt($file['name']);
+					$name        = JFile::stripExt($file['name']);
 					$newFileName = '';
 
 					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)

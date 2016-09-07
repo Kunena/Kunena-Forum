@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Easyblog
+ * @package         Kunena.Plugins
+ * @subpackage      Easyblog
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
 defined('_JEXEC') or die();
@@ -46,7 +46,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
+	 * @param          $userid
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
@@ -72,7 +72,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
+	 * @param        $userid
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean

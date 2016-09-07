@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Route
+ * @package       Kunena.Framework
+ * @subpackage    Route
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -18,51 +18,51 @@ require_once KPATH_SITE . '/router.php';
 abstract class KunenaRouteLegacy
 {
 	// List of legacy views from previous releases
-	static $functions = array (
-		'entrypage' => 1,
-		'listcat' => 1,
-		'showcat' => 1,
-		'latest' => 1,
-		'mylatest' => 1,
-		'noreplies' => 1,
-		'subscriptions' => 1,
-		'favorites' => 1,
-		'userposts' => 1,
-		'unapproved' => 1,
-		'deleted' => 1,
-		'view' => 1,
-		'profile' => 1,
-		'myprofile' => 1,
-		'userprofile' => 1,
-		'fbprofile' => 1,
-		'moderateuser' => 1,
-		'userlist' => 1,
-		'rss' => 1,
-		'post' => 1,
-		'report' => 1,
-		'template' => 1,
-		'announcement' => 1,
-		'article' => 1,
-		'who' => 1,
-		'poll' => 1,
-		'polls' => 1,
-		'stats' => 1,
-		'help' => 1,
-		'review' => 1,
-		'rules' => 1,
-	//      'search'=>1,
-		'advsearch' => 1,
+	static $functions = array(
+		'entrypage'       => 1,
+		'listcat'         => 1,
+		'showcat'         => 1,
+		'latest'          => 1,
+		'mylatest'        => 1,
+		'noreplies'       => 1,
+		'subscriptions'   => 1,
+		'favorites'       => 1,
+		'userposts'       => 1,
+		'unapproved'      => 1,
+		'deleted'         => 1,
+		'view'            => 1,
+		'profile'         => 1,
+		'myprofile'       => 1,
+		'userprofile'     => 1,
+		'fbprofile'       => 1,
+		'moderateuser'    => 1,
+		'userlist'        => 1,
+		'rss'             => 1,
+		'post'            => 1,
+		'report'          => 1,
+		'template'        => 1,
+		'announcement'    => 1,
+		'article'         => 1,
+		'who'             => 1,
+		'poll'            => 1,
+		'polls'           => 1,
+		'stats'           => 1,
+		'help'            => 1,
+		'review'          => 1,
+		'rules'           => 1,
+		//      'search'=>1,
+		'advsearch'       => 1,
 		'markallcatsread' => 1,
-		'markthisread' => 1,
-		'subscribecat' => 1,
-		'unsubscribecat' => 1,
-		'karma' => 1,
-		'bulkactions' => 1,
+		'markthisread'    => 1,
+		'subscribecat'    => 1,
+		'unsubscribecat'  => 1,
+		'karma'           => 1,
+		'bulkactions'     => 1,
 		'templatechooser' => 1,
-		'json' => 1,
-		'pdf' => 1,
-		'thankyou' => 1,
-		'fb_pdf' => 1,
+		'json'            => 1,
+		'pdf'             => 1,
+		'thankyou'        => 1,
+		'fb_pdf'          => 1,
 	);
 
 	/**
@@ -81,7 +81,7 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
-	 * @param     $uri
+	 * @param       $uri
 	 * @param   int $showstart
 	 *
 	 * @return boolean
@@ -124,8 +124,8 @@ abstract class KunenaRouteLegacy
 			$uri->delVar('do');
 		}
 
-		$app = JFactory::getApplication();
-		$config = KunenaFactory::getConfig();
+		$app     = JFactory::getApplication();
+		$config  = KunenaFactory::getConfig();
 		$changed = false;
 
 		switch ($uri->getVar('view'))
@@ -207,7 +207,7 @@ abstract class KunenaRouteLegacy
 					case 'userposts' :
 						$uri->setVar('userid', '0');
 
-						// Continue in latestposts
+					// Continue in latestposts
 					case 'latestposts' :
 						$uri->setVar('layout', 'posts');
 						$uri->setVar('mode', 'recent');
@@ -244,9 +244,9 @@ abstract class KunenaRouteLegacy
 				$uri->setVar('view', 'topic');
 
 				// Convert URI to have both id and mesid
-				$id = $uri->getVar('id');
+				$id      = $uri->getVar('id');
 				$message = KunenaForumMessageHelper::get($id);
-				$mesid = $uri->getVar('mesid');
+				$mesid   = $uri->getVar('mesid');
 
 				if ($message->exists())
 				{
@@ -274,7 +274,7 @@ abstract class KunenaRouteLegacy
 					$uri->setVar('layout', 'moderate');
 				}
 
-				// Continue to user profile
+			// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :
 			case 'fbprofile' :
@@ -308,9 +308,9 @@ abstract class KunenaRouteLegacy
 				$uri->setVar('layout', 'report');
 
 				// Convert URI to have both id and mesid
-				$id = $uri->getVar('id');
+				$id      = $uri->getVar('id');
 				$message = KunenaForumMessageHelper::get($id);
-				$mesid = null;
+				$mesid   = null;
 
 				if ($message->exists())
 				{
@@ -398,7 +398,7 @@ abstract class KunenaRouteLegacy
 
 				// Convert URI to have both id and mesid
 				$message = KunenaForumMessageHelper::get($id);
-				$mesid = null;
+				$mesid   = null;
 
 				if ($message->exists())
 				{
@@ -699,7 +699,7 @@ abstract class KunenaRouteLegacy
 	 */
 	public static function convertMenuItem($item)
 	{
-		$uri = JUri::getInstance($item->link);
+		$uri  = JUri::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
 		$params = new JRegistry($item->params);
@@ -735,8 +735,8 @@ abstract class KunenaRouteLegacy
 			}
 		}
 
-		$item->link = $uri->toString();
-		$item->query = $uri->getQuery(true);
+		$item->link   = $uri->toString();
+		$item->query  = $uri->getQuery(true);
 		$item->params = $params->toString();
 	}
 }

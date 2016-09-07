@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic.User
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Topic.User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -29,8 +29,8 @@ abstract class KunenaForumTopicUserHelper
 	 * Returns KunenaForumTopicUser object.
 	 *
 	 * @param   KunenaForumTopic|int|null $topic
-	 * @param   mixed $user
-	 * @param   bool $reload
+	 * @param   mixed                     $user
+	 * @param   bool                      $reload
 	 *
 	 * @return KunenaForumTopicUser
 	 */
@@ -42,7 +42,7 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		$topic = intval($topic);
-		$user = KunenaUserHelper::get($user);
+		$user  = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
 		{
@@ -51,7 +51,7 @@ abstract class KunenaForumTopicUserHelper
 
 		if ($reload || empty(self::$_instances [$user->userid][$topic]))
 		{
-			$topics = self::getTopics($topic, $user);
+			$topics                                   = self::getTopics($topic, $user);
 			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop($topics);
 		}
 
@@ -60,7 +60,7 @@ abstract class KunenaForumTopicUserHelper
 
 	/**
 	 * @param   bool|array $ids
-	 * @param   mixed $user
+	 * @param   mixed      $user
 	 *
 	 * @return KunenaForumTopicUser[]
 	 */
@@ -89,7 +89,7 @@ abstract class KunenaForumTopicUserHelper
 		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
-		$list = array ();
+		$list = array();
 
 		foreach ($ids as $id)
 		{
@@ -106,7 +106,8 @@ abstract class KunenaForumTopicUserHelper
 	 * Get all user ids who have participated to the given topics.
 	 *
 	 * @param   array|KunenaForumTopic[] $topics
-	 * @param   string $value  Row to pick up as value.
+	 * @param   string                   $value Row to pick up as value.
+	 *
 	 * @return array List of [topic][userid] = value.
 	 */
 	static public function getUserIds(array $topics, $value = 'user_id')
@@ -128,7 +129,7 @@ abstract class KunenaForumTopicUserHelper
 
 		$idlist = implode(',', $ids);
 
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('topic_id, user_id')
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -160,7 +161,7 @@ abstract class KunenaForumTopicUserHelper
 	public static function move($old, $new)
 	{
 		// Update database
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
 		$db->execute();
@@ -181,7 +182,7 @@ abstract class KunenaForumTopicUserHelper
 
 			foreach (self::$_topics [$new->id] as &$instance)
 			{
-				$instance->topic_id = $new->id;
+				$instance->topic_id    = $new->id;
 				$instance->category_id = $new->category_id;
 			}
 		}
@@ -243,13 +244,13 @@ abstract class KunenaForumTopicUserHelper
 	public static function cleanup()
 	{
 		self::$_instances = array();
-		self::$_topics = array();
+		self::$_topics    = array();
 	}
 
 	/**
 	 * @param   bool|array|int $topicids
-	 * @param   int  $start
-	 * @param   int  $end
+	 * @param   int            $start
+	 * @param   int            $end
 	 *
 	 * @return boolean|integer
 	 */
@@ -259,17 +260,17 @@ abstract class KunenaForumTopicUserHelper
 
 		if (is_array($topicids))
 		{
-			$where = 'AND m.thread IN (' . implode(',', $topicids) . ')';
+			$where  = 'AND m.thread IN (' . implode(',', $topicids) . ')';
 			$where2 = 'AND ut.topic_id IN (' . implode(',', $topicids) . ')';
 		}
 		elseif ((int) $topicids)
 		{
-			$where = 'AND m.thread=' . (int) $topicids;
+			$where  = 'AND m.thread=' . (int) $topicids;
 			$where2 = 'AND ut.topic_id=' . (int) $topicids;
 		}
 		else
 		{
-			$where = '';
+			$where  = '';
 			$where2 = '';
 		}
 
@@ -350,8 +351,8 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db = JFactory::getDBO();
-		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
+		$db     = JFactory::getDBO();
+		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery($query);
 		$results = (array) $db->loadAssocList('topic_id');
 		KunenaError::checkDatabaseError();
@@ -385,8 +386,8 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db = JFactory::getDBO();
-		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$db     = JFactory::getDBO();
+		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery($query);
 		$results = (array) $db->loadAssocList('user_id');
 		KunenaError::checkDatabaseError();

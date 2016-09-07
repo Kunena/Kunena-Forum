@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Forum.Announcement
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -25,8 +25,8 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int   $identifier  Announcement to load - Can be only an integer.
-	 * @param   bool  $reload      reload
+	 * @param   int  $identifier Announcement to load - Can be only an integer.
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumAnnouncement
 	 */
@@ -60,8 +60,8 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get url
 	 *
-	 * @param   string  $layout  layout
-	 * @param   bool    $xhtml   xhtml
+	 * @param   string $layout layout
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return string
 	 */
@@ -75,7 +75,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get uri
 	 *
-	 * @param   string  $layout  layout
+	 * @param   string $layout layout
 	 *
 	 * @return JUri
 	 */
@@ -94,17 +94,17 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Announcements
 	 *
-	 * @param   int   $start   start
-	 * @param   int   $limit   limit
-	 * @param   bool  $filter  filter
+	 * @param   int  $start  start
+	 * @param   int  $limit  limit
+	 * @param   bool $filter filter
 	 *
 	 * @return KunenaForumAnnouncement[]
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db = JFactory::getDBO();
+		$db       = JFactory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 		if ($filter)
 		{
@@ -129,7 +129,7 @@ abstract class KunenaForumAnnouncementHelper
 		KunenaError::checkDatabaseError();
 
 		self::$_instances = array();
-		$list = array();
+		$list             = array();
 
 		foreach ($results as $announcement)
 		{
@@ -141,7 +141,7 @@ abstract class KunenaForumAnnouncementHelper
 			$instance = new KunenaForumAnnouncement($announcement);
 			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
-			$list[] = $instance;
+			$list[]                           = $instance;
 		}
 
 		unset($results);
@@ -152,15 +152,15 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Count
 	 *
-	 * @param   bool  $filter  filter
+	 * @param   bool $filter filter
 	 *
 	 * @return integer
 	 */
 	static public function getCount($filter = true)
 	{
-		$db = JFactory::getDBO();
+		$db       = JFactory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 		if ($filter)
 		{

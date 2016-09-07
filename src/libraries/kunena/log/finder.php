@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Message
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Message
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -30,8 +30,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   JDate $starting  Starting date or null if older than ending date.
-	 * @param   JDate $ending    Ending date or null if newer than starting date.
+	 * @param   JDate $starting Starting date or null if older than ending date.
+	 * @param   JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 */

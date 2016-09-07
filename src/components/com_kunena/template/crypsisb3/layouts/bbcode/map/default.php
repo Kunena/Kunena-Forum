@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -44,16 +44,19 @@ if (!isset($id))
 
 if (!empty($this->config->google_map_api_key))
 {
-	$mapid = 'kgooglemap' . $this->mapid;
-	$map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
+	$mapid      = 'kgooglemap' . $this->mapid;
+	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 	$map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
-	if (!in_array($map_type, $map_typeId)) { $map_type = 'ROADMAP'; }
-	
-	$map_zoom = isset($params['zoom']) ? (int) $params['zoom'] : 10;
-	$map_control = isset($params['control']) ? (int) $params['control'] : 0;
-	$content = json_encode(addslashes($this->content));
+	if (!in_array($map_type, $map_typeId))
+	{
+		$map_type = 'ROADMAP';
+	}
+
+	$map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
+	$map_control   = isset($params['control']) ? (int) $params['control'] : 0;
+	$content       = json_encode(addslashes($this->content));
 	$contentString = JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
-	
+
 	$this->addScriptDeclaration(
 		"
 	// <![CDATA[
@@ -90,17 +93,17 @@ if (!empty($this->config->google_map_api_key))
 		});
 	// ]]>"
 	);
-?>
+	?>
 
-<div id="<?php echo $mapid; ?>" class="kgooglemap"><?php echo JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
+	<div id="<?php echo $mapid; ?>" class="kgooglemap"><?php echo JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
 
-<?php 
+	<?php
 }
 else
 { ?>
-    <div class="alert alert-info" role="alert">
-    <?php 
-    	echo JText::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
-    ?>
-    </div>
-<?php }?>
+	<div class="alert alert-info" role="alert">
+		<?php
+		echo JText::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
+		?>
+	</div>
+<?php } ?>

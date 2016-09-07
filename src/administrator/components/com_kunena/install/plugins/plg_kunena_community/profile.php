@@ -2,13 +2,13 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Community
+ * @package          Kunena.Plugins
+ * @subpackage       Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2016 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license          http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -46,7 +46,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
+	 * @param          $userid
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
@@ -99,7 +99,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
+	 * @param        $userid
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|string

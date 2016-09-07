@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator
- * @subpackage Views
+ * @package       Kunena.Administrator
+ * @subpackage    Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,33 +17,33 @@ class KunenaAdminViewStatistics extends KunenaView
 {
 	public function displayDefault($tpl = null)
 	{
-		$this->state = $this->get('state');
-		$this->group = $this->state->get('group');
-		$this->items = $this->get('items');
+		$this->state      = $this->get('state');
+		$this->group      = $this->state->get('group');
+		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
-		$this->filterUserFields = $this->getFilterUserFields();
-		$this->sortFields = $this->getSortFields();
+		$this->filterUserFields    = $this->getFilterUserFields();
+		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->filterTypeFields = $this->getFilterTypeFields();
+		$this->filterTypeFields      = $this->getFilterTypeFields();
 		$this->filterOperationFields = $this->getFilterOperationFields();
 
-		$this->filterSearch = $this->escape($this->state->get('filter.search'));
-		$this->filterType	= $this->escape($this->state->get('filter.type'));
-		$this->filterUser	= $this->escape($this->state->get('filter.user'));
-		$this->filterCategory = $this->escape($this->state->get('filter.category'));
-		$this->filterTopic = $this->escape($this->state->get('filter.topic'));
+		$this->filterSearch     = $this->escape($this->state->get('filter.search'));
+		$this->filterType       = $this->escape($this->state->get('filter.type'));
+		$this->filterUser       = $this->escape($this->state->get('filter.user'));
+		$this->filterCategory   = $this->escape($this->state->get('filter.category'));
+		$this->filterTopic      = $this->escape($this->state->get('filter.topic'));
 		$this->filterTargetUser = $this->escape($this->state->get('filter.target_user'));
-		$this->filterIp = $this->escape($this->state->get('filter.ip'));
-		$this->filterTimeStart = $this->escape($this->state->get('filter.time_start'));
-		$this->filterTimeStop = $this->escape($this->state->get('filter.time_stop'));
-		$this->filterOperation = $this->escape($this->state->get('filter.operation'));
-		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->filterIp         = $this->escape($this->state->get('filter.ip'));
+		$this->filterTimeStart  = $this->escape($this->state->get('filter.time_start'));
+		$this->filterTimeStop   = $this->escape($this->state->get('filter.time_stop'));
+		$this->filterOperation  = $this->escape($this->state->get('filter.operation'));
+		$this->filterActive     = $this->escape($this->state->get('filter.active'));
 
-		$this->filterUsertypes	= $this->escape($this->state->get('filter.usertypes'));
-		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection = $this->escape($this->state->get('list.direction'));
+		$this->filterUsertypes = $this->escape($this->state->get('filter.usertypes'));
+		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
 		$document = JFactory::getDocument();
 		$document->setTitle(JText::_('Forum Logs'));
@@ -61,7 +61,7 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	protected function getFilterUserFields()
 	{
-		$filterFields = array();
+		$filterFields   = array();
 		$filterFields[] = JHtml::_('select.option', 0, 'Guests');
 		$filterFields[] = JHtml::_('select.option', 1, 'Registered users');
 		$filterFields[] = JHtml::_('select.option', 2, 'Regular members');
@@ -71,6 +71,7 @@ class KunenaAdminViewStatistics extends KunenaView
 
 		return $filterFields;
 	}
+
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -102,7 +103,7 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	protected function getFilterTypeFields()
 	{
-		$filterFields = array();
+		$filterFields   = array();
 		$filterFields[] = JHtml::_('select.option', 1, 'MOD');
 		$filterFields[] = JHtml::_('select.option', 2, 'ACT');
 		$filterFields[] = JHtml::_('select.option', 3, 'ERR');
@@ -116,7 +117,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		$filterFields = array();
 
 		$reflection = new ReflectionClass('KunenaLog');
-		$constants = $reflection->getConstants();
+		$constants  = $reflection->getConstants();
 		ksort($constants);
 
 		foreach ($constants as $key => $value)

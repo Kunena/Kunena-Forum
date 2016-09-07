@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Application
+ * @package         Kunena.Site
+ * @subpackage      Controller.Application
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -74,9 +74,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	{
 		KunenaFactory::loadLanguage('com_kunena');
 
-		$format = $this->input->getWord('format', 'html');
-		$id = $this->input->getInt('id', 0);
-		$thumb = $this->input->getBool('thumb', false);
+		$format   = $this->input->getWord('format', 'html');
+		$id       = $this->input->getInt('id', 0);
+		$thumb    = $this->input->getBool('thumb', false);
 		$download = $this->input->getBool('download', false);
 
 		// Run before executing action.
@@ -198,8 +198,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = JFactory::getDocument();
 	}
 }

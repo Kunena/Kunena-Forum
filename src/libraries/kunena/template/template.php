@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Framework
- * @subpackage  Template
+ * @package         Kunena.Framework
+ * @subpackage      Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -74,13 +74,13 @@ class KunenaTemplate extends JObject
 
 	protected $userClasses = array(
 		'kwho-',
-		'admin' => 'kwho-admin',
+		'admin'     => 'kwho-admin',
 		'globalmod' => 'kwho-globalmoderator',
 		'moderator' => 'kwho-moderator',
-		'user' => 'kwho-user',
-		'guest' => 'kwho-guest',
-		'banned' => 'kwho-banned',
-		'blocked' => 'kwho-blocked'
+		'user'      => 'kwho-user',
+		'guest'     => 'kwho-guest',
+		'banned'    => 'kwho-banned',
+		'blocked'   => 'kwho-blocked'
 	);
 
 	public $topicIcons = array();
@@ -244,19 +244,24 @@ class KunenaTemplate extends JObject
 	public function initialize()
 	{
 		$this->loadLanguage();
-		$config = KunenaFactory::getConfig ();
+		$config = KunenaFactory::getConfig();
 		if ($config->sef)
 		{
 			$sef = '/forum';
 		}
-		else {
+		else
+		{
 			$sef = '/index.php?option=com_kunena';
 		}
 		?>
 		<script>
-			jQuery(document).ready(function($) {
-				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'],  $sef) !== false){ echo "true"; } else echo "false";?>;
-				if (isForumActive){
+			jQuery(document).ready(function ($) {
+				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
+				{
+					echo "true";
+				}
+				else echo "false";?>;
+				if (isForumActive) {
 					$('.current').addClass("active alias-parent-active");
 					$('.alias-parent-active').addClass("active alias-parent-active");
 				}
@@ -791,31 +796,31 @@ HTML;
 				{
 					foreach ($xml->icons as $icons)
 					{
-						$type   = (string)$icons->attributes()->type;
-						$width  = (int)$icons->attributes()->width;
-						$height = (int)$icons->attributes()->height;
+						$type   = (string) $icons->attributes()->type;
+						$width  = (int) $icons->attributes()->width;
+						$height = (int) $icons->attributes()->height;
 
 						foreach ($icons->icon as $icon)
 						{
 							$attributes = $icon->attributes();
 							$icon       = new stdClass();
-							$icon->id   = (int)$attributes->id;
-							$icon->type = (string)$attributes->type ? (string)$attributes->type : $type;
-							$icon->name = (string)$attributes->name;
+							$icon->id   = (int) $attributes->id;
+							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+							$icon->name = (string) $attributes->name;
 
 							if ($icon->type != 'user')
 							{
 								$icon->id = $icon->type . '_' . $icon->name;
 							}
 
-							$icon->published             = (int)$attributes->published;
-							$icon->title                 = (string)$attributes->title;
-							$icon->b2                    = (string)$attributes->b2;
-							$icon->b3                    = (string)$attributes->b3;
-							$icon->fa                    = (string)$attributes->fa;
-							$icon->filename              = (string)$attributes->src;
-							$icon->width                 = (int)$attributes->width ? (int)$attributes->width : $width;
-							$icon->height                = (int)$attributes->height ? (int)$attributes->height : $height;
+							$icon->published             = (int) $attributes->published;
+							$icon->title                 = (string) $attributes->title;
+							$icon->b2                    = (string) $attributes->b2;
+							$icon->b3                    = (string) $attributes->b3;
+							$icon->fa                    = (string) $attributes->fa;
+							$icon->filename              = (string) $attributes->src;
+							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
+							$icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
 							$icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false, $category_iconset);
 							$this->topicIcons[$icon->id] = $icon;
 						}
@@ -879,28 +884,28 @@ HTML;
 				{
 					foreach ($xml->icons as $icons)
 					{
-						$type   = (string)$icons->attributes()->type;
-						$width  = (int)$icons->attributes()->width;
-						$height = (int)$icons->attributes()->height;
+						$type   = (string) $icons->attributes()->type;
+						$width  = (int) $icons->attributes()->width;
+						$height = (int) $icons->attributes()->height;
 
 						foreach ($icons->icon as $icon)
 						{
 							$attributes = $icon->attributes();
 							$icon       = new stdClass();
-							$icon->id   = (int)$attributes->id;
-							$icon->type = (string)$attributes->type ? (string)$attributes->type : $type;
-							$icon->name = (string)$attributes->name;
+							$icon->id   = (int) $attributes->id;
+							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+							$icon->name = (string) $attributes->name;
 
 							if ($icon->type != 'user')
 							{
 								$icon->id = $icon->type . '_' . $icon->name;
 							}
 
-							$icon->published                = (int)$attributes->published;
-							$icon->title                    = (string)$attributes->title;
-							$icon->filename                 = (string)$attributes->src;
-							$icon->width                    = (int)$attributes->width ? (int)$attributes->width : $width;
-							$icon->height                   = (int)$attributes->height ? (int)$attributes->height : $height;
+							$icon->published                = (int) $attributes->published;
+							$icon->title                    = (string) $attributes->title;
+							$icon->filename                 = (string) $attributes->src;
+							$icon->width                    = (int) $attributes->width ? (int) $attributes->width : $width;
+							$icon->height                   = (int) $attributes->height ? (int) $attributes->height : $height;
 							$this->categoryIcons[$icon->id] = $icon;
 						}
 					}
@@ -1011,7 +1016,7 @@ HTML;
 				$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
 			}
 
-			$xml = simplexml_load_file($xmlfile);
+			$xml  = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
 			if ($topicicontype == 'B2')
@@ -1119,11 +1124,11 @@ HTML;
 	{
 		if (isset($src->icons))
 		{
-			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+			$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
 
 			if (!$icon)
 			{
-				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
 			}
 
 			$attributes = $icon[0]->attributes();
@@ -1142,11 +1147,11 @@ HTML;
 	{
 		if (isset($src->icons))
 		{
-			$icon       = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+			$icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
 
 			if (!$icon)
 			{
-				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
 			}
 
 			$attributes = $icon[0]->attributes();
@@ -1399,8 +1404,8 @@ HTML;
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();
 
-		$topicicontype   = $this->ktemplate->params->get('topicicontype');
-		$topiclabels     = $this->ktemplate->params->get('labels');
+		$topicicontype = $this->ktemplate->params->get('topicicontype');
+		$topiclabels   = $this->ktemplate->params->get('labels');
 
 		if ($topiclabels != 0)
 		{
@@ -1411,7 +1416,7 @@ HTML;
 				$xmlfile = JPATH_ROOT . '/media/kunena/labels/labels.xml';
 			}
 
-			$xml     = simplexml_load_file($xmlfile);
+			$xml = simplexml_load_file($xmlfile);
 
 			if ($topiclabels == 1)
 			{
@@ -1432,21 +1437,21 @@ HTML;
 	{
 		if (isset($src->labels))
 		{
-			$label       = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+			$label = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
 
 			if (!$label)
 			{
-				$label   = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
+				$label = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
 			}
 
-			$attributes = $label[0]->attributes();
-			$label       = new stdClass;
-			$label->id   = (int) $attributes->id;
-			$label->b2   = (string) $attributes->b2;
-			$label->b3   = (string) $attributes->b3;
-			$label->fa   = (string) $attributes->fa;
-			$label->src  = (string) $attributes->src;
-			$label->name = (string) $attributes->name;
+			$attributes       = $label[0]->attributes();
+			$label            = new stdClass;
+			$label->id        = (int) $attributes->id;
+			$label->b2        = (string) $attributes->b2;
+			$label->b3        = (string) $attributes->b3;
+			$label->fa        = (string) $attributes->fa;
+			$label->src       = (string) $attributes->src;
+			$label->name      = (string) $attributes->name;
 			$label->labeltype = (string) $attributes->labeltype;
 
 			return $label;
@@ -1456,7 +1461,7 @@ HTML;
 	public function borderless()
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$borderless   = $this->ktemplate->params->get('borderless');
+		$borderless      = $this->ktemplate->params->get('borderless');
 
 		if ($borderless)
 		{

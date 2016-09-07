@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator
- * @subpackage Views
+ * @package       Kunena.Administrator
+ * @subpackage    Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -19,9 +19,9 @@ class KunenaAdminViewLabels extends KunenaView
 {
 	public function displayDefault($tpl = null)
 	{
-		$this->state = $this->get('state');
-		$this->group = $this->state->get('group');
-		$this->items = $this->get('items');
+		$this->state      = $this->get('state');
+		$this->group      = $this->state->get('group');
+		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
 		$document = JFactory::getDocument();

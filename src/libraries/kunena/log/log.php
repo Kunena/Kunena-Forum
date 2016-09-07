@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Libraries
- * @subpackage Log
+ * @package       Kunena.Libraries
+ * @subpackage    Log
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -102,7 +102,7 @@ class KunenaLog
 	{
 		if (!empty(static::$entries))
 		{
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->insert('#__kunena_logs')
 				->columns('type, user_id, category_id, topic_id, target_user, ip, time, operation, data');
@@ -140,12 +140,12 @@ class KunenaLog
 	/**
 	 * Log new entry.
 	 *
-	 * @param   int                 $type         Log entry type.
-	 * @param   string              $operation    Performed operation.
-	 * @param   string              $data         JSON encoded string.
-	 * @param   KunenaForumCategory $category     Target category.
-	 * @param   KunenaForumTopic    $topic        Target topic.
-	 * @param   KunenaUser          $user         Target user.
+	 * @param   int                 $type      Log entry type.
+	 * @param   string              $operation Performed operation.
+	 * @param   string              $data      JSON encoded string.
+	 * @param   KunenaForumCategory $category  Target category.
+	 * @param   KunenaForumTopic    $topic     Target topic.
+	 * @param   KunenaUser          $user      Target user.
 	 *
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ class KunenaLog
 	/**
 	 * Add a KunenaLogEntry entry to the Kunena log.
 	 *
-	 * @param   KunenaLogEntry  $entry  An instance of an entry to be logged.
+	 * @param   KunenaLogEntry $entry An instance of an entry to be logged.
 	 *
 	 * @return void
 	 */

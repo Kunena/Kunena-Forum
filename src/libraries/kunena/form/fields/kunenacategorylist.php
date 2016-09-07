@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Form
+ * @package       Kunena.Framework
+ * @subpackage    Form
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -33,7 +33,7 @@ class JFormFieldKunenaCategoryList extends JFormField
 
 		KunenaFactory::loadLanguage('com_kunena');
 
-		$size = $this->element['size'];
+		$size  = $this->element['size'];
 		$class = $this->element['class'];
 
 		$attribs = ' ';

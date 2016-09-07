@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  AltaUserPoints
+ * @package         Kunena.Plugins
+ * @subpackage      AltaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,8 +21,8 @@ class plgKunenaAltaUserPoints extends JPlugin
 	/**
 	 * Constructor of plgKunenaAltaUserPoints class
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An optional associative array of configuration settings.
+	 * @param   object &$subject The object to observe
+	 * @param   array  $config   An optional associative array of configuration settings.
 	 */
 	public function __construct(&$subject, $config)
 	{

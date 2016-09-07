@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -36,7 +36,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Constructor
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0.0-BETA2
 	 *
@@ -353,7 +353,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		$post_catid = $this->app->input->post->get('catid', '', 'raw');
 		$post_alias = $this->app->input->post->get('alias', '', 'raw');
-		$post_name = $this->app->input->post->get('name', '', 'raw');
+		$post_name  = $this->app->input->post->get('name', '', 'raw');
 
 		list($title, $alias) = $this->_generateNewTitle($post_catid, $post_alias, $post_name);
 
@@ -763,8 +763,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Order Up Down
 	 *
-	 * @param   integer  $id         id
-	 * @param   integer  $direction  direction
+	 * @param   integer $id        id
+	 * @param   integer $direction direction
 	 *
 	 * @throws null
 	 *
@@ -817,9 +817,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Set variable
 	 *
-	 * @param   integer  $cid       id
-	 * @param   string   $variable  variable
-	 * @param   string   $value     value
+	 * @param   integer $cid      id
+	 * @param   string  $variable variable
+	 * @param   string  $value    value
 	 *
 	 * @return void
 	 *
@@ -893,9 +893,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to change the title & alias.
 	 *
-	 * @param   integer  $category_id  The id of the category.
-	 * @param   string   $alias        The alias.
-	 * @param   string   $name         The name.
+	 * @param   integer $category_id The id of the category.
+	 * @param   string  $alias       The alias.
+	 * @param   string  $name        The name.
 	 *
 	 * @return    array  Contains the modified title and alias.
 	 *
@@ -967,9 +967,9 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', '', 'array');
+		$cid        = $this->app->input->get('cid', '', 'array');
 		$cat_parent = $this->app->input->getInt('batch_catid_target', 0);
-		$task = $this->app->input->getString('move_copy');
+		$task       = $this->app->input->getString('move_copy');
 
 		if ($cat_parent == 0 || empty($cid))
 		{

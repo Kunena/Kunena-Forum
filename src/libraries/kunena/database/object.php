@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Object
+ * @package       Kunena.Framework
+ * @subpackage    Object
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,8 +28,8 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Returns the global object.
 	 *
-	 * @param   int      $identifier  Object identifier to load.
-	 * @param   boolean  $reload      Force object reload from the database.
+	 * @param   int     $identifier Object identifier to load.
+	 * @param   boolean $reload     Force object reload from the database.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throws  Exception
@@ -42,7 +42,8 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Returns true if the object exists in the database.
 	 *
-	 * @param   boolean  $exists  Internal parameter to change state.
+	 * @param   boolean $exists Internal parameter to change state.
+	 *
 	 * @return  boolean  True if object exists in database.
 	 */
 	public function exists($exists = null)
@@ -62,9 +63,9 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * This method optionally takes an array of properties to ignore or allow when binding.
 	 *
-	 * @param   array    $src     An associative array or object to bind to the JTable instance.
-	 * @param   array    $fields  An optional array list of properties to ignore / include only while binding.
-	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
+	 * @param   array   $src     An associative array or object to bind to the JTable instance.
+	 * @param   array   $fields  An optional array list of properties to ignore / include only while binding.
+	 * @param   boolean $include True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
 	 */
@@ -88,7 +89,7 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Method to load object from the database.
 	 *
-	 * @param   mixed    $id  Id to be loaded.
+	 * @param   mixed $id Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
 	 */
@@ -130,7 +131,7 @@ abstract class KunenaDatabaseObject extends JObject
 		$this->_saving = true;
 
 		// Check the object.
-		if (! $this->check())
+		if (!$this->check())
 		{
 			return $this->_saving = false;
 		}
@@ -139,10 +140,10 @@ abstract class KunenaDatabaseObject extends JObject
 		$table = $this->getTable();
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
-		$isNew = ! $this->_exists;
+		$isNew = !$this->_exists;
 
 		// Check the table object.
-		if (! $table->check())
+		if (!$table->check())
 		{
 			$this->setError($table->getError());
 
@@ -190,7 +191,7 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Method to delete the object from the database.
 	 *
-	 * @return	boolean	True on success.
+	 * @return    boolean    True on success.
 	 */
 	public function delete()
 	{
@@ -253,7 +254,7 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Class constructor, overridden in descendant classes.
 	 *
-	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
+	 * @param   mixed $properties   Associative array to set the initial properties of the object.
 	 *                              If not profided, default values will be used.
 	 *
 	 * @return  KunenaDatabaseObject

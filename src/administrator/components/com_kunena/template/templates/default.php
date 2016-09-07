@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Templates
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Templates
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -25,60 +25,67 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-color-palette" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?></div>
+			<div class="module-title nav-header"><i class="icon-color-palette"
+			                                        alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
+			</div>
 			<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm" name="adminForm">
-					<input type="hidden" name="task" value="" />
-					<input type="hidden" name="boxchecked" value="0" />
-					<?php echo JHtml::_('form.token'); ?>
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
+			      name="adminForm">
+				<input type="hidden" name="task" value=""/>
+				<input type="hidden" name="boxchecked" value="0"/>
+				<?php echo JHtml::_('form.token'); ?>
 
-					<div class="btn-group pull-right hidden-phone">
-						<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
-					</div>
+				<div class="btn-group pull-right hidden-phone">
+					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+				</div>
 
-					<table class="table table-striped">
+				<table class="table table-striped">
 					<thead>
-						<tr>
-							<th width="1%"></th>
-							<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
-							<th class="center"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?></th>
-							<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
-							<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
-							<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?></th>
-							<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
-						</tr>
+					<tr>
+						<th width="1%"></th>
+						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
+						<th class="center"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
+					</tr>
 					</thead>
 					<tfoot>
-						<tr>
-							<td colspan="7">
-								<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
-							</td>
-						</tr>
+					<tr>
+						<td colspan="7">
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+						</td>
+					</tr>
 					</tfoot>
 					<tbody>
-						<?php foreach ($this->templates as $id => $row)
+					<?php foreach ($this->templates as $id => $row)
 						:
-	?>
+						?>
 						<tr>
 							<td>
-								<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
+								<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>" name="cid[]"
+								       value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);"/>
 							</td>
 							<td>
 								<?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
-								<span class="editlinktip hasTip" title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-									<a href="#edit" onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name);?></a>
+								<span class="editlinktip hasTip"
+								      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+									<a href="#edit"
+									   onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
 								</span>
 							</td>
 							<td class="center">
 								<?php if ($row->published == 1)
-								:
-	?>
+									:
+									?>
 									<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
 								<?php else
-:
-	?>
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
+									:
+									?>
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
 										<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
 									</a>
 								<?php endif; ?>
@@ -93,13 +100,14 @@ JHtml::_('dropdown.init');
 								<?php echo $this->escape($row->creationdate); ?>
 							</td>
 							<td>
-								<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>" target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
+								<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>"
+								   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
 							</td>
 						</tr>
-						<?php endforeach; ?>
+					<?php endforeach; ?>
 					</tbody>
-					</table>
-				</form>
+				</table>
+			</form>
 			<div class="clearfix"></div>
 		</div>
 	</div>

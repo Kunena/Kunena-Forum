@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -56,7 +56,7 @@ class TableKunenaUserBans extends JTable
 	}
 
 	/**
-	 * @param     $userid
+	 * @param       $userid
 	 * @param   int $mode
 	 *
 	 * @return boolean
@@ -64,7 +64,7 @@ class TableKunenaUserBans extends JTable
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
@@ -106,7 +106,7 @@ class TableKunenaUserBans extends JTable
 	}
 
 	/**
-	 * @param     $ip
+	 * @param       $ip
 	 * @param   int $mode
 	 *
 	 * @return boolean
@@ -114,7 +114,7 @@ class TableKunenaUserBans extends JTable
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
@@ -179,7 +179,7 @@ class TableKunenaUserBans extends JTable
 	 *
 	 * @return boolean|void
 	 */
-	public function bind($data, $ignore=array())
+	public function bind($data, $ignore = array())
 	{
 		if (isset($data['comments']))
 		{

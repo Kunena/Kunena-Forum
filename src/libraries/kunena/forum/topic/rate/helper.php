@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Framework
- * @subpackage  Forum.Topic
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -25,8 +25,8 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param   null     $identifier
-	 * @param   bool     $reload
+	 * @param   null $identifier
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopicRate The rate object.
 	 * @internal  param The $identifier rate object to load - Can be only an integer.

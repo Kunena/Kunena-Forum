@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
+ * @package       Kunena.Installer
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -27,8 +27,9 @@ class pkg_kunena_languagesInstallerScript
 	}
 
 	/**
-	 * @param   string $type
+	 * @param   string         $type
 	 * @param   JInstallerFile $parent
+	 *
 	 * @return boolean
 	 */
 	public function preflight($type, $parent)
@@ -56,7 +57,7 @@ class pkg_kunena_languagesInstallerScript
 		}
 
 		// Get list of languages to be installed.
-		$source = $parent->getParent()->getPath('source') . '/language';
+		$source    = $parent->getParent()->getPath('source') . '/language';
 		$languages = JFactory::getLanguage()->getKnownLanguages();
 
 		// @var SimpleXMLElement $files
@@ -65,7 +66,7 @@ class pkg_kunena_languagesInstallerScript
 
 		foreach ($languages as $language)
 		{
-			$name = "com_kunena_{$language['tag']}";
+			$name   = "com_kunena_{$language['tag']}";
 			$search = JFolder::files($source, $name);
 
 			if (empty($search))
@@ -90,7 +91,7 @@ class pkg_kunena_languagesInstallerScript
 
 		// Remove old K1.7 style language pack.
 		$table = JTable::getInstance('extension');
-		$id = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
+		$id    = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
 
 		if ($id)
 		{
@@ -104,7 +105,7 @@ class pkg_kunena_languagesInstallerScript
 	public function uninstallLanguage($tag, $name)
 	{
 		$table = JTable::getInstance('extension');
-		$id = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
+		$id    = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
 
 		if (!$id)
 		{

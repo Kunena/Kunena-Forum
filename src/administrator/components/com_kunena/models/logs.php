@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator
- * @subpackage Models
+ * @package       Kunena.Administrator
+ * @subpackage    Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,8 +22,9 @@ class KunenaAdminModelLogs extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param	array	$config	An optional associative array of configuration settings.
-	 * @see		JController
+	 * @param    array $config An optional associative array of configuration settings.
+	 *
+	 * @see        JController
 	 */
 	public function __construct($config = array())
 	{
@@ -154,25 +155,25 @@ class KunenaAdminModelLogs extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param	string		$id	A prefix for the store id.
+	 * @param    string $id A prefix for the store id.
 	 *
-	 * @return	string		A store id.
+	 * @return    string        A store id.
 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':' . $this->getState('filter.id');
-		$id	.= ':' . $this->getState('filter.type');
-		$id	.= ':' . $this->getState('filter.user');
-		$id	.= ':' . $this->getState('filter.category');
-		$id	.= ':' . $this->getState('filter.topic');
-		$id	.= ':' . $this->getState('filter.target_user');
-		$id	.= ':' . $this->getState('filter.ip');
-		$id	.= ':' . $this->getState('filter.time_start');
-		$id	.= ':' . $this->getState('filter.time_stop');
-		$id	.= ':' . $this->getState('filter.operation');
-		$id	.= ':' . $this->getState('filter.usertypes');
-		$id	.= ':' . json_encode($this->getState('group'));
+		$id .= ':' . $this->getState('filter.id');
+		$id .= ':' . $this->getState('filter.type');
+		$id .= ':' . $this->getState('filter.user');
+		$id .= ':' . $this->getState('filter.category');
+		$id .= ':' . $this->getState('filter.topic');
+		$id .= ':' . $this->getState('filter.target_user');
+		$id .= ':' . $this->getState('filter.ip');
+		$id .= ':' . $this->getState('filter.time_start');
+		$id .= ':' . $this->getState('filter.time_stop');
+		$id .= ':' . $this->getState('filter.operation');
+		$id .= ':' . $this->getState('filter.usertypes');
+		$id .= ':' . json_encode($this->getState('group'));
 
 		return parent::getStoreId($id);
 	}
@@ -209,7 +210,7 @@ class KunenaAdminModelLogs extends JModelList
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @return	KunenaLogFinder
+	 * @return    KunenaLogFinder
 	 */
 	protected function getFinder()
 	{
@@ -223,7 +224,7 @@ class KunenaAdminModelLogs extends JModelList
 		}
 
 		// Create a new query object.
-		$db	= $this->getDbo();
+		$db     = $this->getDbo();
 		$finder = new KunenaLogFinder;
 
 		// Filter by type.
@@ -241,7 +242,7 @@ class KunenaAdminModelLogs extends JModelList
 		{
 			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
 			$finder->innerJoin('#__users AS u ON u.id=a.user_id');
-			$finder->where('u.username',  'LIKE', $filter, false);
+			$finder->where('u.username', 'LIKE', $filter, false);
 		}
 
 		// Filter by category.
@@ -285,12 +286,12 @@ class KunenaAdminModelLogs extends JModelList
 
 		// Filter by time.
 		$start = $this->getState('filter.time_start');
-		$stop = $this->getState('filter.time_stop');
+		$stop  = $this->getState('filter.time_stop');
 
 		if ($start || $stop)
 		{
 			$start = $start ? new JDate($start) : null;
-			$stop = $stop ? new JDate($stop . ' +1 day') : null;
+			$stop  = $stop ? new JDate($stop . ' +1 day') : null;
 			$finder->filterByTime($start, $stop);
 		}
 
@@ -349,23 +350,23 @@ class KunenaAdminModelLogs extends JModelList
 			{
 				case 0:
 					$finder->where('user_id', '=', 0);
-				break;
+					break;
 				case 1:
 					$finder->where('user_id', '>', 0);
-				break;
+					break;
 				case 2:
 					$finder->where('user_id', '>', 0);
 					$finder->where('user_id', 'NOT IN', array_keys($access->getAdmins() + $access->getModerators()));
-				break;
+					break;
 				case 3:
 					$finder->where('user_id', 'IN', array_keys($access->getModerators()));
-				break;
+					break;
 				case 4:
 					$finder->where('user_id', 'IN', array_keys($access->getAdmins()));
-				break;
+					break;
 				case 5:
 					$finder->where('user_id', 'IN', array_keys($access->getAdmins() + $access->getModerators()));
-				break;
+					break;
 			}
 		}
 
@@ -411,20 +412,23 @@ class KunenaAdminModelLogs extends JModelList
 			->limit((int) $this->getState('list.limit'))
 			->find();
 
-		$userIds1 = $items->map(function ($item, $key) {
+		$userIds1 = $items->map(function ($item, $key)
+		{
 			return $item->user_id;
 
 		});
-		$userIds2 = $items->map(function ($item, $key) {
+		$userIds2 = $items->map(function ($item, $key)
+		{
 
 			return $item->target_user;
 
 		});
-		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
+		$userIds  = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
 		KunenaUserHelper::loadUsers($userIds);
 
-		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) {
+		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key)
+		{
 			return $item->topic_id;
 
 		})->all());

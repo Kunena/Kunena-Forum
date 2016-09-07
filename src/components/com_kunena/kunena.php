@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Site
+ * @package        Kunena.Site
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -146,7 +146,7 @@ if (KUNENA_PROFILER)
 	foreach ($kunena_profiler->getAll() as $item)
 	{
 		echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
-		$item->getTotalTime(), $item->calls);
+			$item->getTotalTime(), $item->calls);
 	}
 
 	echo '</div>';

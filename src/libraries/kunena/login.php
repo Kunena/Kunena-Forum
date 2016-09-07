@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Integration
+ * @package         Kunena.Framework
+ * @subpackage      Integration
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -29,7 +29,7 @@ class KunenaLogin
 	{
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
-		$classes = $dispatcher->trigger('onKunenaGetLogin');
+		$classes    = $dispatcher->trigger('onKunenaGetLogin');
 
 		foreach ($classes as $class)
 		{
@@ -69,10 +69,10 @@ class KunenaLogin
 	/**
 	 * Method to login user by leverage Kunena plugin enabled
 	 *
-	 * @param   string  $username    The username of user which need to be logged
-	 * @param   string  $password    The password of user which need to be logged
-	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
-	 * @param   string  $secretkey   The secret key for the TFA feature
+	 * @param   string $username   The username of user which need to be logged
+	 * @param   string $password   The password of user which need to be logged
+	 * @param   int    $rememberme If the user want to be remembered the next time it want to log
+	 * @param   string $secretkey  The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 */
@@ -94,7 +94,7 @@ class KunenaLogin
 	 *
 	 * @return boolean
 	 */
-	public function logoutUser($return=null)
+	public function logoutUser($return = null)
 	{
 		foreach ($this->instances as $login)
 		{
@@ -208,7 +208,7 @@ class KunenaLogin
 	 * user has enabled a specific TFA method on their account. Only if both conditions
 	 * are met will this method return true;
 	 *
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
+	 * @param   integer $userId The user ID to check. Skip to use the current user.
 	 *
 	 * @return boolean True if TFA is enabled for this user
 	 */
@@ -233,7 +233,7 @@ class KunenaLogin
 		}
 
 		// Has this user turned on TFA on their account?
-		$model = new UsersModelUser;
+		$model     = new UsersModelUser;
 		$otpConfig = $model->getOtpConfig($userId);
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));

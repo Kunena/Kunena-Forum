@@ -27,8 +27,8 @@
 #kunena .c-rating__item {
 	-webkit-box-flex: 0;
 	-webkit-flex: 0 0 24px;
-	  -ms-flex: 0 0 24px;
-		  flex: 0 0 24px;
+	-ms-flex: 0 0 24px;
+	flex: 0 0 24px;
 	height: 24px;
 	width: 24px;
 	background: url("../images/stars.svg");

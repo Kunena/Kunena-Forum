@@ -1,0 +1,32 @@
+﻿*.bat     text eol=lf
+*.config  text eol=lf
+*.css     text eol=lf
+*.html    text eol=lf
+*.js      text eol=lf
+*.json    text eol=lf
+*.lock    text eol=lf
+*.less    text eol=lf
+*.md      text eol=lf
+*.php     text eol=lf
+*.script  text eol=lf
+*.sh      text eol=lf
+*.sql     text eol=lf
+*.ini     text eol=lf
+*.twig    text eol=lf
+*.txt     text eol=lf
+*.xml     text eol=lf
+*.yml     text eol=lf
+
+# Define binary file attributes.
+# - Do not treat them as text.
+# - Include binary diff in patches instead of "binary files differ."
+*.gif     -text diff
+*.gz      -text diff
+*.ico     -text diff
+*.jpeg    -text diff
+*.jpg     -text diff
+*.png     -text diff
+*.phar    -text diff
+*.exe     -text diff
+*.svgz    -text diff
+*.ttf     -text diff

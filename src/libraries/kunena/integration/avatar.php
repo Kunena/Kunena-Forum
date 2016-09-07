@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package       Kunena.Framework
+ * @subpackage    Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -32,7 +32,7 @@ class KunenaAvatar
 		{
 			JPluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
-			$classes = $dispatcher->trigger('onKunenaGetAvatar');
+			$classes    = $dispatcher->trigger('onKunenaGetAvatar');
 
 			foreach ($classes as $class)
 			{
@@ -90,23 +90,23 @@ class KunenaAvatar
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
-		$size = new StdClass;
+		$size    = new StdClass;
 		$size->x = intval($sizex);
 		$size->y = intval($sizey);
 
 		if (!intval($sizex))
 		{
 			$template = KunenaFactory::getTemplate();
-			$name = ucfirst(strtolower($sizex));
-			$size->x = intval($template->params->get('avatarSizeX' . $name, 90));
-			$size->y = intval($template->params->get('avatarSizeY' . $name, 90));
+			$name     = ucfirst(strtolower($sizex));
+			$size->x  = intval($template->params->get('avatarSizeX' . $name, 90));
+			$size->y  = intval($template->params->get('avatarSizeY' . $name, 90));
 		}
 
 		return $size;
 	}
 
 	/**
-	 * @param     $user
+	 * @param       $user
 	 * @param   int $sizex
 	 * @param   int $sizey
 	 *
@@ -129,7 +129,7 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param        $user
+	 * @param          $user
 	 * @param   string $class
 	 * @param   int    $sizex
 	 * @param   int    $sizey
@@ -138,7 +138,7 @@ class KunenaAvatar
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
-		$size = $this->getSize($sizex, $sizey);
+		$size   = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
 
 		if (!$avatar)

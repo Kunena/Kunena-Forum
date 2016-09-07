@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -340,7 +340,7 @@ class KunenaControllerTopics extends KunenaController
 
 						if ($message->authorise('move') && $topic->move($target, $message->id))
 						{
-								$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
 						}
 						else
 						{
@@ -361,7 +361,7 @@ class KunenaControllerTopics extends KunenaController
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_MODERATE,
 						array(
-							'move' => array('id' => $topic->id, 'mode' => 'topic'),
+							'move'   => array('id' => $topic->id, 'mode' => 'topic'),
 							'target' => array('category_id' => $target->id)
 						),
 						$topic->getCategory(),

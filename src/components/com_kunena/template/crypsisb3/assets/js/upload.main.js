@@ -15,8 +15,8 @@ jQuery(function ($) {
 	}
 
 	jQuery.fn.extend({
-		insertAtCaret: function(myValue){
-			return this.each(function(i) {
+		insertAtCaret: function (myValue) {
+			return this.each(function (i) {
 				if (document.selection) {
 					//For browsers like Internet Explorer
 					this.focus();
@@ -30,7 +30,7 @@ jQuery(function ($) {
 					var startPos = this.selectionStart;
 					var endPos = this.selectionEnd;
 					var scrollTop = this.scrollTop;
-					this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos,this.value.length);
+					this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
 					this.focus();
 					this.selectionStart = startPos + myValue.length;
 					this.selectionEnd = startPos + myValue.length;
@@ -62,8 +62,8 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url    : kunena_upload_files_rem + '&fil_id=' + file.id,
-					type   : 'POST',
+					url: kunena_upload_files_rem + '&fil_id=' + file.id,
+					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}
@@ -90,8 +90,8 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url    : kunena_upload_files_rem + '&fil_id=' + fileid,
-					type   : 'POST',
+					url: kunena_upload_files_rem + '&fil_id=' + fileid,
+					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}
@@ -189,7 +189,7 @@ jQuery(function ($) {
 
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
-				url    : kunena_upload_files_rem + '&fil_id=' + file_id,
+				url: kunena_upload_files_rem + '&fil_id=' + file_id,
 				type: 'POST',
 				success: function (result) {
 					$this.parent().remove();
@@ -198,29 +198,29 @@ jQuery(function ($) {
 		});
 
 	$('#fileupload').fileupload({
-		url               : $('#kunena_upload_files_url').val(),
-		dataType          : 'json',
-		autoUpload        : true,
+		url: $('#kunena_upload_files_url').val(),
+		dataType: 'json',
+		autoUpload: true,
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
 		disableImageResize: / Android( ?!.*Chrome) |Opera /
 			.test(window.navigator.userAgent),
-		previewMaxWidth   : 100,
-		previewMaxHeight  : 100,
-		previewCrop       : true
+		previewMaxWidth: 100,
+		previewMaxHeight: 100,
+		previewCrop: true
 	}).bind('fileuploadsubmit', function (e, data) {
-			var params = {};
-			$.each(data.files, function (index, file) {
-				params = {
-					'catid'   : $('#kunena_upload').val(),
-					'filename': file.name,
-					'size'    : file.size,
-					'mime'    : file.type
-				};
-			});
+		var params = {};
+		$.each(data.files, function (index, file) {
+			params = {
+				'catid': $('#kunena_upload').val(),
+				'filename': file.name,
+				'size': file.size,
+				'mime': file.type
+			};
+		});
 
-			data.formData = params;
+		data.formData = params;
 	})
 		.bind('fileuploaddrop', function (e, data) {
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
@@ -267,110 +267,110 @@ jQuery(function ($) {
 				node.appendTo(data.context);
 			});
 		}).on('fileuploadprocessalways', function (e, data) {
-			var index = data.index,
+		var index = data.index,
 			file = data.files[index],
 			node = $(data.context.children()[index]);
-			if (file.preview) {
-				node
+		if (file.preview) {
+			node
 				.prepend('<br>')
 				.prepend(file.preview);
-			}
+		}
 
-			if (file.error) {
-				node
+		if (file.error) {
+			node
 				.append('<br>')
 				.append($('<span class="text-danger"/>').text(file.error));
-			}
+		}
 
-			if (index + 1 === data.files.length) {
-				data.context.find('button.btn-primary')
+		if (index + 1 === data.files.length) {
+			data.context.find('button.btn-primary')
 				.text(Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON'))
 				.prop('disabled', !!data.files.error);
-			}
-		}).on('fileuploaddone', function (e, data) {
-			// $.each(data.result.data, function (index, file)
+		}
+	}).on('fileuploaddone', function (e, data) {
+		// $.each(data.result.data, function (index, file)
 
-			var link = $('<a>')
+		var link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
 
-			data.context.find('span')
+		data.context.find('span')
 			.wrap(link);
 
-			if (data.result.success == true) {
-				$('#form_submit_button').prop('disabled', false);
+		if (data.result.success == true) {
+			$('#form_submit_button').prop('disabled', false);
 
-				// The attachment has been right uploaded, so now we need to put into input hidden to added to message
-				$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
-				$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
+			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
+			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
+			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
 
-				data.uploaded = true;
+			data.uploaded = true;
 
-				data.context.append(insertButton.clone(true).data(data));
-				if (data.context.find('button').hasClass('btn-danger')) {
-					data.context.find('button.btn-danger').remove();
-				}
-
-				data.context.append(removeButton.clone(true).data(data));
+			data.context.append(insertButton.clone(true).data(data));
+			if (data.context.find('button').hasClass('btn-danger')) {
+				data.context.find('button.btn-danger').remove();
 			}
-			else if (data.result.message) {
-				data.uploaded = false;
-				data.context.append(removeButton.clone(true).data(data));
 
-				var error = null;
-				$.each(data.result.data.exceptions, function (index, error) {
-					error = $('<div class="alert alert-error"/>').text(error.message);
-					data.context.find('span')
+			data.context.append(removeButton.clone(true).data(data));
+		}
+		else if (data.result.message) {
+			data.uploaded = false;
+			data.context.append(removeButton.clone(true).data(data));
+
+			var error = null;
+			$.each(data.result.data.exceptions, function (index, error) {
+				error = $('<div class="alert alert-error"/>').text(error.message);
+				data.context.find('span')
 					.append('<br>')
 					.append(error);
-				});
-			}
-		}).on('fileuploadfail', function (e, data) {
-			$.each(data.files, function (index, file) {
-				// TODO: replace text with error message from server if possible
-				var error = $('<span class="text-danger"/>').text('File upload failed.');
-				$(data.context.children()[index])
-				.append('<br>')
-				.append(error);
-			});
-		}).prop('disabled', !$.support.fileInput)
-		.parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-		// Load attachments when the message is edited
-		if ($('#kmessageid').val() > 0) {
-			$.ajax({
-				type    : 'POST',
-				url     : kunena_upload_files_preload,
-				async   : false,
-				dataType: 'json',
-				data    : {mes_id: $('#kmessageid').val()},
-				success : function (data) {
-					if ($.isEmptyObject(data.files) == false) {
-						fileCount = Object.keys(data.files).length;
-
-						filesedit = data.files;
-
-						$(data.files).each(function (index, file) {
-							var image = '';
-							if (file.image === true) {
-								image = '<img src="' + file.path + '" width="100" height="100" /><br />';
-							}
-							else {
-								image = '<i class="icon-flag-2 icon-big"></i><br />';
-							}
-
-							var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
-							data.uploaded = true;
-							data.result = false;
-							data.file_id = file.id;
-
-							object.append(insertButton.clone(true).data(file));
-							object.append(removeButton.clone(true).data(data));
-
-							object.appendTo("#files");
-						});
-					}
-				}
 			});
 		}
+	}).on('fileuploadfail', function (e, data) {
+		$.each(data.files, function (index, file) {
+			// TODO: replace text with error message from server if possible
+			var error = $('<span class="text-danger"/>').text('File upload failed.');
+			$(data.context.children()[index])
+				.append('<br>')
+				.append(error);
+		});
+	}).prop('disabled', !$.support.fileInput)
+		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+	// Load attachments when the message is edited
+	if ($('#kmessageid').val() > 0) {
+		$.ajax({
+			type: 'POST',
+			url: kunena_upload_files_preload,
+			async: false,
+			dataType: 'json',
+			data: {mes_id: $('#kmessageid').val()},
+			success: function (data) {
+				if ($.isEmptyObject(data.files) == false) {
+					fileCount = Object.keys(data.files).length;
+
+					filesedit = data.files;
+
+					$(data.files).each(function (index, file) {
+						var image = '';
+						if (file.image === true) {
+							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
+						}
+						else {
+							image = '<i class="icon-flag-2 icon-big"></i><br />';
+						}
+
+						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
+						data.uploaded = true;
+						data.result = false;
+						data.file_id = file.id;
+
+						object.append(insertButton.clone(true).data(file));
+						object.append(removeButton.clone(true).data(data));
+
+						object.appendTo("#files");
+					});
+				}
+			}
+		});
+	}
 });

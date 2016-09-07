@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -56,7 +56,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		parent::before();
 
 		$catid = $this->input->getInt('catid', 0);
-		$id = $this->input->getInt('id', 0);
+		$id    = $this->input->getInt('id', 0);
 		$mesid = $this->input->getInt('mesid', 0);
 		$start = $this->input->getInt('limitstart', 0);
 		$limit = $this->input->getInt('limit', 0);
@@ -87,12 +87,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			// If message was set, use it to find the current topic.
 			$this->message = KunenaForumMessageHelper::get($mesid);
-			$this->topic = $this->message->getTopic();
+			$this->topic   = $this->message->getTopic();
 		}
 		else
 		{
 			// Note that redirect loops throw RuntimeException because of we added KunenaForumTopic::getTopic() call!
-			$this->topic = KunenaForumTopicHelper::get($id)->getTopic();
+			$this->topic   = KunenaForumTopicHelper::get($id)->getTopic();
 			$this->message = KunenaForumMessageHelper::get($this->topic->first_post_id);
 		}
 
@@ -124,17 +124,17 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 
 		// Load messages from the current page and set the pagination.
-		$hold = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
+		$hold   = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
 		$finder = new KunenaForumMessageFinder;
 		$finder
 			->where('thread', '=', $this->topic->id)
 			->filterByHold($hold);
 
-		$start = $mesid ? $this->topic->getPostLocation($mesid) : $start;
+		$start            = $mesid ? $this->topic->getPostLocation($mesid) : $start;
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$this->messages = $finder
-			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : - 1)
+			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : -1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
@@ -156,11 +156,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 
 		// Get user data, captcha & quick reply.
-		$this->userTopic = $this->topic->getUserTopic();
+		$this->userTopic  = $this->topic->getUserTopic();
 		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists());
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
@@ -169,7 +169,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare messages for display.
 	 *
-	 * @param   int  $mesid  Selected message Id.
+	 * @param   int $mesid Selected message Id.
 	 *
 	 * @return  void
 	 */
@@ -179,10 +179,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);
 
 		// First collect ids and users.
-		$threaded = ($this->layout == 'indented' || $this->layout == 'threaded');
-		$userlist = array();
+		$threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
+		$userlist       = array();
 		$this->threaded = array();
-		$location = $this->pagination->limitstart;
+		$location       = $this->pagination->limitstart;
 
 		foreach ($this->messages AS $message)
 		{
@@ -201,10 +201,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				}
 			}
 
-			$userlist[(int) $message->userid] = (int) $message->userid;
+			$userlist[(int) $message->userid]      = (int) $message->userid;
 			$userlist[(int) $message->modified_by] = (int) $message->modified_by;
 
-			$thankyou_list = $thankyous[$message->id]->getList();
+			$thankyou_list     = $thankyous[$message->id]->getList();
 			$message->thankyou = array();
 
 			if (!empty($thankyou_list))
@@ -240,8 +240,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Change ordering of the displayed messages and apply threading.
 	 *
-	 * @param   int    $parent  Parent Id.
-	 * @param   array  $indent  Indent for the current object.
+	 * @param   int   $parent Parent Id.
+	 * @param   array $indent Indent for the current object.
 	 *
 	 * @return  array
 	 */
@@ -261,7 +261,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		foreach ($this->threaded[$parent] as $mesid)
 		{
 			$message = $this->messages[$mesid];
-			$skip = $message->id != $this->topic->first_post_id
+			$skip    = $message->id != $this->topic->first_post_id
 				&& $message->parent != $this->topic->first_post_id && !isset($this->messages[$message->parent]);
 
 			if ($mesid != $last)
@@ -283,7 +283,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$indent[] = 'gap';
 			}
 
-			$list[$mesid] = $this->messages[$mesid];
+			$list[$mesid]         = $this->messages[$mesid];
 			$list[$mesid]->indent = $indent;
 
 			if (empty($this->threaded[$mesid]))
@@ -364,9 +364,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 
-		$app = JFactory::getApplication('site');
+		$app             = JFactory::getApplication('site');
 		$componentParams = $app->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$robots          = $componentParams->get('robots');
 
 		if ($robots == '')
 		{
@@ -385,17 +385,17 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$doc->setMetaData('robots', 'nofollow, noindex');
 		}
 
-		$page = $this->pagination->pagesCurrent;
-		$total = $this->pagination->pagesTotal;
+		$page       = $this->pagination->pagesCurrent;
+		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
-			$params_keywords    = $params->get('menu-meta_keywords');
+			$params          = $menu_item->params;
+			$params_keywords = $params->get('menu-meta_keywords');
 
 			$this->setTitle($headerText);
 

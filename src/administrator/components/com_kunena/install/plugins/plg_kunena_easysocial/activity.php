@@ -26,8 +26,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param      $command
-	 * @param      $message
+	 * @param        $command
+	 * @param        $message
 	 * @param   null $target
 	 *
 	 * @return mixed
@@ -41,7 +41,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param      $command
+	 * @param        $command
 	 * @param   null $target
 	 *
 	 * @return mixed

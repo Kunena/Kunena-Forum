@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -15,12 +15,12 @@ var previewActive = false;
 function kPreviewHelper(previewActive) {
 	if (jQuery('#kbbcode-message').val() != null) {
 		jQuery.ajax({
-			type    : 'POST',
-			url     : 'index.php?option=com_kunena&view=topic&layout=edit&format=raw',
-			async   : false,
+			type: 'POST',
+			url: 'index.php?option=com_kunena&view=topic&layout=edit&format=raw',
+			async: false,
 			dataType: 'json',
-			data    : {body: jQuery('#kbbcode-message').val()},
-			success : function (data) {
+			data: {body: jQuery('#kbbcode-message').val()},
+			success: function (data) {
 				jQuery('#kbbcode-preview').html(data.preview);
 			}
 		});
@@ -70,15 +70,15 @@ jQuery(document).ready(function ($) {
 
 		if (item != undefined) {
 			$(item).atwho({
-				at              : ":",
-				displayTpl      : "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-				insertTpl       : ':${name}:',
+				at: ":",
+				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+				insertTpl: ':${name}:',
 				callbacks: {
 					remoteFilter: function (query, callback) {
 						if (query.length > 0) {
 							$.ajax({
-								url    : $("#kurl_emojis").val(),
-								data   : {
+								url: $("#kurl_emojis").val(),
+								data: {
 									search: query
 								},
 								success: function (data) {
@@ -96,7 +96,7 @@ jQuery(document).ready(function ($) {
 	if ($.fn.sisyphus != undefined) {
 		$("#postform").sisyphus({
 			locationBased: true,
-			timeout      : 5
+			timeout: 5
 		});
 	}
 
@@ -126,12 +126,12 @@ jQuery(document).ready(function ($) {
 		}
 
 		$.ajax({
-			type    : 'POST',
-			url     : kurl_topicons_request,
-			async   : false,
+			type: 'POST',
+			url: kurl_topicons_request,
+			async: false,
 			dataType: 'json',
-			data    : {catid: catid},
-			success : function (data) {
+			data: {catid: catid},
+			success: function (data) {
 				$('#iconset_topic_list').remove();
 
 				var div_object = $('<div>', {'id': 'iconset_topic_list'});
@@ -142,17 +142,17 @@ jQuery(document).ready(function ($) {
 					if (value.type != 'system') {
 						if (value.id == 0) {
 							var input = $('<input>', {
-								type   : 'radio',
-								id     : 'radio' + value.id,
-								name   : 'topic_emoticon',
-								value  : value.id
-							}).prop('checked',true);
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
+								value: value.id
+							}).prop('checked', true);
 						}
 						else {
 							var input = $('<input>', {
-								type : 'radio',
-								id   : 'radio' + value.id,
-								name : 'topic_emoticon',
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
 								value: value.id
 							});
 						}
@@ -162,27 +162,27 @@ jQuery(document).ready(function ($) {
 						if (kunena_topicicontype == 'B2') {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<span>', {
-								'class' : 'icon icon-topic icon-' + value.b2,
+								'class': 'icon icon-topic icon-' + value.b2,
 								'border': '0',
-								'al'    : ''
+								'al': ''
 							}));
 						}
 						else if (kunena_topicicontype == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<i>', {
-								'class' : 'fa glyphicon-topic fa-2x fa-' + value.fa,
+								'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
 								'border': '0',
-								'al'    : ''
+								'al': ''
 							}));
 						}
 						else {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
 						}
 

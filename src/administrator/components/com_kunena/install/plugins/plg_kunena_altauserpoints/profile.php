@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  AltaUserPoints
+ * @package         Kunena.Plugins
+ * @subpackage      AltaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -50,7 +50,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param        $user
+	 * @param          $user
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
@@ -115,7 +115,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
+	 * @param        $userid
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean

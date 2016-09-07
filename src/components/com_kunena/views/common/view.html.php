@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Views
+ * @package         Kunena.Site
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -524,7 +524,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
 	 *
-	 * @param   string    $params Add extras params to the URL
+	 * @param   string      $params Add extras params to the URL
 	 * @param   bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
@@ -587,7 +587,7 @@ class KunenaViewCommon extends KunenaView
 			}
 			else
 			{
-				return  $name;
+				return $name;
 			}
 		}
 		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed)

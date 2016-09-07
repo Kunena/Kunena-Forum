@@ -40,12 +40,12 @@
 	$.support.fileInput = !(new RegExp(
 		// Handle devices which give false positives for the feature detection:
 		'(Android (1\\.[0156]|2\\.[01]))' +
-			'|(Windows Phone (OS 7|8\\.0))|(XBLWP)|(ZuneWP)|(WPDesktop)' +
-			'|(w(eb)?OSBrowser)|(webOS)' +
-			'|(Kindle/(1\\.0|2\\.[05]|3\\.0))'
+		'|(Windows Phone (OS 7|8\\.0))|(XBLWP)|(ZuneWP)|(WPDesktop)' +
+		'|(w(eb)?OSBrowser)|(webOS)' +
+		'|(Kindle/(1\\.0|2\\.[05]|3\\.0))'
 	).test(window.navigator.userAgent) ||
-		// Feature detection for all other devices:
-		$('<input type="file">').prop('disabled'));
+	// Feature detection for all other devices:
+	$('<input type="file">').prop('disabled'));
 
 	// The FileReader API is not actually used, but works as feature detection,
 	// as some Safari versions (5?) support XHR file uploads via the FormData API,
@@ -393,8 +393,8 @@
 
 				data._time = now;
 				loaded = Math.floor(
-					e.loaded / e.total * (data.chunkSize || data._progress.total)
-				) + (data.uploadedBytes || 0);
+						e.loaded / e.total * (data.chunkSize || data._progress.total)
+					) + (data.uploadedBytes || 0);
 				// Add the difference from the previously loaded state
 				// to the global loaded counter:
 				this._progress.loaded += (loaded - data._progress.loaded);
@@ -491,7 +491,7 @@
 						$.each(options.files, function (index, file) {
 							formData.push({
 								name: ($.type(options.paramName) === 'array' &&
-									options.paramName[index]) || paramName,
+								options.paramName[index]) || paramName,
 								value: file
 							});
 						});
@@ -520,7 +520,7 @@
 							) {
 								formData.append(
 									($.type(options.paramName) === 'array' &&
-										options.paramName[index]) || paramName,
+									options.paramName[index]) || paramName,
 									file,
 									file.uploadName || file.name
 								);
@@ -617,8 +617,8 @@
 			// The HTTP request method must be "POST" or "PUT":
 			options.type = (options.type ||
 				($.type(options.form.prop('method')) === 'string' &&
-					options.form.prop('method')) || ''
-				).toUpperCase();
+				options.form.prop('method')) || ''
+			).toUpperCase();
 			if (options.type !== 'POST' && options.type !== 'PUT'
 				&& options.type !== 'PATCH'
 			) {
@@ -736,7 +736,7 @@
 			};
 			data.processing = function () {
 				return !this.jqXHR && this._processQueue && that
-					._getDeferredState(this._processQueue) === 'pending';
+						._getDeferredState(this._processQueue) === 'pending';
 			};
 			data.progress = function () {
 				return this._progress;
@@ -814,7 +814,7 @@
 				// Add progress listeners for this chunk upload:
 				that._initProgressListener(o);
 				jqXHR = ((that._trigger('chunksend', null, o) !== false && $.ajax(o)) ||
-						that._getXHRPromise(false, o.context))
+				that._getXHRPromise(false, o.context))
 					.done(function (result, textStatus, jqXHR) {
 						ub = that._getUploadedBytes(jqXHR) ||
 							(ub + o.chunkSize);
@@ -950,48 +950,48 @@
 					// Set timer for bitrate progress calculation:
 					options._bitrateTimer = new that._BitrateTimer();
 					jqXHR = jqXHR || (
-						((aborted || that._trigger(
-							'send',
-							$.Event('send', {delegatedEvent: e}),
-							options
-						) === false) &&
-						that._getXHRPromise(false, options.context, aborted)) ||
-						that._chunkedUpload(options) || $.ajax(options)
-					).done(function (result, textStatus, jqXHR) {
-						that._onDone(result, textStatus, jqXHR, options);
-					}).fail(function (jqXHR, textStatus, errorThrown) {
-						that._onFail(jqXHR, textStatus, errorThrown, options);
-					}).always(function (jqXHRorResult, textStatus, jqXHRorError) {
-						that._onAlways(
-							jqXHRorResult,
-							textStatus,
-							jqXHRorError,
-							options
-						);
-						that._sending -= 1;
-						that._active -= 1;
-						if (options.limitConcurrentUploads
-							&& options.limitConcurrentUploads > that._sending
-						) {
-							// Start the next queued upload,
-							// that has not been aborted:
-							var nextSlot = that._slots.shift();
-							while (nextSlot) {
-								if (that._getDeferredState(nextSlot) === 'pending') {
-									nextSlot.resolve();
-									break;
+							((aborted || that._trigger(
+								'send',
+								$.Event('send', {delegatedEvent: e}),
+								options
+							) === false) &&
+							that._getXHRPromise(false, options.context, aborted)) ||
+							that._chunkedUpload(options) || $.ajax(options)
+						).done(function (result, textStatus, jqXHR) {
+							that._onDone(result, textStatus, jqXHR, options);
+						}).fail(function (jqXHR, textStatus, errorThrown) {
+							that._onFail(jqXHR, textStatus, errorThrown, options);
+						}).always(function (jqXHRorResult, textStatus, jqXHRorError) {
+							that._onAlways(
+								jqXHRorResult,
+								textStatus,
+								jqXHRorError,
+								options
+							);
+							that._sending -= 1;
+							that._active -= 1;
+							if (options.limitConcurrentUploads
+								&& options.limitConcurrentUploads > that._sending
+							) {
+								// Start the next queued upload,
+								// that has not been aborted:
+								var nextSlot = that._slots.shift();
+								while (nextSlot) {
+									if (that._getDeferredState(nextSlot) === 'pending') {
+										nextSlot.resolve();
+										break;
+									}
+
+									nextSlot = that._slots.shift();
 								}
-
-								nextSlot = that._slots.shift();
 							}
-						}
 
-						if (that._active === 0) {
-							// The stop callback is triggered when all uploads have
-							// been completed, equivalent to the global ajaxStop event:
-							that._trigger('stop');
-						}
-					});
+							if (that._active === 0) {
+								// The stop callback is triggered when all uploads have
+								// been completed, equivalent to the global ajaxStop event:
+								that._trigger('stop');
+							}
+						});
 					return jqXHR;
 				};
 			this._beforeSend(e, options);
@@ -1310,7 +1310,7 @@
 				data = {
 					fileInput: $(e.target),
 					form: $(e.target.form)
-			};
+				};
 			this._getFileInputFiles(data.fileInput).always(function (files) {
 				data.files = files;
 				if (that.options.replaceFileInput) {
@@ -1318,10 +1318,10 @@
 				}
 
 				if (that._trigger(
-					'change',
-					$.Event('change', {delegatedEvent: e}),
-					data
-				) !== false) {
+						'change',
+						$.Event('change', {delegatedEvent: e}),
+						data
+					) !== false) {
 					that._onAdd(e, data);
 				}
 			});
@@ -1339,10 +1339,10 @@
 					}
 				});
 				if (this._trigger(
-					'paste',
-					$.Event('paste', {delegatedEvent: e}),
-					data
-				) !== false) {
+						'paste',
+						$.Event('paste', {delegatedEvent: e}),
+						data
+					) !== false) {
 					this._onAdd(e, data);
 				}
 			}
@@ -1358,10 +1358,10 @@
 				this._getDroppedFiles(dataTransfer).always(function (files) {
 					data.files = files;
 					if (that._trigger(
-						'drop',
-						$.Event('drop', {delegatedEvent: e}),
-						data
-					) !== false) {
+							'drop',
+							$.Event('drop', {delegatedEvent: e}),
+							data
+						) !== false) {
 						that._onAdd(e, data);
 					}
 				});
@@ -1419,7 +1419,7 @@
 			var options = this.options;
 			if (options.fileInput === undefined) {
 				options.fileInput = this.element.is('input[type="file"]') ?
-						this.element : this.element.find('input[type="file"]');
+					this.element : this.element.find('input[type="file"]');
 			}
 			else if (!(options.fileInput instanceof $)) {
 				options.fileInput = $(options.fileInput);

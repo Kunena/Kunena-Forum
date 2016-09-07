@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum
+ * @package       Kunena.Framework
+ * @subpackage    Forum
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -86,7 +86,7 @@ abstract class KunenaForumDiagnostics
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
-			$query = self::$queryFunction();
+			$query          = self::$queryFunction();
 			$fieldsFunction = 'fields_' . $function;
 
 			if (!method_exists(__CLASS__, $fieldsFunction))
@@ -116,7 +116,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();
@@ -154,7 +154,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();
@@ -654,6 +654,7 @@ abstract class KunenaForumDiagnostics
 
 		return $query;
 	}
+
 	/**
 	 * @return KunenaDatabaseQuery
 	 */

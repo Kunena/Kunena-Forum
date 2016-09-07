@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  HTML
+ * @package         Kunena.Framework
+ * @subpackage      HTML
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -40,8 +40,8 @@ abstract class KunenaHtmlParser
 		$smilies = $db->loadObjectList();
 		KunenaError::checkDatabaseError();
 
-		$smileyArray = array ();
-		$template = KunenaFactory::getTemplate();
+		$smileyArray = array();
+		$template    = KunenaFactory::getTemplate();
 
 		foreach ($smilies as $smiley)
 		{
@@ -60,7 +60,7 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param     $txt
+	 * @param       $txt
 	 * @param   int $len
 	 *
 	 * @return mixed|string|void
@@ -85,9 +85,9 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param        $txt
-	 * @param   null $parent
-	 * @param   int  $len
+	 * @param          $txt
+	 * @param   null   $parent
+	 * @param   int    $len
 	 *
 	 * @param   string $context
 	 *
@@ -102,7 +102,7 @@ abstract class KunenaHtmlParser
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$bbcode = KunenaBbcode::getInstance(self::$relative);
+		$bbcode         = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->context = $context;
@@ -138,13 +138,13 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param      $txt
+	 * @param        $txt
 	 * @param   int  $len
 	 * @param   bool $html
 	 *
 	 * @return string|void
 	 */
-	public static function stripBBCode($txt, $len=0, $html = true)
+	public static function stripBBCode($txt, $len = 0, $html = true)
 	{
 		if (!$txt)
 		{
@@ -168,20 +168,20 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param        $content
+	 * @param          $content
 	 * @param   string $target
 	 *
 	 * @return mixed
 	 */
-	public static function &prepareContent(&$content, $target='body')
+	public static function &prepareContent(&$content, $target = 'body')
 	{
-		$config			= KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-		$events			= (int) $config->get('jcontentevents', false);
-		$event_target	= (array) $config->get('jcontentevent_target', array('body'));
+		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events       = (int) $config->get('jcontentevents', false);
+		$event_target = (array) $config->get('jcontentevent_target', array('body'));
 
 		if ($events && in_array($target, $event_target))
 		{
-			$row = new stdClass;
+			$row       = new stdClass;
 			$row->text =& $content;
 
 			// Run events
@@ -190,7 +190,7 @@ abstract class KunenaHtmlParser
 
 			$dispatcher = JEventDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
 			$content = $row->text;
 		}
 

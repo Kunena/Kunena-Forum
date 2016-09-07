@@ -1,23 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Category.User
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Category.User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryUser
  *
- * @property int $user_id
- * @property int $category_id
- * @property int $role
+ * @property int    $user_id
+ * @property int    $category_id
+ * @property int    $role
  * @property string $allreadtime
- * @property int $subscribed
+ * @property int    $subscribed
  * @property string $params
  *
  */
@@ -28,7 +28,7 @@ class KunenaForumCategoryUser extends JObject
 	protected $_db = null;
 
 	/**
-	 * @param   int  $category
+	 * @param   int   $category
 	 * @param   mixed $user
 	 *
 	 * @internal
@@ -43,15 +43,15 @@ class KunenaForumCategoryUser extends JObject
 
 		// Lets bind the data
 		$this->setProperties($table->getProperties());
-		$this->_exists = false;
+		$this->_exists     = false;
 		$this->category_id = $category;
-		$this->user_id = KunenaUserHelper::get($user)->userid;
+		$this->user_id     = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
 	 * @param   null|int $id
-	 * @param   mixed $user
-	 * @param   bool $reload
+	 * @param   mixed    $user
+	 * @param   bool     $reload
 	 *
 	 * @return KunenaForumCategoryUser
 	 */
@@ -69,7 +69,7 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param   null|bool $exists		True/false will change the state of the object.
+	 * @param   null|bool $exists True/false will change the state of the object.
 	 *
 	 * @return boolean
 	 */
@@ -92,10 +92,10 @@ class KunenaForumCategoryUser extends JObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @param   string $type		The categories table name to be used
-	 * @param   string $prefix	The categories table prefix to be used
+	 * @param   string $type   The categories table name to be used
+	 * @param   string $prefix The categories table prefix to be used
 	 *
-	 * @return JTable|TableKunenaUserCategories		The categories table object
+	 * @return JTable|TableKunenaUserCategories        The categories table object
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
 	{
@@ -104,7 +104,7 @@ class KunenaForumCategoryUser extends JObject
 		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
-			$tabletype ['name'] = $type;
+			$tabletype ['name']   = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
 
@@ -125,8 +125,8 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to load a KunenaForumCategoryUser object by id.
 	 *
-	 * @param   null|int	$category_id		The category id to be loaded.
-	 * @param   mixed		$user				The user to be loaded.
+	 * @param   null|int $category_id The category id to be loaded.
+	 * @param   mixed    $user        The user to be loaded.
 	 *
 	 * @return boolean
 	 */
@@ -159,9 +159,9 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to save the KunenaForumCategoryUser object to the database.
 	 *
-	 * @param   bool $updateOnly	Save the object only if not a new category.
+	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
-	 * @return bool	True on success
+	 * @return bool    True on success
 	 */
 	public function save($updateOnly = false)
 	{
@@ -171,7 +171,7 @@ class KunenaForumCategoryUser extends JObject
 		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (! $table->check())
+		if (!$table->check())
 		{
 			$this->setError($table->getError());
 
@@ -179,7 +179,7 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		// Are we creating a new category
-		$isnew = ! $this->_exists;
+		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new category return
 		if ($isnew && $updateOnly)
@@ -188,7 +188,7 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		// Store the category data in the database
-		if (! $result = $table->store())
+		if (!$result = $table->store())
 		{
 			$this->setError($table->getError());
 		}
@@ -205,7 +205,7 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
-	 * @return bool	True on success
+	 * @return bool    True on success
 	 */
 	public function delete()
 	{
@@ -219,7 +219,7 @@ class KunenaForumCategoryUser extends JObject
 
 		$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
 
-		if (! $result)
+		if (!$result)
 		{
 			$this->setError($table->getError());
 		}

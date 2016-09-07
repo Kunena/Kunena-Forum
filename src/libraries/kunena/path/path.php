@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Path
+ * @package       Kunena.Framework
+ * @subpackage    Path
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -58,7 +58,7 @@ class KunenaPath extends JPath
 	/**
 	 * Method to determine if script owns the path.
 	 *
-	 * @param   string  $path  Path to check ownership.
+	 * @param   string $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
 	 */
@@ -94,6 +94,7 @@ class KunenaPath extends JPath
 	 * Checks if path is writeable either by the server or by FTP.
 	 *
 	 * @param $path
+	 *
 	 * @return boolean
 	 */
 	public static function isWritable($path)

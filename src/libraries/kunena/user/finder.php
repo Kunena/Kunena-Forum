@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  User
+ * @package         Kunena.Framework
+ * @subpackage      User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -27,7 +27,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		parent::__construct();
 
 		$this->config = KunenaConfig::getInstance();
-		$this->limit = $this->config->userlist_rows;
+		$this->limit  = $this->config->userlist_rows;
 
 		$this->query->leftJoin('#__kunena_users AS ku ON ku.userid=a.id');
 	}
@@ -35,9 +35,9 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on registration or last visit date.
 	 *
-	 * @param   JDate $starting  Starting date or null if older than ending date.
-	 * @param   JDate $ending    Ending date or null if newer than starting date.
-	 * @param   bool  $register  True = registration date, False = last visit date.
+	 * @param   JDate $starting Starting date or null if older than ending date.
+	 * @param   JDate $ending   Ending date or null if newer than starting date.
+	 * @param   bool  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 */

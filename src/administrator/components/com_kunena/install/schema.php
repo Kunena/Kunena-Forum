@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -293,7 +293,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param      $prefix
+	 * @param        $prefix
 	 * @param   bool $reload
 	 *
 	 * @return mixed
@@ -341,7 +341,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param      $filename
+	 * @param        $filename
 	 * @param   bool $reload
 	 *
 	 * @return mixed
@@ -751,7 +751,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param      $schema
+	 * @param        $schema
 	 * @param   bool $drop
 	 *
 	 * @return array
@@ -841,7 +841,7 @@ class KunenaModelSchema extends JModelLegacy
 							case '':
 								break;
 							default:
-								echo ("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
 						}
 					}
 
@@ -886,7 +886,7 @@ class KunenaModelSchema extends JModelLegacy
 					}
 					break;
 				default:
-					echo ("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}
 
 			if (!empty($str))
@@ -899,7 +899,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param        $field
+	 * @param          $field
 	 * @param   string $after
 	 *
 	 * @return string
@@ -979,8 +979,8 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param        $dbschema
-	 * @param        $node
+	 * @param          $dbschema
+	 * @param          $node
 	 * @param   string $table
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
@@ -1041,9 +1041,9 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param        $schema
-	 * @param        $type
-	 * @param        $table
+	 * @param          $schema
+	 * @param          $type
+	 * @param          $table
 	 * @param   string $field
 	 *
 	 * @return null
@@ -1085,8 +1085,8 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param        $dbschema
-	 * @param        $node
+	 * @param          $dbschema
+	 * @param          $node
 	 * @param   string $table
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')

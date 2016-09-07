@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -85,21 +85,21 @@ class KunenaModelInstall extends JModelLegacy
 		// TODO: move to migration
 		$this->_fbVersions = array(
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23',
-				'table' => 'fb_sessions', 'column' => 'currvisit'),
+			      'table'     => 'fb_sessions', 'column' => 'currvisit'),
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04',
-				'table' => 'fb_categories', 'column' => 'headerdesc'),
+			      'table'     => 'fb_categories', 'column' => 'headerdesc'),
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03',
-				'table' => 'fb_users', 'column' => 'rank'),
+			      'table'     => 'fb_users', 'column' => 'rank'),
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20',
-				'table' => 'fb_users', 'column' => 'uhits'),
+			      'table'     => 'fb_users', 'column' => 'uhits'),
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15',
-				'table' => 'fb_messages'),
+			      'table'     => 'fb_messages'),
 			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		// TODO: move to migration
 		$this->_sbVersions = array(
 			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '0000-00-00',
-				'table' => 'sb_messages'),
+			      'table'     => 'sb_messages'),
 			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		$this->steps = array(
@@ -192,8 +192,8 @@ class KunenaModelInstall extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param     string    $property   Optional parameter name.
-	 * @param     mixed     $default    The default value to use if no state property exists by name.
+	 * @param     string $property Optional parameter name.
+	 * @param     mixed  $default  The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
 	 *
@@ -443,8 +443,8 @@ class KunenaModelInstall extends JModelLegacy
 
 	// TODO: move to migration (exists in 2.0)
 	/**
-	 * @param        $tag
-	 * @param   string    $name
+	 * @param          $tag
+	 * @param   string $name
 	 *
 	 * @return bool
 	 */
@@ -1081,10 +1081,10 @@ class KunenaModelInstall extends JModelLegacy
 		{
 			JFile::delete(KPATH_ADMIN . '/install.php');
 		}
-		
+
 		// Set Crypsis as default template when do update
 		$config = KunenaFactory::getConfig();
-		
+
 		if ($config->template == 'blue_eagle')
 		{
 			$config->template = 'crypsis';
@@ -1405,7 +1405,8 @@ class KunenaModelInstall extends JModelLegacy
 					{
 						$success = true;
 					}
-				} catch (Exception $e)
+				}
+				catch (Exception $e)
 				{
 					$success = false;
 				}

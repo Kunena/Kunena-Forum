@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Activity
+ * @package       Kunena.Framework
+ * @subpackage    Activity
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -96,8 +96,8 @@ class KunenaActivity
 	/**
 	 * Triggered after (un)subscribing a topic.
 	 *
-	 * @param   int  $topicid  Topic Id.
-	 * @param   int  $action   1 = subscribe, 0 = unsuscribe.
+	 * @param   int $topicid Topic Id.
+	 * @param   int $action  1 = subscribe, 0 = unsuscribe.
 	 */
 	public function onAfterSubscribe($topicid, $action)
 	{
@@ -106,8 +106,8 @@ class KunenaActivity
 	/**
 	 * Triggered after (un)favoriting a topic.
 	 *
-	 * @param   int  $topicid  Topic Id.
-	 * @param   int  $action   1 = favorite, 0 = unfavorite.
+	 * @param   int $topicid Topic Id.
+	 * @param   int $action  1 = favorite, 0 = unfavorite.
 	 */
 	public function onAfterFavorite($topicid, $action)
 	{
@@ -116,8 +116,8 @@ class KunenaActivity
 	/**
 	 * Triggered after (un)stickying a topic.
 	 *
-	 * @param   int  $topicid  Topic Id.
-	 * @param   int  $action   1 = sticky, 0 = unsticky.
+	 * @param   int $topicid Topic Id.
+	 * @param   int $action  1 = sticky, 0 = unsticky.
 	 */
 	public function onAfterSticky($topicid, $action)
 	{
@@ -126,8 +126,8 @@ class KunenaActivity
 	/**
 	 * Triggered after (un)locking a topic.
 	 *
-	 * @param   int  $topicid  Topic Id.
-	 * @param   int  $action   1 = lock, 0 = unlock.
+	 * @param   int $topicid Topic Id.
+	 * @param   int $action  1 = lock, 0 = unlock.
 	 */
 	public function onAfterLock($topicid, $action)
 	{
@@ -136,9 +136,9 @@ class KunenaActivity
 	/**
 	 * Triggered after giving thankyou to a message.
 	 *
-	 * @param   int  $actor    Actor user Id (usually current user).
-	 * @param   int  $target   Target user Id.
-	 * @param   int  $message  Message Id.
+	 * @param   int $actor   Actor user Id (usually current user).
+	 * @param   int $target  Target user Id.
+	 * @param   int $message Message Id.
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -147,9 +147,9 @@ class KunenaActivity
 	/**
 	 * Triggered after removing thankyou from a message.
 	 *
-	 * @param   int  $actor    Actor user Id (usually current user).
-	 * @param   int  $target   Target user Id.
-	 * @param   int  $message  Message Id.
+	 * @param   int $actor   Actor user Id (usually current user).
+	 * @param   int $target  Target user Id.
+	 * @param   int $message Message Id.
 	 */
 	public function onAfterUnThankyou($actor, $target, $message)
 	{
@@ -158,9 +158,9 @@ class KunenaActivity
 	/**
 	 * Triggered after changing user karma.
 	 *
-	 * @param   int  $target  Target user Id.
-	 * @param   int  $actor   Actor user Id (usually current user).
-	 * @param   int  $delta   Points added / removed.
+	 * @param   int $target Target user Id.
+	 * @param   int $actor  Actor user Id (usually current user).
+	 * @param   int $delta  Points added / removed.
 	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{
@@ -180,7 +180,7 @@ class KunenaActivity
 	/**
 	 * Get user points.
 	 *
-	 * @param   int  $userid
+	 * @param   int $userid
 	 *
 	 * @return  integer|void  Number of points.
 	 */

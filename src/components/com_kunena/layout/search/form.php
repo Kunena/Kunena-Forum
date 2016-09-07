@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Layout.Search
+ * @package         Kunena.Site
+ * @subpackage      Layout.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -23,7 +23,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * Method to display the list to choose between posts or titles
 	 *
 	 * @param   int    $id         Id of the HTML select list
-	 * @param   string  $attributes  Extras attributes to apply to the list
+	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */

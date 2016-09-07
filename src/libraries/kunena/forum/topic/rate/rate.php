@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Framework
- * @subpackage  Forum.Topic
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -103,9 +103,9 @@ class KunenaForumTopicRate extends JObject
 			$this->_add($user->userid, $user->time);
 		}
 
-			// }
+		// }
 
-			// Return $this->users;
+		// Return $this->users;
 	}
 
 	/**
@@ -178,7 +178,7 @@ class KunenaForumTopicRate extends JObject
 	 */
 	public function getTopicUserRate()
 	{
-		$me  = KunenaFactory::getUser();
+		$me = KunenaFactory::getUser();
 
 		if ($this->userid == $me->userid)
 		{
@@ -191,8 +191,8 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * Method to get the rate table object.
 	 *
-	 * @param   string $type		Polls table name to be used.
-	 * @param   string $prefix	Polls table prefix to be used.
+	 * @param   string $type   Polls table name to be used.
+	 * @param   string $prefix Polls table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaRate
 	 */
@@ -203,7 +203,7 @@ class KunenaForumTopicRate extends JObject
 		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
-			$tabletype ['name'] = $type;
+			$tabletype ['name']   = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
 
@@ -214,7 +214,7 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * Method to load a KunenaForumTopicPoll object by id.
 	 *
-	 * @param   int $id	The poll id to be loaded.
+	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
 	 */

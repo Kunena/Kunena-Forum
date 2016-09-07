@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Announcement
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,7 +21,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 <div class="well well-small">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
 	      name="editform" class="form-horizontal" id="editform">
-		<input type="hidden" name="task" value="save" />
+		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo JHtml::_('form.token'); ?>
 

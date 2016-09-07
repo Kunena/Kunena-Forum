@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package    Kunena.Plugins
- * @subpackag   AltaUserPoints
+ * @package        Kunena.Plugins
+ * @subpackag      AltaUserPoints
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 jimport('joomla.utilities.string');
@@ -40,7 +40,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param        $plugin_function
+	 * @param          $plugin_function
 	 * @param   string $spc
 	 *
 	 * @return mixed

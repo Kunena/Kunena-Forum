@@ -175,7 +175,7 @@
 								data.img = img;
 							}
 
-								dfd.resolveWith(that, [data]);
+							dfd.resolveWith(that, [data]);
 						},
 						options
 					)) {

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Application
+ * @package         Kunena.Site
+ * @subpackage      Controller.Application
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -64,7 +64,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 						$default = clone $home;
 					}
 
-					$default->query['view'] = 'category';
+					$default->query['view']   = 'category';
 					$default->query['layout'] = 'list';
 				}
 			}
@@ -110,9 +110,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Get default menu item to be shown up.
 	 *
-	 * @param   JMenuSite  $menu     Joomla menu.
-	 * @param   object     $active   Active menu item.
-	 * @param   array      $visited  Already visited menu items.
+	 * @param   JMenuSite $menu    Joomla menu.
+	 * @param   object    $active  Active menu item.
+	 * @param   array     $visited Already visited menu items.
 	 *
 	 * @return object|null
 	 */
@@ -151,7 +151,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there.
 			$visited[$item->id] = 1;
-			$item = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
+			$item               = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
 		}
 
 		return $item;

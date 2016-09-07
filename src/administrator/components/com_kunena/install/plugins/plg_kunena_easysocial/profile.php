@@ -45,7 +45,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
+	 * @param          $userid
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
@@ -156,7 +156,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
+	 * @param        $userid
 	 * @param   bool $xhtml
 	 *
 	 * @return mixed

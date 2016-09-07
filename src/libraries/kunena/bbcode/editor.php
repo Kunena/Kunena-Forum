@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage BBCode
+ * @package       Kunena.Framework
+ * @subpackage    BBCode
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,19 +28,20 @@ class KunenaBbcodeEditor
 	 */
 	function __construct($config = array())
 	{
-		$this->config = $config;
+		$this->config   = $config;
 		$this->template = KunenaFactory::getTemplate();
 	}
 
 	/**
 	 * @param   array $config
+	 *
 	 * @return KunenaBbcodeEditor
 	 */
 	public static function getInstance($config = array())
 	{
 		static $instance = false;
 
-		if (! $instance)
+		if (!$instance)
 		{
 			$instance = new KunenaBbcodeEditor($config);
 		}
@@ -51,9 +52,10 @@ class KunenaBbcodeEditor
 	/**
 	 * Inserts a button or another element at the specified location. See insertElements for details.
 	 *
-	 * @param $element
+	 * @param        $element
 	 * @param   null $pos
-	 * @param $where
+	 * @param        $where
+	 *
 	 * @return boolean
 	 */
 	public function insertElement($element, $pos = null, $where = null)
@@ -70,9 +72,10 @@ class KunenaBbcodeEditor
 	 * inserted after/before the element named $where. If NULL is specified then it is inserted after
 	 * all other elements.
 	 *
-	 * @param $elements
+	 * @param        $elements
 	 * @param   null $pos
-	 * @param $where
+	 * @param        $where
+	 *
 	 * @return boolean
 	 */
 	public function insertElements($elements, $pos = null, $where = null)
@@ -91,7 +94,7 @@ class KunenaBbcodeEditor
 
 		$new_elements_values = array_values($elements);
 
-		$editor_keys = array_keys($this->editor_elements);
+		$editor_keys   = array_keys($this->editor_elements);
 		$editor_values = array_values($this->editor_elements);
 
 		switch ($pos)
@@ -125,8 +128,8 @@ class KunenaBbcodeEditor
 	/**
 	 * Parses an XML description of the buttons into the internal object representation.
 	 *
-	 * @param   SimpleXMLElement  $xml          The XML object to parse
-	 * @param   string            $parseMethod  The parse method name to call
+	 * @param   SimpleXMLElement $xml         The XML object to parse
+	 * @param   string           $parseMethod The parse method name to call
 	 *
 	 * @return array
 	 */
@@ -139,7 +142,7 @@ class KunenaBbcodeEditor
 			if ($xml_item['config'])
 			{
 				$cfgVariable = (string) $xml_item['config'];
-				$cfgValue = intval($cfgVariable[0] != '!');
+				$cfgValue    = intval($cfgVariable[0] != '!');
 
 				if (!$cfgValue)
 				{
@@ -240,6 +243,7 @@ abstract class KunenaBbcodeEditorElement
 	 *
 	 * @static
 	 * @abstract
+	 *
 	 * @param $xml
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
@@ -278,15 +282,16 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	{
 		parent::__construct($name);
 
-		$this->tag = $tag;
+		$this->tag   = $tag;
 		$this->title = $title;
-		$this->alt = $alt;
+		$this->alt   = $alt;
 		$this->class = $class;
 	}
 
 	/**
 	 *
 	 * @param   SimpleXMLElement $xml
+	 *
 	 * @return KunenaBbcodeEditorButton
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
@@ -295,9 +300,9 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 		foreach ($xml as $xml_item)
 		{
-			$item = array();
+			$item         = array();
 			$item['type'] = $xml_item->getName();
-			$item['tag'] = (string) $xml_item['tag'];
+			$item['tag']  = (string) $xml_item['tag'];
 
 			if ($xml_item['disabled'] == 'disabled')
 			{
@@ -307,7 +312,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 			if ($xml_item['config'])
 			{
 				$cfgVariable = (string) $xml_item['config'];
-				$cfgValue = intval($cfgVariable[0] != '!');
+				$cfgValue    = intval($cfgVariable[0] != '!');
 
 				if (!$cfgValue)
 				{
@@ -324,31 +329,31 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 			{
 				case 'wrap-selection':
 					$item['empty_before'] = (string) $xml_item['empty_before'];
-					$item['empty_after'] = (string) $xml_item['empty_after'];
-					$item['repeat'] = (string) $xml_item['repeat'];
-					$item['start'] = (string) $xml_item['start'];
-					$item['end'] = (string) $xml_item['end'];
-					$item['before'] = (string) $xml_item['before'];
-					$item['after'] = (string) $xml_item['after'];
-					$item['class'] = (string) $xml_item['class'];
-					$item['key'] = (string) $xml_item['key'];
-					$item['name'] = (string) $xml_item['name'];
+					$item['empty_after']  = (string) $xml_item['empty_after'];
+					$item['repeat']       = (string) $xml_item['repeat'];
+					$item['start']        = (string) $xml_item['start'];
+					$item['end']          = (string) $xml_item['end'];
+					$item['before']       = (string) $xml_item['before'];
+					$item['after']        = (string) $xml_item['after'];
+					$item['class']        = (string) $xml_item['class'];
+					$item['key']          = (string) $xml_item['key'];
+					$item['name']         = (string) $xml_item['name'];
 
 					break;
 				case 'dropdown':
-					$item['start'] = (string) $xml_item['start'];
-					$item['end'] = (string) $xml_item['end'];
+					$item['start']     = (string) $xml_item['start'];
+					$item['end']       = (string) $xml_item['end'];
 					$item['selection'] = (string) $xml_item['selection'];
-					$item['class'] = (string) $xml_item['class'];
-					$item['key'] = (string) $xml_item['key'];
-					$item['name'] = (string) $xml_item['name'];
+					$item['class']     = (string) $xml_item['class'];
+					$item['key']       = (string) $xml_item['key'];
+					$item['name']      = (string) $xml_item['name'];
 					break;
 				case 'modal':
-					$item['key'] = (string) $xml_item['key'];
+					$item['key']   = (string) $xml_item['key'];
 					$item['start'] = (string) $xml_item['start'];
-					$item['end'] = (string) $xml_item['end'];
+					$item['end']   = (string) $xml_item['end'];
 					$item['class'] = (string) $xml_item['class'];
-					$item['name'] = (string) $xml_item['name'];
+					$item['name']  = (string) $xml_item['name'];
 					break;
 				case 'link':
 					$item['url'] = (string) $xml_item['url'];
@@ -518,16 +523,16 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Add a new display action. This can be used to show a button specific action area.
 	 *
-	 * @param $selection
-	 * @param $class
+	 * @param        $selection
+	 * @param        $class
 	 * @param   null $tag
 	 */
 	function addDisplayAction($selection, $class, $tag = null)
 	{
-		$item['type'] = 'display';
+		$item['type']      = 'display';
 		$item['selection'] = $selection;
-		$item['class'] = $class;
-		$item['tag'] = $tag;
+		$item['class']     = $class;
+		$item['tag']       = $tag;
 
 		$this->actions[] = $item;
 	}
@@ -546,24 +551,24 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 */
 	function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
 	{
-		$item['type'] = 'wrap-selection';
+		$item['type']   = 'wrap-selection';
 		$item['repeat'] = $repeat;
 
 		if ($repeat)
 		{
 			$item['empty_before'] = $empty_before;
-			$item['empty_after'] = $empty_after;
-			$item['start'] = $start;
-			$item['end'] = $end;
-			$item['before'] = $before;
-			$item['after'] = $after;
+			$item['empty_after']  = $empty_after;
+			$item['start']        = $start;
+			$item['end']          = $end;
+			$item['before']       = $before;
+			$item['after']        = $after;
 		}
 
 		$item['start'] = $start;
-		$item['end'] = $end;
-		$item['name'] = $this->class;
+		$item['end']   = $end;
+		$item['name']  = $this->class;
 		$item['class'] = $this->class;
-		$item['tag'] = $tag;
+		$item['tag']   = $tag;
 
 		$this->actions[] = $item;
 	}
@@ -575,8 +580,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 */
 	function addUrlAction($url)
 	{
-		$item['type'] = 'url';
-		$item['url'] = $url;
+		$item['type']    = 'url';
+		$item['url']     = $url;
 		$this->actions[] = $item;
 	}
 }
@@ -602,6 +607,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * Parse XML for separator editor part
 	 *
 	 * @param   SimpleXMLElement $xml
+	 *
 	 * @return KunenaBbcodeEditorSeparator
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)

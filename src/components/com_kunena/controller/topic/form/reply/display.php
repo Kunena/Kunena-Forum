@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -34,13 +34,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		parent::before();
 
 		$catid = $this->input->getInt('catid');
-		$id = $this->input->getInt('id');
+		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 		$quote = $this->input->getBool('quote', false);
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		if ($this->config->read_only)
@@ -51,11 +51,11 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		if (!$mesid)
 		{
 			$this->topic = KunenaForumTopicHelper::get($id);
-			$parent = KunenaForumMessageHelper::get($this->topic->first_post_id);
+			$parent      = KunenaForumMessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent = KunenaForumMessageHelper::get($mesid);
+			$parent      = KunenaForumMessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -69,7 +69,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = $this->topic->getUrl();
+						$canonicalUrl               = $this->topic->getUrl();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;
@@ -95,10 +95,10 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
-					$dispatcher = JEventDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
-					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-					. $captcha_pubkey . '" data-theme="light"'));
+					$dispatcher           = JEventDispatcher::getInstance();
+					$result               = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+					$output               = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
+						. $captcha_pubkey . '" data-theme="light"'));
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
@@ -120,7 +120,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		// Can user edit topic icons?
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
@@ -133,12 +133,12 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
+		$this->headerText   = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
 	}
 
 	/**
@@ -148,8 +148,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
 		$doc = JFactory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');

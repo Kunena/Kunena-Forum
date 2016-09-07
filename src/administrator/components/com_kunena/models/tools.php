@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Models
+ * @package         Kunena.Administrator
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -220,7 +220,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (extension_loaded('gd'))
 		{
-			$gd_info    = gd_info();
+			$gd_info          = gd_info();
 			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
 		}
 		else
@@ -234,7 +234,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
 		// Get Kunena default template
-		$ktemplate        = KunenaFactory::getTemplate();
+		$ktemplate              = KunenaFactory::getTemplate();
 		$this->ktemplatedetails = $ktemplate->getTemplateDetails();
 
 		$this->jtemplatedetails = $this->_getJoomlaTemplate();
@@ -299,7 +299,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$thirdparty              = array();
 		$thirdparty['aup']       = $this->getExtensionVersion('com_alphauserpoints', 'AlphaUserPoints');
-		$thirdparty['alup']       = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
+		$thirdparty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
 		$thirdparty['uddeim']    = $this->getExtensionVersion('com_uddeim', 'UddeIM');
@@ -664,7 +664,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param   $path  $path    Path to extension directory
+	 * @param   $path $path    Path to extension directory
 	 *
 	 * @return  string  Version number
 	 */

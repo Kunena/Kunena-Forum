@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -31,15 +31,15 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		parent::before();
 
 		$this->catid = $this->input->getInt('catid');
-		$mesid = $this->input->getInt('mesid');
-		$saved = $this->app->getUserState('com_kunena.postfields');
+		$mesid       = $this->input->getInt('mesid');
+		$saved       = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
-		$this->message = KunenaForumMessageHelper::get($mesid);
+		$this->message  = KunenaForumMessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
-		$this->topic = $this->message->getTopic();
+		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -65,7 +65,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = $this->topic->getUrl();
+						$canonicalUrl               = $this->topic->getUrl();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;
@@ -83,7 +83,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		$this->action = 'edit';
 
@@ -106,9 +106,9 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			$this->message->edit($saved);
 		}
 
-		$this->post_anonymous = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
+		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
-		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
+		$this->modified_reason      = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
@@ -123,8 +123,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
 		$doc = JFactory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');

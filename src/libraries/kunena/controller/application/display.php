@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Controller
+ * @package       Kunena.Framework
+ * @subpackage    Controller
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -52,7 +52,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			return false;
 		}
 
-		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
+		$name       = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
 		$this->page = KunenaLayoutPage::factory($name);
 
 		return (bool) $this->page->getPath();
@@ -119,7 +119,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			try
 			{
 				// Split into two lines for exception handling.
-				$content = $this->display()->set('breadcrumb', $this->breadcrumb);
+				$content       = $this->display()->set('breadcrumb', $this->breadcrumb);
 				$this->content = $content->render();
 			}
 			catch (KunenaExceptionAuthorise $e)
@@ -135,13 +135,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			{
 				if (!($e instanceof KunenaExceptionAuthorise))
 				{
-					$header = 'Error while rendering layout';
+					$header  = 'Error while rendering layout';
 					$content = isset($content) ? $content->renderError($e) : $this->content->renderError($e);
-					$e = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+					$e       = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
 				}
 				else
 				{
-					$header = $e->getResponseStatus();
+					$header  = $e->getResponseStatus();
 					$content = $e->getMessage();
 				}
 
@@ -187,8 +187,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = JFactory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
@@ -220,9 +220,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			if (!$banned->isLifetime())
 			{
 				$this->app->enqueueMessage(
-     JText::sprintf(
-	 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-	KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
+					JText::sprintf(
+						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
 			}
 			else
 			{
@@ -302,15 +302,16 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$templateText = (string) $this->template->params->get('templatebyText');
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
-		$credits = '<div style="text-align:center">';
+		$credits      = '<div style="text-align:center">';
 		$credits .= JHtml::_(
-	'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
+			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
-	array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
+			array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
 		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
-		if (trim($templateText)) {
+		if (trim($templateText))
+		{
 			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}

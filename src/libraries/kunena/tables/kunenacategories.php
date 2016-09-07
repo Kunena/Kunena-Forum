@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -139,7 +139,7 @@ class TableKunenaCategories extends KunenaTable
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
 		if ($id !== null)
@@ -242,7 +242,7 @@ class TableKunenaCategories extends KunenaTable
 				return;
 			}
 
-			$recurse = array ();
+			$recurse = array();
 
 			while ($id)
 			{
@@ -279,11 +279,11 @@ class TableKunenaCategories extends KunenaTable
 	 *
 	 * @return boolean|mixed
 	 */
-	public function reorder($where='')
+	public function reorder($where = '')
 	{
 		if (!$where)
 		{
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
 			$db->setQuery($query);
 			$parents = $db->loadColumn();

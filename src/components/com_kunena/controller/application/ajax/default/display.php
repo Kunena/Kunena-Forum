@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Application
+ * @package         Kunena.Site
+ * @subpackage      Controller.Application
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -37,7 +37,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 */
 	public function execute()
 	{
-		$format = $this->input->getWord('format', 'html');
+		$format   = $this->input->getWord('format', 'html');
 		$function = 'display' . ucfirst($format);
 
 		if (!method_exists($this, $function))
@@ -99,8 +99,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = JFactory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
@@ -109,7 +109,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as RAW.
 	 *
-	 * @param   mixed  $content  Content to be returned.
+	 * @param   mixed $content Content to be returned.
 	 *
 	 * @return  string
 	 */
@@ -128,7 +128,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as JSON.
 	 *
-	 * @param   mixed  $content  Content to be returned.
+	 * @param   mixed $content Content to be returned.
 	 *
 	 * @return  string
 	 */

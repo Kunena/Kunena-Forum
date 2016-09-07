@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,7 +23,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 *
@@ -60,9 +60,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 	/**
 	 * Getmodel
 	 *
-	 * @param   string  $name    name
-	 * @param   string  $prefix  prefix
-	 * @param   array   $config  config
+	 * @param   string $name   name
+	 * @param   string $prefix prefix
+	 * @param   array  $config config
 	 *
 	 * @return object
 	 *
@@ -154,7 +154,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
-		$inc = ($this->getTask() == 'orderup') ? -1 : + 1;
+		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
 		$model  = $this->getModel();
 		$return = $model->reorder($ids, $inc);

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Layout.Category.Index
+ * @package         Kunena.Site
+ * @subpackage      Layout.Category.Index
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -43,7 +43,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryIcon($category)
 	{
-		$template = KunenaFactory::getTemplate();
+		$template     = KunenaFactory::getTemplate();
 		$catimagepath = $template->params->get('DefaultCategoryicon');
 
 		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
@@ -82,7 +82,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->ktemplate     = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
 
 		if ($subcategory->getNewCount())
@@ -135,7 +135,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int       $catid The Id of category
+	 * @param   int         $catid The Id of category
 	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return null|string

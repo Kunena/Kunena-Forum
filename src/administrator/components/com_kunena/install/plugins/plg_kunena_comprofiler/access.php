@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -164,7 +164,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @return array
 	 */
-	public function getAuthoriseActions( KunenaForumCategory $category, $userid )
+	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$actions = array();
 		$params  = array('category' => $category, 'userid' => $userid, 'actions' => &$actions);

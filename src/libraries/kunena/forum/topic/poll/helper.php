@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic.Poll
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,7 +20,7 @@ abstract class KunenaForumTopicPollHelper
 	/**
 	 * Returns KunenaForumTopic object.
 	 *
-	 * @param   int  $identifier	The poll to load - Can be only an integer.
+	 * @param   int  $identifier The poll to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopicPoll
@@ -52,7 +52,7 @@ abstract class KunenaForumTopicPollHelper
 	 */
 	static public function recount()
 	{
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query
 			->update('#__kunena_topics AS a')

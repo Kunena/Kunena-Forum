@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Template
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -36,13 +36,13 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * @var array
 	 */
 	protected $pathTypes = array(
-		'emoticons' => 'media/emoticons',
-		'ranks' => 'media/ranks',
-		'icons' => 'media/icons',
+		'emoticons'     => 'media/emoticons',
+		'ranks'         => 'media/ranks',
+		'icons'         => 'media/icons',
 		'categoryicons' => 'media/category_icons',
-		'images' => 'media/images',
-		'js' => 'media/js',
-		'css' => 'media/css'
+		'images'        => 'media/images',
+		'js'            => 'media/js',
+		'css'           => 'media/css'
 	);
 
 	/**
@@ -52,13 +52,13 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 */
 	protected $userClasses = array(
 		'kwho-',
-		'admin' => 'kwho-admin',
+		'admin'     => 'kwho-admin',
 		'globalmod' => 'kwho-globalmoderator',
 		'moderator' => 'kwho-moderator',
-		'user' => 'kwho-user',
-		'guest' => 'kwho-guest',
-		'banned' => 'kwho-banned',
-		'blocked' => 'kwho-blocked'
+		'user'      => 'kwho-user',
+		'guest'     => 'kwho-guest',
+		'banned'    => 'kwho-banned',
+		'blocked'   => 'kwho-blocked'
 	);
 
 	/**
@@ -113,8 +113,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc = JFactory::getDocument();
+		$fontawesome     = $this->ktemplate->params->get('fontawesome');
+		$doc             = JFactory::getDocument();
 
 		if ($fontawesome)
 		{
@@ -129,7 +129,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		// Load template colors settings
-		$styles = <<<EOF
+		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
 		$iconcolor = $this->ktemplate->params->get('IconColor');
@@ -164,7 +164,7 @@ EOF;
 	}
 
 	/**
-	 * @param        $filename
+	 * @param          $filename
 	 * @param   string $group
 	 *
 	 * @return JDocument
@@ -177,10 +177,10 @@ EOF;
 	}
 
 	/**
-	 * @param      $link
-	 * @param      $name
-	 * @param      $scope
-	 * @param      $type
+	 * @param        $link
+	 * @param        $name
+	 * @param        $scope
+	 * @param        $type
 	 * @param   null $id
 	 *
 	 * @return string
@@ -226,7 +226,7 @@ HTML;
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $title
 	 *
 	 * @return string
@@ -237,7 +237,7 @@ HTML;
 	}
 
 	/**
-	 * @param        $image
+	 * @param          $image
 	 * @param   string $alt
 	 *
 	 * @return string

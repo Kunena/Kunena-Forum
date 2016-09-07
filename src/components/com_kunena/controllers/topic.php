@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -68,11 +68,11 @@ class KunenaControllerTopic extends KunenaController
 
 			if ($attach->protected)
 			{
-				$object->path    = $attach->getUrl();
+				$object->path = $attach->getUrl();
 			}
 			else
 			{
-				$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+				$object->path = JURI::root(true) . '/' . $attach->getUrl();
 			}
 
 			$object->image   = $attach->isImage();
@@ -565,12 +565,12 @@ class KunenaControllerTopic extends KunenaController
 		{
 			if ($topic->authorise('poll.create', null, false))
 			{
-				$poll                 = $topic->getPoll();
-				$poll->title          = $poll_title;
+				$poll        = $topic->getPoll();
+				$poll->title = $poll_title;
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive        = new JDate($fields['poll_time_to_live']);
+					$polltimetolive       = new JDate($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -828,11 +828,11 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($poll_options) && !empty($poll_title))
 			{
-				$poll->title           = $poll_title;
+				$poll->title = $poll_title;
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive        = new JDate($fields['poll_time_to_live']);
+					$polltimetolive       = new JDate($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -1431,18 +1431,18 @@ class KunenaControllerTopic extends KunenaController
 		{
 			// Delete message
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
-			$topic = $message->getTopic();
-			$log = KunenaLog::LOG_POST_DELETE;
-			$hold   = KunenaForum::DELETED;
-			$msg    = JText::_('COM_KUNENA_POST_SUCCESS_DELETE');
+			$topic   = $message->getTopic();
+			$log     = KunenaLog::LOG_POST_DELETE;
+			$hold    = KunenaForum::DELETED;
+			$msg     = JText::_('COM_KUNENA_POST_SUCCESS_DELETE');
 		}
 		else
 		{
 			// Delete topic
 			$topic = $target = KunenaForumTopicHelper::get($this->id);
-			$log = KunenaLog::LOG_TOPIC_DELETE;
-			$hold   = KunenaForum::TOPIC_DELETED;
-			$msg    = JText::_('COM_KUNENA_TOPIC_SUCCESS_DELETE');
+			$log   = KunenaLog::LOG_TOPIC_DELETE;
+			$hold  = KunenaForum::TOPIC_DELETED;
+			$msg   = JText::_('COM_KUNENA_TOPIC_SUCCESS_DELETE');
 		}
 
 		$category = $topic->getCategory();
@@ -1500,16 +1500,16 @@ class KunenaControllerTopic extends KunenaController
 		{
 			// Undelete message
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
-			$topic = $message->getTopic();
-			$log = KunenaLog::LOG_POST_UNDELETE;
-			$msg    = JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
+			$topic   = $message->getTopic();
+			$log     = KunenaLog::LOG_POST_UNDELETE;
+			$msg     = JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
 		}
 		else
 		{
 			// Undelete topic
 			$topic = $target = KunenaForumTopicHelper::get($this->id);
-			$log = KunenaLog::LOG_TOPIC_UNDELETE;
-			$msg    = JText::_('COM_KUNENA_TOPIC_SUCCESS_UNDELETE');
+			$log   = KunenaLog::LOG_TOPIC_UNDELETE;
+			$msg   = JText::_('COM_KUNENA_TOPIC_SUCCESS_UNDELETE');
 		}
 
 		$category = $topic->getCategory();
@@ -1554,9 +1554,9 @@ class KunenaControllerTopic extends KunenaController
 		{
 			// Delete message
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
-			$topic = $message->getTopic();
-			$log = KunenaLog::LOG_POST_DESTROY;
-			$topic  = KunenaForumTopicHelper::get($target->getTopic());
+			$topic   = $message->getTopic();
+			$log     = KunenaLog::LOG_POST_DESTROY;
+			$topic   = KunenaForumTopicHelper::get($target->getTopic());
 
 			if ($topic->attachments > 0)
 			{
@@ -1568,7 +1568,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			// Delete topic
 			$topic = $target = KunenaForumTopicHelper::get($this->id);
-			$log = KunenaLog::LOG_TOPIC_DESTROY;
+			$log   = KunenaLog::LOG_TOPIC_DESTROY;
 		}
 
 		$category = $topic->getCategory();
@@ -1629,17 +1629,17 @@ class KunenaControllerTopic extends KunenaController
 			// Approve message
 			$target  = KunenaForumMessageHelper::get($this->mesid);
 			$message = $target;
-			$log = KunenaLog::LOG_POST_APPROVE;
+			$log     = KunenaLog::LOG_POST_APPROVE;
 		}
 		else
 		{
 			// Approve topic
 			$target  = KunenaForumTopicHelper::get($this->id);
 			$message = KunenaForumMessageHelper::get($target->first_post_id);
-			$log = KunenaLog::LOG_TOPIC_APPROVE;
+			$log     = KunenaLog::LOG_TOPIC_APPROVE;
 		}
 
-		$topic = $message->getTopic();
+		$topic    = $message->getTopic();
 		$category = $topic->getCategory();
 
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
@@ -1702,11 +1702,11 @@ class KunenaControllerTopic extends KunenaController
 		if ($messageId)
 		{
 			$message = $object = KunenaForumMessageHelper::get($messageId);
-			$topic = $message->getTopic();
+			$topic   = $message->getTopic();
 		}
 		else
 		{
-			$topic = $object = KunenaForumTopicHelper::get($topicId);
+			$topic   = $object = KunenaForumTopicHelper::get($topicId);
 			$message = KunenaForumMessageHelper::get($topic->first_post_id);
 		}
 
@@ -1770,8 +1770,8 @@ class KunenaControllerTopic extends KunenaController
 					KunenaLog::TYPE_MODERATION,
 					$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
 					array(
-						'move' => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
-						'target' => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
+						'move'    => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
+						'target'  => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
 						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow)
 					),
 					$topic->getCategory(),
@@ -1845,13 +1845,13 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
 			$topic   = $target->getTopic();
-			$log = KunenaLog::LOG_POST_REPORT;
+			$log     = KunenaLog::LOG_POST_REPORT;
 		}
 		else
 		{
 			$topic   = $target = KunenaForumTopicHelper::get($this->id);
 			$message = KunenaForumMessageHelper::get($topic->first_post_id);
-			$log = KunenaLog::LOG_TOPIC_REPORT;
+			$log     = KunenaLog::LOG_TOPIC_REPORT;
 		}
 
 		$messagetext = $message->message;
@@ -1882,8 +1882,8 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::TYPE_REPORT,
 				$log,
 				array(
-					'mesid' => $message->id,
-					'reason' => $reason,
+					'mesid'   => $message->id,
+					'reason'  => $reason,
 					'message' => $text
 				),
 				$topic->getCategory(),

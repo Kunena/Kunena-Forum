@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Table
+ * @package       Kunena.Framework
+ * @subpackage    Table
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -91,7 +91,7 @@ abstract class KunenaTableObject
 	/**
 	 * Constructor to create the table object instance.  All objects with key set are stored into global instances.
 	 *
-	 * @param   array            $keys   Name of the primary key field in the table.
+	 * @param   array $keys Name of the primary key field in the table.
 	 *
 	 * @since  K4.0
 	 */
@@ -103,7 +103,7 @@ abstract class KunenaTableObject
 			static::getFields();
 		}
 
-		$exists = false;
+		$exists   = false;
 		$tbl_keys = array();
 
 		if ($keys === null)
@@ -181,12 +181,12 @@ abstract class KunenaTableObject
 	/**
 	 * Method to set the JDatabaseDriver object.
 	 *
-	 * @param   JDatabaseDriver  $db  A JDatabaseDriver object to be used by the table object.
+	 * @param   JDatabaseDriver $db A JDatabaseDriver object to be used by the table object.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @link    http://docs.joomla.org/JTable/setDbo
-	 * @since  K4.0
+	 * @since   K4.0
 	 */
 	public static function setDbo(JDatabaseDriver $db)
 	{
@@ -229,7 +229,8 @@ abstract class KunenaTableObject
 	 *
 	 * Can be used for example if the database fields need to be converted to array or JRegistry.
 	 *
-	 * @param   bool  $sqlFetch  True only if properties were assigned before constructor was called.
+	 * @param   bool $sqlFetch True only if properties were assigned before constructor was called.
+	 *
 	 * @since  K4.0
 	 */
 	protected function initialise($sqlFetch = false)
@@ -259,11 +260,11 @@ abstract class KunenaTableObject
 	 * Note that using array of fields will always make a query to the database, but it's very useful feature if you want to search
 	 * one item by using arbitrary set of matching fields. If there are more than one matching object, first one gets returned.
 	 *
-	 * @param   int|array  $keys        An optional primary key value to load the object by, or an array of fields to match.
+	 * @param   int|array $keys An optional primary key value to load the object by, or an array of fields to match.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throw   RuntimeException
-	 * @since  K4.0
+	 * @since   K4.0
 	 */
 	static public function getInstance($keys)
 	{
@@ -276,7 +277,7 @@ abstract class KunenaTableObject
 		// we need to create a new object.
 		if (!isset(static::$instances[$k]))
 		{
-			$c = get_called_class();
+			$c        = get_called_class();
 			$instance = new $c($keys);
 
 			// @var KunenaTableObject $instance
@@ -314,7 +315,8 @@ abstract class KunenaTableObject
 	/**
 	 * Removes all or selected instances from the object cache.
 	 *
-	 * @param   null|int|array  $ids
+	 * @param   null|int|array $ids
+	 *
 	 * @since  K4.0
 	 */
 	static public function freeInstances($ids = null)
@@ -340,7 +342,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns true if the object exists in the database.
 	 *
-	 * @param   boolean  $exists  Internal parameter to change state.
+	 * @param   boolean $exists Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
 	 * @since  K4.0
@@ -394,7 +396,8 @@ abstract class KunenaTableObject
 		// Use closure to return public variables only.
 		$self = $this;
 
-		return function () use ($self) {
+		return function () use ($self)
+		{
 
 			return get_object_vars($self);
 		};
@@ -405,8 +408,8 @@ abstract class KunenaTableObject
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed  $src     An associative array or object to bind to the JTable instance.
-	 * @param   mixed  $ignore  An optional array or space separated list of properties to ignore while binding.
+	 * @param   mixed $src    An associative array or object to bind to the JTable instance.
+	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
 	 *
 	 * @return  KunenaTableObject
 	 *
@@ -568,9 +571,9 @@ abstract class KunenaTableObject
 	 * property name.  The rows that will be reordered are those whose value matches
 	 * the JTable instance for the property specified.
 	 *
-	 * @param   mixed   $src             An associative array or object to bind to the JTable instance.
-	 * @param   string  $orderingFilter  Filter for the order updating
-	 * @param   mixed   $ignore          An optional array or space separated list of properties
+	 * @param   mixed  $src              An associative array or object to bind to the JTable instance.
+	 * @param   string $orderingFilter   Filter for the order updating
+	 * @param   mixed  $ignore           An optional array or space separated list of properties
 	 *                                   to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
@@ -622,7 +625,7 @@ abstract class KunenaTableObject
 	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
-	 * @param   mixed    $keys  An optional primary key value to delete.  If not set the
+	 * @param   mixed $keys     An optional primary key value to delete.  If not set the
 	 *                          instance property value is used.  If array given, you can
 	 *                          use arbitrary fields to delete more than one item.
 	 *
@@ -664,8 +667,8 @@ abstract class KunenaTableObject
 	 * than the one who checked the row out should be held until the row is checked
 	 * in again.
 	 *
-	 * @param   integer  $userId  The Id of the user checking out the row.
-	 * @param   mixed    $pk      An optional primary key value to check out.  If not set
+	 * @param   integer $userId   The Id of the user checking out the row.
+	 * @param   mixed   $pk       An optional primary key value to check out.  If not set
 	 *                            the instance property value is used.
 	 *
 	 * @return  boolean  True on success.
@@ -680,7 +683,7 @@ abstract class KunenaTableObject
 			return true;
 		}
 
-		$k = static::$tbl_key;
+		$k  = static::$tbl_key;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
@@ -702,7 +705,7 @@ abstract class KunenaTableObject
 		static::$db->execute();
 
 		// Set table values in the object.
-		$this->checked_out = (int) $userId;
+		$this->checked_out      = (int) $userId;
 		$this->checked_out_time = $time;
 
 		return true;
@@ -712,7 +715,7 @@ abstract class KunenaTableObject
 	 * Method to check a row in if the necessary properties/fields exist.  Checking
 	 * a row in will allow other users the ability to edit the row.
 	 *
-	 * @param   mixed  $pk  An optional primary key value to check out.  If not set the instance property value is used.
+	 * @param   mixed $pk An optional primary key value to check out.  If not set the instance property value is used.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -726,7 +729,7 @@ abstract class KunenaTableObject
 			return true;
 		}
 
-		$k = static::$tbl_keys;
+		$k  = static::$tbl_keys;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
@@ -747,7 +750,7 @@ abstract class KunenaTableObject
 		static::$db->execute();
 
 		// Set table values in the object.
-		$this->checked_out = 0;
+		$this->checked_out      = 0;
 		$this->checked_out_time = '';
 
 		return true;
@@ -772,7 +775,7 @@ abstract class KunenaTableObject
 			return true;
 		}
 
-		$k = static::$tbl_keys;
+		$k  = static::$tbl_keys;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
@@ -800,9 +803,9 @@ abstract class KunenaTableObject
 	 * a user. If the row is checked out by the same user, then it is considered
 	 * not checked out -- as the user can still edit it.
 	 *
-	 * @param   integer  $with     The userid to preform the match with, if an item is checked
+	 * @param   integer $with      The userid to preform the match with, if an item is checked
 	 *                             out by this user the function will return false.
-	 * @param   integer  $against  The userid to perform the match against when the function
+	 * @param   integer $against   The userid to perform the match against when the function
 	 *                             is used as a static function.
 	 *
 	 * @return  boolean  True if checked out.
@@ -867,7 +870,7 @@ abstract class KunenaTableObject
 	 */
 	static public function getQuery()
 	{
-		$db = static::$db;
+		$db    = static::$db;
 		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
 
 		return $query;
@@ -898,7 +901,7 @@ abstract class KunenaTableObject
 	 * Returns all keys and their values as an array.
 	 *
 	 * @param   array|string $fields
-	 * @param   bool           $throw
+	 * @param   bool         $throw
 	 *
 	 * @return array
 	 * @since  K4.0
@@ -917,7 +920,7 @@ abstract class KunenaTableObject
 			// No fields were given as parameter: use table instance.
 			foreach ($tableKeys as $i => $keyName)
 			{
-				$keyValue = isset($this->$keyName) ? $this->$keyName : null;
+				$keyValue       = isset($this->$keyName) ? $this->$keyName : null;
 				$keys[$keyName] = $keyValue;
 
 				// If null primary keys aren't allowed
@@ -977,6 +980,7 @@ abstract class KunenaTableObject
 	 * Returns all keys and their values as an array.
 	 *
 	 * @param   array|string $fields
+	 *
 	 * @return array
 	 * @since  K4.0
 	 * @throws UnexpectedValueException

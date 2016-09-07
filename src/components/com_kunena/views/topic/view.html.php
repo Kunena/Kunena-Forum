@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
@@ -152,7 +152,7 @@ class KunenaViewTopic extends KunenaView
 		/*
 		$this->captcha    = KunenaSpamRecaptcha::getInstance();
 		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());     */
-		$this->keywords   = $this->topic->getKeywords(false, ', ');
+		$this->keywords = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');
 
@@ -645,9 +645,9 @@ class KunenaViewTopic extends KunenaView
 
 	function getMessageActions()
 	{
-		$catid = $this->state->get('item.catid');
-		$id    = $this->topic->id;
-		$mesid = $this->message->id;
+		$catid        = $this->state->get('item.catid');
+		$id           = $this->topic->id;
+		$mesid        = $this->message->id;
 		$targetuserid = $this->me->userid;
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
@@ -761,7 +761,7 @@ class KunenaViewTopic extends KunenaView
 					$thankyous = $message->thankyou;
 				}
 
-				if ($this->message->authorise('unthankyou') &&  $this->me->isModerator($this->message->getCategory()))
+				if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
 					$canUnthankyou = true;
 				}
@@ -779,7 +779,7 @@ class KunenaViewTopic extends KunenaView
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
-				$thankyou_delete  = '';
+				$thankyou_delete = '';
 
 				foreach ($loaded_users as $userid => $user)
 				{
@@ -1070,8 +1070,8 @@ class KunenaViewTopic extends KunenaView
 
 	protected function _prepareDocument($type)
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // Get the active item
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive(); // Get the active item
 
 		if ($menu_item)
 		{
@@ -1270,6 +1270,7 @@ class KunenaViewTopic extends KunenaView
 			$this->document->setTitle($title);
 		}
 	}
+
 	public function setKeywords($keywords)
 	{
 		if ($this->inLayout)
@@ -1285,6 +1286,7 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 	}
+
 	public function setDescription($description)
 	{
 		if ($this->inLayout)
@@ -1295,7 +1297,7 @@ class KunenaViewTopic extends KunenaView
 		if (!$this->state->get('embedded'))
 		{
 			// TODO: allow translations/overrides
-			$lang = JFactory::getLanguage();
+			$lang   = JFactory::getLanguage();
 			$length = JString::strlen($lang->getName());
 			$length = 137 - $length;
 

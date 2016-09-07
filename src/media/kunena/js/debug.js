@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Media
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link      http://www.kunena.org
  **/
@@ -12,12 +12,12 @@
 var kmt_domready = false;
 
 if (typeof window.addEvent != 'undefined') {
-	window.addEvent('domready', function(){
+	window.addEvent('domready', function () {
 		kmt_domready = true;
 	});
 }
 
-window.onload = function(){
+window.onload = function () {
 	// MooTools is not loaded
 	if (typeof MooTools == 'undefined') {
 		alert('Kunena: MooTools JavaScript library is not loaded!');

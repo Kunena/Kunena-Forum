@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Announcement
+ * @package         Kunena.Site
+ * @subpackage      Controller.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -46,8 +46,8 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			$limitstart = 0;
 		}
 
-		$moderator = KunenaUserHelper::getMyself()->isModerator();
-		$this->pagination = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
+		$moderator           = KunenaUserHelper::getMyself()->isModerator();
+		$this->pagination    = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
 		$this->announcements = KunenaForumAnnouncementHelper::getAnnouncements(
 			$this->pagination->limitstart,
 			$this->pagination->limit,

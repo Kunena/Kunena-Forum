@@ -63,7 +63,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Method to get the record form.
 	 *
 	 * @param   array   $data     Data for the form.
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   boolean $loadData True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return  JForm    A JForm object on success, false on failure
 	 *
@@ -139,7 +139,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string  $context  The context identifier.
+	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
 	 * @return  void
@@ -165,7 +165,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer  $pk  The id of the primary key.
+	 * @param   integer $pk The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
 	 */

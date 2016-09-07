@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
  * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.bestofjoomla.com
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           http://www.bestofjoomla.com
  **/
 
 // Do not allow direct linking
@@ -58,7 +58,7 @@ class KunenaConfig extends JObject
 	public $enablerss = 1;
 
 	/**
-	 * @var    integer	Threads per page; input, number
+	 * @var    integer    Threads per page; input, number
 	 * @since  1.0.0
 	 */
 	public $threads_per_page = 20;
@@ -120,7 +120,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    string  Category image path; input, text
 	 * @deprecated 4.0
-	 * @since  1.0.0
+	 * @since      1.0.0
 	 */
 	public $catimagepath = 'category_images';
 
@@ -228,7 +228,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    integer  Max subject; input, number
-	 * @since  1.0.0
+	 * @since      1.0.0
 	 * @depricated K5.0
 	 */
 	public $maxsubject = 50;
@@ -1194,7 +1194,7 @@ class KunenaConfig extends JObject
 		{
 			// @var JCache|JCacheController $cache
 
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache    = JFactory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
 			if (!$instance)
@@ -1250,6 +1250,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * Load config settings from database table.
+	 *
 	 * @param   null $userinfo Not used.
 	 */
 	public function load($userinfo = null)
@@ -1307,9 +1308,9 @@ class KunenaConfig extends JObject
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
-		$this->messages_per_page = max($this->messages_per_page, 2);
+		$this->messages_per_page        = max($this->messages_per_page, 2);
 		$this->messages_per_page_search = max($this->messages_per_page_search, 2);
-		$this->threads_per_page = max($this->threads_per_page, 2);
+		$this->threads_per_page         = max($this->threads_per_page, 2);
 	}
 
 	/**

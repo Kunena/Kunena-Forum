@@ -2,13 +2,13 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Community
+ * @package          Kunena.Plugins
+ * @subpackage       Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2016 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license          http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -46,7 +46,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->title   = JText::_(
 			'{actor} ' . JText::sprintf(
 				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-			' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
 		);
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.post';

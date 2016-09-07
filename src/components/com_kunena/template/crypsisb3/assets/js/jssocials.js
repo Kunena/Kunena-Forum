@@ -1,12 +1,12 @@
 /*! jssocials - v1.3.1 - 2016-08-20
-* http://js-socials.com
-* Copyright (c) 2016 Artem Tabalin; Licensed MIT */
-(function(window, $, undefined) {
+ * http://js-socials.com
+ * Copyright (c) 2016 Artem Tabalin; Licensed MIT */
+(function (window, $, undefined) {
 
 	var JSSOCIALS = "JSSocials",
 		JSSOCIALS_DATA_KEY = JSSOCIALS;
 
-	var getOrApply = function(value, context) {
+	var getOrApply = function (value, context) {
 		if ($.isFunction(value)) {
 			return value.apply(context, $.makeArray(arguments).slice(2));
 		}
@@ -43,13 +43,13 @@
 		text: "",
 		shareIn: "blank",
 
-		showLabel: function(screenWidth) {
+		showLabel: function (screenWidth) {
 			return (this.showCount === false) ?
 				(screenWidth > this.smallScreenWidth) :
 				(screenWidth >= this.largeScreenWidth);
 		},
 
-		showCount: function(screenWidth) {
+		showCount: function (screenWidth) {
 			return (screenWidth <= this.smallScreenWidth) ? "inside" : true;
 		},
 
@@ -70,22 +70,22 @@
 		shareCountClass: "jssocials-share-count",
 		shareZeroCountClass: "jssocials-share-no-count",
 
-		_init: function(config) {
+		_init: function (config) {
 			this._initDefaults();
 			$.extend(this, config);
 			this._initShares();
 			this._attachWindowResizeCallback();
 		},
 
-		_initDefaults: function() {
+		_initDefaults: function () {
 			this.url = window.location.href;
 			this.text = $.trim($("meta[name=description]").attr("content") || $("title").text());
 		},
 
-		_initShares: function() {
-			this.shares = $.map(this.shares, $.proxy(function(shareConfig) {
+		_initShares: function () {
+			this.shares = $.map(this.shares, $.proxy(function (shareConfig) {
 				if (typeof shareConfig === "string") {
-					shareConfig = { share: shareConfig };
+					shareConfig = {share: shareConfig};
 				}
 
 				var share = (shareConfig.share && shares[shareConfig.share]);
@@ -94,26 +94,26 @@
 					throw Error("Share '" + shareConfig.share + "' is not found");
 				}
 
-				return $.extend({ url: this.url, text: this.text }, share, shareConfig);
+				return $.extend({url: this.url, text: this.text}, share, shareConfig);
 			}, this));
 		},
 
-		_attachWindowResizeCallback: function() {
+		_attachWindowResizeCallback: function () {
 			$(window).on("resize", $.proxy(this._windowResizeHandler, this));
 		},
 
-		_detachWindowResizeCallback: function() {
+		_detachWindowResizeCallback: function () {
 			$(window).off("resize", this._windowResizeHandler);
 		},
 
-		_windowResizeHandler: function() {
+		_windowResizeHandler: function () {
 			if ($.isFunction(this.showLabel) || $.isFunction(this.showCount)) {
 				window.clearTimeout(this._resizeTimer);
 				this._resizeTimer = setTimeout($.proxy(this.refresh, this), this.resizeTimeout);
 			}
 		},
 
-		_render: function() {
+		_render: function () {
 			this._clear();
 
 			this._defineOptionsByScreen();
@@ -126,19 +126,19 @@
 			this._renderShares();
 		},
 
-		_defineOptionsByScreen: function() {
+		_defineOptionsByScreen: function () {
 			this._screenWidth = $(window).width();
 			this._showLabel = getOrApply(this.showLabel, this, this._screenWidth);
 			this._showCount = getOrApply(this.showCount, this, this._screenWidth);
 		},
 
-		_renderShares: function() {
-			$.each(this.shares, $.proxy(function(_, share) {
+		_renderShares: function () {
+			$.each(this.shares, $.proxy(function (_, share) {
 				this._renderShare(share);
 			}, this));
 		},
 
-		_renderShare: function(share) {
+		_renderShare: function (share) {
 			var $share;
 
 			if ($.isFunction(share.renderer)) {
@@ -154,7 +154,7 @@
 				.appendTo(this._$shares);
 		},
 
-		_createShare: function(share) {
+		_createShare: function (share) {
 			var $result = $("<div>");
 			var $shareLink = this._createShareLink(share).appendTo($result);
 
@@ -168,7 +168,7 @@
 			return $result;
 		},
 
-		_createShareLink: function(share) {
+		_createShareLink: function (share) {
 			var shareStrategy = this._getShareStrategy(share);
 
 			var $result = shareStrategy.call(share, {
@@ -182,7 +182,7 @@
 				$result.append(this._createShareLabel(share));
 			}
 
-			$.each(this.on || {}, function(event, handler) {
+			$.each(this.on || {}, function (event, handler) {
 				if ($.isFunction(handler)) {
 					$result.on(event, $.proxy(handler, share));
 				}
@@ -191,7 +191,7 @@
 			return $result;
 		},
 
-		_getShareStrategy: function(share) {
+		_getShareStrategy: function (share) {
 			var result = shareStrategies[share.shareIn || this.shareIn];
 
 			if (!result) {
@@ -201,12 +201,12 @@
 			return result;
 		},
 
-		_getShareUrl: function(share) {
+		_getShareUrl: function (share) {
 			var shareUrl = getOrApply(share.shareUrl, share);
 			return this._formatShareUrl(shareUrl, share);
 		},
 
-		_createShareLogo: function(share) {
+		_createShareLogo: function (share) {
 			var logo = share.logo;
 
 			var $result = IMG_SRC_REGEX.test(logo) ?
@@ -218,18 +218,18 @@
 			return $result;
 		},
 
-		_createShareLabel: function(share) {
+		_createShareLabel: function (share) {
 			return $("<span>").addClass(this.shareLabelClass)
 				.text(share.label);
 		},
 
-		_renderShareCount: function(share, $container) {
+		_renderShareCount: function (share, $container) {
 			var $count = $("<span>").addClass(this.shareCountClass);
 
 			$container.addClass(this.shareZeroCountClass)
 				.append($count);
 
-			this._loadCount(share).done($.proxy(function(count) {
+			this._loadCount(share).done($.proxy(function (count) {
 				if (count) {
 					$container.removeClass(this.shareZeroCountClass);
 					$count.text(count);
@@ -237,7 +237,7 @@
 			}, this));
 		},
 
-		_loadCount: function(share) {
+		_loadCount: function (share) {
 			var deferred = $.Deferred();
 			var countUrl = this._getCountUrl(share);
 
@@ -245,14 +245,14 @@
 				return deferred.resolve(0).promise();
 			}
 
-			var handleSuccess = $.proxy(function(response) {
+			var handleSuccess = $.proxy(function (response) {
 				deferred.resolve(this._getCountValue(response, share));
 			}, this);
 
 			$.getJSON(countUrl).done(handleSuccess)
-				.fail(function() {
+				.fail(function () {
 					$.get(countUrl).done(handleSuccess)
-						.fail(function() {
+						.fail(function () {
 							deferred.resolve(0);
 						});
 				});
@@ -260,18 +260,18 @@
 			return deferred.promise();
 		},
 
-		_getCountUrl: function(share) {
+		_getCountUrl: function (share) {
 			var countUrl = getOrApply(share.countUrl, share);
 			return this._formatShareUrl(countUrl, share);
 		},
 
-		_getCountValue: function(response, share) {
+		_getCountValue: function (response, share) {
 			var count = ($.isFunction(share.getCount) ? share.getCount(response) : response) || 0;
 			return (typeof count === "string") ? count : this._formatNumber(count);
 		},
 
-		_formatNumber: function(number) {
-			$.each(MEASURES, function(letter, value) {
+		_formatNumber: function (number) {
+			$.each(MEASURES, function (letter, value) {
 				if (number >= value) {
 					number = parseFloat((number / value).toFixed(2)) + letter;
 					return false;
@@ -281,39 +281,39 @@
 			return number;
 		},
 
-		_formatShareUrl: function(url, share) {
-			return url.replace(URL_PARAMS_REGEX, function(match, key, field) {
+		_formatShareUrl: function (url, share) {
+			return url.replace(URL_PARAMS_REGEX, function (match, key, field) {
 				var value = share[field] || "";
 				return value ? (key || "") + window.encodeURIComponent(value) : "";
 			});
 		},
 
-		_clear: function() {
+		_clear: function () {
 			window.clearTimeout(this._resizeTimer);
 			this._$element.empty();
 		},
 
-		_passOptionToShares: function(key, value) {
+		_passOptionToShares: function (key, value) {
 			var shares = this.shares;
 
-			$.each(["url", "text"], function(_, optionName) {
+			$.each(["url", "text"], function (_, optionName) {
 				if (optionName !== key) {
 					return;
 				}
 
-				$.each(shares, function(_, share) {
+				$.each(shares, function (_, share) {
 					share[key] = value;
 				});
 			});
 		},
 
-		_normalizeShare: function(share) {
+		_normalizeShare: function (share) {
 			if ($.isNumeric(share)) {
 				return this.shares[share];
 			}
 
 			if (typeof share === "string") {
-				return $.grep(this.shares, function(s) {
+				return $.grep(this.shares, function (s) {
 					return s.share === share;
 				})[0];
 			}
@@ -321,11 +321,11 @@
 			return share;
 		},
 
-		refresh: function() {
+		refresh: function () {
 			this._render();
 		},
 
-		destroy: function() {
+		destroy: function () {
 			this._clear();
 			this._detachWindowResizeCallback();
 
@@ -334,7 +334,7 @@
 				.removeData(JSSOCIALS_DATA_KEY);
 		},
 
-		option: function(key, value) {
+		option: function (key, value) {
 			if (arguments.length === 1) {
 				return this[key];
 			}
@@ -346,7 +346,7 @@
 			this.refresh();
 		},
 
-		shareOption: function(share, key, value) {
+		shareOption: function (share, key, value) {
 			share = this._normalizeShare(share);
 
 			if (arguments.length === 2) {
@@ -358,12 +358,12 @@
 		}
 	};
 
-	$.fn.jsSocials = function(config) {
+	$.fn.jsSocials = function (config) {
 		var args = $.makeArray(arguments),
 			methodArgs = args.slice(1),
 			result = this;
 
-		this.each(function() {
+		this.each(function () {
 			var $element = $(this),
 				instance = $element.data(JSSOCIALS_DATA_KEY),
 				methodResult;
@@ -390,7 +390,7 @@
 		return result;
 	};
 
-	var setDefaults = function(config) {
+	var setDefaults = function (config) {
 		var component;
 
 		if ($.isPlainObject(config)) {
@@ -405,20 +405,20 @@
 	};
 
 	var shareStrategies = {
-		popup: function(args) {
+		popup: function (args) {
 			return $("<a>").attr("href", "#")
-				.on("click", function() {
+				.on("click", function () {
 					window.open(args.shareUrl, null, "width=600, height=400, location=0, menubar=0, resizeable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
 					return false;
 				});
 		},
 
-		blank: function(args) {
-			return $("<a>").attr({ target: "_blank", href: args.shareUrl });
+		blank: function (args) {
+			return $("<a>").attr({target: "_blank", href: args.shareUrl});
 		},
 
-		self: function(args) {
-			return $("<a>").attr({ target: "_self", href: args.shareUrl });
+		self: function (args) {
+			return $("<a>").attr({target: "_self", href: args.shareUrl});
 		}
 	};
 
@@ -432,7 +432,7 @@
 }(window, jQuery));
 
 
-(function(window, $, jsSocials, undefined) {
+(function (window, $, jsSocials, undefined) {
 
 	$.extend(jsSocials.shares, {
 
@@ -456,7 +456,7 @@
 			logo: "fa fa-facebook",
 			shareUrl: "https://facebook.com/sharer/sharer.php?u={url}",
 			countUrl: "https://graph.facebook.com/?id={url}",
-			getCount: function(data) {
+			getCount: function (data) {
 				return data.share && data.share.share_count || 0;
 			}
 		},
@@ -466,7 +466,7 @@
 			logo: "fa fa-google",
 			shareUrl: "https://plus.google.com/share?url={url}",
 			countUrl: "https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url={url}",
-			getCount: function(data) {
+			getCount: function (data) {
 				return parseFloat((data.match(/\{c: ([.0-9E]+)/) || [])[1]);
 			}
 		},
@@ -476,7 +476,7 @@
 			logo: "fa fa-linkedin",
 			shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}",
 			countUrl: "https://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",
-			getCount: function(data) {
+			getCount: function (data) {
 				return data.count;
 			}
 		},
@@ -486,7 +486,7 @@
 			logo: "fa fa-pinterest",
 			shareUrl: "https://pinterest.com/pin/create/bookmarklet/?media={media}&url={url}&description={text}",
 			countUrl: "https://api.pinterest.com/v1/urls/count.json?&url={url}&callback=?",
-			getCount: function(data) {
+			getCount: function (data) {
 				return data.count;
 			}
 		},
@@ -495,8 +495,8 @@
 			label: "Share",
 			logo: "fa fa-stumbleupon",
 			shareUrl: "http://www.stumbleupon.com/submit?url={url}&title={title}",
-			countUrl:  "https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",
-			getCount: function(data) {
+			countUrl: "https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",
+			getCount: function (data) {
 				return data.result.views;
 			}
 		},

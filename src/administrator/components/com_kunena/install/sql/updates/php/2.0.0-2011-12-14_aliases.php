@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -110,9 +110,9 @@ function kunena_200_2011_12_14_aliases($parent)
 }
 
 /**
- * @param     $type
- * @param     $item
- * @param     $alias
+ * @param       $type
+ * @param       $item
+ * @param       $alias
  * @param   int $state
  *
  * @return boolean
@@ -137,8 +137,8 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 }
 
 /**
- * @param     $category
- * @param     $alias
+ * @param       $category
+ * @param       $alias
  * @param   int $state
  *
  * @return boolean

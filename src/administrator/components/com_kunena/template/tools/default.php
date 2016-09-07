@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  CPanel
+ * @package         Kunena.Administrator.Template
+ * @subpackage      CPanel
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,51 +22,53 @@ defined('_JEXEC') or die();
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-tools" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?></div>
+			<div class="module-title nav-header"><i class="icon-tools"
+			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
+			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=report">
-					<i class="icon-big icon-support" alt="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM') ?>"></i><br />
+					<i class="icon-big icon-support" alt="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM') ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=prune">
-					<i class="icon-big icon-list-view" alt="<?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?>"></i><br />
+					<i class="icon-big icon-list-view" alt="<?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=syncusers">
-					<i class="icon-big icon-shuffle" alt="<?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?>"></i><br />
+					<i class="icon-big icon-shuffle" alt="<?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=recount">
-					<i class="icon-big icon-loop" alt="<?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?>"></i><br />
+					<i class="icon-big icon-loop" alt="<?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=menu">
-					<i class="icon-big icon-menu" alt="<?php echo JText::_('COM_KUNENA_A_MENU_MANAGER'); ?>"></i><br />
+					<i class="icon-big icon-menu" alt="<?php echo JText::_('COM_KUNENA_A_MENU_MANAGER'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=purgerestatements">
-					<i class="icon-big icon-filter" alt="<?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>"></i><br />
+					<i class="icon-big icon-filter" alt="<?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=cleanupip">
-					<i class="icon-big icon-location" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>"></i><br />
+					<i class="icon-big icon-location" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=diagnostics">
-					<i class="icon-big icon-health" alt="<?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>"></i><br />
+					<i class="icon-big icon-health" alt="<?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?></span>
 				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=uninstall">
-					<i class="icon-big icon-remove" alt="<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>"></i><br />
+					<i class="icon-big icon-remove" alt="<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>"></i><br/>
 					<span><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?></span>
 				</a>
 
 				<?php if (KunenaForum::isDev())
-				:
-	?>
+					:
+					?>
 					<a class="btn" href="index.php?option=com_kunena&view=install">
-						<i class="icon-big icon-tree-2" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>"></i><br />
+						<i class="icon-big icon-tree-2" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>"></i><br/>
 						<span><?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?></span>
 					</a>
 				<?php endif; ?>

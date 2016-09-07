@@ -1,21 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic.Poll
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicPoll
  *
- * @property int $id
+ * @property int    $id
  * @property string $title
- * @property int $threadid
+ * @property int    $threadid
  * @property string $polltimetolive
  */
 class KunenaForumTopicPoll extends JObject
@@ -51,7 +51,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Returns KunenaForumTopicPoll object.
 	 *
-	 * @param   mixed $identifier	Poll to load - Can be only an integer.
+	 * @param   mixed $identifier Poll to load - Can be only an integer.
 	 * @param   bool  $reset
 	 *
 	 * @return KunenaForumTopicPoll
@@ -81,7 +81,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Filters and sets poll options.
 	 *
-	 * @param   array $options	array(id=>name, id=>name)
+	 * @param   array $options array(id=>name, id=>name)
 	 */
 	public function setOptions($options)
 	{
@@ -90,7 +90,7 @@ class KunenaForumTopicPoll extends JObject
 			return;
 		}
 
-		$filter = JFilterInput::getInstance();
+		$filter     = JFilterInput::getInstance();
 		$newOptions = array();
 
 		foreach ($options as $key => &$value)
@@ -133,7 +133,7 @@ class KunenaForumTopicPoll extends JObject
 		if (is_null($this->_total))
 		{
 			$this->_total = 0;
-			$options = $this->getOptions();
+			$options      = $this->getOptions();
 
 			foreach ($options as $option)
 			{
@@ -212,7 +212,7 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function getLastVoteId($user = null)
 	{
-		$user = KunenaFactory::getUser($user);
+		$user  = KunenaFactory::getUser($user);
 		$query = "SELECT lastvote
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
@@ -280,23 +280,23 @@ class KunenaForumTopicPoll extends JObject
 		}
 
 		$lastVoteId = $this->getLastVoteId($user->userid);
-		$myvotes = $this->getMyVotes($user);
+		$myvotes    = $this->getMyVotes($user);
 
 		if (!$myvotes)
 		{
 			// First vote
-			$votes = new StdClass;
-			$votes->new = true;
+			$votes         = new StdClass;
+			$votes->new    = true;
 			$votes->pollid = $this->id;
-			$votes->votes = 1;
+			$votes->votes  = 1;
 		}
 		elseif ($change && isset($lastVoteId))
 		{
-			$votes = new StdClass;
-			$votes->new = false;
+			$votes           = new StdClass;
+			$votes->new      = false;
 			$votes->lasttime = null;
 			$votes->lastvote = null;
-			$votes->votes = 1;
+			$votes->votes    = 1;
 
 			// Change vote: decrease votes in the last option
 			if (!$this->changeOptionVotes($lastVoteId, -1))
@@ -307,7 +307,7 @@ class KunenaForumTopicPoll extends JObject
 		}
 		else
 		{
-			$votes = new StdClass;
+			$votes      = new StdClass;
 			$votes->new = false;
 
 			// Add a vote to the user
@@ -316,7 +316,7 @@ class KunenaForumTopicPoll extends JObject
 
 		$votes->lasttime = JFactory::getDate()->toSql();
 		$votes->lastvote = $option;
-		$votes->userid = (int) $user->userid;
+		$votes->userid   = (int) $user->userid;
 
 		// Increase vote count from current option
 		$this->changeOptionVotes($votes->lastvote, 1);
@@ -357,8 +357,8 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   int  $option
-	 * @param   int  $delta
+	 * @param   int $option
+	 * @param   int $delta
 	 *
 	 * @return boolean
 	 */
@@ -392,8 +392,8 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to get the polls table object.
 	 *
-	 * @param   string $type		Polls table name to be used.
-	 * @param   string $prefix	Polls table prefix to be used.
+	 * @param   string $type   Polls table name to be used.
+	 * @param   string $prefix Polls table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaPolls
 	 */
@@ -404,7 +404,7 @@ class KunenaForumTopicPoll extends JObject
 		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
-			$tabletype ['name'] = $type;
+			$tabletype ['name']   = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
 
@@ -429,7 +429,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to load a KunenaForumTopicPoll object by id.
 	 *
-	 * @param   int $id	The poll id to be loaded.
+	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
 	 */
@@ -450,7 +450,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
 	 */
 	public function delete()
 	{
@@ -464,7 +464,7 @@ class KunenaForumTopicPoll extends JObject
 
 		$success = $table->delete($this->id);
 
-		if (! $success)
+		if (!$success)
 		{
 			$this->setError($table->getError());
 		}
@@ -472,7 +472,7 @@ class KunenaForumTopicPoll extends JObject
 		$this->_exists = false;
 
 		// Delete options
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
 		$db->execute();
@@ -490,7 +490,7 @@ class KunenaForumTopicPoll extends JObject
 		if ($success && $topic->exists() && $topic->poll_id)
 		{
 			$topic->poll_id = 0;
-			$success = $topic->save();
+			$success        = $topic->save();
 
 			if (!$success)
 			{
@@ -516,14 +516,14 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to save the KunenaForumTopicPoll object to the database.
 	 *
-	 * @param   bool $updateOnly	Save the object only if not a new poll.
+	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
 	 */
 	public function save($updateOnly = false)
 	{
 		// Are we creating a new poll
-		$isnew = ! $this->_exists;
+		$isnew = !$this->_exists;
 
 		if ($isnew && empty($this->newOptions))
 		{
@@ -538,7 +538,7 @@ class KunenaForumTopicPoll extends JObject
 		$table->exists($this->_exists);
 
 		// Store the topic data in the database
-		if (! $table->store())
+		if (!$table->store())
 		{
 			$this->setError($table->getError());
 

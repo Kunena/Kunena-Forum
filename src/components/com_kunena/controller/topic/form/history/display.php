@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -32,11 +32,11 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		$id = $this->input->getInt('id');
 
-		$this->topic = KunenaForumTopicHelper::get($id);
+		$this->topic   = KunenaForumTopicHelper::get($id);
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic(
-		$this->topic, 0, (int) $this->config->historylimit, 'DESC');
+			$this->topic, 0, (int) $this->config->historylimit, 'DESC');
 
-		$this->replycount = $this->topic->getReplies();
+		$this->replycount   = $this->topic->getReplies();
 		$this->historycount = count($this->history);
 		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
@@ -57,10 +57,10 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->history, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments = KunenaAttachmentHelper::getByMessage($this->history);
+		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = array();
 
 		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;

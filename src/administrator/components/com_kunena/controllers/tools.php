@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0
 	 */
@@ -189,12 +189,12 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($trashdelete)
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-			. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
 		}
 		else
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-			. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -784,7 +784,7 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Check timeout
 	 *
-	 * @param   bool  $stop  stop
+	 * @param   bool $stop stop
 	 *
 	 * @return boolean
 	 *
@@ -848,7 +848,7 @@ class KunenaAdminControllerTools extends KunenaController
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
-		$code = $this->app->input->getInt('secretkey');
+		$code     = $this->app->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 

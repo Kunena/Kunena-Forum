@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -57,7 +57,7 @@ class plgKunenaComprofiler extends JPlugin
 	}
 
 	/**
-	 * @param      $type
+	 * @param        $type
 	 * @param   null $view
 	 * @param   null $params
 	 */
@@ -81,9 +81,9 @@ class plgKunenaComprofiler extends JPlugin
 	}
 
 	/**
-	 * @param     $context
-	 * @param     $item
-	 * @param     $params
+	 * @param       $context
+	 * @param       $item
+	 * @param       $params
 	 * @param   int $page
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)

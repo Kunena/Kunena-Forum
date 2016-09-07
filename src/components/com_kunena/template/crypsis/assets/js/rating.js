@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
 	'use strict';
 
@@ -15,37 +15,42 @@
 	function rating(el, currentRating, maxRating, callback) {
 
 		/**
-	 * stars
-	 *
-	 * @description The collection of stars in the rating.
-	 * @type {Array}
-	 */
+		 * stars
+		 *
+		 * @description The collection of stars in the rating.
+		 * @type {Array}
+		 */
 		var stars = [];
 
 		/**
-	 * init
-	 *
-	 * @description Initializes the rating widget. Returns nothing.
-	 */
+		 * init
+		 *
+		 * @description Initializes the rating widget. Returns nothing.
+		 */
 		(function init() {
 			if (!el) {
-				throw Error('No element supplied.'); }
+				throw Error('No element supplied.');
+			}
 
 			if (!maxRating) {
-				throw Error('No max rating supplied.'); }
+				throw Error('No max rating supplied.');
+			}
 
 			if (!currentRating) {
-				currentRating = 0; }
+				currentRating = 0;
+			}
 
 			if (currentRating < 0 || currentRating > maxRating) {
-				throw Error('Current rating is out of bounds.'); }
+				throw Error('Current rating is out of bounds.');
+			}
 
 			for (var i = 0; i < maxRating; i++) {
 				var star = document.createElement('li');
 				star.classList.add('c-rating__item');
 				star.setAttribute('data-index', i);
 				if (i < currentRating) {
-					star.classList.add('is-active'); }
+					star.classList.add('is-active');
+				}
 
 				el.appendChild(star);
 				stars.push(star);
@@ -88,8 +93,8 @@
 		 * @param {HTMLElement} star The star element
 		 */
 		function starMouseOver(star) {
-			star.addEventListener('mouseover', function(e) {
-				iterate(stars, function(item, index) {
+			star.addEventListener('mouseover', function (e) {
+				iterate(stars, function (item, index) {
 					if (index <= parseInt(star.getAttribute('data-index'))) {
 						item.classList.add('is-active');
 					}
@@ -107,7 +112,7 @@
 		 * @param {HTMLElement} star The star element
 		 */
 		function starMouseOut(star) {
-			star.addEventListener('mouseout', function(e) {
+			star.addEventListener('mouseout', function (e) {
 				if (stars.indexOf(e.relatedTarget) === -1) {
 					setRating(null, false);
 				}
@@ -121,7 +126,7 @@
 		 * @param {HTMLElement} star The star element
 		 */
 		function starClick(star) {
-			star.addEventListener('click', function(e) {
+			star.addEventListener('click', function (e) {
 				e.preventDefault();
 				setRating(parseInt(star.getAttribute('data-index')) + 1, true);
 			});
@@ -138,14 +143,16 @@
 		 */
 		function setRating(value, doCallback) {
 			if (value && value < 0 || value > maxRating) {
-				return; }
+				return;
+			}
 
 			if (doCallback === undefined) {
-				doCallback = true; }
+				doCallback = true;
+			}
 
 			currentRating = value || currentRating;
 
-			iterate(stars, function(star, index) {
+			iterate(stars, function (star, index) {
 				if (index < currentRating) {
 					star.classList.add('is-active');
 				}
@@ -155,7 +162,8 @@
 			});
 
 			if (callback && doCallback) {
-				callback(getRating()); }
+				callback(getRating());
+			}
 		}
 
 		/**
@@ -169,8 +177,8 @@
 		}
 
 		/**
-	 * Returns the setRating and getRating methods
-	 */
+		 * Returns the setRating and getRating methods
+		 */
 		return {
 			setRating: setRating,
 			getRating: getRating
@@ -179,8 +187,8 @@
 	}
 
 	/**
-	* Add to global namespace
-	*/
+	 * Add to global namespace
+	 */
 	window.rating = rating;
 
 })();

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Common
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Common
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
@@ -115,7 +115,7 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 	<li<?php if ($view == 'logs')
 	{
 		echo ' class="active"';
-	}?>>
+	} ?>>
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=logs'); ?>">
 			<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_LOG_MANAGER'); ?>
 		</a></li>

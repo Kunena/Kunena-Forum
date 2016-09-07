@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Forum.Topic
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -44,7 +44,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	public function filterByUserAccess(KunenaUser $user)
 	{
 		$categories = $user->getAllowedCategories();
-		$list = implode(',', $categories);
+		$list       = implode(',', $categories);
 		$this->query->where("a.category_id IN ({$list})");
 
 		return $this;
@@ -94,9 +94,9 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on first or last post.
 	 *
-	 * @param   JDate $starting  Starting date or null if older than ending date.
-	 * @param   JDate $ending    Ending date or null if newer than starting date.
-	 * @param   bool  $lastPost  True = last post, False = first post.
+	 * @param   JDate $starting Starting date or null if older than ending date.
+	 * @param   JDate $ending   Ending date or null if newer than starting date.
+	 * @param   bool  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
 	 */
@@ -262,7 +262,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param   array $hold  List of hold states to display.
+	 * @param   array $hold List of hold states to display.
 	 *
 	 * @return $this
 	 */
@@ -290,7 +290,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get topics.
 	 *
-	 * @param   string  $access  Kunena action access control check.
+	 * @param   string $access Kunena action access control check.
+	 *
 	 * @return array|KunenaForumTopic[]
 	 */
 	public function find($access = 'read')

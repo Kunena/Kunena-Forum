@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Application
+ * @package         Kunena.Site
+ * @subpackage      Controller.Application
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -37,7 +37,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	protected function before()
 	{
 		$catid = $this->input->getInt('catid', 0);
-		$id = $this->input->getInt('id', 0);
+		$id    = $this->input->getInt('id', 0);
 
 		$category = KunenaForumCategoryHelper::get($catid);
 		$category->tryAuthorise();

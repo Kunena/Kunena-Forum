@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package       Kunena.Framework
+ * @subpackage    Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ class KunenaPrivate
 		{
 			JPluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
-			$classes = $dispatcher->trigger('onKunenaGetPrivate');
+			$classes    = $dispatcher->trigger('onKunenaGetPrivate');
 
 			foreach ($classes as $class)
 			{
@@ -100,17 +100,17 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param        $userid
+	 * @param          $userid
 	 * @param   string $class
 	 * @param   string $icon
 	 *
 	 * @return string
 	 * @internal param $text
 	 */
-	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
+	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
-		$my = JFactory::getUser();
-		$url = $this->getURL($userid);
+		$my      = JFactory::getUser();
+		$url     = $this->getURL($userid);
 		$onclick = $this->getOnClick($userid);
 
 		// No PMS enabled or PM not allowed
@@ -123,8 +123,8 @@ class KunenaPrivate
 		if ($userid == $my->id)
 		{
 			$this->pmCount = $this->getUnreadCount($my->id);
-			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
-			$url = $this->getInboxURL();
+			$text          = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$url           = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}

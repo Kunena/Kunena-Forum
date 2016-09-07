@@ -2,12 +2,12 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
 	/* Provide autocomplete user list in search form and in user list */
 	if ($('#kurl_users').length > 0) {
@@ -17,18 +17,18 @@ jQuery(document).ready(function($) {
 		var UserNames = [];
 
 		$("#kusersearch").typeahead({
-			source: function ( query, process ) {
+			source: function (query, process) {
 
 				$.ajax({
 					url: users_url
-					,cache: false
-					,success: function(data){
+					, cache: false
+					, success: function (data) {
 						//reset these containers every time the user searches
 						//because we're potentially getting entirely different results from the api
 						NameObjs = {};
 						UserNames = [];
 
-						$.each( data, function( index, item ){
+						$.each(data, function (index, item) {
 
 							//for each iteration of this loop the "item" argument contains
 							//1 user object from the array in our json, such as:
@@ -39,7 +39,7 @@ jQuery(document).ready(function($) {
 
 							//also store a hashmap so that when bootstrap gives us the selected
 							//name we can map that back to an id value
-							NameObjs[ item.name ] = item;
+							NameObjs[item.name] = item;
 						});
 
 						//send the array of results to bootstrap for display
@@ -48,8 +48,8 @@ jQuery(document).ready(function($) {
 				});
 
 			}
-			,highlighter: function( item ){
-				var user = NameObjs[ item ];
+			, highlighter: function (item) {
+				var user = NameObjs[item];
 
 				return '<div class="bond">'
 					+ '<img src="' + user.photo + '" title="" />'

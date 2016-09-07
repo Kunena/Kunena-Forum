@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Models
+ * @package         Kunena.Administrator
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -374,7 +374,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-		$topicicons = array ();
+		$topicicons     = array();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 
 		foreach ($topiciconslist as $icon)
@@ -499,8 +499,8 @@ class KunenaAdminModelCategories extends KunenaModel
 	 */
 	public function getBatchCategories()
 	{
-		$categories = $this->getAdminCategories();
-		$batch_categories = array();
+		$categories         = $this->getAdminCategories();
+		$batch_categories   = array();
 		$batch_categories[] = JHtml::_('select.option', 'select', JText::_('JSELECT'));
 
 		foreach ($categories as $category)

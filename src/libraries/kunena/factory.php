@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -33,7 +33,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	string	$name
+	 * @param    string $name
+	 *
 	 * @return KunenaTemplate
 	 */
 	public static function getTemplate($name = null)
@@ -61,8 +62,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param	bool	$reload
+	 * @param    int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param    bool $reload
 	 *
 	 * @return KunenaUser
 	 */
@@ -76,7 +77,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   array|bool $update	An array containing session options
+	 * @param   array|bool $update An array containing session options
+	 *
 	 * @return KunenaSession
 	 */
 	public static function getSession($update = false)
@@ -147,7 +149,7 @@ abstract class KunenaFactory
 	 *
 	 * @return mixed
 	 */
-	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
+	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -159,7 +161,7 @@ abstract class KunenaFactory
 		}
 		else
 		{
-			$client = 'admin';
+			$client  = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
 			$lookup2 = KPATH_ADMIN;
 		}
@@ -207,7 +209,7 @@ abstract class KunenaFactory
 
 		$contents = file_get_contents($filename);
 		$contents = str_replace('_QQ_', '"\""', $contents);
-		$strings = @parse_ini_string($contents);
+		$strings  = @parse_ini_string($contents);
 
 		// Restore error tracking to what it was before.
 		ini_set('track_errors', $track_errors);

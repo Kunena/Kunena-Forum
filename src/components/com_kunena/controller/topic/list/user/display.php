@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -29,8 +29,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->state   = $this->model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		{
 			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
 				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time')
-			. '&limit=' . $this->state->get('list.limit'));
+				. '&limit=' . $this->state->get('list.limit'));
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
@@ -66,9 +66,9 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
-		$reverse = !$this->state->get('list.categories.in');
-		$authorise = 'read';
-		$order = 'last_post_time';
+		$reverse     = !$this->state->get('list.categories.in');
+		$authorise   = 'read';
+		$order       = 'last_post_time';
 
 		$finder = new KunenaForumTopicFinder;
 		$finder
@@ -130,29 +130,29 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		{
 			case 'posted' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=posted';
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=posted';
 				break;
 			case 'started' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=started';
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=started';
 				break;
 			case 'favorites' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=favorites';
-				$actions = array('unfavorite');
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=favorites';
+				$actions          = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions';
-				$actions = array('unsubscribe');
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions';
+				$actions          = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=plugin';
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=plugin';
 				break;
 			default :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
-				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
+				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
 		}
 
 		$doc = JFactory::getDocument();

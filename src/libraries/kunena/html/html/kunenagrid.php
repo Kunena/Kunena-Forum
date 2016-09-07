@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage HTML
+ * @package       Kunena.Framework
+ * @subpackage    HTML
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  *
  * Taken from Joomla Platform 11.1
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright     Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE
  **/
 defined('_JEXEC') or die();
 
@@ -41,20 +41,20 @@ abstract class JHtmlKunenaGrid
 	{
 		if (is_array($prefix))
 		{
-			$options = $prefix;
-			$text = array_key_exists('text', $options) ? $options['text'] : $text;
-			$active_title = array_key_exists('active_title', $options) ? $options['active_title'] : $active_title;
+			$options        = $prefix;
+			$text           = array_key_exists('text', $options) ? $options['text'] : $text;
+			$active_title   = array_key_exists('active_title', $options) ? $options['active_title'] : $active_title;
 			$inactive_title = array_key_exists('inactive_title', $options) ? $options['inactive_title'] : $inactive_title;
-			$active_class = array_key_exists('active_class', $options) ? $options['active_class'] : $active_class;
+			$active_class   = array_key_exists('active_class', $options) ? $options['active_class'] : $active_class;
 			$inactive_class = array_key_exists('inactive_class', $options) ? $options['inactive_class'] : $inactive_class;
-			$enabled = array_key_exists('enabled', $options) ? $options['enabled'] : $enabled;
-			$translate = array_key_exists('translate', $options) ? $options['translate'] : $translate;
-			$checkbox = array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
-			$prefix = array_key_exists('prefix', $options) ? $options['prefix'] : '';
+			$enabled        = array_key_exists('enabled', $options) ? $options['enabled'] : $enabled;
+			$translate      = array_key_exists('translate', $options) ? $options['translate'] : $translate;
+			$checkbox       = array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
+			$prefix         = array_key_exists('prefix', $options) ? $options['prefix'] : '';
 		}
 
-		$active = $task == 'publish' ? 'active' : '';
-		$ktemplate = KunenaFactory::getTemplate();
+		$active        = $task == 'publish' ? 'active' : '';
+		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($bootstrap && $topicicontype == 'B2')
@@ -146,10 +146,10 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * Display a boolean setting widget.
 	 *
-	 * @param   integer  $i			The row index.
-	 * @param   integer  $value		The value of the boolean field.
-	 * @param   string   $taskOn	Task to turn the boolean setting on.
-	 * @param   string   $taskOff	Task to turn the boolean setting off.
+	 * @param   integer $i       The row index.
+	 * @param   integer $value   The value of the boolean field.
+	 * @param   string  $taskOn  Task to turn the boolean setting on.
+	 * @param   string  $taskOff Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
 	 */
@@ -163,9 +163,9 @@ abstract class JHtmlKunenaGrid
 		$title .= '::' . JText::_('COM_KUNENA_LIB_CLICK_TO_TOGGLE_STATE');
 
 		// Build the <a> tag.
-		$bool	= ($value) ? 'true' : 'false';
-		$task	= ($value) ? $taskOff : $taskOn;
-		$toggle	= (!$task) ? false : true;
+		$bool   = ($value) ? 'true' : 'false';
+		$task   = ($value) ? $taskOff : $taskOn;
+		$toggle = (!$task) ? false : true;
 
 		if ($toggle)
 		{
@@ -180,19 +180,19 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   string   $title	The link title
-	 * @param   string   $order	The order field for the column
-	 * @param   string   $direction	The current direction
-	 * @param   string|int   $selected	The selected ordering
-	 * @param   string|null   $task	An optional task override
-	 * @param   string   $new_direction	An optional direction for the new column
-	 * @param   string|null   $form
+	 * @param   string      $title         The link title
+	 * @param   string      $order         The order field for the column
+	 * @param   string      $direction     The current direction
+	 * @param   string|int  $selected      The selected ordering
+	 * @param   string|null $task          An optional task override
+	 * @param   string      $new_direction An optional direction for the new column
+	 * @param   string|null $form
 	 *
 	 * @return  string
 	 */
 	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $form = null)
 	{
-		$direction	= strtolower($direction);
+		$direction = strtolower($direction);
 
 		if ($order != $selected)
 		{
@@ -200,7 +200,7 @@ abstract class JHtmlKunenaGrid
 		}
 		else
 		{
-			$direction	= ($direction == 'desc') ? 'asc' : 'desc';
+			$direction = ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
 		$html = '<a href="javascript:kunenatableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\',\'' . $form . '\');" title="' . JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN') . '">';
@@ -217,10 +217,10 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   integer $rowNum	The row index
-	 * @param   integer $recId	The record id
+	 * @param   integer $rowNum The row index
+	 * @param   integer $recId  The record id
 	 * @param   boolean $checkedOut
-	 * @param   string $name	The name of the form element
+	 * @param   string  $name   The name of the form element
 	 *
 	 * @return  string
 	 */
@@ -237,8 +237,8 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param        $row
-	 * @param        $i
+	 * @param          $row
+	 * @param          $i
 	 * @param   string $identifier
 	 *
 	 * @return string
@@ -284,7 +284,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   mixed   $value  Either the scalar value, or an object (for backward compatibility, deprecated)
 	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @param   bool      $bootstrap
+	 * @param   bool    $bootstrap
 	 *
 	 * @return string
 	 */
@@ -295,14 +295,14 @@ abstract class JHtmlKunenaGrid
 			$value = $value->published;
 		}
 
-		$task	= $value ? 'unpublish' : 'publish';
-		$alt	= $value ? JText::_('COM_KUNENA_PUBLISHED') : JText::_('COM_KUNENA_UNPUBLISHED');
+		$task   = $value ? 'unpublish' : 'publish';
+		$alt    = $value ? JText::_('COM_KUNENA_PUBLISHED') : JText::_('COM_KUNENA_UNPUBLISHED');
 		$action = $value ? JText::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : JText::_('COM_KUNENA_LIB_PUBLISH_ITEM');
-		$class = $task == 'unpublish' ? 'publish' : 'unpublish';
+		$class  = $task == 'unpublish' ? 'publish' : 'unpublish';
 
 		$title = $inactive_title = $alt . '::' . $action;
 
-		 return self::action($i, $task, $prefix, $alt, $title, $class, $bootstrap);
+		return self::action($i, $task, $prefix, $alt, $title, $class, $bootstrap);
 	}
 
 	/**
@@ -312,11 +312,11 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $task
 	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @param   bool      $bootstrap
+	 * @param   bool    $bootstrap
 	 *
 	 * @return string
 	 */
-	public static function task($i, $img, $alt, $task, $prefix='', $bootstrap = false)
+	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)
 	{
 		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
 	}
@@ -356,7 +356,7 @@ abstract class JHtmlKunenaGrid
 	*/
 
 	/**
-	 * @param        $rows
+	 * @param          $rows
 	 * @param   string $image
 	 * @param   string $task
 	 *
@@ -370,8 +370,8 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param        $i
-	 * @param        $task
+	 * @param          $i
+	 * @param          $task
 	 * @param   bool   $enabled
 	 * @param   string $alt
 	 *
@@ -394,8 +394,8 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param        $i
-	 * @param        $task
+	 * @param          $i
+	 * @param          $task
 	 * @param   bool   $enabled
 	 * @param   string $alt
 	 *
@@ -418,7 +418,7 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param     $row
+	 * @param       $row
 	 * @param   int $overlib
 	 *
 	 * @return string
@@ -431,8 +431,8 @@ abstract class JHtmlKunenaGrid
 		{
 			$text = addslashes(htmlspecialchars($row->editor, ENT_COMPAT, 'UTF-8'));
 
-			$date	= JHtml::_('date', $row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
-			$time	= JHtml::_('date', $row->checked_out_time, 'H:i');
+			$date = JHtml::_('date', $row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
+			$time = JHtml::_('date', $row->checked_out_time, 'H:i');
 
 			$hover = '<span class="editlinktip hasTip" title="' . JText::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
 		}

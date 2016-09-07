@@ -16,7 +16,7 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see     JController
 	 * @since   1.6
@@ -44,8 +44,8 @@ class KunenaAdminModelPlugins extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
+	 * @param   string $ordering  An optional ordering field.
+	 * @param   string $direction An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 *
@@ -90,7 +90,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return  string    A store id.
 	 */
@@ -109,8 +109,8 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Returns an object list
 	 *
-	 * @param   JDatabaseQuery  $query      The query
-	 * @param   int            $limitstart  Offset
+	 * @param   JDatabaseQuery $query      The query
+	 * @param   int            $limitstart Offset
 	 * @param   int            $limit      The number of records
 	 *
 	 * @return  array
@@ -185,7 +185,7 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Translate a list of objects
 	 *
-	 * @param   array  $items  The array of objects
+	 * @param   array $items The array of objects
 	 *
 	 * @return  array The array of translated objects
 	 */

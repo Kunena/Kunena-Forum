@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Database
+ * @package       Kunena.Framework
+ * @subpackage    Database
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 
 // no direct access
@@ -55,7 +55,7 @@ abstract class KunenaDatabaseObjectFinder
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
-		$this->db = JFactory::getDbo();
+		$this->db    = JFactory::getDbo();
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->table . ' AS a');
 	}
@@ -99,7 +99,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * This function can be used more than once to chain order by.
 	 *
 	 * @param   string $by
-	 * @param   int $direction
+	 * @param   int    $direction
 	 * @param   string $alias
 	 *
 	 * @return $this
@@ -107,7 +107,7 @@ abstract class KunenaDatabaseObjectFinder
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias . '.' . $this->db->quoteName($by);
+		$by        = $alias . '.' . $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -116,10 +116,10 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param   string        $field       Field name.
-	 * @param   string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param   string|array  $value       Value.
-	 * @param  bool          $escape      Only works for LIKE / NOT LIKE.
+	 * @param   string       $field     Field name.
+	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param   string|array $value     Value.
+	 * @param  bool          $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 */
@@ -157,9 +157,10 @@ abstract class KunenaDatabaseObjectFinder
 				{
 					$db = $this->db;
 					array_walk(
-      $value, function (&$item) use ($db) {
-	  $item = $db->quote($item);
-	 });
+						$value, function (&$item) use ($db)
+					{
+						$item = $db->quote($item);
+					});
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
@@ -202,9 +203,9 @@ abstract class KunenaDatabaseObjectFinder
 	{
 		$query = clone $this->query;
 		$this->build($query);
-		
+
 		if ($query->group)
-		{	
+		{
 			$countQuery = $this->db->getQuery(true);
 			$countQuery->select('COUNT(*)')->from("({$query}) AS c");
 			$this->db->setQuery($countQuery);
@@ -214,7 +215,7 @@ abstract class KunenaDatabaseObjectFinder
 			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
-	
+
 		$count = (int) $this->db->loadResult();
 		KunenaError::checkDatabaseError();
 
@@ -224,7 +225,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param   JDatabaseQuery  $query
+	 * @param   JDatabaseQuery $query
 	 *
 	 * @return void
 	 */

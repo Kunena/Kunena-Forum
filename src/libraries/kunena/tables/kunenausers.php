@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Tables
+ * @package         Kunena.Framework
+ * @subpackage      Tables
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -342,7 +342,7 @@ class TableKunenaUsers extends KunenaTable
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
 		if ($userid !== null)

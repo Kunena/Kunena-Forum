@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Views
+ * @package         Kunena.Site
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -103,7 +103,7 @@ class KunenaViewUser extends KunenaView
 		foreach ($list_files as $key => $file)
 		{
 			$response[$key]['filename'] = $file;
-			$response[$key]['url'] = JUri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
+			$response[$key]['url']      = JUri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
 		}
 
 		// Set the MIME type and header for JSON output.

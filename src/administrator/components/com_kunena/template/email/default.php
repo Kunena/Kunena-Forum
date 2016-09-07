@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator.Template
  * @subpackage    Logs
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
@@ -27,7 +27,9 @@ JHtml::_('bootstrap.popover');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-mail" alt="<?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?>"></i> <?php echo JText::_('Select Email Form') ?></div>
+			<div class="module-title nav-header"><i class="icon-mail"
+			                                        alt="<?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?>"></i> <?php echo JText::_('Select Email Form') ?>
+			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">
 				<a class="btn" href="#">

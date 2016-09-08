@@ -165,7 +165,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			else
 			{
 				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
-					$this->config->board_title, $this->profile->getName(), $this->config->board_title);
+					$this->config->board_title, $this->profile->getName(), $this->config->board_title
+				);
 				$this->setDescription($description);
 			}
 

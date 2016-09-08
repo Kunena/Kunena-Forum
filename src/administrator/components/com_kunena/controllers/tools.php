@@ -189,12 +189,14 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($trashdelete)
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS')
+			);
 		}
 		else
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS')
+			);
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -231,7 +233,8 @@ class KunenaAdminControllerTools extends KunenaController
 					SELECT a.id AS userid, 1 AS showOnline
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
-					WHERE b.userid IS NULL");
+					WHERE b.userid IS NULL"
+			);
 
 			try
 			{
@@ -253,7 +256,8 @@ class KunenaAdminControllerTools extends KunenaController
 				"DELETE a
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
-					WHERE b.username IS NULL");
+					WHERE b.username IS NULL"
+			);
 
 			try
 			{
@@ -275,13 +279,15 @@ class KunenaAdminControllerTools extends KunenaController
 				"DELETE a
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
-			WHERE banned='0000-00-00 00:00:00'");
+			WHERE banned='0000-00-00 00:00:00'"
+			);
 			$db->execute();
 
 			$db->setQuery(
 				"DELETE a
 			FROM #__users AS a
-			WHERE block='1'");
+			WHERE block='1'"
+			);
 
 			try
 			{

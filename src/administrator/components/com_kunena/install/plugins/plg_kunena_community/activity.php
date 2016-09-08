@@ -46,7 +46,8 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->title   = JText::_(
 			'{actor} ' . JText::sprintf(
 				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
+			)
 		);
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.post';

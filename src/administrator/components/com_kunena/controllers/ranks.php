@@ -123,7 +123,8 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_title={$db->quote($rank_title)},
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
-					rank_min={$db->quote($rank_min)}");
+					rank_min={$db->quote($rank_min)}"
+			);
 
 			try
 			{
@@ -143,7 +144,8 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
-				WHERE rank_id={$db->quote($rankid)}");
+				WHERE rank_id={$db->quote($rankid)}"
+			);
 
 			try
 			{

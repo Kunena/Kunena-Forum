@@ -146,7 +146,8 @@ if (KUNENA_PROFILER)
 	foreach ($kunena_profiler->getAll() as $item)
 	{
 		echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
-			$item->getTotalTime(), $item->calls);
+			$item->getTotalTime(), $item->calls
+		);
 	}
 
 	echo '</div>';

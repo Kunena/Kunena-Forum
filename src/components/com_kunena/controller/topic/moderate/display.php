@@ -92,7 +92,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 				$username       = $user->getName();
 				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
-					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')')
+					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')'
+				)
 					: null;
 			}
 		}

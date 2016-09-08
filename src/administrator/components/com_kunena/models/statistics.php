@@ -22,7 +22,7 @@ class KunenaAdminModelStatistics extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param    array $config An optional associative array of configuration settings.
+	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
 	 */
@@ -87,7 +87,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param    string $id A prefix for the store id.
+	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return    string        A store id.
 	 */

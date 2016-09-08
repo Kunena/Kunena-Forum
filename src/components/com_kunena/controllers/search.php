@@ -35,6 +35,8 @@ class KunenaControllerSearch extends KunenaController
 		$this->setRedirect(
 			$model->getSearchURL(
 				'search', $model->getState('searchwords'),
-				$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
+				$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false
+			)
+		);
 	}
 }

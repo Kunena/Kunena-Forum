@@ -33,8 +33,11 @@ JHtml::_('behavior.multiselect');
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="smilies"/>
 			<input type="hidden" name="task" value="save"/>
-			<?php if ($this->state->get('item.id')) : ?><input type="hidden" name="smileyid"
-			                                                   value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+			<?php if ($this->state->get('item.id'))
+			:
+	?><input type="hidden" name="smileyid"
+			                                                   value="<?php echo $this->state->get('item.id') ?>" /><?php
+endif; ?>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>

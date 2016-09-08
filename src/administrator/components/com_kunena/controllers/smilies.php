@@ -119,7 +119,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 				"INSERT INTO #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
-					emoticonbar={$db->quote($smiley_emoticonbar)}");
+					emoticonbar={$db->quote($smiley_emoticonbar)}"
+			);
 
 			try
 			{
@@ -139,7 +140,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
-				WHERE id = '$smileyid'");
+				WHERE id = '$smileyid'"
+			);
 
 			try
 			{

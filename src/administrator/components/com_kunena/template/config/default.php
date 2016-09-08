@@ -131,7 +131,7 @@ JHtml::_('behavior.tabstate');
 													<td><input type="text"
 													           name="cfg_sessiontimeout"
 													           value="<?php echo $this->escape($this->config->sessiontimeout);
-													           ?>"/></td>
+																?>"/></td>
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 													</td>
 												</tr>
@@ -854,7 +854,8 @@ JHtml::_('behavior.tabstate');
 														<?php
 														echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
 															ini_get('post_max_size'), ini_get('upload_max_filesize'),
-															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+														)
 														?>
 													</td>
 												</tr>
@@ -940,7 +941,8 @@ JHtml::_('behavior.tabstate');
 														<?php
 														echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
 															ini_get('post_max_size'), ini_get('upload_max_filesize'),
-															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+														)
 														?>
 													</td>
 												</tr>

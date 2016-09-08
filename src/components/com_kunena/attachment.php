@@ -74,7 +74,7 @@ class KunenaApplication extends JApplicationWeb
 	protected $_name = 'site';
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since K2.0
 	 */
 	protected $_clientId = 0;

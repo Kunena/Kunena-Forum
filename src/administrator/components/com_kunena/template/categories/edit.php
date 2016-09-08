@@ -53,7 +53,8 @@ jQuery(document).ready(function($) {
 		});
 	});
 });
-');
+'
+);
 ?>
 
 <div id="kunena" class="admin override">
@@ -90,7 +91,7 @@ jQuery(document).ready(function($) {
 										</a>
 									</li>
 									<?php if (!$this->category->id || !$this->category->isSection())
-										:
+:
 										?>
 										<li>
 											<a href="#tab-settings" data-toggle="tab">
@@ -104,7 +105,7 @@ jQuery(document).ready(function($) {
 										</a>
 									</li>
 									<?php if (!$this->category->id || !$this->category->isSection())
-										:
+:
 										?>
 										<li>
 											<a href="#tab-mods" data-toggle="tab">
@@ -138,10 +139,10 @@ jQuery(document).ready(function($) {
 														       value="<?php echo $this->escape($this->category->alias); ?>"/>
 														<?php
 														if ($this->options ['aliases'])
-															:
+:
 															?>
 															<?php echo '<span id="aliascheck">' . $this->options ['aliases'] . '</span>'; ?>
-														<?php endif ?>
+														<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         endif ?>
 													</td>
 												</tr>
 												<tr>
@@ -193,9 +194,9 @@ jQuery(document).ready(function($) {
 												</tr>
 												</thead>
 												<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist)
-												{
+{
 													foreach ($accesslist as $accessinput)
-														:
+	:
 														?>
 														<tr class="kaccess kaccess-<?php echo $accesstype ?>"
 														    style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
@@ -203,14 +204,14 @@ jQuery(document).ready(function($) {
 															<td><?php echo $accessinput['input'] ?></td>
 															<td><?php echo $accessinput['desc'] ?></td>
 														</tr>
-													<?php endforeach;
-												}; ?>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             endforeach;
+}; ?>
 											</table>
 										</fieldset>
 									</div>
 
 									<?php if (!$this->category->id || !$this->category->isSection())
-										:
+:
 										?>
 										<div class="tab-pane" id="tab-settings">
 											<fieldset>
@@ -282,7 +283,7 @@ jQuery(document).ready(function($) {
 										</fieldset>
 									</div>
 									<?php if (!$this->category->id || !$this->category->isSection())
-										:
+:
 										?>
 										<div class="tab-pane" id="tab-mods">
 											<fieldset>
@@ -299,24 +300,25 @@ jQuery(document).ready(function($) {
 
 													<tbody>
 													<?php $i = 0;
+
 													if (empty($this->moderators))
-														:
+	:
 														?>
 														<tr>
 															<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
 														</tr>
-													<?php else
-														:
-														foreach ($this->moderators as $ml)
-															:
-															?>
-															<tr>
-																<td><?php echo $this->escape($ml->username); ?></td>
-																<td><?php echo $this->escape($ml->name); ?></td>
-																<td><?php echo $this->escape($ml->userid); ?></td>
+																										<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         else
+	:
+	foreach ($this->moderators as $ml)
+		:
+		?>
+		<tr>
+<td><?php echo $this->escape($ml->username); ?></td>
+<td><?php echo $this->escape($ml->name); ?></td>
+<td><?php echo $this->escape($ml->userid); ?></td>
 															</tr>
-														<?php endforeach;
-													endif; ?>
+	<?php                                                                                                                                                                 endforeach;
+endif; ?>
 													</tbody>
 												</table>
 											</fieldset>

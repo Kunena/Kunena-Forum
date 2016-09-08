@@ -206,7 +206,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 					"SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
-				GROUP BY catid");
+				GROUP BY catid"
+				);
 				$pending = $db->loadAssocList();
 				KunenaError::checkDatabaseError();
 

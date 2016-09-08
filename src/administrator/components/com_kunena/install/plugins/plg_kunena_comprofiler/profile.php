@@ -44,10 +44,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -66,10 +66,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -107,8 +107,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-			'forumSideProfile', array('kunena', $view, $view->profile->userid,
-			array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))));
+				'forumSideProfile', array('kunena', $view, $view->profile->userid,
+				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))
+			)
+		);
 	}
 
 	/**
@@ -121,7 +123,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 */
@@ -149,7 +151,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
 	 * @return string
 	 */

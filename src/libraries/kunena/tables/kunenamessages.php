@@ -111,16 +111,18 @@ class TableKunenaMessages extends KunenaTable
 		// Load the user data.
 		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id = {$this->$k}";
 		$this->_db->setQuery($query);
-		$data = $this->_db->loadAssoc();
-
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+				
 			return false;
 		}
-
+		
 		if (!$data)
 		{
 			$this->$k = 0;
@@ -207,13 +209,15 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 

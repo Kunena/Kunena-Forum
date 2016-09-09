@@ -370,14 +370,15 @@ class TableKunenaUsers extends KunenaTable
 			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
 			WHERE u.id = {$this->$k}";
 		$this->_db->setQuery($query);
-		$data = $this->_db->loadAssoc();
 
-		// Check for an error message.
-
-		if ($this->_db->getErrorNum())
+		try 
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 

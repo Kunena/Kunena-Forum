@@ -359,15 +359,16 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Get the total number of content items to index.
 		$this->db->setQuery($sql);
-		$return = (int) $this->db->loadResult();
-
-		// Check for a database error.
-		if ($this->db->getErrorNum())
+		
+		try
 		{
-			// Throw database error exception.
-			throw new Exception($this->db->getErrorMsg(), 500);
+			$return = (int) $this->db->loadResult();
 		}
-
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+		
 		return $return;
 	}
 
@@ -419,16 +420,16 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Get the content items to index.
 		$this->db->setQuery($sql, 0, $limit);
-		$ids = $this->db->loadColumn();
-
-		// Check for a database error.
-
-		if ($this->db->getErrorNum())
+		
+		try
 		{
-			// Throw database error exception.
-			throw new Exception($this->db->getErrorMsg(), 500);
+			$ids = $this->db->loadColumn();
 		}
-
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+		
 		// Convert the items to result objects.
 		$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
 		$items    = array();

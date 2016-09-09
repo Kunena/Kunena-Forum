@@ -381,10 +381,6 @@ class KunenaBbcode extends NBBC_BBCode
 				return true;
 			}
 		}
-		else
-		{
-			return true;
-		}
 
 		return false;
 	}

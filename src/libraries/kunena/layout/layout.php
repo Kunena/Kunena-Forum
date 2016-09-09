@@ -226,14 +226,20 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$cloak = JPluginHelper::isEnabled('content', 'emailcloak');
-
 			$first = $topic->first_post_message;
 			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
 			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
 			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
 			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
 			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
+			$first = preg_replace('/\[article\](.*?)\[\/article]/s', '', $first);
+			$first = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $first);
+			$first = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $first);
+			$first = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $first);
+			$first = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $first);
+			$first = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $first);
+			$first = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $first);
+			$first = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $first);
 
 			$last = $topic->last_post_message;
 			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
@@ -241,61 +247,34 @@ class KunenaLayout extends KunenaLayoutBase
 			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
 			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
 			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
+			$last = preg_replace('/\[article\](.*?)\[\/article]/s', '', $last);
+			$last = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $last);
+			$last = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $last);
+			$last = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $last);
+			$last = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $last);
+			$last = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '',$last);
+			$last = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $last);
+			$last = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $last);
 
 			if ($action instanceof KunenaForumMessage)
 			{
-				if ($cloak)
-				{
-					$title = KunenaHtmlParser::parseText($first, 200, false);
-				}
-				else
-				{
-					$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-				}
+				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($first, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($first, 200, false);
 						break;
 					case 'last':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($last, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($last, 200, false);
 						break;
 					case 'unread':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($last, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($last, 200, false);
 						break;
 					default:
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($first, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($first, 200, false);
 				}
 			}
 

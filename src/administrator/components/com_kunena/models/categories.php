@@ -453,7 +453,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 				if (!$table->store())
 				{
-					$this->setError($table->getError());
+					JFactory::getApplication()->enqueueMessage($table->getError());
 
 					return false;
 				}

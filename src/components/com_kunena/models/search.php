@@ -281,8 +281,8 @@ class KunenaModelSearch extends KunenaModel
 
 		if (!$q && !$this->getState('query.searchuser'))
 		{
-			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
-
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
+			
 			return 0;
 		}
 
@@ -295,7 +295,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($this->total == 0)
 		{
-			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
 
 			return 0;
 		}
@@ -340,7 +340,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (!$q && !$this->getState('query.searchuser'))
 		{
-			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
 
 			return array();
 		}

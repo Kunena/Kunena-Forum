@@ -1188,6 +1188,12 @@ class KunenaConfig extends JObject
 	public $personal = 1;
 
 	/**
+	 * @var integer Allow user social
+	 * @since  K5.1.0
+	 */
+	public $social = 1;
+
+	/**
 	 *
 	 */
 	public function __construct()

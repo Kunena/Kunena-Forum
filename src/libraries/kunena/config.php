@@ -1176,6 +1176,12 @@ class KunenaConfig extends JObject
 	public $emailheader = '/media/kunena/email/hero-wide.png';
 
 	/**
+	 * @var integer Allow user signatures
+	 * @since  K5.1.0
+	 */
+	public $signature = 1;
+
+	/**
 	 *
 	 */
 	public function __construct()

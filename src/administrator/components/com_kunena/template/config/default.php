@@ -520,6 +520,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->lists ['signature'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_SIGNATURES_DESC') ?></td>
 												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_PERSONAL') ?></td>
+													<td><?php echo $this->lists ['personal'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_PERSONAL_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

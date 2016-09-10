@@ -1208,6 +1208,12 @@ class KunenaUser extends JObject
 	 */
 	public function getPersonalText()
 	{
+		$config = KunenaConfig::getInstance();
+		if (!$config->personal)
+		{
+			return false;
+		}
+
 		if (!isset($this->_personalText))
 		{
 			$this->_personalText = KunenaHtmlParser::parseText($this->personalText);

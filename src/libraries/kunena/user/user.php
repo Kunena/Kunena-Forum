@@ -1468,6 +1468,12 @@ class KunenaUser extends JObject
 	 */
 	public function socialButton($name, $gray = false)
 	{
+		$config = KunenaConfig::getInstance();
+		if (!$config->social)
+		{
+			return false;
+		}
+
 		$social = array('twitter'    => array('url' => 'http://twitter.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'),
 		                'facebook'   => array('url' => 'http://www.facebook.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'),
 		                'myspace'    => array('url' => 'http://www.myspace.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'),

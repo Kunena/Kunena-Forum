@@ -18,6 +18,8 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/search.js');
 ?>
 
@@ -95,6 +97,17 @@ $this->addScript('assets/js/search.js');
 						</legend>
 						<?php $this->displaySortByList('sort'); ?>
 						<?php $this->displayOrderList('order'); ?>
+					</fieldset>
+					
+					<fieldset class="span6">
+						<legend>
+							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+						</legend>
+						<div id="searchatdate">
+							<div class="input-append date">
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
+							</div>
+						</div>
 					</fieldset>
 				</div>
 

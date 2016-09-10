@@ -1225,6 +1225,12 @@ class KunenaUser extends JObject
 	 */
 	public function getSignature()
 	{
+		$config = KunenaConfig::getInstance();
+		if (!$config->signature)
+		{
+			return false;
+		}
+
 		if (!isset($this->_signature))
 		{
 			$this->_signature = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);

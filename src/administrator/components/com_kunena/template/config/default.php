@@ -515,6 +515,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->lists ['log_moderation'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA_DESC') ?></td>
 												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_SIGNATURES') ?></td>
+													<td><?php echo $this->lists ['signature'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_SIGNATURES_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

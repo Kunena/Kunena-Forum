@@ -324,7 +324,7 @@ class KunenaAdminModelUsers extends JModelList
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$JFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg());
 
 			return false;
 		}

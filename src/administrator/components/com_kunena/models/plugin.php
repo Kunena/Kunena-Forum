@@ -158,7 +158,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			$this->setError($dispatcher->getError());
+			JFactory::getApplication()->enqueueMessage($dispatcher->getError());
 		}
 	}
 
@@ -186,7 +186,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			// Check for a table object error.
 			if ($return === false && $table->getError())
 			{
-				$this->setError($table->getError());
+				JFactory::getApplication()->enqueueMessage($table->getError());
 
 				return $false;
 			}

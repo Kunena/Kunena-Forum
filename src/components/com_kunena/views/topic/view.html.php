@@ -34,6 +34,8 @@ class KunenaViewTopic extends KunenaView
 	{
 		$this->layout = $this->state->get('layout');
 
+		$errors = array();
+		
 		if ($this->layout == 'flat')
 		{
 			$this->layout = 'default';
@@ -49,17 +51,17 @@ class KunenaViewTopic extends KunenaView
 		if ($this->category->id && !$this->category->authorise('read'))
 		{
 			// User is not allowed to see the category
-			$this->setError($this->category->getError());
+			$errors[] = $this->category->getError();
 		}
 		elseif (!$this->topic)
 		{
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
-			$this->setError(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'));
+			$errors[] = JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP');
 		}
 		elseif (!$this->topic->authorise('read'))
 		{
 			// User is not allowed to see the topic
-			$this->setError($this->topic->getError());
+			$errors[] = $this->topic->getError();
 		}
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
@@ -93,8 +95,6 @@ class KunenaViewTopic extends KunenaView
 
 			return;
 		}
-
-		$errors = $this->getErrors();
 
 		if ($errors)
 		{

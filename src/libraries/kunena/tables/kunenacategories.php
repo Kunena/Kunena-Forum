@@ -164,13 +164,15 @@ class TableKunenaCategories extends KunenaTable
 		// Load the data.
 		$query = "SELECT * FROM #__kunena_categories WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
-		$data = $this->_db->loadAssoc();
 
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 

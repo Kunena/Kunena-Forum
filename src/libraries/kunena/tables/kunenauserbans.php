@@ -82,13 +82,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		$data = $this->_db->loadAssoc();
-
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		
+		try 
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 
@@ -132,13 +134,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		$data = $this->_db->loadAssoc();
-
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		
+		try 
 		{
-			$this->setError($this->_db->getErrorMsg());
-
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 

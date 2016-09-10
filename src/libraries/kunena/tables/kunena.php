@@ -110,14 +110,12 @@ abstract class KunenaTable extends JTable
 
 		$this->_db->setQuery($query);
 		
-		try 
-		{
-			$row = $this->_db->loadAssoc();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			
-		}
+		$row = $this->_db->loadAssoc();
+		
+		if ($this->_db->getErrorNum())
+ 		{
+ 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+ 		}
 
 		if (empty($row))
 		{

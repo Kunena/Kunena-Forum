@@ -1182,6 +1182,12 @@ class KunenaConfig extends JObject
 	public $signature = 1;
 
 	/**
+	 * @var integer Allow user personal
+	 * @since  K5.1.0
+	 */
+	public $personal = 1;
+
+	/**
 	 *
 	 */
 	public function __construct()

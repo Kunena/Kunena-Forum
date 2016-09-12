@@ -31,7 +31,6 @@ $quick = $this->ktemplate->params->get('quick');
 		<?php echo $this->messageButtons->get('quote'); ?>
 		<?php echo $this->messageButtons->get('edit'); ?>
 		<?php if ($config->userdeletetmessage > 0) : ?>
-			<br />
 			<?php echo $this->messageButtons->get('delete'); ?>
 		<?php endif; ?>
 		<?php echo $this->messageButtons->get('thankyou'); ?>

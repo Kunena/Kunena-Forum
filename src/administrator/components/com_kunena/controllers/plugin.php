@@ -590,6 +590,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 				break;
 		}
 
+		KunenaBbcodeEditor::initializeHMVC();
+
 		// Invoke the postSave method to allow for the child class to access the model.
 		$this->postSaveHook($model, $validData);
 

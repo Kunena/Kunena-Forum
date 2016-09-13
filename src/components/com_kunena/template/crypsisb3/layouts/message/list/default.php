@@ -22,7 +22,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
+					(<?php echo JText::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>

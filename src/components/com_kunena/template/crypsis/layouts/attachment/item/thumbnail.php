@@ -29,18 +29,31 @@ if (JApplicationCms::getInstance('site')->get('sef_suffix') && $config->attachme
 }
 else
 {
-	$name = $attachment->getUrl();
+	$name = JURI::root(true) . '/' . $attachment->getUrl();
 }
 
 if ($attachment->isImage())
 {
-	?>
-	<a href="<?php echo $name; ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
-		     height="<?php echo $config->thumbheight; ?>" alt=""/>
-	</a>
+	if ($config->lazyload)
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt=""/>
+		</a>
+		<?php
+	}
+	else
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+			title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt=""/>
+			</a>
 	<?php
+	}
 }
 else
 {

@@ -68,6 +68,10 @@ jQuery(document).ready(function ($) {
 			item = '.qreply';
 		}
 
+		if ($('#wysibb-body').length > 0) {
+			item = '#wysibb-body';
+		}
+
 		if (item != undefined) {
 			$(item).atwho({
 				at: ":",
@@ -91,6 +95,16 @@ jQuery(document).ready(function ($) {
 			});
 		}
 	}
+
+	if (item != undefined) {
+		var users_url = $('#kurl_users').val();
+		$(item).atwho({
+			at: "@",
+			data: users_url,
+			limit: 5
+		});
+	}
+
 
 	/* Store form data into localstorage every 1 second */
 	if ($.fn.sisyphus != undefined) {

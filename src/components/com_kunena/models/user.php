@@ -162,8 +162,15 @@ class KunenaModelUser extends KunenaModel
 			$db    = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$db->setQuery("SELECT COUNT(*) FROM #__users AS u WHERE {$where}");
-			$total = $db->loadResult();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$total = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $total;
@@ -186,8 +193,15 @@ class KunenaModelUser extends KunenaModel
 				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$db->setQuery($query);
-			$total = $db->loadResult();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$total = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $total;
@@ -248,8 +262,15 @@ class KunenaModelUser extends KunenaModel
 			$query .= " ORDER BY {$orderby} {$direction}";
 
 			$db->setQuery($query, $limitstart, $limit);
-			$items = $db->loadColumn();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$items = $db->loadColumn();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			$items = KunenaUserHelper::loadUsers($items);

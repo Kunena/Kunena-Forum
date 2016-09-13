@@ -634,6 +634,61 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Get users type as a string inside the specified category.
+	 *
+	 * @param null   $name
+	 * @param null   $title
+	 * @param null   $class
+	 *
+	 * @return string
+	 * @internal param int $catid Category id or 0 for global.
+	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
+	 *
+	 * @since    K5.1.0
+	 */
+	public function getLinkNoStyle($name = null, $title = null, $class = null)
+	{
+		$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+
+		if ($optional_username == 0 || !$this->userid)
+		{
+			return;
+		}
+
+		if (!$name)
+		{
+			if ($optional_username == 1)
+			{
+				$name = $this->username;
+			}
+			elseif ($optional_username == 2)
+			{
+				$name = $this->name;
+			}
+		}
+
+		$key = "{$name}.{$title}";
+
+		if (empty($this->_link[$key]))
+		{
+			if (!$title)
+			{
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+			}
+
+			$link = $this->getURL();
+
+			if (!empty ($link))
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\">{$name}</a>";
+			else
+				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
+		}
+
+		return $this->_link[$key];
+	}
+
+
+	/**
 	 * @param   bool   $xhtml
 	 * @param   string $task
 	 *

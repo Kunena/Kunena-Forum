@@ -124,6 +124,12 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="optional_username" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_OPTIONAL_USERNAME"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_OPTIONAL_USERNAME_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_USERNAME</option>
+            <option value="2">COM_KUNENA_REALNAME</option>
+        </field>
     </fieldset>
 
     <fieldset name="colors">

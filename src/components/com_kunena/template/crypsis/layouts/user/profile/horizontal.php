@@ -16,6 +16,7 @@ defined('_JEXEC') or die;
 $user   = $this->user;
 $avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 $show   = KunenaConfig::getInstance()->showuserstats;
+$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {
@@ -35,6 +36,11 @@ if ($show)
 		<li>
 			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
 		</li>
+		<?php if ($optional_username) : ?>
+			<li>
+				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+			</li>
+		<?php endif; ?>
 		<?php if ($avatar) : ?>
 			<li>
 				<?php echo $user->getLink($avatar, null, ''); ?>

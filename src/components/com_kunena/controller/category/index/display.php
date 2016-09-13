@@ -223,8 +223,15 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 					WHERE catid IN ({$catlist}) AND hold=1
 					GROUP BY catid"
 				);
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+				
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				foreach ($pending as $item)
 				{

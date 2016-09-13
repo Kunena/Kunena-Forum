@@ -784,7 +784,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-shuffel"></i>';
+			return '<i class="icon icon-shuffle"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
@@ -792,7 +792,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-shuffel"></i>';
+			return '<i class="icon icon-shuffle"></i>';
 		}
 	}
 }

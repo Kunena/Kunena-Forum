@@ -16,6 +16,7 @@ $user            = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $show            = KunenaConfig::getInstance()->showuserstats;
+$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);
@@ -37,6 +38,12 @@ if ($show)
 		<li>
 			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
+
+		<?php if ($optional_username) : ?>
+			<li>
+				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+			</li>
+		<?php endif; ?>
 
 		<?php if ($avatar) : ?>
 			<li>

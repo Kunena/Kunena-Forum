@@ -29,7 +29,7 @@ if (JApplicationCms::getInstance('site')->get('sef_suffix') && $config->attachme
 }
 else
 {
-	$name = $attachment->getUrl();
+	$name = JURI::root(true) . '/' . $attachment->getUrl();
 }
 
 if ($attachment->isImage())

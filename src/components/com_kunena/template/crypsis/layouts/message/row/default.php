@@ -61,10 +61,10 @@ if ($topic->moved_id > 0)
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
 <td class="hidden-phone span1 center topic-item-unread">
-<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $message->message, 'hasTooltip', $category, true, true); ?>
+<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), $this->escape($message->message), 'hasTooltip', $category, true, true); ?>
 <?php else : ?>
 	<td class="hidden-phone span1 center">
-		<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), $message->message, 'hasTooltip', $category, true, false); ?>
+		<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), $this->escape($message->message), 'hasTooltip', $category, true, false); ?>
 		<?php endif; ?>
 	</td>
 	<td class="span<?php echo $cols ?>">
@@ -74,11 +74,11 @@ if ($topic->moved_id > 0)
 			{
 				echo $this->getTopicLink(
 					$topic, 'unread',
-					$message->message . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
+					$this->escape($message->message) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, $this->message, null, $message->message, 'hasTooltip topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, $this->message, null, $this->escape($message->message), 'hasTooltip topictitle', $category, true, false);
 			}
 			?>
 			<div

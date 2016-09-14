@@ -18,6 +18,8 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/search.js');
 ?>
 
@@ -85,7 +87,7 @@ $this->addScript('assets/js/search.js');
 		<div class="collapse in" id="search-options">
 			<div class="well">
 				<div class="row-fluid">
-					<fieldset class="span6">
+					<fieldset class="span4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
@@ -93,12 +95,23 @@ $this->addScript('assets/js/search.js');
 						<?php $this->displayBeforeAfterList('beforeafter'); ?>
 					</fieldset>
 
-					<fieldset class="span6">
+					<fieldset class="span4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
 						<?php $this->displaySortByList('sort'); ?>
 						<?php $this->displayOrderList('order'); ?>
+					</fieldset>
+
+					<fieldset class="span4">
+						<legend>
+							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+						</legend>
+						<div id="searchatdate">
+							<div class="input-append date">
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
+							</div>
+						</div>
 					</fieldset>
 				</div>
 

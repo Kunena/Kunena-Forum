@@ -22,6 +22,8 @@ JHtml::_('dropdown.init');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/search.js');
 
 ?>
@@ -98,7 +100,7 @@ $this->addScript('assets/js/search.js');
 		<div class="collapse in" id="search-options">
 			<div class="well">
 				<div class="row">
-					<fieldset class="col-md-6">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
@@ -110,7 +112,7 @@ $this->addScript('assets/js/search.js');
 						</div>
 					</fieldset>
 
-					<fieldset class="col-md-6">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
@@ -119,6 +121,17 @@ $this->addScript('assets/js/search.js');
 						</div>
 						<div class="col-md-6">
 							<?php $this->displayOrderList('order'); ?>
+						</div>
+					</fieldset>
+
+					<fieldset class="ool-md-4">
+						<legend>
+							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+						</legend>
+						<div id="searchatdate">
+							<div class="input-append date">
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
+							</div>
 						</div>
 					</fieldset>
 				</div>

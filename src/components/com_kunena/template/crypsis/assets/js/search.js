@@ -63,4 +63,10 @@ jQuery(document).ready(function ($) {
 	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");
 	}
+
+	if (jQuery.fn.datepicker != undefined) {
+			jQuery('#searchatdate .input-append.date').datepicker({
+				orientation: "top auto"
+		});
+	}
 });

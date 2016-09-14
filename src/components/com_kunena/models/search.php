@@ -68,6 +68,9 @@ class KunenaModelSearch extends KunenaModel
 		$value = JFactory::getApplication()->input->getString('searchdate', $this->config->searchtime);
 		$this->setState('query.searchdate', $value);
 
+		$value = JFactory::getApplication()->input->getString('searchatdate', null);
+		$this->setState('query.searchatdate', $value);
+
 		$value = JFactory::getApplication()->input->getWord('beforeafter', 'after');
 		$this->setState('query.beforeafter', $value);
 
@@ -195,38 +198,48 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		$time = 0;
+		$time         = 0;
+		$searchatdate = $this->getState('query.searchatdate');
 
-		switch ($this->getState('query.searchdate'))
+		if ($searchatdate==JFactory::getDate()->format('m/d/Y'))
 		{
-			case 'lastvisit' :
-				$time = KunenaFactory::GetSession()->lasttime;
-				break;
-			case 'all' :
-				break;
-			case '1' :
-			case '7' :
-			case '14' :
-			case '30' :
-			case '90' :
-			case '180' :
-			case '365' :
-				$time = time() - 86400 * intval($this->getState('query.searchdate'));
-				break;
-			default :
-				$time = time() - 86400 * 365;
+			switch ($this->getState('query.searchdate'))
+			{
+				case 'lastvisit' :
+					$time = KunenaFactory::GetSession()->lasttime;
+					break;
+				case 'all' :
+					break;
+				case '1' :
+				case '7' :
+				case '14' :
+				case '30' :
+				case '90' :
+				case '180' :
+				case '365' :
+					$time = time() - 86400 * intval($this->getState('query.searchdate'));
+					break;
+				default :
+					$time = time() - 86400 * 365;
+			}
+
+			if ($time)
+			{
+				if ($this->getState('query.beforeafter') == 'after')
+				{
+					$querystrings [] = "m.time > '{$time}'";
+				}
+				else
+				{
+					$querystrings [] = "m.time <= '{$time}'";
+				}
+			}
 		}
-
-		if ($time)
+		else
 		{
-			if ($this->getState('query.beforeafter') == 'after')
-			{
-				$querystrings [] = "m.time > '{$time}'";
-			}
-			else
-			{
-				$querystrings [] = "m.time <= '{$time}'";
-			}
+			$time = JFactory::getDate($this->getState('query.searchatdate'))->toUnix();
+
+			$querystrings[] = "m.time = '{$time}'";
 		}
 
 		$topic_id = $this->getState('query.topic_id');
@@ -282,7 +295,7 @@ class KunenaModelSearch extends KunenaModel
 		if (!$q && !$this->getState('query.searchuser'))
 		{
 			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
-			
+
 			return 0;
 		}
 

@@ -37,7 +37,7 @@ else
 }
 ?>
 
-	<small class="text-muted pull-right hidden-xs">
+	<small class="text-muted pull-right">
 		<?php if ($this->ipLink) : ?>
 			<?php echo KunenaIcons::ip(); ?>
 			<span class="ip"> <?php echo $this->ipLink; ?> </span>

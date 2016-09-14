@@ -193,7 +193,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group" id="kpost-topicicons">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
-									<div id="iconset_topic_list">
+									<div class="span12" id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
 										       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />

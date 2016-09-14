@@ -384,10 +384,6 @@ class KunenaBbcode extends NBBC_BBCode
 				return true;
 			}
 		}
-		else
-		{
-			return true;
-		}
 
 		return false;
 	}
@@ -1222,12 +1218,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 	// Format a [list] tag, which is complicated by the number of different
 	// ways a list can be started.  The following parameters are allowed:
-	// 
+	//
 	//   [list]           Unordered list, using default marker
 	//   [list=circle]    Unordered list, using circle marker
 	//   [list=disc]      Unordered list, using disc marker
 	//   [list=square]    Unordered list, using square marker
-	// 
+	//
 	//   [list=1]         Ordered list, numeric, starting at 1
 	//   [list=A]         Ordered list, capital letters, starting at A
 	//   [list=a]         Ordered list, lowercase letters, starting at a
@@ -1982,7 +1978,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 			//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
-			// 
+			//
 		);
 
 		if (isset($vid_providers [$vid ["type"]]))

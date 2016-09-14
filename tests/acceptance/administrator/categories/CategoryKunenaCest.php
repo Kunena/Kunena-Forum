@@ -107,7 +107,6 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category subcategory1 updated', '15', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 

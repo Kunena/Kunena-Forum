@@ -60,7 +60,7 @@ class KunenaViewTopic extends KunenaView
 			$kquery = new KunenaDatabaseQuery;
 			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
-			
+
 			try
 			{
 				$smileys = $db->loadObjectList();

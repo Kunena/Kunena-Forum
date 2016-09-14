@@ -111,7 +111,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time
 				WHERE m.id={$db->Quote($this->message->id)}";
 			$db->setQuery($query, 0, 1);
-			
+
 			try
 			{
 				$this->replies = $db->loadResult();
@@ -119,7 +119,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				return;
 			}
 		}

@@ -320,14 +320,14 @@ class KunenaAdminModelUsers extends JModelList
 		// Load the list items.
 		$query = $this->_getListQuery();
 
-		try 
+		try
 		{
 			$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
 		}
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-		
+
 			return false;
 		}
 

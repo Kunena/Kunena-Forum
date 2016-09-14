@@ -208,7 +208,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid"
 				);
-				
+
 				try
 				{
 					$pending = $db->loadAssocList();

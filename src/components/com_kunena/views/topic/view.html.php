@@ -35,7 +35,7 @@ class KunenaViewTopic extends KunenaView
 		$this->layout = $this->state->get('layout');
 
 		$errors = array();
-		
+
 		if ($this->layout == 'flat')
 		{
 			$this->layout = 'default';

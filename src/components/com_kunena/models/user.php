@@ -162,7 +162,7 @@ class KunenaModelUser extends KunenaModel
 			$db    = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$db->setQuery("SELECT COUNT(*) FROM #__users AS u WHERE {$where}");
-			
+
 			try
 			{
 				$total = $db->loadResult();
@@ -193,7 +193,7 @@ class KunenaModelUser extends KunenaModel
 				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$total = $db->loadResult();
@@ -262,7 +262,7 @@ class KunenaModelUser extends KunenaModel
 			$query .= " ORDER BY {$orderby} {$direction}";
 
 			$db->setQuery($query, $limitstart, $limit);
-			
+
 			try
 			{
 				$items = $db->loadColumn();

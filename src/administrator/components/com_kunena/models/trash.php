@@ -230,7 +230,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		
+
 		try
 		{
 			$total = (int) $db->loadResult();
@@ -239,7 +239,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return array();
 		}
 
@@ -357,7 +357,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		
+
 		try
 		{
 			$total = (int) $db->loadResult();
@@ -366,7 +366,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return array();
 		}
 

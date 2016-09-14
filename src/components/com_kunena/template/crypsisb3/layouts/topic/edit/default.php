@@ -231,11 +231,19 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 									<!-- The fileinput-button span is used to style the file input field as button -->
 									<span class="btn btn-primary fileinput-button">
-											<?php echo KunenaIcons::plus(); ?>
+										<?php echo KunenaIcons::plus(); ?>
 										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 										<!-- The file input field used as target for the file upload widget -->
-											<input id="fileupload" type="file" name="file" multiple>
-										</span>
+										<input id="fileupload" type="file" name="file" multiple>
+									</span>
+									<button id="insert-all" class="btn btn-primary" type="submit">
+										<?php echo KunenaIcons::upload();?>
+										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
+									</button>
+									<button id="remove-all" class="btn btn-danger" type="submit">
+										<?php echo KunenaIcons::cancel();?>
+										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
+									</button>
 
 									<!-- The container for the uploaded files -->
 									<div id="files" class="files"></div>

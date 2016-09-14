@@ -21,14 +21,14 @@ $quick           = $this->ktemplate->params->get('quick');
 		<div class="kmessagepadding">
 			<?php if ($this->quickreply && $quick == 0) : ?>
 				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
-				   rel="nofollow"><i
-						class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				   rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<?php if ($this->quickreply && $quick == 1) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
-				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i
-						class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 
@@ -36,7 +36,6 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('quote'); ?>
 			<?php echo $this->messageButtons->get('edit'); ?>
 			<?php if ($config->userdeletetmessage > 0) : ?>
-				<br/>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
 			<?php echo $this->messageButtons->get('thankyou'); ?>
@@ -68,19 +67,20 @@ endif; ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if ($this->quickreply && $quick == 0) : ?>
 				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
-				   rel="nofollow"><i
-						class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				   rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<?php if ($this->quickreply && $quick == 1) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
-				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i
-						class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
-				<a class="btn btn-default" data-toggle="dropdown"><i
-						class="glyphicon glyphicon-pencil"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?></a>
+				<a class="btn btn-default" data-toggle="dropdown">
+					<?php echo KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
+				</a>
 				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<li><?php echo $this->messageButtons->get('reply'); ?></li>
@@ -94,8 +94,9 @@ endif; ?>
 
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
-					<a class="btn btn-default" data-toggle="dropdown"><i
-							class="glyphicon glyphicon-random"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?></a>
+					<a class="btn btn-default" data-toggle="dropdown">
+						<?php echo KunenaIcons::shuffle() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+					</a>
 					<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><?php echo $this->messageButtons->get('moderate'); ?></li>

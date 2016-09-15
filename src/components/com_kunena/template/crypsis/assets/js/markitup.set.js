@@ -228,4 +228,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showsoundcloudtag) {
 		$('.soundcloudbutton').remove();
 	}
+	
+	if (!kunena_showconfidentialtag) {
+		$('.confidentialbutton').remove();
+	}
 });

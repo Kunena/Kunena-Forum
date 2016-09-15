@@ -717,24 +717,24 @@ JHtml::_('behavior.tabstate');
 												<td>
 													<input type="text" name="cfg_avatarsize" class="ksm-field" value="<?php echo $this->escape($this->config->avatarsize) ?>" /> kB
 												</td>
-												<td></td>
+												<td><?php echo JText::_('COM_KUNENA_A_AVSIZE_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 												<td class="nowrap">
 													<input type="text" name="cfg_avatarquality" class="ksm-field" value="<?php echo $this->escape($this->config->avatarquality) ?>" /> %
 												</td>
-												<td></td>
+												<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_AVATAR_RESIZE_METHOD') ?></td>
 												<td><?php echo $this->lists ['avatarresizemethod'] ?></td>
-												<td></td>
+												<td><?php echo JText::_('COM_KUNENA_AVATAR_RESIZE_METHOD_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_AVATAR_CROP') ?></td>
 												<td><?php echo $this->lists ['avatarcrop'] ?></td>
-												<td></td>
+												<td><?php echo JText::_('COM_KUNENA_AVATAR_CROP_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>
@@ -1378,4 +1378,3 @@ JHtml::_('behavior.tabstate');
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>
 	</div>
 </div>
-

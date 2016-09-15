@@ -177,6 +177,10 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="hr" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HR" description="COM_KUNENA_TEMPLATE_DISPLAY_HR_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

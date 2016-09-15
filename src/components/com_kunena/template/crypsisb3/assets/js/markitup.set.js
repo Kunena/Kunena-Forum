@@ -236,4 +236,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showhrtag) {
 		$('.hrbutton').remove();
 	}
+	
+	if (!kunena_showlistitemtag) {
+		$('.listitembutton').remove();
+	}
 });

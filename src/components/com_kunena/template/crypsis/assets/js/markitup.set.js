@@ -232,4 +232,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showconfidentialtag) {
 		$('.confidentialbutton').remove();
 	}
+	
+	if (!kunena_showhrtag) {
+		$('.hrbutton').remove();
+	}
 });

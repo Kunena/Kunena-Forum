@@ -202,5 +202,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showsoundcloudtag=0;");
 		}
+		
+		if ($templatesettings->get('confidential'))
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=0;");
+		}
 	}
 }

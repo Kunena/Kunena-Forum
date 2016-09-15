@@ -104,6 +104,15 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showspoilertag=0;");
 		}
 
+                if ($templatesettings->get('confidential'))
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=0;");
+		}
+		
 		if ($templatesettings->get('maps'))
 		{
 			$this->addScriptDeclaration("kunena_showmapstag=1;");

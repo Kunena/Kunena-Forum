@@ -211,5 +211,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showconfidentialtag=0;");
 		}
+		
+		if ($templatesettings->get('hr'))
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=0;");
+		}
 	}
 }

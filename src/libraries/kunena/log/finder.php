@@ -90,8 +90,15 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}

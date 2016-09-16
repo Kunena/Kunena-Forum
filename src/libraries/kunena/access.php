@@ -130,8 +130,15 @@ class KunenaAccess
 		$db    = JFactory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
-		$this->storeRoles((array) $db->loadObjectList());
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$this->storeRoles((array) $db->loadObjectList());
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// FIXME: enable caching after fixing the issues
 		if (KunenaConfig::getInstance()->get('cache_adm'))
@@ -841,8 +848,15 @@ window.addEvent('domready', function(){
 			$query->where("u.id IN ({$userlist})");
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-			$userids = (array) $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$userids = (array) $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $userids;
@@ -907,8 +921,15 @@ window.addEvent('domready', function(){
 
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
-		$userids = (array) $db->loadColumn();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$userids = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $userids;
 	}

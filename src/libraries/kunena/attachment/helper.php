@@ -522,8 +522,15 @@ abstract class KunenaAttachmentHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery($query, 0, $params['limit']);
-		$results = $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 
@@ -565,8 +572,15 @@ abstract class KunenaAttachmentHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+				
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -609,8 +623,15 @@ abstract class KunenaAttachmentHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $mesid)
 		{

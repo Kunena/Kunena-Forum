@@ -240,4 +240,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showlistitemtag) {
 		$('.listitembutton').remove();
 	}
+	
+	if (!kunena_showsupscripttag) {
+		$('.supscriptbutton').remove();
+	}
 });

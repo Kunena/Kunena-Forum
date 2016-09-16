@@ -119,13 +119,18 @@ abstract class KunenaForumTopicUserReadHelper
 		$db    = JFactory::getDBO();
 		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			return false;
 		}
-
+		
 		// Update internal state
 		if (isset(self::$_topics [$old->id]))
 		{
@@ -175,10 +180,15 @@ abstract class KunenaForumTopicUserReadHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+				
 				return false;
 			}
 		}
@@ -200,10 +210,15 @@ abstract class KunenaForumTopicUserReadHelper
 			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
 			SET ur.category_id=t.category_id";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+				
 			return false;
 		}
 
@@ -222,10 +237,15 @@ abstract class KunenaForumTopicUserReadHelper
 		$timestamp = JFactory::getDate()->toUnix() - 60 * 60 * 24 * $days;
 		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+				
 			return false;
 		}
 
@@ -259,8 +279,15 @@ abstract class KunenaForumTopicUserReadHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('topic_id');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadAssocList('topic_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -294,8 +321,15 @@ abstract class KunenaForumTopicUserReadHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('user_id');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadAssocList('user_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// TODO: is there a bug?
 		foreach (self::$_topics [$id] as $instance)

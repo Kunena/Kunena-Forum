@@ -467,9 +467,17 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
 		$db->setQuery($query);
-		$db->execute();
-
-		return KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
+			return false;
+		}
 	}
 
 	/**
@@ -488,8 +496,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDbo();
 		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
 		$db->setQuery($query);
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return (bool) $db->getAffectedRows();
 	}
@@ -1161,8 +1176,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadColumn();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$ids = $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if (empty($ids))
 		{
@@ -1200,8 +1222,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadColumn();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$ids = $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if (empty($ids))
 		{
@@ -1270,8 +1299,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		KunenaUserHelper::recount();
@@ -1411,8 +1447,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$db    = JFactory::getDBO();
 			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC, last_post_id DESC";
 			$db->setQuery($query, 0, 1);
-			$topic = $db->loadObject();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$topic = $db->loadObject();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			if ($topic)
 			{

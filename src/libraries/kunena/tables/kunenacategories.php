@@ -237,10 +237,15 @@ class TableKunenaCategories extends KunenaTable
 		{
 			$query = "SELECT id, parent_id FROM #__kunena_categories";
 			$this->_db->setQuery($query);
-			$list = $this->_db->loadObjectList('id');
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$list = $this->_db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			
 				return;
 			}
 

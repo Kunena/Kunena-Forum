@@ -199,7 +199,15 @@ abstract class KunenaUserHelper
 				WHERE u.id IN ({$userlist})";
 			$db->setQuery($query);
 			$results = $db->loadAssocList();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$results = $db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			foreach ($results as $user)
 			{
@@ -269,9 +277,16 @@ abstract class KunenaUserHelper
 				$where = '1';
 			}
 
-			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
-			list (self::$_total, self::$_lastid) = $db->loadRow();
-			KunenaError::checkDatabaseError();
+			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");	
+			
+			try
+			{
+				list (self::$_total, self::$_lastid) = $db->loadRow();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return (int) self::$_total;
@@ -295,8 +310,15 @@ abstract class KunenaUserHelper
 				WHERE ku.posts>0
 				ORDER BY ku.posts DESC";
 			$db->setQuery($query, 0, $limit);
-			self::$_topposters = (array) $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				self::$_topposters = (array) $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return self::$_topposters;
@@ -336,8 +358,15 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			self::$_online = (array) $db->loadObjectList('userid');
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				self::$_online = (array) $db->loadObjectList('userid');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return self::$_online;
@@ -449,8 +478,15 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			$count = $db->loadResult();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$count = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			$counts          = array();
 			$counts['user']  = count(self::getOnlineUsers());

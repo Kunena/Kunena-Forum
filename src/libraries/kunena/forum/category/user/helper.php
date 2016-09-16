@@ -175,9 +175,16 @@ abstract class KunenaForumCategoryUserHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('category_id');
-		KunenaError::checkDatabaseError();
-
+		
+		try
+		{
+			$results = (array) $db->loadAssocList('category_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+		
 		foreach ($ids as $id)
 		{
 			if (isset($results[$id]))

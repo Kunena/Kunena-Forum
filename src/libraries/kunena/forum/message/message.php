@@ -443,8 +443,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					->where('subscribed=1');
 
 				$db->setQuery($query);
-				$db->execute();
-				KunenaError::checkDatabaseError();
+				
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 		}
 
@@ -1121,7 +1128,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			$db->setQuery($query);
 			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		KunenaForumMessageThankyouHelper::recount();

@@ -216,8 +216,15 @@ class plgSystemKunena extends JPlugin
 				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 			$db->setQuery ( $query );
-			$db->query ();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			// Here's also query to subscribe all users (including blocked) to all existing cats:
 			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)

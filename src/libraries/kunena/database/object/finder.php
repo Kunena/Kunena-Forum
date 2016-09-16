@@ -188,8 +188,15 @@ abstract class KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.' . $this->primaryKey);
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+				
+		try
+		{
+			$results = (array) $this->db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -216,8 +223,14 @@ abstract class KunenaDatabaseObjectFinder
 			$this->db->setQuery($query);
 		}
 
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
+		try
+		{
+			$count = (int) $this->db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $count;
 	}

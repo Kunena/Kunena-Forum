@@ -1256,8 +1256,15 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->execute();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1281,8 +1288,15 @@ class KunenaConfig extends JObject
 	{
 		$db = JFactory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
-		$config = $db->loadAssoc();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$config = $db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if ($config)
 		{

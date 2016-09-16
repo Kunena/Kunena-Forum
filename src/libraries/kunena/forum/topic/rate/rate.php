@@ -94,9 +94,15 @@ class KunenaForumTopicRate extends JObject
 		$query = $this->_db->getQuery(true);
 		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
-		$users = (array) $this->_db->loadObjectList();
 
-		KunenaError::checkDatabaseError();
+		try
+		{
+			$users = (array) $this->_db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($users as $user)
 		{

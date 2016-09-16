@@ -137,13 +137,18 @@ abstract class KunenaForumCategoryHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
 		$db->setQuery($query);
-		$subscribed = (array) $db->loadColumn();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$subscribed = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return array();
 		}
-
+		
 		return self::getCategories($subscribed);
 	}
 
@@ -213,9 +218,19 @@ abstract class KunenaForumCategoryHelper
 		// Get total count
 		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
-
-		if (KunenaError::checkDatabaseError() || !$total)
+		
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
+			return array(0, array());
+		}
+		
+		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -230,13 +245,18 @@ abstract class KunenaForumCategoryHelper
 
 		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery($query, $limitstart, $limit);
-		$subscribed = (array) $db->loadColumn();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$subscribed = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return array(0, array());
 		}
-
+		
 		$list = array();
 
 		foreach ($subscribed as $id)
@@ -287,10 +307,15 @@ abstract class KunenaForumCategoryHelper
 				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery($query);
-		$newlist = (array) $db->loadObjectList('category_id');
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$newlist = (array) $db->loadObjectList('category_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return;
 		}
 
@@ -731,10 +756,15 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 
@@ -750,10 +780,15 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_time=0
 			WHERE tt.id IS NULL";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 
@@ -790,10 +825,15 @@ abstract class KunenaForumCategoryHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			
 				return false;
 			}
 
@@ -849,8 +889,17 @@ abstract class KunenaForumCategoryHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery($query);
-		$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
+			return false;
+		}
 
 		// TODO: remove this by adding level into table
 		self::buildTree($instances);

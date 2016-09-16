@@ -430,13 +430,18 @@ abstract class KunenaAttachmentHelper
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-
-		if (KunenaError::checkDatabaseError())
+		
+		try 
 		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
-
+		
 		if (empty($results))
 		{
 			return true;
@@ -452,9 +457,17 @@ abstract class KunenaAttachmentHelper
 		unset($results);
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
 		$db->setQuery($query);
-		$db->execute();
-
-		return KunenaError::checkDatabaseError();
+		
+		try 
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
+			return false;
+		}
 	}
 
 	/**

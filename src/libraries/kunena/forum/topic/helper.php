@@ -277,9 +277,19 @@ abstract class KunenaForumTopicHelper
 		}
 
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
-
-		if (KunenaError::checkDatabaseError() || !$total)
+		
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
+			return array(0, array());
+		}
+		
+		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -308,11 +318,16 @@ abstract class KunenaForumTopicHelper
 				WHERE {$where} ORDER BY {$orderby}";
 		}
 
-		$db->setQuery($query, $limitstart, $limit);
-		$results = (array) $db->loadAssocList('id');
-
-		if (KunenaError::checkDatabaseError())
+		$db->setQuery($query, $limitstart, $limit);	
+		
+		try
 		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return array(0, array());
@@ -388,8 +403,17 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
+				return false;
+			}
 		}
 
 		return $db->getAffectedRows();
@@ -425,8 +449,17 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
+				return false;
+			}
 		}
 
 		return $db->getAffectedRows();
@@ -496,10 +529,15 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_guest_name = ''
 			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -513,10 +551,15 @@ abstract class KunenaForumTopicHelper
 			SET tt.hold = c.hold
 			WHERE tt.moved_id=0 {$topics}";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -549,10 +592,15 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_guest_name = mmax.name
 			WHERE moved_id=0 {$topics}";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -607,8 +655,17 @@ abstract class KunenaForumTopicHelper
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
 				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
 				GROUP BY thread");
-			$topiclist = (array) $db->loadObjectList('id');
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$topiclist = (array) $db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
+				return false;
+			}
 		}
 
 		$list = array();
@@ -658,8 +715,15 @@ abstract class KunenaForumTopicHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('id');
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{

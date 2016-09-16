@@ -282,10 +282,15 @@ abstract class KunenaForumMessageThankyouHelper
 			SET u.thankyou = 0
 			WHERE t.targetuserid IS NULL";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			return false;
 		}
 
@@ -298,10 +303,15 @@ abstract class KunenaForumMessageThankyouHelper
 			GROUP BY targetuserid
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			return false;
 		}
 

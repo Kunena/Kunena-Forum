@@ -251,13 +251,18 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			->where("thread={$this->id}")->where("hold={$this->_hold}");
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
-
+		
 		return $this->_db->getAffectedRows() ? $this->recount() : $this->save();
 	}
 
@@ -1385,8 +1390,17 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+			
+			try
+			{
+				$this->_db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+				
+				return false;
+			}
 		}
 
 		return true;
@@ -1443,8 +1457,17 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			foreach ($queries as $query)
 			{
 				$db->setQuery($query);
-				$db->execute();
-				KunenaError::checkDatabaseError();
+				
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+					
+					return false;
+				}
 			}
 
 			// FIXME: add recount statistics
@@ -1548,8 +1571,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
 				$db->setQuery($query, 0, 1);
-				$first = $db->loadObject();
-				KunenaError::checkDatabaseError();
+				
+				try
+				{
+					$first = $db->loadObject();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				if ($first)
 				{
@@ -1569,8 +1599,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
 				$db->setQuery($query, 0, 1);
-				$last = $db->loadObject();
-				KunenaError::checkDatabaseError();
+				
+				try
+				{
+					$last = $db->loadObject();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				if ($last)
 				{
@@ -1645,10 +1682,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 					WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
 					GROUP BY m.thread";
 			$this->_db->setQuery($query);
-			$result = $this->_db->loadAssoc();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$result = $this->_db->loadAssoc();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+				
 				return false;
 			}
 
@@ -1662,10 +1704,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 						WHERE m.thread={$this->_db->quote($this->id)}
 						GROUP BY m.thread";
 				$this->_db->setQuery($query);
-				$result = $this->_db->loadAssoc();
 
-				if (KunenaError::checkDatabaseError())
+				try
 				{
+					$result = $this->_db->loadAssoc();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				
 					return false;
 				}
 
@@ -1697,19 +1744,29 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		$query = "UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			return false;
 		}
 
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		
 			return false;
 		}
 

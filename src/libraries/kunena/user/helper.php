@@ -544,13 +544,18 @@ abstract class KunenaUserHelper
 			SET u.posts = 0
 			WHERE ut.user_id IS NULL";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
-
+		
 		$rows = $db->getAffectedRows();
 
 		// Update user post count
@@ -560,10 +565,15 @@ abstract class KunenaUserHelper
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
 
@@ -577,13 +587,18 @@ abstract class KunenaUserHelper
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";
 		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+			
 			return false;
 		}
-
+		
 		$rows += $db->getAffectedRows();
 
 		return $rows;

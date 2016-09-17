@@ -127,7 +127,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -223,7 +223,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));

@@ -124,7 +124,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -351,7 +351,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -407,7 +407,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -462,7 +462,7 @@ class KunenaViewTopic extends KunenaView
 			$params->set('kunena_layout', $this->state->get('layout'));
 
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
 			// Karma points and buttons
@@ -634,7 +634,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
 		return (string) $this->loadTemplateFile('actions');
@@ -709,7 +709,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return (string) $this->loadTemplateFile("message_actions");
@@ -984,7 +984,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
@@ -1255,17 +1255,16 @@ class KunenaViewTopic extends KunenaView
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
 
-			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title . ' - ' . $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
 			}
-			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->getCfg('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 			}
 			else
 			{
-				// TODO: allow translations/overrides (also above)
 				$title = KunenaFactory::getConfig()->board_title . ': ' . $title;
 			}
 

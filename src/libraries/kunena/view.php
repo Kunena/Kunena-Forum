@@ -183,29 +183,30 @@ class KunenaView extends JViewLegacy
 		}
 
 		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
+		$app = JFactory::getApplication();
 
 		switch ((int) $code)
 		{
 			case 400:
-				JResponse::setHeader('Status', '400 Bad Request', true);
+				$app->sendHeaders('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JResponse::setHeader('Status', '401 Unauthorized', true);
+				$app->sendHeaders('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JResponse::setHeader('Status', '403 Forbidden', true);
+				$app->sendHeaders('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JResponse::setHeader('Status', '404 Not Found', true);
+				$app->sendHeaders('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JResponse::setHeader('Status', '410 Gone', true);
+				$app->sendHeaders('Status', '410 Gone', true);
 				break;
 			case 500:
-				JResponse::setHeader('Status', '500 Internal Server Error', true);
+				$app->sendHeaders('Status', '500 Internal Server Error', true);
 				break;
 			case 503:
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
+				$app->sendHeaders('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			default:
 		}
@@ -566,11 +567,11 @@ class KunenaView extends JViewLegacy
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
 
-			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
-			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
 				if ($this->config->board_title == $this->app->get('sitename'))
 				{

@@ -286,7 +286,7 @@ function KunenaParseRoute($segments)
 
 	$profiler = JProfiler::getInstance('Application');
 	KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
-	$starttime = $profiler->getmicrotime();
+	$starttime = microtime(true);
 
 	// Get current menu item and get query variables from it
 	$active = JFactory::getApplication()->getMenu()->getActive();
@@ -424,7 +424,7 @@ function KunenaParseRoute($segments)
 		$vars ['layout'] = 'default';
 	}
 
-	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
+	KunenaRoute::$time = microtime(true) - $starttime;
 
 	foreach ($vars as $var => $value)
 	{

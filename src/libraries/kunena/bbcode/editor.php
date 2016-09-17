@@ -180,7 +180,7 @@ class KunenaBbcodeEditor
 	 *
 	 * @return void
 	 */
-	public function initializeHMVC()
+	public static function initializeHMVC()
 	{
 		$xml_file = simplexml_load_file(dirname(__FILE__) . '/crypsis_editor.xml');
 

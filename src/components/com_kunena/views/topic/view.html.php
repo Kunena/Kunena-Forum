@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\String\StringHelper;
+
 /**
  * Topic View
  */
@@ -1298,12 +1300,12 @@ class KunenaViewTopic extends KunenaView
 		{
 			// TODO: allow translations/overrides
 			$lang   = JFactory::getLanguage();
-			$length = JString::strlen($lang->getName());
+			$length = StringHelper::strlen($lang->getName());
 			$length = 137 - $length;
 
-			if (JString::strlen($description) > $length)
+			if (StringHelper::strlen($description) > $length)
 			{
-				$description = JString::substr($description, 0, $length) . '...';
+				$description = StringHelper::substr($description, 0, $length) . '...';
 			}
 
 			$this->document->setMetadata('description', $description);

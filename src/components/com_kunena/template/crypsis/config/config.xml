@@ -188,6 +188,10 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="subscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT" description="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

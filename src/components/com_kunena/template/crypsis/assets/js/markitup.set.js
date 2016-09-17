@@ -248,4 +248,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showsubscripttag) {
 		$('.subscriptbutton').remove();
 	}
+	
+	if (!kunena_shownumericlisttag) {
+		$('.numericlistbutton').remove();
+	}
 });

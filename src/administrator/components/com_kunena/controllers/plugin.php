@@ -556,6 +556,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 			)
 		);
 
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+		
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)
 		{

@@ -173,11 +173,6 @@ class KunenaBbcodeEditor
 		$template = KunenaFactory::getTemplate();
 
 		$this->isHMVC = $template->isHmvc();
-
-		if ($this->isHMVC)
-		{
-			$this->initializeHMVC();
-		}
 	}
 
 	/**

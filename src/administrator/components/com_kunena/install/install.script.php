@@ -360,8 +360,9 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
+	 * @return string
+	 * @internal param string $version The PHP version to clean
 	 *
-	 * @param   string $version The PHP version to clean
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -538,7 +539,8 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 *
+	 * @internal param array $ignore
 	 */
 	public function deleteFile($path)
 	{
@@ -600,7 +602,8 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 *
+	 * @internal param array $ignore
 	 */
 	public function deleteKfolder($path)
 	{

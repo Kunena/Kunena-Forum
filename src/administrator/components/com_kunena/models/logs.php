@@ -333,7 +333,6 @@ class KunenaAdminModelLogs extends JModelList
 				$finder->order('operation', $direction);
 				break;
 			case 'id':
-			case 'time':
 			default:
 				$finder->order('id', $direction);
 		}

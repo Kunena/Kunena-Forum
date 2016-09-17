@@ -184,16 +184,17 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
-
+			break;
 			// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-
+			break;
 			// Continue.
 			case 'k':
 			case 'kb':
 				$value *= 1024;
+			break;
 		}
 
 		return (int) $value;

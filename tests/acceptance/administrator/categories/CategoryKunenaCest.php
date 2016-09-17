@@ -24,7 +24,7 @@ class CategoryKunenaCest
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
 		$I->amGoingTo('try to save a section');
-		$I->clickToolbarButton('new');
+		$I->clickToolbarButton('New Category');
 		$I->comment('Add new category title');
 		$I->fillField(['name' => 'name'], 'name');
 		$I->comment('Add new category alias');
@@ -55,7 +55,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->clickToolbarButton('new');
+		$I->clickToolbarButton('New Category');
 		$I->comment('Add new category title');
 		$I->comment('Set category');
 		$I->selectOption(['id' => 'parent_id'], '-  name');
@@ -88,7 +88,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new subcategory');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->clickToolbarButton('new');
+		$I->clickToolbarButton('New Category');
 		$I->comment('Add new sub category title');
 		$I->comment('Set subcategory');
 		$I->selectOption(['id' => 'parent_id'], '-  category');

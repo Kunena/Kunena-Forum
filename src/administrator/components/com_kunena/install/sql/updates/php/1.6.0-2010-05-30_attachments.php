@@ -35,22 +35,28 @@ function kunena_160_2010_05_30_attachments($parent)
 
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
 	$db->setQuery($query);
-	$db->execute();
-
-	if ($db->getErrorNum())
+	
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
 	}
-
+	catch(JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+	}
+	
 	// Attachments table has file location - assume we have to convert attachments
 	// Hash and size commited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
 	$db->setQuery($query);
-	$db->execute();
-
-	if ($db->getErrorNum())
+	
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
+	}
+	catch(JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	$collation = $db->getCollation();
@@ -85,11 +91,14 @@ function kunena_160_2010_05_30_attachments($parent)
 					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
 
 	$db->setQuery($query);
-	$db->execute();
-
-	if ($db->getErrorNum())
+	
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
+	}
+	catch(JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
@@ -100,11 +109,14 @@ function kunena_160_2010_05_30_attachments($parent)
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
 	$db->setQuery($query);
-	$db->execute();
-
-	if ($db->getErrorNum())
+	
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
+	}
+	catch(JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	// By now the old attachmets table has been converted to the new Kunena 1.6 format

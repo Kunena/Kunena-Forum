@@ -248,13 +248,16 @@ class KunenaModelSchema extends JModelLegacy
 		}
 
 		$this->db->setQuery($sql[$table]['sql']);
-		$this->db->execute();
-
-		if ($this->db->getErrorNum())
+		
+		try
 		{
-			throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
+			$db->execute();
 		}
-
+		catch(JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
+		}
+		
 		$result            = $sql[$table];
 		$result['success'] = true;
 
@@ -279,11 +282,14 @@ class KunenaModelSchema extends JModelLegacy
 			}
 
 			$this->db->setQuery($sql['sql']);
-			$this->db->execute();
-
-			if ($this->db->getErrorNum())
+			
+			try
 			{
-				throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
+				$db->execute();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
 
 			$results[] = $sql;
@@ -308,11 +314,14 @@ class KunenaModelSchema extends JModelLegacy
 		}
 
 		$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
-		$list = $this->db->loadColumn();
-
-		if ($this->db->getErrorNum())
+		
+		try
 		{
-			throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
+			$list = $this->db->loadColumn();
+		}
+		catch(JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
 
 		$this->tables[$prefix] = array();
@@ -397,12 +406,15 @@ class KunenaModelSchema extends JModelLegacy
 
 			$tableNode->setAttribute("name", $table);
 
-			$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($this->db->getPrefix() . $table));
-			$fields = $this->db->loadObjectList();
+			$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($this->db->getPrefix() . $table));	
 
-			if ($this->db->getErrorNum())
+			try
 			{
-				throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
+				$fields = $this->db->loadObjectList();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
 
 			foreach ($fields as $row)
@@ -431,13 +443,16 @@ class KunenaModelSchema extends JModelLegacy
 			}
 
 			$this->db->setQuery("SHOW KEYS FROM " . $this->db->quoteName($this->db->getPrefix() . $table));
-			$keys = $this->db->loadObjectList();
 
-			if ($this->db->getErrorNum())
+			try
 			{
-				throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
+				$keys = $this->db->loadObjectList();
 			}
-
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
+			}
+			
 			$keyNode = null;
 
 			foreach ($keys as $row)

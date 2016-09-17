@@ -127,65 +127,6 @@ abstract class KunenaError
 	}
 
 	/**
-	 * Return the error in the database query (deprecated use exception in queries instead)
-	 *
-	 * @deprecated
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public static function checkDatabaseError()
-	{
-		$db = JFactory::getDBO();
-
-		if ($db->getErrorNum())
-		{
-			$app = JFactory::getApplication();
-
-			if (JFactory::getApplication()->isAdmin())
-			{
-				$app->enqueueMessage($db->getErrorMsg(), 'error');
-			}
-			elseif (self::$debug || self::$admin)
-			{
-				$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>'), 'error');
-			}
-			else
-			{
-				$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get the last error message from database
-	 *
-	 * @deprecated
-	 *
-	 * @return string
-	 */
-	public static function getDatabaseError()
-	{
-		$db = JFactory::getDBO();
-
-		if ($db->getErrorNum())
-		{
-			if (self::$debug || self::$admin)
-			{
-				return $db->getErrorMsg();
-			}
-			else
-			{
-				return 'Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR');
-			}
-		}
-	}
-
-	/**
 	 * @param $errno
 	 * @param $errstr
 	 * @param $errfile

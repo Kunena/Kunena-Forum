@@ -2786,29 +2786,29 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		if ( !empty($content)  )
+		if (!empty($content))
 		{
-		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal))
-		{
-			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-		}
+			// Display tag in activity streams etc..
+			if (!empty($bbcode->parent->forceMinimal))
+			{
+				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+			}
 
-		$content = strip_tags($content);
+			$content = strip_tags($content);
 
-		$url = trim($content);
+			$url = trim($content);
 
-		if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
-		{
+			if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
+			{
 				// Add scheme to raw domain URLs.
 				$url = "http://{$content}";
 			}
 
 			$url_parsed = parse_url($url);
 
-			if ( $url_parsed['host'] == 'soundcloud.com' )
+			if ($url_parsed['host'] == 'soundcloud.com')
 			{
-			return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
 			}
 		}
 	}

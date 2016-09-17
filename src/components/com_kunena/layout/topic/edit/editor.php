@@ -238,5 +238,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showsupscripttag=0;");
 		}
+		
+		if ($templatesettings->get('subscript'))
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=0;");
+		}
 	}
 }

@@ -136,7 +136,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 			}
 		}
 
-		KunenaBbcodeEditor::initializeHMVC();
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));

@@ -494,7 +494,7 @@ class KunenaViewCommon extends KunenaView
 		switch ($matches[1])
 		{
 			case 'RETURN_URL':
-				return base64_encode(JFactory::getURI()->toString(array('path', 'query', 'fragment')));
+				return base64_encode(JUri::getInstance()->toString(array('path', 'query', 'fragment')));
 			case 'TOKEN':
 				return JHtml::_('form.token');
 			case 'MODULE':

@@ -59,7 +59,7 @@ if ($me->canDoCaptcha())
 		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 		{
 			JPluginHelper::importPlugin('captcha');
-			$dispatcher                = JDispatcher::getInstance();
+			$dispatcher                = JEventDispatcher::getInstance();
 			$result                    = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
 			$output                    = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
 				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"'));

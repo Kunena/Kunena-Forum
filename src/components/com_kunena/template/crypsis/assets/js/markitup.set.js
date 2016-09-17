@@ -244,4 +244,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showsupscripttag) {
 		$('.supscriptbutton').remove();
 	}
+	
+	if (!kunena_showsubscripttag) {
+		$('.subscriptbutton').remove();
+	}
 });

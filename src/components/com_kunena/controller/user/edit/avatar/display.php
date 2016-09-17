@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\String\StringHelper;
+
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
  *
@@ -130,7 +132,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		foreach ($this->galleries as $gallery => $files)
 		{
-			$text = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
+			$text = $gallery ? StringHelper::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = JHtml::_('select.option', $gallery, $text);
 		}
 

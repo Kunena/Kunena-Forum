@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+use Joomla\String\StringHelper;
+
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
 
@@ -325,11 +327,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = JString::parse_url($url);
+				$params = StringHelper::parse_url($url);
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
-					$email = Joomla\String\StringHelper::substr($url, 7);
+					$email = StringHelper::substr($url, 7);
 
 					if ( $this->canCloakEmail($params) )
 					{

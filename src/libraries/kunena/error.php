@@ -103,8 +103,9 @@ abstract class KunenaError
 	/**
 	 * Return different error if it's an admin or a simple user
 	 *
-	 * @return string
+	 * @param $exception
 	 *
+	 * @return string
 	 * @since 5.0
 	 */
 	public static function displayDatabaseError($exception)

@@ -1655,10 +1655,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 						{
 							$link = '';
 						}
-
-						break;
 					}
-
+					break;
 				// Continue to intro if fulltext is empty
 				case 'intro':
 					if (!empty($article->introtext))
@@ -1673,10 +1671,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 						{
 							$link = '';
 						}
-
-						break;
 					}
-
+					break;
 				// Continue to link if introtext is empty
 				case 'link':
 				default:

@@ -258,7 +258,6 @@ class KunenaAdminModelStatistics extends JModelList
 					break;
 
 				case KunenaLog::LOG_POST_DELETE:
-				case KunenaLog::LOG_POST_DELETE:
 				case KunenaLog::LOG_PRIVATE_POST_DELETE:
 					if ($item->type == KunenaLog::TYPE_MODERATION)
 					{

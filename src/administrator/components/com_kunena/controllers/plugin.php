@@ -556,6 +556,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 			)
 		);
 
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+		
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)
 		{
@@ -589,9 +592,6 @@ class KunenaAdminControllerPlugin extends KunenaController
 				);
 				break;
 		}
-
-		$editor = KunenaBbcodeEditor::getInstance();
-		$editor->initializeHMVC();
 
 		// Invoke the postSave method to allow for the child class to access the model.
 		$this->postSaveHook($model, $validData);

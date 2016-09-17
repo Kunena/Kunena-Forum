@@ -67,8 +67,9 @@ $this->getBBcodesEnabled();
 						<option value="16">16</option>
 						<option value="18">18</option>
 					</select><br/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city" id="modal-map-city" type="text"
-					                                                                            value=""/></p>
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>:
+					<input name="modal-map-city" id="modal-map-city"
+					       type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/></p>
 			</div>
 			<div class="modal-footer">
 				<button id="map-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>

@@ -247,5 +247,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showsubscripttag=0;");
 		}
+		
+		if ($templatesettings->get('numericlist'))
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=0;");
+		}
 	}
 }

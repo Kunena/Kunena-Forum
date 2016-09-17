@@ -327,7 +327,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = StringHelper::parse_url($url);
+				$params = Joomla\Uri\UriHelper::parse_url($url);
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
@@ -2804,8 +2804,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$url = "http://{$content}";
 			}
 
-  			$url_parsed = parse_url($url);
-
+			$url_parsed = parse_url($url);
 
 			if ( $url_parsed['host'] == 'soundcloud.com' )
 			{

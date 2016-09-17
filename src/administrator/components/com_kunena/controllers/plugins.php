@@ -136,6 +136,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 			}
 		}
 
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
@@ -248,11 +251,28 @@ class KunenaAdminControllerPlugins extends KunenaController
 		}
 		else
 		{
+			$editor = KunenaBbcodeEditor::getInstance();
+			$editor->initializeHMVC();
+
 			// Checkin succeeded.
 			$message = JText::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 
 			return true;
 		}
+	}
+
+	/**
+	 * Regenerate editor file
+	 *
+	 * @since 5.0.2
+	 */
+	public function resync()
+	{
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
+		$message = 'Sync done';
+		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 	}
 }

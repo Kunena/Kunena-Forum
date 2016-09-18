@@ -256,5 +256,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_shownumericlisttag=0;");
 		}
+		
+		if ($templatesettings->get('bulletedlist'))
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=0;");
+		}
 	}
 }

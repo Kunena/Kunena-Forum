@@ -256,4 +256,16 @@ jQuery(document).ready(function ($){
 	if (!kunena_showbulletedlisttag) {
 		$('.bulletedlistbutton').remove();
 	}
+	
+	if (!kunena_showalignrighttag) {
+		$('.alignrightbutton').remove();
+	}
+	
+	if (!kunena_showalignlefttag) {
+		$('.alignleftbutton').remove();
+	}
+	
+	if (!kunena_showcentertag) {
+		$('.centerbutton').remove();
+	}
 });

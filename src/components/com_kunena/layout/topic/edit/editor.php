@@ -265,5 +265,32 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showbulletedlisttag=0;");
 		}
+		
+		if ($templatesettings->get('alignright'))
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=0;");
+		}
+		
+		if ($templatesettings->get('alignleft'))
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=0;");
+		}
+		
+		if ($templatesettings->get('center'))
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=0;");
+		}
 	}
 }

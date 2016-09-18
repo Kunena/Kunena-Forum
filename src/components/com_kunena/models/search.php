@@ -67,7 +67,7 @@ class KunenaModelSearch extends KunenaModel
 
 		$value = JFactory::getApplication()->input->getString('searchdate', $this->config->searchtime);
 		$this->setState('query.searchdate', $value);
-		
+
 		$value = JFactory::getApplication()->input->getString('searchatdate', null);
 		$this->setState('query.searchatdate', $value);
 
@@ -223,7 +223,7 @@ class KunenaModelSearch extends KunenaModel
 				default :
 					$time = time() - 86400 * 365;
 			}
-	
+
 			if ($time)
 			{
 				if ($this->getState('query.beforeafter') == 'after')
@@ -239,7 +239,7 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$time = JFactory::getDate($this->getState('query.searchatdate'))->toUnix();
-		
+
 			$querystrings[] = "m.time = '{$time}'";
 		}
 

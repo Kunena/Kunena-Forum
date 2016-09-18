@@ -252,4 +252,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_shownumericlisttag) {
 		$('.numericlistbutton').remove();
 	}
+	
+	if (!kunena_showbulletedlisttag) {
+		$('.bulletedlistbutton').remove();
+	}
 });

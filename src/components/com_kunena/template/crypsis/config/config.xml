@@ -200,6 +200,18 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="alignright" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT" description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="alignleft" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT" description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="center" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER" description="COM_KUNENA_TEMPLATE_DISPLAY_CENTER_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

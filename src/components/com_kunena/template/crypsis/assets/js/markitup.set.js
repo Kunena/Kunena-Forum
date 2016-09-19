@@ -268,4 +268,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showcentertag) {
 		$('.centerbutton').remove();
 	}
+	
+	if (!kunena_showunderlinetag) {
+		$('.underlinebutton').remove();
+	}
 });

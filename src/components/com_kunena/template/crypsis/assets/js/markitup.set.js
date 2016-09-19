@@ -272,4 +272,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showunderlinetag) {
 		$('.underlinebutton').remove();
 	}
+	
+	if (!kunena_showitalictag) {
+		$('.italicbutton').remove();
+	}
 });

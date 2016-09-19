@@ -292,5 +292,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showcentertag=0;");
 		}
+		
+		if ($templatesettings->get('underline'))
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
+		}
 	}
 }

@@ -301,5 +301,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
 		}
+		
+		if ($templatesettings->get('italic'))
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=0;");
+		}
 	}
 }

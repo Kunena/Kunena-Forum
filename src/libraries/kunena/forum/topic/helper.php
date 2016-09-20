@@ -188,6 +188,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
+		$exclude = isset($params['exclude']) ? (int) $params['exclude'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
 		$user = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
@@ -207,8 +208,16 @@ abstract class KunenaForumTopicHelper
 		{
 			$post_time_field = 'tt.last_post_time';
 		}
-
-		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
+	
+		if (!$exclude)
+	 	{
+			$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
+		}
+	    else
+		{
+			$categories = KunenaForumCategoryHelper::getCategories($categories, 0);
+		}
+		
 		$catlist = array();
 
 		foreach ($categories as $category)
@@ -233,7 +242,15 @@ abstract class KunenaForumTopicHelper
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
-		$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+	
+		if ($exclude)
+		{
+	    	$where = "tt.hold IN ({$hold}) AND tt.category_id NOT IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+		}
+	    else
+		{
+	    	$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+		}
 
 		if (!$moved)
 		{

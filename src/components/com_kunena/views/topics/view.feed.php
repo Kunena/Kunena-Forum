@@ -19,13 +19,13 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return JException
+	 * @return Exception
 	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		KunenaHtmlParser::$relative = false;
@@ -79,13 +79,13 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return JException
+	 * @return Exception
 	 */
 	function displayUser($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout = 'user';
@@ -122,13 +122,13 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return JException
+	 * @return Exception
 	 */
 	function displayPosts($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout   = 'posts';

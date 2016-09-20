@@ -310,5 +310,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showitalictag=0;");
 		}
+		
+		if ($templatesettings->get('bold'))
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=0;");
+		}
 	}
 }

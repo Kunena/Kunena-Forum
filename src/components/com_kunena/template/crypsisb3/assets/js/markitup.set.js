@@ -284,4 +284,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showstrikethroughtag) {
 		$('.strokebutton').remove();
 	}
+	
+	if (!kunena_showcolorstag) {
+		$('.colors').remove();
+	}
 });

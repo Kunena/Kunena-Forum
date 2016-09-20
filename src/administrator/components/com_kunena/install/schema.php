@@ -248,16 +248,16 @@ class KunenaModelSchema extends JModelLegacy
 		}
 
 		$this->db->setQuery($sql[$table]['sql']);
-		
+
 		try
 		{
-			$db->execute();
+			$this->db->execute();
 		}
 		catch(JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
-		
+
 		$result            = $sql[$table];
 		$result['success'] = true;
 
@@ -282,10 +282,10 @@ class KunenaModelSchema extends JModelLegacy
 			}
 
 			$this->db->setQuery($sql['sql']);
-			
+
 			try
 			{
-				$db->execute();
+				$this->db->execute();
 			}
 			catch(JDatabaseExceptionExecuting $e)
 			{
@@ -314,7 +314,7 @@ class KunenaModelSchema extends JModelLegacy
 		}
 
 		$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
-		
+
 		try
 		{
 			$list = $this->db->loadColumn();
@@ -406,7 +406,7 @@ class KunenaModelSchema extends JModelLegacy
 
 			$tableNode->setAttribute("name", $table);
 
-			$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($this->db->getPrefix() . $table));	
+			$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($this->db->getPrefix() . $table));
 
 			try
 			{
@@ -452,7 +452,7 @@ class KunenaModelSchema extends JModelLegacy
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
-			
+
 			$keyNode = null;
 
 			foreach ($keys as $row)

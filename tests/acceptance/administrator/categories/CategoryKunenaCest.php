@@ -24,6 +24,7 @@ class CategoryKunenaCest
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
 		$I->amGoingTo('try to save a section');
+		$I->wait(5);
 		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
 		$I->clickToolbarButton('New Category');
 		$I->comment('Add new category title');
@@ -56,6 +57,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
+		$I->wait(5);
 		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
 		$I->comment('Add new category title');
 		$I->comment('Set category');
@@ -89,6 +91,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new subcategory');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
+		$I->wait(5);
 		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
 		$I->comment('Add new sub category title');
 		$I->comment('Set subcategory');

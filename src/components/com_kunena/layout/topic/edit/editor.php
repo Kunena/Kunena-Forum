@@ -319,5 +319,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showboldtag=0;");
 		}
+		
+		if ($templatesettings->get('strikethrough'))
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=0;");
+		}
 	}
 }

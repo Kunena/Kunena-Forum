@@ -1,14 +1,14 @@
 <?php
-
 /**
  * Kunena Package
  *
- * @package        Kunena.Package
+ * @package    Kunena.Package
  *
- * @copyright      Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
+
 class CategoryKunenaCest
 {
 	/**
@@ -39,7 +39,6 @@ class CategoryKunenaCest
 		$I->fillField(['id' => 'headerdesc'], 'headerdesc');
 		$I->clickToolbarButton('save');
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->wait(5);
 		$I->doAdministratorLogout();
 	}
 

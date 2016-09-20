@@ -311,12 +311,12 @@ class RoboFile extends \Robo\Tasks
 		}
 
 		// Copy current package
-		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
+		if (!file_exists('dist/pkg_kunena_v5.1.zip'))
 		{
 			$this->build(true);
 		}
 
-		$this->_copy('dist/pkg_kunena_v5.0.zip', $this->cmsPath . "/pkg_kunena_v5.0.zip");
+		$this->_copy('dist/pkg_kunena_v5.1.zip', $this->cmsPath . "/pkg_kunena_v5.1.zip");
 
 		$this->say('Joomla CMS site created at ' . $this->cmsPath);
 

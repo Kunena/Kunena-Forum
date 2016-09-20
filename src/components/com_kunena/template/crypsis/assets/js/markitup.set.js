@@ -288,4 +288,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showcolorstag) {
 		$('.colors').remove();
 	}
+	
+	if (!kunena_showsizetag) {
+		$('.sizebutton').remove();
+	}
 });

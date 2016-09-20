@@ -276,4 +276,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showitalictag) {
 		$('.italicbutton').remove();
 	}
+	
+	if (!kunena_showboldtag) {
+		$('.boldbutton').remove();
+	}
 });

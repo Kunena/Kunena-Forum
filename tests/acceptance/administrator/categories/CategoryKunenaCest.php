@@ -1,14 +1,14 @@
 <?php
-
 /**
  * Kunena Package
  *
- * @package        Kunena.Package
+ * @package    Kunena.Package
  *
- * @copyright      Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
+
 class CategoryKunenaCest
 {
 	/**
@@ -24,8 +24,7 @@ class CategoryKunenaCest
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
 		$I->amGoingTo('try to save a section');
-		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
-		$I->clickToolbarButton('New Category');
+		$I->clickToolbarButton('new');
 		$I->comment('Add new category title');
 		$I->fillField(['name' => 'name'], 'name');
 		$I->comment('Add new category alias');
@@ -40,7 +39,6 @@ class CategoryKunenaCest
 		$I->fillField(['id' => 'headerdesc'], 'headerdesc');
 		$I->clickToolbarButton('save');
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->wait(5);
 		$I->doAdministratorLogout();
 	}
 
@@ -56,7 +54,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
+		$I->clickToolbarButton('new');
 		$I->comment('Add new category title');
 		$I->comment('Set category');
 		$I->selectOption(['id' => 'parent_id'], '-  name');
@@ -89,7 +87,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new subcategory');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
+		$I->clickToolbarButton('new');
 		$I->comment('Add new sub category title');
 		$I->comment('Set subcategory');
 		$I->selectOption(['id' => 'parent_id'], '-  category');

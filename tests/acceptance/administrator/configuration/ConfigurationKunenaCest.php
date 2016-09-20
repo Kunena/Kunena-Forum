@@ -1,14 +1,14 @@
 <?php
-
 /**
  * Kunena Package
  *
- * @package        Kunena.Package
+ * @package    Kunena.Package
  *
- * @copyright      Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
+
 class ConfigurationKunenaCest
 {
 	/**

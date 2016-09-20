@@ -337,5 +337,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showcolorstag=0;");
 		}
+		
+		if ($templatesettings->get('size'))
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=0;");
+		}
 	}
 }

@@ -280,4 +280,8 @@ jQuery(document).ready(function ($){
 	if (!kunena_showboldtag) {
 		$('.boldbutton').remove();
 	}
+	
+	if (!kunena_showstrikethroughtag) {
+		$('.strokebutton').remove();
+	}
 });

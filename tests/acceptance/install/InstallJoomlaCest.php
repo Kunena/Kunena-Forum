@@ -1,14 +1,14 @@
 <?php
-
 /**
  * Kunena Package
  *
- * @package        Kunena.Package
+ * @package    Kunena.Package
  *
- * @copyright      Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
+
 class InstallJoomlaCest
 {
 	/**
@@ -39,7 +39,7 @@ class InstallJoomlaCest
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('/administrator/index.php?option=com_installer');
-		$I->waitForText('Extensions: Install', '30', ['css' => 'H1']);
+		$I->waitForText('Extensions: Install','30', ['css' => 'H1']);
 		$I->click(['link' => 'Install from Folder']);
 		$url = $I->getConfiguration('repo_folder');
 		$I->fillField(['id' => 'install_directory'], $url);

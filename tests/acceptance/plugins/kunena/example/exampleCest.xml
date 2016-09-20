@@ -34,22 +34,22 @@
 
 			<fieldset name="basic">
 				<field name="field1" type="text"
-				       description="Example field 1"
-				       label="Example field 1"
+					description="Example field 1"
+					label="Example field 1"
 				/>
 			</fieldset>
 
 			<fieldset name="advanced">
 				<field name="field2" type="text"
-				       description="Example field 2"
-				       label="Example field 2"
+					description="Example field 2"
+					label="Example field 2"
 				/>
 			</fieldset>
 
 			<fieldset name="example">
 				<field name="field3" type="text"
-				       description="Example field 3"
-				       label="Example field 3"
+					description="Example field 3"
+					label="Example field 3"
 				/>
 			</fieldset>
 

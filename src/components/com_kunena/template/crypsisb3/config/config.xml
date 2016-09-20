@@ -233,6 +233,10 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="size" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SIZE" description="COM_KUNENA_TEMPLATE_DISPLAY_SIZE_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

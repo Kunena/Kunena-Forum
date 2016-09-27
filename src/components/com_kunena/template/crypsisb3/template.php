@@ -117,7 +117,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
 		}
 
 		$icons = $this->ktemplate->params->get('icons');

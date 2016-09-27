@@ -40,7 +40,6 @@ $quick = $this->ktemplate->params->get('quick');
 		<br />
 		<br />
 			<?php echo $this->messageButtons->get('moderate'); ?>
-			<?php echo $this->messageButtons->get('delete'); ?>
 			<?php echo $this->messageButtons->get('undelete'); ?>
 			<?php echo $this->messageButtons->get('permdelete'); ?>
 			<?php echo $this->messageButtons->get('publish'); ?>

@@ -247,15 +247,15 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$filename = urlencode($this->getFilename(false));
 
 		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
-		
+
 		if (JApplicationCms::getInstance('site')->get('sef_suffix'))
 		{
 			$url = preg_replace('/.html/', '', $url);
 		}
-		
+
 		return $url;
 	}
-	
+
 	/**
 	 * Get attachment layout.
 	 *
@@ -317,7 +317,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return KunenauserHelper::get($this->userid);
+		return KunenaUserHelper::get($this->userid);
 	}
 
 	/**

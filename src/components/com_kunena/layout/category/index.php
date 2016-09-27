@@ -53,22 +53,22 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($category->icon))
 			{
-				return '<i class="' . $category->icon . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($category->icon, true, true);
 			}
 			else
 			{
-				return '<i class="' . $catimagepath . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($catimagepath, true, true);
 			}
 		}
 		else
 		{
 			if (!empty($category->icon))
 			{
-				return '<i class="' . $category->icon . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($category->icon, false, true);
 			}
 			else
 			{
-				return '<i class="' . $catimagepath . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($catimagepath, false, true);
 			}
 		}
 	}
@@ -89,22 +89,22 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($subcategory->icon))
 			{
-				return '<i class="' . $subcategory->icon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($subcategory->icon, true, false);
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($defaultcategoryicon, true, false);
 			}
 		}
 		else
 		{
 			if (!empty($subcategory->icon))
 			{
-				return '<i class="' . $subcategory->icon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($subcategory->icon, true, false);
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($defaultcategoryicon, false, false);
 			}
 		}
 	}

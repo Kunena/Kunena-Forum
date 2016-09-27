@@ -795,4 +795,67 @@ class KunenaIcons
 			return '<i class="icon icon-shuffle"></i>';
 		}
 	}
+
+	/**
+	 * Return the category icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function caticon($categoryicon, $new = null, $big = true)
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($new)
+		{
+			$newchar = 'knewchar';
+		}
+		else
+		{
+			$newchar = '';
+		}
+
+		if ($big)
+		{
+			if ($topicicontype == 'fa')
+			{
+				$bigicon = ' fa-big ';
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				$bigicon = ' icon-big ';
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				$bigicon = ' glyphicon-big ';
+			}
+			else
+			{
+				$bigicon = ' icon-big ';
+			}
+		}
+		else
+		{
+			$bigicon = ' ';
+		}
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+		}
+		else
+		{
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+		}
+	}
 }

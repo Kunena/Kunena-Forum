@@ -34,6 +34,14 @@
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
 			</field>
+			<field name="topics_deletedtopics"
+			       type="radio"
+			       default="0"
+			       label="COM_KUNENA_TOPICS_MODE_OPTION_DELETED"
+			       description="COM_KUNENA_TOPICS_MODE_OPTION_DELETED_DESC">
+				<option value="1">COM_KUNENA_SHOW</option>
+				<option value="0">COM_KUNENA_HIDE</option>
+			</field>
 			<field name="topics_categories"
 			       type="kunenacategorylist"
 			       default=""

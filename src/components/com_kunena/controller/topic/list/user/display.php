@@ -70,10 +70,21 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$authorise = 'read';
 		$order = 'last_post_time';
 
+		$holding = $this->getOptions()->get('topics_deletedtopics');
+
+		if ($holding)
+		{
+			$hold = '0,2,3';
+		}
+		else
+		{
+			$hold = '0';
+		}
+
 		$finder = new KunenaForumTopicFinder;
 		$finder
 			->filterByMoved(false)
-			->filterByHold(array(0))
+			->filterByHold(array($hold))
 			->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))

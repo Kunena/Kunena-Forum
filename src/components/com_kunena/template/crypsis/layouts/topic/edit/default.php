@@ -150,7 +150,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
-								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
+								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
@@ -158,7 +158,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
 
 								<div class="controls">
-									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="45" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xxlarge" maxlength="45" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
 									<br />
 									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>

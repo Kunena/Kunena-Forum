@@ -87,8 +87,8 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$results = (int) $db->loadResult();
 		}
@@ -126,7 +126,7 @@ abstract class KunenaForumMessageThankyouHelper
 				GROUP BY s.{$field}
 				ORDER BY countid DESC";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList();
@@ -135,7 +135,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			KunenaError::displayDatabaseError($e);
 		}
-		
+
 		return $results;
 	}
 
@@ -161,7 +161,7 @@ abstract class KunenaForumMessageThankyouHelper
 				ORDER BY countid DESC";
 
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList();
@@ -202,7 +202,7 @@ abstract class KunenaForumMessageThankyouHelper
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
 				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList();
@@ -243,7 +243,7 @@ abstract class KunenaForumMessageThankyouHelper
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList();
@@ -267,11 +267,13 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * Recount thank yous.
+	 * Recount thank yous is null.
 	 *
 	 * @return boolean|int	Number of rows is successful, false on error.
+	 *
+	 * @since K2.0
 	 */
-	static public function recount()
+	static public function recountthankyou()
 	{
 		$db = JFactory::getDBO();
 
@@ -281,7 +283,7 @@ abstract class KunenaForumMessageThankyouHelper
 			SET u.thankyou = 0
 			WHERE t.targetuserid IS NULL";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -289,11 +291,24 @@ abstract class KunenaForumMessageThankyouHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
 		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	/**
+	 * Recount thank yous.
+	 *
+	 * @return boolean|int	Number of rows is successful, false on error.
+	 * @since K2.0
+	 */
+	static public function recount()
+	{
+		$db = JFactory::getDBO();
 
 		// Update user thankyou count
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)
@@ -302,7 +317,7 @@ abstract class KunenaForumMessageThankyouHelper
 			GROUP BY targetuserid
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -310,11 +325,11 @@ abstract class KunenaForumMessageThankyouHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
-		$rows += $db->getAffectedRows();
+		$rows = $db->getAffectedRows();
 
 		return $rows;
 	}

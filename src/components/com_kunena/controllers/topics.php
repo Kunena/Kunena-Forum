@@ -62,6 +62,7 @@ class KunenaControllerTopics extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
+					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
@@ -86,7 +87,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-				
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -148,7 +149,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -210,7 +211,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -273,7 +274,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -331,7 +332,7 @@ class KunenaControllerTopics extends KunenaController
 							$this->app->enqueueMessage($topic->getError(), 'notice');
 						}
 					}
-				} 
+				}
 				else
 				{
 					foreach ($messages as $message)
@@ -370,7 +371,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -411,7 +412,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else

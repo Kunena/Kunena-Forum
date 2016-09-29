@@ -124,10 +124,6 @@ class KunenaAdminControllerCpanel extends KunenaController
 					JFactory::getApplication()->enqueueMessage(JText::_('This version of Kunena is no longer supported. Please upgrade to a supported version. <br/> Please backup before updating.<br/> <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a>'), 'warning');
 				}
 			}
-			else
-			{
-				JFactory::getApplication()->enqueueMessage(JText::_('This version of Kunena and Joomla is no longer supported. Please upgrade to a supported version.  <br/>This template (' . KunenaFactory::getTemplate()->name . ') is no longer supported. Please upgrade to a supported version.  <br/> Please backup before updating.<br/> <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a>'), 'eror');
-			}
 
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
 			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';

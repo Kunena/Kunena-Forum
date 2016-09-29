@@ -17,6 +17,8 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 
 $view = JRequest::getCmd('view', 'cpanel');
+echo JFactory::getApplication()->enqueueMessage(JText::_('This version of Kunena and Joomla is no longer supported. Please upgrade to a supported version. <br/> <br/>This template (' . KunenaFactory::getTemplate()->name . ') is no longer supported. Please upgrade to a supported version.<br/> Please backup before updating.'), 'error' );
+
 ?>
 
 <!-- Main navigation -->

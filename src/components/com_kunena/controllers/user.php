@@ -343,6 +343,8 @@ class KunenaControllerUser extends KunenaController
 					null,
 					$user
 				);
+
+				KunenaUserHelper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);
@@ -686,7 +688,7 @@ class KunenaControllerUser extends KunenaController
 		$post       = $this->app->input->post->getArray();
 		$post_password = $this->app->input->post->get('password', '','raw');
 		$post_password2 = $this->app->input->post->get('password2', '','raw');
-		
+
 		if (empty($post_password) || empty($post_password2))
 		{
 			unset($post['password'], $post['password2']);

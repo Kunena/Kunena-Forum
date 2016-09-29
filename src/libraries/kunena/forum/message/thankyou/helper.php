@@ -273,7 +273,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @since K2.0
 	 */
-	static public function recountthankyou()
+	static public function recountThankyou()
 	{
 		$db = JFactory::getDBO();
 

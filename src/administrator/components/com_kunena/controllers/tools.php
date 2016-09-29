@@ -503,7 +503,8 @@ class KunenaAdminControllerTools extends KunenaController
 						{
 							// Update user statistics
 							KunenaUserHelper::recount();
-							KunenaForumMessageThankyouHelper::recountthankyou();
+							KunenaForumMessageThankyouHelper::recountThankyou();
+							KunenaUserHelper::recountPostsNull();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
 						break;

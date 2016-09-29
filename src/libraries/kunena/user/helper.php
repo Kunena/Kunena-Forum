@@ -557,7 +557,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 */
-	public static function recountbanned()
+	public static function recountBanned()
 	{
 		$db = JFactory::getDBO();
 
@@ -585,7 +585,7 @@ abstract class KunenaUserHelper
 		return $rows;
 	}
 
-	public static function recountpostsnull()
+	public static function recountPostsNull()
 	{
 		$db = JFactory::getDBO();
 

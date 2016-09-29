@@ -344,7 +344,7 @@ class KunenaControllerUser extends KunenaController
 					$user
 				);
 
-				KunenaUserHelper::recountbanned();
+				KunenaUserHelper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);

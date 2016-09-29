@@ -150,7 +150,8 @@ jQuery(document).ready(function($) {
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 												<td>
-													<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
+													<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px;" maxlength="140"><?php echo $this->escape($this->category->description); ?></textarea>
+													<p><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
 												</td>
 											</tr>
 											<tr>

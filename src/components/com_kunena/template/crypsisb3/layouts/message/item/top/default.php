@@ -84,6 +84,9 @@ else
 				<?php if ($attachment->isAudio()) :
 					echo $attachment->getLayout()->render('audio'); ?>
 				<?php endif; ?>
+				<?php if ($attachment->isVideo()) :
+					echo $attachment->getLayout()->render('video'); ?>
+				<?php endif; ?>
 				<li class="col-md-3 center">
 					<div class="thumbnail">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>

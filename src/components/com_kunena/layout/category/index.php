@@ -100,7 +100,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($subcategory->icon))
 			{
-				return KunenaIcons::caticon($subcategory->icon, true, false);
+				return KunenaIcons::caticon($subcategory->icon, false, false);
 			}
 			else
 			{

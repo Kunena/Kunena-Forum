@@ -24,6 +24,7 @@ if (!$attachment->isVideo())
 <div class="clearfix"></div>
 
 <video width="100%" src="<?php echo $location; ?>" controls>
+	Your browser does not support the <code>video</code> element.
 </video>
 <p><?php echo $attachment->getShortName(); ?></p>
 <div class="clearfix"></div>

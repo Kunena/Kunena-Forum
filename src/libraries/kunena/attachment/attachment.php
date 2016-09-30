@@ -127,6 +127,18 @@ class KunenaAttachment extends KunenaDatabaseObject
 		return (stripos($this->filetype, 'image/') !== false);
 	}
 
+	/**
+	 * Check if attachment is audio.
+	 *
+	 * @return  bool  True if attachment is image.
+	 *
+	 * @since  K5.1
+	 */
+	public function isAudio()
+	{
+		return (stripos($this->filetype, 'audio/') !== false);
+	}
+
 
 	/**
 	 * Get path for the file.

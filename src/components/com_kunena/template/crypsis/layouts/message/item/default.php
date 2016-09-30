@@ -82,6 +82,9 @@ $list = array();
 		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
 			<?php foreach ($attachments as $attachment) : ?>
+				<?php if ($attachment->isAudio()) :
+					echo $attachment->getLayout()->render('audio'); ?>
+				<?php endif; ?>
 				<li class="span3 center">
 					<div
 						class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>

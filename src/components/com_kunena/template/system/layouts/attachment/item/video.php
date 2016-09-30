@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
@@ -13,19 +14,17 @@ defined('_JEXEC') or die();
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
+$location = JUri::root() . $attachment->getUrl();
 
-if (!$attachment->isImage())
+if (!$attachment->isVideo())
 {
 	return;
 }
-
-$config = KunenaConfig::getInstance();
-
-$attributesLink = $config->lightbox ? ' rel="lightbox[imagelink' . $attachment->mesid . ']"' : '';
-$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
+<div class="clearfix"></div>
 
-<a href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt=""/>
-</a>
+<video width="100%" src="<?php echo $location; ?>" controls>
+	Your browser does not support the <code>video</code> element.
+</video>
+<p><?php echo $attachment->getShortName(); ?></p>
+<div class="clearfix"></div>

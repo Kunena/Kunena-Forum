@@ -13,21 +13,7 @@ defined('_JEXEC') or die();
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
-if ($attachment->isImage())
-{
-	echo $this->render('image');
-}
-elseif ($attachment->isAudio())
-{
-	echo $this->render('audio');
-}
-elseif ($attachment->isVideo())
-{
-	echo $this->render('video');
-}
-else
-{
-	echo $this->render('file');
-}
-
 ?>
+<div class="kmsgvideo">
+	<?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
+</div>

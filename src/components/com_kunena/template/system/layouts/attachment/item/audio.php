@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
@@ -13,21 +14,17 @@ defined('_JEXEC') or die();
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
-if ($attachment->isImage())
-{
-	echo $this->render('image');
-}
-elseif ($attachment->isAudio())
-{
-	echo $this->render('audio');
-}
-elseif ($attachment->isVideo())
-{
-	echo $this->render('video');
-}
-else
-{
-	echo $this->render('file');
-}
+$location = JUri::root() . $attachment->getUrl();
 
+if (!$attachment->isAudio())
+{
+	return;
+}
 ?>
+<div class="clearfix"></div>
+
+<audio src="<?php echo $location; ?>" controls>
+	Your browser does not support the <code>audio</code> element.
+</audio>
+<p><?php echo $attachment->getShortName(); ?></p>
+<div class="clearfix"></div>

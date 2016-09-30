@@ -2216,6 +2216,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 				}
 			}
+			elseif ($attachment->isVideo())
+			{
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;
+
+				if (!$hide)
+				{
+					return "<div class=\"kmsgvideo\">{$attachment->getUrl()}</div>";
+				}
+			}
 			else
 			{
 				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;

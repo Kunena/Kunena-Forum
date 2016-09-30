@@ -50,14 +50,18 @@ JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
 JHtml::_('jquery.ui');
+$this->addScript('assets/js/jquery.fileupload-ui.js');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
 $this->addScript('assets/js/jquery.fileupload-process.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
+$this->addScript('assets/js/jquery.fileupload-audio.js');
+$this->addScript('assets/js/jquery.fileupload-video.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
+$this->addStyleSheet('assets/css/fileupload-ui.css');
 
 $this->k = 0;
 
@@ -260,6 +264,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 											<?php echo KunenaIcons::cancel(); ?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
+										<div class="clearfix"></div>
+										<div id="progress" class="progress progress-striped">
+											<div class="bar"></div>
+										</div>
 										<!-- The container for the uploaded files -->
 										<div id="files" class="files"></div>
 										<div id="dropzone">

@@ -14,4 +14,19 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
-echo $attachment->isImage() ? $this->render('image') : $this->render('general');
+if ($attachment->isImage())
+{
+	echo $this->render('image');
+}
+elseif ($attachment->isAudio())
+{
+	echo $this->render('audio');
+}
+elseif ($attachment->isVideo())
+{
+	echo $this->render('video');
+}
+else
+{
+	echo $this->render('general');
+}

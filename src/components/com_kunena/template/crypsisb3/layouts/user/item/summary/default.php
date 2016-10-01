@@ -40,12 +40,12 @@ if ($this->config->showuserstats)
 	<div class="row">
 		<div class="col-md-12">
 			<?php if ($avatar) : ?>
-			<div class="col-md-2">
-				<div class="center"> <?php echo $avatar; ?> </div>
-				<div class="center">
-					<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+				<div class="col-md-2">
+					<div class="center"> <?php echo $avatar; ?> </div>
+					<div class="center">
+						<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+					</div>
 				</div>
-			</div>
 			<?php endif; ?>
 			<div class="col-md-10">
 				<div class="row">
@@ -97,28 +97,28 @@ if ($this->config->showuserstats)
 						</ul>
 						<ul class="list-unstyled col-md-3">
 							<?php if (!empty($profile->posts)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-								<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
+									<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($showKarma) && !empty($profile->karma) && KunenaConfig::getInstance()->showkarma) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
-								<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
+									<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($profile->uhits)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
-								<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
+									<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($profile->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-								<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
+									<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($points)) : ?>
 								<li>
@@ -129,9 +129,9 @@ if ($this->config->showuserstats)
 						</ul>
 						<ul class="list-unstyled col-md-3">
 							<?php if (!empty($profile->location)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
-								<span>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
+									<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
 										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
@@ -139,19 +139,19 @@ if ($this->config->showuserstats)
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
 								</span>
-							</li>
+								</li>
 							<?php endif; ?>
 							<?php if ($profile->getGender() >= 1) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
-								<span> <?php echo $profile->getGender(); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
+									<span> <?php echo $profile->getGender(); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if ($profile->birthdate >= '1901-01-01') : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-								<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
+									<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($medals)) : ?>
 								<li>
@@ -189,9 +189,9 @@ if ($this->config->showuserstats)
 <br />
 <div class="col-md-12">
 	<?php if ($signature) : ?>
-	<blockquote>
-		<span><?php echo $signature; ?></span>
-	</blockquote>
+		<blockquote>
+			<span><?php echo $signature; ?></span>
+		</blockquote>
 	<?php endif; ?>
 	<?php if ($personalText) : ?>
 		<blockquote>

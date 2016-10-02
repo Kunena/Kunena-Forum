@@ -86,7 +86,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 					if ($success)
 					{
-						$topic->totalrecount();
+						KunenaForumTopicHelper::recount($ids);
 						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
 					}
@@ -115,7 +115,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 					if ($success)
 					{
-						$topic->totalrecount();
+						KunenaForumTopicHelper::recount($ids);
 						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
 					}

@@ -58,7 +58,7 @@ jQuery(document).ready(function ($){
 	// For picture settings
 	$('#picture-modal-submit').click(function() {
 		var modalpictureurl = $('#modal-picture-url').val();
-		var modalpicturesize = $('#modal-picture-size').val();
+		var modalpicturesize = $("#kpicture-size-list-modal option:selected").val();
 		var modalpicturealt = $('#modal-picture-alt').val();
 
 		var size = '';

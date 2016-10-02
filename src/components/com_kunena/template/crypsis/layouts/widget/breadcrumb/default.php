@@ -17,7 +17,7 @@ if ($item) : ?>
 
 <ul class="breadcrumb">
 	<li class="active">
-		<span class="divider icon-location"></span>
+		<?php echo KunenaIcons::home(); ?> 
 		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
 	</li>
 

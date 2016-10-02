@@ -141,7 +141,7 @@ $view = JFactory::getApplication()->input->getWord('view');
 	</table>
 </form>
 
-<div class="pagination pull-left">
+<div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 	->set('pagination', $this->pagination->setDisplayedPages(4))
 	->set('display', true); ?>

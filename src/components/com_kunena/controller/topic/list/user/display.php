@@ -63,6 +63,17 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
+		$holding = $this->getOptions()->get('topics_deletedtopics');
+
+		if ($holding)
+		{
+			$hold = '0,2,3';
+		}
+		else
+		{
+			$hold = '0';
+		}
+
 		$user = KunenaUserHelper::get($this->state->get('user'));
 
 		// Get categories for the filter.
@@ -74,7 +85,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$finder = new KunenaForumTopicFinder;
 		$finder
 			->filterByMoved(false)
-			->filterByHold(array(0))
+			->filterByHold(array($hold))
 			->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))

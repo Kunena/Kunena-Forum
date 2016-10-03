@@ -32,6 +32,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
+		$holding = $this->getOptions()->get('topics_deletedtopics');
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
@@ -54,6 +55,15 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
+		if ($holding)
+		{
+			$hold = '0,2,3';
+		}
+		else
+		{
+			$hold = '0';
+		}
+
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
 		$reverse     = !$this->state->get('list.categories.in');
@@ -68,24 +78,24 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'topics' :
 				$order = 'first_post_time';
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->filterByTime($time, null, false);
 				break;
 			case 'sticky' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.ordering', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'locked' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.locked', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'noreplies' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.posts', '=', 1)
 					->filterByTime($time);
 				break;
@@ -104,7 +114,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'replies' :
 			default :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->filterByTime($time);
 				break;
 		}

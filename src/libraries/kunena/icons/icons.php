@@ -858,4 +858,34 @@ class KunenaIcons
 			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
 		}
 	}
+
+	/**
+	 * Return the home icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function home()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-home hasTooltip"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-home hasTooltip"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-home hasTooltip"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-home hasTooltip"></span>';
+		}
+	}
 }

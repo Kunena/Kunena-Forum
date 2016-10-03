@@ -211,6 +211,70 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="confidential" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL" description="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="hr" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HR" description="COM_KUNENA_TEMPLATE_DISPLAY_HR_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="listitem" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LISTITEM" description="COM_KUNENA_TEMPLATE_DISPLAY_LISTITEM_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="supscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT" description="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="subscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT" description="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="numericlist" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_NUMBERING" description="COM_KUNENA_TEMPLATE_DISPLAY_NUMBERING_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="bulletedlist" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS" description="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="alignright" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT" description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="alignleft" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT" description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="center" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER" description="COM_KUNENA_TEMPLATE_DISPLAY_CENTER_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="underline" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_UNDERLINE" description="COM_KUNENA_TEMPLATE_DISPLAY_UNDERLINE_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="italic" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ITALIC" description="COM_KUNENA_TEMPLATE_DISPLAY_ITALIC_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="bold" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BOLD" description="COM_KUNENA_TEMPLATE_DISPLAY_BOLD_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="strikethrough" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH" description="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="colors" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_COLORS" description="COM_KUNENA_TEMPLATE_DISPLAY_COLORS_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="size" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SIZE" description="COM_KUNENA_TEMPLATE_DISPLAY_SIZE_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
     </fieldset>
 
     <fieldset name="avatar">

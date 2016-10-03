@@ -107,7 +107,7 @@ abstract class KunenaDatabaseObjectFinder
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by        = $alias . '.' . $this->db->quoteName($by);
+		$by        = (!empty($alias) ? ($alias . '.') : '') . $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -219,7 +219,7 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		else
 		{
-			$query->clear('select')->select('COUNT(*)');
+			$query->clear('select')->clear('order')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
 

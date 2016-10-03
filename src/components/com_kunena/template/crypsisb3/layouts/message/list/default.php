@@ -37,7 +37,7 @@ $view = JFactory::getApplication()->input->getWord('view');
 					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
-		</div>
+		</h2>
 		<?php endif; ?>
 	</div>
 </div>

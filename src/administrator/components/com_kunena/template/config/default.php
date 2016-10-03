@@ -115,10 +115,11 @@ JHtml::_('behavior.tabstate');
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
-													<td colspan="2">
+													<td>
 														<textarea name="cfg_offline_message" rows="3"
 														          cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
 													</td>
+													<td><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_READONLY') ?></td>

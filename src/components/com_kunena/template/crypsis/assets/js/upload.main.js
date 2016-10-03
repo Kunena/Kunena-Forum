@@ -50,6 +50,9 @@ jQuery(function ($) {
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
+		$('#remove-all').hide();
+		$('#insert-all').hide();
+
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) == false) {
 			$(filesedit).each(function (index, file) {
@@ -225,6 +228,9 @@ jQuery(function ($) {
 		.bind('fileuploaddrop', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
 
+			$('#remove-all').show();
+			$('#insert-all').show();
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -238,6 +244,9 @@ jQuery(function ($) {
 		})
 		.bind('fileuploadchange', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
+
+			$('#remove-all').show();
+			$('#insert-all').show();
 
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 

@@ -35,9 +35,7 @@ jQuery(document).ready(function ($) {
 
 	/* To check or uncheck boxes to select items */
 	$('input.kcheckall').click(function () {
-		$('.kcheck').each(function () {
-			$(this).prop('checked', !$(this).prop('checked'));
-		});
+		$('.kcheck').prop('checked', $(this).prop("checked"));
 	});
 
 	/* Allow to make working drop-down choose destination */

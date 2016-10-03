@@ -38,5 +38,10 @@ jQuery(document).ready(function($) {
 		$('#search').collapse("hide");
 	}
 
+	if (jQuery.fn.datepicker != undefined) {
+		jQuery('#searchatdate .input-group.date').datepicker({
+			orientation: "top auto"
+		 });
+	}
 });
 

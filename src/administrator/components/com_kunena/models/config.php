@@ -230,6 +230,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
+		$listUserDeleteMessage[]     = JHtml::_('select.option', '3', JText::_('COM_KUNENA_CONFIG_DELETEMESSAGE_NOT_FIRST_MESSAGE'));
 		$lists['userdeletetmessage'] = JHtml::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $this->config->userdeletetmessage);
 
 		$latestCategoryIn           = array();

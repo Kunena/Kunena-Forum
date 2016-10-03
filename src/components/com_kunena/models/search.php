@@ -201,7 +201,7 @@ class KunenaModelSearch extends KunenaModel
 		$time         = 0;
 		$searchatdate = $this->getState('query.searchatdate');
 
-		if ($searchatdate == JFactory::getDate()->format('m/d/Y'))
+		if (empty($searchatdate) || $searchatdate == JFactory::getDate()->format('m/d/Y'))
 		{
 			switch ($this->getState('query.searchdate'))
 			{

@@ -31,8 +31,8 @@ defined('_JEXEC') or die;
 			<div class="container">
 				<div class="row">
 					<div class="col-md-1">
-						<ul class="list-unstyled btn-link">
-							<li class="text-center"><?php echo KunenaIcons::stats(); ?></li>
+						<ul class="list-unstyled">
+							<li class="btn-link text-center"><?php echo KunenaIcons::stats(); ?></li>
 						</ul>
 					</div>
 

@@ -139,7 +139,7 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php $totaltopics = $category->getTopics() > 0 ? JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
+													<?php $totaltopics = $subcategory->getTopics() > 0 ? JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($subcategory->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 
 													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, null, true, false) . '<small class="hidden-phone muted"> ('
 														. $totaltopics . ')</small>';

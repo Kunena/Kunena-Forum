@@ -985,7 +985,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 			foreach ($cid as $cat)
 			{
-				if ($category != $cat)
+				if ($cat_parent != $cat)
 				{
 					$query = $db->getQuery(true);
 					$query->update($db->quoteName('#__kunena_categories'));

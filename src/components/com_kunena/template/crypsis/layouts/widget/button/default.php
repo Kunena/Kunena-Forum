@@ -21,7 +21,7 @@ $right   = isset($this->pullright) ? ' pull-right' : '';
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
-$normal  = !empty($this->normal) ? 'btn-small' : 'btn';
+$normal  = !empty($this->normal) ? 'btn-sm' : 'btn';
 $icon    = $this->icon;
 ?>
 

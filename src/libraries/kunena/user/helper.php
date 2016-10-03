@@ -300,14 +300,14 @@ abstract class KunenaUserHelper
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName(array('u.id', 'ku.posts'), array(null, 'count')));
 			$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
-			$query->innerJoin($db->quoteName('#__users', 'u') . ' ON (' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid') . ')');
+			$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
 			$query->where($db->quoteName('ku.posts') . '>0');
 			$query->order($db->quoteName('ku.posts') . ' DESC');
 			
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = JAccess::getUsersByGroup(8);
-				$query->where('ku.id NOT IN (' . implode(',', $filter) . ')');
+				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 			}
 			
 			$db->setQuery($query, 0, $limit);

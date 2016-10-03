@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kwho"></div>
+			<div class="btn btn-default btn-sm <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kwho"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -28,54 +28,58 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h2>
 
-	<div class="row-fluid collapse in" id="kwho">
-		<div class="well-small">
-			<ul class="unstyled col-md-1 btn-link">
-				<?php echo KunenaIcons::members(); ?>
-			</ul>
-			<ul class="unstyled col-md-11">
-			<span>
-				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
-			</span>
-				<?php
-				$template = KunenaTemplate::getInstance();
-				$direction = $template->params->get('whoisonlineName');
+	<div class="collapse in" id="kwho">
+		<div class="well well-sm">
+			<div class="container">
+				<div class="row">
+					<ul class="list-unstyled col-md-1 text-center btn-link">
+						<?php echo KunenaIcons::members(); ?>
+					</ul>
+					<ul class="list-unstyled col-md-11">
+					<span>
+						<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
+					</span>
+						<?php
+						$template = KunenaTemplate::getInstance();
+						$direction = $template->params->get('whoisonlineName');
 
-				if ($direction == 'both') : ?>
-					<div><?php echo $this->setLayout('both'); ?></div>
-				<?php
-				elseif ($direction == 'avatar') : ?>
-					<div><?php echo $this->setLayout('avatar'); ?></div>
-				<?php else : ?>
-					<div><?php echo $this->setLayout('name'); ?></div>
-				<?php
-					endif;
-				?>
+						if ($direction == 'both') : ?>
+							<div><?php echo $this->setLayout('both'); ?></div>
+						<?php
+						elseif ($direction == 'avatar') : ?>
+							<div><?php echo $this->setLayout('avatar'); ?></div>
+						<?php else : ?>
+							<div><?php echo $this->setLayout('name'); ?></div>
+						<?php
+							endif;
+						?>
 
-				<?php if (!empty($this->onlineList)) : ?>
-				<div>
-					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
-					<span class="kwho-admin">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
-					</span>
-					<span class="kwho-globalmoderator">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
-					</span>
-					<span class="kwho-moderator">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
-					</span>
-					<span class="kwho-banned">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
-					</span>
-					<span class="kwho-user">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
-					</span>
-					<span class="kwho-guest">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
-					</span>
+						<?php if (!empty($this->onlineList)) : ?>
+						<div>
+							<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
+							<span class="kwho-admin">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+							</span>
+							<span class="kwho-globalmoderator">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+							</span>
+							<span class="kwho-moderator">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+							</span>
+							<span class="kwho-banned">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+							</span>
+							<span class="kwho-user">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+							</span>
+							<span class="kwho-guest">
+								<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+							</span>
+						</div>
+						<?php endif; ?>
+					</ul>
 				</div>
-				<?php endif; ?>
-			</ul>
+			</div>
 		</div>
 	</div>
 </div>

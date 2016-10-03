@@ -50,7 +50,7 @@ if ($this->config->showuserstats)
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-md-12">
-						<ul class="unstyled col-md-2">
+						<ul class="list-unstyled col-md-3">
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
 								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
@@ -73,7 +73,7 @@ if ($this->config->showuserstats)
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="unstyled col-md-3">
+						<ul class="list-unstyled col-md-3">
 							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
@@ -97,8 +97,8 @@ if ($this->config->showuserstats)
 								<span> <?php echo $profile->getTime()->toKunena('time'); ?> </span>
 							</li>
 						</ul>
-						<ul class="unstyled col-md-2">
-							<?php if (!empty($profile->posts)) : ?>
+						<ul class="list-unstyled col-md-3">
+						<?php if (!empty($profile->posts)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 									<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
@@ -129,8 +129,8 @@ if ($this->config->showuserstats)
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="unstyled col-md-3">
-							<?php if (!empty($profile->location)) : ?>
+						<ul class="list-unstyled col-md-3">
+						<?php if (!empty($profile->location)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 									<span>
@@ -169,20 +169,20 @@ if ($this->config->showuserstats)
 						</div>
 						<div class="col-md-3 pull-right">
 							<?php if ($private) : ?>
-								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-xs', 'glyphicon glyphicon-comments-2'); ?>
+								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-sm', 'glyphicon glyphicon-comment'); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"
+								<a class="btn btn-default btn-sm" href="mailto:<?php echo $profile->email; ?>"
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small"
+								<a class="btn btn-default btn-sm"
 								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>
 							<?php elseif (empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small"
+								<a class="btn btn-default btn-sm"
 								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteURL ?></a>
 							<?php elseif (!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-default btn-small"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></button>
+								<button class="btn btn-default btn-sm"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

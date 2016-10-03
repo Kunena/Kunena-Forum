@@ -23,6 +23,8 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 
 ?>
 
@@ -112,6 +114,17 @@ $this->addScript('assets/js/search.js');
 						</div>
 						<div class="col-md-6">
 						<?php $this->displayOrderList('order'); ?>
+						</div>
+					</fieldset>
+
+					<fieldset class="col-md-6">
+						<legend>
+							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+						</legend>
+						<div class="col-md-6" id="searchatdate">
+							<div class="input-group date">
+								<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+							</div>
 						</div>
 					</fieldset>
 				</div>

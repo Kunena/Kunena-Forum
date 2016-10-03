@@ -301,6 +301,19 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
+	 * Access to the query select
+	 *
+	 * @param   mixed  $columns  A string or an array of field names.
+	 * @return $this
+	 */
+	public function select($columns)
+	{
+		$this->query->select($columns);
+
+		return $this;
+	}
+
+	/**
 	 * @param   JDatabaseQuery $query
 	 */
 	protected function build(JDatabaseQuery $query)

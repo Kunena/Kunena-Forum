@@ -199,7 +199,7 @@ abstract class KunenaUserHelper
 				WHERE u.id IN ({$userlist})";
 			$db->setQuery($query);
 			$results = $db->loadAssocList();
-			
+
 			try
 			{
 				$results = $db->loadAssocList();
@@ -277,8 +277,8 @@ abstract class KunenaUserHelper
 				$where = '1';
 			}
 
-			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");	
-			
+			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
+
 			try
 			{
 				list (self::$_total, self::$_lastid) = $db->loadRow();
@@ -310,7 +310,7 @@ abstract class KunenaUserHelper
 				WHERE ku.posts>0
 				ORDER BY ku.posts DESC";
 			$db->setQuery($query, 0, $limit);
-			
+
 			try
 			{
 				self::$_topposters = (array) $db->loadObjectList();
@@ -358,7 +358,7 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			
+
 			try
 			{
 				self::$_online = (array) $db->loadObjectList('userid');
@@ -478,7 +478,7 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$count = $db->loadResult();
@@ -533,8 +533,76 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return boolean|integer
+	 *
+	 * @since K5.1
 	 */
 	public static function recount()
+	{
+		$db = JFactory::getDBO();
+
+		// Update user post count
+		$query = "INSERT INTO #__kunena_users (userid, posts)
+				SELECT user_id AS userid, SUM(posts) AS posts
+				FROM #__kunena_user_topics
+				GROUP BY user_id
+			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	/**
+	 * @return boolean|integer
+	 *
+	 * @since K5.1
+	 */
+	public static function recountBanned()
+	{
+		$db = JFactory::getDBO();
+
+		// Update banned state
+		$query = "UPDATE #__kunena_users AS u
+			LEFT JOIN (
+				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
+			) AS b ON u.userid=b.userid
+			SET u.banned=b.banned";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	/**
+	 * @return bool|int
+	 *
+	 * @since K5.1
+	 */
+	public static function recountPostsNull()
 	{
 		$db = JFactory::getDBO();
 
@@ -544,7 +612,7 @@ abstract class KunenaUserHelper
 			SET u.posts = 0
 			WHERE ut.user_id IS NULL";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -552,54 +620,11 @@ abstract class KunenaUserHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		$rows = $db->getAffectedRows();
-
-		// Update user post count
-		$query = "INSERT INTO #__kunena_users (userid, posts)
-				SELECT user_id AS userid, SUM(posts) AS posts
-				FROM #__kunena_user_topics
-				GROUP BY user_id
-			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
-		$db->setQuery($query);
-		
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-			
-			return false;
-		}
-
-		$rows += $db->getAffectedRows();
-
-		// Update banned state
-		// TODO: move out of here, it's slow
-		$query = "UPDATE #__kunena_users AS u
-			LEFT JOIN (
-				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
-			) AS b ON u.userid=b.userid
-			SET u.banned=b.banned";
-		$db->setQuery($query);
-		
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-			
-			return false;
-		}
-		
-		$rows += $db->getAffectedRows();
 
 		return $rows;
 	}

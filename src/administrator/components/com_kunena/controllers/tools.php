@@ -474,6 +474,7 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->topics)
 						{
 							// Update topic statistics
+							KunenaAttachmentHelper::cleanup();
 							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg = JText::sprintf(
@@ -507,7 +508,9 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->users)
 						{
 							// Update user statistics
+							KunenaForumMessageThankyouHelper::recountThankyou();
 							KunenaUserHelper::recount();
+							KunenaUserHelper::recountPostsNull();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
 						break;

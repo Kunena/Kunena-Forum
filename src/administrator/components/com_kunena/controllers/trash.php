@@ -84,7 +84,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					if ($success)
+					{
+						$topic->totalrecount();
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					}
 				}
 				elseif ($type == 'messages')
 				{
@@ -108,7 +113,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					if ($success)
+					{
+						$topic->totalrecount();
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					}
 				}
 			}
 			else

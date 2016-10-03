@@ -343,6 +343,8 @@ class KunenaControllerUser extends KunenaController
 					null,
 					$user
 				);
+
+				KunenaUserHelper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);

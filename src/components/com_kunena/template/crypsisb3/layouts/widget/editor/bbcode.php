@@ -110,13 +110,16 @@ if (!empty($codeTypes)) : ?>
 				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size"
+				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
+					<input name="modal-picture-size"
 				                                                                                         id="modal-picture-size" type="text" value=""
 				                                                                                         placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE_PLACEHOLDER') ?>"/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt"
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>:
+					<input class="form-control" name="modal-picture-alt"
 					                                                                                     id="modal-picture-alt" type="text" value=""
 					                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url"
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>:
+					<input name="modal-picture-url"
 					                                                                                     id="modal-picture-url" type="text" value=""
 					                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
 				</p>
@@ -137,10 +140,14 @@ if (!empty($codeTypes)) : ?>
 				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>: <input class="form-control" name="modal-link-url"
-				                                                                                     id="modal-link-url" type="text" value=""/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>: <input class="form-control" name="modal-link-text"
-					                                                                                   id="modal-link-text" type="text" value=""/></p>
+				<p>
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
+					<input name="modal-link-url" id="modal-link-url" type="text" value=""
+					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>" />
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
+					<input name="modal-link-text" id="modal-link-text" type="text" value=""
+					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>" />
+				</p>
 			</div>
 			<div class="modal-footer">
 				<button id="link-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -257,11 +264,12 @@ if (!empty($codeTypes)) : ?>
 				<?php
 				if ($this->poll->exists())
 				{
-				$x = 1;
-				foreach ($this->poll->getOptions() as $poll_option)
-				{
-					echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
-					$x++;
+					$x = 1;
+					foreach ($this->poll->getOptions() as $poll_option)
+					{
+						echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
+						$x++;
+					}
 				}
 				?>
 				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>"/>

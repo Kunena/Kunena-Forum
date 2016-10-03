@@ -147,6 +147,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<input type="text" id="kauthorname" name="authorname" size="35"
 								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge"
 								       maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required/>
+								<!-- Encourage guest user to login or register -->
+								<?php
+								$login =  '<a class="btn-link" href="index.php?option=com_users&view=login"> ' . JText::_('JLOGIN') . '</a>';
+								$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
+								echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ; ?>
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>

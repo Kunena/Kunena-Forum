@@ -306,8 +306,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   mixed  $columns  A string or an array of field names.
 	 * @return $this
 	 */
-	public function select($columns) {
+	public function select($columns)
+	{
 		$this->query->select($columns);
+
 		return $this;
 	}
 

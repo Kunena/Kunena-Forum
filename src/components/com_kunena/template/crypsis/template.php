@@ -81,7 +81,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
 		}
 
 		// Load template colors settings

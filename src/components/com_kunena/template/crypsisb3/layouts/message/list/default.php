@@ -37,9 +37,9 @@ $view    = JFactory::getApplication()->input->getWord('view');
 					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
+		</h2>
+		<?php endif; ?>
 	</div>
-	<?php endif; ?>
-</div>
 </div>
 
 <div class="pull-right">

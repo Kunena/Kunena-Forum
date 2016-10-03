@@ -393,7 +393,7 @@ class KunenaForumStatistics
 					HAVING count > 0
 					ORDER BY count DESC";
 			$this->_db->setQuery($query, 0, $limit);
-			
+
 			try
 			{
 				$polls = (array) $this->_db->loadObjectList('id');
@@ -402,7 +402,7 @@ class KunenaForumStatistics
 			{
 				KunenaError::displayDatabaseError($e);
 			}
-			
+
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
@@ -440,13 +440,22 @@ class KunenaForumStatistics
 
 		if (count($this->topThanks) < $limit)
 		{
-			$query = "SELECT t.targetuserid AS id, COUNT(t.targetuserid) AS count
-				FROM `#__kunena_thankyou` AS t
-				INNER JOIN `#__users` AS u ON u.id=t.targetuserid
-				GROUP BY t.targetuserid
-				ORDER BY count DESC";
+			$query = $this->_db->getQuery(true);
+			$query->select($this->_db->quoteName(array('t.targetuserid'), array('id')));
+			$query->select('COUNT(t.targetuserid) AS count');
+			$query->from($this->_db->quoteName(array('#__kunena_thankyou'), array('t')));
+			$query->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'));
+			$query->group($this->_db->quoteName('t.targetuserid'));
+			$query->order($this->_db->quoteName('count') . ' DESC');
+
+			if (KunenaFactory::getConfig()->superadmin_userlist)
+			{
+				$filter = JAccess::getUsersByGroup(8);
+				$query->where('ku.id NOT IN (' . implode(',', $filter) . ')');
+			}
+
 			$this->_db->setQuery($query, 0, $limit);
-			
+
 			try
 			{
 				$this->topThanks = (array) $this->_db->loadObjectList();

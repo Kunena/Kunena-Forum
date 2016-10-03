@@ -106,7 +106,7 @@ EOF;
 		if ($iconcolornew)
 		{
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}

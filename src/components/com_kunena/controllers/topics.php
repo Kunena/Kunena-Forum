@@ -62,6 +62,7 @@ class KunenaControllerTopics extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
+					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{

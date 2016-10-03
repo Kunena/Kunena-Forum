@@ -341,7 +341,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return KunenauserHelper::get($this->userid);
+		return KunenaUserHelper::get($this->userid);
 	}
 
 	/**

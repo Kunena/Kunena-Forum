@@ -120,7 +120,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 		}
 
-		if($categoryIds !== null) {
+		if ($categoryIds !== null)
+		{
 			$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 			$finder->filterByCategories($categories);
 		}

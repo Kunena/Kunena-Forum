@@ -121,9 +121,9 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>
-						<div id="searchatdate">
+						<div class="col-md-6" id="searchatdate">
 							<div class="input-group date">
-								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+								<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
 					</fieldset>

@@ -84,19 +84,19 @@ if (!empty($this->spacing)) : ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
-				<i class="glyphicon glyphicon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($userTopic->posts) : ?>
-				<i class="glyphicon glyphicon-flag hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"><?php echo KunenaIcons::flag(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($this->topic->attachments) : ?>
-				<i class="glyphicon glyphicon-paperclip hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"><?php echo KunenaIcons::attach(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($this->topic->poll_id && $category->allow_polls) : ?>
-				<i class="glyphicon glyphicon-stats hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"><?php echo KunenaIcons::poll(); ?></span>
 			<?php endif; ?>
 		</div>
 
@@ -113,8 +113,8 @@ if (!empty($this->spacing)) : ?>
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				</span>	*/ ?>
 				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
-						<i class="glyphicon glyphicon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					<span class="label label-primary">
+						<?php echo KunenaIcons::lock(); ?> <?php JText::_('COM_KUNENA_LOCKED'); ?>
 					</span>
 				<?php endif; ?>
 			</div>
@@ -130,8 +130,8 @@ if (!empty($this->spacing)) : ?>
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				</span>	*/ ?>
 				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
-						<i class="glyphicon glyphicon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					<span class="label label-primary">
+						<?php echo KunenaIcons::lock(); ?> <?php JText::_('COM_KUNENA_LOCKED'); ?>
 					</span>
 				<?php endif; ?>
 			</div>

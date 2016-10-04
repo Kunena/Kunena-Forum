@@ -1370,15 +1370,33 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$me = KunenaUserHelper::getMyself();
+		$message = $this->getMessage();
+		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		$layout = KunenaLayout::factory('BBCode/Hidden');
-
-		if ($layout->getPath())
+		if (isset($bbcode->parent->message->userid))
 		{
-			return (string) $layout
-				->set('me', $me)
-				->set('content', $content)
-				->set('params', $params);
+			$message_userid = $bbcode->parent->message->userid;
+		}
+		else
+		{
+			$message_userid = $bbcode->parent->userid;
+		}
+
+		if (($me->userid && $message_userid == $me->userid) || $moderator)
+		{
+			$layout = KunenaLayout::factory('BBCode/Hide');
+
+			if ($layout->getPath())
+			{
+				return (string) $layout
+					->set('me', $me)
+					->set('content', $content)
+					->set('params', $params);
+			}
+		}
+		else
+		{
+			return '<br />' . JText::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
 		}
 	}
 

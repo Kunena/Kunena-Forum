@@ -79,7 +79,7 @@ defined('_JEXEC') or die;
 		}
 		else
 		{
-			echo '<li' . $class . '>';
+			echo '<li' . $class . ' >';
 		}
 
 		// Render the menu item.
@@ -129,7 +129,7 @@ defined('_JEXEC') or die;
 			echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
 			if ($item->level == 1)
 			{
-				echo '<li><a>';
+				echo '<li><a itemprop="url"><span itemprop="name">';
 			}
 		}
 		// The next item is shallower.

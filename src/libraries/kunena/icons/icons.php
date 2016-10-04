@@ -140,6 +140,66 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the lock icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function lock()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-lock" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-lock"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-lock"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-lock"></span>';
+		}
+	}
+	
+	/**
+	 * Return the lock icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function shield()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-shield" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-eye-open"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-eye-open"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-eye-open"></span>';
+		}
+	}
+	
+	/**
 	 * Return the stats icon
 	 *
 	 * @return string

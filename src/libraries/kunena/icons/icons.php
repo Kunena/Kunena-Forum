@@ -319,6 +319,36 @@ class KunenaIcons
 			return '<i class="icon icon-time"></i>';
 		}
 	}	
+
+	/**
+	 * Return the thumbs-up icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function thumbsup()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-thumbs-o-up"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-thumbs-up"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-thumbs-up"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-thumbs-up"></i>';
+		}
+	}	
 	
 	/**
 	 * Return the cancel icon

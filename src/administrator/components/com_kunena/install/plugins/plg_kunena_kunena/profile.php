@@ -108,7 +108,7 @@ class KunenaProfileKunena extends KunenaProfile
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$filter = JAccess::getUsersByGroup(8);
-			$query->where('ku.id NOT IN (' . implode(',', $filter) . ')');
+			$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 		}
 
 		$db->setQuery($query, 0, $limit);

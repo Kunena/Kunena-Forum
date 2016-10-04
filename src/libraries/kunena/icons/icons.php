@@ -50,7 +50,7 @@ class KunenaIcons
 	}
 
 	/**
-	 * Return the arrwo up icon
+	 * Return the arrow up icon
 	 *
 	 * @return string
 	 *
@@ -170,7 +170,7 @@ class KunenaIcons
 	}
 	
 	/**
-	 * Return the lock icon
+	 * Return the shield icon (reviewed)
 	 *
 	 * @return string
 	 *

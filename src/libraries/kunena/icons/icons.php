@@ -170,6 +170,36 @@ class KunenaIcons
 	}
 	
 	/**
+	 * Return the star icon (secret key)
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function star()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-star" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-star"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-star"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-star"></span>';
+		}
+	}	
+	
+	/**
 	 * Return the shield icon (reviewed)
 	 *
 	 * @return string
@@ -198,6 +228,66 @@ class KunenaIcons
 			return '<span class="icon icon-eye-open"></span>';
 		}
 	}
+
+	/**
+	 * Return the flag icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function flag()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-flag" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-flag"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-flag"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-flag"></span>';
+		}
+	}
+	
+	/**
+	 * Return the poll icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function poll()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-bars"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-stats"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-bars"></span>';
+		}
+	}	
 	
 	/**
 	 * Return the stats icon

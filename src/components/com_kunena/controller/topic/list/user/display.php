@@ -108,6 +108,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				$finder->filterByUser($user, 'subscribed');
 				break;
 
+			case 'plugin':
+				$pluginmode = $this->state->get('list.modetype');
+				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher->trigger('onKunenaGetUserTopics', array($pluginmode, &$finder, &$order, &$categoryIds, $this));
+				break;
+
 			default :
 				$finder
 					->filterByUser($user, 'involved')
@@ -115,8 +121,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
-		$finder->filterByCategories($categories);
+		if ($categoryIds !== null)
+		{
+			$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+			$finder->filterByCategories($categories);
+		}
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 

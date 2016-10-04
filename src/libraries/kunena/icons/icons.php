@@ -291,6 +291,36 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the clock icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function clock()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-clock-o"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-time"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-time"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-time"></i>';
+		}
+	}	
+	
+	/**
 	 * Return the cancel icon
 	 *
 	 * @return string
@@ -308,15 +338,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-cancel"></i>';
+			return '<i class="icon icon-remove"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-remove-sign"></span>';
+			return '<span class="glyphicon glyphicon-remove"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-cancel"></i>';
+			return '<i class="icon icon-remove"></i>';
 		}
 	}
 

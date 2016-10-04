@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" itemscope itemtype="http://schema.org/SiteNavigationElement">
 	<div class="navbar-inner">
 		<div class="visible-lg">
 			<?php echo $this->subRequest('Widget/Menu'); ?>

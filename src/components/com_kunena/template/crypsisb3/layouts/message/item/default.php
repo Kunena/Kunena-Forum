@@ -39,7 +39,7 @@ $list = array();
 	<?php echo KunenaIcons::ip();?>
 	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<?php endif;?>
-	<span class="glyphicon glyphicon-time"></span>
+	<?php echo KunenaIcons::clock();?>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
 </small>
@@ -81,7 +81,7 @@ $list = array();
 		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
 			<?php foreach ($attachments as $attachment) : ?>
-				<li class="col-md-3 center">
+				<li class="col-md-3 text-center">
 					<div class="thumbnail">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 						<?php echo $attachment->getLayout()->render('textlink'); ?>
@@ -141,7 +141,7 @@ endif; ?>
 		if (!empty($this->thankyou_delete[$userid]))
 		{
 			$list[] = $thank . ' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. $this->thankyou_delete[$userid] . '"><i class="glyphicon glyphicon-remove"></i></a>';
+						. $this->thankyou_delete[$userid] . '"><?php echo KunenaIcons::cancel();?></a>';
 		}
 		else
 		{
@@ -149,7 +149,7 @@ endif; ?>
 		}
 	}
 
-	echo '<i class="glyphicon glyphicon-thumbs-up"></i>' . JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
+	echo '<?php echo KunenaIcons::thumbsup();?>' . JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
 	if ($this->more_thankyou) { echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou); }
 	?>
 </div>

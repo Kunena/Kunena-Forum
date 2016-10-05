@@ -46,7 +46,8 @@ abstract class KunenaForumDiagnostics
 			'userReadOrphaned',
 			'userReadWrongCategory',
 			'userTopicOrphaned',
-			'userTopicWrongCategory'
+			'userTopicWrongCategory',
+			'ratingOrphaned'
 		);
 	}
 
@@ -1138,6 +1139,43 @@ abstract class KunenaForumDiagnostics
 		}
 
 		return array('category_id' => 'invalid');
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function query_ratingOrphaned()
+	{
+		// Query to find user read which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_ratingOrphaned()
+	{
+		$query = self::query_ratingOrphaned()->delete('r');
+
+		return $query;
+	}
+
+	/**
+	 * @param   KunenaDatabaseQuery $query
+	 *
+	 * @return array
+	 */
+	protected static function fields_ratingOrphaned(KunenaDatabaseQuery $query = null)
+	{
+		if ($query)
+		{
+			$query->select('r.*');
+		}
+
+		return array('topic_id' => 'invalid');
 	}
 
 }

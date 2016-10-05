@@ -1405,6 +1405,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
 			// Delete user read
 			$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($this->id)}";
+			// Delete rating
+			$queries[] = "DELETE FROM #__kunena_rate WHERE topic_id={$db->quote($this->id)}";
 
 			// Delete Attachment
 			if ($this->attachments)
@@ -1426,8 +1428,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread={$db->quote($this->id)}";
 			// Delete all messages
 			$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread={$db->quote($this->id)}";
-
-			// TODO: Delete Rating
 
 			foreach ($queries as $query)
 			{
@@ -1694,7 +1694,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		return $this->update();
 	}
-	
+
 	/**
 	 * @return boolean
 	 */

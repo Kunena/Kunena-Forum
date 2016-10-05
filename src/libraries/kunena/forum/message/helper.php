@@ -529,7 +529,35 @@ abstract class KunenaForumMessageHelper
 
 		unset($results);
 	}
-
+	
+	static public function getMessagesByTopics(array $ids)
+	{
+		if (empty($ids))
+		{
+			return;
+		}
+		
+		$db = JFactory::getDBO();
+		
+		$idlist = implode(',', $ids);
+		$query = "SELECT m.*, t.message
+		FROM #__kunena_messages AS m
+		INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+		WHERE m.thread IN ({$idlist}) AND m.hold=0";
+		$db->setQuery($query);
+		
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+		
+		return $results;
+	}
+	
 	/**
 	 * @param   int    $topic_id
 	 * @param   int    $start

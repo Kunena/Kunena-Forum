@@ -535,6 +535,16 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_topicMissingPoll()
+	{
+		$query = self::query_topicMissingPoll()->delete('a');
+
+		return $query;
+	}
+
+	/**
 	 * @param   KunenaDatabaseQuery $query
 	 *
 	 * @return array
@@ -557,6 +567,16 @@ abstract class KunenaForumDiagnostics
 		// Query to find polls which have wrong topic
 		$query = new KunenaDatabaseQuery();
 		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_polls AS p ON p.id=a.poll_id")->leftJoin("#__kunena_topics AS t ON p.threadid=t.id")->where("a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id");
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_topicPollMismatch()
+	{
+		$query = self::query_topicPollMismatch()->delete('a');
 
 		return $query;
 	}
@@ -726,6 +746,16 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_attachmentOrphaned()
+	{
+		$query = self::query_attachmentOrphaned()->delete('a');
+
+		return $query;
+	}
+
+	/**
 	 * @param   KunenaDatabaseQuery $query
 	 *
 	 * @return array
@@ -785,6 +815,16 @@ abstract class KunenaForumDiagnostics
 		// Query to find polls which do not belong in any existing topic
 		$query = new KunenaDatabaseQuery();
 		$query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function delete_pollTopicMismatch()
+	{
+		$query = self::query_pollTopicMismatch()->delete('a');
 
 		return $query;
 	}

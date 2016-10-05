@@ -107,10 +107,10 @@ foreach ($this->sections as $section) :
 													<sup class="knewchar"> (<?php echo $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-													<span class="icon-lock hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY'); ?>"></span>
+													<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-													<span class="icon-shield hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
+													<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
 												<?php endif; ?>
 												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
 													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate" type="application/rss+xml" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">

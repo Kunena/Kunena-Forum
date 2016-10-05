@@ -80,6 +80,36 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the chevron right icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function chevronright()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-chevron-right"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-chevron-right"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-chevron-right"></span>';
+		}
+	}
+	
+	/**
 	 * Return the members icon
 	 *
 	 * @return string

@@ -1382,7 +1382,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$message_userid = $bbcode->parent->userid;
 		}
 
-		if (($me->userid && $message_userid == $me->userid) || $moderator)
+		if (!JFactory::getUser()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hide');
 

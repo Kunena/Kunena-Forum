@@ -1681,7 +1681,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		return $this->update();
 	}
-
+	
 	/**
 	 * @return boolean
 	 */

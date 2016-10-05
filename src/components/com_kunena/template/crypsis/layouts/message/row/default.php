@@ -85,19 +85,19 @@ if ($topic->moved_id > 0)
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
-				<i class="icon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($userTopic->posts) : ?>
-				<i class="icon-flag hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"><?php echo KunenaIcons::flag(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($topic->attachments) : ?>
-				<i class="icon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"><?php echo KunenaIcons::attach(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($topic->poll_id) : ?>
-				<i class="icon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+				<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"><?php echo KunenaIcons::poll(); ?></span>
 			<?php endif; ?>
 		</div>
 		<div class="hidden-phone">
@@ -111,7 +111,7 @@ if ($topic->moved_id > 0)
 				</span>	*/ ?>
 				<?php if ($topic->locked != 0) : ?>
 					<span class="label label-important">
-						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+						<?php echo KunenaIcons::lock(); ?> <?php echo JText::_('COM_KUNENA_LOCKED'); ?>
 					</span>
 				<?php endif; ?>
 			</div>

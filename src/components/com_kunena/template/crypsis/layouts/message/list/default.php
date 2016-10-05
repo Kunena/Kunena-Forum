@@ -74,7 +74,7 @@ $view = JFactory::getApplication()->input->getWord('view');
 					<td class="span1 center hidden-phone">
 						<a id="forumtop"> </a>
 						<a href="#forumbottom">
-							<i class="icon-arrow-down hasTooltip"></i>
+							<?php echo KunenaIcons::arrowdown(); ?>
 						</a>
 					</td>
 					<td class="span<?php echo $cols; ?>">
@@ -102,7 +102,7 @@ $view = JFactory::getApplication()->input->getWord('view');
 					<td class="center hidden-phone">
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
-							<i class="icon-arrow-up hasTooltip"></i>
+							<?php echo KunenaIcons::arrowup(); ?>
 						</a>
 						<?php // FIXME: $this->displayCategoryActions() ?>
 					</td>

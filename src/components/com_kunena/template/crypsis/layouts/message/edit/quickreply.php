@@ -133,7 +133,7 @@ $quick = $template->params->get('quick');
 				<label>
 					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
-				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"></textarea>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>

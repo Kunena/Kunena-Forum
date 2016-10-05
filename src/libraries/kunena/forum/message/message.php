@@ -429,8 +429,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					->where('subscribed=1');
 
 				$db->setQuery($query);
-				
-				try 
+
+				try
 				{
 					$db->execute();
 				}
@@ -1084,6 +1084,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$attachments = $this->getAttachments();
 		foreach ($attachments as $attachment)
 		{
+			$file = JUri::root() . $attachment->filename;
+			KunenaFile::delete($file);
+
 			if (!$attachment->delete())
 			{
 				$this->setError ( $attachment->getError() );
@@ -1102,7 +1105,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$db->execute();

@@ -26,12 +26,12 @@ function kunena_200_2012_06_10_newindication($parent)
 	$lasttime = $now - max(intval(JFactory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
 	$query    = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
 	}
-	catch(JDatabaseExceptionExecuting $e)
+	catch (JDatabaseExceptionExecuting $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
@@ -50,7 +50,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		{
 			$sessions = $db->loadObjectList();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -94,12 +94,12 @@ function kunena_200_2012_06_10_newindication($parent)
 				$values = implode(',', $chunk);
 				$query  = "REPLACE INTO #__kunena_user_read (`user_id`, `topic_id`, `category_id`, `message_id`, `time`) VALUES {$values}";
 				$db->setQuery($query);
-				
+
 				try
 				{
 					$db->execute();
 				}
-				catch(JDatabaseExceptionExecuting $e)
+				catch (JDatabaseExceptionExecuting $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -114,12 +114,12 @@ function kunena_200_2012_06_10_newindication($parent)
 			$users = implode(',', $users);
 			$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE userid IN ({$users})";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$db->execute();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -135,12 +135,12 @@ function kunena_200_2012_06_10_newindication($parent)
 		SET ur.category_id=t.category_id,
 			ur.message_id=t.last_post_id";
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
 	}
-	catch(JDatabaseExceptionExecuting $e)
+	catch (JDatabaseExceptionExecuting $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}

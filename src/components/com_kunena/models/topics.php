@@ -81,7 +81,7 @@ class KunenaModelTopics extends KunenaModel
 			// Check if the category is in exclued list
 			if (!empty($this->config->rss_excluded_categories))
 			{
-				$cat_exclued = explode(',',$this->config->rss_excluded_categories);
+				$cat_exclued = explode(',', $this->config->rss_excluded_categories);
 
 				if (in_array($catid, $cat_exclued))
 				{

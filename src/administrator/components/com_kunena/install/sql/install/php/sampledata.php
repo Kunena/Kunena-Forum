@@ -202,25 +202,25 @@ function installSampleData()
 		if (!$filled)
 		{
 			$db->setQuery($query[1]);
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
-			
+
 			if ($query[0] == 'kunena_categories')
 			{
 				$db->setQuery($aliasquery);
-				
-				try 
+
+				try
 				{
 					$db->execute();
 				}
-				catch(JDatabaseExceptionExecuting $e)
+				catch (JDatabaseExceptionExecuting $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -235,12 +235,12 @@ function installSampleData()
 	// Insert missing users
 	$query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
 	$db->setQuery($query);
-	
-	try 
+
+	try
 	{
 		$db->execute();
 	}
-	catch(JDatabaseExceptionExecuting $e)
+	catch (JDatabaseExceptionExecuting $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}

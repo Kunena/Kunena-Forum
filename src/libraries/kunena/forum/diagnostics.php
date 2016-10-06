@@ -47,7 +47,8 @@ abstract class KunenaForumDiagnostics
 			'userReadWrongCategory',
 			'userTopicOrphaned',
 			'userTopicWrongCategory',
-			'ratingOrphaned'
+			'ratingOrphaned',
+			'channelOrphaned'
 		);
 	}
 
@@ -336,7 +337,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_aliasMissingCategory()
+	protected static function delete_aliasMissingCategory()
 	{
 		$query = self::query_aliasMissingCategory()->delete('a');
 
@@ -538,7 +539,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_topicMissingPoll()
+	protected static function delete_topicMissingPoll()
 	{
 		$query = self::query_topicMissingPoll()->delete('a');
 
@@ -575,7 +576,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_topicPollMismatch()
+	protected static function delete_topicPollMismatch()
 	{
 		$query = self::query_topicPollMismatch()->delete('a');
 
@@ -612,7 +613,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_movedMissingTopic()
+	protected static function delete_movedMissingTopic()
 	{
 		$query = self::query_movedMissingTopic()->delete('a');
 
@@ -647,6 +648,16 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function delete_movedAndMessages()
+	{
+		$query = self::query_movedAndMessages()->delete('a');
+
+		return $query;
+	}
+
+	/**
 	 * @param   KunenaDatabaseQuery $query
 	 *
 	 * @return array
@@ -672,6 +683,7 @@ abstract class KunenaForumDiagnostics
 
 		return $query;
 	}
+
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
@@ -749,7 +761,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_attachmentOrphaned()
+	protected static function delete_attachmentOrphaned()
 	{
 		$query = self::query_attachmentOrphaned()->delete('a');
 
@@ -971,7 +983,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_userCategoryOrphaned()
+	protected static function delete_userCategoryOrphaned()
 	{
 		$query = self::query_userCategoryOrphaned()->delete('a');
 
@@ -1008,7 +1020,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_userReadOrphaned()
+	protected static function delete_userReadOrphaned()
 	{
 		$query = self::query_userReadOrphaned()->delete('a');
 
@@ -1082,7 +1094,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_userTopicOrphaned()
+	protected static function delete_userTopicOrphaned()
 	{
 		$query = self::query_userTopicOrphaned()->delete('a');
 
@@ -1156,7 +1168,7 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
-	protected static function fix_ratingOrphaned()
+	protected static function delete_ratingOrphaned()
 	{
 		$query = self::query_ratingOrphaned()->delete('r');
 
@@ -1178,16 +1190,86 @@ abstract class KunenaForumDiagnostics
 		return array('topic_id' => 'invalid');
 	}
 
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function query_channelOrphaned()
+	{
+		// Query to find user read which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_channelOrphaned()
+	{
+		$query = self::query_channelOrphaned()->update('#__kunena_categories')->set("channels='THIS'")->where("channels='none' OR channels=NULL");
+
+		return $query;
+	}
+
+	/**
+	 * @param   KunenaDatabaseQuery $query
+	 *
+	 * @return array
+	 */
+	protected static function fields_channelOrphaned(KunenaDatabaseQuery $query = null)
+	{
+		if ($query)
+		{
+			$query->select('*');
+		}
+
+		return array('channels' => 'invalid');
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function query_ownerOrphaned()
+	{
+		// Query to find user read which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_topics AS t")->leftJoin("#__kunena_user_topics AS j ON j.topic_id=t.id")->where("t.first_post_userid > 0");
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function fix_ownerOrphaned()
+	{
+		$query = self::query_channelOrphaned()->update('#__kunena_categories')->set("channels='THIS'")->where("channels='none' OR channels=NULL");
+
+		return $query;
+	}
+
+	/**
+	 * @param   KunenaDatabaseQuery $query
+	 *
+	 * @return array
+	 */
+	protected static function fields_ownerOrphaned(KunenaDatabaseQuery $query = null)
+	{
+		if ($query)
+		{
+			$query->select('t.id, t.first_post_userid, 1');
+		}
+
+		return array('channels' => 'invalid');
+	}
 }
 /*
--- Fix category channels (category selection bug):
-UPDATE jos_kunena_categories SET channels='THIS' WHERE channels='none' OR channels=NULL
 
 -- Find and update topics without owners:
-INSERT INTO `j25_kunena_user_topics` (topic_id, user_id, owner)
+INSERT INTO `#__kunena_user_topics` (topic_id, user_id, owner)
 (SELECT t.id, t.first_post_userid, 1
-FROM j25_kunena_topics AS t
-INNER JOIN (SELECT topic_id, MAX(owner) AS owner FROM `j25_kunena_user_topics` GROUP BY topic_id HAVING owner=0) AS j ON j.topic_id=t.id
+FROM #__kunena_topics AS t
+INNER JOIN (SELECT topic_id, MAX(owner) AS owner FROM `#__kunena_user_topics` GROUP BY topic_id HAVING owner=0) AS j ON j.topic_id=t.id
 WHERE t.first_post_userid>0)
 ON DUPLICATE KEY UPDATE owner=1
 */

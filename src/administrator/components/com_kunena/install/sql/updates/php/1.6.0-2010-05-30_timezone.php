@@ -29,45 +29,45 @@ function kunena_160_2010_05_30_timezone($parent)
 		$timeshift = (float) date('Z') + ((float) $config->get('board_ofset') * 3600);
 
 		$db->setQuery("UPDATE #__kunena_categories SET time_last_msg = time_last_msg - {$timeshift}");
-		
+
 		try
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_sessions SET lasttime = lasttime - {$timeshift}, currvisit  = currvisit  - {$timeshift}");
-		
+
 		try
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_whoisonline SET time = time - {$timeshift}");
-		
+
 		try
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_messages SET time = time - {$timeshift}, modified_time = modified_time - {$timeshift}");
-		
+
 		try
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}

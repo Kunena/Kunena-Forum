@@ -253,7 +253,7 @@ class KunenaModelSchema extends JModelLegacy
 		{
 			$this->db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
@@ -287,7 +287,7 @@ class KunenaModelSchema extends JModelLegacy
 			{
 				$this->db->execute();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
@@ -319,7 +319,7 @@ class KunenaModelSchema extends JModelLegacy
 		{
 			$list = $this->db->loadColumn();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
@@ -412,7 +412,7 @@ class KunenaModelSchema extends JModelLegacy
 			{
 				$fields = $this->db->loadObjectList();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
@@ -448,7 +448,7 @@ class KunenaModelSchema extends JModelLegacy
 			{
 				$keys = $this->db->loadObjectList();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}

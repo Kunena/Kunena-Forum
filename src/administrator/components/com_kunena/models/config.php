@@ -321,8 +321,9 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['file_upload']  = JHtml::_('select.genericlist', $uploads, 'cfg_file_upload', 'class="inputbox" size="1"', 'value', 'text', $this->config->file_upload);
 
 		$topic_layout[]         = JHtml::_('select.option', 'flat', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_FLAT'));
+		/* These options are disabled in kunena 5.x
 		$topic_layout[]         = JHtml::_('select.option', 'threaded', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_THREADED'));
-		$topic_layout[]         = JHtml::_('select.option', 'indented', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED'));
+		$topic_layout[]         = JHtml::_('select.option', 'indented', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED'));*/
 		$lists ['topic_layout'] = JHtml::_('select.genericlist', $topic_layout, 'cfg_topic_layout', 'class="inputbox" size="1"', 'value', 'text', $this->config->topic_layout);
 
 		$lists ['show_imgfiles_manage_profile'] = JHtml::_('select.genericlist', $yesno, 'cfg_show_imgfiles_manage_profile', 'class="inputbox" size="1"', 'value', 'text', $this->config->show_imgfiles_manage_profile);

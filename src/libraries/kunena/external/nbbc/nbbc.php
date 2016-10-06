@@ -2100,7 +2100,7 @@ $/Dx", $string);
 					}
 					if (strlen(@$matches[2]))
 					{
-						foreach (split(".", substr($matches[2], 1)) as $index)
+						foreach (explode(".", substr($matches[2], 1)) as $index)
 						{
 							if (is_array($value))
 							{

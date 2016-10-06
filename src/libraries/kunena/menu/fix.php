@@ -69,10 +69,14 @@ abstract class KunenaMenuFix
 
 		// Set the query
 		$db->setQuery($query);
-
-		if (!(self::$items = $db->loadObjectList('id')))
+		
+		try
 		{
-			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
+			self::$items = $db->loadObjectList('id');
+		}
+		catch(JDatabaseExceptionExecuting $e)
+		{
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
 		foreach (self::$items as &$item)

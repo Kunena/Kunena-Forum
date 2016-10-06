@@ -134,11 +134,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="col-md-10">
 								<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							<!-- Encourage guest user to login or register -->
-						<?php  
+						<?php
 			            $login =  '<a class="btn-link" href="index.php?option=com_users&view=login"> ' . JText::_('JLOGIN') . '</a>';
 			            $register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
 						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ;
-			            ?>	
+			            ?>
 							</div>
 						</div>
 
@@ -156,7 +156,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<div class="form-group" id="kpost-subject">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
-								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
+								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"/>
 								<?php if (!$this->config->allow_change_subject  && $this->topic->exists()): ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>

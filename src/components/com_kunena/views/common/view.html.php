@@ -327,7 +327,7 @@ class KunenaViewCommon extends KunenaView
 		$kunena_stats = KunenaForumStatistics::getInstance();
 		$kunena_stats->loadGeneral();
 
-		$this->assign($kunena_stats);
+		$this->kunena_stats     = $kunena_stats;
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 		$this->statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');

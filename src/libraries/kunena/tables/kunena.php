@@ -110,13 +110,15 @@ abstract class KunenaTable extends JTable
 
 		$this->_db->setQuery($query);
 		
-		$row = $this->_db->loadAssoc();
+		try
+		{
+			$row = $this->_db->loadAssoc();
+		}
+		catch(JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
+		}
 		
-		if ($this->_db->getErrorNum())
- 		{
- 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
- 		}
-
 		if (empty($row))
 		{
 			// Check that we have a result.
@@ -371,15 +373,16 @@ abstract class KunenaTable extends JTable
 
 		$this->_db->setQuery($query);
 
-		// Check for a database error.
-		$this->_db->execute();
-
-		// Check for a database error.
-		if ($this->_db->getErrorNum())
+		// Check for a database error.		
+		try
 		{
-			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+			$this->_db->execute();
 		}
-
+		catch(JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
+		}
+		
 		// Implement JObservableInterface: Post-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))

@@ -1241,12 +1241,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if ($config->floodprotection && !$this->getCategory()->authorise('moderate'))
 		{
 			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
-			$lastPostTime = $this->_db->loadResult();
-
-			if ($this->_db->getErrorNum())
+			
+			try
 			{
-				$this->setError($this->_db->getErrorMsg());
-
+				$lastPostTime = $this->_db->loadResult();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+					
 				return false;
 			}
 
@@ -1267,12 +1270,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				AND m.ip={$this->_db->quote($this->ip)}
 				AND t.message={$this->_db->quote($this->message)}
 				AND m.time>={$this->_db->quote($duplicatetimewindow)}");
-			$id = $this->_db->loadResult();
 
-			if ($this->_db->getErrorNum())
+			try
 			{
-				$this->setError($this->_db->getErrorMsg());
-
+				$id = $this->_db->loadResult();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+					
 				return false;
 			}
 

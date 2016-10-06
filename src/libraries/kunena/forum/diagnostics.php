@@ -254,6 +254,16 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function delete_categoryOrphaned()
+	{
+		$query = self::query_categoryOrphaned()->delete('a');
+
+		return $query;
+	}
+
+	/**
 	 * @param   KunenaDatabaseQuery $query
 	 *
 	 * @return array
@@ -463,6 +473,16 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
+	protected static function delete_topicInSection()
+	{
+		$query = self::query_topicInSection()->delete('a');
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
 	protected static function query_topicMissingCategory()
 	{
 		// Query to find topics which do not have existing category
@@ -485,6 +505,16 @@ abstract class KunenaForumDiagnostics
 		}
 
 		return array('category_id' => 'invalid');
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 */
+	protected static function delete_topicMissingCategory()
+	{
+		$query = self::query_topicMissingCategory()->delete('a');
+
+		return $query;
 	}
 
 	/**

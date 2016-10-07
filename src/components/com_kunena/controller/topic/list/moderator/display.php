@@ -21,7 +21,8 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	 * Prepare topic list for moderators.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

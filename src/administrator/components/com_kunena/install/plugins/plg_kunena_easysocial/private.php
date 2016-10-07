@@ -21,7 +21,8 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -39,7 +40,8 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getOnClick($userid)
 	{
 		$userid = (int) $userid;
@@ -51,7 +53,8 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getURL($userid)
 	{
 		return "javascript:void(0)";
@@ -61,7 +64,8 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -76,7 +80,8 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getInboxURL()
 	{
 		return FRoute::conversations();

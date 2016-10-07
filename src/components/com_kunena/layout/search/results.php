@@ -23,7 +23,8 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	 * Method to display the layout of search results
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayRows()
 	{
 		// Run events

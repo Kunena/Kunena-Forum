@@ -20,7 +20,8 @@ class KunenaAdminViewConfig extends KunenaView
 {
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayDefault()
 	{
 		$this->lists = $this->get('Configlists');
@@ -36,7 +37,8 @@ class KunenaAdminViewConfig extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolBarDefault()
 	{
 		$bar = JToolBar::getInstance('toolbar');

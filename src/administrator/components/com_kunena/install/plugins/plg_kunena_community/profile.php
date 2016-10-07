@@ -20,7 +20,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * KunenaProfileCommunity constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -67,7 +68,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -93,7 +95,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function showProfile($view, &$params)
 	{
 	}

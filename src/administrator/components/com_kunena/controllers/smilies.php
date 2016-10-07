@@ -60,7 +60,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function edit()
 	{
 		if (!JSession::checkToken('post'))

@@ -30,7 +30,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * Prepare topic actions display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

@@ -25,7 +25,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * KunenaActivityAltaUserPoints constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -33,7 +34,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getAUPversion()
 	{
 		return AltaUserPointsHelper::getAupVersion();
@@ -44,7 +46,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   string $spc
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
 		return AltaUserPointsHelper::buildKeyreference($plugin_function, $spc);
@@ -54,7 +57,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterPost($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -78,7 +82,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterReply($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -119,7 +124,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
@@ -153,7 +159,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $var
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
@@ -163,7 +170,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $userid
 	 *
 	 * @return array|boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserMedals($userid)
 	{
 		if ($userid == 0)
@@ -191,7 +199,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $userid
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserPoints($userid)
 	{
 		if ($userid == 0)
@@ -218,7 +227,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	private function _checkPermissions($message)
 	{
 		$category   = $message->getCategory();
@@ -250,7 +260,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	private function _checkRuleEnabled($ruleName)
 	{
 		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
@@ -262,7 +273,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);

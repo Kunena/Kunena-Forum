@@ -30,7 +30,8 @@ class KunenaAccessComprofiler
 	 * KunenaAccessComprofiler constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -91,7 +92,8 @@ class KunenaAccessComprofiler
 	 * @param   int    $category   Group id.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
 		$html = array();
@@ -163,7 +165,8 @@ class KunenaAccessComprofiler
 	 * @param   int                 $userid
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$actions = array();
@@ -215,7 +218,8 @@ class KunenaAccessComprofiler
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
 		$allow = $deny = array();
@@ -235,7 +239,8 @@ class KunenaAccessComprofiler
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function loadCategories()
 	{
 		if ($this->categories === false)
@@ -254,7 +259,8 @@ class KunenaAccessComprofiler
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function loadGroups()
 	{
 		if ($this->groups === false)

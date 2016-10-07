@@ -23,7 +23,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		return true;
@@ -192,7 +193,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Prepare attachment display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		// Load language files.

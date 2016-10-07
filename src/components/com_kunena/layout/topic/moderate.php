@@ -23,7 +23,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the options of the topic
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopicOptions()
 	{
 		$options = array();
@@ -59,7 +60,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the list of categories
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryList()
 	{
 		$options = array();

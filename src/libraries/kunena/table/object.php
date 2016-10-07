@@ -306,7 +306,8 @@ abstract class KunenaTableObject
 	/**
 	 * For internal use only.
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function &getInstances()
 	{
 		return static::$instances;
@@ -534,7 +535,8 @@ abstract class KunenaTableObject
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function store($updateNulls = false)
 	{
 		if ($this->exists())
@@ -867,7 +869,8 @@ abstract class KunenaTableObject
 
 	/**
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getQuery()
 	{
 		$db    = static::$db;
@@ -882,7 +885,8 @@ abstract class KunenaTableObject
 	 * @param   JDatabaseQuery $query
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function &loadInstances(JDatabaseQuery $query)
 	{
 		$db = JFactory::getDbo();

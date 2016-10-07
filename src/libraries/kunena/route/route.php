@@ -81,7 +81,8 @@ abstract class KunenaRoute
 	 * @param   bool $object
 	 *
 	 * @return boolean|JUri|null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function current($object = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -107,7 +108,8 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return array|boolean|integer
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getItemID($uri = null)
 	{
 		if (self::$adminApp)
@@ -140,7 +142,8 @@ abstract class KunenaRoute
 	 * @param   int  $ssl
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
 		if (self::$adminApp)
@@ -211,7 +214,8 @@ abstract class KunenaRoute
 	 * @param   string $anchor  Anchor (location in the page).
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getReferrer($default = null, $anchor = null)
 	{
 		$app = JFactory::getApplication();
@@ -292,7 +296,8 @@ abstract class KunenaRoute
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getMenu()
 	{
 		return self::$home;
@@ -302,7 +307,8 @@ abstract class KunenaRoute
 	 * @param $item
 	 *
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getHome($item)
 	{
 		if (!$item)
@@ -334,7 +340,8 @@ abstract class KunenaRoute
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cacheLoad()
 	{
 		// FIXME: Experimental caching.
@@ -360,7 +367,8 @@ abstract class KunenaRoute
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cacheStore()
 	{
 		// FIXME: Experimental caching.
@@ -397,7 +405,8 @@ abstract class KunenaRoute
 	 * @param   null $default
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public static function stringURLSafe($string, $default = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -457,7 +466,8 @@ abstract class KunenaRoute
 	 * @param $alias
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function resolveAlias($alias)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -491,7 +501,8 @@ abstract class KunenaRoute
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public static function initialize()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -582,7 +593,8 @@ abstract class KunenaRoute
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cleanup()
 	{
 		self::$filtered = array();
@@ -713,7 +725,8 @@ abstract class KunenaRoute
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function build()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -787,7 +800,8 @@ abstract class KunenaRoute
 	 * @param   bool                $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
 		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
@@ -797,7 +811,8 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return array|boolean|integer
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
 	{
 		return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
@@ -810,7 +825,8 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
 	{
 		if (!$category)
@@ -828,7 +844,8 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
 	{
 		// FIXME: not yet fully implemented...
@@ -850,7 +867,8 @@ abstract class KunenaRoute
 	 * @param   bool       $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
 		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
@@ -860,7 +878,8 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function setItemID(JUri $uri)
 	{
 		static $candidates = array();
@@ -953,7 +972,8 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function checkItem($item, JUri $uri)
 	{
 		$authorise = self::$menus->authorise($item->id);
@@ -993,7 +1013,8 @@ abstract class KunenaRoute
 	 * @param $catid
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function checkHome($item, $catid)
 	{
 		static $cache = array();
@@ -1030,7 +1051,8 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function checkCategory($item, JUri $uri)
 	{
 		static $cache = array();
@@ -1061,7 +1083,8 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function check($item, JUri $uri)
 	{
 		$hits = 0;

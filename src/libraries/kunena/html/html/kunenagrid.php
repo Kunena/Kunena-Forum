@@ -242,7 +242,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string $identifier
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
 		$userid = JFactory::getUser()->get('id');
@@ -287,7 +288,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $bootstrap
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function published($i, $value, $prefix = '', $bootstrap = false)
 	{
 		if (is_object($value))
@@ -315,7 +317,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $bootstrap
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)
 	{
 		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
@@ -361,7 +364,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string $task
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
 		$href = '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . JText::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
@@ -376,7 +380,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string $alt
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
 	{
 		$alt = JText::_($alt);
@@ -400,7 +405,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string $alt
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')
 	{
 		$alt = JText::_($alt);
@@ -422,7 +428,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   int $overlib
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function _checkedOut(&$row, $overlib = 1)
 	{
 		$hover = '';
@@ -444,7 +451,8 @@ abstract class JHtmlKunenaGrid
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	static function behavior()
 	{
 		static $loaded = false;

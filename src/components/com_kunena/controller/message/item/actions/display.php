@@ -32,7 +32,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * Prepare message actions display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -477,7 +478,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @param   string $icon
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')

@@ -24,7 +24,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function getPruneCategories()
 	{
 		$cat_params                = array();
@@ -43,7 +44,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
@@ -56,7 +58,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function getPruneControlOptions()
 	{
 		$contoloptions    = array();
@@ -75,7 +78,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function getPruneKeepSticky()
 	{
 		$optionsticky    = array();
@@ -143,7 +147,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getReportData()
 	{
 		if (!$this->app->get('smtpuser'))
@@ -353,7 +358,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSystemReportAnonymous()
 	{
 		$kunena_db = JFactory::getDBO();
@@ -707,7 +713,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return array
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function getIntegrationSettings()
 	{
 		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');

@@ -17,7 +17,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -33,7 +34,8 @@ class KunenaLoginJoomla
 	 * @param   string  $secretkey  The secretkey given by user when TFA is enabled
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)
 	{
 		$credentials = array('username' => $username, 'password' => $password);
@@ -52,7 +54,8 @@ class KunenaLoginJoomla
 	/**
 	 * @return boolean|string
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function logoutUser()
 	{
 		$error = JFactory::getApplication()->logout();
@@ -62,7 +65,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function getRememberMe()
 	{
 		return (bool) JPluginHelper::isEnabled('system', 'remember');
@@ -70,7 +74,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLoginURL()
 	{
 		$Itemid = UsersHelperRoute::getLoginRoute();
@@ -80,7 +85,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLogoutURL()
 	{
 		$Itemid = UsersHelperRoute::getLoginRoute();
@@ -90,7 +96,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRegistrationURL()
 	{
 		$usersConfig = JComponentHelper::getParams('com_users');
@@ -107,7 +114,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getResetURL()
 	{
 		$Itemid = UsersHelperRoute::getResetRoute();
@@ -117,7 +125,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRemindURL()
 	{
 		$Itemid = UsersHelperRoute::getRemindRoute();

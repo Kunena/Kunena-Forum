@@ -25,7 +25,8 @@ abstract class KunenaTemplateHelper
 	 * @param $template
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public static function isDefault($template)
 	{
 		$config         = KunenaFactory::getConfig();
@@ -40,7 +41,8 @@ abstract class KunenaTemplateHelper
 	 * @param   null $templateBaseDir
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function parseXmlFiles($templateBaseDir = null)
 	{
 		// Read the template folder to find templates
@@ -179,7 +181,8 @@ abstract class KunenaTemplateHelper
 	 * @param   string $templatename The name of template which needs to be checked
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function templateCanBeUsed($templatename)
 	{
 		if ($templatename == 'Crypsis' || $templatename == 'Crypsisb3')

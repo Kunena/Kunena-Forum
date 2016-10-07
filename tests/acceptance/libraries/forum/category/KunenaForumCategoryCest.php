@@ -21,7 +21,8 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 * Test new KunenaForumCategory()
 	 *
 	 * @return KunenaForumCategory
-	 */
+	 * @since Kunena
+ 	 */
 	public function testNew()
 	{
 		$category = new KunenaForumCategory();

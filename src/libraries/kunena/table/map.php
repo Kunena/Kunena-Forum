@@ -134,7 +134,8 @@ class KunenaTableMap
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getMirrorInstance()
 	{
 		static $instance = array();

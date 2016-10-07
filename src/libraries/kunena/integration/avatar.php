@@ -64,7 +64,8 @@ class KunenaAvatar
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditURL()
 	{
 		return '';
@@ -76,7 +77,8 @@ class KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		return '';

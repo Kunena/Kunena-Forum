@@ -23,7 +23,8 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the time of page generation
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getTime()
 	{
 		$config = KunenaFactory::getConfig();
@@ -43,7 +44,8 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the RSS URL link with image
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getRSS()
 	{
 		$config = KunenaFactory::getConfig();

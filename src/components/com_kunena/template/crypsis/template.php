@@ -25,14 +25,16 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 * The feature allows you to create one base template and only override changed files.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $default = array('crypsis');
 
 	/**
 	 * Template initialization.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function initialize()
 	{
 		// Template requires Bootstrap javascript
@@ -125,7 +127,8 @@ EOF;
 	 * @param   string $group
 	 *
 	 * @return JDocument
-	 */
+	 * @since Kunena
+ 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");

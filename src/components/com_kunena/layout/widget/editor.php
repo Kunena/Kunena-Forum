@@ -22,7 +22,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Get geshi code types.
 	 *
 	 * @return array|null
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCodeTypes()
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
@@ -65,7 +66,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Define javascript variables to show or disable some bbcode buttons
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function getBBcodesEnabled()
 	{
 		$this->ktemplate  = KunenaFactory::getTemplate();

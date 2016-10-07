@@ -63,7 +63,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $endtime   Ending time as unix timestamp.
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getTotal($starttime = null, $endtime = null)
 	{
 		$db    = JFactory::getDBO();
@@ -108,7 +109,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
 	{
 		$field = 'targetuserid';
@@ -146,7 +148,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = JFactory::getDBO();
@@ -183,7 +186,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
 		$db    = JFactory::getDBO();

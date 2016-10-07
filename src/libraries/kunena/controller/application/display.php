@@ -43,7 +43,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
@@ -170,7 +171,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
@@ -242,7 +244,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function after()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
@@ -265,7 +268,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @param   int $code
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function setResponseStatus($code = 404)
 	{
 		switch ((int) $code)
@@ -296,7 +300,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');

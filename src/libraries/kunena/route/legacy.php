@@ -69,7 +69,8 @@ abstract class KunenaRouteLegacy
 	 * @param $view
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function isLegacy($view)
 	{
 		if (!$view || $view == 'legacy')
@@ -86,7 +87,8 @@ abstract class KunenaRouteLegacy
 	 *
 	 * @return boolean
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public static function convert($uri, $showstart = 1)
 	{
 		// Make sure that input is JUri to legacy Kunena func=xxx

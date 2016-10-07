@@ -33,7 +33,8 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUserRead
-	 */
+	 * @since Kunena
+ 	 */
 	static public function get($topic = null, $user = null, $reload = false)
 	{
 		if ($topic instanceof KunenaForumTopic)
@@ -68,7 +69,8 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   mixed      $user
 	 *
 	 * @return KunenaForumTopicUserRead[]
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getTopics($ids = false, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -112,14 +114,15 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function move($old, $new)
 	{
 		// Update database
 		$db    = JFactory::getDBO();
 		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -127,10 +130,10 @@ abstract class KunenaForumTopicUserReadHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-		
+
 			return false;
 		}
-		
+
 		// Update internal state
 		if (isset(self::$_topics [$old->id]))
 		{
@@ -155,7 +158,8 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function merge($old, $new)
 	{
 		$db = JFactory::getDBO();
@@ -180,7 +184,7 @@ abstract class KunenaForumTopicUserReadHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$db->execute();
@@ -188,7 +192,7 @@ abstract class KunenaForumTopicUserReadHelper
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				return false;
 			}
 		}
@@ -202,7 +206,8 @@ abstract class KunenaForumTopicUserReadHelper
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	static public function recount()
 	{
 		$db    = JFactory::getDBO();
@@ -210,7 +215,7 @@ abstract class KunenaForumTopicUserReadHelper
 			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
 			SET ur.category_id=t.category_id";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -218,7 +223,7 @@ abstract class KunenaForumTopicUserReadHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-				
+
 			return false;
 		}
 
@@ -229,7 +234,8 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   int $days
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	static public function purge($days = 365)
 	{
 		// Purge items that are older than x days (defaulting to a year)
@@ -237,7 +243,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$timestamp = JFactory::getDate()->toUnix() - 60 * 60 * 24 * $days;
 		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -245,7 +251,7 @@ abstract class KunenaForumTopicUserReadHelper
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-				
+
 			return false;
 		}
 
@@ -257,7 +263,8 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
-	 */
+	 * @since Kunena
+ 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
@@ -279,7 +286,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadAssocList('topic_id');
@@ -321,7 +328,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadAssocList('user_id');

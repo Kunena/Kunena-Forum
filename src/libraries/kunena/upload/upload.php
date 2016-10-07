@@ -409,7 +409,8 @@ class KunenaUpload
 	 * Clean up temporary file if it exists.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function cleanup()
 	{
 		if (!$this->filename || !is_file($this->filename))
@@ -426,7 +427,8 @@ class KunenaUpload
 	 * @param   mixed $content
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function ajaxResponse($content)
 	{
 		// TODO: Joomla 3.1+ uses JResponseJson (we just emulate it for now).
@@ -481,7 +483,8 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
 		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
@@ -505,7 +508,8 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
 		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
@@ -531,7 +535,8 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkFileSizeImageAttachment($filesize)
 	{
 		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
@@ -735,7 +740,8 @@ class KunenaUpload
 	 * @param   boolean $si         whether to use SI prefixes or IEC
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function bytes($bytes, $force_unit = null, $format = null, $si = true)
 	{
 		// Format string

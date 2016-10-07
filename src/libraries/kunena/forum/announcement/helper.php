@@ -64,7 +64,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getUrl($layout = null, $xhtml = true)
 	{
 		$uri = self::getUri($layout);
@@ -125,7 +126,7 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query, $start, $limit);
-		
+
 		try
 		{
 			$results = (array) $db->loadAssocList();
@@ -162,7 +163,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getCount($filter = true)
 	{
 		$db       = JFactory::getDBO();
@@ -188,7 +190,7 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$total = (int) $db->loadResult();
@@ -205,7 +207,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cleanup()
 	{
 		self::$_instances = array();

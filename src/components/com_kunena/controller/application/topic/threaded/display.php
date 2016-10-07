@@ -21,7 +21,8 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
@@ -33,7 +34,8 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * Change topic layout to threaded.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		$layout = $this->input->getWord('layout');

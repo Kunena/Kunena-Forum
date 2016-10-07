@@ -26,7 +26,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 
 	/**
 	 * @var integer
-	 */
+	 * @since Kunena
+ 	 */
 	public $total;
 
 	public $data = array();
@@ -35,7 +36,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare search results display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -88,7 +90,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

@@ -71,7 +71,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayClean()
 	{
 		$this->setToolBarClean();
@@ -80,7 +81,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolbarClean()
 	{
 		// Set the titlebar text

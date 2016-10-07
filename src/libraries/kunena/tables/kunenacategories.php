@@ -99,7 +99,8 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string $ignore
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function bind($array, $ignore = '')
 	{
 		if (is_object($array))
@@ -135,7 +136,8 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -172,7 +174,7 @@ class TableKunenaCategories extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -194,7 +196,8 @@ class TableKunenaCategories extends KunenaTable
 	// Check for potential problems
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		if ($this->id && $this->parent_id)
@@ -245,7 +248,7 @@ class TableKunenaCategories extends KunenaTable
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-			
+
 				return;
 			}
 
@@ -313,7 +316,8 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function store($updateNulls = false)
 	{
 		$ret = parent::store($updateNulls);

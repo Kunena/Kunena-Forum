@@ -18,7 +18,8 @@ abstract class KunenaMenuHelper
 {
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cleanCache()
 	{
 		// @var JCache|JCacheController $cache

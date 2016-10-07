@@ -36,7 +36,8 @@ class TableKunenaKeywords extends KunenaTable
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		$this->name = trim($this->name);

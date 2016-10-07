@@ -21,7 +21,8 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	function display($tpl = null)
 	{
 		$this->setToolbar();
@@ -49,7 +50,8 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolbar()
 	{
 		$help_url = 'https://www.kunena.org/docs/';

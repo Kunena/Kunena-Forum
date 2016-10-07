@@ -21,7 +21,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare recent topics list.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -260,7 +261,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$page       = $this->pagination->pagesCurrent;

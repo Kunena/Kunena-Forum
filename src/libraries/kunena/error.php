@@ -26,7 +26,8 @@ abstract class KunenaError
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public static function initialize()
 	{
 		if (!self::$enabled)
@@ -57,7 +58,8 @@ abstract class KunenaError
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function cleanup()
 	{
 		if (self::$enabled && (--self::$enabled) == 0)
@@ -75,7 +77,8 @@ abstract class KunenaError
 	 * @param   string $where
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public static function error($msg, $where = 'default')
 	{
 		if (self::$debug)
@@ -90,7 +93,8 @@ abstract class KunenaError
 	 * @param   string $where
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public static function warning($msg, $where = 'default')
 	{
 		if (self::$debug)
@@ -134,7 +138,8 @@ abstract class KunenaError
 	 * @param $errline
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		if (error_reporting() == 0 || !strstr($errfile, 'kunena'))

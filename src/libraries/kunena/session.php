@@ -214,7 +214,8 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isNewUser()
 	{
 		return !$this->_exists;
@@ -222,7 +223,8 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isNewSession()
 	{
 		// Perform session timeout check
@@ -246,7 +248,8 @@ class KunenaSession extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function markAllCategoriesRead()
 	{
 		$this->allreadtime = JFactory::getDate()->toUnix();
@@ -255,7 +258,8 @@ class KunenaSession extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function updateSessionInfo()
 	{
 		// If this is a new session, reset the lasttime colum with the timestamp

@@ -22,7 +22,8 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * KunenaAvatarEasySocial constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -45,7 +46,8 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditURL()
 	{
 		return FRoute::profile(array('layout' => 'edit'));
@@ -57,7 +59,8 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		$user = KunenaFactory::getUser($user);

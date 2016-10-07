@@ -42,7 +42,8 @@ class plgKunenaExampleCest extends JPlugin
 	 * @param    int    $context    The 'page' number.
 	 *
 	 * @return    string
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaAfterTitle($context, &$object, &$params, $limitstart)
 	{
 		return '';
@@ -59,7 +60,8 @@ class plgKunenaExampleCest extends JPlugin
 	 * @param    int    $limitstart The 'page' number.
 	 *
 	 * @return    string
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaBeforeDisplay($context, &$object, &$params, $limitstart)
 	{
 		return '';
@@ -76,7 +78,8 @@ class plgKunenaExampleCest extends JPlugin
 	 * @param    int    $limitstart The 'page' number.
 	 *
 	 * @return    string
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaAfterDisplay($context, &$object, &$params, $limitstart)
 	{
 		return '';

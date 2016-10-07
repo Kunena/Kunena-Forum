@@ -21,7 +21,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Content to be appended after the main output.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $after = array();
 
 	/**
@@ -45,7 +46,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $key
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function text($key)
 	{
 		return JText::_($key);
@@ -92,7 +94,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $id
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
@@ -103,7 +106,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string $title
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getIcon($name, $title = '')
 	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
@@ -120,7 +124,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   int $precision Significant digits for output
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function formatLargeNumber($number, $precision = 3)
 	{
 		// Do we need to reduce the number of significant digits?
@@ -156,7 +161,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $canonical
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -214,7 +220,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   bool                $canonical
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -323,7 +330,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $canonical
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();

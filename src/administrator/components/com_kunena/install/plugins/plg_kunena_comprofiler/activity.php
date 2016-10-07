@@ -21,7 +21,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * KunenaActivityComprofiler constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -31,7 +32,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $userid
 	 *
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserPoints($userid)
 	{
 		$points = null;
@@ -43,7 +45,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforePost($message)
 	{
 		$params = array('actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message);
@@ -52,7 +55,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforeReply($message)
 	{
 		$params = array('actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message);
@@ -61,7 +65,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforeEdit($message)
 	{
 		$params = array('actor' => $message->get('modified_by'), 'message' => $message);
@@ -70,7 +75,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterPost($message)
 	{
 		$params = array('actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message);
@@ -79,7 +85,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterReply($message)
 	{
 		$params = array('actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message);
@@ -88,7 +95,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterEdit($message)
 	{
 		$params = array('actor' => $message->get('modified_by'), 'message' => $message);
@@ -97,7 +105,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterDelete($message)
 	{
 		$my     = JFactory::getUser();
@@ -107,7 +116,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterUndelete($message)
 	{
 		$my     = JFactory::getUser();
@@ -119,7 +129,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		$params = array('actor' => $actor, 'target' => $target, 'message' => $message);

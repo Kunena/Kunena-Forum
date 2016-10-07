@@ -19,7 +19,8 @@ class Pkg_KunenaInstallerScript
 	 * List of supported versions. Newest version first!
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $versions = array(
 		'PHP'     => array(
 			'7.1' => '7.1.0',
@@ -43,7 +44,8 @@ class Pkg_KunenaInstallerScript
 	 * List of required PHP extensions.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent)

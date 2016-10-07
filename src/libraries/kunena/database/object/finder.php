@@ -21,12 +21,14 @@ abstract class KunenaDatabaseObjectFinder
 	 * Table associated with the model.
 	 *
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	protected $table;
 
 	/**
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	protected $primaryKey = 'id';
 
 	/**
@@ -176,7 +178,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function find()
 	{
 		if ($this->skip)
@@ -188,7 +191,7 @@ abstract class KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.' . $this->primaryKey);
 		$this->db->setQuery($query, $this->start, $this->limit);
-				
+
 		try
 		{
 			$results = (array) $this->db->loadColumn();
@@ -205,7 +208,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function count()
 	{
 		$query = clone $this->query;
@@ -241,7 +245,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   JDatabaseQuery $query
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function build(JDatabaseQuery $query)
 	{
 	}

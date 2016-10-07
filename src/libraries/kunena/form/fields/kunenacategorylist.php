@@ -21,7 +21,8 @@ class JFormFieldKunenaCategoryList extends JFormField
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getInput()
 	{
 		if (!class_exists('KunenaForum') || !KunenaForum::installed())

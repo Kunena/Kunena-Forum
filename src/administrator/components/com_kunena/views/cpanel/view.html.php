@@ -20,7 +20,8 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayDefault()
 	{
 		$help_url = 'https://www.kunena.org/docs/Category:Installation';

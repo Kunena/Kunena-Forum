@@ -338,7 +338,8 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -371,14 +372,14 @@ class TableKunenaUsers extends KunenaTable
 			WHERE u.id = {$this->$k}";
 		$this->_db->setQuery($query);
 
-		try 
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -403,7 +404,8 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function reset()
 	{
 		parent::reset();
@@ -437,7 +439,8 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		if (!$this->userid || !JFactory::getUser($this->userid))

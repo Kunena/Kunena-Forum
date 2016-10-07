@@ -28,7 +28,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @param $config
 	 *
 	 * @deprecated  5.0
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -57,7 +58,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaAvatar
 	 *
 	 * @deprecated  5.0
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetAvatar()
 	{
 		if (!$this->params->get('avatar', 1))
@@ -76,7 +78,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaProfile
 	 *
 	 * @deprecated  5.0
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetProfile()
 	{
 		if (!$this->params->get('profile', 1))
@@ -95,7 +98,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaActivity
 	 *
 	 * @deprecated  5.0
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetActivity()
 	{
 		if (!$this->params->get('activity', 1))

@@ -65,7 +65,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   null|bool $exists
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -108,7 +109,8 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getOptions()
 	{
 		if ($this->options === false)
@@ -118,7 +120,7 @@ class KunenaForumTopicPoll extends JObject
 				WHERE pollid={$this->_db->Quote($this->id)}
 				ORDER BY id";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->options = (array) $this->_db->loadObjectList('id');
@@ -134,7 +136,8 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTotal()
 	{
 		if (is_null($this->_total))
@@ -153,7 +156,8 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserCount()
 	{
 		if ($this->usercount === false)
@@ -162,7 +166,7 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)}";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->usercount = (int) $this->_db->loadResult();
@@ -181,7 +185,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
 		if ($this->users === false)
@@ -190,7 +195,7 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} ORDER BY lasttime DESC";
 			$this->_db->setQuery($query, $start, $limit);
-			
+
 			try
 			{
 				$this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
@@ -208,7 +213,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getMyVotes($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
@@ -219,7 +225,7 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->myvotes[$user->userid] = $this->_db->loadResult();
@@ -237,7 +243,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLastVoteId($user = null)
 	{
 		$user  = KunenaFactory::getUser($user);
@@ -245,7 +252,7 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 		$this->_db->setQuery($query);
-		
+
 		try
 		{
 			$this->mylastvoteId = $this->_db->loadResult();
@@ -262,7 +269,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getMyTime($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
@@ -273,7 +281,7 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->mytime[$user->userid] = $this->_db->loadResult();
@@ -293,7 +301,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function vote($option, $change = false, $user = null)
 	{
 		if (!$this->exists())
@@ -369,7 +378,7 @@ class KunenaForumTopicPoll extends JObject
 			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote,lasttime)
 				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)},{$this->_db->Quote($votes->lasttime)});";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->_db->execute();
@@ -377,7 +386,7 @@ class KunenaForumTopicPoll extends JObject
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
 
 				return false;
@@ -390,7 +399,7 @@ class KunenaForumTopicPoll extends JObject
 				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)},lasttime={$this->_db->Quote($votes->lasttime)}
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($votes->userid)};";
 			$this->_db->setQuery($query);
-			
+
 			try
 			{
 				$this->_db->execute();
@@ -398,7 +407,7 @@ class KunenaForumTopicPoll extends JObject
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
 
 				return false;
@@ -413,7 +422,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $delta
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected function changeOptionVotes($option, $delta)
 	{
 		if (!isset($this->options[$option]->votes))
@@ -429,7 +439,7 @@ class KunenaForumTopicPoll extends JObject
 		$query = "UPDATE #__kunena_polls_options SET votes=votes+{$delta} WHERE id={$this->_db->Quote($option)}";
 
 		$this->_db->setQuery($query);
-		
+
 		try
 		{
 			$this->_db->execute();
@@ -437,7 +447,7 @@ class KunenaForumTopicPoll extends JObject
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-				
+
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
 
 			return false;
@@ -489,7 +499,8 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($id)
 	{
 		// Create the table object
@@ -532,7 +543,7 @@ class KunenaForumTopicPoll extends JObject
 		$db    = JFactory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -545,7 +556,7 @@ class KunenaForumTopicPoll extends JObject
 		// Delete votes
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$db->execute();
@@ -639,7 +650,7 @@ class KunenaForumTopicPoll extends JObject
 			{
 				$query = "DELETE FROM #__kunena_polls_options WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				
+
 				try
 				{
 					$this->_db->execute();
@@ -672,7 +683,7 @@ class KunenaForumTopicPoll extends JObject
 				$query = "INSERT INTO #__kunena_polls_options (text, pollid, votes)
 					VALUES({$this->_db->quote($value)}, {$this->_db->Quote($this->id)}, 0)";
 				$this->_db->setQuery($query);
-				
+
 				try
 				{
 					$this->_db->execute();
@@ -689,7 +700,7 @@ class KunenaForumTopicPoll extends JObject
 					SET text={$this->_db->quote($value)}
 					WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				
+
 				try
 				{
 					$this->_db->execute();

@@ -22,7 +22,8 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function populateState()
 	{
 		$id = $this->getInt('id', 0);
@@ -104,7 +105,8 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getannouncementActions()
 	{
 		$actions = array();

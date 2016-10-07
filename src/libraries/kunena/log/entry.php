@@ -55,7 +55,8 @@ class KunenaLogEntry
 	 * Get all the data.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getData()
 	{
 		return $this->data;

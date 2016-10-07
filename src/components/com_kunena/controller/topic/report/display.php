@@ -81,7 +81,8 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

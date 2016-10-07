@@ -70,7 +70,8 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function reset()
 	{
 		parent::reset();
@@ -82,7 +83,8 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -111,7 +113,7 @@ class TableKunenaMessages extends KunenaTable
 		// Load the user data.
 		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id = {$this->$k}";
 		$this->_db->setQuery($query);
-		
+
 		try
 		{
 			$data = $this->_db->loadAssoc();
@@ -119,10 +121,10 @@ class TableKunenaMessages extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-				
+
 			return false;
 		}
-		
+
 		if (!$data)
 		{
 			$this->$k = 0;
@@ -140,7 +142,8 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->catid);
@@ -217,7 +220,7 @@ class TableKunenaMessages extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 

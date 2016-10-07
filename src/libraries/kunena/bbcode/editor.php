@@ -57,7 +57,8 @@ class KunenaBbcodeEditor
 	 * @param        $where
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function insertElement($element, $pos = null, $where = null)
 	{
 		if (is_subclass_of($element, 'KunenaBbcodeEditorElement'))
@@ -77,7 +78,8 @@ class KunenaBbcodeEditor
 	 * @param        $where
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function insertElements($elements, $pos = null, $where = null)
 	{
 		$new_elements_keys = array();
@@ -132,7 +134,8 @@ class KunenaBbcodeEditor
 	 * @param   string           $parseMethod The parse method name to call
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
 	{
 		$elements = array();
@@ -170,7 +173,8 @@ class KunenaBbcodeEditor
 	 *
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function initialize()
 	{
 		$template     = KunenaFactory::getTemplate();
@@ -181,7 +185,8 @@ class KunenaBbcodeEditor
 	 * Initialize HMVC editor
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function initializeHMVC()
 	{
 		$xml_file = simplexml_load_file(dirname(__FILE__) . '/crypsis_editor.xml');
@@ -226,7 +231,8 @@ abstract class KunenaBbcodeEditorElement
 	 * Constructor for the base class for editor elements.
 	 *
 	 * @param $name
-	 */
+	 * @since Kunena
+ 	 */
 	function __construct($name)
 	{
 		$this->name = $name;
@@ -363,7 +369,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function editorActionHMVCJs()
 	{
 		$js = '';
@@ -506,7 +513,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function generateHMVCJs()
 	{
 		$js = $this->editorActionHMVCJs($this->name);
@@ -589,7 +597,8 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * Generate JS part for element
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function generateHMVCJs()
 	{
 		$js = "{separator:'|' }";

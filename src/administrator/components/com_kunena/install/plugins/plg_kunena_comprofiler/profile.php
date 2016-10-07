@@ -21,7 +21,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * KunenaProfileComprofiler constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -29,7 +30,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function open()
 	{
 		KunenaIntegrationComprofiler::open();
@@ -37,7 +39,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function close()
 	{
 		KunenaIntegrationComprofiler::close();
@@ -98,7 +101,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param $params
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function showProfile($view, &$params)
 	{
 		global $_PLUGINS;
@@ -116,7 +120,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * @param $event
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public static function trigger($event, &$params)
 	{
 		KunenaIntegrationComprofiler::trigger($event, $params);
@@ -126,7 +131,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -154,7 +160,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		global $_CB_framework;

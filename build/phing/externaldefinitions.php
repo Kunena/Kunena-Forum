@@ -16,7 +16,8 @@ defined('KUNENA_NOT_DEFINED') or die();
 class Kunena {
 	/**
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	static function isSvn() {}
 }
 

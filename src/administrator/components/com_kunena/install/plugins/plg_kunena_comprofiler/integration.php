@@ -17,7 +17,8 @@ class KunenaIntegrationComprofiler
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function open()
 	{
 		if (self::$open)
@@ -32,7 +33,8 @@ class KunenaIntegrationComprofiler
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function close()
 	{
 		if (!self::$open)
@@ -52,7 +54,8 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @param $event
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public static function trigger($event, &$params)
 	{
 		global $_PLUGINS;

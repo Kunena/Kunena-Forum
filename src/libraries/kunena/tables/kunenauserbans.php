@@ -60,7 +60,8 @@ class TableKunenaUserBans extends JTable
 	 * @param   int $mode
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -82,15 +83,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -112,7 +113,8 @@ class TableKunenaUserBans extends JTable
 	 * @param   int $mode
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -134,15 +136,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -161,7 +163,8 @@ class TableKunenaUserBans extends JTable
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		if (!$this->ip)

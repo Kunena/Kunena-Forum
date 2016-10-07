@@ -19,7 +19,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * KunenaPrivateComprofiler constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -38,7 +39,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function showIcon($userid)
 	{
 		global $_CB_framework, $_CB_PMS;
@@ -79,7 +81,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param   string $icon
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
 		global $_CB_framework, $_CB_PMS;
@@ -112,7 +115,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getInboxLink($text)
 	{
 		global $_CB_framework;
@@ -134,7 +138,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getCBUserid()
 	{
 		global $_CB_framework;
@@ -164,7 +169,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getInboxURL()
 	{
 		global $_CB_framework;

@@ -26,7 +26,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected function populateState()
 	{
 		// Get search word list
@@ -145,7 +146,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function buildWhere()
 	{
 		$db           = JFactory::getDBO();
@@ -254,7 +256,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function buildOrderBy()
 	{
 		if ($this->getState('query.order') == 'dec')
@@ -318,7 +321,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSearchWords()
 	{
 		// Accept individual words and quoted strings
@@ -341,7 +345,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getResults()
 	{
 		if ($this->messages !== false)
@@ -423,7 +428,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUrlParams()
 	{
 		// Turn internal state into URL, but ignore default values
@@ -468,7 +474,8 @@ class KunenaModelSearch extends KunenaModel
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{
 		$config   = KunenaFactory::getConfig();

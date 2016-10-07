@@ -98,7 +98,8 @@ class KunenaUser extends JObject
 	 * @param   int $identifier
 	 *
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($identifier = 0)
 	{
 		// Always load the user -- if user does not exist: fill empty data
@@ -124,7 +125,8 @@ class KunenaUser extends JObject
 	 * @param   bool     $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaUserHelper::get($identifier, $reload);
@@ -134,7 +136,8 @@ class KunenaUser extends JObject
 	 * @param   null|bool $exists
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -151,7 +154,8 @@ class KunenaUser extends JObject
 	 * Is the user me?
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isMyself()
 	{
 		$result = KunenaUserHelper::getMyself()->userid == $this->userid;
@@ -381,7 +385,8 @@ class KunenaUser extends JObject
 	 * @param   string $no
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function isOnline($yes = false, $no = 'offline')
 	{
 		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
@@ -389,7 +394,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getStatus()
 	{
 		return KunenaUserHelper::getStatus($this->userid);
@@ -397,7 +403,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getStatusText()
 	{
 		return KunenaHtmlParser::parseText($this->status_text);
@@ -405,7 +412,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAllowedCategories()
 	{
 		if (!isset($this->_allowed))
@@ -418,7 +426,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getMessageOrdering()
 	{
 		static $default;
@@ -446,7 +455,8 @@ class KunenaUser extends JObject
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isAdmin(KunenaForumCategory $category = null)
 	{
 		return KunenaAccess::getInstance()->isAdmin($this, $category && $category->exists() ? $category->id : null);
@@ -460,7 +470,8 @@ class KunenaUser extends JObject
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isModerator(KunenaForumCategory $category = null)
 	{
 		return KunenaAccess::getInstance()->isModerator($this, $category && $category->exists() ? $category->id : null);
@@ -468,7 +479,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isBanned()
 	{
 		if (!$this->banned)
@@ -489,7 +501,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function isBlocked()
 	{
 		if ($this->blocked)
@@ -505,7 +518,8 @@ class KunenaUser extends JObject
 	 * @param   bool   $escape
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getName($visitorname = '', $escape = true)
 	{
 		if (!$this->userid && !$this->name)
@@ -531,7 +545,8 @@ class KunenaUser extends JObject
 	 * @param   int        $sizey
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90)
 	{
 		$avatars = KunenaFactory::getAvatarIntegration();
@@ -544,7 +559,8 @@ class KunenaUser extends JObject
 	 * @param   int        $sizey
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90)
 	{
 		$avatars = KunenaFactory::getAvatarIntegration();
@@ -562,7 +578,8 @@ class KunenaUser extends JObject
 	 * @param   int         $catid
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0)
 	{
 		if (!$name)
@@ -693,7 +710,8 @@ class KunenaUser extends JObject
 	 * @param   string $task
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getURL($xhtml = true, $task = '')
 	{
 		// Note: We want to link also existing users who have never visited Kunena before.
@@ -720,7 +738,8 @@ class KunenaUser extends JObject
 	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getType($catid = 0, $code = false)
 	{
 		static $types = array(
@@ -810,7 +829,7 @@ class KunenaUser extends JObject
 		if (self::$_ranks === null)
 		{
 			$this->_db->setQuery("SELECT * FROM #__kunena_ranks");
-			
+
 			try
 			{
 				self::$_ranks = $this->_db->loadObjectList('rank_id');
@@ -1031,7 +1050,8 @@ class KunenaUser extends JObject
 	 * @param   null|string $layout
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopicLayout($layout = null)
 	{
 		if ($layout == 'default')
@@ -1085,7 +1105,8 @@ class KunenaUser extends JObject
 	 * Get the URL to private messages
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPrivateMsgURL()
 	{
 		$private = KunenaFactory::getPrivateMessaging();
@@ -1097,7 +1118,8 @@ class KunenaUser extends JObject
 	 * Get the label for URL to private messages
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPrivateMsgLabel()
 	{
 		$private = KunenaFactory::getPrivateMessaging();
@@ -1439,7 +1461,8 @@ class KunenaUser extends JObject
 	 * @param   string $name
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function profileIcon($name)
 	{
 		switch ($name)
@@ -1527,7 +1550,8 @@ class KunenaUser extends JObject
 	 * @param   bool   $gray
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function socialButton($name, $gray = false)
 	{
 		$config = KunenaConfig::getInstance();
@@ -1600,7 +1624,8 @@ class KunenaUser extends JObject
 	 * @param   string $var
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
@@ -1610,7 +1635,8 @@ class KunenaUser extends JObject
 	 * @param   string $name
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function __get($name)
 	{
 		switch ($name)
@@ -1634,7 +1660,8 @@ class KunenaUser extends JObject
 	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function canDoCaptcha()
 	{
 		$config = KunenaFactory::getConfig();

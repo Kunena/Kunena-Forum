@@ -31,7 +31,8 @@ class pkg_kunena_languagesInstallerScript
 	 * @param   JInstallerFile $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function preflight($type, $parent)
 	{
 		if (!in_array($type, array('install', 'update')))

@@ -25,26 +25,30 @@ class RoboFile extends \Robo\Tasks
 	 * File extension for executables
 	 *
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	private $executableExtension = '';
 
 	/**
 	 * Local configuration parameters
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	private $configuration = array();
 
 	/**
 	 * Path to the local CMS root
 	 *
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	private $cmsPath = '';
 
 	/**
 	 * Constructor
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct()
 	{
 		$this->configuration = $this->getConfiguration();
@@ -61,7 +65,8 @@ class RoboFile extends \Robo\Tasks
 	 * Get the executable extension according to Operating System
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	private function getExecutableExtension()
 	{
 		if ($this->isWindows())
@@ -79,7 +84,8 @@ class RoboFile extends \Robo\Tasks
 	 *          - 'use-htaccess': renames and enable embedded Joomla .htaccess file
 	 *          - 'env': set a specific environment to get configuration from
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function runTests($opts = ['use-htaccess' => false, 'env' => 'desktop'])
 	{
 		$this->createTestingSite($opts['use-htaccess']);
@@ -140,7 +146,8 @@ class RoboFile extends \Robo\Tasks
 	 * @param string $suite          Optional name of the suite containing the tests, Acceptance by default.
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function runTest($pathToTestFile = null, $suite = 'acceptance')
 	{
 		$this->runSelenium();
@@ -238,7 +245,8 @@ class RoboFile extends \Robo\Tasks
 	 * @param string $tool
 	 *
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	public function runChecker($tool = null)
 	{
 		if ($tool === null) {
@@ -357,7 +365,8 @@ class RoboFile extends \Robo\Tasks
 	 * Build correct git clone command according to local configuration and OS
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	private function buildGitCloneCommand()
 	{
 		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
@@ -369,7 +378,8 @@ class RoboFile extends \Robo\Tasks
 	 * Check if local OS is Windows
 	 *
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	private function isWindows()
 	{
 		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
@@ -379,7 +389,8 @@ class RoboFile extends \Robo\Tasks
 	 * Get the correct CMS root path
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	private function getCmsPath()
 	{
 		if (empty($this->configuration->cmsPath))
@@ -400,7 +411,8 @@ class RoboFile extends \Robo\Tasks
 	 * Runs Selenium Standalone Server.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function runSelenium()
 	{
 		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
@@ -428,7 +440,8 @@ class RoboFile extends \Robo\Tasks
 	 * Downloads Composer
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	private function getComposer()
 	{
 		// Make sure we have Composer
@@ -493,7 +506,8 @@ class RoboFile extends \Robo\Tasks
 	 * @param   array  $params  Additional params
 	 *
 	 * @return  void
-	 */
+	 * @since Kunena
+ 	 */
 	public function build($params = ['dev' => false])
 	{
 		if (!file_exists('jorobo.ini'))

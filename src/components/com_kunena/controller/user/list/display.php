@@ -93,7 +93,8 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$page      = $this->pagination->pagesCurrent;

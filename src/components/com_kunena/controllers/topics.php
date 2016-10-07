@@ -53,9 +53,9 @@ class KunenaControllerTopics extends KunenaController
 			$this->setRedirectBack();
 		}
 		else
-		{	
+		{
 			$messages = KunenaForumMessageHelper::getMessagesByTopics($ids);
-			
+
 			foreach ($topics as $topic)
 			{
 				if ($topic->authorise('permdelete') && $topic->delete())
@@ -71,13 +71,13 @@ class KunenaControllerTopics extends KunenaController
 					$this->app->enqueueMessage($topic->getError(), 'notice');
 				}
 			}
-			
+
 			// Delete attachments in each message
 			$finder = new KunenaAttachmentFinder;
 			$finder->where('mesid', 'IN', array_keys($messages));
-			
+
 			$attachments = $finder->find();
-			
+
 			if (!empty($attachments))
 			{
 				foreach ($attachments as $instance)
@@ -85,14 +85,11 @@ class KunenaControllerTopics extends KunenaController
 					$instance->exists(false);
 					unset($instance);
 				}
-				
+
 				$db = JFactory::getDBO();
-				
-				$ids = implode(',', array_keys($messages));
-				
-				$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
+				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
-				
+
 				try
 				{
 					$db->execute();
@@ -100,7 +97,7 @@ class KunenaControllerTopics extends KunenaController
 				catch (JDatabaseExceptionExecuting $e)
 				{
 					KunenaError::displayDatabaseError($e);
-						
+
 					return false;
 				}
 			}

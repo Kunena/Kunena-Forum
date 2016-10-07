@@ -29,7 +29,8 @@ class KunenaBbcode extends NBBC_BBCode
 
 	/**
 	 * @var object
-	 */
+	 * @since Kunena
+ 	 */
 	public $parent = null;
 
 	/**
@@ -38,7 +39,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param   bool $relative
 	 *
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($relative = true)
 	{
 		parent::__construct();
@@ -69,7 +71,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param   bool $relative
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getInstance($relative = true)
 	{
 		static $instance = false;
@@ -88,7 +91,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param $params
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function parseUrl($params)
 	{
 		$url  = $params['url'];
@@ -281,7 +285,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param $string
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	function Internal_AutoDetectURLs($string)
 	{
 		$search = preg_split('/(?xi)
@@ -372,7 +377,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param $params
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function canCloakEmail(&$params)
 	{
 
@@ -399,7 +405,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param   bool $local_too
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function IsValidURL($string, $email_too = true, $local_too = false)
 	{
 		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
@@ -1038,7 +1045,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function __construct()
 	{
 		if (!KunenaFactory::getConfig()->disemoticons)
@@ -1566,7 +1574,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 *
 	 * @return boolean|string
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	function DoArticle($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -2262,7 +2271,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   bool             $displayImage
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
 		$layout                                              = KunenaLayout::factory('BBCode/Attachment')
@@ -2533,7 +2543,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet id to render in layout
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function renderTweet($tweetid)
 	{
 		$tweet = $this->getTweet($tweetid);
@@ -2570,7 +2581,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet ID to query against twitter API
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
@@ -2773,7 +2785,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $ItemID The eBay ID of object to query
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getEbayItem($ItemID)
 	{
 		$config = KunenaFactory::getConfig();
@@ -2807,7 +2820,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $ItemID The eBay ID of object to query
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getEbayItemFromCache($ItemID)
 	{
 		$cache = JFactory::getCache('Kunena_ebay_request');

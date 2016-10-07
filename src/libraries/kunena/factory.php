@@ -66,7 +66,8 @@ abstract class KunenaFactory
 	 * @param    bool $reload
 	 *
 	 * @return KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getUser($id = null, $reload = false)
 	{
 		return KunenaUserHelper::get($id, $reload);
@@ -148,7 +149,8 @@ abstract class KunenaFactory
 	 * @param   string $client
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = array();
@@ -194,7 +196,8 @@ abstract class KunenaFactory
 	 * @param $filename
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function parseLanguage($lang, $filename)
 	{
 		if (!is_file($filename))

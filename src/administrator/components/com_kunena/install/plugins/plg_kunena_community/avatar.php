@@ -19,7 +19,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * KunenaAvatarCommunity constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -42,7 +43,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
@@ -54,7 +56,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		$kuser = KunenaFactory::getUser($user);

@@ -23,7 +23,8 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare profile form items.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -61,7 +62,8 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

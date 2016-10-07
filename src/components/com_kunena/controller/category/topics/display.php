@@ -144,7 +144,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$page  = $this->pagination->pagesCurrent;

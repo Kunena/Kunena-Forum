@@ -103,7 +103,8 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));

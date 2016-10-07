@@ -85,7 +85,8 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
 		/*
@@ -223,7 +224,8 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($id)
 	{
 		// Create the table object

@@ -19,7 +19,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * The items in the collection.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $items = array();
 
 	/**
@@ -36,7 +37,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get all items in the collection.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function all()
 	{
 		return $this->items;
@@ -114,7 +116,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Count the number of items in the collection.
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function count()
 	{
 		return count($this->items);
@@ -126,7 +129,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   mixed $key
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function offsetExists($key)
 	{
 		return array_key_exists($key, $this->items);
@@ -138,7 +142,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   mixed $key
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function offsetGet($key)
 	{
 		return $this->items[$key];
@@ -151,7 +156,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   mixed $value
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function offsetSet($key, $value)
 	{
 		if (is_null($key))
@@ -170,7 +176,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   string $key
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function offsetUnset($key)
 	{
 		unset($this->items[$key]);

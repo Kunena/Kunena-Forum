@@ -1201,7 +1201,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -1243,7 +1244,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function save()
 	{
 		$db = JFactory::getDBO();
@@ -1256,7 +1258,7 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		
+
 		try
 		{
 			$db->execute();
@@ -1272,7 +1274,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function reset()
 	{
 		$instance = new KunenaConfig;
@@ -1288,7 +1291,7 @@ class KunenaConfig extends JObject
 	{
 		$db = JFactory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
-		
+
 		try
 		{
 			$config = $db->loadAssoc();
@@ -1332,7 +1335,8 @@ class KunenaConfig extends JObject
 	 * @return JRegistry
 	 *
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPlugin($name)
 	{
 		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry;
@@ -1355,7 +1359,8 @@ class KunenaConfig extends JObject
 	 * Email set for the configuration
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEmail()
 	{
 		$email = $this->get('email');

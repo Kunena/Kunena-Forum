@@ -164,7 +164,8 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public static function move($old, $new)
 	{
 		// Update database
@@ -207,7 +208,8 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public static function merge($old, $new)
 	{
 		$db = JFactory::getDBO();
@@ -364,7 +366,8 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
-	 */
+	 * @since Kunena
+ 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)

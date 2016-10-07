@@ -597,7 +597,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $item
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getAccessLevel($item)
 	{
 		if (($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages))

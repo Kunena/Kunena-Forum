@@ -293,7 +293,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   string $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumTopic[]
-	 */
+	 * @since Kunena
+ 	 */
 	public function find($access = 'read')
 	{
 		$results = parent::find();

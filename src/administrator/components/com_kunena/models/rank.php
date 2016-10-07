@@ -47,7 +47,8 @@ class KunenaAdminModelRank extends KunenaModel
 	 * @return mixed|null
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRank()
 	{
 		$db = JFactory::getDBO();
@@ -78,7 +79,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return mixed
 	 *
-	 */
+	 * @since Kunena 
+ 	 */
 	public function getRankspaths()
 	{
 		$template = KunenaFactory::getTemplate();

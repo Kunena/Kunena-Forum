@@ -23,7 +23,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayCreate()
 	{
 		$this->displayEdit();
@@ -31,7 +32,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayEdit()
 	{
 		$this->category = $this->get('AdminCategory');
@@ -51,7 +53,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
@@ -94,7 +97,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolBarEdit()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
@@ -117,7 +121,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolBarDefault()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));

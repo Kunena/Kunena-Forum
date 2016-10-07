@@ -131,7 +131,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

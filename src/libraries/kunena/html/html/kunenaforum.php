@@ -28,7 +28,8 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $translate
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
 		$preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
@@ -206,7 +207,8 @@ abstract class JHtmlKunenaForum
 	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);

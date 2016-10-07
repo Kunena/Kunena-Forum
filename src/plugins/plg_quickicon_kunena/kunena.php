@@ -36,7 +36,8 @@ class plgQuickiconKunena extends JPlugin
 	 * @param   string $context
 	 *
 	 * @return array|null
-	 */
+	 * @since Kunena
+ 	 */
 	public function onGetIcons($context)
 	{
 		if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise('core.manage', 'com_kunena'))

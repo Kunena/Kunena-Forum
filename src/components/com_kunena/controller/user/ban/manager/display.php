@@ -40,7 +40,8 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	 * Prepare ban manager.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -63,7 +64,8 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

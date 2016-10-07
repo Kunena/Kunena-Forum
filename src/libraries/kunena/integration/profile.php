@@ -54,7 +54,8 @@ class KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopHits($limit = 0)
 	{
 		if (!$limit)
@@ -70,7 +71,8 @@ class KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -106,7 +108,8 @@ class KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function showProfile($view, &$params)
 	{
 
@@ -116,7 +119,8 @@ class KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getTopHits($limit = 0)
 	{
 		return array();

@@ -52,7 +52,8 @@ class KunenaAdminViewUsers extends KunenaView
 	 * setToolbar
 	 *
 	 * @return    string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolbar()
 	{
 		// Get the toolbar object instance
@@ -149,7 +150,8 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -170,7 +172,8 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();

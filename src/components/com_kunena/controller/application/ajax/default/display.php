@@ -21,7 +21,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();
@@ -90,7 +91,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * Prepare AJAX display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		// Load language files.

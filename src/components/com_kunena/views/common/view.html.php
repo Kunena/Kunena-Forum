@@ -528,7 +528,8 @@ class KunenaViewCommon extends KunenaView
 	 * @param   bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
 		$mode = KunenaFactory::getConfig()->rss_type;

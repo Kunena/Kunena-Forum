@@ -36,7 +36,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 	/**
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	public $headerText;
 
 	/**
@@ -46,7 +47,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $mesIds  List of additional message Ids to be loaded.
 	 *
 	 * @return  void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
 	{
 		// Collect user Ids for avatar prefetch when integrated.
@@ -102,7 +104,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$page       = $this->pagination->pagesCurrent;
@@ -190,7 +193,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $actions
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
 	{
 		if (!$actions)
@@ -253,7 +257,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $actions
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{
 		if (!$actions)

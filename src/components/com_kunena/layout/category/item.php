@@ -23,7 +23,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display categories Index sublayout
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayCategories()
 	{
 		if ($this->sections)
@@ -37,7 +38,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display category action sublayout
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayCategoryActions()
 	{
 		if (!$this->category->isSection())
@@ -50,7 +52,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to return array of actions sublayout
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryActions()
 	{
 		$category = $this->category;
@@ -214,7 +217,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   int $maxpages The maximum number of pages
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPagination($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));

@@ -19,7 +19,8 @@ class KunenaUploadHelper
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	private function __construct()
 	{
 	}
@@ -30,7 +31,8 @@ class KunenaUploadHelper
 	 * @param $format
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function upload($file, $uploadfolder, $format)
 	{
 		jimport('joomla.filesystem.folder');

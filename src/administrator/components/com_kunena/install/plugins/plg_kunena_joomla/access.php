@@ -22,7 +22,8 @@ class KunenaAccessJoomla
 
 	/**
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -49,7 +50,8 @@ class KunenaAccessJoomla
 	 * @param   KunenaForumCategory $category Category
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
 		$list = array();
@@ -133,7 +135,8 @@ class KunenaAccessJoomla
 	 * @param   int    $category   Group id.
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
 		$html = array();
@@ -258,7 +261,8 @@ class KunenaAccessJoomla
 	 * @param   int                 $userid
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$groups = (array) JAccess::getGroupsByUser($userid, true);
@@ -330,7 +334,8 @@ class KunenaAccessJoomla
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
 		$allow = $deny = array();

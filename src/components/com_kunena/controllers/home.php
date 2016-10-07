@@ -26,7 +26,8 @@ class KunenaControllerHome extends KunenaController
 	 *
 	 * @return JControllerLegacy|void
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		$menu = $this->app->getMenu();
@@ -97,7 +98,8 @@ class KunenaControllerHome extends KunenaController
 	 * @param   array $visited
 	 *
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
 		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])

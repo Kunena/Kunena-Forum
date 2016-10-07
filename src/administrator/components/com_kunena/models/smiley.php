@@ -46,7 +46,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 	 * @return  mixed|null
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSmiley()
 	{
 		$db = JFactory::getDBO();

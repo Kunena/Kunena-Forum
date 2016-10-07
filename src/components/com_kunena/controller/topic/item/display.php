@@ -41,7 +41,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	public $headerText;
 
 	/**
@@ -172,7 +173,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @param   int $mesid Selected message Id.
 	 *
 	 * @return  void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareMessages($mesid)
 	{
 		// Get thank yous for all messages in the page
@@ -334,7 +336,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * After render update topic data for the user.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function after()
 	{
 		parent::after();
@@ -354,7 +357,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();

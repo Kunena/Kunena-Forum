@@ -28,7 +28,8 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare search form display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -48,7 +49,8 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

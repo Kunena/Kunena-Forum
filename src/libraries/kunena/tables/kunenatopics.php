@@ -77,7 +77,8 @@ class TableKunenaTopics extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -106,18 +107,18 @@ class TableKunenaTopics extends KunenaTable
 		// Load the user data.
 		$query = "SELECT * FROM #__kunena_topics WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		if (!$data)
 		{
 			$this->$k = 0;
@@ -135,7 +136,8 @@ class TableKunenaTopics extends KunenaTable
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->category_id);

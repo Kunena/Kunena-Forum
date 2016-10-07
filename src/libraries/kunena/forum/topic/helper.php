@@ -27,7 +27,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	static public function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumTopic)
@@ -65,7 +66,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public static function subscribe($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
@@ -94,7 +96,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public static function favorite($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
@@ -180,7 +183,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumTopic[]
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -631,7 +635,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed              $user
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	static public function fetchNewStatus(array $topics, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);

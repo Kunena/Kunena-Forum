@@ -31,7 +31,8 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * Prepare credits display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -73,7 +74,8 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

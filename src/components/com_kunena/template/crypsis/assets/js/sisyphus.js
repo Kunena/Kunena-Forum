@@ -26,8 +26,9 @@
 	/**
 	 * Check if local storage or other browser storage is available
 	 *
-	 * @return Boolean
-	 */
+	 * @return boolean
+	 * @since Kunena
+ 	 */
 	browserStorage.isAvailable = function () {
 		if (typeof $.jStorage === "object") {
 			return true;
@@ -47,8 +48,9 @@
 	 * @param [String] key
 	 * @param [String] value
 	 *
-	 * @return Boolean
-	 */
+	 * @return boolean
+	 * @since Kunena
+ 	 */
 	browserStorage.set = function (key, value) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.set(key, value + "");
@@ -69,7 +71,8 @@
 	 * @param [String] key
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	browserStorage.get = function (key) {
 		if (typeof $.jStorage === "object") {
 			var result = $.jStorage.get(key);
@@ -86,7 +89,8 @@
 	 * @param [String] key
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	browserStorage.remove = function (key) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.deleteKey(key);

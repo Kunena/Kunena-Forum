@@ -20,7 +20,8 @@ class KunenaViewCategory extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)

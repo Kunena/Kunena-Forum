@@ -41,8 +41,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function install($parent)
 	{
 		// Delete all cached files.
@@ -62,7 +62,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function discover_install($parent)
 	{
 		return self::install($parent);
@@ -72,7 +73,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function update($parent)
 	{
 		return self::install($parent);
@@ -82,7 +84,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function uninstall($parent)
 	{
 		$adminpath = $parent->getParent()->getPath('extension_administrator');
@@ -103,7 +106,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function preflight($type, $parent)
 	{
 		$parent   = $parent->getParent();
@@ -333,7 +337,8 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function postflight($type, $parent)
 	{
 		return true;
@@ -379,7 +384,8 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkVersion($name, $version)
 	{
 		$app = JFactory::getApplication();
@@ -419,7 +425,8 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkDbo($name, $types)
 	{
 		$app = JFactory::getApplication();
@@ -440,7 +447,8 @@ class Com_KunenaInstallerScript
 	 * @return integer
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkExtensions($extensions)
 	{
 		$app = JFactory::getApplication();
@@ -465,7 +473,8 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected function checkKunena($version)
 	{
 		$app = JFactory::getApplication();

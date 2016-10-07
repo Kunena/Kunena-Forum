@@ -20,7 +20,8 @@ class KunenaViewTopic extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	function displayEdit($tpl = null)
 	{
 		$body     = JFactory::getApplication()->input->post->get('body', '', 'raw');
@@ -47,7 +48,8 @@ class KunenaViewTopic extends KunenaView
 	 * @since K4.0
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayListEmoji($tpl = null)
 	{
 		$response = array();
@@ -91,7 +93,8 @@ class KunenaViewTopic extends KunenaView
 	 * Send list of topic icons in JSON for the category set selected
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayTopicIcons()
 	{
 		jimport('joomla.filesystem.folder');

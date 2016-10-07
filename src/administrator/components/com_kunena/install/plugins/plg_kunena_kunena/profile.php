@@ -17,7 +17,8 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -28,7 +29,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -48,7 +50,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		if ($user == 0)
@@ -94,7 +97,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -128,7 +132,8 @@ class KunenaProfileKunena extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function showProfile($view, &$params)
 	{
 	}
@@ -138,7 +143,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml = true);

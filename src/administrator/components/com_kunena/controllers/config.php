@@ -28,7 +28,8 @@ class KunenaAdminControllerConfig extends KunenaController
 	/**
 	 * @since    2.0.0-BETA2
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	protected $kunenabaseurl = null;
 
 	/**

@@ -25,7 +25,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * The feature allows you to create one base template and only override changed files.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $default = array('crypsis');
 
 	/**
@@ -34,7 +35,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * These will override default files in JROOT/media/kunena
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
@@ -49,7 +51,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * User group initialization.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected $userClasses = array(
 		'kwho-',
 		'admin'     => 'kwho-admin',
@@ -67,7 +70,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * By default language files are also loaded from the parent templates.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadLanguage()
 	{
 		$lang = JFactory::getLanguage();
@@ -84,7 +88,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function initialize()
 	{
 		JHtml::_('bootstrap.framework');
@@ -168,7 +173,8 @@ EOF;
 	 * @param   string $group
 	 *
 	 * @return JDocument
-	 */
+	 * @since Kunena
+ 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
@@ -184,7 +190,8 @@ EOF;
 	 * @param   null $id
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
@@ -230,7 +237,8 @@ HTML;
 	 * @param   string $title
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getIcon($name, $title = '')
 	{
 		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
@@ -241,7 +249,8 @@ HTML;
 	 * @param   string $alt
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getImage($image, $alt = '')
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';

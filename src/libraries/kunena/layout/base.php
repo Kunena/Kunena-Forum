@@ -39,7 +39,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Layout name.
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	protected $_name = '';
 
 	/**
@@ -60,7 +61,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Support for closure variables.
 	 *
 	 * @var array
-	 */
+	 * @since Kunena
+ 	 */
 	protected $closures = array();
 
 	protected $debug;
@@ -222,7 +224,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   Exception $e
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function renderError(Exception $e)
 	{
 		// Exceptions aren't allowed in string conversion, log the error and output it as a string.
@@ -289,7 +292,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function addStyleSheet($filename)
 	{
 		return KunenaFactory::getTemplate()->addStyleSheet($filename);
@@ -301,7 +305,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function addScript($filename)
 	{
 		return KunenaFactory::getTemplate()->addScript($filename);
@@ -314,7 +319,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $type
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
 		return KunenaFactory::getTemplate()->addScriptDeclaration($content, $type);
@@ -499,7 +505,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $property
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function __isset($property)
 	{
 		return array_key_exists($property, $this->closures);

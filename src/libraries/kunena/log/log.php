@@ -97,7 +97,8 @@ class KunenaLog
 	 * Should only be called as a shutdown function in order to make sure all items are logged.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public static function flush()
 	{
 		if (!empty(static::$entries))
@@ -131,7 +132,8 @@ class KunenaLog
 	 * Clear out the log entries.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public static function clear()
 	{
 		static::$entries = array();
@@ -148,7 +150,8 @@ class KunenaLog
 	 * @param   KunenaUser          $user      Target user.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public static function log(
 		$type,
 		$operation,
@@ -168,7 +171,8 @@ class KunenaLog
 	 * @param   KunenaLogEntry $entry An instance of an entry to be logged.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public static function addEntry(KunenaLogEntry $entry)
 	{
 		static::$entries[] = $entry;

@@ -25,7 +25,8 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * Method to get moderation actions for announcements
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getActions()
 	{
 		$this->buttons = array();

@@ -22,7 +22,8 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	 * KunenaAvatarEasyprofile constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -30,7 +31,8 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getEditURL()
 	{
 		return JRoute::_('index.php?option=com_jsn&view=profile');
@@ -42,7 +44,8 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
 		if (!$user->userid == 0)

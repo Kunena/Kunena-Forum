@@ -819,7 +819,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function removecatsubscriptions()
 	{
 		if (!JSession::checkToken('post'))
@@ -862,7 +863,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function removetopicsubscriptions()
 	{
 		if (!JSession::checkToken('post'))

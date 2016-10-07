@@ -153,7 +153,8 @@ abstract class KunenaForumCategoryUserHelper
 	 *
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
-	 */
+	 * @since Kunena
+ 	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
@@ -175,7 +176,7 @@ abstract class KunenaForumCategoryUserHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadAssocList('category_id');
@@ -184,7 +185,7 @@ abstract class KunenaForumCategoryUserHelper
 		{
 			KunenaError::displayDatabaseError($e);
 		}
-		
+
 		foreach ($ids as $id)
 		{
 			if (isset($results[$id]))

@@ -14,7 +14,8 @@ class KunenaAdminTemplate
 {
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function initialize()
 	{
 		$document = JFactory::getDocument();
@@ -30,7 +31,8 @@ class KunenaAdminTemplate
 	 * @param   bool|false $fullpath
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)

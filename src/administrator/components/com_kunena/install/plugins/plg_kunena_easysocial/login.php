@@ -19,7 +19,8 @@ class KunenaLoginEasySocial
 	 * KunenaLoginEasySocial constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -27,7 +28,8 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLoginURL()
 	{
 		return FRoute::dashboard();
@@ -35,7 +37,8 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLogoutURL()
 	{
 		return FRoute::dashboard();
@@ -43,7 +46,8 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return null
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRegistrationURL()
 	{
 		$usersConfig = JComponentHelper::getParams('com_users');

@@ -59,7 +59,8 @@ class plgSystemKunena extends JPlugin
 	 *
 	 * @param $context
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetConfiguration($context, &$params)
 	{
 		if ($context == 'kunena.configuration')
@@ -216,7 +217,7 @@ class plgSystemKunena extends JPlugin
 				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 			$db->setQuery ( $query );
-			
+
 			try
 			{
 				$db->execute();
@@ -266,7 +267,8 @@ class plgSystemKunena extends JPlugin
 	 *
 	 * @return boolean
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
 	{
 		if ($type != 'component')

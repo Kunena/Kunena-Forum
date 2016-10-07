@@ -19,7 +19,8 @@ class KunenaLoginCommunity
 	 * KunenaLoginCommunity constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -27,7 +28,8 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLoginURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
@@ -35,7 +37,8 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLogoutURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
@@ -43,7 +46,8 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRegistrationURL()
 	{
 		$usersConfig = JComponentHelper::getParams('com_users');

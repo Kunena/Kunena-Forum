@@ -21,7 +21,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -33,7 +34,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function assignBadge($command, $message, $target = null)
 	{
 		$user  = FD::user($target);
@@ -47,7 +49,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function assignPoints($command, $target = null)
 	{
 		$user = FD::user($target);
@@ -59,7 +62,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterPost($message)
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
@@ -228,7 +232,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))

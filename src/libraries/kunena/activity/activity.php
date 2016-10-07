@@ -21,7 +21,8 @@ class KunenaActivity
 	 * Triggered before posting a new topic.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforePost($message)
 	{
 	}
@@ -30,7 +31,8 @@ class KunenaActivity
 	 * Triggered after posting a new topic.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterPost($message)
 	{
 	}
@@ -39,7 +41,8 @@ class KunenaActivity
 	 * Triggered before replying to a topic.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforeReply($message)
 	{
 	}
@@ -48,7 +51,8 @@ class KunenaActivity
 	 * Triggered after replying to a topic.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterReply($message)
 	{
 	}
@@ -57,7 +61,8 @@ class KunenaActivity
 	 * Triggered before editing a post.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onBeforeEdit($message)
 	{
 	}
@@ -66,7 +71,8 @@ class KunenaActivity
 	 * Triggered after editing a post.
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterEdit($message)
 	{
 	}
@@ -74,21 +80,24 @@ class KunenaActivity
 	/** TODO: Looks like these aren't fully working..
 	 *
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterDelete($message)
 	{
 	}
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterUndelete($message)
 	{
 	}
 
 	/**
 	 * @param $message
-	 */
+	 * @since Kunena
+ 	 */
 	public function onAfterDeleteTopic($message)
 	{
 	}
@@ -172,7 +181,8 @@ class KunenaActivity
 	 * @param $userid
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserMedals($userid)
 	{
 	}

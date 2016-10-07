@@ -25,7 +25,8 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	 * Prepare announcement form display.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -40,7 +41,8 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

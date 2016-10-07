@@ -103,7 +103,8 @@ class KunenaTemplate extends JObject
 
 	/**
 	 * @var string
-	 */
+	 * @since Kunena
+ 	 */
 	protected $category_iconset = '';
 
 	/**
@@ -112,7 +113,8 @@ class KunenaTemplate extends JObject
 	 * @access    protected
 	 *
 	 * @param   null $name
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($name = null)
 	{
 		if (!$name)
@@ -223,7 +225,8 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadLanguage()
 	{
 		// Loading language strings for the template
@@ -240,7 +243,8 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function initialize()
 	{
 		$this->loadLanguage();
@@ -272,7 +276,8 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function initializeBackend()
 	{
 		$this->loadLanguage();
@@ -280,7 +285,8 @@ class KunenaTemplate extends JObject
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUserClasses()
 	{
 		return $this->userClasses;
@@ -294,7 +300,8 @@ class KunenaTemplate extends JObject
 	 * @param null $id
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod');
@@ -341,7 +348,8 @@ HTML;
 	 * @param string $title
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getIcon($name, $title = '')
 	{
 		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
@@ -352,7 +360,8 @@ HTML;
 	 * @param string $alt
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getImage($image, $alt = '')
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
@@ -362,7 +371,8 @@ HTML;
 	 * @param $list
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPaginationListFooter($list)
 	{
 		$html = '<div class="list-footer">';
@@ -379,7 +389,8 @@ HTML;
 	 * @param $list
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPaginationListRender($list)
 	{
 		$html = '<ul class="kpagination">';
@@ -406,7 +417,8 @@ HTML;
 	 * @param $item
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPaginationItemActive($item)
 	{
 		return '<a title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
@@ -416,7 +428,8 @@ HTML;
 	 * @param $item
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPaginationItemInactive($item)
 	{
 		return '<span class="pagenav">' . $item->text . '</span>';
@@ -427,7 +440,8 @@ HTML;
 	 * @param string $class_sfx
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getClass($class, $class_sfx = '')
 	{
 		return $class . ($class_sfx ? " {$class}.{$class_sfx}" : '');
@@ -435,7 +449,8 @@ HTML;
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getStyleVariables()
 	{
 		return $this->style_variables;
@@ -446,7 +461,8 @@ HTML;
 	 * @param string $default
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getStyleVariable($name, $default = '')
 	{
 		return isset($this->style_variables[$name]) ? $this->style_variables[$name] : $default;
@@ -457,7 +473,8 @@ HTML;
 	 * @param $value
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function setStyleVariable($name, $value)
 	{
 		$this->compiled_style_variables = null;
@@ -470,7 +487,8 @@ HTML;
 	 * @param string $group
 	 *
 	 * @return JDocument
-	 */
+	 * @since Kunena
+ 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		if (!preg_match('|https?://|', $filename))
@@ -498,7 +516,8 @@ HTML;
 	/**
 	 * @param        $filename
 	 * @param string $condition
-	 */
+	 * @since Kunena
+ 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{
 		$filename  = preg_replace('|^css/|u', '', $filename);
@@ -511,7 +530,8 @@ HTML;
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function clearCache()
 	{
 		$path = JPATH_ROOT . "/media/kunena/cache/{$this->name}";
@@ -526,7 +546,8 @@ HTML;
 	 * @param string $filename
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCachePath($filename = '')
 	{
 		if ($filename)
@@ -550,7 +571,8 @@ HTML;
 	 * @param $matches
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	function findUrl($matches)
 	{
 		$file = trim($matches[1], ' \'"');
@@ -570,7 +592,8 @@ HTML;
 	 * @param string $type
 	 *
 	 * @return JDocument
-	 */
+	 * @since Kunena
+ 	 */
 	function addScriptDeclaration($content, $type = 'text/javascript')
 	{
 		return JFactory::getDocument()->addScriptDeclaration($content, $type);
@@ -582,7 +605,8 @@ HTML;
 	 * @param $filename
 	 *
 	 * @return JDocument
-	 */
+	 * @since Kunena
+ 	 */
 	function addScript($filename)
 	{
 		if (!preg_match('|https?://|', $filename))
@@ -616,7 +640,8 @@ HTML;
 	 *
 	 * @return array
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		$app = JFactory::getApplication();
@@ -649,7 +674,8 @@ HTML;
 	 * @param null   $ignore
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
 	{
 		if ($basepath)
@@ -687,7 +713,8 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAvatarPath($filename = '', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['avatars'], 'media/kunena/avatars');
@@ -698,7 +725,8 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSmileyPath($filename = '', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['emoticons'], 'media/kunena/emoticons');
@@ -709,7 +737,8 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getRankPath($filename = '', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
@@ -720,7 +749,8 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopicIconPath($filename = '', $url = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -751,7 +781,8 @@ HTML;
 	 * @param        $category_iconset
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)
 	{
 		if (!$this->isHmvc())
@@ -768,7 +799,8 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getImagePath($filename = '', $url = true)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
@@ -952,7 +984,8 @@ HTML;
 	 * @param bool $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTopicIconIndexPath($index, $url = false)
 	{
 		if (empty($this->topicIcons))
@@ -975,7 +1008,8 @@ HTML;
 	 * @param bool $url
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
 	{
 		if (empty($this->categoryIcons))
@@ -1170,7 +1204,8 @@ HTML;
 	 * @param KunenaForumCategory $category
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryIcon($category)
 	{
 		$config = KunenaFactory::getConfig();
@@ -1304,7 +1339,8 @@ HTML;
 	/**
 	 * @return bool
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function isHmvc()
 	{
 		$app = JFactory::getApplication();

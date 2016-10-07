@@ -23,7 +23,8 @@ class KunenaIntegrationActivity
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct()
 	{
 		JPluginHelper::importPlugin('kunena');
@@ -61,7 +62,8 @@ class KunenaIntegrationActivity
 	 * @param   string $arguments Arguments need to be passed to the method
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function __call($method, $arguments)
 	{
 		$ret = null;

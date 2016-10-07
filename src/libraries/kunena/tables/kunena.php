@@ -18,7 +18,8 @@ abstract class KunenaTable extends JTable
 	 * @param   null $exists
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -36,7 +37,8 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function load($keys = null, $reset = true)
 	{
 		// Implement JObservableInterface: Pre-processing by observers
@@ -109,7 +111,7 @@ abstract class KunenaTable extends JTable
 		}
 
 		$this->_db->setQuery($query);
-		
+
 		try
 		{
 			$row = $this->_db->loadAssoc();
@@ -118,7 +120,7 @@ abstract class KunenaTable extends JTable
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
-		
+
 		if (empty($row))
 		{
 			// Check that we have a result.
@@ -145,7 +147,8 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function store($updateNulls = false)
 	{
 		// Workaround Joomla 3.2 change.
@@ -373,7 +376,7 @@ abstract class KunenaTable extends JTable
 
 		$this->_db->setQuery($query);
 
-		// Check for a database error.		
+		// Check for a database error.
 		try
 		{
 			$this->_db->execute();
@@ -382,7 +385,7 @@ abstract class KunenaTable extends JTable
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
-		
+
 		// Implement JObservableInterface: Post-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))

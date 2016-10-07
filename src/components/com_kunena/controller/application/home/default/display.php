@@ -21,7 +21,8 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();

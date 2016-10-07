@@ -224,8 +224,9 @@ class lessc
 	 *
 	 * @param $block
 	 *
-	 * @throws exception
-	 */
+	 * @throws Exception
+	 * @since Kunena
+ 	 */
 	protected function compileBlock($block)
 	{
 		switch ($block->type)
@@ -995,7 +996,8 @@ class lessc
 	 * @param $value
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function compileValue($value)
 	{
 		switch ($value[0])
@@ -1309,7 +1311,8 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function colorArgs($args)
 	{
 		if ($args[0] != 'list' || count($args[2]) < 2)
@@ -1651,7 +1654,8 @@ class lessc
 	 * @param $color
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function toRGB($color)
 	{
 		if ($color[0] == 'color')
@@ -1705,7 +1709,8 @@ class lessc
 	 * @param $func
 	 *
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	protected function funcToColor($func)
 	{
 		$fname = $func[1];
@@ -2640,8 +2645,9 @@ class lessc
 	 *
 	 * @param null $msg
 	 *
-	 * @throws exception
-	 */
+	 * @throws Exception
+	 * @since Kunena
+ 	 */
 	protected function throwError($msg = null)
 	{
 		if ($this->sourceLoc >= 0)
@@ -3214,7 +3220,8 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	protected function expression(&$out)
 	{
 		if ($this->value($lhs))
@@ -3250,7 +3257,8 @@ class lessc_parser
 	 * @param $minP
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function expHelper($lhs, $minP)
 	{
 		$this->inExp = true;
@@ -4161,7 +4169,8 @@ class lessc_parser
 	 * @param null $name
 	 *
 	 * @return bool
-	 */
+	 * @since Kunena
+ 	 */
 	protected function assign($name = null)
 	{
 		if ($name) $this->currentProperty = $name;

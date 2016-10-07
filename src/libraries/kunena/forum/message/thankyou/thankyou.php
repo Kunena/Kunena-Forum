@@ -22,7 +22,8 @@ class KunenaForumMessageThankyou extends JObject
 {
 	/**
 	 * @var integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected $id = 0;
 
 	protected $users = array();
@@ -31,7 +32,8 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   int $id
 	 *
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($id)
 	{
 		$this->id = (int) $id;
@@ -54,7 +56,8 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   int $userid
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists($userid)
 	{
 		return isset($this->users[(int) $userid]);
@@ -75,7 +78,8 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function save($user)
 	{
 		$user    = KunenaFactory::getUser($user);
@@ -107,18 +111,18 @@ class KunenaForumMessageThankyou extends JObject
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$db->execute();
 		}
 		catch(JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		$this->_savethankyou($message);
 
 		return true;
@@ -128,22 +132,23 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   KunenaForumMessage $message
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
 		$db    = JFactory::getDBO();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$db->execute();
 		}
 		catch(JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -165,7 +170,8 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function delete($user)
 	{
 		$user    = KunenaFactory::getUser($user);
@@ -192,15 +198,15 @@ class KunenaForumMessageThankyou extends JObject
 
 		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$db->execute();
 		}
 		catch(JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 

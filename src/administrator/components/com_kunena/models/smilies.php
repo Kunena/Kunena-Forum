@@ -84,7 +84,8 @@ class KunenaAdminModelSmilies extends JModelList
 	 * @param   string $id
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.

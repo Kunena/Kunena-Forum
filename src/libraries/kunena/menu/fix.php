@@ -39,7 +39,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public static function initialize()
 	{
 		self::load();
@@ -51,7 +52,8 @@ abstract class KunenaMenuFix
 	 *
 	 * @return array
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function load()
 	{
 		// Initialise variables.
@@ -69,7 +71,7 @@ abstract class KunenaMenuFix
 
 		// Set the query
 		$db->setQuery($query);
-		
+
 		try
 		{
 			self::$items = $db->loadObjectList('id');
@@ -103,7 +105,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getLegacy()
 	{
 		$items = array();
@@ -118,7 +121,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
-	 */
+	 * @since Kunena
+ 	 */
 	public static function fixLegacy()
 	{
 		$errors = array();
@@ -149,7 +153,8 @@ abstract class KunenaMenuFix
 	 * @param $itemid
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function delete($itemid)
 	{
 		// Only delete Kunena menu items
@@ -167,7 +172,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getAll()
 	{
 		$items = array();
@@ -185,7 +191,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getAliases()
 	{
 		$items = array();
@@ -200,7 +207,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public static function getInvalid()
 	{
 		$items = array();
@@ -220,7 +228,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected static function build()
 	{
 		if (!isset(self::$structure))

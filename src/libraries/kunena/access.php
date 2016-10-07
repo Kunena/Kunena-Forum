@@ -35,7 +35,8 @@ class KunenaAccess
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -104,7 +105,8 @@ class KunenaAccess
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function clearCache()
 	{
 		$this->adminsByCatid      = array();
@@ -130,7 +132,7 @@ class KunenaAccess
 		$db    = JFactory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$this->storeRoles((array) $db->loadObjectList());
@@ -160,7 +162,8 @@ class KunenaAccess
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAccessOptions($category)
 	{
 		$list = array();
@@ -193,7 +196,8 @@ class KunenaAccess
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAccessTypesList($category)
 	{
 		static $enabled = false;
@@ -262,7 +266,8 @@ window.addEvent('domready', function(){
 	 * @param   KunenaForumCategory $category Category
 	 *
 	 * @return array|null
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
 		$list = array();
@@ -332,7 +337,8 @@ window.addEvent('domready', function(){
 	 * @param   bool $all
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAdmins($catid = 0, $all = false)
 	{
 		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
@@ -352,7 +358,8 @@ window.addEvent('domready', function(){
 	 * @param   bool $all
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getModerators($catid = 0, $all = false)
 	{
 		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
@@ -369,7 +376,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAdminStatus($user = null)
 	{
 		if (!($user instanceof KunenaUser))
@@ -384,7 +392,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getModeratorStatus($user = null)
 	{
 		if (!($user instanceof KunenaUser))
@@ -400,7 +409,8 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function isAdmin($user = null, $catid = 0)
 	{
 		if (!($user instanceof KunenaUser))
@@ -440,7 +450,8 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena 
+ 	 */
 	public function isModerator($user = null, $catid = 0)
 	{
 		if (!($user instanceof KunenaUser))
@@ -539,7 +550,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAllowedCategories($user = null)
 	{
 		static $read = array();
@@ -617,7 +629,8 @@ window.addEvent('domready', function(){
 	 * @param   int                 $userid
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$list = array();
@@ -696,7 +709,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $excludeList
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null)
 	{
 		$topic    = KunenaForumTopicHelper::get($topic);
@@ -848,7 +862,7 @@ window.addEvent('domready', function(){
 			$query->where("u.id IN ({$userlist})");
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$userids = (array) $db->loadObjectList();
@@ -900,7 +914,8 @@ window.addEvent('domready', function(){
 	 * @param   bool             $type
 	 *
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{
 		$category = $topic->getCategory();
@@ -921,7 +936,7 @@ window.addEvent('domready', function(){
 
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$userids = (array) $db->loadColumn();

@@ -22,7 +22,8 @@ class KunenaAdminViewRanks extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
-	 */
+	 * @since Kunena
+ 	 */
 	function display($tpl = null)
 	{
 		$this->setToolbar();
@@ -46,7 +47,8 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function setToolbar()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
@@ -81,7 +83,8 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -95,7 +98,8 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();

@@ -184,7 +184,8 @@ class KunenaImage extends KunenaCompatImage
 	 * @param $src_h
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
 	{
 		// We should first cut the piece we are interested in from the source

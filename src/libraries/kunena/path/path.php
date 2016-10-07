@@ -96,7 +96,8 @@ class KunenaPath extends JPath
 	 * @param $path
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public static function isWritable($path)
 	{
 		if (is_writable($path) || self::isOwner($path))

@@ -20,7 +20,8 @@ class KunenaModelCommon extends KunenaModel
 {
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	protected function populateState()
 	{
 		$params = $this->getParameters();

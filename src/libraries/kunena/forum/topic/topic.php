@@ -40,7 +40,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 {
 	/**
 	 * @var integer
-	 */
+	 * @since Kunena
+ 	 */
 	public $id = null;
 
 	public $unread = 0;
@@ -105,7 +106,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $properties
 	 *
 	 * @internal
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($properties = null)
 	{
 		if (!empty($this->id))
@@ -129,7 +131,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool $reset
 	 *
 	 * @return KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	static public function getInstance($identifier = null, $reset = false)
 	{
 		return KunenaForumTopicHelper::get($identifier, $reset);
@@ -139,7 +142,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null|bool $exists
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	function exists($exists = null)
 	{
 		if ($exists !== null)
@@ -158,7 +162,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function subscribe($value = true, $user = null)
 	{
 		$usertopic             = $this->getUserTopic($user);
@@ -181,7 +186,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function favorite($value = true, $user = null)
 	{
 		$usertopic           = $this->getUserTopic($user);
@@ -201,7 +207,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function sticky($value = 1)
 	{
 		$this->ordering = (int) $value;
@@ -213,7 +220,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function lock($value = 1)
 	{
 		$this->locked = (int) $value;
@@ -237,7 +245,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function publish($value = KunenaForum::PUBLISHED)
 	{
 		if ($value < 0 || $value > 3)
@@ -291,7 +300,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public function getAuthor()
 	{
 		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
@@ -299,7 +309,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaForumCategory
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->category_id);
@@ -318,7 +329,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getHits()
 	{
 		return $this->hits;
@@ -386,7 +398,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public function getFirstPostAuthor()
 	{
 		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
@@ -394,7 +407,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public function getLastPostAuthor()
 	{
 		return KunenaUserHelper::getAuthor($this->last_post_userid, $this->last_post_guest_name);
@@ -467,7 +481,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $category_icon
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getIcon($category_icon = '')
 	{
 		return KunenaFactory::getTemplate()->getTopicIcon($this, $category_icon);
@@ -477,7 +492,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $hold
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getTotal($hold = null)
 	{
 		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory()))
@@ -492,7 +508,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $hold
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getReplies($hold = null)
 	{
 		return (int) max($this->getTotal($hold) - 1, 0);
@@ -504,7 +521,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null|string $action
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
 		return KunenaRoute::getTopicUrl(
@@ -523,7 +541,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string              $action
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null)
 	{
 		return $this->getUrl($category, $xhtml, $action);
@@ -640,7 +659,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed       $hold
 	 *
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	public function getPostLocation($mesid, $direction = null, $hold = null)
 	{
 		if (is_null($direction))
@@ -696,7 +716,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   array|null $safefields
 	 *
 	 * @return KunenaForumMessage
-	 */
+	 * @since Kunena
+ 	 */
 	public function newReply($fields = array(), $user = null, $safefields = null)
 	{
 		$user     = KunenaUserHelper::get($user);
@@ -749,7 +770,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function hasNew($user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -787,7 +809,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function markRead($user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -811,7 +834,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null $user
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function markNew($user = null)
 	{
 		return $this->markRead($user);
@@ -1530,7 +1554,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int                $postdelta
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function update($message = null, $postdelta = 0)
 	{
 		// Update post count
@@ -1668,7 +1693,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function recount()
 	{
 		if (!$this->moved_id)
@@ -1732,7 +1758,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function resetvotes()
 	{
 		if (!$this->poll_id)
@@ -1859,7 +1886,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
 	{
 		// Check that topic is not locked or user is a moderator
@@ -1875,7 +1903,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function authoriseOwn(KunenaUser $user)
 	{
 		// Guests cannot own a topic.
@@ -1899,7 +1928,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function authorisePoll(KunenaUser $user)
 	{
 		// Check that user can vote
@@ -1917,7 +1947,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function authoriseVote(KunenaUser $user)
 	{
 		// Check that user can vote
@@ -1957,7 +1988,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	protected function authoriseNoVotes(KunenaUser $user)
 	{
 		$poll = $this->getPoll();
@@ -1972,7 +2004,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
-	 */
+	 * @since Kunena
+ 	 */
 	protected function delta()
 	{
 		if (!$this->hold && $this->_hold)

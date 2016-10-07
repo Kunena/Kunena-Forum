@@ -21,7 +21,8 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 */
+	 * @since Kunena
+ 	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();
@@ -60,7 +61,8 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 * Prepare document.
 	 *
 	 * @return void
-	 */
+	 * @since Kunena
+ 	 */
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();

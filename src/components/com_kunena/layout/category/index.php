@@ -40,7 +40,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   KunenaCategory $category The KunenaCategory object
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryIcon($category)
 	{
 		$template     = KunenaFactory::getTemplate();
@@ -79,7 +80,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   KunenaSubCategory $subcategory The KunenaCategory object
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
 		$this->ktemplate     = KunenaFactory::getTemplate();
@@ -139,7 +141,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return null|string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
 		if (KunenaConfig::getInstance()->enablerss)

@@ -25,7 +25,8 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 *
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -42,7 +43,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @return JControllerLegacy|void
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		require_once __DIR__ . '/view.php';
@@ -66,7 +68,8 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function run()
 	{
 		if (!JSession::checkToken('post'))
@@ -166,7 +169,8 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	function uninstall()
 	{
 		if (!JSession::checkToken('get'))
@@ -243,8 +247,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $exception
 	 *
 	 * @return boolean
-	 *
-	 */
+	 * @since Kunena
+ 	 */
 	static public function exceptionHandler($exception)
 	{
 		self::error('', 'Uncaught Exception: ' . $exception->getMessage());
@@ -259,8 +263,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $errline
 	 *
 	 * @return boolean
-	 *
-	 */
+	 * @since Kunena
+ 	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		// Self::error('', "Fatal Error: $errstr in $errfile on line $errline");

@@ -36,7 +36,8 @@ class KunenaView extends JViewLegacy
 	 * @param   array $config
 	 *
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($config = array())
 	{
 		$name           = isset($config['name']) ? $config['name'] : $this->getName();
@@ -80,7 +81,8 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayAll()
 	{
 		if ($this->inLayout)
@@ -97,7 +99,8 @@ class KunenaView extends JViewLegacy
 	 *
 	 * @return mixed|void
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayLayout($layout = null, $tpl = null)
 	{
 		if ($this->inLayout)
@@ -349,7 +352,8 @@ class KunenaView extends JViewLegacy
 	 *
 	 * @return $this
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function displayTemplateFile($view, $layout, $template = null)
 	{
 		// HMVC legacy support.
@@ -408,7 +412,8 @@ class KunenaView extends JViewLegacy
 	 *
 	 * @return string The output of the the template script.
 	 * @throws Exception
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
 	{
 		KUNENA_PROFILER ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

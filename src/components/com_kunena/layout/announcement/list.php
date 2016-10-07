@@ -25,7 +25,8 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 	 * @see KunenaCompatLayoutBase::getOptions()
 	 *
 	 * @return string
-	 */
+	 * @since Kunena
+ 	 */
 	public function getOptions()
 	{
 		$options = array();

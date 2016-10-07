@@ -21,7 +21,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault()
 	{
 		$this->setLayout($this->state->get('layout'));
@@ -50,7 +50,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayPurge()
 	{
 		$this->purgeitems    = $this->get('PurgeItems');
@@ -63,7 +63,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarDefault()
 	{
 		// Set the titlebar text
@@ -81,7 +81,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarPurge()
 	{
 		// Set the titlebar text
@@ -100,7 +100,7 @@ class KunenaAdminViewTrash extends KunenaView
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -131,7 +131,7 @@ class KunenaAdminViewTrash extends KunenaView
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();

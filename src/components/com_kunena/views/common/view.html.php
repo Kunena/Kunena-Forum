@@ -529,7 +529,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
 		$mode = KunenaFactory::getConfig()->rss_type;

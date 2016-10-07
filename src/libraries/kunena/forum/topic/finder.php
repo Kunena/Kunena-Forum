@@ -294,7 +294,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @since Kunena
- 	 */
+	 */
 	public function find($access = 'read')
 	{
 		$results = parent::find();

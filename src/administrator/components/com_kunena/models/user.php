@@ -47,7 +47,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function getUser()
 	{
 		$userid = $this->getState($this->getName() . '.id');
@@ -62,7 +62,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function getSubscriptions()
 	{
 		$db     = JFactory::getDBO();
@@ -101,7 +101,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function getCatsubcriptions()
 	{
 		$userid = $this->getState($this->getName() . '.id');
@@ -116,7 +116,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function getIPlist()
 	{
 		$db     = JFactory::getDBO();
@@ -167,8 +167,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function getListmodcats()
 	{
 		$user = $this->getUser();
@@ -234,8 +234,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function getMovecatslist()
 	{
 		return JHtml::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');

@@ -74,7 +74,7 @@ class KunenaVersion
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function checkVersion()
 	{
 		$version = $this->getDBVersion();

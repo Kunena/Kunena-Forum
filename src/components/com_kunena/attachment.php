@@ -172,7 +172,7 @@ class KunenaApplication extends JApplicationWeb
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function doExecute()
 	{
 		// Handle SEF.
@@ -197,7 +197,7 @@ class KunenaApplication extends JApplicationWeb
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function isSite()
 	{
 		return true;
@@ -206,7 +206,7 @@ class KunenaApplication extends JApplicationWeb
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function isAdmin()
 	{
 		return false;
@@ -217,7 +217,7 @@ class KunenaApplication extends JApplicationWeb
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getTemplate($params = false)
 	{
 		return 'system';
@@ -238,7 +238,7 @@ class KunenaApplication extends JApplicationWeb
 	 *
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserState($name, $default = null)
 	{
 		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;

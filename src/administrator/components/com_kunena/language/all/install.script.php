@@ -32,7 +32,7 @@ class pkg_kunena_languagesInstallerScript
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function preflight($type, $parent)
 	{
 		if (!in_array($type, array('install', 'update')))

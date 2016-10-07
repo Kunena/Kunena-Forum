@@ -33,7 +33,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param    string $name
+	 * @param   string $name
 	 *
 	 * @return KunenaTemplate
 	 */
@@ -62,12 +62,12 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param    int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param    bool $reload
+	 * @param   int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param   bool $reload
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public static function getUser($id = null, $reload = false)
 	{
 		return KunenaUserHelper::get($id, $reload);
@@ -150,7 +150,7 @@ abstract class KunenaFactory
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = array();
@@ -197,7 +197,7 @@ abstract class KunenaFactory
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected static function parseLanguage($lang, $filename)
 	{
 		if (!is_file($filename))

@@ -20,7 +20,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * @param   null $step
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($step = null)
 	{
 		// Joomla 2.5 support
@@ -171,7 +171,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * @return array
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function mapUserGroups($list)
 	{
 		if (!is_array($list))

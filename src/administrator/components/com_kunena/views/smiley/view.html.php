@@ -38,7 +38,7 @@ class KunenaAdminViewSmiley extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolbar()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');

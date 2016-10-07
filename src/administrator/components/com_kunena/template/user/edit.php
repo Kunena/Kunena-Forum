@@ -34,7 +34,8 @@ jQuery(function($) {
 		}
 	});
 });
-');
+'
+);
 ?>
 
 <div id="kunena" class="admin override">
@@ -86,13 +87,16 @@ jQuery(function($) {
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></legend>
 											<div><?php echo $this->avatar; ?></div>
-											<?php if ($this->editavatar) : ?>
+											<?php
+											if ($this->editavatar)
+:
+	?>
 												<div>
 													<label><input type="checkbox" value="1"
 													              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
 													</label>
 												</div>
-											<?php endif; ?>
+											<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             endif; ?>
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
@@ -108,7 +112,8 @@ jQuery(function($) {
 											<div>
 												<?php echo JText::sprintf(
 													'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-													'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'); ?>
+													'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+												); ?>
 											</div>
 										</fieldset>
 									</div>
@@ -324,20 +329,24 @@ jQuery(function($) {
 												</tr>
 												</thead>
 												<?php
-												if (!empty($this->subscatslist)) : foreach ($this->subscatslist as $cat) :
-													?>
-													<tr>
-														<td><?php echo $this->escape($cat->name); ?>
-															<small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
-														</td>
-														<td><?php echo $this->escape($cat->id); ?></td>
-													</tr>
-												<?php endforeach;
-												else : ?>
+												if (!empty($this->subscatslist))
+:
+													foreach ($this->subscatslist as $cat)
+	:
+																									?>
+																									<tr>
+																										<td><?php echo $this->escape($cat->name); ?>
+																											<small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
+																										</td>
+																										<td><?php echo $this->escape($cat->id); ?></td>
+																									</tr>
+																																				<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              endforeach;
+												else:
+	?>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_NOCATSUBS'); ?></td>
 													</tr>
-												<?php endif; ?>
+												<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 											</table>
 										</fieldset>
 									</div>
@@ -359,18 +368,23 @@ jQuery(function($) {
 												</thead>
 
 												<?php
-												if ($this->sub) : foreach ($this->sub as $topic) :
-													?>
-													<tr>
-														<td><?php echo $this->escape($topic->subject); ?></td>
-														<td><?php echo $this->escape($topic->id); ?></td>
-													</tr>
-												<?php endforeach;
-												else : ?>
+												if ($this->sub)
+:
+													foreach ($this->sub as $topic)
+	:
+																									?>
+																									<tr>
+																										<td><?php echo $this->escape($topic->subject); ?></td>
+																										<td><?php echo $this->escape($topic->id); ?></td>
+																									</tr>
+																																				<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          endforeach;
+												else
+:
+	?>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_NOSUBS'); ?></td>
 													</tr>
-												<?php endif; ?>
+												<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
 											</table>
 										</fieldset>
 									</div>
@@ -381,13 +395,16 @@ jQuery(function($) {
 											<table class="table table-striped">
 												<?php
 												$i          = 0;
-												foreach ($this->ipslist as $ip => $list) :
+
+												foreach ($this->ipslist as $ip => $list)
+:
 													$userlist = array();
 													$mescnt = 0;
+
 													foreach ($list as $curuser)
-													{
+	{
 														if ($curuser->userid == $this->user->userid)
-														{
+		{
 															$mescnt += intval($curuser->mescnt);
 															continue;
 														}
@@ -406,7 +423,7 @@ jQuery(function($) {
 															)
 														</td>
 													</tr>
-												<?php endforeach; ?>
+																								<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endforeach; ?>
 											</table>
 										</fieldset>
 									</div>

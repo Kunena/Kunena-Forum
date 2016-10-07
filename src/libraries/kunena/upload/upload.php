@@ -185,11 +185,13 @@ class KunenaUpload
 			case 'gb':
 				$value *= 1024;
 			break;
+
 			// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
 			break;
+
 			// Continue.
 			case 'k':
 			case 'kb':
@@ -410,7 +412,7 @@ class KunenaUpload
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function cleanup()
 	{
 		if (!$this->filename || !is_file($this->filename))
@@ -428,7 +430,7 @@ class KunenaUpload
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function ajaxResponse($content)
 	{
 		// TODO: Joomla 3.1+ uses JResponseJson (we just emulate it for now).
@@ -462,7 +464,8 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			} while (JDEBUG && $e);
+			}
+			while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
@@ -484,7 +487,7 @@ class KunenaUpload
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
 		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
@@ -509,7 +512,7 @@ class KunenaUpload
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
 		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
@@ -536,7 +539,7 @@ class KunenaUpload
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function checkFileSizeImageAttachment($filesize)
 	{
 		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
@@ -741,7 +744,7 @@ class KunenaUpload
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function bytes($bytes, $force_unit = null, $format = null, $si = true)
 	{
 		// Format string

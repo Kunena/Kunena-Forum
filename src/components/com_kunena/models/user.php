@@ -21,7 +21,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function populateState()
 	{
 		$active = $this->app->getMenu()->getActive();
@@ -77,7 +77,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getQueryWhere()
 	{
 		$where = '';
@@ -155,7 +155,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotal()
 	{
 		static $total = false;
@@ -182,7 +182,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getCount()
 	{
 		static $total = false;

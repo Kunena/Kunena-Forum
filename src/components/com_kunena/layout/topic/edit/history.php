@@ -26,7 +26,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getNumLink($mesid, $replycnt)
 	{
 		if ($this->config->ordering_system == 'replyid')
@@ -51,7 +51,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';

@@ -31,7 +31,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function populateState()
 	{
 		$params = $this->getParameters();
@@ -200,7 +200,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -249,7 +249,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function getRecentTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -340,7 +340,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function getUserTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -399,7 +399,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function getPosts()
 	{
 		$this->topics = array();
@@ -487,7 +487,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getMessages()
 	{
 		if ($this->topics === false)
@@ -501,7 +501,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotal()
 	{
 		if ($this->topics === false)
@@ -515,7 +515,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -601,7 +601,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getPostActions()
 	{
 		if ($this->messages === false)
@@ -667,7 +667,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;

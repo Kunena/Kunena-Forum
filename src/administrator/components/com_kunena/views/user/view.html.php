@@ -21,7 +21,7 @@ class KunenaAdminViewUser extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function displayEdit()
 	{
 		$this->setToolBarEdit();
@@ -55,7 +55,7 @@ class KunenaAdminViewUser extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function displayMove()
 	{
 		$this->setToolBarMove();
@@ -67,7 +67,7 @@ class KunenaAdminViewUser extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
@@ -84,7 +84,7 @@ class KunenaAdminViewUser extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text

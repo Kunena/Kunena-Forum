@@ -37,7 +37,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -265,7 +265,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

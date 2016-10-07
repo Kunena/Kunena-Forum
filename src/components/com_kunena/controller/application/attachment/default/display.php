@@ -24,7 +24,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		return true;
@@ -194,7 +194,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		// Load language files.

@@ -23,7 +23,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 *
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getCodeTypes()
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
@@ -67,7 +67,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function getBBcodesEnabled()
 	{
 		$this->ktemplate  = KunenaFactory::getTemplate();

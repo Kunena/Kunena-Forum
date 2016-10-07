@@ -39,7 +39,7 @@ class TableKunenaUserRead extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		$user  = KunenaUserHelper::get($this->user_id);

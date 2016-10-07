@@ -24,7 +24,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopicOptions()
 	{
 		$options = array();
@@ -61,7 +61,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryList()
 	{
 		$options = array();

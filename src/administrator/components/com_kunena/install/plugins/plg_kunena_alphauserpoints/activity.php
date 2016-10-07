@@ -29,7 +29,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -40,7 +40,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	protected function _getAUPversion()
 	{
 		return AlphaUserPointsHelper::getAupVersion();
@@ -54,7 +54,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
 		return AlphaUserPointsHelper::buildKeyreference($plugin_function, $spc);
@@ -67,7 +67,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterPost($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -94,7 +94,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterReply($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -119,7 +119,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -144,7 +144,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
@@ -183,7 +183,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
@@ -196,7 +196,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserMedals($userid)
 	{
 		if ($userid == 0)
@@ -227,7 +227,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserPoints($userid)
 	{
 		if ($userid == 0)
@@ -258,7 +258,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	private function _checkPermissions($message)
 	{
 		$category   = $message->getCategory();
@@ -293,7 +293,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	private function _checkRuleEnabled($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
@@ -308,7 +308,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);

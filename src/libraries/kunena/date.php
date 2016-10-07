@@ -30,7 +30,7 @@ class KunenaDate extends JDate
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function toTimeAgo()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -96,7 +96,7 @@ class KunenaDate extends JDate
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function toTimezone()
 	{
 		$timezone = $this->getOffsetFromGMT(true);
@@ -112,7 +112,7 @@ class KunenaDate extends JDate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')
 	{
 		return '<span class="kdate ' . $class . '" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
@@ -125,7 +125,7 @@ class KunenaDate extends JDate
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{
 		if ($this->format('Y') < 1902)

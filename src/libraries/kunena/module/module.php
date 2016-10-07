@@ -19,7 +19,7 @@ abstract class KunenaModule
 	 * CSS file to be loaded.
 	 * @var string
 	 * @since Kunena
- 	 */
+	 */
 	static protected $css = null;
 
 	/**

@@ -84,7 +84,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();

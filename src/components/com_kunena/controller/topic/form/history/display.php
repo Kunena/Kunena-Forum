@@ -26,7 +26,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -73,7 +73,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 

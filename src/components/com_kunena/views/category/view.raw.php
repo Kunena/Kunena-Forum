@@ -21,7 +21,7 @@ class KunenaViewCategory extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault($tpl = null)
 	{
 		$response              = array();

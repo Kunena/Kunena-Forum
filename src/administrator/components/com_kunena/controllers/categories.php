@@ -57,7 +57,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 * @since Kunena
- 	 */
+	 */
 	public function lock()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -94,7 +94,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function review()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -113,7 +113,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unreview()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -132,7 +132,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function allow_anonymous()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -151,7 +151,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function deny_anonymous()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -170,7 +170,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function allow_polls()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -189,7 +189,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function deny_polls()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -208,7 +208,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function publish()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -227,7 +227,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unpublish()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
@@ -246,7 +246,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function add()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
@@ -275,7 +275,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function edit()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');

@@ -29,7 +29,7 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

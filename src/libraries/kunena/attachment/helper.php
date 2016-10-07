@@ -226,7 +226,8 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			}
+			while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -263,7 +264,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function getExtensions($category, $user = null)
 	{
 		$imagetypes = self::getImageExtensions($category, $user);
@@ -283,7 +284,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return array|boolean
 	 * @since Kunena
- 	 */
+	 */
 	static public function getImageExtensions($category = null, $user = null)
 	{
 		if ($category !== null)
@@ -358,7 +359,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return array|boolean
 	 * @since Kunena
- 	 */
+	 */
 	static public function getFileExtensions($category = null, $user = null)
 	{
 		$category = KunenaForumCategoryHelper::get($category);
@@ -426,7 +427,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	static public function cleanup()
 	{
 		$db = JFactory::getDBO();
@@ -486,7 +487,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
 		$len = mb_strlen($filename);

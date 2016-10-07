@@ -20,7 +20,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	 *
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -29,7 +29,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getEditURL()
 	{
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
@@ -42,7 +42,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
 		if (!$user->userid == 0)

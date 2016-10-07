@@ -19,7 +19,7 @@ abstract class KunenaMenuHelper
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public static function cleanCache()
 	{
 		// @var JCache|JCacheController $cache
@@ -50,6 +50,7 @@ abstract class KunenaMenuHelper
 		asort($levels);
 		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
 		$cache = JFactory::getCache('mod_menu', '');
+
 		if (!($items = $cache->get($key)))
 		{
 			// Initialise variables.
@@ -116,6 +117,7 @@ abstract class KunenaMenuHelper
 
 						default:
 							$router = JSite::getRouter();
+
 							if ($router->getMode() == JROUTER_MODE_SEF)
 							{
 								$item->flink = 'index.php?Itemid=' . $item->id;

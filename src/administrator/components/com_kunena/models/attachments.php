@@ -100,7 +100,7 @@ class KunenaAdminModelAttachments extends JModelList
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.

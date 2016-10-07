@@ -24,7 +24,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getTime()
 	{
 		$config = KunenaFactory::getConfig();
@@ -45,7 +45,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getRSS()
 	{
 		$config = KunenaFactory::getConfig();

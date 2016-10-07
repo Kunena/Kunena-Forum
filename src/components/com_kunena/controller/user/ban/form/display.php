@@ -57,7 +57,7 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

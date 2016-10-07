@@ -24,7 +24,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayCategories()
 	{
 		if ($this->sections)
@@ -39,7 +39,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayCategoryActions()
 	{
 		if (!$this->category->isSection())
@@ -53,7 +53,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryActions()
 	{
 		$category = $this->category;
@@ -218,7 +218,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getPagination($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));

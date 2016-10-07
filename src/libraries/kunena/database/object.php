@@ -260,7 +260,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @return  KunenaDatabaseObject
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($properties = null)
 	{
 		if (!$this->_name)

@@ -98,7 +98,7 @@ class KunenaLog
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public static function flush()
 	{
 		if (!empty(static::$entries))
@@ -133,7 +133,7 @@ class KunenaLog
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public static function clear()
 	{
 		static::$entries = array();
@@ -151,7 +151,7 @@ class KunenaLog
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public static function log(
 		$type,
 		$operation,
@@ -172,7 +172,7 @@ class KunenaLog
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public static function addEntry(KunenaLogEntry $entry)
 	{
 		static::$entries[] = $entry;

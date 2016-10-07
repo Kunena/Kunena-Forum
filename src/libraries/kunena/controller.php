@@ -27,7 +27,7 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -57,7 +57,7 @@ class KunenaController extends JControllerLegacy
 	 * @return KunenaController
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{
 		static $instance = null;
@@ -193,7 +193,7 @@ class KunenaController extends JControllerLegacy
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function execute($task)
 	{
 		if (!$task)
@@ -440,7 +440,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getRedirect()
 	{
 		return $this->redirect;
@@ -449,7 +449,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getMessage()
 	{
 		return $this->message;
@@ -458,7 +458,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getMessageType()
 	{
 		return $this->messageType;

@@ -35,7 +35,7 @@ class KunenaForumTopicUser extends JObject
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($topic = null, $user = null)
 	{
 		$topic = KunenaForumTopicHelper::get($topic);
@@ -69,7 +69,7 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * @return KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopic()
 	{
 		return KunenaForumTopicHelper::get($this->topic_id);
@@ -80,7 +80,7 @@ class KunenaForumTopicUser extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -129,7 +129,7 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function reset()
 	{
 		$this->topic_id = 0;

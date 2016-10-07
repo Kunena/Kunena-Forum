@@ -167,7 +167,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayTopicRows()
 	{
 		$firstpost = $this->state->get('list.mode') == 'topics';
@@ -213,7 +213,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayPostRows()
 	{
 		foreach ($this->messages as $message)

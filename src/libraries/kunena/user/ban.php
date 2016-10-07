@@ -66,7 +66,7 @@ class KunenaUserBan extends JObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getUser()
 	{
 		return KunenaUserHelper::get((int) $this->userid);
@@ -75,7 +75,7 @@ class KunenaUserBan extends JObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getCreator()
 	{
 		return KunenaUserHelper::get((int) $this->created_by);
@@ -84,7 +84,7 @@ class KunenaUserBan extends JObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getModifier()
 	{
 		return KunenaUserHelper::get((int) $this->modified_by);
@@ -257,7 +257,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
 		$c     = __CLASS__;
@@ -298,7 +298,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getUserHistory($userid)
 	{
 		if (!$userid)
@@ -339,8 +339,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function exists()
 	{
 		return $this->_exists;
@@ -487,8 +487,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function canBan()
 	{
 		$userid = $this->userid;
@@ -535,8 +535,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function isEnabled()
 	{
 		if ($this->isLifetime())
@@ -556,8 +556,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function isLifetime()
 	{
 		return $this->expiration == $this->_db->getNullDate();

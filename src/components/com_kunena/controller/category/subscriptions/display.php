@@ -104,7 +104,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getActions()
 	{
 		$options   = array();
@@ -119,7 +119,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

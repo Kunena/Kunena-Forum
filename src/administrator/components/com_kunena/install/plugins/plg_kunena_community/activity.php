@@ -23,7 +23,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 *
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -32,7 +32,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterPost($message)
 	{
 		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
@@ -81,7 +81,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterReply($message)
 	{
 		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
@@ -154,7 +154,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param   int $target
 	 * @param   int $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		CFactory::load('libraries', 'userpoints');
@@ -227,7 +227,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	protected function getAccess($category)
 	{
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private

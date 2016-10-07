@@ -71,7 +71,7 @@ class TableKunenaMessages extends KunenaTable
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function reset()
 	{
 		parent::reset();
@@ -84,7 +84,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -143,7 +143,7 @@ class TableKunenaMessages extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->catid);

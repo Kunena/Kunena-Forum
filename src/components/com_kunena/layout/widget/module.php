@@ -26,7 +26,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function renderPosition()
 	{
 		$document = JFactory::getDocument();

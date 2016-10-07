@@ -22,7 +22,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();
@@ -92,7 +92,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		// Load language files.

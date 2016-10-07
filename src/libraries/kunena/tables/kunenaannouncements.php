@@ -51,7 +51,7 @@ class TableKunenaAnnouncements extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		if ($this->created_by)

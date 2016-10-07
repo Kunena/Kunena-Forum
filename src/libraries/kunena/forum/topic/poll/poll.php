@@ -66,7 +66,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -110,7 +110,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getOptions()
 	{
 		if ($this->options === false)
@@ -137,7 +137,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotal()
 	{
 		if (is_null($this->_total))
@@ -157,7 +157,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserCount()
 	{
 		if ($this->usercount === false)
@@ -186,7 +186,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
 		if ($this->users === false)
@@ -214,7 +214,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getMyVotes($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
@@ -244,7 +244,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getLastVoteId($user = null)
 	{
 		$user  = KunenaFactory::getUser($user);
@@ -270,7 +270,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getMyTime($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
@@ -302,7 +302,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function vote($option, $change = false, $user = null)
 	{
 		if (!$this->exists())
@@ -423,7 +423,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function changeOptionVotes($option, $delta)
 	{
 		if (!isset($this->options[$option]->votes))
@@ -500,7 +500,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($id)
 	{
 		// Create the table object

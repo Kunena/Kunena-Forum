@@ -33,7 +33,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function populateState()
 	{
 		$layout = $this->getCmd('layout', 'default');
@@ -85,7 +85,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getLastestCategories()
 	{
 		if ($this->items === false)
@@ -255,7 +255,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getUnapprovedCount()
 	{
 		return $this->pending;
@@ -264,7 +264,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->getState('item.id'));
@@ -273,7 +273,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -348,7 +348,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotal()
 	{
 		if ($this->total === false)
@@ -362,7 +362,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -438,7 +438,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;
@@ -447,7 +447,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getModerators()
 	{
 		$moderators = $this->getCategory()->getModerators(false);
@@ -458,7 +458,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryActions()
 	{
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));

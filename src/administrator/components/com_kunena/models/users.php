@@ -58,7 +58,7 @@ class KunenaAdminModelUsers extends JModelList
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$this->context = 'com_kunena.admin.users';

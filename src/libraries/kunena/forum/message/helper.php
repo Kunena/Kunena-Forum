@@ -153,7 +153,7 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		$reverse     = isset($params['reverse']) ? (int) $params['reverse'] : 0;
@@ -320,7 +320,7 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
 	{
 		if (is_null($direction))
@@ -405,7 +405,8 @@ abstract class KunenaForumMessageHelper
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})
-			GROUP BY m.id, mm.hold");
+			GROUP BY m.id, mm.hold"
+		);
 
 		try
 		{
@@ -546,7 +547,7 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
 		$db    = JFactory::getDBO();

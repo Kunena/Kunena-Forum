@@ -29,7 +29,7 @@ class KunenaControllerSearch extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function results()
 	{
 		$model = $this->getModel('Search');

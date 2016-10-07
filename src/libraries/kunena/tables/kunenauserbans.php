@@ -61,7 +61,7 @@ class TableKunenaUserBans extends JTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -114,7 +114,7 @@ class TableKunenaUserBans extends JTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -164,7 +164,7 @@ class TableKunenaUserBans extends JTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		if (!$this->ip)

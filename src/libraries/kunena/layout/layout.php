@@ -22,7 +22,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $after = array();
 
 	/**
@@ -47,7 +47,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function text($key)
 	{
 		return JText::_($key);
@@ -95,7 +95,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
@@ -107,7 +107,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getIcon($name, $title = '')
 	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
@@ -125,7 +125,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function formatLargeNumber($number, $precision = 3)
 	{
 		// Do we need to reduce the number of significant digits?
@@ -162,7 +162,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -221,7 +221,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -261,7 +261,7 @@ class KunenaLayout extends KunenaLayoutBase
 			$last = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $last);
 			$last = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $last);
 			$last = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $last);
-			$last = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '',$last);
+			$last = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $last);
 			$last = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $last);
 			$last = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $last);
 
@@ -331,7 +331,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();

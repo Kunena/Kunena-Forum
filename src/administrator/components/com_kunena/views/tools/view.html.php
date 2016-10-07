@@ -19,7 +19,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault()
 	{
 		$this->systemreport = $this->get('SystemReport');
@@ -32,7 +32,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayPrune()
 	{
 		$this->forumList       = $this->get('PruneCategories');
@@ -47,7 +47,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displaySubscriptions()
 	{
 		$id = $this->app->input->get('id', 0, 'int');
@@ -69,7 +69,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displaySyncUsers()
 	{
 		$this->setToolBarSyncUsers();
@@ -79,7 +79,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayRecount()
 	{
 		$this->setToolBarRecount();
@@ -89,7 +89,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayMenu()
 	{
 		$this->legacy    = KunenaMenuFix::getLegacy();
@@ -103,7 +103,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayPurgeReStatements()
 	{
 		$this->setToolBarPurgeReStatements();
@@ -113,7 +113,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayCleanupIP()
 	{
 		$this->setToolCleanupIP();
@@ -123,7 +123,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayDiagnostics()
 	{
 		$this->setToolBarDiagnostics();
@@ -133,7 +133,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayUninstall()
 	{
 		$this->setToolBarUninstall();
@@ -147,7 +147,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarDefault()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
@@ -158,7 +158,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarPrune()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -174,7 +174,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarSyncUsers()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -190,7 +190,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarRecount()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -206,7 +206,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarMenu()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -228,7 +228,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarPurgeReStatements()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -244,7 +244,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolCleanupIP()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -260,7 +260,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarUninstall()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -274,7 +274,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarDiagnostics()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');

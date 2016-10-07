@@ -82,7 +82,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{
 		$uri = $this->getUri($layout);
@@ -122,7 +122,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getTaskUrl($task = null, $xhtml = true)
 	{
 		$uri = $this->getTaskUri($task);
@@ -208,7 +208,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getAuthor()
 	{
 		if (!$this->_author)
@@ -356,7 +356,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		return true;
@@ -377,7 +377,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return null|string
 	 * @since Kunena
- 	 */
+	 */
 	protected function authoriseNew(KunenaUser $user)
 	{
 		if ($this->exists())
@@ -393,7 +393,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return null|string
 	 * @since Kunena
- 	 */
+	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
 		if (!$this->exists())
@@ -414,7 +414,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return null|string
 	 * @since Kunena
- 	 */
+	 */
 	protected function authoriseNotBanned(KunenaUser $user)
 	{
 		$banned = $user->isBanned();
@@ -441,7 +441,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return null|string
 	 * @since Kunena
- 	 */
+	 */
 	protected function authoriseWrite(KunenaUser $user)
 	{
 		// Check that user is global moderator

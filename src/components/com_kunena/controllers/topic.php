@@ -23,7 +23,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -40,7 +40,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function loadattachments()
 	{
 		// Only support JSON requests.
@@ -104,7 +104,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function removeattachments()
 	{
 		// Only support JSON requests.
@@ -296,7 +296,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function post()
 	{
 		$this->id = JFactory::getApplication()->input->getInt('parentid', 0);
@@ -655,7 +655,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function edit()
 	{
 		$this->id = JFactory::getApplication()->input->getInt('mesid', 0);
@@ -970,7 +970,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function checkMaxLinks($text, $topic)
 	{
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
@@ -1018,7 +1018,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function thankyou()
 	{
 		$type = JFactory::getApplication()->input->getString('task');
@@ -1028,7 +1028,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unthankyou()
 	{
 		$type = JFactory::getApplication()->input->getString('task');
@@ -1040,7 +1040,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	protected function setThankyou($type)
 	{
 		if (!JSession::checkToken('get'))
@@ -1126,7 +1126,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function subscribe()
 	{
 		if (!JSession::checkToken('get'))
@@ -1158,7 +1158,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function unsubscribe()
 	{
 		if (!JSession::checkToken('get'))
@@ -1190,7 +1190,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function favorite()
 	{
 		if (!JSession::checkToken('get'))
@@ -1222,7 +1222,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function unfavorite()
 	{
 		if (!JSession::checkToken('get'))
@@ -1254,7 +1254,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function sticky()
 	{
 		if (!JSession::checkToken('get'))
@@ -1301,7 +1301,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function unsticky()
 	{
 		if (!JSession::checkToken('get'))
@@ -1348,7 +1348,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function lock()
 	{
 		if (!JSession::checkToken('get'))
@@ -1395,7 +1395,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function unlock()
 	{
 		if (!JSession::checkToken('get'))
@@ -1442,7 +1442,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('get'))
@@ -1512,7 +1512,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function undelete()
 	{
 		if (!JSession::checkToken('get'))
@@ -1567,7 +1567,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function permdelete()
 	{
 		if (!JSession::checkToken('get'))
@@ -1639,7 +1639,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function approve()
 	{
 		if (!JSession::checkToken('get'))
@@ -1708,7 +1708,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function move()
 	{
 		if (!JSession::checkToken('post'))
@@ -1833,7 +1833,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function report()
 	{
 		if (!JSession::checkToken('post'))
@@ -2006,7 +2006,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function vote()
 	{
 		if (!JSession::checkToken('post'))
@@ -2063,7 +2063,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function resetvotes()
 	{
 		if (!JSession::checkToken('get'))

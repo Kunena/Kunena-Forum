@@ -18,8 +18,8 @@ abstract class KunenaTable extends JTable
 	 * @param   null $exists
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -37,8 +37,8 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function load($keys = null, $reset = true)
 	{
 		// Implement JObservableInterface: Pre-processing by observers
@@ -116,7 +116,7 @@ abstract class KunenaTable extends JTable
 		{
 			$row = $this->_db->loadAssoc();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
@@ -147,8 +147,8 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function store($updateNulls = false)
 	{
 		// Workaround Joomla 3.2 change.
@@ -381,7 +381,7 @@ abstract class KunenaTable extends JTable
 		{
 			$this->_db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}

@@ -22,7 +22,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

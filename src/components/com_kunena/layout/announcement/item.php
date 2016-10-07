@@ -26,7 +26,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getActions()
 	{
 		$this->buttons = array();

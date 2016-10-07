@@ -1460,7 +1460,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$config = KunenaFactory::getConfig();
 
 		if (!$user->isModerator($this->getCategory())
-				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id))
+				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id || ($config->userdeletetmessage == '3' && $this->id==$this->getTopic()->first_post_id)))
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}

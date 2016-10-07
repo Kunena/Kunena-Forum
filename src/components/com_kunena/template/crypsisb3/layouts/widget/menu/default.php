@@ -126,10 +126,18 @@ defined('_JEXEC') or die;
 		// The next item is deeper.
 		if ($item->deeper)
 		{
-			echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
-			if ($item->level == 1)
+			if ($item->level < 3)
 			{
+				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
 				echo '<li><a itemprop="url"><span itemprop="name">';
+			}
+			elseif ($item->level == 3)
+			{
+				echo '<ul class="dropdown-menu" role="menu">';
+			}
+			else
+			{
+				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
 			}
 		}
 		// The next item is shallower.

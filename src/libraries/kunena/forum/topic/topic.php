@@ -1408,12 +1408,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Delete rating
 			$queries[] = "DELETE FROM #__kunena_rate WHERE topic_id={$db->quote($this->id)}";
 
-			// Delete Attachment
-			if ($this->attachments)
-			{
-				$queries[] = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.thread={$db->quote($this->id)}";
-			}
-
 			if ($this->poll_id)
 			{
 				// Delete poll (users)

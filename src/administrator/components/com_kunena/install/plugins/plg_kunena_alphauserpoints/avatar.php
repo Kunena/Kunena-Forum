@@ -27,7 +27,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -38,7 +38,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function getEditURL()
 	{
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account');
@@ -67,7 +67,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 *
 	 * @deprecated  5.0
 	 * @since Kunena
- 	 */
+	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{
 		$user = KunenaFactory::getUser($user);

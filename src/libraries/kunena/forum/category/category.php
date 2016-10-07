@@ -158,7 +158,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumCategoryHelper::get($identifier, $reload);
@@ -196,7 +196,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function subscribe($value = true, $user = null)
 	{
 		$usercategory             = KunenaForumCategoryUserHelper::get($this->id, $user);
@@ -232,7 +232,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function isSection()
 	{
 		$this->buildInfo();
@@ -243,7 +243,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getIcon()
 	{
 		return KunenaFactory::getTemplate()->getCategoryIcon($this);
@@ -256,7 +256,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this;
@@ -441,7 +441,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function addAlias($alias)
 	{
 		if (!$this->exists())
@@ -491,7 +491,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function deleteAlias($alias)
 	{
 		// Do not delete valid alias.
@@ -542,7 +542,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopics()
 	{
 		$this->buildInfo();
@@ -553,7 +553,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getPosts()
 	{
 		$this->buildInfo();
@@ -564,7 +564,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getReplies()
 	{
 		$this->buildInfo();
@@ -575,7 +575,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getLastCategory()
 	{
 		$this->buildInfo();
@@ -586,7 +586,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public function getLastTopic()
 	{
 		return KunenaForumTopicHelper::get($this->getLastCategory()->last_topic_id);
@@ -597,7 +597,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	public function getChannels($action = 'read')
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -665,7 +665,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getNewTopicCategory($user = null)
 	{
 		foreach ($this->getChannels() as $category)
@@ -699,7 +699,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function newTopic(array $fields = null, $user = null, array $safefields = null)
 	{
 		$catid           = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory($user)->id;
@@ -743,7 +743,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getParent()
 	{
 		$parent = KunenaForumCategoryHelper::get(intval($this->parent_id));
@@ -884,7 +884,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -922,7 +922,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getAdmins($includeGlobal = true)
 	{
 		$access   = KunenaAccess::getInstance();
@@ -949,7 +949,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getModerators($includeGlobal = true, $objects = true)
 	{
 		$access   = KunenaAccess::getInstance();
@@ -1048,7 +1048,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
 	{
 		if (isset($src['channels']) && is_array($src['channels']))
@@ -1084,7 +1084,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($id = null)
 	{
 		$exists = parent::load($id);
@@ -1434,7 +1434,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function update($topic, $topicdelta = 0, $postdelta = 0)
 	{
 		if (!$topic->id)

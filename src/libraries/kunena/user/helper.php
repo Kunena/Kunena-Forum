@@ -45,7 +45,7 @@ abstract class KunenaUserHelper
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public static function cleanup()
 	{
 		self::$_instances      = array();
@@ -55,7 +55,7 @@ abstract class KunenaUserHelper
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public static function initialize()
 	{
 		$id        = JFactory::getUser()->id;
@@ -74,7 +74,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public static function get($identifier = null, $reload = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -136,7 +136,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public static function getAuthor($id, $name)
 	{
 		$id = (int) $id;
@@ -166,7 +166,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public static function getMyself()
 	{
 		return self::$_me;
@@ -177,7 +177,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function loadUsers(array $userids = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -246,7 +246,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function getLastId()
 	{
 		if (self::$_lastid === null)
@@ -260,7 +260,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function getTotalCount()
 	{
 		if (self::$_total === null)
@@ -305,7 +305,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getTopPosters($limit = 0)
 	{
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
@@ -346,7 +346,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getOnlineUsers()
 	{
 		if (self::$_online === null)
@@ -393,9 +393,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
-	 * @param    array   $groupIds  List of Group Ids (null for all).
-	 * @param    array   $userIds   List of User Ids (null for all).
-	 * @param    boolean $recursive Recursively include all child groups (optional)
+	 * @param   array   $groupIds  List of Group Ids (null for all).
+	 * @param   array   $userIds   List of User Ids (null for all).
+	 * @param   boolean $recursive Recursively include all child groups (optional)
 	 *
 	 * @return  array
 	 * @throws  BadMethodCallException  If first two parameters are both null.
@@ -467,7 +467,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getOnlineCount()
 	{
 		static $counts = null;
@@ -522,7 +522,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function getStatus($user)
 	{
 		$user   = self::get($user);
@@ -618,7 +618,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return bool|int
+	 * @return boolean|integer
 	 *
 	 * @since K5.1
 	 */

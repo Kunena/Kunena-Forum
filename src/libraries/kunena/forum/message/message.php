@@ -39,7 +39,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $id = null;
 
 	protected $_table = 'KunenaMessages';
@@ -92,7 +92,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($properties = null)
 	{
 		$this->_db = JFactory::getDbo();
@@ -113,7 +113,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumMessage
 	 * @since Kunena
- 	 */
+	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumMessageHelper::get($identifier, $reload);
@@ -124,7 +124,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function isNew($user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -187,7 +187,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getUrl($category = null, $xhtml = true)
 	{
 		return $this->getTopic()->getUrl($category, $xhtml, $this);
@@ -214,7 +214,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getPermaUrl($category = null, $xhtml = true)
 	{
 		$uri = $this->getPermaUri($category);
@@ -248,7 +248,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function newReply($fields = array(), $user = null, $safefields = null)
 	{
 		$user     = KunenaUserHelper::get($user);
@@ -470,7 +470,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function publish($value = KunenaForum::PUBLISHED)
 	{
 		if ($this->hold == $value)
@@ -487,7 +487,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopic()
 	{
 		if (!$this->_topic)
@@ -532,7 +532,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->catid);
@@ -541,7 +541,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumMessage
 	 * @since Kunena
- 	 */
+	 */
 	public function getParent()
 	{
 		return KunenaForumMessageHelper::get($this->parent);
@@ -550,7 +550,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getAuthor()
 	{
 		return KunenaUserHelper::getAuthor($this->userid, $this->name);
@@ -567,7 +567,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public function getModifier()
 	{
 		return KunenaUserHelper::get($this->modified_by);
@@ -794,7 +794,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function uploadAttachment($tmpid, $postvar, $catid = null)
 	{
 		$attachment                     = new KunenaAttachment;
@@ -858,7 +858,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getNbAttachments()
 	{
 		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
@@ -916,7 +916,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function updateAttachments()
 	{
 		// Save new attachments and update message text
@@ -1163,7 +1163,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		$author = KunenaUserHelper::get($this->userid);
@@ -1263,7 +1263,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$lastPostTime = $this->_db->loadResult();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -1286,13 +1286,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				WHERE m.userid={$this->_db->quote($this->userid)}
 				AND m.ip={$this->_db->quote($this->ip)}
 				AND t.message={$this->_db->quote($this->message)}
-				AND m.time>={$this->_db->quote($duplicatetimewindow)}");
+				AND m.time>={$this->_db->quote($duplicatetimewindow)}"
+			);
 
 			try
 			{
 				$id = $this->_db->loadResult();
 			}
-			catch(JDatabaseExceptionExecuting $e)
+			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -1618,7 +1619,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	protected function delta()
 	{
 		if (!$this->hold && ($this->_hold || $this->thread != $this->_thread))
@@ -1644,7 +1645,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $once)
 	{
 		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
@@ -1690,7 +1691,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
 				'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
 				'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-				'', $title2);
+				'', $title2
+			);
 		}
 
 		return $title;

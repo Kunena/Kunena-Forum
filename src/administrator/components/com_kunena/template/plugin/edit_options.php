@@ -31,10 +31,10 @@ foreach ($this->fieldsets as $name => $fieldset)
 		</thead>
 		<tbody>
 		<?php foreach ($this->form->getFieldset($name) as $field)
-		:
+	:
 			?>
 			<?php if (!$field->hidden)
-			:
+		:
 			?>
 			<tr>
 				<td>
@@ -44,7 +44,8 @@ foreach ($this->fieldsets as $name => $fieldset)
 					<?php echo $field->input; ?>
 				</td>
 			</tr>
-		<?php else:
+		<?php else
+:
 			$hidden_fields .= $field->input; ?>
 		<?php endif; ?>
 		<?php endforeach; ?>

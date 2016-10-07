@@ -30,7 +30,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

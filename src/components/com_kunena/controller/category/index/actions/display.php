@@ -31,7 +31,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

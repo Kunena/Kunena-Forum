@@ -62,7 +62,7 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @return float
 	 * @since Kunena
- 	 */
+	 */
 	static public function getSelected($id)
 	{
 		$db    = JFactory::getDbo();

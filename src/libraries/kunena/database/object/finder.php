@@ -9,7 +9,7 @@
  * @link          https://www.kunena.org
  **/
 
-// no direct access
+// No direct access
 defined('_JEXEC') or die;
 
 /**
@@ -22,13 +22,13 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @var string
 	 * @since Kunena
- 	 */
+	 */
 	protected $table;
 
 	/**
 	 * @var string
 	 * @since Kunena
- 	 */
+	 */
 	protected $primaryKey = 'id';
 
 	/**
@@ -121,13 +121,14 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string       $field     Field name.
 	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array $value     Value.
-	 * @param  bool          $escape    Only works for LIKE / NOT LIKE.
+	 * @param   bool          $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 */
 	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
+
 		switch ($operation)
 		{
 			case '>':
@@ -150,6 +151,7 @@ abstract class KunenaDatabaseObjectFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
+
 				if (empty($value))
 				{
 					// WHERE field IN (nothing).
@@ -160,11 +162,12 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db)
-					{
-						$item = $db->quote($item);
-					});
-					$list = implode(',', $value);
-					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+						{
+							$item = $db->quote($item);
+						}
+					);
+							$list = implode(',', $value);
+							$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
 				break;
 		}
@@ -179,7 +182,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function find()
 	{
 		if ($this->skip)
@@ -209,7 +212,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function count()
 	{
 		$query = clone $this->query;
@@ -246,7 +249,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 	}

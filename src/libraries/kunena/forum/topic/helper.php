@@ -28,7 +28,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	static public function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumTopic)
@@ -67,7 +67,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function subscribe($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
@@ -97,7 +97,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function favorite($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
@@ -184,7 +184,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -636,7 +636,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function fetchNewStatus(array $topics, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -676,7 +676,8 @@ abstract class KunenaForumTopicHelper
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
 				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
-				GROUP BY thread");
+				GROUP BY thread"
+			);
 
 			try
 			{

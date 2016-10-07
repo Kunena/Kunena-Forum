@@ -25,7 +25,7 @@ class KunenaLogin
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct()
 	{
 		JPluginHelper::importPlugin('kunena');
@@ -46,7 +46,7 @@ class KunenaLogin
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function enabled()
 	{
 		// TODO: do better
@@ -78,7 +78,7 @@ class KunenaLogin
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
 		foreach ($this->instances as $login)
@@ -97,7 +97,7 @@ class KunenaLogin
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function logoutUser($return = null)
 	{
 		foreach ($this->instances as $login)
@@ -114,7 +114,7 @@ class KunenaLogin
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getRememberMe()
 	{
 		foreach ($this->instances as $login)
@@ -131,7 +131,7 @@ class KunenaLogin
 	/**
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getLoginURL()
 	{
 		foreach ($this->instances as $login)
@@ -148,7 +148,7 @@ class KunenaLogin
 	/**
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getLogoutURL()
 	{
 		foreach ($this->instances as $login)
@@ -165,7 +165,7 @@ class KunenaLogin
 	/**
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getRegistrationURL()
 	{
 		foreach ($this->instances as $login)
@@ -182,7 +182,7 @@ class KunenaLogin
 	/**
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getResetURL()
 	{
 		foreach ($this->instances as $login)
@@ -199,7 +199,7 @@ class KunenaLogin
 	/**
 	 * @return null
 	 * @since Kunena
- 	 */
+	 */
 	public function getRemindURL()
 	{
 		foreach ($this->instances as $login)
@@ -254,7 +254,7 @@ class KunenaLogin
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public static function getTwoFactorMethods()
 	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';

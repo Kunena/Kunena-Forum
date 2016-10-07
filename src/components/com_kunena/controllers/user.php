@@ -78,7 +78,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function search()
 	{
 		$model = $this->getModel('user');
@@ -105,7 +105,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function change()
 	{
 		if (!JSession::checkToken('get'))
@@ -124,7 +124,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function karmaup()
 	{
 		$this->karma(1);
@@ -133,7 +133,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function karmadown()
 	{
 		$this->karma(-1);
@@ -237,7 +237,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function ban()
 	{
 		$user = KunenaFactory::getUser(JFactory::getApplication()->input->getInt('userid', 0));
@@ -440,7 +440,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function cancel()
 	{
 		$user = KunenaFactory::getUser();
@@ -450,7 +450,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function login()
 	{
 		if (!JFactory::getUser()->guest || !JSession::checkToken('post'))
@@ -490,7 +490,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function logout()
 	{
 		if (!JSession::checkToken('request'))
@@ -527,7 +527,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function status()
 	{
 		if (!JSession::checkToken('request'))
@@ -559,7 +559,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function statusText()
 	{
 		if (!JSession::checkToken('request'))
@@ -593,7 +593,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	protected function karma($karmaDelta)
 	{
 		if (!JSession::checkToken('get'))
@@ -685,7 +685,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	protected function saveUser()
 	{
 		// We only allow users to edit few fields
@@ -814,7 +814,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function deleteOldAvatars()
 	{
 		if (preg_match('|^users/|', $this->me->avatar))
@@ -845,7 +845,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function saveAvatar()
 	{
 		$action         = JFactory::getApplication()->input->getString('avatar', 'keep');

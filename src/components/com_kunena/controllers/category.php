@@ -33,7 +33,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function jump()
 	{
 		$catid = JFactory::getApplication()->input->getInt('catid', 0);
@@ -51,7 +51,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function markread()
 	{
 		if (!JSession::checkToken('request'))
@@ -125,7 +125,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function subscribe()
 	{
 		if (!JSession::checkToken('get'))
@@ -162,7 +162,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function unsubscribe()
 	{
 		if (!JSession::checkToken('request'))

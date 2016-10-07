@@ -339,7 +339,7 @@ class TableKunenaUsers extends KunenaTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -405,7 +405,7 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function reset()
 	{
 		parent::reset();
@@ -440,7 +440,7 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		if (!$this->userid || !JFactory::getUser($this->userid))

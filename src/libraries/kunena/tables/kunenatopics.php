@@ -78,7 +78,7 @@ class TableKunenaTopics extends KunenaTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -137,7 +137,7 @@ class TableKunenaTopics extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->category_id);

@@ -22,7 +22,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function none()
 	{
 		// FIXME: This is workaround for task=none on edit.
@@ -32,7 +32,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function publish()
 	{
 		if (!JSession::checkToken('post'))
@@ -79,7 +79,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unpublish()
 	{
 		if (!JSession::checkToken('post'))
@@ -126,7 +126,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function edit()
 	{
 		$cid = JFactory::getApplication()->input->post->get('cid', array(), 'array');
@@ -140,7 +140,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('request'))
@@ -179,7 +179,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function save()
 	{
 		if (!JSession::checkToken('post'))

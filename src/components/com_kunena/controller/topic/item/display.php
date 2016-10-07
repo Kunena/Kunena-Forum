@@ -42,7 +42,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * @var string
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**
@@ -174,7 +174,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareMessages($mesid)
 	{
 		// Get thank yous for all messages in the page
@@ -337,7 +337,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function after()
 	{
 		parent::after();
@@ -358,7 +358,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();

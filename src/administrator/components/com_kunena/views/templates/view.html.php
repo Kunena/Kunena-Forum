@@ -19,7 +19,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault()
 	{
 		$this->setToolBarDefault();
@@ -31,7 +31,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayAdd()
 	{
 		$this->setToolBarAdd();
@@ -41,7 +41,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayEdit()
 	{
 		$this->setToolBarEdit();
@@ -72,7 +72,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayChooseless()
 	{
 		$this->setToolBarChooseless();
@@ -97,7 +97,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayEditless()
 	{
 		$this->setToolBarEditless();
@@ -113,7 +113,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayChoosecss()
 	{
 		$this->setToolBarChoosecss();
@@ -137,7 +137,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displayEditcss()
 	{
 		$this->setToolBarEditcss();
@@ -152,7 +152,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarDefault()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -175,7 +175,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarAdd()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -189,7 +189,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarEdit()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -207,7 +207,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarChoosecss()
 	{
 
@@ -223,7 +223,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarEditcss()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -240,7 +240,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarChooseless()
 	{
 
@@ -256,7 +256,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setToolBarEditless()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');

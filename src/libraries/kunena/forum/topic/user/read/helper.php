@@ -34,7 +34,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @return KunenaForumTopicUserRead
 	 * @since Kunena
- 	 */
+	 */
 	static public function get($topic = null, $user = null, $reload = false)
 	{
 		if ($topic instanceof KunenaForumTopic)
@@ -70,7 +70,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @return KunenaForumTopicUserRead[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getTopics($ids = false, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -115,7 +115,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public static function move($old, $new)
 	{
 		// Update database
@@ -159,7 +159,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public static function merge($old, $new)
 	{
 		$db = JFactory::getDBO();
@@ -207,7 +207,7 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	static public function recount()
 	{
 		$db    = JFactory::getDBO();
@@ -235,7 +235,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	static public function purge($days = 365)
 	{
 		// Purge items that are older than x days (defaulting to a year)
@@ -264,7 +264,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
 	 * @since Kunena
- 	 */
+	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)

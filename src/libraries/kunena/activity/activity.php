@@ -22,7 +22,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onBeforePost($message)
 	{
 	}
@@ -32,7 +32,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterPost($message)
 	{
 	}
@@ -42,7 +42,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onBeforeReply($message)
 	{
 	}
@@ -52,7 +52,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterReply($message)
 	{
 	}
@@ -62,7 +62,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onBeforeEdit($message)
 	{
 	}
@@ -72,7 +72,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterEdit($message)
 	{
 	}
@@ -81,7 +81,7 @@ class KunenaActivity
 	 *
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterDelete($message)
 	{
 	}
@@ -89,7 +89,7 @@ class KunenaActivity
 	/**
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterUndelete($message)
 	{
 	}
@@ -97,7 +97,7 @@ class KunenaActivity
 	/**
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterDeleteTopic($message)
 	{
 	}
@@ -182,7 +182,7 @@ class KunenaActivity
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserMedals($userid)
 	{
 	}

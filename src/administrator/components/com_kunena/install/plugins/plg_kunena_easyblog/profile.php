@@ -21,7 +21,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 *
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -33,7 +33,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -54,7 +54,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
 		// Make sure that user profile exist.
@@ -70,7 +70,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @param $view
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function showProfile($view, &$params)
 	{
 	}
@@ -81,7 +81,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);

@@ -62,7 +62,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($config = array(), JInput $input = null)
 	{
 		$this->option = 'com_kunena';
@@ -100,7 +100,7 @@ class KunenaModel extends JModelLegacy
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getItemid()
 	{
 		$Itemid = 0;
@@ -167,7 +167,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getVar($name, $default = null, $hash = 'request', $type = 'none')
 	{
 		// If we are not in embedded mode, get variable from request
@@ -193,7 +193,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getBool($name, $default = false, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'bool');
@@ -206,7 +206,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getCmd($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'cmd');
@@ -219,7 +219,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getFloat($name, $default = 0.0, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'float');
@@ -232,7 +232,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getInt($name, $default = 0, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'int');
@@ -245,7 +245,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getString($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'string');
@@ -258,7 +258,7 @@ class KunenaModel extends JModelLegacy
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	protected function getWord($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'word');

@@ -50,7 +50,7 @@ abstract class KunenaForumTopicPollHelper
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	static public function recount()
 	{
 		$db    = JFactory::getDbo();

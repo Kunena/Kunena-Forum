@@ -35,7 +35,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
-				
+
 		try
 		{
 			$results = new KunenaCollection((array) $this->db->loadObjectList('id', 'KunenaAttachment'));

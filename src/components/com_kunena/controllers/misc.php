@@ -29,7 +29,7 @@ class KunenaControllerMisc extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function template()
 	{
 		$name = JFactory::getApplication()->input->getString('name', JFactory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));

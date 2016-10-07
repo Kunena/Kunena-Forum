@@ -43,7 +43,7 @@ class TableKunenaSessions extends KunenaTable
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($oid = null, $reset = true)
 	{
 		if (!$oid)
@@ -57,7 +57,7 @@ class TableKunenaSessions extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->userid);

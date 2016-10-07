@@ -69,7 +69,7 @@ class KunenaViewInstall extends JViewLegacy
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displaySchema()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
@@ -95,7 +95,7 @@ class KunenaViewInstall extends JViewLegacy
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function displaySchemaDiff()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';

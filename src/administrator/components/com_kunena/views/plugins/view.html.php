@@ -26,7 +26,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->setToolbar();

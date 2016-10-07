@@ -63,7 +63,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

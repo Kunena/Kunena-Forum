@@ -23,7 +23,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function canPublish()
 	{
 		return $this->announcement->authorise('edit');
@@ -34,7 +34,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function canEdit()
 	{
 		return $this->announcement->authorise('edit');
@@ -45,7 +45,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function canDelete()
 	{
 		return $this->announcement->authorise('delete');
@@ -59,7 +59,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function displayField($name, $mode = null)
 	{
 		return $this->announcement->displayField($name, $mode);

@@ -35,7 +35,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $id = null;
 
 	protected $_table = 'KunenaAttachments';

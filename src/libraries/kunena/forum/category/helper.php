@@ -106,7 +106,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	static public function register($instance)
 	{
 		if ($instance->exists())
@@ -132,7 +132,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getSubscriptions($user = null)
 	{
 		$user  = KunenaUserHelper::get($user);
@@ -347,7 +347,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
 	{
 		if ($groupids === false)
@@ -456,7 +456,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getParents($id = 0, $levels = 100, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -667,7 +667,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	static public function getOrphaned($levels = 0, $params = array())
 	{
 		$list = array();
@@ -696,7 +696,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function getCategoryTree($parent = 0)
 	{
 		if ($parent === false)
@@ -712,7 +712,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function &getIndentation($categories)
 	{
 		$tree = new KunenaTree($categories);
@@ -857,8 +857,8 @@ abstract class KunenaForumCategoryHelper
 	 * @param $alias
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	static public function getAlias($category_id, $alias)
 	{
 		$db    = JFactory::getDbo();
@@ -890,7 +890,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	static public function &loadCategories()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -959,7 +959,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	static public function compareByNameAsc($a, $b)
 	{
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b]))
@@ -976,7 +976,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	static public function compareByNameDesc($a, $b)
 	{
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b]))
@@ -993,7 +993,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	static public function stripName($original, $strip)
 	{
 		$strip = trim($strip);

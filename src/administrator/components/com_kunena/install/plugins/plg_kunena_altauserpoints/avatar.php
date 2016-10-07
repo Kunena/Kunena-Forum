@@ -20,7 +20,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 *
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -29,7 +29,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getEditURL()
 	{
 		return JRoute::_('index.php?option=com_altauserpoints&view=account');
@@ -55,7 +55,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{
 		$user = KunenaFactory::getUser($user);

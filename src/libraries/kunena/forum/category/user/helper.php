@@ -154,7 +154,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
 	 * @since Kunena
- 	 */
+	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)

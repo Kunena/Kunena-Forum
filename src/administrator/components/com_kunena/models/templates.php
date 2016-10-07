@@ -26,7 +26,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -113,7 +113,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @return array
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function getTemplates()
 	{
 		// Get template xml file info
@@ -215,7 +215,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @return mixed
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
@@ -235,7 +235,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
 		$app       = JFactory::getApplication();
@@ -266,7 +266,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @return mixed
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function getPagination()
 	{
 		// Get a storage key.
@@ -293,7 +293,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Add the list state to the store id.

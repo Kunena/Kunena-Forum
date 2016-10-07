@@ -302,7 +302,7 @@ class KunenaPagination
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function setChrome()
 	{
 		$template                 = KunenaFactory::getTemplate();

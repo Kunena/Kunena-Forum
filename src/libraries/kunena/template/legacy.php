@@ -18,7 +18,7 @@ class KunenaTemplateLegacy
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public static function load()
 	{
 	}

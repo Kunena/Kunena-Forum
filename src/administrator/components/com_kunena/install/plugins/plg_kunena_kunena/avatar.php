@@ -18,7 +18,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	/**
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -28,7 +28,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function getEditURL()
 	{
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
@@ -41,7 +41,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		$user   = KunenaFactory::getUser($user);

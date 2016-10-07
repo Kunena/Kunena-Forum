@@ -294,7 +294,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getAdminOptions()
 	{
 		$category = $this->getAdminCategory();
@@ -400,7 +400,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * @return array|boolean
 	 * @since Kunena
- 	 */
+	 */
 	function getAdminModerators()
 	{
 		$category = $this->getAdminCategory();
@@ -420,7 +420,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	protected function getReorderConditions($table)
 	{
 		$condition   = array();
@@ -435,7 +435,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function saveorder($pks = null, $order = null)
 	{
 		$table      = JTable::getInstance('KunenaCategories', 'Table');

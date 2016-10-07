@@ -36,7 +36,7 @@ class KunenaAccess
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -106,7 +106,7 @@ class KunenaAccess
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function clearCache()
 	{
 		$this->adminsByCatid      = array();
@@ -154,7 +154,9 @@ class KunenaAccess
 						'au' => $this->adminsByUserid,
 						'mc' => $this->moderatorsByCatid,
 						'mu' => $this->moderatorsByUserid,
-					)), self::$cacheKey, 'com_kunena');
+					)
+				), self::$cacheKey, 'com_kunena'
+			);
 		}
 	}
 
@@ -163,10 +165,11 @@ class KunenaAccess
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getAccessOptions($category)
 	{
 		$list = array();
+
 		// @var KunenaAccess $access
 
 		foreach ($this->accesstypes['all'] as $access)
@@ -197,7 +200,7 @@ class KunenaAccess
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getAccessTypesList($category)
 	{
 		static $enabled = false;
@@ -222,7 +225,8 @@ window.addEvent('domready', function(){
 	if (item) {
 		kShowAccessType('kaccess', item);
 	}
-});");
+});"
+			);
 		}
 
 		$exists      = 0;
@@ -267,7 +271,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array|null
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
 		$list = array();
@@ -304,8 +308,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
 	 *
-	 * @param string $accesstype Access type.
-	 * @param mixed  $id         Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   mixed  $id         Group id.
 	 *
 	 * @return string|null
 	 *
@@ -338,7 +342,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getAdmins($catid = 0, $all = false)
 	{
 		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
@@ -359,7 +363,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getModerators($catid = 0, $all = false)
 	{
 		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
@@ -377,7 +381,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getAdminStatus($user = null)
 	{
 		if (!($user instanceof KunenaUser))
@@ -393,7 +397,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getModeratorStatus($user = null)
 	{
 		if (!($user instanceof KunenaUser))
@@ -409,8 +413,8 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function isAdmin($user = null, $catid = 0)
 	{
 		if (!($user instanceof KunenaUser))
@@ -450,8 +454,8 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
-	 * @since Kunena 
- 	 */
+	 * @since Kunena
+	 */
 	public function isModerator($user = null, $catid = 0)
 	{
 		if (!($user instanceof KunenaUser))
@@ -551,7 +555,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getAllowedCategories($user = null)
 	{
 		static $read = array();
@@ -630,7 +634,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$list = array();
@@ -667,7 +671,7 @@ window.addEvent('domready', function(){
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
 	{
-		// hold = 0: normal
+		// Hold = 0: normal
 		// hold = 1: unapproved
 		// hold = 2: deleted
 		if (!($user instanceof KunenaUser))
@@ -710,7 +714,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null)
 	{
 		$topic    = KunenaForumTopicHelper::get($topic);
@@ -844,7 +848,7 @@ window.addEvent('domready', function(){
 		}
 		elseif (is_array($excludeList))
 		{
-			// array() needs to be flipped to get userids into keys
+			// Array() needs to be flipped to get userids into keys
 			$excludeList = array_flip($excludeList);
 		}
 		else
@@ -915,7 +919,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{
 		$category = $topic->getCategory();

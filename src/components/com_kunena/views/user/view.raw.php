@@ -21,7 +21,7 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	function displayList($tpl = null)
 	{
 		$response = array();

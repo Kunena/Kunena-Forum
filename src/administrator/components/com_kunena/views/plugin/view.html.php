@@ -33,7 +33,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function displayEdit($tpl = null)
 	{
 		$this->state = $this->get('State');

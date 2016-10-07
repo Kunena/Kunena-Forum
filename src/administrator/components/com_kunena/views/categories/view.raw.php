@@ -21,7 +21,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function displayChkAliases()
 	{
 		$alias = $this->app->input->get('alias', null, 'string');

@@ -24,7 +24,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getTabs()
 	{
 		$banInfo   = KunenaUserBan::getInstanceByUserid($this->user->id, true);
@@ -252,7 +252,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayUnapprovedPosts()
 	{
 		$params = array(
@@ -274,7 +274,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayUserPosts()
 	{
 		$params = array(
@@ -296,7 +296,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayGotThankyou()
 	{
 		$params = array(
@@ -318,7 +318,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displaySaidThankyou()
 	{
 		$params = array(
@@ -340,7 +340,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayFavorites()
 	{
 		$params = array(
@@ -362,7 +362,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displaySubscriptions()
 	{
 		if ($this->config->topic_subscriptions == 'disabled')
@@ -389,7 +389,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayCategoriesSubscriptions()
 	{
 		if ($this->config->category_subscriptions == 'disabled')

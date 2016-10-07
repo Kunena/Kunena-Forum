@@ -33,7 +33,7 @@ class KunenaForumCategoryUser extends JObject
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($category = 0, $user = null)
 	{
 		// Always fill empty data
@@ -64,7 +64,7 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->category_id);
@@ -75,7 +75,7 @@ class KunenaForumCategoryUser extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -133,7 +133,7 @@ class KunenaForumCategoryUser extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($category_id = null, $user = null)
 	{
 		if ($category_id === null)

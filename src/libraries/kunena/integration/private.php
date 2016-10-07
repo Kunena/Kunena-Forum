@@ -55,7 +55,7 @@ class KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getOnClick($userid)
 	{
 		return '';
@@ -66,7 +66,7 @@ class KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getURL($userid)
 	{
 		return '';
@@ -77,7 +77,7 @@ class KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function showIcon($userid)
 	{
 		$my = JFactory::getUser();
@@ -144,7 +144,7 @@ class KunenaPrivate
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxURL()
 	{
 		return '';
@@ -155,7 +155,7 @@ class KunenaPrivate
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getUnreadCount($userid)
 	{
 		return 0;

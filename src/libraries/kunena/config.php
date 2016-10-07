@@ -1202,7 +1202,7 @@ class KunenaConfig extends JObject
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -1245,7 +1245,7 @@ class KunenaConfig extends JObject
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function save()
 	{
 		$db = JFactory::getDBO();
@@ -1275,7 +1275,7 @@ class KunenaConfig extends JObject
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function reset()
 	{
 		$instance = new KunenaConfig;
@@ -1336,7 +1336,7 @@ class KunenaConfig extends JObject
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function getPlugin($name)
 	{
 		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry;
@@ -1360,7 +1360,7 @@ class KunenaConfig extends JObject
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getEmail()
 	{
 		$email = $this->get('email');

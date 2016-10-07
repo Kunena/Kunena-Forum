@@ -46,7 +46,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

@@ -69,7 +69,7 @@ class KunenaForumStatistics
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct()
 	{
 		$this->_db     = JFactory::getDBO();
@@ -91,7 +91,7 @@ class KunenaForumStatistics
 	/**
 	 * @return KunenaForumStatistics
 	 * @since Kunena
- 	 */
+	 */
 	public static function getInstance()
 	{
 		if (self::$_instance === null)
@@ -105,7 +105,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $force
 	 * @since Kunena
- 	 */
+	 */
 	public function loadAll($force = false)
 	{
 		$this->top = array();
@@ -117,7 +117,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $force
 	 * @since Kunena
- 	 */
+	 */
 	public function loadGeneral($force = false)
 	{
 		if (!$this->showgenstats && !$force)
@@ -134,7 +134,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $override
 	 * @since Kunena
- 	 */
+	 */
 	public function loadUserStats($override = false)
 	{
 		if ($this->showpopuserstats || $override)
@@ -169,7 +169,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $override
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopicStats($override = false)
 	{
 		if ($this->showpopsubjectstats || $override)
@@ -249,7 +249,8 @@ class KunenaForumStatistics
 				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0");
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
+			);
 
 			try
 			{
@@ -279,7 +280,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopTopics($limit = 0)
 	{
 		$limit = $limit ? $limit : $this->_config->popsubjectcount;
@@ -317,7 +318,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopPosters($limit = 0)
 	{
 		$limit = $limit ? $limit : $this->_config->popusercount;
@@ -353,7 +354,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopProfiles($limit = 0)
 	{
 		$limit = $limit ? $limit : $this->_config->popusercount;
@@ -389,7 +390,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopPolls($limit = 0)
 	{
 		$limit = $limit ? $limit : $this->_config->poppollscount;
@@ -444,7 +445,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function loadTopThankyous($limit = 0)
 	{
 		$limit = $limit ? $limit : $this->_config->popthankscount;

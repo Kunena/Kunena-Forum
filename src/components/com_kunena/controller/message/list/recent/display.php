@@ -29,7 +29,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

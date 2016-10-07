@@ -54,7 +54,7 @@ class KunenaModelRate extends KunenaModel
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function getRate()
 	{
 		return KunenaForumRateHelper::get($this->getState('item.topicid'));
@@ -63,7 +63,7 @@ class KunenaModelRate extends KunenaModel
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function getRates()
 	{
 		return KunenaForumRateHelper::getRates($this->getState('list.start'), $this->getState('list.limit'), !$this->me->isModerator());
@@ -72,7 +72,7 @@ class KunenaModelRate extends KunenaModel
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getRateActions()
 	{
 		$actions   = array();

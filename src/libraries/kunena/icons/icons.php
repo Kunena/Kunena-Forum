@@ -508,7 +508,7 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
-	 * @param null $text
+	 * @param   null $text
 	 *
 	 * @return string
 	 *

@@ -22,7 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function none()
 	{
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_NO_TASK'));
@@ -32,7 +32,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function permdel()
 	{
 		if (!JSession::checkToken('post'))
@@ -99,7 +99,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('post'))
@@ -162,7 +162,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function restore()
 	{
 		if (!JSession::checkToken('post'))
@@ -225,7 +225,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function approve()
 	{
 		if (!JSession::checkToken('post'))
@@ -289,7 +289,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function move()
 	{
 		if (!JSession::checkToken('post'))
@@ -387,7 +387,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unfavorite()
 	{
 		if (!JSession::checkToken('post'))
@@ -433,7 +433,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function unsubscribe()
 	{
 		if (!JSession::checkToken('post'))
@@ -464,7 +464,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function approve_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -512,7 +512,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function delete_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -559,7 +559,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function restore_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -606,7 +606,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function permdel_posts()
 	{
 		if (!JSession::checkToken('post'))

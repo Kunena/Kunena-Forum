@@ -26,7 +26,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $default = array('crypsis');
 
 	/**
@@ -34,7 +34,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function initialize()
 	{
 		// Template requires Bootstrap javascript
@@ -128,7 +128,7 @@ EOF;
 	 *
 	 * @return JDocument
 	 * @since Kunena
- 	 */
+	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");

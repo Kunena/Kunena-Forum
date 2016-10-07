@@ -22,7 +22,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();

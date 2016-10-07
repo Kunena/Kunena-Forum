@@ -70,7 +70,7 @@ abstract class KunenaRouteLegacy
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public static function isLegacy($view)
 	{
 		if (!$view || $view == 'legacy')
@@ -88,7 +88,7 @@ abstract class KunenaRouteLegacy
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public static function convert($uri, $showstart = 1)
 	{
 		// Make sure that input is JUri to legacy Kunena func=xxx
@@ -209,6 +209,7 @@ abstract class KunenaRouteLegacy
 					case 'userposts' :
 						$uri->setVar('userid', '0');
 						break;
+
 					// Continue in latestposts
 					case 'latestposts' :
 						$uri->setVar('layout', 'posts');
@@ -276,6 +277,7 @@ abstract class KunenaRouteLegacy
 					$uri->setVar('layout', 'moderate');
 				}
 				break;
+
 			// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :

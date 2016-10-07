@@ -26,7 +26,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $default = array('crypsis');
 
 	/**
@@ -36,7 +36,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
@@ -52,7 +52,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected $userClasses = array(
 		'kwho-',
 		'admin'     => 'kwho-admin',
@@ -71,7 +71,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function loadLanguage()
 	{
 		$lang = JFactory::getLanguage();
@@ -89,7 +89,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function initialize()
 	{
 		JHtml::_('bootstrap.framework');
@@ -174,7 +174,7 @@ EOF;
 	 *
 	 * @return JDocument
 	 * @since Kunena
- 	 */
+	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
@@ -191,7 +191,7 @@ EOF;
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
@@ -238,7 +238,7 @@ HTML;
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getIcon($name, $title = '')
 	{
 		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
@@ -250,7 +250,7 @@ HTML;
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getImage($image, $alt = '')
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';

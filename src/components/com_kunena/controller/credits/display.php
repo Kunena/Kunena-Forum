@@ -32,7 +32,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -75,7 +75,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

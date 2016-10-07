@@ -31,7 +31,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

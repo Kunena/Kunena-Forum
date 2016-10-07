@@ -83,7 +83,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function setPrimary()
 	{
 		$this->primary = true;
@@ -129,7 +129,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function __toString()
 	{
 		try

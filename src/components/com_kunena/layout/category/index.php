@@ -41,7 +41,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryIcon($category)
 	{
 		$template     = KunenaFactory::getTemplate();
@@ -81,7 +81,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
 		$this->ktemplate     = KunenaFactory::getTemplate();
@@ -142,7 +142,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @return null|string
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
 		if (KunenaConfig::getInstance()->enablerss)

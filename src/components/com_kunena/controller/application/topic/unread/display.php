@@ -22,7 +22,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		return KunenaFactory::getTemplate()->isHmvc();
@@ -62,7 +62,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();

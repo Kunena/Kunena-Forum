@@ -65,7 +65,7 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	static public function getUrl($layout = null, $xhtml = true)
 	{
 		$uri = self::getUri($layout);
@@ -164,7 +164,7 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	static public function getCount($filter = true)
 	{
 		$db       = JFactory::getDBO();
@@ -208,7 +208,7 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function cleanup()
 	{
 		self::$_instances = array();

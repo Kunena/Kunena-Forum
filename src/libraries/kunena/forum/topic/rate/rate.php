@@ -86,7 +86,7 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
 		/*
@@ -225,7 +225,7 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function load($id)
 	{
 		// Create the table object

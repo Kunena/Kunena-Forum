@@ -16,26 +16,32 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @var KunenaLayout
 	 */
 	protected $page;
+
 	/**
 	 * @var KunenaLayout
 	 */
 	protected $content;
+
 	/**
 	 * @var JPathway
 	 */
 	protected $breadcrumb;
+
 	/**
 	 * @var KunenaUser
 	 */
 	protected $me;
+
 	/**
 	 * @var KunenaConfig
 	 */
 	public $config;
+
 	/**
 	 * @var KunenaTemplate
 	 */
 	protected $template;
+
 	/**
 	 * @var JDocument
 	 */
@@ -44,7 +50,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
@@ -172,7 +178,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
@@ -224,7 +230,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->app->enqueueMessage(
 					JText::sprintf(
 						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
+						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
+					), 'notice'
+				);
 			}
 			else
 			{
@@ -245,7 +253,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function after()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
@@ -269,7 +277,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function setResponseStatus($code = 404)
 	{
 		switch ((int) $code)
@@ -301,7 +309,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+		 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');
@@ -311,10 +319,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
-			array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
+			array('style' => 'display: inline; visibility: visible; text-decoration: none;')
+		);
 		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
+
 		if (trim($templateText))
 		{
 			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'

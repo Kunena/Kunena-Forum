@@ -29,7 +29,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function populateState()
 	{
 		$active = $this->app->getMenu()->getActive();
@@ -103,7 +103,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->getState('item.catid'));
@@ -243,7 +243,7 @@ class KunenaModelTopic extends KunenaModel
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
 		$list = array();
@@ -329,7 +329,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotal()
 	{
 		return $this->getTopic()->getTotal();
@@ -338,7 +338,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getMyVotes()
 	{
 		return $this->getPoll()->getMyVotes();
@@ -347,7 +347,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getModerators()
 	{
 		$moderators = $this->getCategory()->getModerators(false);
@@ -366,7 +366,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
- 	 */
+	 */
 	public function getPollUserCount()
 	{
 		return $this->getPoll()->getUserCount();
@@ -375,7 +375,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public function getPollUsers()
 	{
 		return $this->getPoll()->getUsers();

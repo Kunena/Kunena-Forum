@@ -22,7 +22,7 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists()
 	{
 		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
@@ -35,7 +35,7 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		$layout = $this->input->getWord('layout');

@@ -99,7 +99,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function save()
 	{
 		$db = JFactory::getDbo();
@@ -173,7 +173,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function rankupload()
 	{
 		if (!JSession::checkToken('post'))
@@ -210,7 +210,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function remove()
 	{
 		$db = JFactory::getDbo();

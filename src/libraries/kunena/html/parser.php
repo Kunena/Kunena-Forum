@@ -25,7 +25,7 @@ abstract class KunenaHtmlParser
 	 *
 	 * @return array
 	 * @since Kunena
- 	 */
+	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
 		$db = JFactory::getDBO();
@@ -181,7 +181,7 @@ abstract class KunenaHtmlParser
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
 		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
@@ -211,7 +211,7 @@ abstract class KunenaHtmlParser
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public static function escape($string)
 	{
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');

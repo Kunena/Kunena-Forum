@@ -40,7 +40,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

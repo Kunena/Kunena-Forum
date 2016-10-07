@@ -20,7 +20,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	/**
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -43,7 +43,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getURL($userid)
 	{
 		static $itemid = false;
@@ -75,7 +75,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getUnreadCount($userid)
 	{
 		return $this->uddeim->getInboxUnreadMessages($userid);
@@ -86,7 +86,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -100,7 +100,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxURL()
 	{
 		return JRoute::_($this->uddeim->getLinkToBox('inbox', false));

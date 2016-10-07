@@ -62,7 +62,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();

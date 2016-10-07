@@ -23,7 +23,7 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $id = 0;
 
 	protected $users = array();
@@ -33,7 +33,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @internal
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($id)
 	{
 		$this->id = (int) $id;
@@ -57,7 +57,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function exists($userid)
 	{
 		return isset($this->users[(int) $userid]);
@@ -79,7 +79,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function save($user)
 	{
 		$user    = KunenaFactory::getUser($user);
@@ -116,7 +116,7 @@ class KunenaForumMessageThankyou extends JObject
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -133,7 +133,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
 		$db    = JFactory::getDBO();
@@ -145,7 +145,7 @@ class KunenaForumMessageThankyou extends JObject
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -171,7 +171,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function delete($user)
 	{
 		$user    = KunenaFactory::getUser($user);
@@ -203,7 +203,7 @@ class KunenaForumMessageThankyou extends JObject
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

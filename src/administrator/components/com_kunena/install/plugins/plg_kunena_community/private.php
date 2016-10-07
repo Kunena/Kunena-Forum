@@ -22,7 +22,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @param $params
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -34,7 +34,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getOnClick($userid)
 	{
 		if (!$this->loaded)
@@ -55,7 +55,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	protected function getURL($userid)
 	{
 		return "javascript:void(0)";
@@ -66,7 +66,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -80,7 +80,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=inbox');

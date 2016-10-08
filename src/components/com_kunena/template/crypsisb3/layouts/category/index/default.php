@@ -38,11 +38,11 @@ foreach ($this->sections as $section) :
 	} ?>
 
 	<div class="kfrontend">
-		<h2 class="btn-toolbar pull-right">
+		<div class="btn-toolbar pull-right">
 			<?php if (count($this->sections) > 0) : ?>
 				<button class="btn btn-default btn-sm <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
 			<?php endif; ?>
-		</h2>
+		</div>
 
 		<h1 class="btn-link">
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', true, false); ?>

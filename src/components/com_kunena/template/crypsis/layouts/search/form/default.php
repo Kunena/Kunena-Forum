@@ -105,8 +105,9 @@ $this->addScript('assets/js/search.js');
 						</legend>
 						<div id="searchatdate">
 							<div class="input-append date">
-								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
-							</div>
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> 
+								<span class="input-group-addon"><?php echo KunenaIcons::calendar();?></span>
+							</div>			
 						</div>
 					</fieldset>
 				</div>
@@ -164,10 +165,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="center">
 			<button type="submit" class="btn btn-primary">
-				<i class="icon-search icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+				<?php echo KunenaIcons::search();?><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
 			</button>
 			<button type="reset" class="btn" onclick="window.history.back();">
-				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel();?><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 	</div>

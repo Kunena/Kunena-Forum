@@ -27,7 +27,8 @@ defined('_JEXEC') or die();
  * Individual controller classes are located in /components/com_kunena/controller
  * sub-folders eg: controller/user/login/display.php
  *
- * @see KunenaLayout
+ * @see   KunenaLayout
+ * @since Kunena
  */
 class KunenaRequest
 {
@@ -40,6 +41,7 @@ class KunenaRequest
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws    InvalidArgumentException
+	 * @since Kunena
 	 */
 	public static function factory($path, JInput $input = null, $options = null)
 	{

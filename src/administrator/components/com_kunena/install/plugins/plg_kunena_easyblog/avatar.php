@@ -19,6 +19,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	 * KunenaAvatarEasyblog constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

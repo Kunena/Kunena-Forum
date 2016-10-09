@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Read Table
  * Provides access to the #__kunena_user_read table
+ * @since Kunena
  */
 class TableKunenaUserRead extends KunenaTable
 {
@@ -30,6 +31,8 @@ class TableKunenaUserRead extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

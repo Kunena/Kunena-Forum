@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumMessageFinder
+ * @since Kunena
  */
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
@@ -23,6 +24,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -38,6 +40,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @return $this
 	 * @deprecated Use where() instead.
+	 * @since      Kunena
 	 */
 	public function filterBy($field, $operation, $value)
 	{
@@ -53,6 +56,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser $user
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUserAccess(KunenaUser $user)
 	{
@@ -74,6 +78,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $categories
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByCategories(array $categories)
 	{
@@ -107,6 +112,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
@@ -135,6 +141,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUser(KunenaUser $user = null, $action = 'posted')
 	{
@@ -180,6 +187,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $hold List of hold states to display.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByHold(array $hold = array(0))
 	{
@@ -194,6 +202,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	public function find($access = 'read')
 	{

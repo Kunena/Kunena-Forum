@@ -20,6 +20,7 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 	 * @param $app
 	 *
 	 * @return KunenaControllerApplicationDisplay|null
+	 * @since Kunena
 	 */
 	static public function getInstance($view, $subview, $task, $input, $app)
 	{

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Access Control for Joomla 2.5+
+ * @since Kunena
  */
 class KunenaAccessJoomla
 {
@@ -22,6 +23,7 @@ class KunenaAccessJoomla
 
 	/**
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -36,6 +38,7 @@ class KunenaAccessJoomla
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
 	 * @return array    Supported access types.
+	 * @since Kunena
 	 */
 	public function getAccessTypes()
 	{
@@ -90,6 +93,7 @@ class KunenaAccessJoomla
 	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -232,6 +236,7 @@ class KunenaAccessJoomla
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array of (catid=>userid)
+	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -284,6 +289,7 @@ class KunenaAccessJoomla
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array where category ids are in the keys.
+	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -379,6 +385,7 @@ class KunenaAccessJoomla
 	 * @param   integer $viewlevel
 	 *
 	 * @return    array    List of view levels for which the user is authorised.
+	 * @since Kunena
 	 */
 	protected function getGroupsByViewLevel($viewlevel)
 	{
@@ -414,6 +421,7 @@ class KunenaAccessJoomla
 	 * @param   array   $inUsers   Only list selected users.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
 	{

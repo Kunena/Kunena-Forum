@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Kunena Access Control for CommunityBuilder
+ * @since Kunena
  */
 class KunenaAccessComprofiler
 {
@@ -30,6 +31,7 @@ class KunenaAccessComprofiler
 	 * KunenaAccessComprofiler constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -43,6 +45,7 @@ class KunenaAccessComprofiler
 	 * List all access types you want to handle. All names must be less than 20 characters.
 	 *
 	 * @return array    Supported access types.
+	 * @since Kunena
 	 */
 	public function getAccessTypes()
 	{
@@ -62,6 +65,7 @@ class KunenaAccessComprofiler
 	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -146,6 +150,7 @@ class KunenaAccessComprofiler
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -189,6 +194,7 @@ class KunenaAccessComprofiler
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{

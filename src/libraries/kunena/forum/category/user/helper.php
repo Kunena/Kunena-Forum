@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryUserHelper
+ * @since Kunena
  */
 abstract class KunenaForumCategoryUserHelper
 {
@@ -26,6 +27,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   bool     $reload   Reload objects from the database.
 	 *
 	 * @return KunenaForumCategoryUser    The user category object.
+	 * @since Kunena
 	 */
 	static public function get($category = null, $user = null, $reload = false)
 	{
@@ -58,6 +60,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   mixed          $user The user id to load.
 	 *
 	 * @return KunenaForumCategoryUser[]
+	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $user = null)
 	{
@@ -153,6 +156,7 @@ abstract class KunenaForumCategoryUserHelper
 	 *
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
+	 *
 	 * @since Kunena
 	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)

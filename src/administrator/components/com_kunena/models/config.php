@@ -479,9 +479,9 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		// K5.1
 		$lists ['signature'] = JHtml::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox" size="1"', 'value', 'text', $this->config->signature);
-		$lists ['personal'] = JHtml::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);
-		$lists ['social'] = JHtml::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox" size="1"', 'value', 'text', $this->config->social);
-		$lists ['lazyload'] = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
+		$lists ['personal']  = JHtml::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);
+		$lists ['social']    = JHtml::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox" size="1"', 'value', 'text', $this->config->social);
+		$lists ['lazyload']  = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
 
 		return $lists;
 	}

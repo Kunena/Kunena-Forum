@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
  *
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
  * is compatible with the current version.
+ * @since Kunena
  */
 abstract class KunenaForum
 {
@@ -55,11 +56,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see KunenaForum::enabled()
-	 * @see KunenaForum::isCompatible()
-	 * @see KunenaForum::setup()
+	 * @see   KunenaForum::enabled()
+	 * @see   KunenaForum::isCompatible()
+	 * @see   KunenaForum::setup()
 	 *
 	 * @return boolean True if Kunena has been fully installed.
+	 * @since Kunena
 	 */
 	public static function installed()
 	{
@@ -88,13 +90,14 @@ abstract class KunenaForum
 	 * }
 	 * </code>
 	 *
-	 * @see KunenaForum::installed()
-	 * @see KunenaForum::isCompatible()
-	 * @see KunenaForum::setup()
+	 * @see   KunenaForum::installed()
+	 * @see   KunenaForum::isCompatible()
+	 * @see   KunenaForum::setup()
 	 *
 	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
 	 *
 	 * @return boolean True if online.
+	 * @since Kunena
 	 */
 	public static function enabled($checkAdmin = true)
 	{
@@ -177,11 +180,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see KunenaForum::installed()
+	 * @see   KunenaForum::installed()
 	 *
 	 * @param   string $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
+	 * @since Kunena
 	 */
 	public static function isCompatible($version)
 	{
@@ -215,6 +219,7 @@ abstract class KunenaForum
 	 * by replacing files during upgrade.
 	 *
 	 * @return boolean True if Git repository is detected.
+	 * @since Kunena
 	 */
 	public static function isDev()
 	{
@@ -230,6 +235,7 @@ abstract class KunenaForum
 	 * Returns the exact version from Kunena Forum.
 	 *
 	 * @return string Version number.
+	 * @since Kunena
 	 */
 	public static function version()
 	{
@@ -245,6 +251,7 @@ abstract class KunenaForum
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return string Major version in xxx.yyy format.
+	 * @since Kunena
 	 */
 	public static function versionMajor()
 	{
@@ -260,6 +267,7 @@ abstract class KunenaForum
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
 	 * @return string Date in yyyy-mm-dd format.
+	 * @since Kunena
 	 */
 	public static function versionDate()
 	{
@@ -275,6 +283,7 @@ abstract class KunenaForum
 	 * Returns codename from Kunena release.
 	 *
 	 * @return string Codename.
+	 * @since Kunena
 	 */
 	public static function versionName()
 	{
@@ -290,6 +299,7 @@ abstract class KunenaForum
 	 * Returns all version information together.
 	 *
 	 * @return object stdClass containing (version, major, date, name).
+	 * @since Kunena
 	 */
 	public static function getVersionInfo()
 	{
@@ -313,6 +323,8 @@ abstract class KunenaForum
 	 * @param   string          $layout   Name of the layout.
 	 * @param   null|string     $template Name of the template file.
 	 * @param   array|JRegistry $params   Extra parameters to control the model.
+	 *
+	 * @since Kunena
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())
 	{

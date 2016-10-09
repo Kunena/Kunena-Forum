@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
  * @property string $title
  * @property int    $threadid
  * @property string $polltimetolive
+ * @since Kunena
  */
 class KunenaForumTopicPoll extends JObject
 {
@@ -40,6 +41,8 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @param   int $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -55,6 +58,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   bool  $reset
 	 *
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reset = false)
 	{
@@ -83,6 +87,8 @@ class KunenaForumTopicPoll extends JObject
 	 * Filters and sets poll options.
 	 *
 	 * @param   array $options array(id=>name, id=>name)
+	 *
+	 * @since Kunena
 	 */
 	public function setOptions($options)
 	{
@@ -463,6 +469,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaPolls
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
 	{
@@ -482,6 +489,8 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * @param   array $data
 	 * @param   array $allow
+	 *
+	 * @since Kunena
 	 */
 	public function bind(array $data, array $allow = array())
 	{
@@ -519,6 +528,7 @@ class KunenaForumTopicPoll extends JObject
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -601,6 +611,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{

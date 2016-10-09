@@ -59,8 +59,9 @@ class plgSystemKunena extends JPlugin
 	 *
 	 * @param $context
 	 * @param $params
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function onKunenaGetConfiguration($context, &$params)
 	{
 		if ($context == 'kunena.configuration')
@@ -247,6 +248,7 @@ class plgSystemKunena extends JPlugin
 	 * @param $eid
 	 *
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
 	{
@@ -268,7 +270,7 @@ class plgSystemKunena extends JPlugin
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
- 	 */
+	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
 	{
 		if ($type != 'component')

@@ -132,7 +132,7 @@ JHtml::_('behavior.tabstate');
 													<td><input type="text"
 													           name="cfg_sessiontimeout"
 													           value="<?php echo $this->escape($this->config->sessiontimeout);
-																?>"/></td>
+													           ?>"/></td>
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 													</td>
 												</tr>

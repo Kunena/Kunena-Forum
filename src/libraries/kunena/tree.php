@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Tree Class
+ * @since Kunena
  */
 class KunenaTree implements Iterator
 {
@@ -37,6 +38,8 @@ class KunenaTree implements Iterator
 	 * @param   string $id
 	 * @param   string $parent
 	 * @param   string $level
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level')
 	{
@@ -118,6 +121,8 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @param $items
+	 *
+	 * @since Kunena
 	 */
 	public function add(&$items)
 	{

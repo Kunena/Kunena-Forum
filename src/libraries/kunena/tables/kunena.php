@@ -196,6 +196,7 @@ abstract class KunenaTable extends JTable
 	 * @return  boolean    True on success.
 	 *
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	protected function insertObject()
 	{
@@ -260,6 +261,7 @@ abstract class KunenaTable extends JTable
 	 * @return  boolean  True on success.
 	 *
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	public function updateObject($nulls = false)
 	{

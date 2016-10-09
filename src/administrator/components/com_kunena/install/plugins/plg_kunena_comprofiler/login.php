@@ -19,6 +19,7 @@ class KunenaLoginComprofiler
 	 * KunenaLoginComprofiler constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

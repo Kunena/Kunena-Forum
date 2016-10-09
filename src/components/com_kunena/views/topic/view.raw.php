@@ -103,7 +103,7 @@ class KunenaViewTopic extends KunenaView
 
 		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
-		$app = JFactory::getApplication();
+		$app              = JFactory::getApplication();
 
 		if (empty($category_iconset))
 		{
@@ -177,7 +177,7 @@ class KunenaViewTopic extends KunenaView
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app = JFactory::getApplication();
+		$app      = JFactory::getApplication();
 
 		if ($user->id == 0)
 		{
@@ -207,7 +207,7 @@ class KunenaViewTopic extends KunenaView
 		$starid   = $this->app->input->get('starid', 0, 'int');
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app = JFactory::getApplication();
+		$app      = JFactory::getApplication();
 
 		if ($this->me->exists() || $this->config->ratingenabled)
 		{

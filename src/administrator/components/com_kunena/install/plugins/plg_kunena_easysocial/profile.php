@@ -19,6 +19,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * KunenaProfileEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -103,6 +104,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)

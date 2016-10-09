@@ -19,6 +19,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * KunenaAvatarCommunity constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -28,6 +29,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{

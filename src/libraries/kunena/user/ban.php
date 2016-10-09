@@ -14,11 +14,13 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaUserBan
+ * @since Kunena
  */
 class KunenaUserBan extends JObject
 {
 	/**
 	 * @var array|KunenaUserBan[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -45,6 +47,8 @@ class KunenaUserBan extends JObject
 	 * @access    protected
 	 *
 	 * @param   null $identifier
+	 *
+	 * @since     Kunena
 	 */
 	public function __construct($identifier = null)
 	{
@@ -94,6 +98,7 @@ class KunenaUserBan extends JObject
 	 * Return ban creation date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getCreationDate()
 	{
@@ -104,6 +109,7 @@ class KunenaUserBan extends JObject
 	 * Return ban expiration date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getExpirationDate()
 	{
@@ -114,6 +120,7 @@ class KunenaUserBan extends JObject
 	 * Return ban modification date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getModificationDate()
 	{
@@ -122,6 +129,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param   KunenaUserBan $instance
+	 *
+	 * @since Kunena
 	 */
 	private static function storeInstance($instance)
 	{
@@ -153,6 +162,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $userid
+	 *
+	 * @since Kunena
 	 */
 	private static function cacheUserid($userid)
 	{
@@ -378,6 +389,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $data
+	 *
+	 * @since Kunena
 	 */
 	protected function bind($data)
 	{
@@ -461,6 +474,8 @@ class KunenaUserBan extends JObject
 	/**
 	 * @param   null $public
 	 * @param   null $private
+	 *
+	 * @since Kunena
 	 */
 	public function setReason($public = null, $private = null)
 	{
@@ -565,6 +580,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $comment
+	 *
+	 * @since Kunena
 	 */
 	public function addComment($comment)
 	{
@@ -581,6 +598,8 @@ class KunenaUserBan extends JObject
 	/**
 	 * @param          $expiration
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function setExpiration($expiration, $comment = '')
 	{
@@ -617,6 +636,8 @@ class KunenaUserBan extends JObject
 	 * @param   string $reason_private
 	 * @param   string $reason_public
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
@@ -631,6 +652,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function unBan($comment = '')
 	{

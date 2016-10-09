@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 /**
  * Utility class for creating HTML Grids
+ * @since Kunena
  */
 abstract class JHtmlKunenaGrid
 {
@@ -152,6 +153,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $taskOff Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
+	 * @since Kunena
 	 */
 	static function boolean($i, $value, $taskOn = null, $taskOff = null)
 	{
@@ -189,6 +191,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string|null $form
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $form = null)
 	{
@@ -223,6 +226,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $name   The name of the form element
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public static function id($rowNum, $recId, $checkedOut = false, $name = 'cid')
 	{

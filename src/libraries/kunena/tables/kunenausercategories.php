@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Categories Table
  * Provides access to the #__kunena_user_categories table
+ * @since Kunena
  */
 class TableKunenaUserCategories extends KunenaTable
 {
@@ -32,6 +33,8 @@ class TableKunenaUserCategories extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

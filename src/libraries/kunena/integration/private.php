@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaPrivate
+ * @since Kunena
  */
 class KunenaPrivate
 {
@@ -21,6 +22,7 @@ class KunenaPrivate
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaPrivate
+	 * @since Kunena
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -109,6 +111,7 @@ class KunenaPrivate
 	 *
 	 * @return string
 	 * @internal param $text
+	 * @since    Kunena
 	 */
 	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{

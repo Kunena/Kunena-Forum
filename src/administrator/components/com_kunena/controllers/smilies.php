@@ -60,7 +60,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function edit()
 	{

@@ -98,7 +98,7 @@ if ($this->config->showuserstats)
 							</li>
 						</ul>
 						<ul class="list-unstyled col-md-3">
-						<?php if (!empty($profile->posts)) : ?>
+							<?php if (!empty($profile->posts)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 									<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
@@ -130,7 +130,7 @@ if ($this->config->showuserstats)
 							<?php endif; ?>
 						</ul>
 						<ul class="list-unstyled col-md-3">
-						<?php if (!empty($profile->location)) : ?>
+							<?php if (!empty($profile->location)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 									<span>

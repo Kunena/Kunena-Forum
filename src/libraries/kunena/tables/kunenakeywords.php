@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Keywords Table
  * Provides access to the #__kunena_keywords table
+ * @since Kunena
  */
 class TableKunenaKeywords extends KunenaTable
 {
@@ -28,6 +29,8 @@ class TableKunenaKeywords extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

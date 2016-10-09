@@ -13,7 +13,8 @@ defined('_JEXEC') or die();
 /**
  * Implements Kunena specific functions for page layouts.
  *
- * @see KunenaLayout
+ * @see   KunenaLayout
+ * @since Kunena
  */
 class KunenaLayoutPage extends KunenaLayout
 {
@@ -25,6 +26,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   $options
 	 *
 	 * @return  KunenaControllerDisplay
+	 * @since Kunena
 	 */
 	public function request($path, Jinput $input = null, $options = null)
 	{
@@ -40,6 +42,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   $options
 	 *
 	 * @return  KunenaLayout
+	 * @since Kunena
 	 */
 	public function execute($path, Jinput $input = null, $options = null)
 	{
@@ -54,6 +57,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param $ignore
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{
@@ -86,6 +90,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   string $base  Base path.
 	 *
 	 * @return  KunenaLayout
+	 * @since Kunena
 	 */
 	public static function factory($paths, $base = 'pages')
 	{

@@ -166,7 +166,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();
@@ -226,7 +226,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions

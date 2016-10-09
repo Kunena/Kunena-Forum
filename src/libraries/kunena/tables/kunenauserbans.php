@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Bans
  * Provides access to the #__kunena_users_banned table
+ * @since Kunena
  */
 class TableKunenaUserBans extends JTable
 {
@@ -49,6 +50,8 @@ class TableKunenaUserBans extends JTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -185,6 +188,7 @@ class TableKunenaUserBans extends JTable
 	 * @param   array $ignore
 	 *
 	 * @return boolean|void
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{

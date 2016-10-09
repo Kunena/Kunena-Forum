@@ -15,11 +15,13 @@ KunenaMenuFix::initialize();
 
 /**
  * Class KunenaMenuFix
+ * @since Kunena
  */
 abstract class KunenaMenuFix
 {
 	/**
 	 * @var array|StdClass[]
+	 * @since Kunena
 	 */
 	public static $items = array();
 
@@ -290,6 +292,7 @@ abstract class KunenaMenuFix
 	 * @param   StdClass $item
 	 *
 	 * @return object
+	 * @since Kunena
 	 */
 	protected static function getHome($item)
 	{

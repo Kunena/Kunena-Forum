@@ -540,6 +540,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $cat_id
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function getMessagesByCategory($cat_id)
 	{
@@ -565,6 +566,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $topic_id
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function getMessagesByTopic($topic_id)
 	{

@@ -508,7 +508,7 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
-	 * @param   null $text
+	 * @param null $text
 	 *
 	 * @return string
 	 *
@@ -805,8 +805,8 @@ class KunenaIcons
 	 */
 	static public function caticon($categoryicon, $new = null, $big = true)
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($new)
 		{
@@ -868,8 +868,8 @@ class KunenaIcons
 	 */
 	static public function home()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{

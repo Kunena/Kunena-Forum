@@ -12,16 +12,19 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicUserReadHelper
+ * @since Kunena
  */
 abstract class KunenaForumTopicUserReadHelper
 {
 	/**
 	 * @var array|KunenaForumTopicUserRead[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaForumTopicUserRead[]
+	 * @since Kunena
 	 */
 	protected static $_topics = array();
 
@@ -263,6 +266,7 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
+	 *
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
@@ -316,6 +320,8 @@ abstract class KunenaForumTopicUserReadHelper
 
 	/**
 	 * @param   int $id
+	 *
+	 * @since Kunena
 	 */
 	static protected function reloadTopic($id)
 	{

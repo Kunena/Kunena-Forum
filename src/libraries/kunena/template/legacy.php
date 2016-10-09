@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
+ * @since Kunena
  */
 class KunenaTemplateLegacy
 {
@@ -89,6 +90,7 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 
 /**
  * Class CKunenaTools is legacy class from Kunena 1.6/1.7
+ * @since Kunena
  */
 class CKunenaTools
 {

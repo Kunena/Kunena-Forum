@@ -50,6 +50,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	function getNewAnnouncement()
 	{
@@ -58,6 +59,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	function getAnnouncement()
 	{
@@ -66,6 +68,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
@@ -79,6 +82,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	function getAnnouncements()
 	{

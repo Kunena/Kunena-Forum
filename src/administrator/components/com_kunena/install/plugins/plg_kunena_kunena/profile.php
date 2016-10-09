@@ -17,6 +17,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -132,6 +133,7 @@ class KunenaProfileKunena extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)

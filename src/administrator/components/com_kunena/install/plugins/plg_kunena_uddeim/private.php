@@ -19,6 +19,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 
 	/**
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

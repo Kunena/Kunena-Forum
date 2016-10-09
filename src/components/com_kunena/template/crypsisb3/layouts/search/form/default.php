@@ -130,7 +130,9 @@ $this->addScript('assets/js/search.js');
 						</legend>
 						<div class="col-md-6" id="searchatdate">
 							<div class="input-group date">
-								<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
+								<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
+								       value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> <span class="add-on"><i
+										class="icon-grid-view-2 "></i></span>
 							</div>
 						</div>
 					</fieldset>

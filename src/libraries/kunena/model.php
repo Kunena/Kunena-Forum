@@ -18,41 +18,49 @@ class KunenaModel extends JModelLegacy
 {
 	/**
 	 * @var JSite|JAdministrator
+	 * @since Kunena
 	 */
 	public $app = null;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me = null;
 
 	/**
 	 * @var KunenaConfig
+	 * @since Kunena
 	 */
 	public $config = null;
 
 	/**
 	 * @var JRegistry
+	 * @since Kunena
 	 */
 	public $params = null;
 
 	/**
 	 * @var JInput
+	 * @since Kunena
 	 */
 	protected $input = null;
 
 	/**
 	 * @var JFilterInput
+	 * @since Kunena
 	 */
 	protected $filter = null;
 
 	/**
 	 * @var JObject
+	 * @since Kunena
 	 */
 	protected $state = null;
 
 	/**
 	 * @var boolean
+	 * @since Kunena
 	 */
 	protected $embedded = false;
 
@@ -77,6 +85,8 @@ class KunenaModel extends JModelLegacy
 	/**
 	 * @param   array $params
 	 * @param   bool  $embedded
+	 *
+	 * @since Kunena
 	 */
 	public function initialize($params = array(), $embedded = true)
 	{
@@ -120,6 +130,7 @@ class KunenaModel extends JModelLegacy
 	 * @param   mixed $var The output to escape.
 	 *
 	 * @return mixed The escaped value.
+	 * @since Kunena
 	 */
 	public function escape($var)
 	{
@@ -128,6 +139,7 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @return JRegistry
+	 * @since Kunena
 	 */
 	protected function getParameters()
 	{
@@ -146,6 +158,7 @@ class KunenaModel extends JModelLegacy
 	 * @param   string $type
 	 *
 	 * @return mixed|object
+	 * @since Kunena
 	 */
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
 	{

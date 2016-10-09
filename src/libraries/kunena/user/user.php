@@ -68,6 +68,7 @@ jimport('joomla.utilities.date');
  * @property    string $apple
  * @property    string $vk
  * @property    string $telegram
+ * @since Kunena
  */
 class KunenaUser extends JObject
 {
@@ -244,10 +245,11 @@ class KunenaUser extends JObject
 	/**
 	 * Method to get the user table object.
 	 *
-	 * @param   string $type   The user table name to be used.
-	 * @param   string $prefix The user table prefix to be used.
+	 * @param    string $type   The user table name to be used.
+	 * @param    string $prefix The user table prefix to be used.
 	 *
 	 * @return    JTable|TableKunenaUsers    The user table object.
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
 	{
@@ -267,6 +269,8 @@ class KunenaUser extends JObject
 	/**
 	 * @param   mixed $data
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function bind($data, array $ignore = array())
 	{
@@ -277,9 +281,10 @@ class KunenaUser extends JObject
 	/**
 	 * Method to load a KunenaUser object by userid.
 	 *
-	 * @param   mixed $id The user id of the user to load.
+	 * @param    mixed $id The user id of the user to load.
 	 *
 	 * @return    boolean            True on success
+	 * @since Kunena
 	 */
 	public function load($id)
 	{
@@ -307,9 +312,10 @@ class KunenaUser extends JObject
 	/**
 	 * Method to save the KunenaUser object to the database.
 	 *
-	 * @param   boolean $updateOnly Save the object only if not a new user.
+	 * @param    boolean $updateOnly Save the object only if not a new user.
 	 *
 	 * @return    boolean True on success.
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{
@@ -360,6 +366,7 @@ class KunenaUser extends JObject
 	 * Method to delete the KunenaUser object from the database.
 	 *
 	 * @return    boolean    True on success.
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -653,9 +660,9 @@ class KunenaUser extends JObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @param   null   $name
-	 * @param   null   $title
-	 * @param   null   $class
+	 * @param null $name
+	 * @param null $title
+	 * @param null $class
 	 *
 	 * @return string
 	 * @internal param int $catid Category id or 0 for global.
@@ -665,7 +672,7 @@ class KunenaUser extends JObject
 	 */
 	public function getLinkNoStyle($name = null, $title = null, $class = null)
 	{
-		$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+		$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 		if ($optional_username == 0 || !$this->userid)
 		{
@@ -695,14 +702,10 @@ class KunenaUser extends JObject
 
 			$link = $this->getURL();
 
-			if (!empty($link))
-			{
+			if (!empty ($link))
 				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\">{$name}</a>";
-			}
 			else
-			{
 				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
-			}
 		}
 
 		return $this->_link[$key];
@@ -813,6 +816,7 @@ class KunenaUser extends JObject
 	 * @param   bool|null $special True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|null
+	 * @since Kunena
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
 	{
@@ -992,6 +996,7 @@ class KunenaUser extends JObject
 	 * Return local time for the user.
 	 *
 	 * @return KunenaDate  User time instance.
+	 * @since Kunena
 	 */
 	public function getTime()
 	{
@@ -1025,6 +1030,7 @@ class KunenaUser extends JObject
 	 * Return registration date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getRegisterDate()
 	{
@@ -1035,6 +1041,7 @@ class KunenaUser extends JObject
 	 * Return last visit date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getLastVisitDate()
 	{
@@ -1088,6 +1095,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @param   string $layout
+	 *
+	 * @since Kunena
 	 */
 	public function setTopicLayout($layout = 'default')
 	{
@@ -1169,8 +1178,7 @@ class KunenaUser extends JObject
 				$count     = $private->getUnreadCount($this->userid);
 				$this->_pm = $private->getInboxLink($count
 					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
-					: JText::_('COM_KUNENA_PMS_INBOX')
-				);
+					: JText::_('COM_KUNENA_PMS_INBOX'));
 			}
 			else
 			{
@@ -1298,7 +1306,6 @@ class KunenaUser extends JObject
 	public function getPersonalText()
 	{
 		$config = KunenaConfig::getInstance();
-
 		if (!$config->personal)
 		{
 			return false;
@@ -1322,7 +1329,6 @@ class KunenaUser extends JObject
 	public function getSignature()
 	{
 		$config = KunenaConfig::getInstance();
-
 		if (!$config->signature)
 		{
 			return false;
@@ -1562,7 +1568,6 @@ class KunenaUser extends JObject
 	public function socialButton($name, $gray = false)
 	{
 		$config = KunenaConfig::getInstance();
-
 		if (!$config->social)
 		{
 			return false;
@@ -1659,8 +1664,7 @@ class KunenaUser extends JObject
 			'Undefined property via __get(): ' . $name .
 			' in ' . $trace[0]['file'] .
 			' on line ' . $trace[0]['line'],
-			E_USER_NOTICE
-		);
+			E_USER_NOTICE);
 
 		return null;
 	}

@@ -21,6 +21,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -62,6 +63,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterPost($message)
@@ -232,6 +234,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
@@ -256,6 +259,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since Kunena
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -264,6 +269,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $topic
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

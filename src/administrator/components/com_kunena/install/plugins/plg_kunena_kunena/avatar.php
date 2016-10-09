@@ -17,6 +17,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 	/**
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

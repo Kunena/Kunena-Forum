@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Messages
  * Provides access to the #__kunena_messages table
+ * @since Kunena
  */
 class TableKunenaMessages extends KunenaTable
 {
@@ -62,6 +63,8 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -186,7 +189,8 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   boolean $updateNulls has no effect.
 	 *
 	 * @return boolean
-	 * @see KunenaTable::store()
+	 * @see   KunenaTable::store()
+	 * @since Kunena
 	 */
 	public function store($updateNulls = false)
 	{

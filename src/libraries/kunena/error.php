@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaError
+ * @since Kunena
  */
 abstract class KunenaError
 {
@@ -194,6 +195,8 @@ abstract class KunenaError
 
 	/**
 	 * @param $debug
+	 *
+	 * @since Kunena
 	 */
 	public static function shutdownHandler($debug)
 	{

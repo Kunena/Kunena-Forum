@@ -34,6 +34,8 @@ class KunenaForumTopicRate extends JObject
 
 	/**
 	 * @param   int $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -51,6 +53,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   bool $reload
 	 *
 	 * @return    KunenaForumMessage        The message object.
+	 * @since     Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -72,6 +75,8 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * @param $userid
 	 * @param $time
+	 *
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -182,6 +187,7 @@ class KunenaForumTopicRate extends JObject
 
 	/**
 	 * Get rate for the specified topic and user
+	 * @since Kunena
 	 */
 	public function getTopicUserRate()
 	{
@@ -202,6 +208,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaRate
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
 	{

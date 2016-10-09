@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaInstaller
+ * @since Kunena
  */
 class KunenaInstaller
 {
@@ -25,6 +26,7 @@ class KunenaInstaller
 	 * @param   string $version
 	 *
 	 * @return  boolean  True if version can be safely downgraded.
+	 * @since Kunena
 	 */
 	public static function canDowngrade($version)
 	{
@@ -53,6 +55,7 @@ class KunenaInstaller
 	 * Get Kunena database schema version.
 	 *
 	 * @return  string  Version number or null.
+	 * @since Kunena
 	 */
 	public static function getSchemaVersion()
 	{
@@ -78,6 +81,7 @@ class KunenaInstaller
 	 * @param   bool   $reload Reload all tables.
 	 *
 	 * @return boolean  True if the table exists in the database.
+	 * @since Kunena
 	 */
 	public static function detectTable($table, $prefix = '#__', $reload = false)
 	{
@@ -114,6 +118,7 @@ class KunenaInstaller
 	 * @param   boolean $reload Reload all tables.
 	 *
 	 * @return string|null  Column type or NULL if either table or column does not exist.
+	 * @since Kunena
 	 */
 	public static function getTableColumn($table, $column, $prefix = '#__', $reload = false)
 	{

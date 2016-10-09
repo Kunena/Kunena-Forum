@@ -26,6 +26,8 @@ class KunenaLogEntry
 	 * @param   KunenaForumCategory $category
 	 * @param   KunenaForumTopic    $topic
 	 * @param   KunenaUser          $user
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(
 		$type,

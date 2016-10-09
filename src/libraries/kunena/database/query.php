@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 /**
  * Query Element Class.
+ * @since Kunena
  */
 class KunenaDatabaseQueryElement
 {
@@ -89,6 +90,7 @@ class KunenaDatabaseQueryElement
 
 /**
  * Query Building Class.
+ * @since Kunena
  */
 class KunenaDatabaseQuery
 {

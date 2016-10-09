@@ -33,7 +33,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
-		$holding = $this->getOptions()->get('topics_deletedtopics');
+		$holding       = $this->getOptions()->get('topics_deletedtopics');
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 

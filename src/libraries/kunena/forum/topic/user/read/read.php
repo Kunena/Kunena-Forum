@@ -18,6 +18,7 @@ defined('_JEXEC') or die();
  * @property int $category_id
  * @property int $message_id
  * @property int $time
+ * @since Kunena
  */
 class KunenaForumTopicUserRead extends JObject
 {
@@ -97,6 +98,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   string $prefix Topics table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaUserRead
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table')
 	{
@@ -116,6 +118,8 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * @param   array $data
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function bind(array $data, array $ignore = array())
 	{
@@ -140,6 +144,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function load($topic_id = null, $user = null)
 	{
@@ -180,6 +185,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new entry.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{
@@ -224,6 +230,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * Method to delete the KunenaForumTopicUserRead object from the database.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function delete()
 	{

@@ -13,7 +13,8 @@ defined('_JEXEC') or die();
 /**
  * Implements Kunena specific functions for all layouts.
  *
- * @see KunenaLayoutBase
+ * @see   KunenaLayoutBase
+ * @since Kunena
  */
 class KunenaLayout extends KunenaLayoutBase
 {
@@ -29,6 +30,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Object KunenaView
 	 *
 	 * @var unknown
+	 * @since Kunena
 	 */
 	protected $legacy;
 
@@ -36,6 +38,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Append HTML after the layout content.
 	 *
 	 * @param   string $content
+	 *
+	 * @since Kunena
 	 */
 	public function appendAfter($content)
 	{
@@ -61,6 +65,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @return  string  The rendered view.
 	 *
 	 * @throws  Exception|RunTimeException
+	 * @since Kunena
 	 */
 	public function render($layout = null)
 	{

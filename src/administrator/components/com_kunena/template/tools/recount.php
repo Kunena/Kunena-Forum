@@ -73,7 +73,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
 <!-- Modal -->
 <div id="recountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel" aria-hidden="true"
-	 data-backdrop="static" data-keyboard="false">
+     data-backdrop="static" data-keyboard="false">
 	<div class="modal-header">
 		<button type="button" class="close recount-close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3></h3>

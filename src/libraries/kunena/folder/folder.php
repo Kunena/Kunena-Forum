@@ -15,7 +15,8 @@ jimport('joomla.filesystem.folder');
 /**
  * Class KunenaFolder
  *
- * @see JFolder
+ * @see   JFolder
+ * @since Kunena
  */
 class KunenaFolder extends JFolder
 {
@@ -23,6 +24,8 @@ class KunenaFolder extends JFolder
 	 * Create index.html file into the given folder, if it doesn't exist.
 	 *
 	 * @param $folder
+	 *
+	 * @since Kunena
 	 */
 	static function createIndex($folder)
 	{

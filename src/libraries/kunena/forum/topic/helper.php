@@ -12,11 +12,13 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicHelper
+ * @since Kunena
  */
 abstract class KunenaForumTopicHelper
 {
 	/**
 	 * @var KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -125,6 +127,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   string $authorise
 	 *
 	 * @return KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $authorise = 'read')
 	{
@@ -165,6 +168,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumTopicUser[]
+	 * @since Kunena
 	 */
 	static public function getUserTopics($ids = false, $user = null)
 	{
@@ -227,7 +231,7 @@ abstract class KunenaForumTopicHelper
 			$categories = KunenaForumCategoryHelper::getCategories($categories, 0);
 		}
 
-		$catlist    = array();
+		$catlist = array();
 
 		foreach ($categories as $category)
 		{
@@ -376,6 +380,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of deleted topics.
+	 * @since Kunena
 	 */
 	public static function delete($ids)
 	{
@@ -446,6 +451,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of trashed topics.
+	 * @since Kunena
 	 */
 	public static function trash($ids)
 	{
@@ -488,6 +494,7 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -500,6 +507,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   int   $end
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
 	{
@@ -676,8 +684,7 @@ abstract class KunenaForumTopicHelper
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
 				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
-				GROUP BY thread"
-			);
+				GROUP BY thread");
 
 			try
 			{
@@ -716,6 +723,8 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids)
 	{

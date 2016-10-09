@@ -71,7 +71,9 @@ $this->getBBcodesEnabled();
 				<option value="18">18</option>
 			</select><br/>
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city" id="modal-map-city" type="text"
-			 value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/></p>
+			                                                                            value=""
+			                                                                            placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/>
+		</p>
 	</div>
 	<div class="modal-footer">
 		<button id="map-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -104,19 +106,23 @@ if (!empty($codeTypes)) : ?>
 	<div class="modal-body">
 		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
 			<select id="kpicture-size-list-modal"
-						name="modal-picture-size" class="kbutton">
+			        name="modal-picture-size" class="kbutton">
 				<?php
-					$vid_provider = array ('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
+				$vid_provider = array('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
 
-					foreach ( $vid_provider as $vid_type )
-					{
-						$vid_type = explode ( ',', $vid_type );
-						echo '<option value = "' . (!empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
-					}
+				foreach ($vid_provider as $vid_type)
+				{
+					$vid_type = explode(',', $vid_type);
+					echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+				}
 				?>
 			</select>
-			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt" id="modal-picture-alt" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>" />
-			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>" />
+			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt"
+			                                                                                     id="modal-picture-alt" type="text" value=""
+			                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
+			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url"
+			                                                                                     type="text" value=""
+			                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
 		</p>
 	</div>
 	<div class="modal-footer">
@@ -133,10 +139,10 @@ if (!empty($codeTypes)) : ?>
 		<p>
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
 			<input name="modal-link-url" id="modal-link-url" type="text" value=""
-			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>" />
+			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>"/>
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
 			<input name="modal-link-text" id="modal-link-text" type="text" value=""
-			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>" />
+			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
 		</p>
 	</div>
 	<div class="modal-footer">

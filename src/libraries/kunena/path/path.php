@@ -15,7 +15,8 @@ jimport('joomla.filesystem.path');
 /**
  * Class KunenaPath
  *
- * @see JPath
+ * @see   JPath
+ * @since Kunena
  */
 class KunenaPath extends JPath
 {
@@ -29,6 +30,7 @@ class KunenaPath extends JPath
 	 * Returns server writable temporary directory, preferring to Joomla tmp if possible.
 	 *
 	 * @return  string  Path to temporary directory.
+	 * @since Kunena
 	 */
 	public static function tmpdir()
 	{
@@ -61,6 +63,7 @@ class KunenaPath extends JPath
 	 * @param   string $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
+	 * @since Kunena
 	 */
 	public static function isOwner($path)
 	{

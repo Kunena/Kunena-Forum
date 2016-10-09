@@ -25,6 +25,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * KunenaActivityAltaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -82,6 +83,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)
@@ -124,6 +126,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)

@@ -18,6 +18,7 @@ class KText
 	 * @param $string
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public static function _($string)
 	{
@@ -28,6 +29,7 @@ class KText
 /**
  * @return integer
  * @throws KunenaInstallerException
+ * @since Kunena
  */
 function installSampleData()
 {

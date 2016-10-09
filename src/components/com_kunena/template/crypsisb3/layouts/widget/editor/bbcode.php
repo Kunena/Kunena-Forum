@@ -114,17 +114,21 @@ if (!empty($codeTypes)) : ?>
 					<select id="kpicture-size-list-modal"
 					        name="modal-picture-size" class="kbutton">
 						<?php
-						$vid_provider = array ('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
+						$vid_provider = array('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
 
-						foreach ( $vid_provider as $vid_type )
+						foreach ($vid_provider as $vid_type)
 						{
-							$vid_type = explode ( ',', $vid_type );
-							echo '<option value = "' . (!empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+							$vid_type = explode(',', $vid_type);
+							echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 						}
 						?>
 					</select>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt" id="modal-picture-alt" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>" />
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>" />
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt"
+					                                                                                     id="modal-picture-alt" type="text" value=""
+					                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url"
+					                                                                                     id="modal-picture-url" type="text" value=""
+					                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -146,10 +150,10 @@ if (!empty($codeTypes)) : ?>
 				<p>
 					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
 					<input name="modal-link-url" id="modal-link-url" type="text" value=""
-					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>" />
+					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>"/>
 					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
 					<input name="modal-link-text" id="modal-link-text" type="text" value=""
-					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>" />
+					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
 				</p>
 			</div>
 			<div class="modal-footer">
@@ -227,67 +231,67 @@ if (!empty($codeTypes)) : ?>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
-<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
-			</div>
-			<div class="modal-body">
-				<div id="kbbcode-poll-options">
-					<div class="input-group col-md-12" style="padding: 0">
-						<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
-						<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
-						       maxlength="100" size="40"
-						       value="<?php echo $this->escape($this->poll->title) ?>"
-						/>
-					</div>
-					<div class="clearfix"></div>
-					<?php echo KunenaIcons::poll_add(); ?>
-					<?php echo KunenaIcons::poll_rem(); ?>
-					<div class="clearfix"></div>
-					<div id="datepoll-container">
-						<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-						<div class="input-group date">
-							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
-							       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
-							<span class="input-group-addon">
+	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
+				</div>
+				<div class="modal-body">
+					<div id="kbbcode-poll-options">
+						<div class="input-group col-md-12" style="padding: 0">
+							<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
+							<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
+							       maxlength="100" size="40"
+							       value="<?php echo $this->escape($this->poll->title) ?>"
+							/>
+						</div>
+						<div class="clearfix"></div>
+						<?php echo KunenaIcons::poll_add(); ?>
+						<?php echo KunenaIcons::poll_rem(); ?>
+						<div class="clearfix"></div>
+						<div id="datepoll-container">
+							<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+							<div class="input-group date">
+								<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
+								       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
+								<span class="input-group-addon">
 								<i class="glyphicon glyphicon-th"></i>
 							</span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="clearfix"></div>
-				<br/>
-				<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
-				</div>
-				<?php
-				if ($this->poll->exists())
-				{
-					$x = 1;
-					foreach ($this->poll->getOptions() as $poll_option)
+					<div class="clearfix"></div>
+					<br/>
+					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
+					</div>
+					<?php
+					if ($this->poll->exists())
 					{
-						echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
-						$x++;
+						$x = 1;
+						foreach ($this->poll->getOptions() as $poll_option)
+						{
+							echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
+							$x++;
+						}
 					}
-				}
-				?>
-				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>"/>
-				<input type="hidden" name="number_total_options" id="numbertotal"
-				       value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
+					?>
+					<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>"/>
+					<input type="hidden" name="number_total_options" id="numbertotal"
+					       value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-default" data-dismiss="modal"
+				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
-		<div class="modal-footer">
-			<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-			<button class="btn btn-default" data-dismiss="modal"
-			        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
-		</div>
 	</div>
-</div>
-</div>
+	</div>
 <?php endif; ?>
 <div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

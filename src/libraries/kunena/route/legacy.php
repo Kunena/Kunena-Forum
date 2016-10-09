@@ -14,6 +14,7 @@ require_once KPATH_SITE . '/router.php';
 
 /**
  * Class KunenaRouteLegacy
+ * @since Kunena
  */
 abstract class KunenaRouteLegacy
 {
@@ -209,7 +210,6 @@ abstract class KunenaRouteLegacy
 					case 'userposts' :
 						$uri->setVar('userid', '0');
 						break;
-
 					// Continue in latestposts
 					case 'latestposts' :
 						$uri->setVar('layout', 'posts');
@@ -277,7 +277,6 @@ abstract class KunenaRouteLegacy
 					$uri->setVar('layout', 'moderate');
 				}
 				break;
-
 			// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :
@@ -700,6 +699,8 @@ abstract class KunenaRouteLegacy
 
 	/**
 	 * @param $item
+	 *
+	 * @since Kunena
 	 */
 	public static function convertMenuItem($item)
 	{

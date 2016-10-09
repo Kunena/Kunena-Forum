@@ -50,6 +50,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @var boolean
+	 * @since Kunena
 	 */
 	public $disabled = false;
 
@@ -285,6 +286,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * Get attachment layout.
 	 *
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	public function getLayout()
 	{
@@ -427,6 +429,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

@@ -114,6 +114,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * @param   mixed $content Content to be returned.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function displayRaw($content)
 	{
@@ -133,6 +134,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * @param   mixed $content Content to be returned.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function displayJson($content)
 	{

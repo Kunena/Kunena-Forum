@@ -14,36 +14,43 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaLayout
+	 * @since Kunena
 	 */
 	protected $page;
 
 	/**
 	 * @var KunenaLayout
+	 * @since Kunena
 	 */
 	protected $content;
 
 	/**
 	 * @var JPathway
+	 * @since Kunena
 	 */
 	protected $breadcrumb;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	protected $me;
 
 	/**
 	 * @var KunenaConfig
+	 * @since Kunena
 	 */
 	public $config;
 
 	/**
 	 * @var KunenaTemplate
+	 * @since Kunena
 	 */
 	protected $template;
 
 	/**
 	 * @var JDocument
+	 * @since Kunena
 	 */
 	protected $document;
 
@@ -67,6 +74,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	protected function display()
 	{
@@ -81,6 +89,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return JLayoutBase
+	 * @since Kunena
 	 */
 	public function execute()
 	{
@@ -230,9 +239,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->app->enqueueMessage(
 					JText::sprintf(
 						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
-					), 'notice'
-				);
+						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
 			}
 			else
 			{
@@ -309,7 +316,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @return string
 	 * @since Kunena
-		 */
+	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');
@@ -319,12 +326,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
-			array('style' => 'display: inline; visibility: visible; text-decoration: none;')
-		);
+			array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
 		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
-
 		if (trim($templateText))
 		{
 			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'

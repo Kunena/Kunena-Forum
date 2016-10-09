@@ -25,6 +25,7 @@ class KunenaAccessCommunity
 	 * KunenaAccessCommunity constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -39,6 +40,7 @@ class KunenaAccessCommunity
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
 	 * @return array    Supported access types.
+	 * @since Kunena
 	 */
 	public function getAccessTypes()
 	{
@@ -54,6 +56,7 @@ class KunenaAccessCommunity
 	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -123,6 +126,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -157,6 +161,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{

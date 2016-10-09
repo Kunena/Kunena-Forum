@@ -458,6 +458,7 @@ abstract class KunenaTableObject
 	 * @param   bool $reset
 	 *
 	 * @return boolean|KunenaTableObject
+	 * @since Kunena
 	 */
 	protected function load($keys = null, $reset = true)
 	{

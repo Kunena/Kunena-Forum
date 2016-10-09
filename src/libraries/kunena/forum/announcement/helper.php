@@ -19,6 +19,7 @@ abstract class KunenaForumAnnouncementHelper
 {
 	/**
 	 * @var KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	public static $_instances = false;
 
@@ -29,6 +30,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -79,6 +81,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string $layout layout
 	 *
 	 * @return JUri
+	 * @since Kunena
 	 */
 	static public function getUri($layout = null)
 	{
@@ -100,6 +103,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{

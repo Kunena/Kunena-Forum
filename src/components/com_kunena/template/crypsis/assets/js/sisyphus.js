@@ -28,7 +28,7 @@
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	browserStorage.isAvailable = function () {
 		if (typeof $.jStorage === "object") {
 			return true;
@@ -50,7 +50,7 @@
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	browserStorage.set = function (key, value) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.set(key, value + "");
@@ -72,7 +72,7 @@
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	browserStorage.get = function (key) {
 		if (typeof $.jStorage === "object") {
 			var result = $.jStorage.get(key);
@@ -90,7 +90,7 @@
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	browserStorage.remove = function (key) {
 		if (typeof $.jStorage === "object") {
 			$.jStorage.deleteKey(key);

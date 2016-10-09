@@ -21,6 +21,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -34,6 +35,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param   JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
@@ -78,6 +80,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
+	 * @since Kunena
 	 */
 	public function find()
 	{

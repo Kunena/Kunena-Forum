@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
  * @property int    $userid
  * @property int    $targetuserid
  * @property string $time
+ * @since Kunena
  */
 class KunenaForumMessageThankyou extends JObject
 {
@@ -44,6 +45,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -66,6 +68,8 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * @param   int    $userid
 	 * @param   string $time
+	 *
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -158,6 +162,7 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Get all users who have given thank you to this message.
 	 * @return array List of userid=>time.
+	 * @since Kunena
 	 */
 	public function getList()
 	{

@@ -24,6 +24,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * KunenaProfileAltaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -113,6 +114,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)

@@ -15,6 +15,7 @@ define('MIME_PNG', 'image/png');
 
 /**
  * Helper class for image manipulation.
+ * @since Kunena
  */
 class KunenaImage extends KunenaCompatImage
 {

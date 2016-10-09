@@ -89,6 +89,8 @@ class KunenaApplication extends JApplicationWeb
 	 * @param   JInput                $input
 	 * @param   JRegistry             $config
 	 * @param   JApplicationWebClient $client
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
 	{

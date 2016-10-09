@@ -20,6 +20,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * KunenaProfileCommunity constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -32,6 +33,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -52,6 +54,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -95,6 +98,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
@@ -106,6 +110,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

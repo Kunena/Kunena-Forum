@@ -91,6 +91,7 @@ abstract class KunenaTemplateHelper
 	 * @param   null $templateBaseDir
 	 *
 	 * @return boolean|stdClass
+	 * @since Kunena
 	 */
 	public static function parseXmlFile($templateDir, $templateBaseDir = null)
 	{
@@ -124,6 +125,7 @@ abstract class KunenaTemplateHelper
 	 * @param   $path
 	 *
 	 * @return boolean|stdClass
+	 * @since Kunena
 	 */
 	public static function parseKunenaInstallFile($path)
 	{

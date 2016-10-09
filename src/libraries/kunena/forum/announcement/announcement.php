@@ -22,6 +22,7 @@ defined('_JEXEC') or die();
  * @property int    $published
  * @property int    $ordering
  * @property int    $showdate
+ * @since Kunena
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
@@ -45,6 +46,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @param   mixed $properties
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($properties = null)
 	{
@@ -68,6 +71,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -96,6 +100,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $layout
 	 *
 	 * @return JUri
+	 * @since Kunena
 	 */
 	public function getUri($layout = 'default')
 	{
@@ -136,6 +141,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $task
 	 *
 	 * @return JUri
+	 * @since Kunena
 	 */
 	public function getTaskUri($task = null)
 	{
@@ -164,6 +170,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $mode
 	 *
 	 * @return integer|string
+	 * @since Kunena
 	 */
 	public function displayField($field, $mode = null)
 	{
@@ -221,6 +228,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getCreationDate()
 	{
@@ -322,6 +330,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

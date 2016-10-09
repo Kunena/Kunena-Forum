@@ -23,6 +23,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
+	 * @since Kunena
 	 */
 	public function find()
 	{

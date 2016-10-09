@@ -130,9 +130,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control"
 							       maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required/>
 							<?php
-							$login =  '<a class="btn-link" href="index.php?option=com_users&view=login"> ' . JText::_('JLOGIN') . '</a>';
-							$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
-							echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ; ?>
+							$login    = '<a class="btn-link" href="index.php?option=com_users&view=login"> ' . JText::_('JLOGIN') . '</a>';
+							$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
+							echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register); ?>
 						</div>
 					</div>
 
@@ -229,11 +229,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 										<input id="fileupload" type="file" name="file" multiple>
 									</span>
 									<button id="insert-all" class="btn btn-primary" type="submit" style="display:none;">
-										<?php echo KunenaIcons::upload();?>
+										<?php echo KunenaIcons::upload(); ?>
 										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
 									</button>
 									<button id="remove-all" class="btn btn-danger" type="submit" style="display:none;">
-										<?php echo KunenaIcons::cancel();?>
+										<?php echo KunenaIcons::cancel(); ?>
 										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 									</button>
 									<!-- The global progress bar -->

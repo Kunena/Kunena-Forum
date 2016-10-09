@@ -22,6 +22,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * KunenaActivityCommunity constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -31,6 +32,7 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterPost($message)
@@ -80,6 +82,7 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)
@@ -153,6 +156,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
@@ -212,6 +216,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($target)
 	{

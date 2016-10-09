@@ -132,8 +132,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo $this->getGroupCheckbox('ip'); ?>
 						</th>
 						<?php if (!$this->group)
-						:
-	?>
+							:
+							?>
 							<th class="nowrap center">
 								Data
 							</th>
@@ -192,8 +192,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<?php if (!$this->group)
-						:
-	?>
+							:
+							?>
 							<td>
 							</td>
 						<?php endif; ?>
@@ -211,9 +211,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					$i                = 0;
 
 					if ($this->pagination->total > 0)
-					:
-						foreach ($this->items as $item)
 						:
+						foreach ($this->items as $item)
+							:
 							$date = new KunenaDate($item->time);
 							$user     = KunenaUserHelper::get($item->user_id);
 							$category = KunenaForumCategoryHelper::get($item->category_id);
@@ -249,8 +249,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
 								</td>
 								<?php if (!$this->group)
-								:
-	?>
+									:
+									?>
 									<td>
 										<a class="btn hasPopover" title="Data" data-content="<?php echo
 										$this->escape("<pre>{$this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))}</pre>"); ?>"
@@ -263,23 +263,23 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							$i++;
 						endforeach;
 					else:
-	?>
+						?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
 							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 								<?php
 								if ($this->filterActive)
-	:
-	?>
+									:
+									?>
 									<button class="btn" type="button"
 									        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-								<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
+								<?php endif; ?>
 							</span>
 								</div>
 							</td>
 						</tr>
-					<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                         endif; ?>
+					<?php endif; ?>
 					</tbody>
 				</table>
 			</form>

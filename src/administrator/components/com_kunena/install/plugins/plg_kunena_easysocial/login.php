@@ -19,6 +19,7 @@ class KunenaLoginEasySocial
 	 * KunenaLoginEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

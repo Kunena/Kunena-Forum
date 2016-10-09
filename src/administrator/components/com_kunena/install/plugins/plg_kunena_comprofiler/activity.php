@@ -21,6 +21,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * KunenaActivityComprofiler constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -45,6 +46,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onBeforePost($message)
@@ -55,6 +57,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onBeforeReply($message)
@@ -65,6 +68,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onBeforeEdit($message)
@@ -75,6 +79,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterPost($message)
@@ -85,6 +90,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)
@@ -95,6 +101,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterEdit($message)
@@ -105,6 +112,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterDelete($message)
@@ -116,6 +124,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterUndelete($message)
@@ -129,6 +138,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
@@ -140,6 +150,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int $topic
 	 * @param   int $action
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterSubscribe($topic, $action)
 	{
@@ -151,6 +163,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int $topic
 	 * @param   int $action
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterFavorite($topic, $action)
 	{

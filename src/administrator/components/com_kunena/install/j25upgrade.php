@@ -19,6 +19,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 
 	/**
 	 * @param   null $step
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($step = null)

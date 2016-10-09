@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
  *
  * @return array|null
  * @throws KunenaInstallerException
+ * @since Kunena
  */
 function kunena_160_2010_05_30_polls($parent)
 {

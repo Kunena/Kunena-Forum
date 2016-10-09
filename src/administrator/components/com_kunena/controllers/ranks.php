@@ -98,7 +98,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function save()
 	{
@@ -172,7 +172,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function rankupload()
 	{
@@ -209,7 +209,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function remove()
 	{

@@ -27,7 +27,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayModeList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
@@ -44,7 +44,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayDateList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
@@ -68,7 +68,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
@@ -85,7 +85,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displaySortByList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
@@ -110,7 +110,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayOrderList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
@@ -127,7 +127,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayLimitList($id, $attributes = 'class="form-control"')
 	{
 		// Limit value list
@@ -149,7 +149,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 * @since Kunena
- 	 */
+	 */
 	public function displayCategoryList($id, $attributes = 'class="form-control"')
 	{
 		// Category select list

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Widget
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Widget
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-sm <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kstats"></div>
+			<div class="btn btn-default btn-sm <?php echo KunenaIcons::collapse(); ?>" data-toggle="collapse" data-target="#kstats"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 						</ul>
 					</div>
 
-					<div class="col-md-3">		
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -78,7 +78,7 @@ defined('_JEXEC') or die;
 						</ul>
 					</div>
 
-					<div class="col-md-3">	
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:

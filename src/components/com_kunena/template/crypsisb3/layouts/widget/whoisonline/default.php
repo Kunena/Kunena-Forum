@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Statistics
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Statistics
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-sm <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kwho"></div>
+			<div class="btn btn-default btn-sm <?php echo KunenaIcons::collapse(); ?>" data-toggle="collapse" data-target="#kwho"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -32,7 +32,7 @@ defined('_JEXEC') or die;
 		<div class="well well-sm">
 			<div class="container">
 				<div class="row">
-					
+
 					<div class="col-md-1">
 						<ul class="list-unstyled">
 							<li class="btn-link">
@@ -40,50 +40,50 @@ defined('_JEXEC') or die;
 							</li>
 						</ul>
 					</div>
-					
+
 					<div class="col-md-11">
 						<ul class="list-unstyled">
 							<span>
 								<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 							</span>
-								<?php
-								$template = KunenaTemplate::getInstance();
-								$direction = $template->params->get('whoisonlineName');
+							<?php
+							$template  = KunenaTemplate::getInstance();
+							$direction = $template->params->get('whoisonlineName');
 
-								if ($direction == 'both') : ?>
-									<div><?php echo $this->setLayout('both'); ?></div>
+							if ($direction == 'both') : ?>
+								<div><?php echo $this->setLayout('both'); ?></div>
 								<?php
-								elseif ($direction == 'avatar') : ?>
-									<div><?php echo $this->setLayout('avatar'); ?></div>
-								<?php else : ?>
-									<div><?php echo $this->setLayout('name'); ?></div>
+							elseif ($direction == 'avatar') : ?>
+								<div><?php echo $this->setLayout('avatar'); ?></div>
+							<?php else : ?>
+								<div><?php echo $this->setLayout('name'); ?></div>
 								<?php
-									endif;
-								?>
+							endif;
+							?>
 
-								<?php if (!empty($this->onlineList)) : ?>
+							<?php if (!empty($this->onlineList)) : ?>
 								<div>
 									<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 									<span class="kwho-admin">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 									</span>
 									<span class="kwho-globalmoderator">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 									</span>
 									<span class="kwho-moderator">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 									</span>
 									<span class="kwho-banned">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
 									</span>
 									<span class="kwho-user">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
 									</span>
 									<span class="kwho-guest">
-										<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+										<?php echo KunenaIcons::user(); ?><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 									</span>
 								</div>
-								<?php endif; ?>
+							<?php endif; ?>
 						</ul>
 					</div>
 				</div>

@@ -34,10 +34,10 @@ JHtml::_('behavior.multiselect');
 			<input type="hidden" name="view" value="ranks"/>
 			<input type="hidden" name="task" value="save"/>
 			<?php if ($this->state->get('item.id'))
-			:
-	?><input type="hidden" name="rankid"
-			                                                   value="<?php echo $this->state->get('item.id') ?>" /><?php
-endif; ?>
+				:
+				?><input type="hidden" name="rankid"
+				         value="<?php echo $this->state->get('item.id') ?>" /><?php
+			endif; ?>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -61,12 +61,12 @@ endif; ?>
 							<?php echo $this->listranks; ?>
 							<?php
 							if (!$this->state->get('item.id'))
-							:
-	?>
+								:
+								?>
 								<img name="rank_image" src="" border="0" alt=""/>
-							<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     else
-:
-	?>
+							<?php else
+								:
+								?>
 								<img name="rank_image"
 								     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
 								     border="0" alt=""/>

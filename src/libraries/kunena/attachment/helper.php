@@ -12,11 +12,13 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Attachment Helper Class
+ * @since Kunena
  */
 abstract class KunenaAttachmentHelper
 {
 	/**
 	 * @var KunenaAttachment[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -28,6 +30,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string $mime
 	 *
 	 * @return  bool  True if mime is image.
+	 * @since Kunena
 	 */
 	public function isImageMime($mime)
 	{
@@ -41,6 +44,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaAttachment
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -78,6 +82,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getById($ids = false, $authorise = 'read')
 	{
@@ -120,6 +125,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|string $ids
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getNumberAttachments($ids = false)
 	{
@@ -145,6 +151,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false, $authorise = 'read')
 	{
@@ -226,8 +233,7 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			}
-			while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -509,6 +515,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	public static function getByUserid($user, array $params)
 	{
@@ -571,6 +578,8 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadById(array $ids)
 	{
@@ -620,6 +629,8 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadByMessage(array $ids)
 	{

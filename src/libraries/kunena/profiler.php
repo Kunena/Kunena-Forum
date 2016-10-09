@@ -13,6 +13,7 @@ jimport('joomla.error.profiler');
 
 /**
  * Class KunenaProfiler
+ * @since Kunena
  */
 class KunenaProfiler extends JProfiler
 {
@@ -22,6 +23,7 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected $_heap = array();
 
@@ -31,6 +33,7 @@ class KunenaProfiler extends JProfiler
 	 * @return KunenaProfiler
 	 *
 	 * @fixme override getInstance() and fix the function into Joomla
+	 * @since Kunena
 	 */
 	public static function instance($prefix = 'Kunena')
 	{
@@ -45,8 +48,9 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @param $name
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function start($name)
 	{
 		$item = KunenaProfilerItem::getInstance($name);
@@ -59,7 +63,7 @@ class KunenaProfiler extends JProfiler
 	 *
 	 * @return float
 	 * @since Kunena
- 	 */
+	 */
 	public function getTime($name)
 	{
 		$item = KunenaProfilerItem::getInstance($name);
@@ -72,7 +76,7 @@ class KunenaProfiler extends JProfiler
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function stop($name)
 	{
 		$item = array_pop($this->_heap);
@@ -94,6 +98,7 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @return array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	public function getAll()
 	{
@@ -109,7 +114,7 @@ class KunenaProfiler extends JProfiler
 	 *
 	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function sort(&$array, $property = 'total')
 	{
 		return usort($array, function ($a, $b) use ($property)
@@ -126,11 +131,13 @@ class KunenaProfiler extends JProfiler
 
 /**
  * Class KunenaProfilerItem
+ * @since Kunena
  */
 class KunenaProfilerItem
 {
 	/**
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -138,8 +145,9 @@ class KunenaProfilerItem
 
 	/**
 	 * @param $name
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function __construct($name)
 	{
 		$this->name     = $name;
@@ -152,6 +160,7 @@ class KunenaProfilerItem
 	 * @param   string $name
 	 *
 	 * @return KunenaProfilerItem
+	 * @since Kunena
 	 */
 	public static function getInstance($name)
 	{
@@ -165,6 +174,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	public static function getAll()
 	{
@@ -174,7 +184,7 @@ class KunenaProfilerItem
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getStartTime()
 	{
 		return end($this->start);
@@ -183,7 +193,7 @@ class KunenaProfilerItem
 	/**
 	 * @return float
 	 * @since Kunena
- 	 */
+	 */
 	public function getTotalTime()
 	{
 		return $this->total;
@@ -192,7 +202,7 @@ class KunenaProfilerItem
 	/**
 	 * @return float
 	 * @since Kunena
- 	 */
+	 */
 	public function getInternalTime()
 	{
 		return $this->total - $this->external;
@@ -200,6 +210,8 @@ class KunenaProfilerItem
 
 	/**
 	 * @param $starttime
+	 *
+	 * @since Kunena
 	 */
 	public function start($starttime)
 	{
@@ -212,7 +224,7 @@ class KunenaProfilerItem
 	 *
 	 * @return float
 	 * @since Kunena
- 	 */
+	 */
 	public function stop($stoptime)
 	{
 		$starttime = array_pop($this->start);
@@ -230,6 +242,8 @@ class KunenaProfilerItem
 
 	/**
 	 * @param $delta
+	 *
+	 * @since Kunena
 	 */
 	public function external($delta)
 	{

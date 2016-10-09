@@ -13,6 +13,7 @@ jimport('joomla.application.component.helper');
 
 /**
  * Class KunenaController
+ * @since Kunena
  */
 class KunenaController extends JControllerLegacy
 {
@@ -141,7 +142,7 @@ class KunenaController extends JControllerLegacy
 	 * @return mixed
 	 * @throws Exception
 	 *
-	 * @todo Check if the parent function override is still needed.
+	 * @since Kunena
 	 */
 	protected function executeTask($task)
 	{
@@ -308,6 +309,7 @@ class KunenaController extends JControllerLegacy
 	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -431,6 +433,7 @@ class KunenaController extends JControllerLegacy
 	 * @param   string $var The output to escape.
 	 *
 	 * @return string The escaped value.
+	 * @since Kunena
 	 */
 	public function escape($var)
 	{
@@ -472,6 +475,8 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @param   string $default
 	 * @param   string $anchor
+	 *
+	 * @since Kunena
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

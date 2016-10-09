@@ -12,16 +12,19 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Forum Topic User Helper Class
+ * @since Kunena
  */
 abstract class KunenaForumTopicUserHelper
 {
 	/**
 	 * @var array|KunenaForumTopicUser[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaForumTopicUser[]
+	 * @since Kunena
 	 */
 	protected static $_topics = array();
 
@@ -33,6 +36,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   bool                      $reload
 	 *
 	 * @return KunenaForumTopicUser
+	 * @since Kunena
 	 */
 	static public function get($topic = null, $user = null, $reload = false)
 	{
@@ -63,6 +67,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   mixed      $user
 	 *
 	 * @return KunenaForumTopicUser[]
+	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $user = null)
 	{
@@ -109,6 +114,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   string                   $value Row to pick up as value.
 	 *
 	 * @return array List of [topic][userid] = value.
+	 * @since Kunena
 	 */
 	static public function getUserIds(array $topics, $value = 'user_id')
 	{
@@ -259,6 +265,7 @@ abstract class KunenaForumTopicUserHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -272,6 +279,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   int            $end
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)
 	{
@@ -366,6 +374,7 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
+	 *
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
@@ -419,6 +428,8 @@ abstract class KunenaForumTopicUserHelper
 
 	/**
 	 * @param   int $id
+	 *
+	 * @since Kunena
 	 */
 	static protected function reloadTopic($id)
 	{

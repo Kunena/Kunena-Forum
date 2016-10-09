@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAccess
+ * @since Kunena
  */
 class KunenaAccess
 {
@@ -88,6 +89,7 @@ class KunenaAccess
 
 	/**
 	 * @return KunenaAccess|null
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -314,6 +316,7 @@ window.addEvent('domready', function(){
 	 * @return string|null
 	 *
 	 * @deprecated 3.0.1
+	 * @since      Kunena
 	 */
 	public function getGroupName($accesstype, $id)
 	{
@@ -503,6 +506,7 @@ window.addEvent('domready', function(){
 	 * @return boolean
 	 *
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 * @since   Kunena
 	 */
 	public function setModerator($category, $user = null, $status = true)
 	{
@@ -668,6 +672,7 @@ window.addEvent('domready', function(){
 	 * @param   bool  $string
 	 *
 	 * @return string|array
+	 * @since Kunena
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
 	{

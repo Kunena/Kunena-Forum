@@ -22,6 +22,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * KunenaAvatarEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -31,6 +32,8 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaUserFinder
+ * @since Kunena
  */
 class KunenaUserFinder extends KunenaDatabaseObjectFinder
 {
@@ -21,6 +22,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -40,6 +42,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null, $register = true)
 	{
@@ -65,6 +68,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $ignore
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByConfiguration(array $ignore = array())
 	{
@@ -94,6 +98,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param $search
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByName($search)
 	{
@@ -116,6 +121,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return array|KunenaUser[]
+	 * @since Kunena
 	 */
 	public function find()
 	{

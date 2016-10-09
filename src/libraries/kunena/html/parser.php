@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaHtmlParser
+ * @since Kunena
  */
 abstract class KunenaHtmlParser
 {
@@ -72,6 +73,7 @@ abstract class KunenaHtmlParser
 	 * @param   int $len
 	 *
 	 * @return mixed|string|void
+	 * @since Kunena
 	 */
 	public static function parseText($txt, $len = 0)
 	{
@@ -100,6 +102,7 @@ abstract class KunenaHtmlParser
 	 * @param   string $context
 	 *
 	 * @return mixed|void
+	 * @since Kunena
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
 	{
@@ -128,6 +131,7 @@ abstract class KunenaHtmlParser
 	 * @param   int $len
 	 *
 	 * @return mixed|void
+	 * @since Kunena
 	 */
 	public static function plainBBCode($txt, $len = 0)
 	{
@@ -151,6 +155,7 @@ abstract class KunenaHtmlParser
 	 * @param   bool $html
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public static function stripBBCode($txt, $len = 0, $html = true)
 	{

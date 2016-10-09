@@ -19,6 +19,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * KunenaPrivateComprofiler constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)

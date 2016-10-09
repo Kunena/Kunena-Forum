@@ -99,6 +99,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   bool   $id    Id of the button.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Item Collection.
+ * @since Kunena
  */
 class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -27,6 +28,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Create a new collection.
 	 *
 	 * @param   array $items Initial items to be added into the collection.
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(array $items = array())
 	{
@@ -48,6 +51,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get the first item from the collection.
 	 *
 	 * @return mixed|null
+	 * @since Kunena
 	 */
 	public function first()
 	{
@@ -58,6 +62,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get the last item from the collection.
 	 *
 	 * @return mixed|null
+	 * @since Kunena
 	 */
 	public function last()
 	{
@@ -70,6 +75,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure $callback
 	 *
 	 * @return KunenaCollection
+	 * @since Kunena
 	 */
 	public function filter(Closure $callback)
 	{
@@ -82,6 +88,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure $callback
 	 *
 	 * @return KunenaCollection
+	 * @since Kunena
 	 */
 	public function each(Closure $callback)
 	{
@@ -96,6 +103,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure $callback
 	 *
 	 * @return KunenaCollection
+	 * @since Kunena
 	 */
 	public function map(Closure $callback)
 	{
@@ -106,6 +114,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get an iterator for the items.
 	 *
 	 * @return ArrayIterator
+	 * @since Kunena
 	 */
 	public function getIterator()
 	{

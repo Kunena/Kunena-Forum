@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaDatabaseObject
+ * @since Kunena
  */
 abstract class KunenaDatabaseObject extends JObject
 {
@@ -33,6 +34,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throws  Exception
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -45,6 +47,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @param   boolean $exists Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
+	 * @since Kunena
 	 */
 	public function exists($exists = null)
 	{
@@ -68,6 +71,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @param   boolean $include True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
+	 * @since Kunena
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
 	{
@@ -92,6 +96,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @param   mixed $id Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
+	 * @since Kunena
 	 */
 	public function load($id = null)
 	{
@@ -125,6 +130,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
 	 *
 	 * @return  boolean  True on success.
+	 * @since Kunena
 	 */
 	public function save()
 	{
@@ -192,6 +198,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * Method to delete the object from the database.
 	 *
 	 * @return    boolean    True on success.
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -243,6 +250,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * the database is safe and as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -289,6 +297,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * Method to get the table object.
 	 *
 	 * @return  JTable|KunenaTable  The table object.
+	 * @since Kunena
 	 */
 	protected function getTable()
 	{
@@ -299,6 +308,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * Internal save method.
 	 *
 	 * @return  boolean  True on success.
+	 * @since Kunena
 	 */
 	protected function saveInternal()
 	{

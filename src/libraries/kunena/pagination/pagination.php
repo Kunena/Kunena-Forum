@@ -76,16 +76,19 @@ class KunenaPagination
 
 	/**
 	 * @var    integer
+	 * @since Kunena
 	 */
 	public $stickyStart = null;
 
 	/**
 	 * @var    integer
+	 * @since Kunena
 	 */
 	public $stickyStop = null;
 
 	/**
 	 * @var    JUri
+	 * @since Kunena
 	 */
 	public $uri = null;
 
@@ -170,6 +173,7 @@ class KunenaPagination
 	 * @param   Juri $uri JUri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 * @since Kunena
 	 */
 	public function setUri(JUri $uri)
 	{
@@ -186,6 +190,7 @@ class KunenaPagination
 	 * @param   int $end       How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 * @since Kunena
 	 */
 	public function setDisplayedPages($displayed = 10, $start = 0, $end = 0)
 	{

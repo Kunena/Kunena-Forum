@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
  * @since       2.0
  *
  * @deprecated  5.0
+ * @since       Kunena
  */
 class plgKunenaAlphaUserPoints extends JPlugin
 {
@@ -28,7 +29,7 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @param $config
 	 *
 	 * @deprecated  5.0
-	 * @since Kunena
+	 * @since       Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -58,7 +59,7 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaAvatar
 	 *
 	 * @deprecated  5.0
-	 * @since Kunena
+	 * @since       Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -78,7 +79,7 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaProfile
 	 *
 	 * @deprecated  5.0
-	 * @since Kunena
+	 * @since       Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -98,7 +99,7 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * @return KunenaActivity
 	 *
 	 * @deprecated  5.0
-	 * @since Kunena
+	 * @since       Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

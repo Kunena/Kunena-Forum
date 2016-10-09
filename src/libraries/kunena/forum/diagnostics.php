@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumDiagnostics
+ * @since Kunena
  */
 abstract class KunenaForumDiagnostics
 {
@@ -216,6 +217,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string $function
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public static function getQuery($function)
 	{
@@ -253,6 +255,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_categoryOrphaned()
 	{
@@ -281,6 +284,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_categoryMissingAlias()
 	{
@@ -309,6 +313,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_categoryWrongAlias()
 	{
@@ -337,6 +342,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_aliasMissingCategory()
 	{
@@ -349,6 +355,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_aliasMissingCategory()
 	{
@@ -375,6 +382,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_messageBodyMissingMessage()
 	{
@@ -387,6 +395,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_messageBodyMissingMessage()
 	{
@@ -413,6 +422,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_messageMissingMessageBody()
 	{
@@ -425,6 +435,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_messageMissingMessageBody()
 	{
@@ -451,6 +462,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_topicInSection()
 	{
@@ -479,6 +491,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_topicMissingCategory()
 	{
@@ -507,6 +520,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_topicMissingMessages()
 	{
@@ -519,6 +533,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_topicMissingMessages()
 	{
@@ -545,6 +560,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_topicMissingPoll()
 	{
@@ -573,6 +589,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_topicPollMismatch()
 	{
@@ -601,6 +618,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_movedMissingTopic()
 	{
@@ -613,6 +631,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_movedMissingTopic()
 	{
@@ -639,6 +658,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_movedAndMessages()
 	{
@@ -667,6 +687,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_messageWrongCategory()
 	{
@@ -679,6 +700,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_messageWrongCategory()
 	{
@@ -705,6 +727,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_messageOrphaned()
 	{
@@ -717,6 +740,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_messageOrphaned()
 	{
@@ -743,6 +767,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_attachmentOrphaned()
 	{
@@ -771,6 +796,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_pollOrphaned()
 	{
@@ -783,6 +809,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_pollOrphaned()
 	{
@@ -809,6 +836,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_pollTopicMismatch()
 	{
@@ -837,6 +865,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_pollOptionOrphaned()
 	{
@@ -849,6 +878,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_pollOptionOrphaned()
 	{
@@ -875,6 +905,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_pollUserOrphaned()
 	{
@@ -887,6 +918,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_pollUserOrphaned()
 	{
@@ -913,6 +945,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_thankyouOrphaned()
 	{
@@ -925,6 +958,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function delete_thankyouOrphaned()
 	{
@@ -951,6 +985,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_userCategoryOrphaned()
 	{
@@ -963,6 +998,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_userCategoryOrphaned()
 	{
@@ -989,6 +1025,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_userReadOrphaned()
 	{
@@ -1001,6 +1038,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_userReadOrphaned()
 	{
@@ -1027,6 +1065,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_userReadWrongCategory()
 	{
@@ -1039,6 +1078,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_userReadWrongCategory()
 	{
@@ -1065,6 +1105,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_userTopicOrphaned()
 	{
@@ -1077,6 +1118,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_userTopicOrphaned()
 	{
@@ -1103,6 +1145,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function query_userTopicWrongCategory()
 	{
@@ -1115,6 +1158,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return KunenaDatabaseQuery
+	 * @since Kunena
 	 */
 	protected static function fix_userTopicWrongCategory()
 	{

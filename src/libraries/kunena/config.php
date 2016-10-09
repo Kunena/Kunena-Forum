@@ -8,7 +8,7 @@
  * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
  * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           http://www.bestofjoomla.com
  **/
@@ -18,6 +18,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaConfig
+ * @since Kunena
  */
 class KunenaConfig extends JObject
 {
@@ -1210,6 +1211,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @return KunenaConfig|mixed
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -1236,6 +1238,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @param   mixed $properties
+	 *
+	 * @since Kunena
 	 */
 	public function bind($properties)
 	{
@@ -1286,6 +1290,8 @@ class KunenaConfig extends JObject
 	 * Load config settings from database table.
 	 *
 	 * @param   null $userinfo Not used.
+	 *
+	 * @since Kunena
 	 */
 	public function load($userinfo = null)
 	{
@@ -1344,6 +1350,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * Messages per page
+	 * @since Kunena
 	 */
 	public function check()
 	{

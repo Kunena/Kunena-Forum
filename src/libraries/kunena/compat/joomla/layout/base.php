@@ -11,6 +11,7 @@ defined('JPATH_BASE') or die;
 
 /**
  * Compatibility layer for JLayoutBase
+ * @since Kunena
  */
 class KunenaCompatLayoutBase extends JLayoutBase
 {

@@ -118,6 +118,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int $numTopics   The number of topics
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{

@@ -56,7 +56,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return  void
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function lock()
 	{
@@ -93,7 +93,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function review()
 	{
@@ -112,7 +112,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function unreview()
 	{
@@ -131,7 +131,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function allow_anonymous()
 	{
@@ -150,7 +150,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function deny_anonymous()
 	{
@@ -169,7 +169,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function allow_polls()
 	{
@@ -188,7 +188,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function deny_polls()
 	{
@@ -207,7 +207,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function publish()
 	{
@@ -226,7 +226,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function unpublish()
 	{
@@ -245,7 +245,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function add()
 	{
@@ -274,7 +274,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function edit()
 	{

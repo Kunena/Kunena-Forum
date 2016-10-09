@@ -12,11 +12,13 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryHelper
+ * @since Kunena
  */
 abstract class KunenaForumCategoryHelper
 {
 	/**
 	 * @var KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public static $_instances;
 
@@ -26,6 +28,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * Initialize class.
+	 * @since Kunena
 	 */
 	static public function initialize()
 	{
@@ -273,6 +276,8 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @param   int|array $catids
+	 *
+	 * @since Kunena
 	 */
 	static public function getNewTopics($catids)
 	{
@@ -382,6 +387,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string     $authorise
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $reverse = false, $authorise = 'read')
 	{
@@ -506,6 +512,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getChildren($parents = 0, $levels = 0, $params = array())
 	{
@@ -547,6 +554,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool  $optimize
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static protected function _getChildren(array $parents, $levels, array $params, $optimize)
 	{
@@ -724,6 +732,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string|array $categories
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	static public function recount($categories = '')
 	{
@@ -812,6 +821,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	static public function fixAliases()
 	{
@@ -934,6 +944,8 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @param   array $instances
+	 *
+	 * @since Kunena
 	 */
 	static protected function buildTree(array &$instances)
 	{

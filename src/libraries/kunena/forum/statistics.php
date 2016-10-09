@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumStatistics
+ * @since Kunena
  */
 class KunenaForumStatistics
 {
@@ -43,6 +44,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @var array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public $topTopics = null;
 
@@ -104,6 +106,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $force
+	 *
 	 * @since Kunena
 	 */
 	public function loadAll($force = false)
@@ -116,6 +119,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $force
+	 *
 	 * @since Kunena
 	 */
 	public function loadGeneral($force = false)
@@ -133,6 +137,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $override
+	 *
 	 * @since Kunena
 	 */
 	public function loadUserStats($override = false)
@@ -168,6 +173,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $override
+	 *
 	 * @since Kunena
 	 */
 	public function loadTopicStats($override = false)
@@ -249,8 +255,7 @@ class KunenaForumStatistics
 				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
-			);
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0");
 
 			try
 			{

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Upload Backend Helper Class
+ * @since Kunena
  */
 class KunenaUploadHelper
 {

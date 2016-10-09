@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaModule
+ * @since Kunena
  */
 abstract class KunenaModule
 {
@@ -24,17 +25,21 @@ abstract class KunenaModule
 
 	/**
 	 * @var stdClass
+	 * @since Kunena
 	 */
 	protected $module = null;
 
 	/**
 	 * @var JRegistry
+	 * @since Kunena
 	 */
 	protected $params = null;
 
 	/**
 	 * @param   stdClass  $module
 	 * @param   JRegistry $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($module, $params)
 	{
@@ -45,11 +50,13 @@ abstract class KunenaModule
 
 	/**
 	 * Internal module function to display module contents.
+	 * @since Kunena
 	 */
 	abstract protected function _display();
 
 	/**
 	 * Display module contents.
+	 * @since Kunena
 	 */
 	final public function display()
 	{

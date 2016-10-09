@@ -27,6 +27,7 @@ class KunenaUpload
 	 * @param   array $extensions List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
+	 * @since Kunena
 	 */
 	public static function getInstance(array $extensions = array())
 	{
@@ -46,6 +47,7 @@ class KunenaUpload
 	 * @param   array $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function addExtensions(array $extensions)
 	{
@@ -72,6 +74,7 @@ class KunenaUpload
 	 *
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
+	 * @since Kunena
 	 */
 	public function splitFilename($filename = null)
 	{
@@ -112,6 +115,7 @@ class KunenaUpload
 	 * @param   string $filename Original filename.
 	 *
 	 * @return string  Path pointing to the protected file.
+	 * @since Kunena
 	 */
 	public function getProtectedFile($filename = null)
 	{
@@ -124,6 +128,7 @@ class KunenaUpload
 	 * @param   string $filename Original filename.
 	 *
 	 * @return string     Protected filename.
+	 * @since Kunena
 	 */
 	public function getProtectedFilename($filename = null)
 	{
@@ -141,6 +146,7 @@ class KunenaUpload
 	 * Get upload folder.
 	 *
 	 * @return string  Absolute path.
+	 * @since Kunena
 	 */
 	public function getFolder()
 	{
@@ -155,6 +161,7 @@ class KunenaUpload
 	 * @param   string $value Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return int  Value in bytes.
+	 * @since Kunena
 	 */
 	public static function toBytes($value)
 	{
@@ -184,19 +191,17 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
-			break;
-
+				break;
 			// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-			break;
-
+				break;
 			// Continue.
 			case 'k':
 			case 'kb':
 				$value *= 1024;
-			break;
+				break;
 		}
 
 		return (int) $value;
@@ -209,6 +214,7 @@ class KunenaUpload
 	 *
 	 * @return array Updated options.
 	 * @throws null
+	 * @since Kunena
 	 */
 	public function ajaxUpload(array $options)
 	{
@@ -464,8 +470,7 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+			} while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
@@ -567,6 +572,7 @@ class KunenaUpload
 	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
+	 * @since Kunena
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
@@ -687,6 +693,7 @@ class KunenaUpload
 	 * @param   array $file Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
+	 * @since Kunena
 	 */
 	protected function checkUpload($file)
 	{

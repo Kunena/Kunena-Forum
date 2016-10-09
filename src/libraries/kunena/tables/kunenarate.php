@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Rate
  * Provides access to the #__kunena_rate table
+ * @since Kunena
  */
 class TableKunenaRate extends KunenaTable
 {
@@ -28,6 +29,8 @@ class TableKunenaRate extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

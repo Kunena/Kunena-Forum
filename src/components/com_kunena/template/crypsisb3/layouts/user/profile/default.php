@@ -12,11 +12,11 @@ defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user            = $this->user;
-$this->ktemplate = KunenaFactory::getTemplate();
-$avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$show            = KunenaConfig::getInstance()->showuserstats;
-$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+$user              = $this->user;
+$this->ktemplate   = KunenaFactory::getTemplate();
+$avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
+$show              = KunenaConfig::getInstance()->showuserstats;
+$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);

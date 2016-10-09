@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatar
+ * @since Kunena
  */
 class KunenaAvatar
 {
@@ -25,6 +26,7 @@ class KunenaAvatar
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaAvatar
+	 * @since Kunena
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -56,6 +58,8 @@ class KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{
@@ -89,6 +93,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return StdClass
+	 * @since Kunena
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
@@ -113,6 +118,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
@@ -137,6 +143,7 @@ class KunenaAvatar
 	 * @param   int    $sizey
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{

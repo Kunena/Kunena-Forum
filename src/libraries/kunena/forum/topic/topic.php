@@ -35,6 +35,7 @@ defined('_JEXEC') or die();
  * @property string $last_post_message
  * @property string $last_post_guest_name
  * @property string $params
+ * @since Kunena
  */
 class KunenaForumTopic extends KunenaDatabaseObject
 {
@@ -234,6 +235,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool|string $glue
 	 *
 	 * @return array|string
+	 * @since Kunena
 	 */
 	public function getKeywords($user = null, $glue = false)
 	{
@@ -279,6 +281,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Send email notifications from the first post in the topic.
 	 *
 	 * @param   null|string $url
+	 *
+	 * @since Kunena
 	 */
 	public function sendNotification($url = null)
 	{
@@ -290,6 +294,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumTopicUser
+	 * @since Kunena
 	 */
 	public function getUserTopic($user = null)
 	{
@@ -318,6 +323,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	public function getPoll()
 	{
@@ -338,6 +344,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * Increase hit counter for this topic.
+	 * @since Kunena
 	 */
 	public function hit()
 	{
@@ -367,6 +374,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string   $prefix
 	 *
 	 * @return JPagination
+	 * @since Kunena
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = '')
 	{
@@ -390,6 +398,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumTopicUser
+	 * @since Kunena
 	 */
 	public function getUserInfo($user = null)
 	{
@@ -416,6 +425,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getFirstPostTime()
 	{
@@ -424,6 +434,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getLastPostTime()
 	{
@@ -463,6 +474,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $field
 	 *
 	 * @return integer|string
+	 * @since Kunena
 	 */
 	public function displayField($field)
 	{
@@ -527,8 +539,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	{
 		return KunenaRoute::getTopicUrl(
 			$this, $xhtml, $action,
-			$category ? KunenaForumCategoryHelper::get($category) : $this->getCategory()
-		);
+			$category ? KunenaForumCategoryHelper::get($category) : $this->getCategory());
 	}
 
 	/**
@@ -577,6 +588,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $action
 	 *
 	 * @return JUri|null
+	 * @since Kunena
 	 */
 	public function getUri($category = null, $action = null)
 	{
@@ -948,6 +960,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -985,6 +998,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null $id The topic id to be loaded.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function load($id = null)
 	{
@@ -1006,6 +1020,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int    $topic_iconid Define a new topic icon
 	 *
 	 * @return    boolean|KunenaForumCategory|KunenaForumTopic    Target KunenaForumCategory or KunenaForumTopic or false on failure
+	 * @since Kunena
 	 */
 	public function move($target, $ids = false, $shadow = false, $subject = '', $subjectall = false, $topic_iconid = null)
 	{
@@ -1320,12 +1335,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Update first and last post information into the target topic
 			$target->updatePostInfo(
 				$this->first_post_id, $this->first_post_time, $this->first_post_userid,
-				$this->first_post_message, $this->first_post_guest_name
-			);
+				$this->first_post_message, $this->first_post_guest_name);
 			$target->updatePostInfo(
 				$this->last_post_id, $this->last_post_time, $this->last_post_userid,
-				$this->last_post_message, $this->last_post_guest_name
-			);
+				$this->last_post_message, $this->last_post_guest_name);
 
 			// Save target topic
 			if (!$target->save(false))
@@ -1363,7 +1376,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool $cascade
 	 *
 	 * @return bool    True on success.
-	 *
+	 * @since Kunena
 	 */
 	public function save($cascade = true)
 	{
@@ -1399,6 +1412,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Method to put the KunenaForumTopic object on trash this is still present in database.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function trash()
 	{
@@ -1439,6 +1453,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool $recount
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function delete($recount = true)
 	{
@@ -1514,6 +1529,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int    $userid
 	 * @param   string $message
 	 * @param   string $name
+	 *
+	 * @since Kunena
 	 */
 	public function updatePostInfo($id, $time = 0, $userid = 0, $message = '', $name = '')
 	{
@@ -1808,6 +1825,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseNotExists(KunenaUser $user)
 	{
@@ -1824,6 +1842,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -1857,6 +1876,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseNotHold(KunenaUser $user)
 	{
@@ -1873,6 +1893,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseNotMoved(KunenaUser $user)
 	{

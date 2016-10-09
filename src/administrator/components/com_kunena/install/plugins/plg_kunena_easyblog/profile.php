@@ -20,6 +20,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * KunenaProfileEasyblog constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -69,6 +70,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)

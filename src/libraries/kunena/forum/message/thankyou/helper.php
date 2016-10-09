@@ -18,6 +18,7 @@ abstract class KunenaForumMessageThankyouHelper
 {
 	/**
 	 * @var KunenaForumMessageThankyou[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -31,6 +32,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
+	 * @since Kunena
 	 */
 	static public function get($identifier, $reload = false)
 	{
@@ -223,6 +225,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Load users who have given thank you to listed messages.
 	 *
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
 	{
@@ -274,7 +278,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous is null.
 	 *
-	 * @return boolean|int	Number of rows is successful, false on error.
+	 * @return boolean|int    Number of rows is successful, false on error.
 	 *
 	 * @since K2.0
 	 */
@@ -308,7 +312,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous.
 	 *
-	 * @return boolean|int	Number of rows is successful, false on error.
+	 * @return boolean|int    Number of rows is successful, false on error.
 	 * @since K2.0
 	 */
 	static public function recount()
@@ -345,6 +349,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int $ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
+	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false)
 	{

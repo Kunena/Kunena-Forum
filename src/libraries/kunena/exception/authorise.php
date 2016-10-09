@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaExceptionAuthorise
+ * @since Kunena
  */
 class KunenaExceptionAuthorise extends RuntimeException
 {

@@ -88,6 +88,7 @@ class KunenaLog
 
 	/**
 	 * @var array|KunenaLogEntry[]
+	 * @since Kunena
 	 */
 	protected static $entries = array();
 

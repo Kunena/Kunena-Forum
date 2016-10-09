@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena BBCode Editor Class
  *
- * @version  2.0
+ * @since 2.0
  */
 class KunenaBbcodeEditor
 {
@@ -36,6 +36,7 @@ class KunenaBbcodeEditor
 	 * @param   array $config
 	 *
 	 * @return KunenaBbcodeEditor
+	 * @since Kunena
 	 */
 	public static function getInstance($config = array())
 	{
@@ -222,6 +223,7 @@ class KunenaBbcodeEditor
 
 /**
  * Class KunenaBbcodeEditorElement
+ * @since Kunena
  */
 abstract class KunenaBbcodeEditorElement
 {
@@ -231,6 +233,7 @@ abstract class KunenaBbcodeEditorElement
 	 * Constructor for the base class for editor elements.
 	 *
 	 * @param $name
+	 *
 	 * @since Kunena
 	 */
 	function __construct($name)
@@ -245,6 +248,8 @@ abstract class KunenaBbcodeEditorElement
 	 * @abstract
 	 *
 	 * @param $xml
+	 *
+	 * @since Kunena
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{
@@ -254,6 +259,7 @@ abstract class KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorButton
+ * @since Kunena
  */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
@@ -277,6 +283,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param $tag
 	 * @param $title
 	 * @param $alt
+	 *
+	 * @since Kunena
 	 */
 	function __construct($name, $class, $tag, $title, $alt)
 	{
@@ -293,6 +301,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement $xml
 	 *
 	 * @return KunenaBbcodeEditorButton
+	 * @since Kunena
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{
@@ -528,6 +537,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param        $selection
 	 * @param        $class
 	 * @param   null $tag
+	 *
+	 * @since Kunena
 	 */
 	function addDisplayAction($selection, $class, $tag = null)
 	{
@@ -550,6 +561,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   null $before
 	 * @param   null $after
 	 * @param   null $tag
+	 *
+	 * @since Kunena
 	 */
 	function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
 	{
@@ -579,6 +592,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * Open the specified URL when the button is pressed.
 	 *
 	 * @param $url
+	 *
+	 * @since Kunena
 	 */
 	function addUrlAction($url)
 	{
@@ -590,6 +605,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorSeparator
+ * @since Kunena
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 {
@@ -612,6 +628,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement $xml
 	 *
 	 * @return KunenaBbcodeEditorSeparator
+	 * @since Kunena
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{

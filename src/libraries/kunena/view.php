@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena View Class
+ * @since Kunena
  */
 class KunenaView extends JViewLegacy
 {
@@ -186,7 +187,7 @@ class KunenaView extends JViewLegacy
 		}
 
 		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
-		$app = JFactory::getApplication();
+		$app   = JFactory::getApplication();
 
 		switch ((int) $code)
 		{
@@ -292,6 +293,7 @@ class KunenaView extends JViewLegacy
 	 * @param   array  $hmvcParams
 	 *
 	 * @throws LogicException
+	 * @since Kunena
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
 	{
@@ -559,6 +561,7 @@ class KunenaView extends JViewLegacy
 	 * @param   unknown $title
 	 *
 	 * @throws LogicException
+	 * @since Kunena
 	 */
 	public function setTitle($title)
 	{

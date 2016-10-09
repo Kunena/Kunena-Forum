@@ -12,11 +12,13 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Forum Message Helper Class
+ * @since Kunena
  */
 abstract class KunenaForumMessageHelper
 {
 	/**
 	 * @var KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -29,6 +31,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessage    The message object.
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -66,6 +69,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	static public function getMessages($ids = false, $authorise = 'read')
 	{
@@ -107,6 +111,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool   $orderbyid
 	 *
 	 * @return KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	static public function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -361,6 +366,8 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param   array|string $mesids
+	 *
+	 * @since Kunena
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -405,8 +412,7 @@ abstract class KunenaForumMessageHelper
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})
-			GROUP BY m.id, mm.hold"
-		);
+			GROUP BY m.id, mm.hold");
 
 		try
 		{
@@ -435,6 +441,7 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -446,6 +453,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int $topicids
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public static function recount($topicids = false)
 	{
@@ -488,6 +496,8 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
 	{

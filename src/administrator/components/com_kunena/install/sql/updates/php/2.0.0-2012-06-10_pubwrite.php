@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
  * @param $parent
  *
  * @return array|null
+ * @since Kunena
  */
 function kunena_200_2012_06_10_pubwrite($parent)
 {

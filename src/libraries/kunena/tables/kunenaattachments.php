@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Attachments Table
  * Provides access to the #__kunena_attachments table
+ * @since Kunena
  */
 class TableKunenaAttachments extends KunenaTable
 {
@@ -42,6 +43,8 @@ class TableKunenaAttachments extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

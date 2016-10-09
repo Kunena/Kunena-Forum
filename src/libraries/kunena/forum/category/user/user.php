@@ -19,6 +19,7 @@ defined('_JEXEC') or die();
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
+ * @since Kunena
  *
  */
 class KunenaForumCategoryUser extends JObject
@@ -55,6 +56,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   bool     $reload
 	 *
 	 * @return KunenaForumCategoryUser
+	 * @since Kunena
 	 */
 	static public function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -99,6 +101,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   string $prefix The categories table prefix to be used
 	 *
 	 * @return JTable|TableKunenaUserCategories        The categories table object
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
 	{
@@ -118,6 +121,8 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * @param   array $data
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -166,6 +171,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
 	 * @return bool    True on success
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{
@@ -210,6 +216,7 @@ class KunenaForumCategoryUser extends JObject
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
 	 * @return bool    True on success
+	 * @since Kunena
 	 */
 	public function delete()
 	{

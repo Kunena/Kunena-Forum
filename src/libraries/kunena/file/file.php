@@ -15,7 +15,8 @@ jimport('joomla.filesystem.file');
 /**
  * Class KunenaFile
  *
- * @see JFile
+ * @see   JFile
+ * @since Kunena
  */
 class KunenaFile extends JFile
 {
@@ -23,6 +24,7 @@ class KunenaFile extends JFile
 	 * @param $file
 	 *
 	 * @return boolean|mixed|string
+	 * @since Kunena
 	 */
 	public static function getMime($file)
 	{

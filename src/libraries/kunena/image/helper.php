@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 /**
  * Helper class for image manipulation.
+ * @since Kunena
  */
 class KunenaImageHelper
 {
@@ -28,6 +29,7 @@ class KunenaImageHelper
 	 * @param   int    $crop      Define if you want crop the image.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
 	{

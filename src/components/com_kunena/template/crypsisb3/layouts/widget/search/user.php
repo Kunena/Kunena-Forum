@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Search
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Search
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -18,7 +18,8 @@ $state = $this->state;
       name="usrlform" id="usrlform" class="form-search pull-right">
 	<input type="hidden" name="view" value="user"/>
 	<?php if ($me->exists()) : ?>
-		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+		<input type="hidden" id="kurl_users" name="kurl_users"
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -26,7 +27,7 @@ $state = $this->state;
 		<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"
 		       value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 		<button type="submit" class="btn btn-default">
-			<?php echo KunenaIcons::search();?>
+			<?php echo KunenaIcons::search(); ?>
 		</button>
 	</div>
 </form>

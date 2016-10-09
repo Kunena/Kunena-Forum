@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaLogin
+ * @since Kunena
  */
 class KunenaLogin
 {
@@ -19,6 +20,7 @@ class KunenaLogin
 
 	/**
 	 * @var array|KunenaLogin[]
+	 * @since Kunena
 	 */
 	protected $instances = array();
 
@@ -57,6 +59,7 @@ class KunenaLogin
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaLogin
+	 * @since Kunena
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -221,6 +224,7 @@ class KunenaLogin
 	 * @param   integer $userId The user ID to check. Skip to use the current user.
 	 *
 	 * @return boolean True if TFA is enabled for this user
+	 * @since Kunena
 	 */
 	public function isTFAEnabled($userId = null)
 	{

@@ -54,6 +54,7 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @param $event
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public static function trigger($event, &$params)

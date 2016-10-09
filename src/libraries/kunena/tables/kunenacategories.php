@@ -15,6 +15,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Categories
  * Provides access to the #__kunena_categories table
+ * @since Kunena
  */
 class TableKunenaCategories extends KunenaTable
 {
@@ -88,6 +89,8 @@ class TableKunenaCategories extends KunenaTable
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -232,6 +235,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param $id
 	 *
 	 * @return integer|void
+	 * @since Kunena
 	 */
 	public function isChild($id)
 	{
@@ -288,6 +292,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string $where
 	 *
 	 * @return boolean|mixed
+	 * @since Kunena
 	 */
 	public function reorder($where = '')
 	{

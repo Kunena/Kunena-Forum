@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicPollHelper
+ * @since Kunena
  */
 abstract class KunenaForumTopicPollHelper
 {
@@ -24,6 +25,7 @@ abstract class KunenaForumTopicPollHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{

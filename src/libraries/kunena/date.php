@@ -13,6 +13,7 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaDate
+ * @since Kunena
  */
 class KunenaDate extends JDate
 {
@@ -21,6 +22,7 @@ class KunenaDate extends JDate
 	 * @param   null   $tz
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public static function getInstance($date = 'now', $tz = null)
 	{

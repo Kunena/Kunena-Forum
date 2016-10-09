@@ -14,6 +14,7 @@ jimport('joomla.form.formfield');
 
 /**
  * Class JFormFieldKunenaCategoryList
+ * @since Kunena
  */
 class JFormFieldKunenaCategoryList extends JFormField
 {

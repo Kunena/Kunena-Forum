@@ -9,11 +9,12 @@
  * @link          https://www.kunena.org
  **/
 
-// No direct access
+// no direct access
 defined('_JEXEC') or die;
 
 /**
  * Class KunenaDatabaseObjectFinder
+ * @since Kunena
  */
 abstract class KunenaDatabaseObjectFinder
 {
@@ -33,11 +34,13 @@ abstract class KunenaDatabaseObjectFinder
 
 	/**
 	 * @var JDatabaseQuery
+	 * @since Kunena
 	 */
 	protected $query;
 
 	/**
 	 * @var JDatabase
+	 * @since Kunena
 	 */
 	protected $db;
 
@@ -49,6 +52,7 @@ abstract class KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -68,6 +72,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int $limitstart
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function start($limitstart = 0)
 	{
@@ -84,6 +89,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int $limit
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function limit($limit = null)
 	{
@@ -105,6 +111,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string $alias
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
 	{
@@ -121,14 +128,14 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string       $field     Field name.
 	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array $value     Value.
-	 * @param   bool          $escape    Only works for LIKE / NOT LIKE.
+	 * @param  bool          $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
-
 		switch ($operation)
 		{
 			case '>':
@@ -151,7 +158,6 @@ abstract class KunenaDatabaseObjectFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
-
 				if (empty($value))
 				{
 					// WHERE field IN (nothing).
@@ -162,12 +168,11 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db)
-						{
-							$item = $db->quote($item);
-						}
-					);
-							$list = implode(',', $value);
-							$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+					{
+						$item = $db->quote($item);
+					});
+					$list = implode(',', $value);
+					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
 				break;
 		}

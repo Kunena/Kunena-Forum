@@ -18,6 +18,8 @@ class plgKunenaEasyprofile extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{

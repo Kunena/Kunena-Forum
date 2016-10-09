@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaEmail
+ * @since Kunena
  */
 abstract class KunenaEmail
 {

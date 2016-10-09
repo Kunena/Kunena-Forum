@@ -23,6 +23,8 @@ class KunenaAdminModelAttachments extends JModelList
 
 	/**
 	 * @param   array $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{

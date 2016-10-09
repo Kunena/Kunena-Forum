@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaProfile
+ * @since Kunena
  */
 class KunenaProfile
 {
@@ -21,6 +22,7 @@ class KunenaProfile
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaProfile
+	 * @since Kunena
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -89,6 +91,8 @@ class KunenaProfile
 	/**
 	 * @param   string $action
 	 * @param   bool   $xhtml
+	 *
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -99,6 +103,8 @@ class KunenaProfile
 	 * @param          $user
 	 * @param   string $task
 	 * @param   bool   $xhtml
+	 *
+	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -108,6 +114,7 @@ class KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
@@ -129,6 +136,8 @@ class KunenaProfile
 	/**
 	 * @param        $userid
 	 * @param   bool $xhtml
+	 *
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

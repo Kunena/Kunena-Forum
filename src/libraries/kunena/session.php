@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaSession
+ * @since Kunena
  */
 class KunenaSession extends JObject
 {
@@ -24,6 +25,8 @@ class KunenaSession extends JObject
 
 	/**
 	 * @param   mixed|null $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier)
 	{
@@ -51,6 +54,7 @@ class KunenaSession extends JObject
 	 * @param   null $userid
 	 *
 	 * @return KunenaSession
+	 * @since Kunena
 	 */
 	public static function getInstance($update = false, $userid = null)
 	{
@@ -236,6 +240,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return integer|string
+	 * @since Kunena
 	 */
 	public function getAllReadTime()
 	{

@@ -19,6 +19,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	 * KunenaAvatarComprofiler constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($params)
@@ -28,6 +29,8 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{

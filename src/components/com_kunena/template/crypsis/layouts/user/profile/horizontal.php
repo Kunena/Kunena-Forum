@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user   = $this->user;
-$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
-$show   = KunenaConfig::getInstance()->showuserstats;
+$user              = $this->user;
+$avatar            = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+$show              = KunenaConfig::getInstance()->showuserstats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)

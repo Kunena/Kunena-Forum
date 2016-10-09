@@ -18,6 +18,7 @@ KunenaRoute::initialize();
 
 /**
  * Class KunenaRoute
+ * @since Kunena
  */
 abstract class KunenaRoute
 {
@@ -265,6 +266,7 @@ abstract class KunenaRoute
 	 * @param   bool $object
 	 *
 	 * @return JUri|string
+	 * @since Kunena
 	 */
 	public static function normalize($uri = null, $object = false)
 	{
@@ -394,6 +396,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return JCacheController
+	 * @since Kunena
 	 */
 	protected static function getCache()
 	{
@@ -436,6 +439,7 @@ abstract class KunenaRoute
 	 * @param   string $string String to process
 	 *
 	 * @return  string  Processed string
+	 * @since Kunena
 	 */
 	protected static function stringURLUnicodeSlug($string)
 	{
@@ -605,6 +609,7 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return boolean|JUri|null
+	 * @since Kunena
 	 */
 	protected static function prepare($uri = null)
 	{

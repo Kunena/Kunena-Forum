@@ -44,6 +44,7 @@ class KunenaIntegrationActivity
 
 	/**
 	 * @return static
+	 * @since Kunena
 	 */
 	static public function getInstance()
 	{

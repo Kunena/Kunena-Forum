@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 /**
  * Kunena JSON Response, extends JResponseJson.
+ * @since Kunena
  */
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
@@ -25,6 +26,8 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 	 * @param   string  $message        The main response message
 	 * @param   boolean $error          True, if the success flag shall be set to false, defaults to false
 	 * @param   boolean $ignoreMessages True, if the message queue shouldn't be included, defaults to false
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($response = null, $message = null, $error = false, $ignoreMessages = false)
 	{
@@ -56,8 +59,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+			} while (JDEBUG && $e);
 
 			// Create response data on exceptions.
 			$this->data = array('exceptions' => $exceptions);

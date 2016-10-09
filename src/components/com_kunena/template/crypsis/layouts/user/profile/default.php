@@ -38,9 +38,9 @@ if ($show)
 		</li>
 
 		<?php if ($optional_username) : ?>
-		<li>
-			[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
-		</li>
+			<li>
+				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+			</li>
 		<?php endif; ?>
 
 		<?php if ($avatar) : ?>

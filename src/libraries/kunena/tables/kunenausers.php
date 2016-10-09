@@ -23,6 +23,7 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 * User ID
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $userid = null;
 
@@ -44,42 +45,49 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 * Signature
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $signature = null;
 
 	/**
 	 * Is moderator?
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $moderator = null;
 
 	/**
 	 * Banned until timestamp
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $banned = null;
 
 	/**
 	 * Ordering of posts
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $ordering = null;
 
 	/**
 	 * User post count
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $posts = null;
 
 	/**
 	 * Avatar image file
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $avatar = null;
 
 	/**
 	 * User karma
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $karma = null;
 
@@ -88,245 +96,287 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 * Kunena Group ID
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $group_id = null;
 
 	/**
 	 * Kunena Profile hits
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $uhits = null;
 
 	/**
 	 * Personal text
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $personalText = null;
 
 	/**
 	 * Gender
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $gender = null;
 
 	/**
 	 * Birthdate
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $birthdate = null;
 
 	/**
 	 * User Location
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $location = null;
 
 	/**
 	 * Name of web site
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $websitename = null;
 
 	/**
 	 * URL to web site
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $websiteurl = null;
 
 	/**
 	 * User rank
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $rank = null;
 
 	/**
 	 * Hide Email address
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $hideEmail = null;
 
 	/**
 	 * Show online
 	 * @var integer
+	 * @since Kunena
 	 **/
 	public $showOnline = null;
 
 	/**
 	 * ICQ ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $icq = null;
 
 	/**
 	 * AIM ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $aim = null;
 
 	/**
 	 * YIM ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $yim = null;
 
 	/**
 	 * Microsoft ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $microsoft = null;
 
 	/**
 	 * SKYPE ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $skype = null;
 
 	/**
 	 * TWITTER ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $twitter = null;
 
 	/**
 	 * FACEBOOK ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $facebook = null;
 
 	/**
 	 * Google ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $google = null;
 
 	/**
 	 * MYSPACE ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $myspace = null;
 
 	/**
 	 * LINKEDIN ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $linkedin = null;
 
 	/**
 	 * DELICIOUS ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $delicious = null;
 
 	/**
 	 * FRIENDFEED ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $friendfeed = null;
 
 	/**
 	 * $DIGG ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $digg = null;
 
 	/**
 	 * BLOGSPOT ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $blogspot = null;
 
 	/**
 	 * FLICKR ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $flickr = null;
 
 	/**
 	 * BEBO ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $bebo = null;
 
 	/**
 	 * Thankyou count
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $thankyou = null;
 
 	/**
 	 * canSubscribe
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $canSubscribe = null;
 
 	/**
 	 * userListtime
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $userListtime = null;
 
 	/**
 	 * Status
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $status = null;
 
 	/**
 	 * Status Text
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $status_text = null;
 
 	/**
 	 * Instagram
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $instagram = null;
 
 	/**
 	 * QQ
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $qq = null;
 
 	/**
 	 * Qzone
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $qzone = null;
 
 	/**
 	 * Weibo
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $weibo = null;
 
 	/**
 	 * Wechat
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $wechat = null;
 
 	/**
 	 * Apple
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $apple = null;
 
 	/**
 	 * Vk
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $vk = null;
 
 	/**
 	 * telegram
 	 * @var integer
-	 **/
+	 * @since Kunena
+	 */
 	public $telegram = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -422,6 +472,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   array $ignore
 	 *
 	 * @return boolean|void
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{

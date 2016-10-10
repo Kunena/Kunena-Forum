@@ -1182,6 +1182,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		foreach ($attachments as $attachment)
 		{
+			$file = JUri::root() . $attachment->filename;
+			KunenaFile::delete($file);
+
 			if (!$attachment->delete())
 			{
 				$this->setError($attachment->getError());

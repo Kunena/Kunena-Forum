@@ -1528,14 +1528,17 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Delete user read
 			$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($this->id)}";
 
-			// Delete poll (users)
-			$queries[] = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->quote($this->poll_id)}";
+			if ($this->poll_id)
+			{
+				// Delete poll (users)
+				$queries[] = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->quote($this->poll_id)}";
 
-			// Delete poll (options)
-			$queries[] = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->quote($this->poll_id)}";
+				// Delete poll (options)
+				$queries[] = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->quote($this->poll_id)}";
 
-			// Delete poll
-			$queries[] = "DELETE FROM #__kunena_polls WHERE id={$db->quote($this->poll_id)}";
+				// Delete poll
+				$queries[] = "DELETE FROM #__kunena_polls WHERE id={$db->quote($this->poll_id)}";
+			}
 
 			// Delete thank yous
 			$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread={$db->quote($this->id)}";

@@ -91,8 +91,8 @@ if ($topic->moved_id > 0)
 				 * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				 * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
-						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					<span class="label label-warning">
+						<?php echo KunenaIcons::lock(); ?> <?php JText::_('COM_KUNENA_LOCKED'); ?>
 					</span>
 				<?php endif; ?>
 			</div>

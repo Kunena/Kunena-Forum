@@ -68,7 +68,6 @@ $editor   = $template->params->get('editor');
 
 <div class="kreply span12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block;">
 	<div class="modal-header">
-		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
 			<?php echo JText::sprintf('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY', $author->getLink()); ?>
 		</h3>

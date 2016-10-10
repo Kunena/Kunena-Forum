@@ -176,7 +176,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								       name="subject" id="subject"
 								       maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6"
 								       <?php if (!$this->config->allow_change_subject && $this->message->parent) : ?>disabled<?php endif; ?>
-								       value="<?php echo $this->escape($this->message->subject); ?>" required/>
+								       value="<?php echo $this->escape($this->message->subject); ?>"/>
 								<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
 								<?php endif; ?>

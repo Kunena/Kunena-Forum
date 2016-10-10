@@ -23,7 +23,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	public $poll;
@@ -36,7 +37,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

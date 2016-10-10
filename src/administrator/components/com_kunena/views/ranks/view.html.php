@@ -70,6 +70,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public static function specialOptions()
 	{

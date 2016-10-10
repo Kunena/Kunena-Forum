@@ -34,7 +34,8 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		$catid = $this->input->getInt('catid', 0);

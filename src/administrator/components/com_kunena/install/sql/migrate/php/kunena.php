@@ -14,6 +14,7 @@ class KunenaMigratorKunena
 {
 	/**
 	 * @return KunenaMigratorKunena|null
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -31,6 +32,7 @@ class KunenaMigratorKunena
 	 * Detect Kunena 1.x version.
 	 *
 	 * @return  string  Kunena version or null.
+	 * @since Kunena
 	 */
 	public function detect()
 	{

@@ -21,7 +21,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	public $sections = array();

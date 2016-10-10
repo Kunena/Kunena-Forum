@@ -22,6 +22,7 @@ class KunenaAdminViewSmiley extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed|void
+	 * @since Kunena
 	 */
 	public function display($tpl = null)
 	{

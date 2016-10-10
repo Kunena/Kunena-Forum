@@ -36,6 +36,7 @@ class plgKunenaGravatar extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{

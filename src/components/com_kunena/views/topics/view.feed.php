@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Topics View
+ * @since Kunena
  */
 class KunenaViewTopics extends KunenaView
 {
@@ -20,6 +21,8 @@ class KunenaViewTopics extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return Exception
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -80,6 +83,8 @@ class KunenaViewTopics extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return Exception
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	function displayUser($tpl = null)
 	{
@@ -123,6 +128,8 @@ class KunenaViewTopics extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return Exception
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	function displayPosts($tpl = null)
 	{
@@ -254,6 +261,7 @@ class KunenaViewTopics extends KunenaView
 	 * @param $date
 	 * @param $userid
 	 * @param $username
+	 * @since Kunena
 	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{

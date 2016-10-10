@@ -34,7 +34,8 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @return KunenaLayout
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	public function execute()
 	{
 		$menu = $this->app->getMenu();
@@ -116,6 +117,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   array     $visited Already visited menu items.
 	 *
 	 * @return object|null
+	 * @since Kunena
 	 */
 	protected function getDefaultMenuItem(JMenuSite $menu, $active, $visited = array())
 	{

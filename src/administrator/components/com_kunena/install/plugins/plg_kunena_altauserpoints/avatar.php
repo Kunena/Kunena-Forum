@@ -42,7 +42,8 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string|void
-	 */
+	 * @since Kunena
+ 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
 		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');

@@ -31,7 +31,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

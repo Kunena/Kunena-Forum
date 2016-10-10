@@ -887,7 +887,8 @@ window.addEvent('domready', function(){
 
 	/**
 	 * @param   array $list
-	 */
+	 * @since Kunena
+ 	 */
 	protected function storeRoles(array $list = null)
 	{
 		if (empty($list))

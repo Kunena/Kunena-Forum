@@ -36,6 +36,7 @@
  *
  * The `lessc_formatter` takes a CSS tree, and dumps it to a formatted string,
  * handling things like indentation.
+ * @since Kunena
  */
 class lessc
 {
@@ -2372,6 +2373,7 @@ class lessc
 	 * $opts isn't used yet
 	 *
 	 * @param null $fname
+	 * @since Kunena
 	 */
 	public function __construct($fname = null)
 	{
@@ -2472,6 +2474,7 @@ class lessc
 	 * @param bool  $force Force rebuild?
 	 *
 	 * @return array lessphp cache structure
+	 * @since Kunena
 	 */
 	public function cachedCompile($in, $force = false)
 	{
@@ -2876,6 +2879,7 @@ class lessc_parser
 	 * Consider:
 	 *     property1: 10 -5; // is two numbers, 10 and -5
 	 *     property2: (10 -5); // should evaluate to 5
+	 * @since Kunena
 	 */
 	protected $inParens = false;
 
@@ -2974,6 +2978,7 @@ class lessc_parser
 	 * Before parsing a chain, use $s = $this->seek() to remember the current
 	 * position into $s. Then if a chain fails, use $this->seek($s) to
 	 * go back where we started.
+	 * @since Kunena
 	 */
 	protected function parseChunk()
 	{

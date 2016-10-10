@@ -45,6 +45,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return KunenaForumRate
+	 * @since Kunena
 	 */
 	function getNewRate()
 	{

@@ -18,6 +18,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 
 /**
  * Finder adapter for com_kunena.
+ * @since Kunena
  */
 class plgFinderKunena extends FinderIndexerAdapter
 {
@@ -279,6 +280,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @return  void
 	 *
 	 * @throws  Exception on database error.
+	 * @since Kunena
 	 */
 	protected function index(FinderIndexerResult $item)
 	{
@@ -449,6 +451,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $message
 	 *
 	 * @return FinderIndexerResult
+	 * @since Kunena
 	 */
 	protected function createIndexerResult($message)
 	{
@@ -502,6 +505,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param   string $view      View name.
 	 *
 	 * @return    string        The URL of the item.
+	 * @since Kunena
 	 */
 	protected function getUrl($id, $extension, $view)
 	{

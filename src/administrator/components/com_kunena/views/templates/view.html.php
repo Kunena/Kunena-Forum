@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Templates view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewTemplates extends KunenaView
 {

@@ -21,17 +21,20 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	/**
 	 * @var array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
-	 */
+	 * @since Kunena
+ 	 */
 	public $pagination;
 
 	/**

@@ -122,6 +122,7 @@ class KunenaAdminModelAttachments extends JModelList
 	 * @param   int    $limit
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
@@ -145,7 +146,8 @@ class KunenaAdminModelAttachments extends JModelList
 
 	/**
 	 * @return JDatabaseQuery
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();

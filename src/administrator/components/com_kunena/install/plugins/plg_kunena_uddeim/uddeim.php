@@ -16,6 +16,7 @@ class PlgKunenaUddeIM extends JPlugin
 	/**
 	 * @param   object $subject
 	 * @param   array  $config
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -49,6 +50,7 @@ class PlgKunenaUddeIM extends JPlugin
 
 	/**
 	 * @return KunenaPrivateUddeIM|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
 	{

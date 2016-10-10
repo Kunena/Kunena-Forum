@@ -26,6 +26,7 @@ class KunenaAdminModelIcons extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{

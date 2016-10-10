@@ -20,6 +20,7 @@ class KunenaControllerCommon extends KunenaController
 {
 	/**
 	 * @param   array $config
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{

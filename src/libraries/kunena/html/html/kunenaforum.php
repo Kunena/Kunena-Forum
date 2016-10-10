@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class JHtmlKunenaForum
+ * @since Kunena
  */
 abstract class JHtmlKunenaForum
 {

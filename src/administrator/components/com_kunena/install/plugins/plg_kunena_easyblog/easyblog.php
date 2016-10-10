@@ -49,6 +49,7 @@ class plgKunenaEasyblog extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarEasyblog|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -66,6 +67,7 @@ class plgKunenaEasyblog extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileEasyblog|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{

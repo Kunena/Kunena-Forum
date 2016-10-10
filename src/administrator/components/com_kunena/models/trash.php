@@ -30,6 +30,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -445,7 +446,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * @return JPagination
-	 *
+	 * @since Kunena
 	 */
 	public function getNavigation()
 	{

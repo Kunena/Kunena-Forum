@@ -25,16 +25,19 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @var KunenaForumCategory[]
-	 */
+	 * @since Kunena
+ 	 */
 	protected $_admincategories = false;
 
 	/**
 	 * @var KunenaForumCategory
+	 * @since Kunena
 	 */
 	protected $_admincategory = false;
 
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -120,6 +123,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public function getAdminCategories()
 	{
@@ -228,6 +232,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return JPagination
+	 * @since Kunena
 	 */
 	public function getAdminNavigation()
 	{
@@ -238,6 +243,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getAdminCategory()
 	{

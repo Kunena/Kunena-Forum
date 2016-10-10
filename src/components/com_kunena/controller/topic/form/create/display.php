@@ -27,7 +27,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * @return boolean
 	 *
 	 * @throws RuntimeException
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

@@ -21,7 +21,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	public $topicButtons;

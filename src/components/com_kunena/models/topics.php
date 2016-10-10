@@ -452,6 +452,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @param   array $userlist
 	 * @param   array $postlist
+	 * @since Kunena
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{

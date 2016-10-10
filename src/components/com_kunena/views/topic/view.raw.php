@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Topic View
+ * @since Kunena
  */
 class KunenaViewTopic extends KunenaView
 {
@@ -170,6 +171,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * Load global rate for the topic
+	 * @since Kunena
 	 */
 	public function displayGetrate()
 	{
@@ -201,6 +203,7 @@ class KunenaViewTopic extends KunenaView
 	 * Save rate for user logged in by JSON call
 	 *
 	 * @param   null $tpl
+	 * @since Kunena
 	 */
 	public function displayRate($tpl = null)
 	{

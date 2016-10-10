@@ -27,7 +27,8 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

@@ -673,6 +673,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @param   $path $path    Path to extension directory
 	 *
 	 * @return  string  Version number
+	 * @since Kunena
 	 */
 	public function findExtensionVersion($path)
 	{

@@ -23,7 +23,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 	/**
 	 * @var KunenaForumCategory
-	 */
+	 * @since Kunena
+ 	 */
 	public $category;
 
 	public $total;
@@ -32,12 +33,14 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 	/**
 	 * @var KunenaPagination
-	 */
+	 * @since Kunena
+ 	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	/**
@@ -46,7 +49,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

@@ -128,7 +128,8 @@ class KunenaApplication extends JApplicationWeb
 	 * @param   JSession $session
 	 *
 	 * @return $this
-	 */
+	 * @since Kunena
+ 	 */
 	public function loadSession(JSession $session = null)
 	{
 		if ($session !== null)
@@ -228,7 +229,8 @@ class KunenaApplication extends JApplicationWeb
 	/**
 	 * @param $name
 	 * @param $value
-	 */
+	 * @since Kunena
+ 	 */
 	public function setUserState($name, $value)
 	{
 		$this->userstate[$name] = $value;

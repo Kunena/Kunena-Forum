@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
- *
+ * @since Kunena
  */
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {

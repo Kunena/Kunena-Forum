@@ -273,7 +273,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return mixed|string|void
-	 */
+	 * @since Kunena
+ 	 */
 	private function buildContent($message)
 	{
 		$parent               = new stdClass;

@@ -350,7 +350,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @return DOMDocument
-	 *
+	 * @since Kunena
 	 */
 	public function createSchema()
 	{
@@ -997,6 +997,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param $dbschema
 	 * @param $upgrade
+	 * @since Kunena
 	 */
 	public function upgradeSchema($dbschema, $upgrade)
 	{
@@ -1018,6 +1019,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param          $dbschema
 	 * @param          $node
 	 * @param   string $table
+	 * @since Kunena
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
 	{
@@ -1125,6 +1127,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param          $dbschema
 	 * @param          $node
 	 * @param   string $table
+	 * @since Kunena
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')
 	{

@@ -21,16 +21,19 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $profile;
 
 	/**
 	 * @var array|KunenaAttachments[]
+	 * @since Kunena
 	 */
 	public $attachments;
 

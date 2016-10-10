@@ -114,6 +114,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * Initialise Kunena, run from Joomla installer.
+	 * @since Kunena
 	 *
 	 */
 	public function install()
@@ -128,7 +129,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Uninstall Kunena, run from Joomla installer.
 	 *
 	 * @return boolean
-	 *
+	 * @since Kunena
 	 */
 	public function uninstall()
 	{
@@ -183,7 +184,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Get model
 	 *
 	 * @return $this
-	 *
+	 * @since Kunena
 	 */
 	public function getModel()
 	{
@@ -230,7 +231,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Get Status
 	 *
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	public function getStatus()
 	{
@@ -241,7 +242,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Get Action
 	 *
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	public function getAction()
 	{
@@ -250,7 +251,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	public function getStep()
 	{
@@ -259,7 +260,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	public function getTask()
 	{
@@ -270,7 +271,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Get version
 	 *
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	public function getVersion()
 	{
@@ -283,7 +284,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * @param $action
 	 *
 	 * @throws Exception
-	 *
+	 * @since Kunena
 	 */
 	public function setAction($action)
 	{
@@ -2797,6 +2798,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * navigation tab and publish it in the Kunena module position kunena_menu.
 	 * In addition it checks if there is a link to Kunena in any of the menus
 	 * and if not, adds a forum link in the mainmenu.
+	 * @since Kunena
 	 */
 	function createMenu()
 	{

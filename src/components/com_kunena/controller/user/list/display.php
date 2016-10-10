@@ -33,7 +33,8 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Load user list.
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

@@ -52,6 +52,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 
 	/**
 	 * @param   array $config
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -168,6 +169,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   integer $pk The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
+	 * @since Kunena
 	 */
 	public function getItem($pk = null)
 	{
@@ -224,6 +226,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   array  $config Configuration array for model. Optional.
 	 *
 	 * @return  JTable    A database object
+	 * @since Kunena
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{

@@ -17,6 +17,7 @@ class PlgKunenaKunena extends JPlugin
 	 * @param   object &$subject
 	 *
 	 * @param   array  $config
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -33,6 +34,7 @@ class PlgKunenaKunena extends JPlugin
 
 	/**
 	 * @return KunenaAvatarKunena|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -48,6 +50,7 @@ class PlgKunenaKunena extends JPlugin
 
 	/**
 	 * @return KunenaProfileKunena|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{

@@ -23,6 +23,7 @@ class KunenaAdminModelSmilies extends JModelList
 	/**
 	 *
 	 * @param   array $config
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -47,6 +48,7 @@ class KunenaAdminModelSmilies extends JModelList
 	 * @param   string $direction
 	 *
 	 * @return    void
+	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -97,7 +99,7 @@ class KunenaAdminModelSmilies extends JModelList
 
 	/**
 	 * @return JDatabaseQuery
-	 *
+	 * @since Kunena
 	 */
 	protected function getListQuery()
 	{

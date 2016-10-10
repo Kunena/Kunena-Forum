@@ -111,6 +111,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumTopic
+	 * @since Kunena
 	 */
 	public function getTopic()
 	{
@@ -162,6 +163,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array|boolean|KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	public function getMessages()
 	{
@@ -357,6 +359,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	public function getPoll()
 	{

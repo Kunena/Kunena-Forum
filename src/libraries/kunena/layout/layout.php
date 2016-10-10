@@ -396,7 +396,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @deprecated 5.0
 	 * @return $this
-	 */
+	 * @since Kunena
+ 	 */
 	public function setLegacy(KunenaView $view = null)
 	{
 		$this->legacy = $view;

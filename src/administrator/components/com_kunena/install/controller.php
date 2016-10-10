@@ -219,7 +219,7 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @return mixed|null
-	 *
+	 * @since Kunena
 	 */
 	function runStep()
 	{
@@ -234,6 +234,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	/**
 	 * @param $type
 	 * @param $errstr
+	 * @since Kunena
 	 */
 	static public function error($type, $errstr)
 	{

@@ -18,6 +18,7 @@ class KunenaMigratorJoomlaboard
 
 	/**
 	 * @return KunenaMigratorJoomlaboard|null
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -35,6 +36,7 @@ class KunenaMigratorJoomlaboard
 	 * Detect JoomlaBoard version.
 	 *
 	 * @return  string  JoomlaBoard version or null.
+	 * @since Kunena
 	 */
 	public function detect()
 	{

@@ -16,6 +16,7 @@ jimport('joomla.html.parameter');
 /**
  * Kunena Users Table Class
  * Provides access to the #__kunena_users table
+ * @since Kunena
  */
 class KunenaTemplate extends JObject
 {

@@ -39,7 +39,8 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -80,6 +81,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string $path Absolute path for the gallery.
 	 *
 	 * @return  array|string[]  List of directories.
+	 * @since Kunena
 	 */
 	protected function getGalleries($path)
 	{
@@ -116,7 +118,8 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string $path Absolute path for the gallery.
 	 *
 	 * @return  array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getGallery($path)
 	{
 		return KunenaFolder::files($path, $this->imageFilter);
@@ -126,6 +129,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Get avatar galleries and make them select option list.
 	 *
 	 * @return array|string[]  List of options.
+	 * @since Kunena
 	 */
 	protected function getGalleryOptions()
 	{

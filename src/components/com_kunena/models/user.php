@@ -122,6 +122,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
+	 * @since Kunena
 	 */
 	public function getQuerySearch()
 	{
@@ -213,6 +214,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
+	 * @since Kunena
 	 */
 	public function getItems()
 	{

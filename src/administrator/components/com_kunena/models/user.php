@@ -59,7 +59,7 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|KunenaForumTopic[]
+	 * @return array|KunenaForumTopic[]|void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -113,7 +113,7 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array
+	 * @return array|void
 	 *
 	 * @throws Exception
 	 * @since Kunena

@@ -39,8 +39,9 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-flag-2"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
+			<div class="module-title nav-header">
+				<i class="icon-flag-2"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>" method="post" id="adminForm"
@@ -181,7 +182,7 @@ JHtml::_('dropdown.init');
 								<div class="well center filter-state">
 										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE');
 											?>
-											<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR');</a> 
+											<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR');</a>
 											?>
 											<?php if ($this->filterActive || $this->pagination->total > 0)
 												:

@@ -137,7 +137,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Install
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 *
 	 * @since    2.0
 	 */

@@ -53,7 +53,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Clean
 	 *
-	 * @return void
+	 * @return boolean|void
 	 *
 	 * @since  K5.0
 	 *

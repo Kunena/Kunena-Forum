@@ -31,7 +31,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $identifier The message to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
-	 * @return KunenaForumMessageThankyou
+	 * @return KunenaForumMessageThankyou|void
 	 * @since Kunena
 	 */
 	static public function get($identifier, $reload = false)

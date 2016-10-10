@@ -89,7 +89,7 @@ abstract class KunenaRouteLegacy
 	 * @param       $uri
 	 * @param   int $showstart
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 * @throws Exception
 	 * @since Kunena
 	 */

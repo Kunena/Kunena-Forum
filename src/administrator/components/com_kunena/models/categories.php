@@ -246,7 +246,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return boolean|KunenaForumCategory
+	 * @return boolean|KunenaForumCategory|void
 	 * @since Kunena
 	 */
 	public function getAdminCategory()
@@ -302,7 +302,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return array
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	public function getAdminOptions()

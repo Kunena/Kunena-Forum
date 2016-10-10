@@ -42,8 +42,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-chart"
-			                                        alt="<?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?>"></i> <?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-chart"></i>
+				<?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=statistics'); ?>" method="post" name="adminForm"

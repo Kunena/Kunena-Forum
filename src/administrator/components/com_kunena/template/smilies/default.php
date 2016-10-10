@@ -44,8 +44,9 @@ JHtml::_('behavior.tabstate');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-thumbs-up"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-thumbs-up"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div class="tabbable-panel">

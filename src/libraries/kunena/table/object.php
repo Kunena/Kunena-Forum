@@ -392,7 +392,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns an associative array of object properties.
 	 *
-	 * @return  array
+	 * @return array|Closure
 	 *
 	 * @since  K4.0
 	 */

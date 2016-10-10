@@ -27,25 +27,24 @@ JHtml::_('bootstrap.popover');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-mail"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?>"></i> <?php echo JText::_('Select Email Form') ?>
+			<div class="module-title nav-header"><i class="icon-mail"></i> <?php echo JText::_('Select Email Form') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">
 				<a class="btn" href="#">
-					<i class="icon-big icon-user" alt="<?php echo JText::_('Subscription') ?>"></i><br/>
+					<i class="icon-big icon-user"></i><br/>
 					<span><?php echo JText::_('Subscription') ?></span>
 				</a>
 				<a class="btn" href="#">
-					<i class="icon-big icon-shield" alt="<<?php echo JText::_('Moderator') ?>"></i><br/>
+					<i class="icon-big icon-shield"></i><br/>
 					<span><?php echo JText::_('Moderator') ?></span>
 				</a>
 				<a class="btn" href="#">
-					<i class="icon-big icon-checkmark" alt="<?php echo JText::_('Approved') ?>"></i><br/>
+					<i class="icon-big icon-checkmark"></i><br/>
 					<span><?php echo JText::_('Approved') ?></span>
 				</a>
 				<a class="btn" href="#">
-					<i class="icon-big icon-notification-circle" alt="<?php echo JText::_('Report') ?>"></i><br/>
+					<i class="icon-big icon-notification-circle"></i><br/>
 					<span><?php echo JText::_('Report') ?></span>
 				</a>
 			</div>

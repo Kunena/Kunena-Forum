@@ -66,8 +66,7 @@ jQuery(document).ready(function($) {
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
 			<div class="module-title nav-header">
-				<i class="icon-list-view"
-				   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i>
+				<i class="icon-list-view"></i>
 				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 				: <?php echo $this->escape($this->category->name); ?></div>
 			<hr class="hr-condensed">

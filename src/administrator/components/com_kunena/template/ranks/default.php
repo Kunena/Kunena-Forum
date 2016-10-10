@@ -42,8 +42,9 @@ JHtml::_('behavior.tabstate');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-star-2"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-star-2"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div class="tabbable-panel">

@@ -59,7 +59,7 @@ $this->getBBcodesEnabled();
 					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ZOOM_LEVEL') ?>: <select id="modal-map-zoomlevel">
 						<option value="2">2</option>
 						<option value="4">4</option>
-						<option type="6">6</option>
+						<option value="6">6</option>
 						<option value="8">8</option>
 						<option value="10">10</option>
 						<option value="12">12</option>
@@ -240,7 +240,7 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-body">
 					<div id="kbbcode-poll-options">
-						<div class="input-group col-md-12" style="padding: 0">
+						<div class="input-group col-md-12" style="padding: 0;">
 							<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 							<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
 							       maxlength="100" size="40"

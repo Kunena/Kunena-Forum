@@ -204,7 +204,7 @@ class lessc
 	 * @param $parentBlock
 	 * @param $out
 	 *
-	 * @return array
+	 * @return array|bool
 	 * @since LESSC
 	 */
 	protected function tryImport($importPath, $parentBlock, $out)
@@ -2229,7 +2229,7 @@ class lessc
 	 *
 	 * @param $func
 	 *
-	 * @return bool
+	 * @return array|bool
 	 * @since LESSC
 	 */
 	protected function funcToColor($func)

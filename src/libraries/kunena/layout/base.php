@@ -401,7 +401,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string $layout The layout name.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaLayout|KunenaLayoutBase
 	 * @since Kunena
 	 */
 	public function setLayout($layout)
@@ -421,7 +421,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string $path The paths queue.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaLayout|KunenaLayoutBase
 	 * @since Kunena
 	 */
 	public function setPath($path)
@@ -436,7 +436,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   array $paths The paths queue.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaLayout|KunenaLayoutBase
 	 * @since Kunena
 	 */
 	public function setPaths(array $paths)
@@ -452,7 +452,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $property The name of the property.
 	 * @param   mixed  $value    The value of the property to set.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaLayout|KunenaLayoutBase
 	 * @since Kunena
 	 */
 	public function set($property, $value = null)
@@ -541,7 +541,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   mixed $properties Either an associative array or another object.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaLayout|KunenaLayoutBase
 	 *
 	 * @see     set()
 	 * @throws \InvalidArgumentException
@@ -627,7 +627,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   $input
 	 * @param   $options
 	 *
-	 * @return  KunenaControllerDisplay
+	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena
 	 */
 	public function subRequest($path, Jinput $input = null, $options = null)

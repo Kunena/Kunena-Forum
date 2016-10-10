@@ -642,7 +642,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   KunenaForumTopic[] $topics
 	 * @param   mixed              $user
 	 *
-	 * @return array
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	static public function fetchNewStatus(array $topics, $user = null)

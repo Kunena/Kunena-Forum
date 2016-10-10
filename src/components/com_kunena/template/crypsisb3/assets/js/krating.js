@@ -31,8 +31,7 @@ jQuery(document).ready(function ($) {
 	// Build krating item
 	function buildItem() {
 		var ratingItem = document.createElement('div');
-		var html = '<ul class="c-rating"></ul>';
-		ratingItem.innerHTML = html;
+		ratingItem.innerHTML = '<ul class="c-rating"></ul>';
 		krating.appendChild(ratingItem);
 		return ratingItem;
 	}

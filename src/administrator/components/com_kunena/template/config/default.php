@@ -27,8 +27,9 @@ JHtml::_('behavior.tabstate');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-cogs"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
+			<div class="module-title nav-header">
+				<i class="icon-cogs"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">

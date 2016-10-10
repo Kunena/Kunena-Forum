@@ -639,7 +639,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return KunenaForumCategory
+	 * @return boolean|KunenaForumCategory
 	 * @since Kunena
 	 */
 	public function getLastCategory()
@@ -661,7 +661,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @param   string $action
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return KunenaForumCategory|KunenaForumCategory[]
 	 * @since Kunena
 	 */
 	public function getChannels($action = 'read')

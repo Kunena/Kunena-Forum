@@ -46,8 +46,9 @@ jQuery(function($) {
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-user"
-			                                        alt="<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>"></i> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>
+			<div class="module-title nav-header">
+				<i class="icon-user"></i>
+				<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>
 				: <?php echo $this->escape($this->user->name); ?></div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm"

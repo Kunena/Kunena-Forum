@@ -80,7 +80,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int  $identifier The message to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
-	 * @return    KunenaForumMessage        The message object.
+	 * @return KunenaForumMessage|KunenaForumTopicRate
 	 * @since     Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
@@ -153,7 +153,7 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @param $user
 	 *
-	 * @return bool true if success
+	 * @return boolean|JResponseJson
 	 * @internal param int $userid
 	 *
 	 * @since    2.0
@@ -235,7 +235,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaRate
+	 * @return boolean|JTable|KunenaTable|TableKunenaRate
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')

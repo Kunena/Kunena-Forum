@@ -109,7 +109,7 @@ class KunenaForumTopicUser extends JObject
 	 * @param   string $type   Topics table name to be used.
 	 * @param   string $prefix Topics table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaUserTopics
+	 * @return boolean|JTable|KunenaTable|TableKunenaUserTopics
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')

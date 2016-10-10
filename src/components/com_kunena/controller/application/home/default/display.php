@@ -31,7 +31,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return KunenaLayout
+	 * @return JLayoutBase|KunenaLayout
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena

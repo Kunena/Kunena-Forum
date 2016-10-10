@@ -40,8 +40,9 @@ $user = JFactory::getUser();
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-puzzle"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-puzzle"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">

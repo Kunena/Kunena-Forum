@@ -115,7 +115,7 @@ if (!empty($this->spacing)) : ?>
 				 * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				 * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
+					<span class="label label-warning">
 						<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
 					</span>
 				<?php endif; ?>
@@ -132,7 +132,7 @@ if (!empty($this->spacing)) : ?>
 				 * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				 * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
+					<span class="label label-warning">
 						<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
 					</span>
 				<?php endif; ?>

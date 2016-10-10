@@ -1427,19 +1427,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 
 		$me = KunenaUserHelper::getMyself();
-		$message = $this->getMessage();
-		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if (isset($bbcode->parent->message->userid))
-		{
-			$message_userid = $bbcode->parent->message->userid;
-		}
-		else
-		{
-			$message_userid = $bbcode->parent->userid;
-		}
-
-		if (($me->userid && $message_userid == $me->userid) || $moderator)
+		if (!JFactory::getUser()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hidden');
 

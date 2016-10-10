@@ -72,13 +72,22 @@ if ($topic->moved_id > 0)
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink(
-					$topic, 'unread',
-					$this->escape($message->message) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
+				echo $this->getTopicLink($topic, 'unread', $this->escape($topic->subject) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, $this->message, null, $this->escape($message->message), 'hasTooltip topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true, false);
+			}
+
+			if ($topic->getUserTopic()->favorite)
+			{
+				echo $this->getIcon('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
+			}
+
+			if ($topic->locked != 0)
+			{
+				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
 			<div

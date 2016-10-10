@@ -10,16 +10,39 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaControllerDisplay
+ */
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Empty';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $output = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $layout = 'default';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $config;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $primary = false;
 
 	/**

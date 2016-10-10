@@ -17,10 +17,18 @@ defined('_JEXEC') or die();
  */
 class KunenaViewCategory extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 * @since Kunena
+ 	 */
 	function displayDefault($tpl = null)
 	{
 	}
 
+	/**
+	 * @param $type
+	 * @since Kunena
+ 	 */
 	protected function _prepareDocument($type)
 	{
 	}

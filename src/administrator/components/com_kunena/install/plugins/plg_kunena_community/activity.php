@@ -14,8 +14,15 @@ defined('_JEXEC') or die();
 
 jimport('joomla.utilities.string');
 
+/**
+ * Class KunenaActivityCommunity
+ */
 class KunenaActivityCommunity extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -274,7 +281,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 *
 	 * @return mixed|string|void
 	 * @since Kunena
- 	 */
+	 */
 	private function buildContent($message)
 	{
 		$parent               = new stdClass;

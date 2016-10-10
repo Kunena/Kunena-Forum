@@ -11,10 +11,20 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaPrivateUddeIM
+ */
 class KunenaPrivateUddeIM extends KunenaPrivate
 {
+	/**
+	 * @var null|uddeIMAPI
+	 */
 	protected $uddeim = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

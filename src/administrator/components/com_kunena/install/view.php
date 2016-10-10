@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 class KunenaViewInstall extends JViewLegacy
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $model = null;
 
 	/**
@@ -58,7 +62,7 @@ class KunenaViewInstall extends JViewLegacy
 	 * @access private
 	 *
 	 * @return null
-	 * @since Kunena
+	 * @since  Kunena
 	 **/
 	function setToolBar()
 	{

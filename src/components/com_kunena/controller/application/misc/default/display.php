@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
 {
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $header;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $body;
 
 	/**

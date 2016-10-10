@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Announcement/Item';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $announcement;
 
 	/**

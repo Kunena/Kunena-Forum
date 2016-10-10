@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 class KunenaExceptionAuthorise extends RuntimeException
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $responseCodes = array(
 		400 => '400 Bad Request',
 		401 => '401 Unauthorized',

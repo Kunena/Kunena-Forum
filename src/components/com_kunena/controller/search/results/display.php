@@ -17,12 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Search/Results';
 
 	/**
 	 * @var KunenaModelSearch
 	 * @since Kunena
- 	 */
+	 */
 	public $model;
 
 	/**
@@ -31,6 +35,10 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 */
 	public $total;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $data = array();
 
 	/**

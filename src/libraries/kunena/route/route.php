@@ -23,6 +23,10 @@ KunenaRoute::initialize();
 abstract class KunenaRoute
 {
 	// List of views: array of default variable=>value pairs, which can be removed from URI
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $views = array(
 		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
 		'announcement' => array('layout' => 'default'),
@@ -39,43 +43,119 @@ abstract class KunenaRoute
 	);
 
 	// Reserved layout names for category view
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	// Use category name only in these views
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	static $time = 0;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $adminApp = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $config = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $menus = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $menu = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $default = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $active = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $home = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $search = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $current = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $childlist = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $subtree = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $parent = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $uris = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $urisSave = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static protected $filtered = array();
 
 	/**

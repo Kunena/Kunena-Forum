@@ -69,7 +69,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see JModelForm::getForm()
+	 * @see   JModelForm::getForm()
 	 *
 	 * @param   array $data
 	 * @param   bool  $loadData
@@ -95,7 +95,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see JModelForm::loadFormData()
+	 * @see   JModelForm::loadFormData()
 	 * @since Kunena
 	 */
 	protected function loadFormData()

@@ -16,14 +16,33 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaDatabaseObject extends JObject
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null|string
+	 */
 	protected $_name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_table = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_saving = false;
 
 	/**

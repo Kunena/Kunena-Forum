@@ -17,12 +17,16 @@ defined('_JEXEC') or die;
  */
 abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/List';
 
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
 	/**
@@ -34,7 +38,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * @var KunenaPagination
 	 * @since Kunena
- 	 */
+	 */
 	public $pagination;
 
 	/**

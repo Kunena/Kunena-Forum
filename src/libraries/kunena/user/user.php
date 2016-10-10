@@ -73,26 +73,69 @@ jimport('joomla.utilities.date');
 class KunenaUser extends JObject
 {
 	// Global for every instance
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_ranks = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_allowed = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_link = array();
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_time;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_pm;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_email;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_website;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_personalText;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $_signature;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
 	/**

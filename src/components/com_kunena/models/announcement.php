@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 class KunenaModelAnnouncement extends KunenaModel
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $total = false;
 
 	/**

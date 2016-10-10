@@ -27,6 +27,10 @@ class KunenaForumMessageThankyou extends JObject
 	 */
 	protected $id = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $users = array();
 
 	/**

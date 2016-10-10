@@ -166,6 +166,9 @@ class KunenaVersion
 	}
 }
 
+/**
+ * Class KunenaVersionException
+ */
 class KunenaVersionException extends Exception
 {
 }

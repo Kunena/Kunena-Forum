@@ -32,16 +32,40 @@ abstract class KunenaUserHelper
 	 */
 	protected static $_instances_name = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_online = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_online_status = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_lastid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_total = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_topposters = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_me = null;
 
 	/**

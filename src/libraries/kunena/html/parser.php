@@ -16,8 +16,16 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaHtmlParser
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $emoticons = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $relative = true;
 
 	/**

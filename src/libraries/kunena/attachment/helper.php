@@ -22,6 +22,10 @@ abstract class KunenaAttachmentHelper
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_messages = array();
 
 	/**

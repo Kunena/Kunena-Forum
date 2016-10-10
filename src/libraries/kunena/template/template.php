@@ -21,14 +21,31 @@ jimport('joomla.html.parameter');
 class KunenaTemplate extends JObject
 {
 	// Global for every instance
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var null|string
+	 */
 	public $name = null;
 
+	/**
+	 * @var JRegistry|null
+	 */
 	public $params = null;
 
+	/**
+	 * @var bool|int
+	 */
 	public $paramstime = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
@@ -39,6 +56,10 @@ class KunenaTemplate extends JObject
 		'css'           => 'media/css'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypeDefaults = array(
 		'avatars'       => 'media/avatars',
 		'emoticons'     => 'media/emoticons',
@@ -50,6 +71,10 @@ class KunenaTemplate extends JObject
 		'js'            => 'media/js',
 		'css'           => 'media/css'
 	);
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypeOld = array(
 		'avatars'    => 'images/avatars',
 		'emoticons'  => 'images/emoticons',
@@ -61,18 +86,46 @@ class KunenaTemplate extends JObject
 		'css'        => 'css'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $default = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $paths = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $css_compile = true;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $filecache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $smileyPath = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $rankPath = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $userClasses = array(
 		'kwho-',
 		'admin'     => 'kwho-admin',
@@ -84,22 +137,57 @@ class KunenaTemplate extends JObject
 		'blocked'   => 'kwho-blocked'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $topicIcons = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categoryIcons = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $stylesheets = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $style_variables = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $compiled_style_variables = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $scripts = array();
 
+	/**
+	 * @var null|SimpleXMLElement
+	 */
 	protected $xml = null;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $map;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $hmvc;
 
 	/**
@@ -1162,6 +1250,13 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->icons))
@@ -1185,6 +1280,13 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->icons))
@@ -1451,6 +1553,11 @@ HTML;
 		return self::$_instances [$name];
 	}
 
+	/**
+	 * @param $topic
+	 *
+	 * @return stdClass
+	 */
 	public function getTopicLabel($topic)
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();
@@ -1484,6 +1591,13 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->labels))
@@ -1509,6 +1623,10 @@ HTML;
 		}
 	}
 
+	/**
+	 * @return string
+	 * @since Kunena
+ 	 */
 	public function borderless()
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();

@@ -17,30 +17,46 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Item';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $headerText;
 
 	/**
 	 * @var KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
 	 * @since Kunena
- 	 */
+	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
 	/**
@@ -50,7 +66,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

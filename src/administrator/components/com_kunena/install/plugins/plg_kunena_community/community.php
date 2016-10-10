@@ -12,6 +12,9 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaCommunity
+ */
 class plgKunenaCommunity extends JPlugin
 {
 	/**
@@ -50,7 +53,7 @@ class plgKunenaCommunity extends JPlugin
 	 *
 	 * @return KunenaAccess
 	 *
-	 * @todo Should we remove category ACL integration?
+	 * @todo  Should we remove category ACL integration?
 	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()

@@ -20,14 +20,34 @@ require_once KPATH_ADMIN . '/models/categories.php';
  */
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $topics = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pending = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $items = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $topicActions = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $actionMove = false;
 
 	/**

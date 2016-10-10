@@ -17,6 +17,10 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Ban/History';
 
 	/**
@@ -37,6 +41,10 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 */
 	public $banHistory;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $headerText;
 
 	/**

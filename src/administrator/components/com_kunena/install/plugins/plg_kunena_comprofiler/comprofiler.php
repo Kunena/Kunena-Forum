@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaComprofiler
+ */
 class plgKunenaComprofiler extends JPlugin
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $minCBVersion = '2.0.0';
 
 	/**
@@ -62,6 +69,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * @param        $type
 	 * @param   null $view
 	 * @param   null $params
+	 *
 	 * @since Kunena
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
@@ -88,6 +96,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * @param       $item
 	 * @param       $params
 	 * @param   int $page
+	 *
 	 * @since Kunena
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)

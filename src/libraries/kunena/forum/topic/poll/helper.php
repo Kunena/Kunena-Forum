@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForumTopicPollHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**

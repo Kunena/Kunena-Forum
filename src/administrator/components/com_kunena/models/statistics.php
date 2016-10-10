@@ -25,8 +25,8 @@ class KunenaAdminModelStatistics extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
-	 * @since Kunena
- 	 */
+	 * @since      Kunena
+	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -48,6 +48,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 *
 	 * @param   null $ordering
 	 * @param   null $direction
+	 *
 	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)

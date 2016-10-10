@@ -68,6 +68,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	protected $closures = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $debug;
 
 	/**

@@ -21,6 +21,10 @@ jimport('joomla.utilities.string');
  */
 class KunenaActivityAlphaUserPoints extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

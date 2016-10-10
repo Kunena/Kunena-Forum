@@ -35,7 +35,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	public function execute()
 	{
 		$menu = $this->app->getMenu();

@@ -11,10 +11,21 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaPrivateCommunity
+ */
 class KunenaPrivateCommunity extends KunenaPrivate
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $loaded = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

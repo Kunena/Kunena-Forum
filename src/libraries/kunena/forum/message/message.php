@@ -43,8 +43,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public $id = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaMessages';
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
 	/**
@@ -59,18 +66,46 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	protected $_attachments_del = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_topic = null;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $_hold = 1;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $_thread = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authtcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                   => array(),
 		'read'                   => array('Read'),

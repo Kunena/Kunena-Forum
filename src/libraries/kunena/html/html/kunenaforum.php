@@ -252,6 +252,14 @@ abstract class JHtmlKunenaForum
 		return "<a {$attributes}>{$content}</a>";
 	}
 
+	/**
+	 * @param       $name
+	 * @param       $options
+	 * @param array $selected
+	 *
+	 * @return string
+	 * @since Kunena
+ 	 */
 	public static function checklist($name, $options, $selected = array())
 	{
 		if ($selected !== true && !is_array($selected))

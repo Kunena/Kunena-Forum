@@ -24,8 +24,15 @@ defined('_JEXEC') or die();
  */
 class KunenaForumCategoryUser extends JObject
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
 	/**

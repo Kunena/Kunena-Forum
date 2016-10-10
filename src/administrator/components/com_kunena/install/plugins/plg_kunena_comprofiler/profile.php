@@ -13,8 +13,15 @@ defined('_JEXEC') or die();
 
 require_once dirname(__FILE__) . '/integration.php';
 
+/**
+ * Class KunenaProfileComprofiler
+ */
 class KunenaProfileComprofiler extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

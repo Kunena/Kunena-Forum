@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class KunenaUpload
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $validExtensions = array();
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $filename;
 
 	/**

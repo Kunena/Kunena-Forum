@@ -18,18 +18,45 @@ defined('_JEXEC') or die();
  */
 class KunenaForumTopicRate extends JObject
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $topic_id = 0;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $stars = 0;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $time = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $users = array();
 
 	/**

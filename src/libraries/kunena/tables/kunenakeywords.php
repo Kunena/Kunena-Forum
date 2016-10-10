@@ -19,12 +19,28 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaKeywords extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $public_count = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $total_count = null;
 
 	/**

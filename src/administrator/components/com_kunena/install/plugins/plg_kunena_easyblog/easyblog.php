@@ -12,6 +12,9 @@
 
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaEasyblog
+ */
 class plgKunenaEasyblog extends JPlugin
 {
 	/**

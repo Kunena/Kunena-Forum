@@ -17,10 +17,22 @@ defined('_JEXEC') or die();
  */
 class KunenaControllerInstall extends JControllerLegacy
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $step = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $steps = null;
 
+	/**
+	 * @var bool|JModelLegacy|null
+	 * @since Kunena
+	 */
 	protected $model = null;
 
 	/**
@@ -234,6 +246,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	/**
 	 * @param $type
 	 * @param $errstr
+	 *
 	 * @since Kunena
 	 */
 	static public function error($type, $errstr)

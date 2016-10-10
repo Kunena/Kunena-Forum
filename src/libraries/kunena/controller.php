@@ -17,10 +17,19 @@ jimport('joomla.application.component.helper');
  */
 class KunenaController extends JControllerLegacy
 {
+	/**
+	 * @var JApplicationCms|null
+	 */
 	public $app = null;
 
+	/**
+	 * @var KunenaUser|null
+	 */
 	public $me = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 */
 	public $config = null;
 
 	/**

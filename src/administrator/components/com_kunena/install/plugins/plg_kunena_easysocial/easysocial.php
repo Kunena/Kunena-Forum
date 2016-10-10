@@ -11,6 +11,9 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * Class plgKunenaEasySocial
+ */
 class plgKunenaEasySocial extends JPlugin
 {
 	/**
@@ -138,7 +141,7 @@ class plgKunenaEasySocial extends JPlugin
 	 *
 	 * @return KunenaPrivate
 	 * @since Kunena
- 	 */
+	 */
 	public function onKunenaGetPrivate()
 	{
 		if (!$this->exists())
@@ -161,7 +164,7 @@ class plgKunenaEasySocial extends JPlugin
 	 *
 	 * @return KunenaActivity
 	 * @since Kunena
- 	 */
+	 */
 	public function onKunenaGetActivity()
 	{
 		if (!$this->exists())

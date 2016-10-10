@@ -44,7 +44,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return $this
 	 * @since Kunena
- 	 */
+	 */
 	public function cleanentries()
 	{
 		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=logs&layout=clean", false));
@@ -57,6 +57,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @since  K5.0
 	 *
+	 * @since  Kunena
 	 */
 	public function clean()
 	{

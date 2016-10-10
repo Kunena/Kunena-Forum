@@ -17,28 +17,76 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/Login';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $my;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $registrationUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $resetPasswordUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $remindUsernameUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $rememberMe;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $lastvisitDate;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $announcementsUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $pm_link;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $inboxCount;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $profile_edit_url;
 
 	/**

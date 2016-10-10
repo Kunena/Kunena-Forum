@@ -26,7 +26,7 @@ class KunenaAdminModelBlockips extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
-	 * @since 5.1
+	 * @since      5.1
 	 */
 	public function __construct($config = array())
 	{

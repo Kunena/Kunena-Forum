@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/WhoIsOnline';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $usersUrl;
 
 	/**
@@ -28,7 +36,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

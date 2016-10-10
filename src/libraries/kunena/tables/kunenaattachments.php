@@ -19,26 +19,70 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaAttachments extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $mesid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $protected = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hash = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $size = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $folder = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filetype = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filename = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filename_real = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $comment = null;
 
 	/**

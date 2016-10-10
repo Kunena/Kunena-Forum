@@ -21,22 +21,57 @@ defined('_JEXEC') or die();
  */
 class KunenaForumTopicPoll extends JObject
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_total = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $options = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $newOptions = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $usercount = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $users = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $myvotes = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $mytime = array();
 
 	/**

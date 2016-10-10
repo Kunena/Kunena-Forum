@@ -16,22 +16,58 @@ defined('_JEXEC') or die();
  */
 class KunenaAccess
 {
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const CATEGORY_SUBSCRIPTION = 1;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_SUBSCRIPTION = 2;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $instance = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $accesstypes = array('all' => array());
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $adminsByCatid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $adminsByUserid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $moderatorsByCatid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $moderatorsByUserid = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	/**
@@ -887,8 +923,9 @@ window.addEvent('domready', function(){
 
 	/**
 	 * @param   array $list
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	protected function storeRoles(array $list = null)
 	{
 		if (empty($list))

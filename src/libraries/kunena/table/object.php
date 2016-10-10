@@ -219,6 +219,10 @@ abstract class KunenaTableObject
 		return array_keys(static::$tbl_fields);
 	}
 
+	/**
+	 * @return mixed|string
+	 * @since Kunena
+ 	 */
 	public function getId()
 	{
 		return $this->_key;

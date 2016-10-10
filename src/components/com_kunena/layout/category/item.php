@@ -184,7 +184,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   bool                $canonical
 	 *
 	 * @return string
-	 * @see KunenaLayout::getLastPostLink()
+	 * @see   KunenaLayout::getLastPostLink()
 	 * @since Kunena
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20, $follow = true, $canonical = false)

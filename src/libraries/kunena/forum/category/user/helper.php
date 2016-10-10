@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
 abstract class KunenaForumCategoryUserHelper
 {
 	// Global for every instance
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -101,6 +105,10 @@ abstract class KunenaForumCategoryUserHelper
 		return $list;
 	}
 
+	/**
+	 * @param array $ids
+	 * @param null  $user
+	 */
 	static public function markRead(array $ids, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);

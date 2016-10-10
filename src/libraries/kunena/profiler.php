@@ -17,8 +17,16 @@ jimport('joomla.error.profiler');
  */
 class KunenaProfiler extends JProfiler
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_kstart = array();
 
 	/**
@@ -141,6 +149,10 @@ class KunenaProfilerItem
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $start = array();
 
 	/**

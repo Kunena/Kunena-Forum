@@ -12,6 +12,9 @@ defined('_JEXEC') or die();
 
 // This file contains initial sample data for the forum
 
+/**
+ * Class KText
+ */
 class KText
 {
 	/**

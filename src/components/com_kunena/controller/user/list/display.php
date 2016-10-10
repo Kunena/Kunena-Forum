@@ -17,16 +17,40 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $state;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $users;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $pagination;
 
 	/**
@@ -34,7 +58,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

@@ -17,6 +17,10 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit';
 
 	/**
@@ -28,7 +32,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $profile;
 
 	/**
@@ -38,7 +42,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

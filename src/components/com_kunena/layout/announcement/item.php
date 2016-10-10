@@ -19,6 +19,10 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	public $buttons;
 
 	/**

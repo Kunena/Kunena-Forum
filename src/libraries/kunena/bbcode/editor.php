@@ -20,10 +20,15 @@ defined('_JEXEC') or die();
  */
 class KunenaBbcodeEditor
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	var $editor_elements = array();
 
 	/**
 	 * @param   array $config
+	 *
 	 * @since Kunena
 	 */
 	function __construct($config = array())
@@ -227,6 +232,10 @@ class KunenaBbcodeEditor
  */
 abstract class KunenaBbcodeEditorElement
 {
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	var $name;
 
 	/**
@@ -263,16 +272,40 @@ abstract class KunenaBbcodeEditorElement
  */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $tag;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $config;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $title;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $alt;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	protected $class;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $actions = array();
 
 	/**

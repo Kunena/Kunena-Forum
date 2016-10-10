@@ -18,10 +18,22 @@ defined('_JEXEC') or die();
  */
 class KunenaModelSearch extends KunenaModel
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $error = null;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $total = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $messages = false;
 
 	/**

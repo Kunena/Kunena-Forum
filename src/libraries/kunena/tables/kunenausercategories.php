@@ -19,16 +19,40 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaUserCategories extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $user_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $category_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $role = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allreadtime = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $subscribed = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
 	/**

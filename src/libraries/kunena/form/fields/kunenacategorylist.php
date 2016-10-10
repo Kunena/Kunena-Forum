@@ -18,6 +18,10 @@ jimport('joomla.form.formfield');
  */
 class JFormFieldKunenaCategoryList extends JFormField
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $type = 'KunenaCategoryList';
 
 	/**

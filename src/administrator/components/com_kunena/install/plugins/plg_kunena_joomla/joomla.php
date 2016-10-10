@@ -11,11 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaJoomla
+ */
 class plgKunenaJoomla extends JPlugin
 {
 	/**
 	 * @param   object $subject
 	 * @param   array  $config
+	 *
 	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)

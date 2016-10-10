@@ -13,8 +13,15 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\String\StringHelper;
 
+/**
+ * Class KunenaActivityEasySocial
+ */
 class KunenaActivityEasySocial extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

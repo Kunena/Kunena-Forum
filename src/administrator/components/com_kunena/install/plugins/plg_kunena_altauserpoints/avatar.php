@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAvatarAltaUserPoints
+ */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -43,7 +50,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 *
 	 * @return string|void
 	 * @since Kunena
- 	 */
+	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
 		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');

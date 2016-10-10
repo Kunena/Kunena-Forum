@@ -16,30 +16,80 @@ defined('_JEXEC') or die();
  */
 class KunenaForumStatistics
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_instance = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 */
 	protected $_config = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $lastUserId = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $memberCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $sectionCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $categoryCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $messageCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayReplyCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayReplyCount = null;
 
 	/**
@@ -48,24 +98,64 @@ class KunenaForumStatistics
 	 */
 	public $topTopics = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPosters = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topProfiles = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPolls = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topThanks = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $top = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	public $showgenstats = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	public $showpopuserstats = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	public $showpopsubjectstats = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	public $showpoppollstats = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	public $showpopthankyoustats = false;
 
 	/**

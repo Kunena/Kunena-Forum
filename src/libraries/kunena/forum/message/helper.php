@@ -22,6 +22,10 @@ abstract class KunenaForumMessageHelper
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_location = array();
 
 	/**

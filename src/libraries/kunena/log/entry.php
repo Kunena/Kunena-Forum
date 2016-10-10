@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaLogEntry
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $data;
 
 	/**

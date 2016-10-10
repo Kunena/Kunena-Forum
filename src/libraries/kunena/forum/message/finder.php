@@ -16,10 +16,22 @@ defined('_JEXEC') or die();
  */
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_messages';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $hold = array(0);
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $moved = null;
 
 	/**
@@ -211,6 +223,9 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		return KunenaForumMessageHelper::getMessages($results, $access);
 	}
 
+	/**
+	 * @param JDatabaseQuery $query
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 		// TODO: remove the field..

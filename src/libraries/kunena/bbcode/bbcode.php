@@ -25,6 +25,10 @@ jimport('joomla.utilities.string');
  */
 class KunenaBbcode extends NBBC_BBCode
 {
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $autolink_disable = 0;
 
 	/**
@@ -449,10 +453,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 */
 	public $token = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	var $default_smileys = array();
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $mapid = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	var $default_tag_rules = array(
 		'b' => array(
 			'simple_start' => "<b>",

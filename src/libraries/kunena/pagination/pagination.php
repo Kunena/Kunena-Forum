@@ -92,12 +92,28 @@ class KunenaPagination
 	 */
 	public $uri = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $itemActiveChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $itemInactiveChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $listChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $footerChrome = null;
 
 	/**

@@ -15,14 +15,34 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaError
 {
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	static $enabled = 0;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $handler = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $debug = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	static $admin = false;
 
+	/**
+	 * @var
+	 * @since Kunena
+ 	 */
 	static $format;
 
 	/**

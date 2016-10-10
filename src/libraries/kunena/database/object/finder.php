@@ -44,10 +44,22 @@ abstract class KunenaDatabaseObjectFinder
 	 */
 	protected $db;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $start = 0;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $limit = 20;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $skip = false;
 
 	/**

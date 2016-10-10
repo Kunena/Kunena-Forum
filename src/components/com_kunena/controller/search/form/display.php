@@ -17,12 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Search/Form';
 
 	/**
 	 * @var KunenaModelSearch
 	 * @since Kunena
- 	 */
+	 */
 	public $model;
 
 	/**

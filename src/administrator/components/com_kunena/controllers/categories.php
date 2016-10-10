@@ -40,6 +40,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since    2.0.0-BETA2
 	 *
+	 * @since    Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -950,6 +951,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since K4.0
 	 *
+	 * @since Kunena
 	 */
 	public function trash()
 	{

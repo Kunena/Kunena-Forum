@@ -25,18 +25,46 @@ abstract class KunenaMenuFix
 	 */
 	public static $items = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $filtered = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $aliases = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $invalid = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $legacy = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $same = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $structure = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $parent = null;
 
 	/**
@@ -223,6 +251,10 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	public static function getConflicts()
 	{
 		return array();

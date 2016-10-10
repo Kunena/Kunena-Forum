@@ -45,26 +45,69 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public $id = null;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $unread = 0;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	public $lastread = 0;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaTopics';
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authccache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $_hold = 1;
 
+	/**
+	 * @var int
+	 * @since Kunena
+ 	 */
 	protected $_posts = 0;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_pagination = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                        => array(),
 		'read'                        => array('Read'),

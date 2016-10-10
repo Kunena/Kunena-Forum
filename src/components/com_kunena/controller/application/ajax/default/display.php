@@ -36,7 +36,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * @throws RuntimeException
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	public function execute()
 	{
 		$format   = $this->input->getWord('format', 'html');

@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaGravatar
+ */
 class plgKunenaGravatar extends JPlugin
 {
 	/**

@@ -19,6 +19,10 @@ require_once KPATH_SITE . '/router.php';
 abstract class KunenaRouteLegacy
 {
 	// List of legacy views from previous releases
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $functions = array(
 		'entrypage'       => 1,
 		'listcat'         => 1,

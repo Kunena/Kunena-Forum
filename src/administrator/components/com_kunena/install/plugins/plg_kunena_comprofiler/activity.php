@@ -13,8 +13,15 @@ defined('_JEXEC') or die();
 
 require_once dirname(__FILE__) . '/integration.php';
 
+/**
+ * Class KunenaActivityComprofiler
+ */
 class KunenaActivityComprofiler extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -176,8 +183,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int $topic
 	 * @param   int $action
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterSticky($topic, $action)
 	{
 		$my     = JFactory::getUser();
@@ -188,8 +196,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int $topic
 	 * @param   int $action
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterLock($topic, $action)
 	{
 		$my     = JFactory::getUser();
@@ -201,8 +210,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $target
 	 * @param   int $actor
 	 * @param   int $delta
+	 *
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{
 		$params = array('actor' => $actor, 'target' => $target, 'delta' => $delta);

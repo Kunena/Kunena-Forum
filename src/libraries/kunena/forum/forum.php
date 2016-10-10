@@ -21,21 +21,65 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForum
 {
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected static $version = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected static $version_major = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected static $version_date = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected static $version_name = false;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const PUBLISHED = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const UNAPPROVED = 1;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const DELETED = 2;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_DELETED = 3;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_CREATION = 4;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const MODERATOR = 1;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ADMINISTRATOR = 2;
 
 	/**

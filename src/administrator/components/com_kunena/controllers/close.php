@@ -32,6 +32,7 @@ class KunenaAdminControllerClose extends KunenaController
 	 *
 	 * @since    2.0.0-BETA2
 	 *
+	 * @since    Kunena
 	 */
 	public function __construct($config = array())
 	{

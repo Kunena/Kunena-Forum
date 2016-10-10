@@ -147,7 +147,7 @@ class KunenaAdminModelAttachments extends JModelList
 	/**
 	 * @return JDatabaseQuery
 	 * @since Kunena
- 	 */
+	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();

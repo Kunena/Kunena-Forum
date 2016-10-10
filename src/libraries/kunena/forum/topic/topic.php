@@ -1546,6 +1546,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Delete all messages
 			$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread={$db->quote($this->id)}";
 
+			// Delete rating
+			$queries[] = "DELETE FROM #__kunena_rate WHERE topic_id={$db->quote($this->id)}";
+
 			foreach ($queries as $query)
 			{
 				$db->setQuery($query);

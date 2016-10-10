@@ -25,7 +25,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

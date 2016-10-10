@@ -21,7 +21,8 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $category;
 
 	public $categoryButtons;

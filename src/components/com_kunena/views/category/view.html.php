@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Category View
+ * @since Kunena
  */
 class KunenaViewCategory extends KunenaView
 {

@@ -16,6 +16,7 @@ class plgKunenaJoomla extends JPlugin
 	/**
 	 * @param   object $subject
 	 * @param   array  $config
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -32,6 +33,7 @@ class plgKunenaJoomla extends JPlugin
 
 	/**
 	 * @return KunenaAccessJoomla|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -47,6 +49,7 @@ class plgKunenaJoomla extends JPlugin
 
 	/**
 	 * @return KunenaLoginJoomla|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
 	{

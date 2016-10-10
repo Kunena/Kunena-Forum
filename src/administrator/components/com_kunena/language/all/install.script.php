@@ -14,6 +14,7 @@ class pkg_kunena_languagesInstallerScript
 
 	/**
 	 * @param   JInstallerFile $parent
+	 * @since Kunena
 	 */
 	public function uninstall($parent)
 	{

@@ -23,6 +23,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -141,7 +142,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws KunenaExceptionAuthorise
-	 *
+	 * @since Kunena
 	 */
 	public function save()
 	{

@@ -26,7 +26,8 @@ class KunenaAdminModelUsers extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -119,6 +120,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return    string        A store id.
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -140,7 +142,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return    JDatabaseQuery
-	 *
+	 * @since Kunena
 	 */
 	protected function getListQuery()
 	{

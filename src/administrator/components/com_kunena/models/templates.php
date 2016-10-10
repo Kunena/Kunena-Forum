@@ -37,6 +37,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -74,6 +75,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @param   bool  $loadData
 	 *
 	 * @return boolean|mixed
+	 * @since Kunena
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -94,6 +96,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @see JModelForm::loadFormData()
+	 * @since Kunena
 	 */
 	protected function loadFormData()
 	{
@@ -137,7 +140,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	function getTotal()
 	{
@@ -146,7 +149,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	function getStart()
 	{
@@ -155,7 +158,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return boolean|stdClass
-	 *
+	 * @since Kunena
 	 */
 	function getTemplatedetails()
 	{
@@ -173,7 +176,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
-	 *
+	 * @since Kunena
 	 */
 	function getFileLessParsed()
 	{
@@ -193,7 +196,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
-	 *
+	 * @since Kunena
 	 */
 	function getFileContentParsed()
 	{

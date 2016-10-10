@@ -25,6 +25,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * Return custom display layout.
 	 *
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	protected function display()
 	{

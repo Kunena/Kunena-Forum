@@ -22,6 +22,7 @@ class KunenaAdminModelUser extends KunenaModel
 {
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -197,7 +198,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
-	 *
+	 * @since Kunena
 	 */
 	public function getListuserranks()
 	{
@@ -243,7 +244,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
-	 *
+	 * @since Kunena
 	 */
 	public function getMoveuser()
 	{

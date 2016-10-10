@@ -13,48 +13,58 @@
  * @author  emberlabs.org
  * @license MIT License
  * @link    https://github.com/emberlabs/gravatarlib
+ * @copyright gravatar
+ * @since Kunena
  */
 class KunenaGravatar
 {
 	/**
 	 * @var integer - The size to use for avatars.
+	 * @since Kunena
 	 */
 	protected $size = 80;
 
 	/**
 	 * @var string - The maximum rating to allow for the avatar.
+	 * @since Kunena
 	 */
 	protected $max_rating = 'g';
 
 	/**
 	 * @var string - A temporary internal cache of the URL parameters to use.
+	 * @since Kunena
 	 */
 	protected $param_cache = null;
 
 	/**
 	 * @var string - URL constants for the avatar images
+	 * @since Kunena
 	 */
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 
 	/**
 	 * @var string - The email address of the user.
+	 * @since Kunena
 	 */
 	protected $email = null;
 
 	/**
 	 * @var mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
 	 *      a URL, or false if using the...default gravatar default image (hah)
+	 * @since Kunena
 	 */
 	protected $default_image = false;
 
 	/**
 	 * Extra attributes to the IMG tag like ALT, CLASS, STYLE...
+	 * @since Kunena
 	 */
 	protected $extra = "";
 
 	/**
 	 * @param   string $email
+	 * @since Kunena
 	 */
 	public function __construct($email = null)
 	{
@@ -65,6 +75,7 @@ class KunenaGravatar
 	 * @param   string $email
 	 *
 	 * @return string $email
+	 * @since Kunena
 	 */
 	public function setEmail($email)
 	{
@@ -75,6 +86,7 @@ class KunenaGravatar
 	 * Define extras html attributes to be added into the HTML
 	 *
 	 * @param   string $extra
+	 * @since Kunena
 	 */
 	public function setExtra($extra)
 	{
@@ -85,6 +97,7 @@ class KunenaGravatar
 	 * Get the currently set avatar size.
 	 *
 	 * @return integer - The current avatar size in use.
+	 * @since Kunena
 	 */
 	public function getAvatarSize()
 	{
@@ -99,6 +112,7 @@ class KunenaGravatar
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *
 	 * @throws \InvalidArgumentException
+	 * @since Kunena
 	 */
 	public function setAvatarSize($size)
 	{
@@ -124,6 +138,7 @@ class KunenaGravatar
 	 * Get the current default image setting.
 	 *
 	 * @return mixed - False if no default image set, string if one is set.
+	 * @since Kunena
 	 */
 	public function getDefaultImage()
 	{
@@ -139,6 +154,7 @@ class KunenaGravatar
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *
 	 * @throws \InvalidArgumentException
+	 * @since Kunena
 	 */
 	public function setDefaultImage($image)
 	{
@@ -180,6 +196,7 @@ class KunenaGravatar
 	 * Get the current maximum allowed rating for avatars.
 	 *
 	 * @return string - The string representing the current maximum allowed rating ('g', 'pg', 'r', 'x').
+	 * @since Kunena
 	 */
 	public function getMaxRating()
 	{
@@ -194,6 +211,7 @@ class KunenaGravatar
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *
 	 * @throws \InvalidArgumentException
+	 * @since Kunena
 	 */
 	public function setMaxRating($rating)
 	{
@@ -219,6 +237,7 @@ class KunenaGravatar
 	 * @param   string $email - The email to get the hash for.
 	 *
 	 * @return string - The hashed form of the email, post cleaning.
+	 * @since Kunena
 	 */
 	public function getEmailHash($email)
 	{
@@ -230,6 +249,7 @@ class KunenaGravatar
 	 * Check if we are using the secure protocol for the image URLs.
 	 *
 	 * @return boolean - Are we supposed to use the secure protocol?
+	 * @since Kunena
 	 */
 	public function usingSecureURL()
 	{
@@ -252,6 +272,7 @@ class KunenaGravatar
 	 *                                  already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.
+	 * @since Kunena
 	 */
 	public function buildGravatarURL($hash_email = true)
 	{
@@ -313,6 +334,7 @@ class KunenaGravatar
 	 * @param $hash_email
 	 *
 	 * @return IMG HTML attribute
+	 * @since Kunena
 	 */
 	public function getLink($hash_email)
 	{
@@ -323,6 +345,7 @@ class KunenaGravatar
 
 	/**
 	 * toString
+	 * @since Kunena
 	 */
 	public function __toString()
 	{

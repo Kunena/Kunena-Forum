@@ -56,6 +56,7 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * Set the toolbar on log manager
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{

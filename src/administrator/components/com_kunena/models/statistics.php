@@ -25,7 +25,8 @@ class KunenaAdminModelStatistics extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
-	 */
+	 * @since Kunena
+ 	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -47,6 +48,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 *
 	 * @param   null $ordering
 	 * @param   null $direction
+	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -90,6 +92,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return    string        A store id.
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -136,6 +139,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 * @param   string $field
 	 *
 	 * @return KunenaLogFinder
+	 * @since Kunena
 	 */
 	protected function getFinder($field = 'user_id')
 	{

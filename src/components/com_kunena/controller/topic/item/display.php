@@ -21,22 +21,26 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	/**
 	 * @var KunenaForumCategory
-	 */
+	 * @since Kunena
+ 	 */
 	public $category;
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaPagination
-	 */
+	 * @since Kunena
+ 	 */
 	public $pagination;
 
 	/**
@@ -51,7 +55,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();
@@ -246,7 +251,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @param   array $indent Indent for the current object.
 	 *
 	 * @return  array
-	 */
+	 * @since Kunena
+ 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
 		$list = array();

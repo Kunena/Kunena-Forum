@@ -51,6 +51,7 @@ class plgKunenaCommunity extends JPlugin
 	 * @return KunenaAccess
 	 *
 	 * @todo Should we remove category ACL integration?
+	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -68,6 +69,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena login integration object.
 	 *
 	 * @return \KunenaLoginCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -85,6 +87,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -102,6 +105,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -119,6 +123,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena private message integration object.
 	 *
 	 * @return \KunenaPrivateCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -136,6 +141,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return \KunenaActivityCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

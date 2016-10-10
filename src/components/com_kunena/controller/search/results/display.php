@@ -21,7 +21,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 
 	/**
 	 * @var KunenaModelSearch
-	 */
+	 * @since Kunena
+ 	 */
 	public $model;
 
 	/**

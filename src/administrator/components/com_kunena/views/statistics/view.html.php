@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Statistics view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewStatistics extends KunenaView
 {

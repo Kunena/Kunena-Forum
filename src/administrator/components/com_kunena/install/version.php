@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaVersion
+ * @since Kunena
  */
 class KunenaVersion
 {
@@ -132,6 +133,7 @@ class KunenaVersion
 	 * Retrieve installed Kunena version as string.
 	 *
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
+	 * @since Kunena
 	 */
 	static function getVersionHTML()
 	{
@@ -142,6 +144,7 @@ class KunenaVersion
 	 * Retrieve copyright information as string.
 	 *
 	 * @return string "© 2008 - 2016 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @since Kunena
 	 */
 	static function getCopyrightHTML()
 	{
@@ -155,6 +158,7 @@ class KunenaVersion
 	 * Retrieve installed Kunena version, copyright and license as string.
 	 *
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2016 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @since Kunena
 	 */
 	static function getLongVersionHTML()
 	{

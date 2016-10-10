@@ -21,6 +21,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 	/**
 	 * @var array|KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	public $messages;
 

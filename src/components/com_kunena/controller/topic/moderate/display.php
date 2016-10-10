@@ -21,11 +21,13 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaForumMessage|null
+	 * @since Kunena
 	 */
 	public $message;
 
@@ -43,7 +45,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

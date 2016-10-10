@@ -21,11 +21,13 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaForumMessage|null
+	 * @since Kunena
 	 */
 	public $message;
 
@@ -37,7 +39,8 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

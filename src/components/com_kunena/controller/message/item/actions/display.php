@@ -21,7 +21,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	public $message;

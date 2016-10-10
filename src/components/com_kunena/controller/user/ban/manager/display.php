@@ -21,16 +21,19 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $profile;
 
 	/**
 	 * @var KunenaUserBan
+	 * @since Kunena
 	 */
 	public $userBans;
 

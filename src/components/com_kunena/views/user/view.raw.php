@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Users View
+ * @since Kunena
  */
 class KunenaViewUser extends KunenaView
 {

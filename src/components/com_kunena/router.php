@@ -29,6 +29,7 @@ jimport('joomla.error.profiler');
  * @param $query
  *
  * @return array Segments
+ * @since Kunena
  */
 function KunenaBuildRoute(&$query)
 {
@@ -275,6 +276,7 @@ function KunenaBuildRoute(&$query)
  *
  * @return array
  * @throws Exception
+ * @since Kunena
  */
 function KunenaParseRoute($segments)
 {

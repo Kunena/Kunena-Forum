@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * The HTML Kunena configuration view.
+ * @since Kunena
  */
 class KunenaViewInstall extends JViewLegacy
 {
@@ -57,7 +58,7 @@ class KunenaViewInstall extends JViewLegacy
 	 * @access private
 	 *
 	 * @return null
-	 *
+	 * @since Kunena
 	 **/
 	function setToolBar()
 	{

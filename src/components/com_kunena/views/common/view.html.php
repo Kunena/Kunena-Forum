@@ -16,6 +16,7 @@ jimport('joomla.document.html.html');
 
 /**
  * Common view
+ * @since Kunena
  */
 class KunenaViewCommon extends KunenaView
 {

@@ -21,7 +21,8 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 
 	/**
 	 * @var KunenaForumTopic
-	 */
+	 * @since Kunena
+ 	 */
 	public $topic;
 
 	/**

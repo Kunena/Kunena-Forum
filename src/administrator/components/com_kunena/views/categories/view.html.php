@@ -13,11 +13,13 @@ defined('_JEXEC') or die();
 
 /**
  * About view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewCategories extends KunenaView
 {
 	/**
 	 * @var array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public $categories = array();
 
@@ -156,6 +158,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function publishedOptions()
 	{
@@ -171,6 +174,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of locked filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function lockOptions()
 	{
@@ -186,6 +190,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function reviewOptions()
 	{
@@ -201,6 +206,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	public function allowpollsOptions()
 	{
@@ -216,6 +222,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function anonymousOptions()
 	{
@@ -231,6 +238,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -252,6 +260,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{

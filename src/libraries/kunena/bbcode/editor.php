@@ -24,7 +24,7 @@ class KunenaBbcodeEditor
 
 	/**
 	 * @param   array $config
-	 *
+	 * @since Kunena
 	 */
 	function __construct($config = array())
 	{

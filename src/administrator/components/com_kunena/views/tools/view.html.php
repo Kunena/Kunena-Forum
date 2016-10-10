@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * About view for Kunena cpanel
+ * @since Kunena
  */
 class KunenaAdminViewTools extends KunenaView
 {

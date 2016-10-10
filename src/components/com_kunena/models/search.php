@@ -290,6 +290,7 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{

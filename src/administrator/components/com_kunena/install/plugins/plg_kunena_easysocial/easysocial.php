@@ -68,6 +68,7 @@ class plgKunenaEasySocial extends JPlugin
 	 * Get Kunena login integration object.
 	 *
 	 * @return KunenaLogin
+	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -90,6 +91,7 @@ class plgKunenaEasySocial extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -112,6 +114,7 @@ class plgKunenaEasySocial extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -134,7 +137,8 @@ class plgKunenaEasySocial extends JPlugin
 	 * Get Kunena private message integration object.
 	 *
 	 * @return KunenaPrivate
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetPrivate()
 	{
 		if (!$this->exists())
@@ -156,7 +160,8 @@ class plgKunenaEasySocial extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
-	 */
+	 * @since Kunena
+ 	 */
 	public function onKunenaGetActivity()
 	{
 		if (!$this->exists())

@@ -48,6 +48,7 @@ class plgKunenaEasyprofile extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarEasyprofile|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -65,6 +66,7 @@ class plgKunenaEasyprofile extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileEasyprofile|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{

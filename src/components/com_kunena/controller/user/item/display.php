@@ -21,17 +21,20 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $me;
 
 	/**
 	 * @var JUser
+	 * @since Kunena
 	 */
 	public $user;
 
 	/**
 	 * @var KunenaUser
-	 */
+	 * @since Kunena
+ 	 */
 	public $profile;
 
 	public $headerText;
@@ -44,7 +47,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
-	 */
+	 * @since Kunena
+ 	 */
 	protected function before()
 	{
 		parent::before();

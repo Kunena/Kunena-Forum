@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Attachments view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewAttachments extends KunenaView
 {
@@ -67,6 +68,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -83,6 +85,7 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 * Returns an array of review filter options.
+	 * @since Kunena
 	 *
 	 * @return    array
 	 */

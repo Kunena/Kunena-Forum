@@ -22,6 +22,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
 	/**
 	 * @param   array $config
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{

@@ -15,6 +15,7 @@ use Joomla\String\StringHelper;
 
 /**
  * Topic View
+ * @since Kunena
  */
 class KunenaViewTopic extends KunenaView
 {
@@ -999,6 +1000,7 @@ class KunenaViewTopic extends KunenaView
 	 * Also redirects back to tasks are prevented.
 	 *
 	 * @param   string $anchor
+	 * @since Kunena
 	 */
 	protected function redirectBack($anchor = '')
 	{

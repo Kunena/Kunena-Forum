@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Icons
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @package    Kunena.Framework
+ * @subpackage Icons
+ *
+ * @copyright  Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -14,8 +15,7 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaIcons
  *
- * @since  5.0
- *
+ * @since 5.0
  */
 class KunenaIcons
 {
@@ -28,8 +28,8 @@ class KunenaIcons
 	 */
 	static public function arrowdown()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -58,8 +58,8 @@ class KunenaIcons
 	 */
 	static public function arrowup()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -88,8 +88,8 @@ class KunenaIcons
 	 */
 	static public function chevronright()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -108,7 +108,7 @@ class KunenaIcons
 			return '<span class="icon icon-chevron-right"></span>';
 		}
 	}
-	
+
 	/**
 	 * Return the members icon
 	 *
@@ -118,8 +118,8 @@ class KunenaIcons
 	 */
 	static public function members()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -148,8 +148,8 @@ class KunenaIcons
 	 */
 	static public function user()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -178,8 +178,8 @@ class KunenaIcons
 	 */
 	static public function lock()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -198,7 +198,7 @@ class KunenaIcons
 			return '<span class="icon icon-lock"></span>';
 		}
 	}
-	
+
 	/**
 	 * Return the star icon (secret key)
 	 *
@@ -208,8 +208,8 @@ class KunenaIcons
 	 */
 	static public function star()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -227,8 +227,8 @@ class KunenaIcons
 		{
 			return '<span class="icon icon-star"></span>';
 		}
-	}	
-	
+	}
+
 	/**
 	 * Return the shield icon (reviewed)
 	 *
@@ -238,8 +238,8 @@ class KunenaIcons
 	 */
 	static public function shield()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -268,8 +268,8 @@ class KunenaIcons
 	 */
 	static public function flag()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -288,7 +288,7 @@ class KunenaIcons
 			return '<span class="icon icon-flag"></span>';
 		}
 	}
-	
+
 	/**
 	 * Return the poll icon
 	 *
@@ -298,8 +298,8 @@ class KunenaIcons
 	 */
 	static public function poll()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -317,8 +317,8 @@ class KunenaIcons
 		{
 			return '<span class="icon icon-bars"></span>';
 		}
-	}	
-	
+	}
+
 	/**
 	 * Return the stats icon
 	 *
@@ -328,8 +328,8 @@ class KunenaIcons
 	 */
 	static public function stats()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -359,8 +359,8 @@ class KunenaIcons
 	 */
 	static public function search()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -389,8 +389,8 @@ class KunenaIcons
 	 */
 	static public function collapse()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -419,8 +419,8 @@ class KunenaIcons
 	 */
 	static public function clock()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -428,7 +428,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-time"></i>';
+			return '<i class="icon icon-clock"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
@@ -436,9 +436,9 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-time"></i>';
+			return '<i class="icon icon-clock"></i>';
 		}
-	}	
+	}
 
 	/**
 	 * Return the thumbs-up icon
@@ -449,8 +449,8 @@ class KunenaIcons
 	 */
 	static public function thumbsup()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -468,8 +468,8 @@ class KunenaIcons
 		{
 			return '<i class="icon icon-thumbs-up"></i>';
 		}
-	}	
-	
+	}
+
 	/**
 	 * Return the cancel icon
 	 *
@@ -479,8 +479,8 @@ class KunenaIcons
 	 */
 	static public function cancel()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -509,8 +509,8 @@ class KunenaIcons
 	 */
 	static public function ip()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if (!KunenaUserHelper::getMyself()->isModerator())
 		{
@@ -544,8 +544,8 @@ class KunenaIcons
 	 */
 	static public function email()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -574,8 +574,8 @@ class KunenaIcons
 	 */
 	static public function bookmark()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -604,8 +604,8 @@ class KunenaIcons
 	 */
 	static public function back()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -634,8 +634,8 @@ class KunenaIcons
 	 */
 	static public function save()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -664,8 +664,8 @@ class KunenaIcons
 	 */
 	static public function edit()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -694,8 +694,8 @@ class KunenaIcons
 	 */
 	static public function attach()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -724,8 +724,8 @@ class KunenaIcons
 	 */
 	static public function plus()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -748,7 +748,7 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
-	 * @param null $text
+	 * @param   null $text
 	 *
 	 * @return string
 	 *
@@ -756,8 +756,8 @@ class KunenaIcons
 	 */
 	static public function rss($text = null)
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($text)
 		{
@@ -797,8 +797,8 @@ class KunenaIcons
 	 */
 	static public function upload()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -827,8 +827,8 @@ class KunenaIcons
 	 */
 	static public function picture()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -857,8 +857,8 @@ class KunenaIcons
 	 */
 	static public function file()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -887,8 +887,8 @@ class KunenaIcons
 	 */
 	static public function delete()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -917,28 +917,28 @@ class KunenaIcons
 	 */
 	static public function poll_add()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-add" class="fa fa-plus btn btn-xs btn-small btn-default"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 	}
 
@@ -951,28 +951,28 @@ class KunenaIcons
 	 */
 	static public function poll_rem()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
 		}
 	}
 
@@ -985,8 +985,8 @@ class KunenaIcons
 	 */
 	static public function undo()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -1015,8 +1015,8 @@ class KunenaIcons
 	 */
 	static public function shuffle()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -1045,8 +1045,8 @@ class KunenaIcons
 	 */
 	static public function caticon($categoryicon, $new = null, $big = true)
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($new)
 		{
@@ -1098,7 +1098,7 @@ class KunenaIcons
 			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
 		}
 	}
-	
+
 	/**
 	 * Return the home icon
 	 *
@@ -1108,8 +1108,8 @@ class KunenaIcons
 	 */
 	static public function home()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -1128,7 +1128,7 @@ class KunenaIcons
 			return '<span class="icon icon-home hasTooltip"></span>';
 		}
 	}
-	
+
 	/**
 	 * Return the calendar icon
 	 *
@@ -1138,8 +1138,8 @@ class KunenaIcons
 	 */
 	static public function calendar()
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -1158,5 +1158,4 @@ class KunenaIcons
 			return '<i class="icon icon-calendar"></i>';
 		}
 	}
-	
 }

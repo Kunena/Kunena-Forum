@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaMigratorFireboard
+ * @since Kunena
  */
 class KunenaMigratorFireboard
 {

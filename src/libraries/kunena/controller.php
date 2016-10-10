@@ -19,16 +19,19 @@ class KunenaController extends JControllerLegacy
 {
 	/**
 	 * @var JApplicationCms|null
+	 * @since Kunena
 	 */
 	public $app = null;
 
 	/**
 	 * @var KunenaUser|null
+	 * @since Kunena
 	 */
 	public $me = null;
 
 	/**
 	 * @var KunenaConfig|null
+	 * @since Kunena
 	 */
 	public $config = null;
 

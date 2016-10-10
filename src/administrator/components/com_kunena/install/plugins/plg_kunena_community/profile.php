@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaProfileCommunity
+ * @since Kunena
  */
 class KunenaProfileCommunity extends KunenaProfile
 {

@@ -51,6 +51,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @var JDatabaseDriver|null
+	 * @since Kunena
 	 */
 	protected $_db = null;
 

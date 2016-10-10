@@ -24,6 +24,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * @var KunenaConfig|mixed
+	 * @since Kunena
 	 */
 	protected $config;
 

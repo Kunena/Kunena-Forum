@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatarAltaUserPoints
+ * @since Kunena
  */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {

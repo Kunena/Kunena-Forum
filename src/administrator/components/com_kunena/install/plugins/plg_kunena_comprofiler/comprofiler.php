@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class plgKunenaComprofiler
+ * @since Kunena
  */
 class plgKunenaComprofiler extends JPlugin
 {

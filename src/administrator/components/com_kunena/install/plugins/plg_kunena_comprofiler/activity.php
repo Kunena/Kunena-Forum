@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Class KunenaActivityComprofiler
+ * @since Kunena
  */
 class KunenaActivityComprofiler extends KunenaActivity
 {

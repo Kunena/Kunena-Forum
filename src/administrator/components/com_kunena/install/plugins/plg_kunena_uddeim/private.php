@@ -13,11 +13,13 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaPrivateUddeIM
+ * @since Kunena
  */
 class KunenaPrivateUddeIM extends KunenaPrivate
 {
 	/**
 	 * @var null|uddeIMAPI
+	 * @since Kunena
 	 */
 	protected $uddeim = null;
 

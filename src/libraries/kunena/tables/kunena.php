@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaTable
+ * @since Kunena
  */
 abstract class KunenaTable extends JTable
 {

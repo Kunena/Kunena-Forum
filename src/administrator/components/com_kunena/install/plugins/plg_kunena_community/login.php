@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaLoginCommunity
+ * @since Kunena
  */
 class KunenaLoginCommunity
 {

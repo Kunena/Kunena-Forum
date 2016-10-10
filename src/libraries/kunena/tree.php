@@ -41,16 +41,19 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_id = null;
 
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_parent = null;
 
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_level = null;
 

@@ -15,6 +15,7 @@ use Joomla\String\StringHelper;
 
 /**
  * Class KunenaActivityEasySocial
+ * @since Kunena
  */
 class KunenaActivityEasySocial extends KunenaActivity
 {

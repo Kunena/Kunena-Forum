@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 /**
  * Class plgKunenaEasySocial
+ * @since Kunena
  */
 class plgKunenaEasySocial extends JPlugin
 {

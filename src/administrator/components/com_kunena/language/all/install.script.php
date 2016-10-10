@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class pkg_kunena_languagesInstallerScript
+ * @since Kunena
  */
 class pkg_kunena_languagesInstallerScript
 {
@@ -111,6 +112,7 @@ class pkg_kunena_languagesInstallerScript
 	/**
 	 * @param $tag
 	 * @param $name
+	 * @since Kunena
 	 */
 	public function uninstallLanguage($tag, $name)
 	{

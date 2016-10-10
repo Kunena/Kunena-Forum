@@ -29,16 +29,19 @@ class KunenaTemplate extends JObject
 
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	public $name = null;
 
 	/**
 	 * @var JRegistry|null
+	 * @since Kunena
 	 */
 	public $params = null;
 
 	/**
 	 * @var bool|int
+	 * @since Kunena
 	 */
 	public $paramstime = false;
 
@@ -175,6 +178,7 @@ class KunenaTemplate extends JObject
 
 	/**
 	 * @var null|SimpleXMLElement
+	 * @since Kunena
 	 */
 	protected $xml = null;
 
@@ -1256,6 +1260,7 @@ HTML;
 	 * @param string $style
 	 *
 	 * @return stdClass
+	 * @since Kunena
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
 	{
@@ -1286,6 +1291,7 @@ HTML;
 	 * @param string $style
 	 *
 	 * @return stdClass
+	 * @since Kunena
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
 	{
@@ -1557,6 +1563,7 @@ HTML;
 	 * @param $topic
 	 *
 	 * @return stdClass
+	 * @since Kunena
 	 */
 	public function getTopicLabel($topic)
 	{
@@ -1597,6 +1604,7 @@ HTML;
 	 * @param string $style
 	 *
 	 * @return stdClass
+	 * @since Kunena
 	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
 	{

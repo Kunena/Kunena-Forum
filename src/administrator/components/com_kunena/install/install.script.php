@@ -15,6 +15,7 @@ jimport('joomla.filesystem.file');
 
 /**
  * Class Com_KunenaInstallerScript
+ * @since Kunena
  */
 class Com_KunenaInstallerScript
 {

@@ -76,6 +76,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @var mixed|null
+	 * @since Kunena
 	 */
 	protected $_alias = null;
 

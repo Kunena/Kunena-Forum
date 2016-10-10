@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaMigratorKunena
+ * @since Kunena
  */
 class KunenaMigratorKunena
 {

@@ -63,6 +63,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param $condition
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function innerJoin($condition)
 	{
@@ -75,6 +76,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param $columns
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function select($columns)
 	{
@@ -87,6 +89,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param $columns
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function group($columns)
 	{
@@ -127,6 +130,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * @param   JDatabaseQuery $query
+	 * @since Kunena
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

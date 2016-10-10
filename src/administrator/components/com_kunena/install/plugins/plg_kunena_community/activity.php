@@ -16,6 +16,7 @@ jimport('joomla.utilities.string');
 
 /**
  * Class KunenaActivityCommunity
+ * @since Kunena
  */
 class KunenaActivityCommunity extends KunenaActivity
 {

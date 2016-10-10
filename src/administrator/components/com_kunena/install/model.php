@@ -3139,6 +3139,7 @@ class KunenaModelInstall extends JModelLegacy
 
 /**
  * Class KunenaInstallerException
+ * @since Kunena
  */
 class KunenaInstallerException extends Exception
 {

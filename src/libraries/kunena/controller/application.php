@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaControllerApplication
+ * @since Kunena
  */
 abstract class KunenaControllerApplication extends KunenaControllerDisplay
 {

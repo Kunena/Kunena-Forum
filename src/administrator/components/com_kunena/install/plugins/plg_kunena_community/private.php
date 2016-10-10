@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaPrivateCommunity
+ * @since Kunena
  */
 class KunenaPrivateCommunity extends KunenaPrivate
 {

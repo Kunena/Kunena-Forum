@@ -58,6 +58,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @var JDatabaseDriver|null
+	 * @since Kunena
 	 */
 	protected $db = null;
 
@@ -1228,6 +1229,7 @@ class KunenaModelSchema extends JModelLegacy
 
 /**
  * Class KunenaSchemaException
+ * @since Kunena
  */
 class KunenaSchemaException extends Exception
 {

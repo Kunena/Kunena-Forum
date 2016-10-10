@@ -30,6 +30,7 @@ class KunenaForumTopicUserRead extends JObject
 
 	/**
 	 * @var JDatabaseDriver|null
+	 * @since Kunena
 	 */
 	protected $_db = null;
 

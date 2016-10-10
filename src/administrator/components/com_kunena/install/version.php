@@ -168,6 +168,7 @@ class KunenaVersion
 
 /**
  * Class KunenaVersionException
+ * @since Kunena
  */
 class KunenaVersionException extends Exception
 {

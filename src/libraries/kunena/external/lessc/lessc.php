@@ -36,78 +36,78 @@
  *
  * The `lessc_formatter` takes a CSS tree, and dumps it to a formatted string,
  * handling things like indentation.
- * @since Kunena
+ * @since LESSC
  */
 class lessc
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static public $VERSION = "v0.4.0";
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $TRUE = array("keyword", "true");
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $FALSE = array("keyword", "false");
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $libFunctions = array();
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $registeredVars = array();
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $preserveComments = false;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $vPrefix = '@'; // prefix of abstract properties
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $mPrefix = '$'; // prefix of abstract blocks
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $parentSelector = '&';
 
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $importDisabled = false;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $importDir = '';
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $numberPrecision = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $allParsedFiles = array();
 
@@ -115,24 +115,24 @@ class lessc
 	// so we know how to create error messages
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $sourceParser = null;
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $sourceLoc = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static public $defaultValue = array("keyword", "");
 
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	static protected $nextImportId = 0; // uniquely identify imports
 
@@ -141,7 +141,7 @@ class lessc
 	 * @param $url
 	 *
 	 * @return null|string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function findImport($url)
 	{
@@ -162,7 +162,7 @@ class lessc
 	 * @param $name
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function fileExists($name)
 	{
@@ -174,7 +174,7 @@ class lessc
 	 * @param $delim
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	static public function compressList($items, $delim)
 	{
@@ -192,7 +192,7 @@ class lessc
 	 * @param $what
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	static public function preg_quote($what)
 	{
@@ -205,7 +205,7 @@ class lessc
 	 * @param $out
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function tryImport($importPath, $parentBlock, $out)
 	{
@@ -291,6 +291,7 @@ class lessc
 	 * @param $out
 	 * @param $sourceParser
 	 * @param $importDir
+	 * @since LESSC
 	 */
 	protected function compileImportedProps($props, $block, $out, $sourceParser, $importDir)
 	{
@@ -334,7 +335,7 @@ class lessc
 	 * @param $block
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function compileBlock($block)
 	{
@@ -366,6 +367,7 @@ class lessc
 
 	/**
 	 * @param $block
+	 * @since LESSC
 	 */
 	protected function compileCSSBlock($block)
 	{
@@ -384,6 +386,7 @@ class lessc
 
 	/**
 	 * @param $media
+	 * @since LESSC
 	 */
 	protected function compileMedia($media)
 	{
@@ -417,7 +420,7 @@ class lessc
 	 * @param $scope
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function mediaParent($scope)
 	{
@@ -436,6 +439,7 @@ class lessc
 	/**
 	 * @param $block
 	 * @param $selectors
+	 * @since LESSC
 	 */
 	protected function compileNestedBlock($block, $selectors)
 	{
@@ -451,6 +455,7 @@ class lessc
 
 	/**
 	 * @param $root
+	 * @since LESSC
 	 */
 	protected function compileRoot($root)
 	{
@@ -463,6 +468,7 @@ class lessc
 	/**
 	 * @param $block
 	 * @param $out
+	 * @since LESSC
 	 */
 	protected function compileProps($block, $out)
 	{
@@ -479,7 +485,7 @@ class lessc
 	 * @param bool $split
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function sortProps($props, $split = false)
 	{
@@ -526,7 +532,7 @@ class lessc
 	 * @param $queries
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function compileMediaQuery($queries)
 	{
@@ -579,6 +585,7 @@ class lessc
 	 * @param null $childQueries
 	 *
 	 * @return null
+	 * @since LESSC
 	 */
 	protected function multiplyMedia($env, $childQueries = null)
 	{
@@ -621,6 +628,7 @@ class lessc
 	 * @param $replace
 	 *
 	 * @return int
+	 * @since LESSC
 	 */
 	protected function expandParentSelectors(&$tag, $replace)
 	{
@@ -640,6 +648,7 @@ class lessc
 
 	/**
 	 * @return null
+	 * @since LESSC
 	 */
 	protected function findClosestSelectors()
 	{
@@ -665,7 +674,7 @@ class lessc
 	 * @param $selectors
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function multiplySelectors($selectors)
 	{
@@ -710,7 +719,7 @@ class lessc
 	 * @param $selectors
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function compileSelectors($selectors)
 	{
@@ -737,7 +746,7 @@ class lessc
 	 * @param $right
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function eq($left, $right)
 	{
@@ -750,7 +759,7 @@ class lessc
 	 * @param $keywordArgs
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function patternMatch($block, $orderedArgs, $keywordArgs)
 	{
@@ -866,6 +875,7 @@ class lessc
 	 * @param array $skip
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function patternMatchAll($blocks, $orderedArgs, $keywordArgs, $skip = array())
 	{
@@ -896,6 +906,7 @@ class lessc
 	 * @param array $seen
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function findBlocks($searchIn, $path, $orderedArgs, $keywordArgs, $seen = array())
 	{
@@ -962,6 +973,7 @@ class lessc
 	 * @param $args
 	 * @param $orderedValues
 	 * @param $keywordValues
+	 * @since LESSC
 	 */
 	protected function zipSetArgs($args, $orderedValues, $keywordValues)
 	{
@@ -1022,6 +1034,7 @@ class lessc
 	 * @param $prop
 	 * @param $block
 	 * @param $out
+	 * @since LESSC
 	 */
 	protected function compileProp($prop, $block, $out)
 	{
@@ -1210,7 +1223,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function compileValue($value)
 	{
@@ -1294,6 +1307,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return number
+	 * @since LESSC
 	 */
 	protected function lib_pow($args)
 	{
@@ -1304,6 +1318,7 @@ class lessc
 
 	/**
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_pi()
 	{
@@ -1314,6 +1329,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return int
+	 * @since LESSC
 	 */
 	protected function lib_mod($args)
 	{
@@ -1326,6 +1342,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_tan($num)
 	{
@@ -1336,6 +1353,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_sin($num)
 	{
@@ -1346,6 +1364,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_cos($num)
 	{
@@ -1356,7 +1375,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_atan($num)
 	{
@@ -1369,7 +1388,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_asin($num)
 	{
@@ -1382,7 +1401,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_acos($num)
 	{
@@ -1395,6 +1414,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_sqrt($num)
 	{
@@ -1405,7 +1425,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_extract($value)
 	{
@@ -1423,7 +1443,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_isnumber($value)
 	{
@@ -1434,7 +1454,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_isstring($value)
 	{
@@ -1445,7 +1465,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_iscolor($value)
 	{
@@ -1456,7 +1476,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_iskeyword($value)
 	{
@@ -1467,7 +1487,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_ispixel($value)
 	{
@@ -1478,7 +1498,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_ispercentage($value)
 	{
@@ -1489,7 +1509,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_isem($value)
 	{
@@ -1500,7 +1520,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_isrem($value)
 	{
@@ -1511,7 +1531,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_rgbahex($color)
 	{
@@ -1531,7 +1551,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_argb($color)
 	{
@@ -1543,7 +1563,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_e($arg)
 	{
@@ -1572,7 +1592,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib__sprintf($args)
 	{
@@ -1615,7 +1635,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_floor($arg)
 	{
@@ -1628,7 +1648,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_ceil($arg)
 	{
@@ -1641,7 +1661,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_round($arg)
 	{
@@ -1654,7 +1674,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_unit($arg)
 	{
@@ -1678,7 +1698,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function colorArgs($args)
 	{
@@ -1698,7 +1718,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_darken($args)
 	{
@@ -1714,7 +1734,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_lighten($args)
 	{
@@ -1730,7 +1750,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_saturate($args)
 	{
@@ -1746,7 +1766,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_desaturate($args)
 	{
@@ -1762,7 +1782,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_spin($args)
 	{
@@ -1780,7 +1800,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_fadeout($args)
 	{
@@ -1794,7 +1814,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_fadein($args)
 	{
@@ -1808,6 +1828,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_hue($color)
 	{
@@ -1820,6 +1841,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_saturation($color)
 	{
@@ -1832,6 +1854,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @since LESSC
 	 */
 	protected function lib_lightness($color)
 	{
@@ -1846,6 +1869,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return int|mixed
+	 * @since LESSC
 	 */
 	protected function lib_alpha($value)
 	{
@@ -1860,7 +1884,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_fade($args)
 	{
@@ -1874,7 +1898,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function lib_percentage($arg)
 	{
@@ -1890,7 +1914,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function lib_mix($args)
 	{
@@ -1939,6 +1963,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function lib_contrast($args)
 	{
@@ -1967,6 +1992,7 @@ class lessc
 	 * @param string $error
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function assertColor($value, $error = "expected color value")
 	{
@@ -1985,7 +2011,7 @@ class lessc
 	 * @param string $error
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function assertNumber($value, $error = "expecting number")
 	{
@@ -2003,7 +2029,7 @@ class lessc
 	 * @param string $name
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function assertArgs($value, $expectedArgs, $name = "")
 	{
@@ -2039,7 +2065,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function toHSL($color)
 	{
@@ -2103,7 +2129,7 @@ class lessc
 	 * @param $temp2
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function toRGB_helper($comp, $temp1, $temp2)
 	{
@@ -2141,7 +2167,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function toRGB($color)
 	{
@@ -2190,7 +2216,7 @@ class lessc
 	 * @param int $min
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function clamp($v, $max = 1, $min = 0)
 	{
@@ -2204,7 +2230,7 @@ class lessc
 	 * @param $func
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function funcToColor($func)
 	{
@@ -2304,6 +2330,7 @@ class lessc
 	 * @param bool $forExpression
 	 *
 	 * @return array|bool|null
+	 * @since LESSC
 	 */
 	protected function reduce($value, $forExpression = false)
 	{
@@ -2468,6 +2495,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function coerceColor($value)
 	{
@@ -2514,6 +2542,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function coerceString($value)
 	{
@@ -2533,7 +2562,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function flattenList($value)
 	{
@@ -2549,7 +2578,7 @@ class lessc
 	 * @param $a
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function toBool($a)
 	{
@@ -2568,6 +2597,7 @@ class lessc
 	 * @param $exp
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function evaluate($exp)
 	{
@@ -2635,6 +2665,7 @@ class lessc
 	 * @param $right
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function stringConcatenate($left, $right)
 	{
@@ -2664,7 +2695,7 @@ class lessc
 	 * @param $c
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function fixColor($c)
 	{
@@ -2690,7 +2721,7 @@ class lessc
 	 * @param $rgt
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function op_number_color($op, $lft, $rgt)
 	{
@@ -2706,7 +2737,7 @@ class lessc
 	 * @param $rgt
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function op_color_number($op, $lft, $rgt)
 	{
@@ -2725,7 +2756,7 @@ class lessc
 	 * @param $right
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function op_color_color($op, $left, $right)
 	{
@@ -2766,7 +2797,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	function lib_red($color)
 	{
@@ -2784,7 +2815,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	function lib_green($color)
 	{
@@ -2802,7 +2833,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	function lib_blue($color)
 	{
@@ -2824,7 +2855,7 @@ class lessc
 	 * @param $right
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	protected function op_number_number($op, $left, $right)
 	{
@@ -2872,6 +2903,7 @@ class lessc
 	 * @param null $selectors
 	 *
 	 * @return stdclass
+	 * @since LESSC
 	 */
 	protected function makeOutputBlock($type, $selectors = null)
 	{
@@ -2890,6 +2922,7 @@ class lessc
 	 * @param null $block
 	 *
 	 * @return stdclass
+	 * @since LESSC
 	 */
 	protected function pushEnv($block = null)
 	{
@@ -2906,7 +2939,7 @@ class lessc
 	// pop something off the stack
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function popEnv()
 	{
@@ -2920,6 +2953,7 @@ class lessc
 	/**
 	 * @param $name
 	 * @param $value
+	 * @since LESSC
 	 */
 	protected function set($name, $value)
 	{
@@ -2933,6 +2967,7 @@ class lessc
 	 * @param null $default
 	 *
 	 * @return array|null
+	 * @since LESSC
 	 */
 	protected function get($name, $default = null)
 	{
@@ -2963,6 +2998,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @throws Exception
+	 * @since LESSC
 	 */
 	protected function injectVariables($args)
 	{
@@ -2993,7 +3029,7 @@ class lessc
 	 *
 	 * @param null $fname
 	 *
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public function __construct($fname = null)
 	{
@@ -3009,7 +3045,7 @@ class lessc
 	 * @param null $name
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function compile($string, $name = null)
 	{
@@ -3046,6 +3082,7 @@ class lessc
 	 *
 	 * @return int|string
 	 * @throws Exception
+	 * @since LESSC
 	 */
 	public function compileFile($fname, $outFname = null)
 	{
@@ -3081,7 +3118,7 @@ class lessc
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function checkedCompile($in, $out)
 	{
@@ -3115,7 +3152,7 @@ class lessc
 	 * @param bool  $force Force rebuild?
 	 *
 	 * @return array lessphp cache structure
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public function cachedCompile($in, $force = false)
 	{
@@ -3184,6 +3221,7 @@ class lessc
 	 *
 	 * @return int|string
 	 * @throws exception
+	 * @since LESSC
 	 */
 	public function parse($str = null, $initialVariables = null)
 	{
@@ -3223,6 +3261,7 @@ class lessc
 	 * @param $name
 	 *
 	 * @return lessc_parser
+	 * @since LESSC
 	 */
 	protected function makeParser($name)
 	{
@@ -3234,6 +3273,7 @@ class lessc
 
 	/**
 	 * @param $name
+	 * @since LESSC
 	 */
 	public function setFormatter($name)
 	{
@@ -3242,7 +3282,7 @@ class lessc
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function newFormatter()
 	{
@@ -3259,6 +3299,7 @@ class lessc
 
 	/**
 	 * @param $preserve
+	 * @since LESSC
 	 */
 	public function setPreserveComments($preserve)
 	{
@@ -3268,6 +3309,7 @@ class lessc
 	/**
 	 * @param $name
 	 * @param $func
+	 * @since LESSC
 	 */
 	public function registerFunction($name, $func)
 	{
@@ -3276,6 +3318,7 @@ class lessc
 
 	/**
 	 * @param $name
+	 * @since LESSC
 	 */
 	public function unregisterFunction($name)
 	{
@@ -3284,6 +3327,7 @@ class lessc
 
 	/**
 	 * @param $variables
+	 * @since LESSC
 	 */
 	public function setVariables($variables)
 	{
@@ -3292,6 +3336,7 @@ class lessc
 
 	/**
 	 * @param $name
+	 * @since LESSC
 	 */
 	public function unsetVariable($name)
 	{
@@ -3300,6 +3345,7 @@ class lessc
 
 	/**
 	 * @param $dirs
+	 * @since LESSC
 	 */
 	public function setImportDir($dirs)
 	{
@@ -3308,6 +3354,7 @@ class lessc
 
 	/**
 	 * @param $dir
+	 * @since LESSC
 	 */
 	public function addImportDir($dir)
 	{
@@ -3317,7 +3364,7 @@ class lessc
 
 	/**
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	public function allParsedFiles()
 	{
@@ -3326,6 +3373,7 @@ class lessc
 
 	/**
 	 * @param $file
+	 * @since LESSC
 	 */
 	protected function addParsedFile($file)
 	{
@@ -3338,7 +3386,7 @@ class lessc
 	 * @param null $msg
 	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function throwError($msg = null)
 	{
@@ -3357,7 +3405,7 @@ class lessc
 	 * @param null $less
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public static function ccompile($in, $out, $less = null)
 	{
@@ -3375,7 +3423,7 @@ class lessc
 	 * @param null $less
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since LESSC
 	 */
 	public static function cexecute($in, $force = false, $less = null)
 	{
@@ -3389,7 +3437,7 @@ class lessc
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $cssColors = array(
 		'aliceblue'            => '240,248,255',
@@ -3547,18 +3595,19 @@ class lessc
 // syntax tree
 /**
  * Class lessc_parser
+ * @since LESSC
  */
 class lessc_parser
 {
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	static protected $nextBlockId = 0; // used to uniquely identify blocks
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $precedence = array(
 		'=<' => 0,
@@ -3576,54 +3625,54 @@ class lessc_parser
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $whitePattern;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $commentMulti;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $commentSingle = "//";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $commentMultiLeft = "/*";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $commentMultiRight = "*/";
 
 	// regex string to match any of the operators
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $operatorString;
 
 	// these properties will supress division unless it's inside parenthases
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $supressDivisionProps =
 		array('/border-radius$/i', '/^font$/i');
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $blockDirectives = array("font-face", "keyframes", "page", "-moz-document", "viewport", "-moz-viewport", "-o-viewport", "-ms-viewport");
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $lineDirectives = array("charset");
 
@@ -3635,14 +3684,14 @@ class lessc_parser
 	 * Consider:
 	 *     property1: 10 -5; // is two numbers, 10 and -5
 	 *     property2: (10 -5); // should evaluate to 5
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected $inParens = false;
 
 	// caches preg escaped literals
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	static protected $literalCache = array();
 
@@ -3651,6 +3700,7 @@ class lessc_parser
 	 *
 	 * @param      $lessc
 	 * @param null $sourceName
+	 * @since LESSC
 	 */
 	public function __construct($lessc, $sourceName = null)
 	{
@@ -3682,6 +3732,7 @@ class lessc_parser
 	 *
 	 * @return null
 	 * @throws exception
+	 * @since LESSC
 	 */
 	public function parse($buffer)
 	{
@@ -3750,7 +3801,7 @@ class lessc_parser
 	 * Before parsing a chain, use $s = $this->seek() to remember the current
 	 * position into $s. Then if a chain fails, use $this->seek($s) to
 	 * go back where we started.
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function parseChunk()
 	{
@@ -3955,6 +4006,7 @@ class lessc_parser
 	 * @param $directives
 	 *
 	 * @return int
+	 * @since LESSC
 	 */
 	protected function isDirective($dirname, $directives)
 	{
@@ -3970,7 +4022,7 @@ class lessc_parser
 	 * @param $tags
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function fixTags($tags)
 	{
@@ -3989,7 +4041,7 @@ class lessc_parser
 	 * @param $exps
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function expressionList(&$exps)
 	{
@@ -4015,7 +4067,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function expression(&$out)
 	{
@@ -4052,7 +4104,7 @@ class lessc_parser
 	 * @param $minP
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function expHelper($lhs, $minP)
 	{
@@ -4114,7 +4166,7 @@ class lessc_parser
 	 * @param null $keyName
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function propertyValue(&$value, $keyName = null)
 	{
@@ -4145,7 +4197,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function parenValue(&$out)
 	{
@@ -4182,7 +4234,7 @@ class lessc_parser
 	 * @param $value
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function value(&$value)
 	{
@@ -4261,7 +4313,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function import(&$out)
 	{
@@ -4284,7 +4336,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function mediaQueryList(&$out)
 	{
@@ -4302,7 +4354,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function mediaQuery(&$out)
 	{
@@ -4351,7 +4403,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function mediaExpression(&$out)
 	{
@@ -4388,7 +4440,7 @@ class lessc_parser
 	 * @param null $rejectStrs
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function openString($end, &$out, $nestingOpen = null, $rejectStrs = null)
 	{
@@ -4475,7 +4527,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function string(&$out)
 	{
@@ -4551,7 +4603,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function interpolation(&$out)
 	{
@@ -4581,7 +4633,7 @@ class lessc_parser
 	 * @param $unit
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function unit(&$unit)
 	{
@@ -4607,7 +4659,7 @@ class lessc_parser
 	 * @param $out
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function color(&$out)
 	{
@@ -4638,7 +4690,7 @@ class lessc_parser
 	 * @param $isVararg
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function argumentDef(&$args, &$isVararg)
 	{
@@ -4771,7 +4823,7 @@ class lessc_parser
 	 * @param string $delim
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function tags(&$tags, $simple = false, $delim = ',')
 	{
@@ -4792,7 +4844,7 @@ class lessc_parser
 	 * @param $tags
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function mixinTags(&$tags)
 	{
@@ -4815,7 +4867,7 @@ class lessc_parser
 	 * @param $hasExpression
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function tagBracket(&$parts, &$hasExpression)
 	{
@@ -4907,7 +4959,7 @@ class lessc_parser
 	 * @param bool $simple
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function tag(&$tag, $simple = false)
 	{
@@ -4990,7 +5042,7 @@ class lessc_parser
 	 * @param $func
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function func(&$func)
 	{
@@ -5053,7 +5105,7 @@ class lessc_parser
 	 * @param $name
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function variable(&$name)
 	{
@@ -5087,7 +5139,7 @@ class lessc_parser
 	 * @param null $name
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	protected function assign($name = null)
 	{
@@ -5101,7 +5153,7 @@ class lessc_parser
 	 * @param $word
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function keyword(&$word)
 	{
@@ -5118,7 +5170,7 @@ class lessc_parser
 	// consume an end of statement delimiter
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function end()
 	{
@@ -5139,7 +5191,7 @@ class lessc_parser
 	 * @param $guards
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function guards(&$guards)
 	{
@@ -5177,7 +5229,7 @@ class lessc_parser
 	 * @param $guardGroup
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function guardGroup(&$guardGroup)
 	{
@@ -5204,7 +5256,7 @@ class lessc_parser
 	 * @param $guard
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function guard(&$guard)
 	{
@@ -5231,7 +5283,7 @@ class lessc_parser
 	 * @param null $eatWhitespace
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function literal($what, $eatWhitespace = null)
 	{
@@ -5271,7 +5323,7 @@ class lessc_parser
 	 * @param bool   $flatten
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function genericList(&$out, $parseItem, $delim = "", $flatten = true)
 	{
@@ -5316,7 +5368,7 @@ class lessc_parser
 	 * @param bool $allowNewline
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function to($what, &$out, $until = false, $allowNewline = false)
 	{
@@ -5342,7 +5394,7 @@ class lessc_parser
 	 * @param null $eatWhitespace
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function match($regex, &$out, $eatWhitespace = null)
 	{
@@ -5363,7 +5415,7 @@ class lessc_parser
 	// match some whitespace
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function whitespace()
 	{
@@ -5398,6 +5450,7 @@ class lessc_parser
 	 * @param null $from
 	 *
 	 * @return int
+	 * @since LESSC
 	 */
 	protected function peek($regex, &$out = null, $from = null)
 	{
@@ -5413,7 +5466,7 @@ class lessc_parser
 	 * @param null $where
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function seek($where = null)
 	{
@@ -5430,6 +5483,7 @@ class lessc_parser
 	 * @param null   $count
 	 *
 	 * @throws exception
+	 * @since LESSC
 	 */
 	public function throwError($msg = "parse error", $count = null)
 	{
@@ -5463,6 +5517,7 @@ class lessc_parser
 	 * @param null $type
 	 *
 	 * @return stdclass
+	 * @since LESSC
 	 */
 	protected function pushBlock($selectors = null, $type = null)
 	{
@@ -5488,6 +5543,7 @@ class lessc_parser
 	 * @param $type
 	 *
 	 * @return stdclass
+	 * @since LESSC
 	 */
 	protected function pushSpecialBlock($type)
 	{
@@ -5498,6 +5554,7 @@ class lessc_parser
 	/**
 	 * @param      $prop
 	 * @param null $pos
+	 * @since LESSC
 	 */
 	protected function append($prop, $pos = null)
 	{
@@ -5508,7 +5565,7 @@ class lessc_parser
 	// pop something off the stack
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function pop()
 	{
@@ -5524,7 +5581,7 @@ class lessc_parser
 	 * @param $text
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function removeComments($text)
 	{
@@ -5591,71 +5648,73 @@ class lessc_parser
 
 /**
  * Class lessc_formatter_classic
+ * @since LESSC
  */
 class lessc_formatter_classic
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $indentChar = "  ";
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $break = "\n";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $open = " {";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $close = "}";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $selectorSeparator = ", ";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $assignSeparator = ":";
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $openSingle = " { ";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $closeSingle = " }";
 
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $disableSingle = false;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $breakSelectors = false;
 
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $compressColors = false;
 
 	/**
 	 * lessc_formatter_classic constructor.
+	 * @since LESS
 	 */
 	public function __construct()
 	{
@@ -5666,7 +5725,7 @@ class lessc_formatter_classic
 	 * @param int $n
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function indentStr($n = 0)
 	{
@@ -5678,7 +5737,7 @@ class lessc_formatter_classic
 	 * @param $value
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function property($name, $value)
 	{
@@ -5689,7 +5748,7 @@ class lessc_formatter_classic
 	 * @param $block
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	protected function isEmpty($block)
 	{
@@ -5708,6 +5767,7 @@ class lessc_formatter_classic
 
 	/**
 	 * @param $block
+	 * @since LESSC
 	 */
 	public function block($block)
 	{
@@ -5781,37 +5841,38 @@ class lessc_formatter_classic
 
 /**
  * Class lessc_formatter_compressed
+ * @since LESSC
  */
 class lessc_formatter_compressed extends lessc_formatter_classic
 {
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $disableSingle = true;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $open = "{";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $selectorSeparator = ",";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $assignSeparator = ":";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $break = "";
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $compressColors = true;
 
@@ -5819,7 +5880,7 @@ class lessc_formatter_compressed extends lessc_formatter_classic
 	 * @param int $n
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since LESSC
  	 */
 	public function indentStr($n = 0)
 	{
@@ -5829,27 +5890,28 @@ class lessc_formatter_compressed extends lessc_formatter_classic
 
 /**
  * Class lessc_formatter_lessjs
+ * @since LESSC
  */
 class lessc_formatter_lessjs extends lessc_formatter_classic
 {
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $disableSingle = true;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $breakSelectors = true;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $assignSeparator = ": ";
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since LESSC
 	 */
 	public $selectorSeparator = ",";
 }

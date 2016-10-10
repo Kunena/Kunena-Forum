@@ -13,6 +13,7 @@ jimport('joomla.application.component.modellist');
 
 /**
  * Class KunenaAdminModelPlugins
+ * @since Kunena
  */
 class KunenaAdminModelPlugins extends JModelList
 {

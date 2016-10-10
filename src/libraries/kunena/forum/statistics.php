@@ -24,11 +24,13 @@ class KunenaForumStatistics
 
 	/**
 	 * @var JDatabaseDriver|null
+	 * @since Kunena
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var KunenaConfig|null
+	 * @since Kunena
 	 */
 	protected $_config = null;
 

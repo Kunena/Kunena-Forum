@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KText
+ * @since Kunena
  */
 class KText
 {

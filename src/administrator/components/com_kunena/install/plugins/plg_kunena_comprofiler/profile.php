@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Class KunenaProfileComprofiler
+ * @since Kunena
  */
 class KunenaProfileComprofiler extends KunenaProfile
 {

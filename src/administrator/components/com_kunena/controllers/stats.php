@@ -20,6 +20,7 @@ class KunenaAdminControllerStats extends KunenaController
 {
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $baseurl = null;
 

@@ -62,7 +62,7 @@ if (!function_exists('str_split'))
 	 * @param int $split_length
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function str_split($string, $split_length = 1)
 	{
@@ -76,81 +76,83 @@ $BBCode_SourceDir = dirname(__FILE__);
 
 /**
  * Class BBCodeLexer
+ * @since BBCode
  */
 class BBCodeLexer
 {
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $token;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $text;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $tag;
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $state;
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $input;
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $ptr;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $unget;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $verbatim;
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $debug;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $tagmarker;
 	/**
 	 * @var mixed
+	 * @since BBCode
 	 */
 	var $end_tagmarker;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $pat_main;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $pat_comment;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $pat_comment2;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $pat_wiki;
 
@@ -159,6 +161,7 @@ class BBCodeLexer
 	 *
 	 * @param        $string
 	 * @param string $tagmarker
+	 * @since BBCode
 	 */
 	function __construct($string, $tagmarker = '[')
 	{
@@ -201,6 +204,7 @@ class BBCodeLexer
 
 	/**
 	 * @return int
+	 * @since BBCode
 	 */
 	function GuessTextLength()
 	{
@@ -243,6 +247,7 @@ class BBCodeLexer
 
 	/**
 	 * @return int
+	 * @since BBCode
 	 */
 	function NextToken()
 	{
@@ -383,6 +388,7 @@ class BBCodeLexer
 
 	/**
 	 * @return int
+	 * @since BBCode
 	 */
 	function PeekToken()
 	{
@@ -397,7 +403,7 @@ class BBCodeLexer
 
 	/**
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function SaveState()
 	{
@@ -415,6 +421,7 @@ class BBCodeLexer
 
 	/**
 	 * @param $state
+	 * @since BBCode
 	 */
 	function RestoreState($state)
 	{
@@ -436,7 +443,7 @@ class BBCodeLexer
 	 * @param $string
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_StripQuotes($string)
 	{
@@ -462,6 +469,7 @@ class BBCodeLexer
 	 * @param $pieces
 	 *
 	 * @return int|string
+	 * @since BBCode
 	 */
 	function Internal_ClassifyPiece($ptr, $pieces)
 	{
@@ -498,7 +506,7 @@ class BBCodeLexer
 	 * @param $tag
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function Internal_DecodeTag($tag)
 	{
@@ -660,12 +668,13 @@ class BBCodeLexer
 
 /**
  * Class BBCodeLibrary
+ * @since BBCode
  */
 class BBCodeLibrary
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $default_smileys = Array(
 		':)'     => 'smile.gif', ':-)' => 'smile.gif',
@@ -723,7 +732,7 @@ class BBCodeLibrary
 	);
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $default_tag_rules = Array(
 		'b'       => Array(
@@ -1005,7 +1014,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoURL($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1053,7 +1062,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoEmail($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1081,7 +1090,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoSize($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1126,7 +1135,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoFont($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1179,7 +1188,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoWiki($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1207,7 +1216,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1255,7 +1264,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoRule($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1278,7 +1287,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1329,7 +1338,7 @@ class BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return bool|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function DoList($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1431,6 +1440,7 @@ class BBCodeLibrary
 
 /**
  * Class BBCodeEmailAddressValidator
+ * @since BBCode
  */
 class BBCodeEmailAddressValidator
 {
@@ -1438,7 +1448,7 @@ class BBCodeEmailAddressValidator
 	 * @param $strEmailAddress
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function check_email_address($strEmailAddress)
 	{
@@ -1478,7 +1488,7 @@ class BBCodeEmailAddressValidator
 	 * @param $strLocalPortion
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function check_local_portion($strLocalPortion)
 	{
@@ -1509,7 +1519,7 @@ class BBCodeEmailAddressValidator
 	 * @param $strDomainPortion
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function check_domain_portion($strDomainPortion)
 	{
@@ -1558,7 +1568,7 @@ class BBCodeEmailAddressValidator
 	 * @param $intMaximum
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function check_text_length($strText, $intMinimum, $intMaximum)
 	{
@@ -1576,165 +1586,169 @@ class BBCodeEmailAddressValidator
 
 /**
  * Class NBBC_BBCode
+ * @since BBCode
  */
 class NBBC_BBCode
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $tag_rules;
 	/**
 	 * @var BBCodeLibrary
+	 * @since BBCode
 	 */
 	var $defaults;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $current_class;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $root_class;
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $lost_start_tags;
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $start_tags;
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $allow_ampersand;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $tag_marker;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $ignore_newlines;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $plain_mode;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $detect_urls;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $url_pattern;
 	/**
 	 * @var int
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $output_limit;
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	var $text_length;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $was_limited;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $limit_tail;
 	/**
 	 * @var float
+	 * @since BBCode
 	 */
 	var $limit_precision;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $smiley_dir;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $smiley_url;
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $smileys;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $smiley_regex;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $enable_smileys;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $wiki_url;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $local_img_dir;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $local_img_url;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $url_targetable;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $url_target;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $rule_html;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $pre_trim;
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $post_trim;
 	/**
 	 * @var bool
-	 * @since Kunena
+	 * @since BBCode
 	 */
 	var $debug;
 
 	/**
 	 * NBBC_BBCode constructor.
+	 * @since BBCode
 	 */
 	function __construct()
 	{
@@ -1772,6 +1786,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param string $trim
+	 * @since BBCode
 	 */
 	function SetPreTrim($trim = "a")
 	{
@@ -1780,7 +1795,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetPreTrim()
 	{
@@ -1789,6 +1804,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param string $trim
+	 * @since BBCode
 	 */
 	function SetPostTrim($trim = "a")
 	{
@@ -1797,7 +1813,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetPostTrim()
 	{
@@ -1806,6 +1822,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param string $class
+	 * @since BBCode
 	 */
 	function SetRoot($class = 'block')
 	{
@@ -1824,7 +1841,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetRoot()
 	{
@@ -1833,6 +1850,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $enable
+	 * @since BBCode
 	 */
 	function SetDebug($enable = true)
 	{
@@ -1841,7 +1859,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDebug()
 	{
@@ -1850,6 +1868,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $enable
+	 * @since BBCode
 	 */
 	function SetAllowAmpersand($enable = true)
 	{
@@ -1863,6 +1882,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param string $marker
+	 * @since BBCode
 	 */
 	function SetTagMarker($marker = '[')
 	{
@@ -1871,7 +1891,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetTagMarker()
 	{
@@ -1880,6 +1900,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $ignore
+	 * @since BBCode
 	 */
 	function SetIgnoreNewlines($ignore = true)
 	{
@@ -1888,7 +1909,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetIgnoreNewlines()
 	{
@@ -1897,6 +1918,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param int $limit
+	 * @since BBCode
 	 */
 	function SetLimit($limit = 0)
 	{
@@ -1905,6 +1927,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return int
+	 * @since BBCode
 	 */
 	function GetLimit()
 	{
@@ -1913,6 +1936,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param string $tail
+	 * @since BBCode
 	 */
 	function SetLimitTail($tail = "...")
 	{
@@ -1921,7 +1945,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetLimitTail()
 	{
@@ -1930,6 +1954,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param float $prec
+	 * @since BBCode
 	 */
 	function SetLimitPrecision($prec = 0.15)
 	{
@@ -1938,6 +1963,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return float
+	 * @since BBCode
 	 */
 	function GetLimitPrecision()
 	{
@@ -1946,7 +1972,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function WasLimited()
 	{
@@ -1955,6 +1981,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $enable
+	 * @since BBCode
 	 */
 	function SetPlainMode($enable = true)
 	{
@@ -1963,7 +1990,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetPlainMode()
 	{
@@ -1972,6 +1999,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $enable
+	 * @since BBCode
 	 */
 	function SetDetectURLs($enable = true)
 	{
@@ -1980,7 +2008,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDetectURLs()
 	{
@@ -1989,6 +2017,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $pattern
+	 * @since BBCode
 	 */
 	function SetURLPattern($pattern)
 	{
@@ -1997,7 +2026,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetURLPattern()
 	{
@@ -2006,6 +2035,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $enable
+	 * @since BBCode
 	 */
 	function SetURLTargetable($enable)
 	{
@@ -2014,7 +2044,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetURLTargetable()
 	{
@@ -2023,6 +2053,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $target
+	 * @since BBCode
 	 */
 	function SetURLTarget($target)
 	{
@@ -2031,7 +2062,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetURLTarget()
 	{
@@ -2041,6 +2072,7 @@ class NBBC_BBCode
 	/**
 	 * @param $name
 	 * @param $rule
+	 * @since BBCode
 	 */
 	function AddRule($name, $rule)
 	{
@@ -2049,6 +2081,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $name
+	 * @since BBCode
 	 */
 	function RemoveRule($name)
 	{
@@ -2059,6 +2092,7 @@ class NBBC_BBCode
 	 * @param $name
 	 *
 	 * @return bool|mixed
+	 * @since BBCode
 	 */
 	function GetRule($name)
 	{
@@ -2075,6 +2109,7 @@ class NBBC_BBCode
 	 * @param $name
 	 *
 	 * @return bool|mixed
+	 * @since BBCode
 	 */
 	function GetDefaultRule($name)
 	{
@@ -2084,6 +2119,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $name
+	 * @since BBCode
 	 */
 	function SetDefaultRule($name)
 	{
@@ -2099,7 +2135,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function GetDefaultRules()
 	{
@@ -2113,6 +2149,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $url
+	 * @since BBCode
 	 */
 	function SetWikiURL($url)
 	{
@@ -2123,7 +2160,7 @@ class NBBC_BBCode
 	 * @param $url
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetWikiURL($url)
 	{
@@ -2132,7 +2169,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultWikiURL()
 	{
@@ -2141,6 +2178,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $path
+	 * @since BBCode
 	 */
 	function SetLocalImgDir($path)
 	{
@@ -2149,7 +2187,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetLocalImgDir()
 	{
@@ -2158,7 +2196,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultLocalImgDir()
 	{
@@ -2167,6 +2205,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $path
+	 * @since BBCode
 	 */
 	function SetLocalImgURL($path)
 	{
@@ -2175,7 +2214,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetLocalImgURL()
 	{
@@ -2184,7 +2223,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultLocalImgURL()
 	{
@@ -2193,6 +2232,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $html
+	 * @since BBCode
 	 */
 	function SetRuleHTML($html)
 	{
@@ -2201,7 +2241,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetRuleHTML()
 	{
@@ -2210,7 +2250,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultRuleHTML()
 	{
@@ -2220,6 +2260,7 @@ class NBBC_BBCode
 	/**
 	 * @param $code
 	 * @param $image
+	 * @since BBCode
 	 */
 	function AddSmiley($code, $image)
 	{
@@ -2229,6 +2270,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $code
+	 * @since BBCode
 	 */
 	function RemoveSmiley($code)
 	{
@@ -2240,6 +2282,7 @@ class NBBC_BBCode
 	 * @param $code
 	 *
 	 * @return bool|mixed
+	 * @since BBCode
 	 */
 	function GetSmiley($code)
 	{
@@ -2257,6 +2300,7 @@ class NBBC_BBCode
 	 * @param $code
 	 *
 	 * @return bool|mixed
+	 * @since BBCode
 	 */
 	function GetDefaultSmiley($code)
 	{
@@ -2266,6 +2310,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $code
+	 * @since BBCode
 	 */
 	function SetDefaultSmiley($code)
 	{
@@ -2275,7 +2320,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function GetDefaultSmileys()
 	{
@@ -2290,6 +2335,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $path
+	 * @since BBCode
 	 */
 	function SetSmileyDir($path)
 	{
@@ -2298,7 +2344,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetSmileyDir()
 	{
@@ -2307,7 +2353,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultSmileyDir()
 	{
@@ -2316,6 +2362,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param $path
+	 * @since BBCode
 	 */
 	function SetSmileyURL($path)
 	{
@@ -2324,7 +2371,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetSmileyURL()
 	{
@@ -2333,7 +2380,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetDefaultSmileyURL()
 	{
@@ -2342,6 +2389,7 @@ class NBBC_BBCode
 
 	/**
 	 * @param bool $enable
+	 * @since BBCode
 	 */
 	function SetEnableSmileys($enable = true)
 	{
@@ -2350,7 +2398,7 @@ class NBBC_BBCode
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function GetEnableSmileys()
 	{
@@ -2361,7 +2409,7 @@ class NBBC_BBCode
 	 * @param $string
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function nl2br($string)
 	{
@@ -2372,7 +2420,7 @@ class NBBC_BBCode
 	 * @param $string
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function UnHTMLEncode($string)
 	{
@@ -2392,7 +2440,7 @@ class NBBC_BBCode
 	 * @param $string
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Wikify($string)
 	{
@@ -2405,7 +2453,7 @@ class NBBC_BBCode
 	 * @param bool $email_too
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function IsValidURL($string, $email_too = true)
 	{
@@ -2450,7 +2498,7 @@ $/Dx", $string))
 	 * @param $string
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function IsValidEmail($string)
 	{
@@ -2489,7 +2537,7 @@ $/Dx", $string);
 	 * @param $string
 	 *
 	 * @return mixed|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function HTMLEncode($string)
 	{
@@ -2508,6 +2556,7 @@ $/Dx", $string);
 	 * @param $string
 	 *
 	 * @return array|mixed|string
+	 * @since BBCode
 	 */
 	function FixupOutput($string)
 	{
@@ -2544,7 +2593,7 @@ $/Dx", $string);
 	 * @param $string
 	 *
 	 * @return mixed|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_ProcessSmileys($string)
 	{
@@ -2618,7 +2667,7 @@ $/Dx", $string);
 	 * @param $string
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function Internal_AutoDetectURLs($string)
 	{
@@ -2722,7 +2771,7 @@ $/Dx", $string);
 	 * @param array $default_array
 	 *
 	 * @return mixed|string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function FillTemplate($template, $insert_array, $default_array = Array())
 	{
@@ -2867,7 +2916,7 @@ $/Dx", $string);
 	 * @param int $start
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_CollectText($array, $start = 0)
 	{
@@ -2886,7 +2935,7 @@ $/Dx", $string);
 	 * @param int $end
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_CollectTextReverse($array, $start = 0, $end = 0)
 	{
@@ -2903,7 +2952,7 @@ $/Dx", $string);
 	 * @param $pos
 	 *
 	 * @return array
-	 * @since  Kunena
+	 * @since BBCode
 	 */
 	function Internal_GenerateOutput($pos)
 	{
@@ -2969,7 +3018,7 @@ $/Dx", $string);
 	 * @param $class_list
 	 *
 	 * @return bool
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_RewindToClass($class_list)
 	{
@@ -2998,6 +3047,7 @@ $/Dx", $string);
 	 * @param $tag_name
 	 *
 	 * @return array|bool|string
+	 * @since BBCode
 	 */
 	function Internal_FinishTag($tag_name)
 	{
@@ -3050,7 +3100,7 @@ $/Dx", $string);
 	 * @param bool $raw
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_DumpStack($array = false, $raw = false)
 	{
@@ -3098,6 +3148,7 @@ $/Dx", $string);
 	/**
 	 * @param $pattern
 	 * @param $array
+	 * @since BBCode
 	 */
 	function Internal_CleanupWSByPoppingStack($pattern, &$array)
 	{
@@ -3136,6 +3187,7 @@ $/Dx", $string);
 
 	/**
 	 * @param $pattern
+	 * @since BBCode
 	 */
 	function Internal_CleanupWSByEatingInput($pattern)
 	{
@@ -3180,7 +3232,7 @@ $/Dx", $string);
 	 * @param $array
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_CleanupWSByIteratingPointer($pattern, $pos, $array)
 	{
@@ -3218,7 +3270,7 @@ $/Dx", $string);
 	 * @param $limit
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_LimitText($string, $limit)
 	{
@@ -3260,6 +3312,7 @@ $/Dx", $string);
 	 * @param $contents
 	 *
 	 * @return bool|mixed|string
+	 * @since BBCode
 	 */
 	function DoTag($action, $tag_name, $default_value, $params, $contents)
 	{
@@ -3431,7 +3484,7 @@ $/Dx", $string);
 	 * @param $contents
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since BBCode
  	 */
 	function Internal_DoEnhancedTag($tag_rule, $params, $contents)
 	{
@@ -3443,6 +3496,7 @@ $/Dx", $string);
 
 	/**
 	 * @param $params
+	 * @since BBCode
 	 */
 	function Internal_UpdateParamsForMissingEndTag($params)
 	{
@@ -3471,6 +3525,7 @@ $/Dx", $string);
 	 * @param $tag_name
 	 * @param $tag_params
 	 * @param $tag_rule
+	 * @since BBCode
 	 */
 	function Internal_ProcessIsolatedTag($tag_name, $tag_params, $tag_rule)
 	{
@@ -3500,6 +3555,7 @@ $/Dx", $string);
 	 * @param $tag_name
 	 * @param $tag_params
 	 * @param $tag_rule
+	 * @since BBCode
 	 */
 	function Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule)
 	{
@@ -3707,6 +3763,7 @@ $/Dx", $string);
 	 * @param $string
 	 *
 	 * @return array|mixed|string
+	 * @since BBCode
 	 */
 	function Parse($string)
 	{

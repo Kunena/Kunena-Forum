@@ -17,6 +17,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 {
 	/**
 	 * @var int|mixed
+	 * @since Kunena
 	 */
 	public $code = 200;
 

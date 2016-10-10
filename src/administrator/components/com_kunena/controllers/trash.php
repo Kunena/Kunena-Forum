@@ -20,6 +20,7 @@ class KunenaAdminControllerTrash extends KunenaController
 {
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $baseurl = null;
 

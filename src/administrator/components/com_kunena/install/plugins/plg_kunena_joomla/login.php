@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaLoginJoomla
+ * @since Kunena
  */
 class KunenaLoginJoomla
 {

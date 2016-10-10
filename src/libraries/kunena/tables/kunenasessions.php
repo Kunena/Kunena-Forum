@@ -65,6 +65,7 @@ class TableKunenaSessions extends KunenaTable
 	 * TableKunenaSessions constructor.
 	 *
 	 * @param   string $db
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAdminTemplate
+ * @since Kunena
  */
 class KunenaAdminTemplate
 {

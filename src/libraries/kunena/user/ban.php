@@ -44,16 +44,19 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @var JDate|null
+	 * @since Kunena
 	 */
 	protected static $_now = null;
 
 	/**
 	 * @var JUser|null
+	 * @since Kunena
 	 */
 	protected static $_my = null;
 
 	/**
 	 * @var JDatabaseDriver|null
+	 * @since Kunena
 	 */
 	protected $_db = null;
 

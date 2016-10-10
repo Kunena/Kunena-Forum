@@ -29,6 +29,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @var int|string
+	 * @since Kunena
 	 */
 	protected $allreadtime;
 

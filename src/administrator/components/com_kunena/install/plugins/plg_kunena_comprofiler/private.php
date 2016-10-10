@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaPrivateComprofiler
+ * @since Kunena
  */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {

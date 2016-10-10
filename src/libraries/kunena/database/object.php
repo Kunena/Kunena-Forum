@@ -24,6 +24,7 @@ abstract class KunenaDatabaseObject extends JObject
 
 	/**
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_name = null;
 

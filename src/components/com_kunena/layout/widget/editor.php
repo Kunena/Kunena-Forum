@@ -136,7 +136,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlinktag=0;");
 		}
 
-		if ($templatesettings->get('image_upload != ""') && $templatesettings->get('picture'))
+		if ($templatesettings->get('picture'))
 		{
 			$this->addScriptDeclaration("kunena_showpicturetag=1;");
 		}

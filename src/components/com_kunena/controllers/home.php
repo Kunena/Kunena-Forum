@@ -19,9 +19,9 @@ defined('_JEXEC') or die();
 class KunenaControllerHome extends KunenaController
 {
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $home = 1;
 
 	/**

@@ -26,7 +26,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $usersUrl;
 
 	/**

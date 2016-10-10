@@ -112,7 +112,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 * @since Kunena
- 	 */
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permissions of the current category - activity only if public or registered

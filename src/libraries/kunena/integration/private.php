@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 class KunenaPrivate
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $instance = false;
@@ -148,7 +148,7 @@ class KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getInboxLink($text)
 	{
 		return '';

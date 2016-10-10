@@ -19,31 +19,31 @@ defined('_JEXEC') or die();
 class KunenaModelTopics extends KunenaModel
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $topics = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $messages = false;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $total = 0;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $topicActions = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $actionMove = false;

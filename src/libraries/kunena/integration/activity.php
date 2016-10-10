@@ -26,7 +26,7 @@ class KunenaIntegrationActivity
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected static $instance;
 
 	/**

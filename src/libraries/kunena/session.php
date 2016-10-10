@@ -16,13 +16,13 @@ defined('_JEXEC') or die();
 class KunenaSession extends JObject
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_sessiontimeout = false;
@@ -35,7 +35,7 @@ class KunenaSession extends JObject
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	private static $_instance;
 
 	/**

@@ -25,13 +25,13 @@ class KunenaModelSearch extends KunenaModel
 	protected $error = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $total = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $messages = false;

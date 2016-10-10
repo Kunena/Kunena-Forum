@@ -20,13 +20,13 @@ require_once dirname(__FILE__) . '/integration.php';
 class KunenaAccessComprofiler
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $categories = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $groups = false;

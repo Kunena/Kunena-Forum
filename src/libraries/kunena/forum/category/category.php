@@ -57,9 +57,9 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public $id = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $level = 0;
 
 	/**
@@ -86,19 +86,19 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	protected $_channels = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_topics = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_posts = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_lastcat = false;
@@ -116,9 +116,9 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $_new = 0;
 
 	/**

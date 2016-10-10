@@ -44,7 +44,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**

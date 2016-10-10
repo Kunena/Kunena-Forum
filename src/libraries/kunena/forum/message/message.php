@@ -73,15 +73,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_topic = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $_hold = 1;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $_thread = 0;
 
 	/**
@@ -1344,7 +1344,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				WHERE m.userid={$this->_db->quote($this->userid)}
 				AND m.ip={$this->_db->quote($this->ip)}
 				AND t.message={$this->_db->quote($this->message)}
-				AND m.time>={$this->_db->quote($duplicatetimewindow)}");
+				AND m.time>={$this->_db->quote($duplicatetimewindow)}"
+			);
 
 			try
 			{
@@ -1758,7 +1759,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
 				'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
 				'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-				'', $title2);
+				'', $title2
+			);
 		}
 
 		return $title;

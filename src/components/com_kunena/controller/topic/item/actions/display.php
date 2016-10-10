@@ -32,7 +32,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $topicButtons;
 
 	/**

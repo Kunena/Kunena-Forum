@@ -25,13 +25,13 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected static $_tree;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected static $allowed;
 
 	/**

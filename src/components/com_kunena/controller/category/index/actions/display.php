@@ -32,7 +32,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $categoryButtons;
 
 	/**

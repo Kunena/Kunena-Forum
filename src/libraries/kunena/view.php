@@ -36,7 +36,7 @@ class KunenaView extends JViewLegacy
 	public $config = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $embedded = false;
@@ -54,15 +54,15 @@ class KunenaView extends JViewLegacy
 	public $teaser = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $inLayout = 0;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	protected $_row = 0;
 
 	/**
@@ -212,8 +212,8 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param array $messages
-	 * @param int   $code
+	 * @param   array $messages
+	 * @param   int   $code
 	 */
 	public function displayError($messages = array(), $code = 404)
 	{
@@ -268,7 +268,7 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param array $errors
+	 * @param   array $errors
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -292,7 +292,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * @param $position
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function isModulePosition($position)
 	{
@@ -306,7 +306,7 @@ class KunenaView extends JViewLegacy
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getModulePosition($position)
 	{
 		$html     = '';
@@ -326,12 +326,12 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param     $text
-	 * @param int $len
+	 * @param   int $len
 	 * @param     $parent
 	 *
 	 * @return mixed|void
 	 * @since Kunena
- 	 */
+	 */
 	public function parse($text, $len = 0, $parent)
 	{
 		if ($this instanceof KunenaViewSearch)
@@ -560,21 +560,21 @@ class KunenaView extends JViewLegacy
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getTemplateMD5()
 	{
 		return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
-	 * @param null                $content
-	 * @param null                $title
-	 * @param null                $class
+	 * @param   KunenaForumCategory $category
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
 		if (!$content)
@@ -591,16 +591,16 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param KunenaForumTopic         $topic
-	 * @param null                     $action
-	 * @param null                     $content
-	 * @param null                     $title
-	 * @param null                     $class
-	 * @param KunenaForumCategory|null $category
+	 * @param   KunenaForumTopic         $topic
+	 * @param   null                     $action
+	 * @param   null                     $content
+	 * @param   null                     $title
+	 * @param   null                     $class
+	 * @param   KunenaForumCategory|null $category
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
 		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);

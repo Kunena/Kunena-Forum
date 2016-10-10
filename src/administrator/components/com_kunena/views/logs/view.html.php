@@ -18,9 +18,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewLogs extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->state      = $this->get('state');
@@ -196,7 +196,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 *
 	 * @return mixed|string
 	 * @since Kunena
- 	 */
+	 */
 	public function getType($id)
 	{
 		static $types = array(1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP');
@@ -209,7 +209,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getGroupCheckbox($name)
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';

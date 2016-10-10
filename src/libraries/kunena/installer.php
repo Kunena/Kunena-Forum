@@ -15,7 +15,6 @@ defined('_JEXEC') or die();
  */
 class KunenaInstaller
 {
-	// Minimum supported versions during downgrade.
 	/**
 	 * @var array
 	 * @since Kunena

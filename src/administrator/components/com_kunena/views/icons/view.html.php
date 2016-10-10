@@ -18,9 +18,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewIcons extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->state      = $this->get('state');

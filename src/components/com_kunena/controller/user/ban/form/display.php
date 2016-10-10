@@ -38,7 +38,7 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**

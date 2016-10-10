@@ -24,7 +24,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $context;
 
 	/**

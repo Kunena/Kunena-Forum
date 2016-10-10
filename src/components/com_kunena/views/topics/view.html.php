@@ -18,9 +18,9 @@ defined('_JEXEC') or die();
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
@@ -53,9 +53,9 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	function displayUser($tpl = null)
 	{
 		$this->layout           = 'user';
@@ -85,9 +85,9 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	function displayPosts($tpl = null)
 	{
 		$this->layout           = 'posts';
@@ -213,7 +213,7 @@ class KunenaViewTopics extends KunenaView
 	 *
 	 * @return mixed|string
 	 * @since Kunena
- 	 */
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])

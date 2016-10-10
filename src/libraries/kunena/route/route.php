@@ -22,7 +22,6 @@ KunenaRoute::initialize();
  */
 abstract class KunenaRoute
 {
-	// List of views: array of default variable=>value pairs, which can be removed from URI
 	/**
 	 * @var array
 	 * @since Kunena
@@ -42,14 +41,12 @@ abstract class KunenaRoute
 		'user'         => array('layout' => 'default', 'userid' => '0'),
 	);
 
-	// Reserved layout names for category view
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
-	// Use category name only in these views
 	/**
 	 * @var array
 	 * @since Kunena
@@ -63,37 +60,37 @@ abstract class KunenaRoute
 	static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	static $time = 0;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $adminApp = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $config = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $menus = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $menu = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $default = false;
@@ -105,13 +102,13 @@ abstract class KunenaRoute
 	static $active = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $home = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $search = false;
@@ -123,7 +120,7 @@ abstract class KunenaRoute
 	static $current = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $childlist = false;
@@ -147,7 +144,7 @@ abstract class KunenaRoute
 	static $uris = array();
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $urisSave = false;

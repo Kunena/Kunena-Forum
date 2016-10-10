@@ -44,7 +44,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**

@@ -32,13 +32,13 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $message;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $messageButtons;
 
 	/**

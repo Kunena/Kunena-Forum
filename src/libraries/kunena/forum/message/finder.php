@@ -224,7 +224,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

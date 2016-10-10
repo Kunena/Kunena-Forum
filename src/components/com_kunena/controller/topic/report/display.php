@@ -38,7 +38,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $uri;
 
 	/**

@@ -26,13 +26,13 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $changeUsername;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $frontendForm;
 
 	/**

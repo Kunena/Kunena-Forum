@@ -235,7 +235,7 @@ abstract class KunenaBbcodeEditorElement
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+		 */
 	var $name;
 
 	/**
@@ -275,31 +275,31 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $tag;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $config;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $title;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $alt;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $class;
 
 	/**

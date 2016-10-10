@@ -26,7 +26,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $settings;
 
 	/**

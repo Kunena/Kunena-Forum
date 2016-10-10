@@ -475,7 +475,7 @@ class KunenaAccessJoomla
 
 	/**
 	 * @param      $action
-	 * @param null $asset
+	 * @param   null $asset
 	 *
 	 * @return array
 	 * @since  Kunena

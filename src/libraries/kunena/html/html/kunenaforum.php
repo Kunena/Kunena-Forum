@@ -255,11 +255,11 @@ abstract class JHtmlKunenaForum
 	/**
 	 * @param       $name
 	 * @param       $options
-	 * @param array $selected
+	 * @param   array $selected
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public static function checklist($name, $options, $selected = array())
 	{
 		if ($selected !== true && !is_array($selected))

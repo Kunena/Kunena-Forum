@@ -508,7 +508,7 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
-	 * @param null $text
+	 * @param   null $text
 	 *
 	 * @return string
 	 *
@@ -800,8 +800,8 @@ class KunenaIcons
 	 * Return the category icon
 	 *
 	 * @param      $categoryicon
-	 * @param null $new
-	 * @param bool $big
+	 * @param   null $new
+	 * @param   bool $big
 	 *
 	 * @return string
 	 * @since K5.0

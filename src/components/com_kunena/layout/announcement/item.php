@@ -22,7 +22,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $buttons;
 
 	/**

@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 class KunenaPrivateCommunity extends KunenaPrivate
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $loaded = false;

@@ -36,11 +36,11 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $config;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $primary = false;

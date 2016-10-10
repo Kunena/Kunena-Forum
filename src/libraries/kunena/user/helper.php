@@ -419,9 +419,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
-	 * @param    array   $groupIds  List of Group Ids (null for all).
-	 * @param    array   $userIds   List of User Ids (null for all).
-	 * @param    boolean $recursive Recursively include all child groups (optional)
+	 * @param   array   $groupIds  List of Group Ids (null for all).
+	 * @param   array   $userIds   List of User Ids (null for all).
+	 * @param   boolean $recursive Recursively include all child groups (optional)
 	 *
 	 * @return  array
 	 * @throws  BadMethodCallException  If first two parameters are both null.
@@ -644,7 +644,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return bool|int
+	 * @return boolean|integer
 	 *
 	 * @since K5.1
 	 */

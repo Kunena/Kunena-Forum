@@ -18,13 +18,13 @@ defined('_JEXEC') or die();
 class KunenaAccessCommunity
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $categories = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $groups = false;

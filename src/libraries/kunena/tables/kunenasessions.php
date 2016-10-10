@@ -20,9 +20,9 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaSessions extends KunenaTable
 {
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $userid = 0;
 
 	/**
@@ -38,25 +38,25 @@ class TableKunenaSessions extends KunenaTable
 	public $allowedcats = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $lasttime = 0;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $readtopics = 0;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $currvisit = 0;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
@@ -64,7 +64,7 @@ class TableKunenaSessions extends KunenaTable
 	/**
 	 * TableKunenaSessions constructor.
 	 *
-	 * @param string $db
+	 * @param   string $db
 	 */
 	public function __construct($db)
 	{

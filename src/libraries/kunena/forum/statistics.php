@@ -129,31 +129,31 @@ class KunenaForumStatistics
 	public $top = array();
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $showgenstats = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $showpopuserstats = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $showpopsubjectstats = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $showpoppollstats = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $showpopthankyoustats = false;
@@ -345,7 +345,8 @@ class KunenaForumStatistics
 				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0");
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
+			);
 
 			try
 			{

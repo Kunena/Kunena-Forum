@@ -26,7 +26,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**
@@ -38,13 +38,13 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $total;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $topics;
 
 	/**

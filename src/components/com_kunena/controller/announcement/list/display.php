@@ -26,13 +26,13 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $announcements;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $pagination;
 
 	/**

@@ -416,7 +416,8 @@ abstract class KunenaForumMessageHelper
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})
-			GROUP BY m.id, mm.hold");
+			GROUP BY m.id, mm.hold"
+		);
 
 		try
 		{

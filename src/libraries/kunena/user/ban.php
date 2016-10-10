@@ -58,7 +58,7 @@ class KunenaUserBan extends JObject
 	protected $_db = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;

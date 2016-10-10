@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 abstract class KunenaTable extends JTable
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
@@ -335,11 +335,11 @@ abstract class KunenaTable extends JTable
 	}
 
 	/**
-	 * @param null $pk
+	 * @param   null $pk
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	public function delete($pk = null)
 	{
 		// Workaround Joomla 3.2 change.

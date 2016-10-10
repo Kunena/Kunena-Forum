@@ -27,7 +27,6 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $userid = null;
 
-	// From Joomla
 	/**
 	 * @var null
 	 * @since Kunena

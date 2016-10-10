@@ -47,25 +47,25 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $path;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $width;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $height;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $shortname;
 
 	/**

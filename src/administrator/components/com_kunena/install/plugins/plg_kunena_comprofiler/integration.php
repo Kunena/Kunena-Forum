@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 class KunenaIntegrationComprofiler
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $open = false;

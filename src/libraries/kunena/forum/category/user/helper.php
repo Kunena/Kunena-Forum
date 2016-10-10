@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForumCategoryUserHelper
 {
-	// Global for every instance
 	/**
 	 * @var array
 	 * @since Kunena
@@ -106,8 +105,8 @@ abstract class KunenaForumCategoryUserHelper
 	}
 
 	/**
-	 * @param array $ids
-	 * @param null  $user
+	 * @param   array $ids
+	 * @param   null  $user
 	 */
 	static public function markRead(array $ids, $user = null)
 	{

@@ -26,7 +26,7 @@ class KunenaUpload
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $filename;
 
 	/**
@@ -200,11 +200,13 @@ class KunenaUpload
 			case 'gb':
 				$value *= 1024;
 				break;
+
 			// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
 				break;
+
 			// Continue.
 			case 'k':
 			case 'kb':
@@ -478,7 +480,8 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			} while (JDEBUG && $e);
+			}
+			while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;

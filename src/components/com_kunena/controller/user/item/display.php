@@ -44,13 +44,13 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $headerText;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $tabs;
 
 	/**

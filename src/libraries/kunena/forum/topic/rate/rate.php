@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 class KunenaForumTopicRate extends JObject
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
@@ -30,15 +30,15 @@ class KunenaForumTopicRate extends JObject
 	protected $_db = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $topic_id = 0;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+	 */
 	public $stars = 0;
 
 	/**

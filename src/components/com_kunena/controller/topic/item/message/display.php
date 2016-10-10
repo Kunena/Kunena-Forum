@@ -26,43 +26,43 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $message;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $topic;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $category;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $profile;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $reportMessageLink;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $ipLink;
 
 	/**

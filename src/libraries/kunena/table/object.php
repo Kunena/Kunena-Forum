@@ -222,7 +222,7 @@ abstract class KunenaTableObject
 	/**
 	 * @return mixed|string
 	 * @since Kunena
- 	 */
+	 */
 	public function getId()
 	{
 		return $this->_key;

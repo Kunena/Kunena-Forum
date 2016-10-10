@@ -26,7 +26,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $announcement;
 
 	/**

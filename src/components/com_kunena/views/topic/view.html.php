@@ -44,27 +44,27 @@ class KunenaViewTopic extends KunenaView
 	var $poll = null;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+		 */
 	var $mmm = 0;
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
- 	 */
+		 */
 	var $k = 0;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	var $cache = true;
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->layout = $this->state->get('layout');
@@ -196,9 +196,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayUnread($tpl = null)
 	{
 		// Redirect unread layout to the page that contains the first unread message
@@ -216,9 +216,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayFlat($tpl = null)
 	{
 		$this->state->set('layout', 'default');
@@ -227,9 +227,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayThreaded($tpl = null)
 	{
 		$this->state->set('layout', 'threaded');
@@ -238,9 +238,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	public function displayIndented($tpl = null)
 	{
 		$this->state->set('layout', 'indented');
@@ -249,9 +249,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	protected function DisplayCreate($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -357,9 +357,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 * @since Kunena
- 	 */
+	 */
 	protected function DisplayReply($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -435,11 +435,11 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	protected function displayEdit($tpl = null)
 	{
 		$this->catid = $this->state->get('item.catid');
@@ -511,7 +511,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function getMessageProfileBox()
 	{
 		static $profiles = array();
@@ -622,7 +622,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	function getTopicActions()
 	{
 		$catid = $this->state->get('item.catid');
@@ -719,7 +719,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	function getMessageActions()
 	{
 		$catid        = $this->state->get('item.catid');
@@ -793,9 +793,9 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param      $id
 	 * @param      $message
-	 * @param null $template
+	 * @param   null $template
 	 * @since Kunena
- 	 */
+	 */
 	function displayMessage($id, $message, $template = null)
 	{
 		$layout = $this->getLayout();
@@ -982,7 +982,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return mixed|string
 	 * @since Kunena
- 	 */
+	 */
 	function fillMessageInfo($matches)
 	{
 		switch ($matches[1])
@@ -1005,9 +1005,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $template
+	 * @param   null $template
 	 * @since Kunena
- 	 */
+	 */
 	function displayMessages($template = null)
 	{
 		foreach ($this->messages as $id => $message)
@@ -1021,7 +1021,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return KunenaPagination
 	 * @since Kunena
- 	 */
+	 */
 	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -1043,7 +1043,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();
@@ -1052,9 +1052,9 @@ class KunenaViewTopic extends KunenaView
 	// Helper functions
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function hasThreadHistory()
 	{
 		if (!$this->config->showhistory || !$this->topic->exists())
@@ -1146,7 +1146,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getNumLink($mesid, $replycnt)
 	{
 		if ($this->config->ordering_system == 'replyid')
@@ -1166,7 +1166,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function displayMessageField($name)
 	{
 		return $this->message->displayField($name);
@@ -1177,7 +1177,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function displayTopicField($name)
 	{
 		return $this->topic->displayField($name);
@@ -1188,16 +1188,16 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 */
 	function displayCategoryField($name)
 	{
 		return $this->category->displayField($name);
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
- 	 */
+	 */
 	function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
@@ -1211,7 +1211,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $type
 	 * @since Kunena
- 	 */
+	 */
 	protected function _prepareDocument($type)
 	{
 		$app       = JFactory::getApplication();
@@ -1383,21 +1383,21 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param        $anker
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string $rel
+	 * @param   string $class
 	 *
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 
 	/**
-	 * @param unknown $title
+	 * @param   unknown $title
 	 * @since Kunena
- 	 */
+	 */
 	public function setTitle($title)
 	{
 		if ($this->inLayout)
@@ -1430,7 +1430,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $keywords
 	 * @since Kunena
- 	 */
+	 */
 	public function setKeywords($keywords)
 	{
 		if ($this->inLayout)
@@ -1450,7 +1450,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $description
 	 * @since Kunena
- 	 */
+	 */
 	public function setDescription($description)
 	{
 		if ($this->inLayout)

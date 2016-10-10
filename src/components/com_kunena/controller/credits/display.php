@@ -26,25 +26,25 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $logo;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $intro;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $memberList;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $thanks;
 
 	/**

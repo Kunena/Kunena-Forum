@@ -20,13 +20,13 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $category;
 
 	/**
@@ -38,13 +38,13 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $poll;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $uri;
 
 	/**

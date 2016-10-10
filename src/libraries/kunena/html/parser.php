@@ -23,7 +23,7 @@ abstract class KunenaHtmlParser
 	static $emoticons = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	static $relative = true;

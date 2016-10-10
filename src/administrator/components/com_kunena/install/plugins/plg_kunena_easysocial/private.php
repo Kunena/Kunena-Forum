@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $loaded = false;

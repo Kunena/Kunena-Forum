@@ -27,7 +27,7 @@ defined('_JEXEC') or die();
 class KunenaForumTopicUser extends JObject
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;

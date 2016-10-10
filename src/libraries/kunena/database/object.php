@@ -34,13 +34,13 @@ abstract class KunenaDatabaseObject extends JObject
 	protected $_table = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_saving = false;

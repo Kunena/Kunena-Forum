@@ -23,13 +23,13 @@ class KunenaAvatar
 	public $avatarSizes = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $resize = false;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $instance = false;

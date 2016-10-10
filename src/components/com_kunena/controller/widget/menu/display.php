@@ -26,49 +26,49 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $basemenu;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $list;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $menu;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $active;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $path;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $active_id;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $showAll;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $class_sfx;
 
 	/**

@@ -26,13 +26,13 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $total;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $pagination;
 
 	/**

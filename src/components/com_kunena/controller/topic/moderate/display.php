@@ -38,25 +38,25 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $uri;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $title;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $topicIcons;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	public $userLink;
 
 	/**

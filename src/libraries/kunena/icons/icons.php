@@ -428,7 +428,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-time"></i>';
+			return '<i class="icon icon-clock"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
@@ -436,7 +436,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-time"></i>';
+			return '<i class="icon icon-clock"></i>';
 		}
 	}
 

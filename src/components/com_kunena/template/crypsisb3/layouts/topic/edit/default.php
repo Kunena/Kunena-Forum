@@ -193,7 +193,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
 							<div class="controls">
-								<input class="input-xxlarge form-control" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"/>
+								<input class="input-xxlarge form-control" name="modified_reason" maxlength="200" type="text"
+								       value="<?php echo $this->message->modified_reason; ?>" title="reason"/>
 							</div>
 						</div>
 						<?php endif; ?>

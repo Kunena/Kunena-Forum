@@ -19,72 +19,208 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaCategories extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $parent_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $alias = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $icon = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $icon_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $locked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $accesstype = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $pub_access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $pub_recurse = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $admin_access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $admin_recurse = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $published = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $channels = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $checked_out = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $checked_out_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $review = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allow_anonymous = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $post_anonymous = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hits = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $description = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $headerdesc = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $class_sfx = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allow_polls = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topic_ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $iconset = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $numTopics = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $numPosts = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_topic_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
 	/**

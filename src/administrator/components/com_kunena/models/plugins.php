@@ -11,6 +11,9 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
+/**
+ * Class KunenaAdminModelPlugins
+ */
 class KunenaAdminModelPlugins extends JModelList
 {
 	/**
@@ -116,7 +119,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 *
 	 * @return  array
 	 * @since Kunena
- 	 */
+	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
 		$search   = $this->getState('filter.name') ? $this->getState('filter.name') : $this->getState('filter.search');

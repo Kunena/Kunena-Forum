@@ -17,10 +17,22 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Announcement/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $announcements;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pagination;
 
 	/**

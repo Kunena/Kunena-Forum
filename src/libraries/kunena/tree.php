@@ -15,20 +15,49 @@ defined('_JEXEC') or die();
  */
 class KunenaTree implements Iterator
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_tree = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_parents = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_levels = array();
 
+	/**
+	 * @var null|string
+	 */
 	protected $_id = null;
 
+	/**
+	 * @var null|string
+	 */
 	protected $_parent = null;
 
+	/**
+	 * @var null|string
+	 */
 	protected $_level = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $heap = null;
 
 	//	protected $_count = null;

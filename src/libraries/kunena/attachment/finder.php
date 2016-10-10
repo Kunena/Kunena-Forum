@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_attachments';
 
 	/**

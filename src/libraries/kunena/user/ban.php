@@ -24,21 +24,54 @@ class KunenaUserBan extends JObject
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instancesByUserid = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instancesByIP = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_useridcache = array();
 
+	/**
+	 * @var JDate|null
+	 */
 	protected static $_now = null;
 
+	/**
+	 * @var JUser|null
+	 */
 	protected static $_my = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ANY = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ACTIVE = 1;
 
 	/**

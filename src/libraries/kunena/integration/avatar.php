@@ -16,10 +16,22 @@ defined('_JEXEC') or die();
  */
 class KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $avatarSizes = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $resize = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**

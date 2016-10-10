@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaLogFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_logs';
 
 	/**
@@ -55,6 +59,11 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $condition
+	 *
+	 * @return $this
+	 */
 	public function innerJoin($condition)
 	{
 		$this->query->innerJoin($condition);
@@ -62,6 +71,11 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $columns
+	 *
+	 * @return $this
+	 */
 	public function select($columns)
 	{
 		$this->query->select($columns);
@@ -69,6 +83,11 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $columns
+	 *
+	 * @return $this
+	 */
 	public function group($columns)
 	{
 		$this->query->group($columns);
@@ -106,6 +125,9 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $results;
 	}
 
+	/**
+	 * @param   JDatabaseQuery $query
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 	}

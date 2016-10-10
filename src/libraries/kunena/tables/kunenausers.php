@@ -27,19 +27,46 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $userid = null;
 
-	// From Joomla
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $username = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $email = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $blocked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $registerDate = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $lastvisitDate = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $view = null;
 
 	/**
@@ -91,6 +118,10 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $karma = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $karma_time = null;
 
 	/**

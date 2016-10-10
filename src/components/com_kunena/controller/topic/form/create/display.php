@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Edit';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $captchaHtml = null;
 
 	/**
@@ -28,7 +36,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 *
 	 * @throws RuntimeException
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

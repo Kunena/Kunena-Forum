@@ -17,18 +17,34 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $category;
 
 	/**
 	 * @var KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public $topic;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $poll;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $uri;
 
 	/**
@@ -38,7 +54,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 class KunenaUploadHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**

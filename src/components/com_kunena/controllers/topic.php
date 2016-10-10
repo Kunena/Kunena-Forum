@@ -144,7 +144,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @throws RuntimeException
 	 * @since Kunena
- 	 */
+	 */
 	public function upload()
 	{
 		// Only support JSON requests.
@@ -939,7 +939,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return boolean
 	 * @internal param string $usbject
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	protected function checkURLInSubject($subject)
 	{

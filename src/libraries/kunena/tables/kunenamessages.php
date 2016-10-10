@@ -19,46 +19,130 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaMessages extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $parent = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $thread = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $catid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $email = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $subject = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ip = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topic_emoticon = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $locked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hold = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hits = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $moved = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_reason = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $message = null;
 
 	/**

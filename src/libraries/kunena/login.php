@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 class KunenaLogin
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**

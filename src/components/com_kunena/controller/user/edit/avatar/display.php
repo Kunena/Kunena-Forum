@@ -19,18 +19,46 @@ use Joomla\String\StringHelper;
  */
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit/Avatar';
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $gallery;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleries;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleryOptions;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleryImages;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
@@ -40,7 +68,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -119,7 +147,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 *
 	 * @return  array
 	 * @since Kunena
- 	 */
+	 */
 	protected function getGallery($path)
 	{
 		return KunenaFolder::files($path, $this->imageFilter);

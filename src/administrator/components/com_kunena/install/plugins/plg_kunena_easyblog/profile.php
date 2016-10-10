@@ -12,8 +12,15 @@
 
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaProfileEasyblog
+ */
 class KunenaProfileEasyblog extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

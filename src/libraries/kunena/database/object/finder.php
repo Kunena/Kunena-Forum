@@ -9,7 +9,7 @@
  * @link          https://www.kunena.org
  **/
 
-// no direct access
+// No direct access
 defined('_JEXEC') or die;
 
 /**
@@ -44,10 +44,22 @@ abstract class KunenaDatabaseObjectFinder
 	 */
 	protected $db;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $start = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $limit = 20;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $skip = false;
 
 	/**
@@ -128,7 +140,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string       $field     Field name.
 	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array $value     Value.
-	 * @param  bool          $escape    Only works for LIKE / NOT LIKE.
+	 * @param   bool          $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -136,6 +148,7 @@ abstract class KunenaDatabaseObjectFinder
 	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
+
 		switch ($operation)
 		{
 			case '>':
@@ -158,6 +171,7 @@ abstract class KunenaDatabaseObjectFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
+
 				if (empty($value))
 				{
 					// WHERE field IN (nothing).
@@ -168,11 +182,12 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db)
-					{
-						$item = $db->quote($item);
-					});
-					$list = implode(',', $value);
-					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+						{
+							$item = $db->quote($item);
+						}
+					);
+							$list = implode(',', $value);
+							$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
 				break;
 		}

@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaPrivateComprofiler
+ */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -32,7 +39,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @return string|void
 	 * @since Kunena
- 	 */
+	 */
 	protected function getURL($userid)
 	{
 	}

@@ -19,12 +19,28 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaPolls extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $title = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $threadid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $polltimetolive = null;
 
 	/**

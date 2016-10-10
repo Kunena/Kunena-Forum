@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForumTopicRateHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**

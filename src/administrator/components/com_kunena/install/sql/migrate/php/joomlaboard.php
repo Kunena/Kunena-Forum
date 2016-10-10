@@ -10,8 +10,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaMigratorJoomlaboard
+ */
 class KunenaMigratorJoomlaboard
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $versions = array(
 		array('version' => '1.0', 'date' => '0000-00-00', 'table' => 'sb_messages', 'column' => 'id'),
 	);

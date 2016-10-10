@@ -43,8 +43,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public $id = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaMessages';
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
 	/**
@@ -59,18 +66,46 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	protected $_attachments_del = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_topic = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_hold = 1;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_thread = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authtcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                   => array(),
 		'read'                   => array('Read'),
@@ -1309,7 +1344,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				WHERE m.userid={$this->_db->quote($this->userid)}
 				AND m.ip={$this->_db->quote($this->ip)}
 				AND t.message={$this->_db->quote($this->message)}
-				AND m.time>={$this->_db->quote($duplicatetimewindow)}");
+				AND m.time>={$this->_db->quote($duplicatetimewindow)}"
+			);
 
 			try
 			{
@@ -1723,7 +1759,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
 				'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
 				'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-				'', $title2);
+				'', $title2
+			);
 		}
 
 		return $title;

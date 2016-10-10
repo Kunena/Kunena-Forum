@@ -38,7 +38,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * @throws RuntimeException
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	public function execute()
 	{
 		try
@@ -72,7 +72,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * @throws RuntimeException
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	public function display()
 	{
 		KunenaFactory::loadLanguage('com_kunena');

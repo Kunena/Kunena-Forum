@@ -17,20 +17,40 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Index';
 
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $sections = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categories = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $pending = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $more = array();
 
 	/**

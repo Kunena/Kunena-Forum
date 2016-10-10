@@ -21,6 +21,7 @@ class plgSystemKunena extends JPlugin
 	/**
 	 * @param   object $subject
 	 * @param   array  $config
+	 *
 	 * @since Kunena
 	 */
 	function __construct(&$subject, $config)
@@ -193,6 +194,7 @@ class plgSystemKunena extends JPlugin
 	 * @param $isnew
 	 * @param $success
 	 * @param $msg
+	 *
 	 * @since Kunena
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)

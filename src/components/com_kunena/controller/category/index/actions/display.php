@@ -17,14 +17,22 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Index/Actions';
 
 	/**
 	 * @var KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $categoryButtons;
 
 	/**

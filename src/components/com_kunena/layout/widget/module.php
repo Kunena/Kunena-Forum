@@ -19,6 +19,10 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutWidgetModule extends KunenaLayout
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $position = null;
 
 	/**

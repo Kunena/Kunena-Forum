@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
  */
 class KunenaPrivate
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**
@@ -139,6 +143,12 @@ class KunenaPrivate
 		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 	}
 
+	/**
+	 * @param $text
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
 	public function getInboxLink($text)
 	{
 		return '';

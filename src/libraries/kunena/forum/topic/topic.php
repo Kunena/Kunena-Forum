@@ -45,26 +45,69 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public $id = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $unread = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $lastread = 0;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaTopics';
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authccache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_hold = 1;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_posts = 0;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_pagination = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                        => array(),
 		'read'                        => array('Read'),
@@ -539,7 +582,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	{
 		return KunenaRoute::getTopicUrl(
 			$this, $xhtml, $action,
-			$category ? KunenaForumCategoryHelper::get($category) : $this->getCategory());
+			$category ? KunenaForumCategoryHelper::get($category) : $this->getCategory()
+		);
 	}
 
 	/**
@@ -1335,10 +1379,12 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Update first and last post information into the target topic
 			$target->updatePostInfo(
 				$this->first_post_id, $this->first_post_time, $this->first_post_userid,
-				$this->first_post_message, $this->first_post_guest_name);
+				$this->first_post_message, $this->first_post_guest_name
+			);
 			$target->updatePostInfo(
 				$this->last_post_id, $this->last_post_time, $this->last_post_userid,
-				$this->last_post_message, $this->last_post_guest_name);
+				$this->last_post_message, $this->last_post_guest_name
+			);
 
 			// Save target topic
 			if (!$target->save(false))

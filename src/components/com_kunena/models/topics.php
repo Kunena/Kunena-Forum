@@ -18,14 +18,34 @@ defined('_JEXEC') or die();
  */
 class KunenaModelTopics extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topics = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $messages = false;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $total = 0;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topicActions = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $actionMove = false;
 
 	/**
@@ -452,6 +472,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @param   array $userlist
 	 * @param   array $postlist
+	 *
 	 * @since Kunena
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())

@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminViewLabels extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->state      = $this->get('state');

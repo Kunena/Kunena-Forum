@@ -19,26 +19,70 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaAnnouncements extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $title = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $sdescription = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $description = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $publish_up = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $publish_down = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $published = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $showdate = null;
 
 	/**

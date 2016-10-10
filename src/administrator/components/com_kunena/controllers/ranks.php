@@ -18,6 +18,9 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerRanks extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**

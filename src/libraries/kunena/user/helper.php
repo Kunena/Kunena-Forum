@@ -32,16 +32,40 @@ abstract class KunenaUserHelper
 	 */
 	protected static $_instances_name = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_online = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_online_status = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_lastid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_total = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_topposters = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_me = null;
 
 	/**
@@ -395,9 +419,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
-	 * @param    array   $groupIds  List of Group Ids (null for all).
-	 * @param    array   $userIds   List of User Ids (null for all).
-	 * @param    boolean $recursive Recursively include all child groups (optional)
+	 * @param   array   $groupIds  List of Group Ids (null for all).
+	 * @param   array   $userIds   List of User Ids (null for all).
+	 * @param   boolean $recursive Recursively include all child groups (optional)
 	 *
 	 * @return  array
 	 * @throws  BadMethodCallException  If first two parameters are both null.
@@ -620,7 +644,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return bool|int
+	 * @return boolean|integer
 	 *
 	 * @since K5.1
 	 */

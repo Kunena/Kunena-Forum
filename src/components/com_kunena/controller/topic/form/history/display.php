@@ -19,6 +19,10 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Edit/History';
 
 	/**

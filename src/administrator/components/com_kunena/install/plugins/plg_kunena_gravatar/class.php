@@ -9,12 +9,12 @@
  * Source:
  * http://site.gravatar.com/site/implement
  *
- * @package gravatarlib
- * @author  emberlabs.org
- * @license MIT License
- * @link    https://github.com/emberlabs/gravatarlib
+ * @package   gravatarlib
+ * @author    emberlabs.org
+ * @license   MIT License
+ * @link      https://github.com/emberlabs/gravatarlib
  * @copyright gravatar
- * @since Kunena
+ * @since     Kunena
  */
 class KunenaGravatar
 {
@@ -41,6 +41,10 @@ class KunenaGravatar
 	 * @since Kunena
 	 */
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 
 	/**
@@ -64,6 +68,7 @@ class KunenaGravatar
 
 	/**
 	 * @param   string $email
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($email = null)
@@ -86,6 +91,7 @@ class KunenaGravatar
 	 * Define extras html attributes to be added into the HTML
 	 *
 	 * @param   string $extra
+	 *
 	 * @since Kunena
 	 */
 	public function setExtra($extra)

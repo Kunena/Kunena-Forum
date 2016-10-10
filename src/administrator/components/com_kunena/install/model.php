@@ -35,20 +35,52 @@ class KunenaModelInstall extends JModelLegacy
 	 */
 	protected $__state_set = false;
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_versionprefix = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_installed = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_versions = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $_action = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_errormsg = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $_versiontablearray = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_versionarray = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	public $steps = null;
 
 	/**
@@ -116,6 +148,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Initialise Kunena, run from Joomla installer.
 	 * @since Kunena
 	 *
+	 * @since Kunena
 	 */
 	public function install()
 	{
@@ -3104,6 +3137,9 @@ class KunenaModelInstall extends JModelLegacy
 	}
 }
 
+/**
+ * Class KunenaInstallerException
+ */
 class KunenaInstallerException extends Exception
 {
 }

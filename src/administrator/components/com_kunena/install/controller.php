@@ -17,10 +17,22 @@ defined('_JEXEC') or die();
  */
 class KunenaControllerInstall extends JControllerLegacy
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $step = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $steps = null;
 
+	/**
+	 * @var bool|JModelLegacy|null
+	 * @since Kunena
+	 */
 	protected $model = null;
 
 	/**
@@ -121,7 +133,8 @@ class KunenaControllerInstall extends JControllerLegacy
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		} while (!$stop && !$error);
+		}
+		while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
@@ -234,6 +247,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	/**
 	 * @param $type
 	 * @param $errstr
+	 *
 	 * @since Kunena
 	 */
 	static public function error($type, $errstr)

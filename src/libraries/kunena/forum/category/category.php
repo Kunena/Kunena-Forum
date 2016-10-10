@@ -50,14 +50,33 @@ defined('_JEXEC') or die();
  */
 class KunenaForumCategory extends KunenaDatabaseObject
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $level = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $authorised = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_aliases = null;
 
+	/**
+	 * @var mixed|null
+	 */
 	protected $_alias = null;
 
 	/**
@@ -66,20 +85,52 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 */
 	protected $_channels = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_topics = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_posts = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_lastcat = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_new = 0;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaCategories';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                              => array(),
 		'read'                              => array('Read'),

@@ -77,6 +77,7 @@ class KunenaViewCategory extends KunenaView
 	 * @param $date
 	 * @param $userid
 	 * @param $username
+	 *
 	 * @since Kunena
 	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)

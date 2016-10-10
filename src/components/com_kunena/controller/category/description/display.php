@@ -17,6 +17,10 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Description';
 
 	/**
@@ -26,7 +30,7 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

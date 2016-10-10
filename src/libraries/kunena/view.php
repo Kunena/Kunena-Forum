@@ -15,22 +15,54 @@ defined('_JEXEC') or die();
  */
 class KunenaView extends JViewLegacy
 {
+	/**
+	 * @var JDocument|null
+	 */
 	public $document = null;
 
+	/**
+	 * @var JApplicationCms|null
+	 */
 	public $app = null;
 
+	/**
+	 * @var KunenaUser|null
+	 */
 	public $me = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 */
 	public $config = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $embedded = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $templatefiles = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $teaser = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $inLayout = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_row = 0;
 
 	/**
@@ -179,6 +211,10 @@ class KunenaView extends JViewLegacy
 		return $contents;
 	}
 
+	/**
+	 * @param   array $messages
+	 * @param   int   $code
+	 */
 	public function displayError($messages = array(), $code = 404)
 	{
 		if ($this->inLayout)
@@ -231,6 +267,9 @@ class KunenaView extends JViewLegacy
 		$this->setTitle($title);
 	}
 
+	/**
+	 * @param   array $errors
+	 */
 	public function displayNoAccess($errors = array())
 	{
 		if ($this->inLayout)
@@ -242,11 +281,19 @@ class KunenaView extends JViewLegacy
 		$this->displayError($errors, 200);
 	}
 
+	/**
+	 * @param $position
+	 */
 	public function displayModulePosition($position)
 	{
 		echo $this->getModulePosition($position);
 	}
 
+	/**
+	 * @param $position
+	 *
+	 * @return integer
+	 */
 	public function isModulePosition($position)
 	{
 		$document = JFactory::getDocument();
@@ -254,6 +301,12 @@ class KunenaView extends JViewLegacy
 		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
 
+	/**
+	 * @param $position
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
 	public function getModulePosition($position)
 	{
 		$html     = '';
@@ -271,6 +324,14 @@ class KunenaView extends JViewLegacy
 		return $html;
 	}
 
+	/**
+	 * @param     $text
+	 * @param   int $len
+	 * @param     $parent
+	 *
+	 * @return mixed|void
+	 * @since Kunena
+	 */
 	public function parse($text, $len = 0, $parent)
 	{
 		if ($this instanceof KunenaViewSearch)
@@ -496,11 +557,24 @@ class KunenaView extends JViewLegacy
 		}
 	}
 
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
 	public function getTemplateMD5()
 	{
 		return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
 	}
 
+	/**
+	 * @param   KunenaForumCategory $category
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
+	 *
+	 * @return mixed
+	 * @since Kunena
+	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
 		if (!$content)
@@ -516,6 +590,17 @@ class KunenaView extends JViewLegacy
 		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
 	}
 
+	/**
+	 * @param   KunenaForumTopic         $topic
+	 * @param   null                     $action
+	 * @param   null                     $content
+	 * @param   null                     $title
+	 * @param   null                     $class
+	 * @param   KunenaForumCategory|null $category
+	 *
+	 * @return mixed
+	 * @since Kunena
+	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
 		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);

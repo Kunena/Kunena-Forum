@@ -16,30 +16,80 @@ defined('_JEXEC') or die();
  */
 class KunenaForumStatistics
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_instance = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 */
 	protected $_config = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $lastUserId = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $memberCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $sectionCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $categoryCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $messageCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayReplyCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayReplyCount = null;
 
 	/**
@@ -48,24 +98,64 @@ class KunenaForumStatistics
 	 */
 	public $topTopics = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPosters = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topProfiles = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPolls = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topThanks = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $top = array();
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showgenstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopuserstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopsubjectstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpoppollstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopthankyoustats = false;
 
 	/**
@@ -255,7 +345,8 @@ class KunenaForumStatistics
 				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0");
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
+			);
 
 			try
 			{

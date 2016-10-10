@@ -52,6 +52,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 
 	/**
 	 * @param   array $config
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($config = array())
@@ -396,6 +397,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 *
 	 * @param   int  $client_id
 	 *
+	 * @since   Kunena
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

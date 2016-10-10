@@ -10,8 +10,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaMigratorFireboard
+ */
 class KunenaMigratorFireboard
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $versions = array(
 		array('version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit'),
 		array('version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc'),

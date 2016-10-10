@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminViewLogs extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->state      = $this->get('state');
@@ -96,6 +100,10 @@ class KunenaAdminViewLogs extends KunenaView
 
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getFilterUserFields()
 	{
 		$filterFields   = array();
@@ -109,6 +117,10 @@ class KunenaAdminViewLogs extends KunenaView
 		return $filterFields;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -124,6 +136,10 @@ class KunenaAdminViewLogs extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
@@ -137,6 +153,10 @@ class KunenaAdminViewLogs extends KunenaView
 		return $sortDirection;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getFilterTypeFields()
 	{
 		$filterFields   = array();
@@ -148,6 +168,10 @@ class KunenaAdminViewLogs extends KunenaView
 		return $filterFields;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getFilterOperationFields()
 	{
 		$filterFields = array();
@@ -167,6 +191,12 @@ class KunenaAdminViewLogs extends KunenaView
 		return $filterFields;
 	}
 
+	/**
+	 * @param $id
+	 *
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	public function getType($id)
 	{
 		static $types = array(1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP');
@@ -174,6 +204,12 @@ class KunenaAdminViewLogs extends KunenaView
 		return isset($types[$id]) ? $types[$id] : '???';
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
 	public function getGroupCheckbox($name)
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';

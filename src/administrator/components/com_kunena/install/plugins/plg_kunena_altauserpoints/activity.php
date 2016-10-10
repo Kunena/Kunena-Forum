@@ -19,6 +19,10 @@ jimport('joomla.utilities.string');
  */
 class KunenaActivityAltaUserPoints extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -105,6 +109,10 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $message
+	 * @since Kunena
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permissions of the current category - activity only if public or registered

@@ -15,6 +15,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaFactory
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $session = null;
 
 	/**

@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginComprofiler
+ */
 class KunenaLoginComprofiler
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

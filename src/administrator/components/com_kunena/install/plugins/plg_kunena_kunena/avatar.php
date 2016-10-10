@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAvatarKunena
+ */
 class KunenaAvatarKunena extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

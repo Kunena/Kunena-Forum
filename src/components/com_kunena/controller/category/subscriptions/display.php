@@ -17,12 +17,28 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pagination;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categories = array();
 
 	/**
@@ -32,7 +48,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

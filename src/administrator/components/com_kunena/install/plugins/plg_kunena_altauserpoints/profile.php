@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 class KunenaProfileAltaUserPoints extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

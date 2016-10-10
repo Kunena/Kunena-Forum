@@ -21,12 +21,16 @@ jimport('joomla.html.pagination');
  */
 class KunenaAdminModelCategories extends KunenaModel
 {
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $context;
 
 	/**
 	 * @var KunenaForumCategory[]
 	 * @since Kunena
- 	 */
+	 */
 	protected $_admincategories = false;
 
 	/**

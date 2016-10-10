@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaEasyprofile
+ */
 class plgKunenaEasyprofile extends JPlugin
 {
 	/**

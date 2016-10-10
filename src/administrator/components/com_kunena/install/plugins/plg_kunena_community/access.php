@@ -11,14 +11,34 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAccessCommunity
+ * @since Kunena
+ */
 class KunenaAccessCommunity
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $categories = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $groups = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $tree = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

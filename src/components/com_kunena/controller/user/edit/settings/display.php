@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaControllerUserEditDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit/Settings';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $settings;
 
 	/**

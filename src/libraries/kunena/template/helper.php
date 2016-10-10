@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaTemplateHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**

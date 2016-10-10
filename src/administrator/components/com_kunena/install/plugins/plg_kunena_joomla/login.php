@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginJoomla
+ */
 class KunenaLoginJoomla
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

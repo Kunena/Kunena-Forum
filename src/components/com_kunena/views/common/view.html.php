@@ -20,10 +20,25 @@ jimport('joomla.document.html.html');
  */
 class KunenaViewCommon extends KunenaView
 {
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $catid = 0;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $offline = false;
 
+	/**
+	 * @param   null $layout
+	 * @param   null $tpl
+	 *
+	 * @return mixed|void
+	 * @since Kunena
+	 */
 	function display($layout = null, $tpl = null)
 	{
 		$this->state = $this->get('State');
@@ -36,6 +51,10 @@ class KunenaViewCommon extends KunenaView
 		return $this->displayLayout($layout, $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->header = $this->escape($this->header);
@@ -50,6 +69,10 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayAnnouncement($tpl = null)
 	{
 		if ($this->offline)
@@ -105,6 +128,10 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayForumJump($tpl = null)
 	{
 		if ($this->offline)
@@ -132,6 +159,10 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayBreadcrumb($tpl = null)
 	{
 		if ($this->offline)
@@ -233,6 +264,10 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayWhosonline($tpl = null)
 	{
 		if ($this->offline)
@@ -311,6 +346,10 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayStatistics($tpl = null)
 	{
 		if ($this->offline)
@@ -342,6 +381,10 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayFooter($tpl = null)
 	{
 		if ($this->offline)
@@ -380,6 +423,10 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayMenu($tpl = null)
 	{
 		if ($this->offline)
@@ -396,6 +443,10 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
 	function getMenu()
 	{
 		$basemenu = KunenaRoute::getMenu();
@@ -422,6 +473,10 @@ class KunenaViewCommon extends KunenaView
 		return count($this->list) ? $this->loadTemplateFile('menu') : '';
 	}
 
+	/**
+	 * @param   null $tpl
+	 * @since Kunena
+	 */
 	function displayLoginBox($tpl = null)
 	{
 		if ($this->offline)
@@ -490,6 +545,12 @@ class KunenaViewCommon extends KunenaView
 		echo $contents;
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	function fillLoginBoxInfo($matches)
 	{
 		switch ($matches[1])
@@ -515,6 +576,11 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   string $action
+	 * @param   bool   $xhtml
+	 * @since Kunena
+	 */
 	function getUserlistURL($action = '', $xhtml = true)
 	{
 		$profile = KunenaFactory::getProfile();
@@ -558,11 +624,27 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param        $name
+	 * @param   string $rel
+	 * @param   string $params
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
 	function getRSSLink($name, $rel = 'follow', $params = '')
 	{
 		return '<a href="' . $this->getRSSURL($params) . '">' . $name . '</a>';
 	}
 
+	/**
+	 * @param        $name
+	 * @param   string $class
+	 * @param   string $rel
+	 *
+	 * @return boolean|string
+	 * @since Kunena
+	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{
 		$my = KunenaFactory::getUser();
@@ -575,6 +657,15 @@ class KunenaViewCommon extends KunenaView
 		return '<a href="' . KunenaRoute::_('index.php?option=com_kunena&view=statistics') . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 	}
 
+	/**
+	 * @param        $action
+	 * @param        $name
+	 * @param   string $rel
+	 * @param   string $class
+	 *
+	 * @return boolean|string
+	 * @since Kunena
+	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
 		$my = KunenaFactory::getUser();

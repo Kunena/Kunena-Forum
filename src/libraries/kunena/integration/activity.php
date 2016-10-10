@@ -17,8 +17,16 @@ defined('_JEXEC') or die();
  */
 class KunenaIntegrationActivity
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $instances = array();
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected static $instance;
 
 	/**

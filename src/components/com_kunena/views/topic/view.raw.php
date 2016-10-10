@@ -203,6 +203,7 @@ class KunenaViewTopic extends KunenaView
 	 * Save rate for user logged in by JSON call
 	 *
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayRate($tpl = null)

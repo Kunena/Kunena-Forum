@@ -17,8 +17,16 @@ defined('_JEXEC') or die();
  */
 class KunenaAccessJoomla
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static protected $viewLevels = null;
 
 	/**
@@ -465,6 +473,13 @@ class KunenaAccessJoomla
 		return $result;
 	}
 
+	/**
+	 * @param      $action
+	 * @param   null $asset
+	 *
+	 * @return array
+	 * @since  Kunena
+	 */
 	protected function getAuthorisedUsers($action, $asset = null)
 	{
 		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));

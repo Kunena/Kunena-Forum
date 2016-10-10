@@ -11,10 +11,21 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * Class KunenaPrivateEasySocial
+ */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $loaded = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

@@ -17,18 +17,22 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Attachments';
 
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $me;
 
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
- 	 */
+	 */
 	public $profile;
 
 	/**
@@ -37,6 +41,10 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 */
 	public $attachments;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**

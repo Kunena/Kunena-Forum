@@ -19,20 +19,53 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaSessions extends KunenaTable
 {
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $userid = 0;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $allowed = 'na';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allowedcats = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $lasttime = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $readtopics = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $currvisit = 0;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * TableKunenaSessions constructor.
+	 *
+	 * @param   string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_sessions', 'userid', $db);

@@ -17,20 +17,52 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Item/Message';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $message;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $topic;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $profile;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $reportMessageLink;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $ipLink;
 
 	/**
@@ -40,7 +72,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
- 	 */
+	 */
 	protected function before()
 	{
 		parent::before();

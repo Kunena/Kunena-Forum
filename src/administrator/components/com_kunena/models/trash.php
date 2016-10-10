@@ -20,12 +20,28 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelTrash extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $__state_set = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_items = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_items_order = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_object = false;
 
 	/**

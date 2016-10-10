@@ -38,14 +38,34 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public $id = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaAttachments';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $path;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $width;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $height;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $shortname;
 
 	/**
@@ -54,8 +74,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public $disabled = false;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected static $_directory = 'media/kunena/attachments';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'read'        => array('Read'),
 		'createimage' => array(),

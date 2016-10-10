@@ -17,6 +17,10 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Message/List';
 
 	/**

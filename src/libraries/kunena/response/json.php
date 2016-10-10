@@ -15,8 +15,15 @@ defined('_JEXEC') or die;
  */
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
+	/**
+	 * @var int|mixed
+	 */
 	public $code = 200;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $location;
 
 	/**
@@ -59,7 +66,8 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			} while (JDEBUG && $e);
+			}
+			while (JDEBUG && $e);
 
 			// Create response data on exceptions.
 			$this->data = array('exceptions' => $exceptions);

@@ -22,8 +22,16 @@ abstract class KunenaForumCategoryHelper
 	 */
 	public static $_instances;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected static $_tree;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected static $allowed;
 
 	/**

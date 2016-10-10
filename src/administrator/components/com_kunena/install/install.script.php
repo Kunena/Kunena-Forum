@@ -13,8 +13,15 @@ defined('_JEXEC') or die();
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
+/**
+ * Class Com_KunenaInstallerScript
+ */
 class Com_KunenaInstallerScript
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $versions = array(
 		'PHP'     => array(
 			'7.1' => '7.1.0',
@@ -35,6 +42,10 @@ class Com_KunenaInstallerScript
 		)
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
@@ -369,7 +380,7 @@ class Com_KunenaInstallerScript
 	 * On some hosting the PHP version given with the version of the packet in the distribution
 	 * @return string
 	 * @internal param string $version The PHP version to clean
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -552,7 +563,7 @@ class Com_KunenaInstallerScript
 	 * @param         $path
 	 *
 	 * @internal param array $ignore
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function deleteFile($path)
 	{
@@ -565,6 +576,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
 	 * @since Kunena
 	 */
 	public function deleteFiles($path, $ignore = array())
@@ -586,6 +598,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
 	 * @since Kunena
 	 */
 	public function deleteFolders($path, $ignore = array())
@@ -607,6 +620,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
 	 * @since Kunena
 	 */
 	public function deleteFolder($path, $ignore = array())
@@ -619,7 +633,7 @@ class Com_KunenaInstallerScript
 	 * @param         $path
 	 *
 	 * @internal param array $ignore
-	 * @since Kunena
+	 * @since    Kunena
 	 */
 	public function deleteKfolder($path)
 	{

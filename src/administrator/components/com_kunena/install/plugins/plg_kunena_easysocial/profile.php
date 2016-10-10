@@ -11,8 +11,15 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * Class KunenaProfileEasySocial
+ */
 class KunenaProfileEasySocial extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -97,7 +104,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return array|void
 	 * @since Kunena
- 	 */
+	 */
 	public function _getTopHits($limit = 0)
 	{
 	}

@@ -17,6 +17,10 @@ defined('_JEXEC') or die('Unauthorized Access');
  */
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**

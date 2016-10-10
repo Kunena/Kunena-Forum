@@ -26,16 +26,40 @@ defined('_JEXEC') or die();
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaAnnouncements';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_date = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_author = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_authcache = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_authfcache = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'   => array(),
 		'read'   => array('Read'),
@@ -373,6 +397,10 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	// Internal functions
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	protected function saveInternal()
 	{
 		// @var JCache|JCacheController $cache

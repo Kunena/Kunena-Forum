@@ -17,16 +17,28 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Message/Item/Actions';
 
 	/**
 	 * @var KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 */
 	public $topic;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $message;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $messageButtons;
 
 	/**

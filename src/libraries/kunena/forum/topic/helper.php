@@ -684,7 +684,8 @@ abstract class KunenaForumTopicHelper
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
 				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
-				GROUP BY thread");
+				GROUP BY thread"
+			);
 
 			try
 			{

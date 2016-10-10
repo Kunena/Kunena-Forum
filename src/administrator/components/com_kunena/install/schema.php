@@ -32,18 +32,45 @@ class KunenaModelSchema extends JModelLegacy
 	 */
 	protected $__state_set = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $schema = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $xmlschema = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $upgradeschema = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $diffschema = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 */
 	protected $db = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $sql = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $version = null;
 
 	/**
@@ -876,7 +903,7 @@ class KunenaModelSchema extends JModelLegacy
 							case '':
 								break;
 							default:
-								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo ("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
 						}
 					}
 
@@ -921,7 +948,7 @@ class KunenaModelSchema extends JModelLegacy
 					}
 					break;
 				default:
-					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo ("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}
 
 			if (!empty($str))
@@ -997,6 +1024,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param $dbschema
 	 * @param $upgrade
+	 *
 	 * @since Kunena
 	 */
 	public function upgradeSchema($dbschema, $upgrade)
@@ -1019,6 +1047,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param          $dbschema
 	 * @param          $node
 	 * @param   string $table
+	 *
 	 * @since Kunena
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
@@ -1127,6 +1156,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param          $dbschema
 	 * @param          $node
 	 * @param   string $table
+	 *
 	 * @since Kunena
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')
@@ -1196,6 +1226,9 @@ class KunenaModelSchema extends JModelLegacy
 	}
 }
 
+/**
+ * Class KunenaSchemaException
+ */
 class KunenaSchemaException extends Exception
 {
 }

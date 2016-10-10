@@ -40,7 +40,7 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
 			<?php if (count($this->sections) > 0) : ?>
-				<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse(); ?>" type="button" data-toggle="collapse"
+				<button class="btn btn-default btn-sm <?php echo KunenaIcons::collapse(); ?>" type="button" data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"></button>
 			<?php endif; ?>
@@ -57,13 +57,13 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
+		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-xs">
 					<tr>
 						<td colspan="3">
-							<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
+							<div class="well well-sm"><?php echo $section->displayField('description'); ?></div>
 						</td>
 					</tr>
 					</thead>
@@ -81,7 +81,7 @@ foreach ($this->sections as $section) :
 					<?php if (!empty($this->categories[$section->id])) : ?>
 						<tr>
 							<td colspan="2" class="hidden-xs">
-								<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+								<?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?>
 							</td>
 							<td colspan="1" class="hidden-xs post-info">
 								<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -91,7 +91,7 @@ foreach ($this->sections as $section) :
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-							<td class="col-md-1 center hidden-xs">
+							<td class="col-md-1 text-center hidden-xs">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category, null, true, false)); ?>
 							</td>
 							<td class="col-md-8">
@@ -109,20 +109,20 @@ foreach ($this->sections as $section) :
 													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-													<span class="glyphicon glyphicon-lock"
-													      title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+													<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>">
+														<?php echo KunenaIcons::lock(); ?>
+													</span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-													<span class="glyphicon glyphicon-shield"
-													      title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+													<span data-toggle="tooltip" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>">
+														<?php echo KunenaIcons::shield(); ?>
+													</span>
 												<?php endif; ?>
 
 												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
 													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate"
-													   type="application/rss+xml"
-													   data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS'); ?>">
-														 <?php echo KunenaIcons::rss(); ?>
-													</a>
+													   type="application/rss+xml" data-toggle="tooltip"
+													   data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
 												<?php endif; ?>
 											</span>
 										</small>
@@ -137,7 +137,7 @@ foreach ($this->sections as $section) :
 								// Display subcategories
 								if (!empty($this->categories[$category->id])) : ?>
 									<div>
-										<ul class="inline">
+										<ul class="list-inline">
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
@@ -184,7 +184,7 @@ foreach ($this->sections as $section) :
 								<?php endif; ?>
 
 								<?php if (!empty($this->pending[$category->id])) : ?>
-									<div class="alert alert-warning" role="alert" style="margin-top:20px;">
+									<div class="alert alert-warning" role="alert" style="margin-top:10px;">
 										<a class="alert-link"
 										   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
 										   title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
@@ -203,24 +203,23 @@ foreach ($this->sections as $section) :
 								?>
 
 								<td class="col-md-3 hidden-xs">
-									<div class="container-fluid">
-										<div class="col-md-12">
-											<?php if ($avatar) : ?>
-											<div class="col-md-3">
+									<div class="col-md-12">
+										<?php if ($avatar) : ?>
+											<div class="col-md-4">
 												<?php echo $author->getLink($avatar); ?>
 											</div>
-											<div class="col-md-9">
-												<?php else : ?>
-												<div class="col-md-12">
-													<?php endif; ?>
-													<span><?php echo $this->getLastPostLink($category, null, null, null, null, false, true) ?></span>
-													<br>
-													<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>
-													<br>
-													<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
-												</div>
+											<div class="col-md-8">
+										<?php else : ?>
+											<div class="col-md-12">
+										<?php endif; ?>
+												<span><?php echo $this->getLastPostLink($category, null, null, null, null, false, true) ?></span>
+												<br>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>
+												<br>
+												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
 										</div>
+									</div>
 								</td>
 							<?php else : ?>
 								<td class="col-md-3 hidden-xs">

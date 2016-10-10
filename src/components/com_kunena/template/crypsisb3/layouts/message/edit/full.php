@@ -23,6 +23,7 @@ $topic    = isset($this->topic) ? $this->topic : $message->getTopic();
 $category = isset($this->category) ? $this->category : $message->getCategory();
 $config   = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$editor   = $template->params->get('editor');
 
 $this->addScript('assets/js/edit.js');
 
@@ -105,7 +106,14 @@ if ($me->canDoCaptcha())
 				<label class="col-md-12 control-label">
 					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
-				<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+				<?php if ($editor == 1)
+				{
+					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $this->config);
+				}
+				else
+				{
+					echo '<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+				} ?>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>

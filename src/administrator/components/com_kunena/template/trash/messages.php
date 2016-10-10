@@ -42,8 +42,9 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-trash"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
+			<div class="module-title nav-header">
+				<i class="icon-trash"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" method="post" id="adminForm"

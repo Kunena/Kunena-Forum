@@ -117,7 +117,7 @@ class plgKunenaComprofiler extends JPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess
+	 * @return KunenaAccess|KunenaAccessComprofiler
 	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
@@ -135,7 +135,7 @@ class plgKunenaComprofiler extends JPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin
+	 * @return KunenaLogin|KunenaLoginComprofiler
 	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()

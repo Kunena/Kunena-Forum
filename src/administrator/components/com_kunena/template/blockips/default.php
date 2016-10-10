@@ -28,8 +28,9 @@ JHtml::_('bootstrap.popover');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-compass"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') ?>
+			<div class="module-title nav-header">
+				<i class="icon-compass"></i>
+				<?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">

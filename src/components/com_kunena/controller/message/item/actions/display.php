@@ -44,7 +44,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Prepare message actions display.
 	 *
-	 * @return void
+	 * @return boolean|void
 	 * @since Kunena
 	 */
 	protected function before()

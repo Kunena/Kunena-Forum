@@ -46,8 +46,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-list-view"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
+			<div class="module-title nav-header">
+				<i class="icon-list-view"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm"

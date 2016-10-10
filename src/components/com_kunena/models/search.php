@@ -357,7 +357,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return boolean
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	public function getResults()

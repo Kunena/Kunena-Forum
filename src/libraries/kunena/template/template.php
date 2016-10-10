@@ -432,7 +432,7 @@ class KunenaTemplate extends JObject
 		}
 
 		return <<<HTML
-<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
 	<span class="{$name}"><span>{$text}</span></span>
 </a>
 HTML;

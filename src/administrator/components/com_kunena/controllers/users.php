@@ -42,7 +42,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @throws Exception
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 *
 	 * @since    2.0
 	 */

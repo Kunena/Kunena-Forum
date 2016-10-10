@@ -380,7 +380,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return KunenaForumCategory|void
 	 *
 	 * @since    2.0.0-BETA2
 	 */
@@ -967,7 +967,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to do batch process on selected categories, to move or copy them.
 	 *
-	 * @return  boolean  Return true if success.
+	 * @return boolean|void
 	 *
 	 * @since  5.1.0
 	 */

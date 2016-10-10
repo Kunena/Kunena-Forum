@@ -217,7 +217,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @param   string $layout The layout name.
 	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena
 	 */
 	public function setLayout($layout)

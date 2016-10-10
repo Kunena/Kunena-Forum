@@ -544,7 +544,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		'color' => array(
 			'mode'     => BBCODE_MODE_ENHANCED,
 			'allow'    => array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
-			'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
+			'template' => '<span style="color:{$_default/tw};">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 		),
@@ -787,7 +787,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		),
 
 		'left' => array(
-			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -799,7 +799,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		),
 
 		'right' => array(
-			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -811,7 +811,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		),
 
 		'center' => array(
-			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -823,7 +823,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		),
 
 		'indent' => array(
-			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",

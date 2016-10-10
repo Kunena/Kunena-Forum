@@ -25,8 +25,9 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-color-palette"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
+			<div class="module-title nav-header">
+				<i class="icon-color-palette"></i>
+				<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
@@ -80,13 +81,13 @@ JHtml::_('dropdown.init');
 								<?php if ($row->published == 1)
 									:
 									?>
-									<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
+									<i class="icon-star"></i>
 								<?php else
 									:
 									?>
 									<a href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-										<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
+										<i class="icon-star-empty"></i>
 									</a>
 								<?php endif; ?>
 							</td>

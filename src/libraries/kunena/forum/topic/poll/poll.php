@@ -504,7 +504,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaPolls
+	 * @return boolean|JTable|KunenaTable|TableKunenaPolls
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')

@@ -105,7 +105,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   string $type   Topics table name to be used.
 	 * @param   string $prefix Topics table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaUserRead
+	 * @return boolean|JTable|KunenaTable|TableKunenaUserRead
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table')

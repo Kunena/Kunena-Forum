@@ -911,7 +911,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Get the number of attachments into a message
 	 *
-	 * @return array
+	 * @return array|StdClass
 	 * @since Kunena
 	 */
 	public function getNbAttachments()

@@ -216,7 +216,7 @@ EOF;
 		if (in_array($name, $buttonsDropdown))
 		{
 			return <<<HTML
-				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
 				{$text}
 				</a>
 HTML;
@@ -224,7 +224,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>

@@ -777,7 +777,7 @@ class BBCodeLibrary
 		'color'   => Array(
 			'mode'     => BBCODE_MODE_ENHANCED,
 			'allow'    => Array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
-			'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
+			'template' => '<span style="color:{$_default/tw};">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => Array('listitem', 'block', 'columns', 'inline', 'link'),
 		),
@@ -884,7 +884,7 @@ class BBCodeLibrary
 			'plain_content' => Array(),
 		),
 		'left'    => Array(
-			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -895,7 +895,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'right'   => Array(
-			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -906,7 +906,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'center'  => Array(
-			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -917,7 +917,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'indent'  => Array(
-			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -956,7 +956,7 @@ class BBCodeLibrary
 		),
 		'code'    => Array(
 			'mode'          => BBCODE_MODE_ENHANCED,
-			'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre\">{\$_content/v}</div>\n</div>\n",
+			'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre;\">{\$_content/v}</div>\n</div>\n",
 			'class'         => 'code',
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'content'       => BBCODE_VERBATIM,
@@ -1123,7 +1123,7 @@ class BBCodeLibrary
 				break;
 		}
 
-		return "<span style=\"font-size:$size\">$content</span>";
+		return "<span style=\"font-size:$size;\">$content</span>";
 	}
 
 	/**
@@ -1176,7 +1176,7 @@ class BBCodeLibrary
 			}
 		}
 
-		return "<span style=\"font-family:$result\">$content</span>";
+		return "<span style=\"font-family:$result;\">$content</span>";
 	}
 
 	/**

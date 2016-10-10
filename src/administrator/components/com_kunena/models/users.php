@@ -305,7 +305,7 @@ class KunenaAdminModelUsers extends JModelList
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return  KunenaUser  List of KunenaUser objects found.
+	 * @return boolean|KunenaUser
 	 *
 	 * @since   3.0
 	 */

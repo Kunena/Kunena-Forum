@@ -421,7 +421,7 @@ class KunenaView extends JViewLegacy
 	 * @param        $layout
 	 * @param   null $template
 	 *
-	 * @return $this
+	 * @return KunenaLayout|KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */

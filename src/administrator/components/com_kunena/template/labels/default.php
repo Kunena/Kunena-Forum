@@ -28,8 +28,9 @@ JHtml::_('bootstrap.popover');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-tags-2"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?>"></i> <?php echo JText::_('Labels') ?>
+			<div class="module-title nav-header">
+				<i class="icon-tags-2"></i>
+				<?php echo JText::_('Labels') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">

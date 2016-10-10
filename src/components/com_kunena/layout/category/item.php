@@ -51,7 +51,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to return array of actions sublayout
 	 *
-	 * @return array
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	public function getCategoryActions()

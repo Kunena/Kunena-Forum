@@ -874,7 +874,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $category_id
 	 * @param $alias
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 * @since Kunena
 	 */
 	static public function getAlias($category_id, $alias)
@@ -906,7 +906,7 @@ abstract class KunenaForumCategoryHelper
 	// Internal functions:
 
 	/**
-	 * @return array
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	static public function &loadCategories()

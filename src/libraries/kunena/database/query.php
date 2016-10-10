@@ -171,7 +171,7 @@ class KunenaDatabaseQuery
 	 *
 	 * @param   string $clause Optionally, the name of the clause to clear, or nothing to clear the whole query.
 	 *
-	 * @return    void
+	 * @return KunenaDatabaseQuery|void
 	 * @since    1.6
 	 */
 	public function clear($clause = null)

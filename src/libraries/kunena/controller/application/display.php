@@ -328,7 +328,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$templateText = (string) $this->template->params->get('templatebyText');
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
-		$credits      = '<div style="text-align:center">';
+		$credits      = '<div style="text-align:center;">';
 		$credits .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',

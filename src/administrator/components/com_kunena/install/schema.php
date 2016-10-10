@@ -419,7 +419,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param   bool $reload
 	 *
-	 * @return DOMDocument
+	 * @return boolean|DOMDocument
 	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */

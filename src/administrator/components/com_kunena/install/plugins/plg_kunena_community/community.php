@@ -52,7 +52,7 @@ class plgKunenaCommunity extends JPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess
+	 * @return KunenaAccess|KunenaAccessCommunity
 	 *
 	 * @todo  Should we remove category ACL integration?
 	 * @since Kunena

@@ -273,7 +273,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $category
 	 * @param   null  $user
 	 *
-	 * @return array
+	 * @return array|boolean
 	 * @since Kunena
 	 */
 	static public function getExtensions($category, $user = null)

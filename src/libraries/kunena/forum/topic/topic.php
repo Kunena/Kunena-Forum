@@ -417,7 +417,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int      $display
 	 * @param   string   $prefix
 	 *
-	 * @return JPagination
+	 * @return JPagination|KunenaPagination
 	 * @since Kunena
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = '')

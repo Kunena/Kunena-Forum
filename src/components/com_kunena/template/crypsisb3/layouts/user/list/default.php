@@ -205,14 +205,16 @@ $this->addScript('assets/js/search.js');
 		<?php endforeach; ?>
 		</tbody>
 		<tfoot>
-		<td class="col-md-1 center hidden-xs">
-			<a id="forumbottom"> </a>
-			<a href="#forumtop">
-				<?php echo KunenaIcons::arrowup();?>
-			</a>
-		</td>
-		<td colspan="8" class="hidden-xs">
-		</td>
+			<tr>
+				<td class="col-md-1 center hidden-xs">
+					<a id="forumbottom"> </a>
+					<a href="#forumtop">
+						<?php echo KunenaIcons::arrowup();?>
+					</a>
+				</td>
+				<td colspan="8" class="hidden-xs">
+				</td>
+			</tr>
 		</tfoot>
 
 	</table>

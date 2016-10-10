@@ -17,10 +17,10 @@ defined('_JEXEC') or die;
 			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>
 		<div class="hidden-lg">
-			<ul class="nav navbar-nav pull-left">
+			<div class="nav navbar-nav pull-left">
 				<div><a class="btn btn-link" data-toggle="collapse" data-target=".knav-collapse"><i class="glyphicon glyphicon-large glyphicon-white glyphicon-list"></i> <b class="caret"></b> </a></div>
 				<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-			</ul>
+			</div>
 			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>
 	</div>

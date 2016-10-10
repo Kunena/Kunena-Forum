@@ -1427,17 +1427,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 
 		$me = KunenaUserHelper::getMyself();
-		$message = $this->getMessage();
-		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
-
-		if (isset($bbcode->parent->message->userid))
-		{
-			$message_userid = $bbcode->parent->message->userid;
-		}
-		else
-		{
-			$message_userid = $bbcode->parent->userid;
-		}
 
 		if (!JFactory::getUser()->guest)
 		{

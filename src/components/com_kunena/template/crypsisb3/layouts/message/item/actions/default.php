@@ -35,7 +35,7 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('reply'); ?>
 			<?php echo $this->messageButtons->get('quote'); ?>
 			<?php echo $this->messageButtons->get('edit'); ?>
-			<?php if (($config->userdeletetmessage > 0 && $config->userdeletetmessage != 3) || ($config->userdeletetmessage == 3 && $this->message->id == $this->message->getTopic()->first_post_id)) : ?>
+			<?php if ($this->message->isAuthorised('delete')) : ?>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
 			<?php echo $this->messageButtons->get('thankyou'); ?>

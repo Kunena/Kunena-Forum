@@ -22,7 +22,7 @@ if ($item) : ?>
 		</li>
 
 		<?php foreach ($pathway as $item) : ?>
-			<li class="divider"><i class="icon-chevron-right"></i></li>
+			<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
 			<li itemscope itemtype="http://schema.org/ListItem">
 				<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
 			</li>

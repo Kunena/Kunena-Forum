@@ -13,11 +13,11 @@ defined('_JEXEC') or die;
 ?>
 
 <?php if (!empty($this->onlineList)) : ?>
-	<div>
+	<div id="whoisonlinelist">
 		<?php
 		foreach ($this->onlineList as $user)
 		{
-			$avatar       = $user->getAvatarImage();
+			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
 			$onlinelist[] = $user->getLink($avatar, null, '') . $user->getLink();
 		}
 		?>
@@ -26,13 +26,13 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 
 <?php if (!empty($this->hiddenList)) : ?>
-	<div>
+	<div id="whoisonlinehidden">
 		<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
 		<?php
 		foreach ($this->hiddenList as $user)
 		{
-			$avatar       = $user->getAvatarImage();
+			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
 			$hiddenlist[] = $user->getLink($avatar, null, '') . $user->getLink();
 		}
 		?>

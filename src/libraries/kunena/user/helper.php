@@ -303,13 +303,13 @@ abstract class KunenaUserHelper
 			$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
 			$query->where($db->quoteName('ku.posts') . '>0');
 			$query->order($db->quoteName('ku.posts') . ' DESC');
-			
+
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = JAccess::getUsersByGroup(8);
 				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 			}
-			
+
 			$db->setQuery($query, 0, $limit);
 
 			try
@@ -505,6 +505,14 @@ abstract class KunenaUserHelper
 	 */
 	public static function getStatus($user)
 	{
+		$config = KunenaFactory::getConfig();
+		$status = $config->user_status;
+
+		if (!$status)
+		{
+			return false;
+		}
+
 		$user = self::get($user);
 		$online = false;
 

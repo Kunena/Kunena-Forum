@@ -23,7 +23,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
 			<?php elseif ($this->me->getStatus() == 2) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 3) : ?>
+			<?php else : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>

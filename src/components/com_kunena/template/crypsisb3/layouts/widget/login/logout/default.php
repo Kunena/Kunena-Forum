@@ -12,19 +12,23 @@
 defined('_JEXEC') or die;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
+$config = KunenaFactory::getConfig();
+$status = $config->user_status;
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<?php if ($this->me->getStatus() == 0) : ?>
+			<?php if ($this->me->getStatus() == 0 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 1) : ?>
+			<?php elseif ($this->me->getStatus() == 1 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 2) : ?>
+			<?php elseif ($this->me->getStatus() == 2 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php else : ?>
+			<?php elseif ($this->me->getStatus() == 3 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
+			<?php else : ?>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>
 		</a>

@@ -84,7 +84,8 @@ class KunenaModelUser extends KunenaModel
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$db    = JFactory::getDBO();
-			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName('user_id')->from($db->quoteName('#__user_usergroup_map')->where($db->quoteName('group_id') . ' = 8')));
 			$db->setQuery($query);
 			$superadmins = (array) $db->loadColumn();
 
@@ -161,9 +162,10 @@ class KunenaModelUser extends KunenaModel
 		{
 			$db    = JFactory::getDBO();
 			$where = $this->getQueryWhere();
-			$db->setQuery("SELECT COUNT(*) FROM #__users AS u WHERE {$where}");
-			
-			try 
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
+
+			try
 			{
 				$total = $db->loadResult();
 			}
@@ -188,13 +190,12 @@ class KunenaModelUser extends KunenaModel
 			$db     = JFactory::getDBO();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$query  = "SELECT COUNT(*)
-				FROM #__users AS u
-				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
-				WHERE {$where} {$search}";
-			$db->setQuery($query);
-			
-			try 
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}"));
+
+			try
 			{
 				$total = $db->loadResult();
 			}
@@ -255,14 +256,13 @@ class KunenaModelUser extends KunenaModel
 			$db     = JFactory::getDBO();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$query  = "SELECT u.id
-				FROM #__users AS u
-				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
-				WHERE {$where} {$search}";
-			$query .= " ORDER BY {$orderby} {$direction}";
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName('u.id'))->from($db->quoteName('#__users', 'u')
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}")
+				->order($db->quoteName("{$where}") . " {$search}"));
+			$db->setQuery($query, $limitstart, $limit);
 
-			$db->setQuery($query, $limitstart, $limit);	
-			
 			try
 			{
 				$items = $db->loadColumn();

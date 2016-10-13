@@ -69,7 +69,7 @@ $labels = $this->ktemplate->params->get('labels');
 						<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 						<?php else : ?>
-							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0" />
 						<?php endif; ?>
 							</label>
 						<?php endforeach; ?>
@@ -86,7 +86,7 @@ $labels = $this->ktemplate->params->get('labels');
 							<?php elseif ( $topicicontype == 'fa') : ?>
 							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 								<?php else : ?>
-								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0" />
 									<?php endif; ?>
 								</label>
 								<?php endforeach; ?>

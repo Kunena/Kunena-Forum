@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
 				<li class="span2">
 					<input type="radio" name="avatar" id="radio<?php echo $image ?>" value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 					<label class=" radio thumbnail" for="radio<?php echo $image ?>">
-						<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="" />
+						<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar" />
 					</label>
 				</li>
 				<?php endforeach; ?>

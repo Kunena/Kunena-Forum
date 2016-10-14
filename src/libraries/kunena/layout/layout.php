@@ -228,13 +228,15 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			$first = $topic->first_post_message;
 			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
+			$first = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $first);
 			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
 			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
-			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
+			$first = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $first);
 			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
 			$first = preg_replace('/\[article\](.*?)\[\/article]/s', '', $first);
 			$first = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $first);
 			$first = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $first);
+			$first = preg_replace('/\[url(.*?)\](.*?)\[\/url]/s', '', $first);
 			$first = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $first);
 			$first = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $first);
 			$first = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $first);
@@ -243,13 +245,15 @@ class KunenaLayout extends KunenaLayoutBase
 
 			$last = $topic->last_post_message;
 			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
+			$last = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $last);
 			$last = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $last);
 			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
-			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
+			$last = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $last);
 			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
 			$last = preg_replace('/\[article\](.*?)\[\/article]/s', '', $last);
 			$last = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $last);
 			$last = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $last);
+			$last = preg_replace('/\[url(.*?)\](.*?)\[\/url]/s', '', $last);
 			$last = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $last);
 			$last = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $last);
 			$last = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '',$last);

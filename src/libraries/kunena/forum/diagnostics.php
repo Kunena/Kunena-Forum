@@ -67,6 +67,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $function))
 		{
 			$query = self::$function();
+
 			// @var KunenaDatabaseQuery $query
 
 			$query->select("COUNT(*)");
@@ -227,6 +228,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $function))
 		{
 			$query = self::$function();
+
 			// @var KunenaDatabaseQuery $query
 
 			$query->select("COUNT(*)");
@@ -398,7 +400,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_messageBodyMissingMessage()
 	{
 		// Query to find broken messages (orphan message text)
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_messages_text AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
 		return $query;
@@ -558,7 +560,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_topicMissingMessages()
 	{
 		// Query to find topics without messages
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_messages AS m ON m.thread=a.id")->where("a.moved_id=0 AND m.id IS NULL");
 
 		return $query;
@@ -878,7 +880,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_pollOrphaned()
 	{
 		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.threadid")->where("t.id IS NULL");
 
 		return $query;
@@ -918,7 +920,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_pollTopicMismatch()
 	{
 		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
 
 		return $query;
@@ -958,7 +960,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_pollOptionOrphaned()
 	{
 		// Query to find poll options which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
@@ -998,7 +1000,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_pollUserOrphaned()
 	{
 		// Query to find poll users which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
@@ -1038,7 +1040,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_thankyouOrphaned()
 	{
 		// Query to find thankyous which do not belong in any existing message
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_thankyou AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.postid")->where("m.id IS NULL");
 
 		return $query;
@@ -1078,7 +1080,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_userCategoryOrphaned()
 	{
 		// Query to find user categories which do not belong in any existing category
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_user_categories AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("a.category_id>0 AND c.id IS NULL");
 
 		return $query;
@@ -1118,7 +1120,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_userReadOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_user_read AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
@@ -1158,7 +1160,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_userReadWrongCategory()
 	{
 		// Query to find user read which wrong category information
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_user_read AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
@@ -1198,7 +1200,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_userTopicOrphaned()
 	{
 		// Query to find user topics which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_user_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
@@ -1238,7 +1240,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_userTopicWrongCategory()
 	{
 		// Query to find user topic which wrong category information
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_user_topics AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
@@ -1278,7 +1280,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_ratingOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
 
 		return $query;
@@ -1318,7 +1320,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_channelOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
 
 		return $query;
@@ -1358,7 +1360,7 @@ abstract class KunenaForumDiagnostics
 	protected static function query_ownerOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->from("#__kunena_topics AS t")->leftJoin("#__kunena_user_topics AS j ON j.topic_id=t.id")->where("t.first_post_userid > 0");
 
 		return $query;
@@ -1392,7 +1394,6 @@ abstract class KunenaForumDiagnostics
 	}
 }
 /*
-
 -- Find and update topics without owners:
 INSERT INTO `#__kunena_user_topics` (topic_id, user_id, owner)
 (SELECT t.id, t.first_post_userid, 1

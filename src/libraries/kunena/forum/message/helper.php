@@ -553,7 +553,7 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param array $ids
+	 * @param   array $ids
 	 *
 	 * @return array|void
 	 * @since 5.0.3

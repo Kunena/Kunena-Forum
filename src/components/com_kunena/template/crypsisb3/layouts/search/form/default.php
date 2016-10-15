@@ -51,14 +51,14 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 					<legend>
 						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
 					</legend>
-					
+
 					<div class="col-md-6">
 							<div class="form-group">
 								<input type="text" name="query" class="form-control"
-							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />		   
+							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
 							</div>
 					</div>
-					
+
 					<div class="col-md-6">
 							<div class="form-group">
 								<?php $this->displayModeList('mode'); ?>
@@ -71,18 +71,18 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 					<legend>
 						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
 					</legend>
-					
+
 						<div class="form-group">
 							<input id="kusersearch" type="text" name="searchuser" class="form-control"
-								value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>" />			
+								value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="exactname" value="1"
 										<?php if ($this->state->get('query.exactname')) { echo $this->checked; } ?>  />
 										<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
 								</label>
-							</div>	
-						</div>		
+							</div>
+						</div>
 				</fieldset>
 				<?php endif; ?>
 			</div>
@@ -96,12 +96,12 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 		<div class="collapse in" id="search-options">
 			<div class="well">
 				<div class="row">
-				
+
 					<fieldset class="col-md-6">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
-						<div class="form-group">	
+						<div class="form-group">
 							<?php $this->displayDateList('date'); ?>
 							<?php $this->displayBeforeAfterList('beforeafter'); ?>
 						</div>
@@ -124,8 +124,8 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 						<div class="col-md-6">
 							<div class="form-group" id="searchatdate">
 								<div class="input-group date">
-									<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy" 
-										value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> 
+									<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
+										value="">
 										<span class="input-group-addon"><?php echo KunenaIcons::calendar();?></span>
 								</div>
 							</div>
@@ -139,7 +139,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 							<legend>
 								<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
-							
+
 							<div class="col-md-6">
 							<input type="text" name="limitstart" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
@@ -154,7 +154,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 							<legend>
 								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>
 							</legend>
-							
+
 							<div class="radio">
 								<label>
 									<input type="radio" name="show" value="0"
@@ -162,16 +162,16 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
 								</label>
 							</div>
-							
+
 							<div class="radio">
 								<label>
 									<input type="radio" name="show" value="1"
 										<?php if ($this->state->get('query.show') == 1) { echo 'checked="checked"'; } ?> />
 									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
 								</label>
-							</div>	
-								
-							<div class="radio">	
+							</div>
+
+							<div class="radio">
 								<label>
 									<input type="radio" name="show" value="2"
 										<?php if ($this->state->get('query.show') == 2) { echo 'checked="checked"'; } ?> />

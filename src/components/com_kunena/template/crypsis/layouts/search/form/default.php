@@ -98,16 +98,16 @@ $this->addScript('assets/js/search.js');
 						<?php $this->displaySortByList('sort'); ?>
 						<?php $this->displayOrderList('order'); ?>
 					</fieldset>
-					
+
 					<fieldset class="span6">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>
 						<div id="searchatdate">
 							<div class="input-append date">
-								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="<?php echo JFactory::getDate()->format('m/d/Y'); ?>"> 
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy" value="">
 								<span class="input-group-addon"><?php echo KunenaIcons::calendar();?></span>
-							</div>			
+							</div>
 						</div>
 					</fieldset>
 				</div>

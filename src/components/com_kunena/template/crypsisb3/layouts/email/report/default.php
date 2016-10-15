@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 // Report moderator email (HTML)
 $this->mail->isHtml(true);
-
+$config  = KunenaConfig::getInstance();
 $user = $this->message->getAuthor();
 ?>
 
@@ -89,7 +89,7 @@ $user = $this->message->getAuthor();
 
 		</style>
 
-		<title><?php echo $msg1 . " " . $config->board_title; ?></title>
+		<title><?php echo JText::_('COM_KUNENA_REPORT_MSG') . " " . $config->board_title; ?></title>
 
 	</head>
 

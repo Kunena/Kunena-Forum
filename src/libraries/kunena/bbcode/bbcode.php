@@ -2893,7 +2893,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			$ebay = SELF::getEbayItemFromCache($ItemID);
 
-			if (is_object($ebay))
+			if (is_object($ebay) && $ebay->Ack == 'Success')
 			{
 				return (string) $layout
 					->set('content', $ItemID)

@@ -100,7 +100,7 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 
-		<div class="hidden-xs">
+		<div class="started">
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?></span>
 			<br />
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>

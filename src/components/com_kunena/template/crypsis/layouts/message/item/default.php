@@ -128,7 +128,7 @@ if ($message->modified_time) {
 		if (!empty($this->thankyou_delete[$userid]))
 		{
 			$list[] = $thank . ' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. $this->thankyou_delete[$userid] . '"><i class="icon-remove"></i></a>';
+						. $this->thankyou_delete[$userid] . '">' . KunenaIcons::delete() . '</a>';
 		}
 		else
 		{

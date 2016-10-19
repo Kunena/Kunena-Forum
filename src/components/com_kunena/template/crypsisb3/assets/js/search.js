@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
 
 		$('#kusersearch').atwho({
 			at: "",
-			tpl: '<li data-value="${username}"><i class="icon-user"></i> ${username} <small>(${name})</small></li>',
+			tpl: '<li data-value="${username}"><span class="glyphicon glyphicon-user"></span> ${username} <small>(${name})</small></li>',
 			limit: 7,
 			callbacks: {
 				remote_filter: function(query, callback)  {

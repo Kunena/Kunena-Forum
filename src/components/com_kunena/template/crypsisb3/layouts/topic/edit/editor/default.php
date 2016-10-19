@@ -193,7 +193,7 @@ $this->getBBcodesEnabled();
 						<div class="input-group date">
 							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 							<span class="input-group-addon">
-								<i class="glyphicon glyphicon-th"></i>
+								<?php echo KunenaIcons::grid();?>
 							</span>
 						</div>
 					</div>

@@ -58,7 +58,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 			</label>
 			<div class="controls" id="ann-date">
 				<div class="input-append date">
-					<?php echo $this->displayInput('created', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'created'); ?>
+					<?php echo $this->displayInput('created', '<span class="add-on">' . KunenaIcons::grid() . '</span>', 'created'); ?>
 				</div>
 			</div>
 		</div>
@@ -69,7 +69,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 			</label>
 			<div class="controls" id="ann-date2">
 				<div class="input-append date">
-					<?php echo $this->displayInput('publish_up', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'publish_up'); ?>
+					<?php echo $this->displayInput('publish_up', '<span class="add-on">' . KunenaIcons::grid() . '</span>', 'publish_up'); ?>
 				</div>
 			</div>
 		</div>
@@ -80,7 +80,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 			</label>
 			<div class="controls" id="ann-date3">
 				<div class="input-append date">
-					<?php echo $this->displayInput('publish_down', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'publish_down'); ?>
+					<?php echo $this->displayInput('publish_down', '<span class="add-on">' . KunenaIcons::grid() . '</span>', 'publish_down'); ?>
 				</div>
 			</div>
 		</div>

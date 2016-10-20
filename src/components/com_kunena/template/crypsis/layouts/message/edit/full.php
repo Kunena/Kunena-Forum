@@ -103,7 +103,7 @@ if ($me->canDoCaptcha() )
 				</label>
 				<input type="text" id="subject" name="subject" class="inputbox span12"
 				       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
-				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+				       <?php if (!$config->allow_change_subject && !$me->isModerator()): ?>disabled<?php endif; ?>
 				       value="<?php echo $message->displayField('subject'); ?>" />
 			</div>
 			<div class="controls">

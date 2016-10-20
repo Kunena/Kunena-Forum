@@ -1077,6 +1077,7 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
+		$caticon = $ktemplate->params->get('DefaultCategoryicon');
 
 		if ($new)
 		{
@@ -1091,15 +1092,36 @@ class KunenaIcons
 		{
 			if ($topicicontype == 'fa')
 			{
-				$bigicon = ' fa-big ';
+				if (!empty($caticon))
+				{
+					$bigicon = ' fa-big ';
+				}
+				else
+				{
+					$bigicon = ' fa-big fa-folder-open ';
+				}
 			}
 			elseif ($topicicontype == 'B2')
 			{
-				$bigicon = ' icon-big ';
+				if (!empty($caticon))
+				{
+					$bigicon = ' icon-big ';
+				}
+				else
+				{
+					$bigicon = ' icon-big icon-folder ';
+				}
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				$bigicon = ' glyphicon-big ';
+				if (!empty($caticon))
+				{
+					$bigicon = ' glyphicon-big ';
+				}
+				else
+				{
+					$bigicon = ' glyphicon-big glyphicon-folder-open ';
+				}
 			}
 			else
 			{
@@ -1108,7 +1130,43 @@ class KunenaIcons
 		}
 		else
 		{
-			$bigicon = ' ';
+			if ($topicicontype == 'fa')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' ';
+				}
+				else
+				{
+					$bigicon = ' fa-folder-open ';
+				}
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' ';
+				}
+				else
+				{
+					$bigicon = ' icon-folder ';
+				}
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' ';
+				}
+				else
+				{
+					$bigicon = ' glyphicon-folder-open ';
+				}
+			}
+			else
+			{
+				$bigicon = ' ';
+			}
 		}
 
 		if ($topicicontype == 'fa')

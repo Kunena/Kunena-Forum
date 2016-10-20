@@ -1081,15 +1081,19 @@ class KunenaModelInstall extends JModelLegacy
 		{
 			JFile::delete(KPATH_ADMIN . '/install.php');
 		}
-		
+
 		// Set Crypsis as default template when do update
 		$config = KunenaFactory::getConfig();
-		
+
 		if ($config->template == 'blue_eagle')
 		{
 			$config->template = 'crypsis';
 			$config->save();
 		}
+
+		// Resync bbcode plugins
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
 
 		if (!$this->getInstallError())
 		{

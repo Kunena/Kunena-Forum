@@ -2,7 +2,7 @@
 <!DOCTYPE config>
 <config>
 	<fieldset name="advanced">
-		<field name="DefaultCategoryicon" type="text" default="glyphicon glyphicon-folder-open glyphicon-big" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON" description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
+		<field name="DefaultCategoryicon" type="text" default="" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON" description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
 		<field name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>

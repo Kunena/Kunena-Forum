@@ -80,17 +80,17 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->messageButtons->set('reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'icon icon-pencil'));
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'icon icon-undo'));
 			}
 			elseif ($topicicontype == 'B3' && !$fullactions)
 			{
 				$this->messageButtons->set('reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'glyphicon glyphicon-pencil'));
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'glyphicon glyphicon-share-alt'));
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->messageButtons->set('reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'fa fa-pencil'));
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'fa fa-reply'));
 			}
 			else
 			{
@@ -103,19 +103,19 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				if ($topicicontype == 'B2')
 				{
 					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'icon icon-pencil')
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'icon icon-undo')
 					);
 				}
 				elseif ($topicicontype == 'B3')
 				{
 					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-pencil')
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-share-alt')
 					);
 				}
 				elseif ($topicicontype == 'fa')
 				{
 					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'fa fa-pencil')
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'fa fa-reply')
 					);
 				}
 				else

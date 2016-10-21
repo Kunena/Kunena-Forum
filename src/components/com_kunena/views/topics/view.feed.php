@@ -41,7 +41,7 @@ class KunenaViewTopics extends KunenaView
 		}
 		else
 		{
-			if ($config->rss_cache)
+			if ($config->rss_cache >= 1)
 			{
 				$cache->setCaching(1);
 				$cache->setLifeTime($config->rss_timelimit);

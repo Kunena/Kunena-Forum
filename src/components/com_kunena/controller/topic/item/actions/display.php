@@ -112,7 +112,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-bookmark-o'));
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-bookmark'));
 			}
 			else
 			{
@@ -127,7 +127,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-bookmark'));
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-bookmark-2'));
 			}
 			elseif ($topicicontype == 'B3' && !$fullactions)
 			{
@@ -137,7 +137,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-bookmark'));
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-bookmark-o'));
 			}
 			else
 			{

@@ -46,8 +46,7 @@ $k = 0;
 			</div>
 			<div class="span10">
 				<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
-					<span
-						class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+					<?php echo KunenaIcons::clock();?> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">

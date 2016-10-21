@@ -39,7 +39,7 @@ foreach ($this->sections as $section) :
 	?>
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
-			<?php if (count($this->sections) > 0) : ?>
+			<?php if (count($this->sections) > 1) : ?>
 				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
 			<?php endif; ?>
 		</h2>

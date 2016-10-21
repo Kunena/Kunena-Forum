@@ -39,7 +39,7 @@ foreach ($this->sections as $section) :
 
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
-			<?php if (count($this->sections) > 0) : ?>
+			<?php if (count($this->sections) > 1) : ?>
 				<button class="btn btn-default btn-sm <?php echo KunenaIcons::collapse(); ?>" type="button" data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"></button>

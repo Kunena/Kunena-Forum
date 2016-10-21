@@ -45,6 +45,7 @@ else
 		<?php echo KunenaIcons::clock(); ?>
 		<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 		<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+		<span class="visible-xs"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink();?></span>
 	</small>
 	<div class="clear-fix"></div>
 	<div class="horizontal-message">

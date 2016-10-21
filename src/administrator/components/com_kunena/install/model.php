@@ -1155,6 +1155,10 @@ class KunenaModelInstall extends JModelLegacy
 			$config->save();
 		}
 
+		// Resync bbcode plugins
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
 		if (!$this->getInstallError())
 		{
 			$this->updateVersionState('');

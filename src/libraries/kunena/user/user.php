@@ -1033,7 +1033,7 @@ class KunenaUser extends JObject
 			$width    = $data[0];
 			$height   = $data[1];
 
-			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="" />';
+			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
 		}
 
 		return $rank;

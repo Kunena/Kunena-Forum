@@ -88,7 +88,7 @@ JHtml::_('dropdown.init');
 													?>
 													<div><img
 														src="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
-														alt=""/></div>
+														alt="<?php echo $this->escape($this->templatename); ?>"/></div>
 													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>

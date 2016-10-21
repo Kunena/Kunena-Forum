@@ -551,6 +551,14 @@ abstract class KunenaUserHelper
 	 */
 	public static function getStatus($user)
 	{
+		$config = KunenaFactory::getConfig();
+		$status = $config->user_status;
+
+		if (!$status)
+		{
+			return false;
+		}
+
 		$user   = self::get($user);
 		$online = false;
 

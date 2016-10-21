@@ -46,13 +46,13 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @var integer
 	 * @since Kunena
-		 */
+	 */
 	var $mmm = 0;
 
 	/**
 	 * @var integer
 	 * @since Kunena
-		 */
+	 */
 	var $k = 0;
 
 	/**
@@ -63,6 +63,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayDefault($tpl = null)
@@ -197,6 +198,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayUnread($tpl = null)
@@ -217,6 +219,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayFlat($tpl = null)
@@ -228,6 +231,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayThreaded($tpl = null)
@@ -239,6 +243,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayIndented($tpl = null)
@@ -250,6 +255,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	protected function DisplayCreate($tpl = null)
@@ -358,6 +364,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	protected function DisplayReply($tpl = null)
@@ -791,9 +798,10 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param      $id
-	 * @param      $message
+	 * @param        $id
+	 * @param        $message
 	 * @param   null $template
+	 *
 	 * @since Kunena
 	 */
 	function displayMessage($id, $message, $template = null)
@@ -1006,6 +1014,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null $template
+	 *
 	 * @since Kunena
 	 */
 	function displayMessages($template = null)
@@ -1210,6 +1219,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param $type
+	 *
 	 * @since Kunena
 	 */
 	protected function _prepareDocument($type)
@@ -1381,8 +1391,8 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param        $anker
-	 * @param        $name
+	 * @param          $anker
+	 * @param          $name
 	 * @param   string $rel
 	 * @param   string $class
 	 *
@@ -1396,6 +1406,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   unknown $title
+	 *
 	 * @since Kunena
 	 */
 	public function setTitle($title)
@@ -1429,6 +1440,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param $keywords
+	 *
 	 * @since Kunena
 	 */
 	public function setKeywords($keywords)
@@ -1449,6 +1461,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param $description
+	 *
 	 * @since Kunena
 	 */
 	public function setDescription($description)

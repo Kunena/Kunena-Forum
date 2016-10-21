@@ -222,7 +222,7 @@ if (!empty($codeTypes)) : ?>
 						<div class="input-append date">
 							<input type="text" class="span12 kpoll-time-to-live-input" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
 							       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span
-								class="add-on"><?php echo KunenaIcons::grid();?></span>
+								class="add-on"><?php echo KunenaIcons::grid(); ?></span>
 						</div>
 					</div>
 				</div>

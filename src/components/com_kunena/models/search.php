@@ -252,7 +252,7 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$time_start_day = JFactory::getDate($this->getState('query.searchatdate'))->toUnix();
-			$time_end_day = new DateTime($this->getState('query.searchatdate'));
+			$time_end_day   = new DateTime($this->getState('query.searchatdate'));
 			$time_end_day->add(new DateInterval("PT23H59M59S"));
 
 			$querystrings[] = " m.time > {$time_start_day} AND m.time < {$time_end_day->getTimestamp()}";

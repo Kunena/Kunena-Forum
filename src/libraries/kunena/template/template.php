@@ -185,13 +185,13 @@ class KunenaTemplate extends JObject
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $map;
 
 	/**
 	 * @var
 	 * @since Kunena
- 	 */
+	 */
 	protected $hmvc;
 
 	/**
@@ -1634,7 +1634,7 @@ HTML;
 	/**
 	 * @return string
 	 * @since Kunena
- 	 */
+	 */
 	public function borderless()
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();

@@ -206,16 +206,16 @@ $this->addScript('assets/js/search.js');
 		</tbody>
 
 		<tfoot>
-			<tr>
-				<td class="col-md-1 center hidden-xs">
-					<a id="forumbottom"> </a>
-					<a href="#forumtop">
-						<?php echo KunenaIcons::arrowup(); ?>
-					</a>
-				</td>
-				<td colspan="8" class="hidden-xs">
-				</td>
-			</tr>
+		<tr>
+			<td class="col-md-1 center hidden-xs">
+				<a id="forumbottom"> </a>
+				<a href="#forumtop">
+					<?php echo KunenaIcons::arrowup(); ?>
+				</a>
+			</td>
+			<td colspan="8" class="hidden-xs">
+			</td>
+		</tr>
 		</tfoot>
 	</table>
 

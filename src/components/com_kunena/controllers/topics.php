@@ -87,7 +87,7 @@ class KunenaControllerTopics extends KunenaController
 					unset($instance);
 				}
 
-				$db = JFactory::getDBO();
+				$db    = JFactory::getDBO();
 				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
 

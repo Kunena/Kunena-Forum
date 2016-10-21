@@ -120,9 +120,9 @@ foreach ($this->sections as $section) :
 												<?php endif; ?>
 
 												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
-													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate"
-													   type="application/rss+xml" data-toggle="tooltip"
-													   data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
+												<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate"
+												   type="application/rss+xml" data-toggle="tooltip"
+												   data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS'); ?>">
 												<?php endif; ?>
 											</span>
 										</small>
@@ -205,13 +205,13 @@ foreach ($this->sections as $section) :
 								<td class="col-md-3 hidden-xs">
 									<div class="col-md-12">
 										<?php if ($avatar) : ?>
-											<div class="col-md-4">
-												<?php echo $author->getLink($avatar); ?>
-											</div>
-											<div class="col-md-8">
-										<?php else : ?>
+										<div class="col-md-4">
+											<?php echo $author->getLink($avatar); ?>
+										</div>
+										<div class="col-md-8">
+											<?php else : ?>
 											<div class="col-md-12">
-										<?php endif; ?>
+												<?php endif; ?>
 												<span><?php echo $this->getLastPostLink($category, null, null, null, null, false, true) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>

@@ -235,7 +235,7 @@ abstract class KunenaBbcodeEditorElement
 	/**
 	 * @var
 	 * @since Kunena
-		 */
+	 */
 	var $name;
 
 	/**

@@ -239,7 +239,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 			{
-				$ktemplate = KunenaFactory::getTemplate();
+				$ktemplate     = KunenaFactory::getTemplate();
 				$topicicontype = $ktemplate->params->get('topicicontype');
 
 				if ($topicicontype == 'B2')

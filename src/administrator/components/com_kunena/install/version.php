@@ -149,9 +149,9 @@ class KunenaVersion
 	static function getCopyrightHTML()
 	{
 		return ': &copy; 2008 - 2016 ' . JText::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
-		. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
-		. ': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
-		. JText::_('COM_KUNENA_VERSION_GPL') . '</a>';
+			. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
+			. ': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
+			. JText::_('COM_KUNENA_VERSION_GPL') . '</a>';
 	}
 
 	/**

@@ -104,7 +104,7 @@ if (JFactory::getLanguage()->isRTL())
 								<?php echo $item->link ?>
 							</td>
 							<td>
-								<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="" height="15"
+								<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15"
 								     width="<?php echo $item->percent ?>%"/>
 							</td>
 							<td>

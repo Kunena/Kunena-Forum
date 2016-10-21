@@ -2769,33 +2769,33 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 						{
 							if ($uri->isSSL())
 							{
-								$tweet_data->text .= '<img src="' . $media->media_url_https . '" alt="" />';
+								$tweet_data->text .= '<img src="' . $media->media_url_https . '" alt="tweet" />';
 							}
 							else
 							{
-								$tweet_data->text .= '<img src="' . $media->media_url . '" alt="" />';
+								$tweet_data->text .= '<img src="' . $media->media_url . '" alt="tweet" />';
 							}
 						}
 						elseif ($media->type == 'video')
 						{
 							if ($uri->isSSL())
 							{
-								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="" /></a>';
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="tweet" /></a>';
 							}
 							else
 							{
-								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="" /></a>';
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="tweet" /></a>';
 							}
 						}
 						elseif ($media->type == 'animated_gif')
 						{
 							if ($uri->isSSL())
 							{
-								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="" /></a>';
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="tweet" /></a>';
 							}
 							else
 							{
-								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="" /></a>';
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="tweet" /></a>';
 							}
 						}
 					}

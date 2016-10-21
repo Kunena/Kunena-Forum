@@ -63,13 +63,13 @@ JHtml::_('behavior.multiselect');
 							if (!$this->state->get('item.id'))
 								:
 								?>
-								<img name="rank_image" src="" border="0" alt=""/>
+								<img name="rank_image" src="" border="0" alt="<?php echo $this->rank_selected->title;?>"/>
 							<?php else
 								:
 								?>
 								<img name="rank_image"
 								     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
-								     border="0" alt=""/>
+								     border="0" alt="<?php echo $this->rank_selected->title;?>" />
 							<?php endif; ?>
 						</td>
 					</tr>

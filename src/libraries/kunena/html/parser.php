@@ -179,7 +179,12 @@ abstract class KunenaHtmlParser
 
 			if ($params->get('mode', 1))
 			{
-				return $txt;
+				$res = substr($txt, 0 ,200);
+
+				if (preg_match('/([\S]+@[\w]+(?:\.[\w]+)+)/i', $res))
+				{
+					return $txt;
+				}
 			}
 		}
 

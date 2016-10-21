@@ -38,8 +38,15 @@ class KunenaViewTopics extends KunenaView
 		}
 		else
 		{
-			$cache->setCaching(1);
-			$cache->setLifeTime($config->rss_cache);
+			if ($config->rss_cache >= 1)
+			{
+				$cache->setCaching(1);
+				$cache->setLifeTime($config->rss_cache);
+			}
+			else
+			{
+				$cache->setCaching(0);
+			}
 		}
 
 		$this->layout = 'default';

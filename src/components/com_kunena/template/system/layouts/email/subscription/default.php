@@ -141,6 +141,8 @@ $more = ($this->once ?
 							<?php echo $msg1 . " " . $config->board_title; ?>
 						</td>
 					</tr>
+
+					<?php if (!empty($config->emailheader)) :?>
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
@@ -152,6 +154,8 @@ $more = ($this->once ?
 			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a>
 						</td>
 					</tr>
+					<?php endif; ?>
+
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
@@ -160,7 +164,7 @@ $more = ($this->once ?
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?></b></a></p>
+								<p>URL : <a href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -183,7 +187,8 @@ $more = ($this->once ?
 								<table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
 									<tr>
 										<td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
-											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
+											bgcolor="#0072C6">
+											<a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
 												href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
@@ -233,7 +238,7 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->messageUrl}
+URL : {$this->message->getUrl(null, false)}
 
 {$full}{$msg2}{$more}
 

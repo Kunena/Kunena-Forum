@@ -141,6 +141,8 @@ $more = ($this->once ?
 							<?php echo $msg1 . " " . $config->board_title; ?>
 						</td>
 					</tr>
+
+					<?php if (!empty($config->emailheader)) :?>
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
@@ -152,6 +154,8 @@ $more = ($this->once ?
 			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a>
 						</td>
 					</tr>
+					<?php endif; ?>
+
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">

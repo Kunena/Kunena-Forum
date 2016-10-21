@@ -34,7 +34,6 @@ $more = ($this->once ?
 		<meta name="format-detection" content="telephone=no" />
 
 		<style>
-			/* Reset styles */
 			body {
 				margin: 0;
 				padding: 0;
@@ -82,7 +81,6 @@ $more = ($this->once ?
 				line-height: 100%;
 			}
 
-			/* Rounded corners for advanced mail clients only */
 			@media all and (min-width: 560px) {
 				.container {
 					border-radius: 8px;
@@ -92,7 +90,6 @@ $more = ($this->once ?
 				}
 			}
 
-			/* Set color for auto links (addresses, dates, etc.) */
 			a, a:hover {
 				color: #127DB3;
 			}
@@ -120,8 +117,6 @@ $more = ($this->once ?
 			background-color: #F0F0F0;
 			padding: 20px 6.25%;">
 
-				<!-- LOGO -->
-				<!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2. URL format: http://domain.com/?utm_source={{Campaign-Source}}&utm_medium=email&utm_content=logo&utm_campaign={{Campaign-Name}} -->
 				<p>
 				</p>
 			</td>
@@ -142,6 +137,8 @@ $more = ($this->once ?
 							<?php echo $msg1 . " " . $config->board_title; ?>
 						</td>
 					</tr>
+
+					<?php if (!empty($config->emailheader)) :?>
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
@@ -153,6 +150,8 @@ $more = ($this->once ?
 			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a>
 						</td>
 					</tr>
+					<?php endif; ?>
+
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
@@ -217,7 +216,6 @@ $more = ($this->once ?
 	</body>
 </html>
 <?php
-// Email as plain text:
 
 $full = !$config->mailfull ? '' : <<<EOS
 {$this->text('COM_KUNENA_MESSAGE')}

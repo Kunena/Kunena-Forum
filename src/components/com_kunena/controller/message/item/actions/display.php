@@ -239,9 +239,33 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 			{
-				$this->messageButtons->set('unthankyou',
-					$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false)
-				);
+				$ktemplate = KunenaFactory::getTemplate();
+				$topicicontype = $ktemplate->params->get('topicicontype');
+
+				if ($topicicontype == 'B2')
+				{
+					$this->messageButtons->set('unthankyou',
+						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'icon-thumbs-down')
+					);
+				}
+				elseif ($topicicontype == 'B3')
+				{
+					$this->messageButtons->set('unthankyou',
+						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'glyphicon glyphicon-thumbs-down')
+					);
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$this->messageButtons->set('unthankyou',
+						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'fa fa-thumbs-down')
+					);
+				}
+				else
+				{
+					$this->messageButtons->set('unthankyou',
+						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false)
+					);
+				}
 			}
 		}
 

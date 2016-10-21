@@ -10,7 +10,7 @@ jQuery(function ($) {
 		if (button != undefined) {
 			button.removeClass('btn-primary');
 			button.addClass('btn-success');
-			button.html('<i class="icon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+			button.html('<i class="glyphicon glyphicon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		}
 	}
 
@@ -130,14 +130,14 @@ jQuery(function ($) {
 
 				$('#insert-all').removeClass('btn-primary');
 				$('#insert-all').addClass('btn-success');
-				$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+				$('#insert-all').html('<i class="glyphicon glyphicon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
 		});
 	});
 
 	var insertButton = $('<button>')
 		.addClass("btn btn-primary")
-		.html('<i class="icon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
+		.html('<i class="glyphicon glyphicon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
 		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
@@ -163,7 +163,7 @@ jQuery(function ($) {
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
-		.html('<i class="icon-trash"></i> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
+		.html('<i class="glyphicon glyphicon-trash"></i> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function () {
 			var $this = $(this),
 				data = $this.data();
@@ -367,7 +367,7 @@ jQuery(function ($) {
 							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
 						}
 						else {
-							image = '<i class="icon-flag-2 icon-big"></i><br />';
+							image = '<i class="glyphicon glyphicon-paperclip glyphicon-big"></i><br />';
 						}
 
 						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');

@@ -42,7 +42,7 @@ $status = $config->user_status;
 				</a>
 				<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 				<p>
-					<i class="glyphicon glyphicon-time"></i>
+					<?php echo KunenaIcons::clock();?>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
@@ -55,7 +55,7 @@ $status = $config->user_status;
 					<label for="status-online" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>"
 						   class="btn btn-link">
-							<i class="glyphicon glyphicon-plus green"></i>
+							<?php echo KunenaIcons::online();?>
 							<?php echo JText::_('COM_KUNENA_ONLINE') ?>
 						</a>
 					</label>
@@ -66,7 +66,7 @@ $status = $config->user_status;
 					<label for="status-away" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>"
 						   class="btn btn-link">
-							<i class="glyphicon glyphicon-plus yellow"></i>
+							<?php echo KunenaIcons::away();?>
 							<?php echo JText::_('COM_KUNENA_AWAY') ?>
 						</a>
 					</label>
@@ -76,7 +76,7 @@ $status = $config->user_status;
 					<label for="status-busy" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>"
 						   class="btn btn-link">
-							<i class="glyphicon glyphicon-minus red"></i>
+							<?php echo KunenaIcons::busy();?>
 							<?php echo JText::_('COM_KUNENA_BUSY') ?>
 						</a>
 					</label>
@@ -86,7 +86,7 @@ $status = $config->user_status;
 					<label for="status-invisible" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>"
 						   class="btn btn-link">
-							<i class="glyphicon glyphicon-minus grey"></i>
+							<?php echo KunenaIcons::invisible();?>
 							<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
 						</a>
 					</label>
@@ -101,7 +101,7 @@ $status = $config->user_status;
 			<div id="statustext">
 				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
-					<i class="glyphicon glyphicon-pencil green"></i>
+					<?php echo KunenaIcons::edit();?>
 					<?php echo JText::_('COM_KUNENA_STATUS') ?>
 				</a>
 			</div>
@@ -110,7 +110,7 @@ $status = $config->user_status;
 			<?php if (!empty($this->announcementsUrl)) : ?>
 				<div id="announcement">
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-bullhorn"></i>
+						<?php echo KunenaIcons::pencil();?>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
 				</div>
@@ -119,7 +119,7 @@ $status = $config->user_status;
 			<?php if (!empty($this->pm_link)) : ?>
 				<div id="mail">
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-envelope"></i>
+						<?php echo KunenaIcons::mail();?>
 						<?php echo $this->inboxCount; ?>
 					</a>
 				</div>
@@ -127,7 +127,7 @@ $status = $config->user_status;
 
 			<div id="settings">
 				<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
-					<i class="glyphicon glyphicon-cog"></i>
+					<?php echo KunenaIcons::cog();?>
 					<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 				</a>
 			</div>
@@ -136,7 +136,7 @@ $status = $config->user_status;
 			<?php if ($markAllReadUrl) : ?>
 				<div id="allread">
 					<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-ok"></i>
+						<?php echo KunenaIcons::drawer();?>
 						<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 					</a>
 				</div>
@@ -148,7 +148,7 @@ $status = $config->user_status;
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">
-						<i class="glyphicon glyphicon-log-out"></i>
+						<?php echo KunenaIcons::out();?>
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
 					</button>
 				</div>

@@ -63,7 +63,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			<td class="span1 center hidden-phone">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
-					<i class="icon-arrow-down hasTooltip"></i>
+					<?php echo KunenaIcons::arrowdown();?>
 				</a>
 			</td>
 			<td class="span<?php echo $cols ?>">
@@ -107,7 +107,7 @@ $this->addStyleSheet('assets/css/rating.css');
 					<a id="forumbottom"> </a>
 					<a href="#forumtop" rel="nofollow">
 						<span class="divider"></span>
-						<i class="icon-arrow-up hasTooltip"></i>
+						<?php echo KunenaIcons::arrowup();?>
 					</a>
 					<?php // FIXME: $this->displayCategoryActions() ?>
 				</td>

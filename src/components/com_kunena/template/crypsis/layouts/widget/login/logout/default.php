@@ -17,13 +17,13 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<?php if ($this->me->status == 0) : ?>
+			<?php if ($this->me->getStatus() == 0) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->status == 1) : ?>
+			<?php elseif ($this->me->getStatus() == 1) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->status == 2) : ?>
+			<?php elseif ($this->me->getStatus() == 2) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php elseif ($this->me->status == 3) : ?>
+			<?php elseif ($this->me->getStatus() == 3) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>

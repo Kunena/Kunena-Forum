@@ -172,6 +172,17 @@ abstract class KunenaHtmlParser
 			return;
 		}
 
+		if (JPluginHelper::isEnabled('content', 'emailcloak'))
+		{
+			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
+			$params = new JRegistry($plugin->params);
+
+			if ($params->get('mode', 1))
+			{
+				return $txt;
+			}
+		}
+
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);

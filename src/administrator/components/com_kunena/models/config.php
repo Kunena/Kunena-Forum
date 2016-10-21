@@ -477,6 +477,8 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['autoembedsoundcloud'] = JHtml::_('select.genericlist', $yesno, 'cfg_autoembedsoundcloud', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedsoundcloud);
 
+		$lists ['user_status'] = JHtml::_('select.genericlist', $yesno, 'cfg_user_status', 'class="inputbox" size="1"', 'value', 'text', $this->config->user_status);
+
 		// K5.1
 		$lists ['signature'] = JHtml::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox" size="1"', 'value', 'text', $this->config->signature);
 		$lists ['personal']  = JHtml::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);

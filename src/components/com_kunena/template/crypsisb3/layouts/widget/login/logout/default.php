@@ -12,19 +12,23 @@
 defined('_JEXEC') or die;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
+$config = KunenaFactory::getConfig();
+$status = $config->user_status;
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<?php if ($this->me->getStatus() == 0) : ?>
+			<?php if ($this->me->getStatus() == 0 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 1) : ?>
+			<?php elseif ($this->me->getStatus() == 1 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 2) : ?>
+			<?php elseif ($this->me->getStatus() == 2 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php else : ?>
+			<?php elseif ($this->me->getStatus() == 3 && $status) : ?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
+			<?php else : ?>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>
 		</a>
@@ -43,6 +47,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</p>
 			</div>
 			<div class="divider"></div>
+
+			<?php if ($status) : ?>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
 				<div>
 					<input id="status-online" class="hide" type="radio" value="0" name="status"/>
@@ -90,7 +96,9 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<?php echo JHtml::_('form.token'); ?>
 			</form>
 			<div class="divider"></div>
-			<div>
+			<?php endif; ?>
+
+			<div id="statustext">
 				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 					<i class="glyphicon glyphicon-pencil green"></i>
@@ -100,7 +108,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<div class="divider"></div>
 
 			<?php if (!empty($this->announcementsUrl)) : ?>
-				<div>
+				<div id="announcement">
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
 						<i class="glyphicon glyphicon-bullhorn"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
@@ -109,7 +117,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php endif; ?>
 
 			<?php if (!empty($this->pm_link)) : ?>
-				<div>
+				<div id="mail">
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
 						<i class="glyphicon glyphicon-envelope"></i>
 						<?php echo $this->inboxCount; ?>
@@ -117,7 +125,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</div>
 			<?php endif; ?>
 
-			<div>
+			<div id="settings">
 				<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
 					<i class="glyphicon glyphicon-cog"></i>
 					<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
@@ -126,7 +134,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<div class="divider"></div>
 
 			<?php if ($markAllReadUrl) : ?>
-				<div>
+				<div id="allread">
 					<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
 						<i class="glyphicon glyphicon-ok"></i>
 						<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>

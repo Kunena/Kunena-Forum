@@ -140,7 +140,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string       $field     Field name.
 	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array $value     Value.
-	 * @param   bool          $escape    Only works for LIKE / NOT LIKE.
+	 * @param   bool         $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -186,8 +186,8 @@ abstract class KunenaDatabaseObjectFinder
 							$item = $db->quote($item);
 						}
 					);
-							$list = implode(',', $value);
-							$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+					$list = implode(',', $value);
+					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
 				break;
 		}

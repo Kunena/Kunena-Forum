@@ -112,6 +112,7 @@ class pkg_kunena_languagesInstallerScript
 	/**
 	 * @param $tag
 	 * @param $name
+	 *
 	 * @since Kunena
 	 */
 	public function uninstallLanguage($tag, $name)

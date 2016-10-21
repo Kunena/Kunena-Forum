@@ -253,8 +253,8 @@ abstract class JHtmlKunenaForum
 	}
 
 	/**
-	 * @param       $name
-	 * @param       $options
+	 * @param         $name
+	 * @param         $options
 	 * @param   array $selected
 	 *
 	 * @return string

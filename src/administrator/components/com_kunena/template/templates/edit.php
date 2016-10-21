@@ -113,7 +113,6 @@ endforeach; ?>
 											</table>
 											<?php
 else
-
 :
 											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 endif;
@@ -138,6 +137,7 @@ endforeach; ?>
 											</table>
 											<?php
 else
+
 :
 											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 endif;
@@ -162,6 +162,7 @@ endforeach; ?>
 											</table>
 											<?php
 else
+
 :
 											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 endif;
@@ -186,6 +187,7 @@ endforeach; ?>
 											</table>
 											<?php
 else
+
 :
 											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 endif;
@@ -210,6 +212,7 @@ endforeach; ?>
 											</table>
 											<?php
 else
+
 :
 											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 endif;

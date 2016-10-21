@@ -101,14 +101,14 @@ defined('_JEXEC') or die();
 						<ul class="pull-left">
 							<li><i class="icon icon-question"></i>
 								<a href="https://www.kunena.org/docs/en/setup"
-							       target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
+								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
 							</li>
 							<li><i class="icon icon-question"></i>
 								<a href="https://www.kunena.org/docs/en/setup/sections-categories"
-							       target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
+								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
 							</li>
 							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum"
-							       target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
+							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
 							</li>
 						</ul>
 						<div class="clearfix"></div>

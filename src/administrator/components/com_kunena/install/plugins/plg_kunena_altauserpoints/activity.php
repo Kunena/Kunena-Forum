@@ -111,6 +111,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterDelete($message)

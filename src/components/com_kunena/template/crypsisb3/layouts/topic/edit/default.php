@@ -154,9 +154,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 						<div class="col-md-10">
 							<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
-								<input class="form-control" type="text" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
+								<input class="form-control" type="text" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"
+								       disabled/>
 							<?php else : ?>
-								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"  />
+								<input class="form-control" type="text"
+								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject"
+								       maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6"
+								       value="<?php echo $this->escape($this->message->subject); ?>"/>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -177,7 +181,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 											<?php else : ?>
 											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>"
-											                                                                     alt="<?php echo $icon->name; ?>" border="0"/>
+											                                                                     alt="<?php echo $icon->name; ?>"
+											                                                                     border="0"/>
 												<?php endif; ?>
 											</label>
 											<?php endforeach; ?>

@@ -205,7 +205,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<tr>
 						<td colspan="10">
 							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination);
-?>
+							?>
 							<?php // Load the batch processing form. ?>
 							<?php echo $this->loadTemplate('batch'); ?>
 						</td>
@@ -218,9 +218,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					$i                  = 0;
 
 					if ($this->pagination->total > 0)
-					:
-						foreach ($this->categories as $item)
 						:
+						foreach ($this->categories as $item)
+							:
 							$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
 							$canEdit    = $this->me->isAdmin($item);
 							$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
@@ -259,12 +259,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							    parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 								<td class="order nowrap center hidden-phone">
 									<?php if ($canChange)
-									:
+										:
 										$disableClassName = '';
 										$disabledLabel = '';
 
 										if (!$this->saveOrder)
-										:
+											:
 											$disabledLabel    = JText::_('JORDERINGDISABLED');
 											$disableClassName = 'inactive tip-top';
 										endif; ?>
@@ -274,7 +274,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									</span>
 										<input type="text" style="display:none;" name="order[]" size="5" value="<?php echo $orderkey; ?>"/>
 									<?php else:
-	?>
+										?>
 										<span class="sortable-handler inactive">
 										<i class="icon-menu"></i>
 									</span>
@@ -288,14 +288,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								</td>
 								<td class="center">
 									<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id))
-									:
-	?>
+										:
+										?>
 										<button class="btn btn-micro" title="Display only this item and its children"
 										        onclick="jQuery('input[name=catid]').val(<?php echo $item->id ?>);this.form.submit()">
 											<i class="icon-location"></i>
 										</button>
 									<?php else:
-	?>
+										?>
 										<button class="btn btn-micro" title="Display only this item and its children"
 										        onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
 											<i class="icon-arrow-up"></i>
@@ -327,37 +327,37 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									</small>
 								</td>
 								<td class="center hidden-phone">
-									<a class="btn btn-micro <?php echo ($item->locked ? 'active' : ''); ?>" href="javascript: void(0);"
+									<a class="btn btn-micro <?php echo($item->locked ? 'active' : ''); ?>" href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
-										<?php echo ($item->locked == 1 ? $img_yes : $img_no); ?>
+										<?php echo($item->locked == 1 ? $img_yes : $img_no); ?>
 									</a>
 								</td>
 								<?php if ($item->isSection())
-								:
-	?>
+									:
+									?>
 									<td class="center hidden-phone" colspan="3">
 										<?php echo JText::_('COM_KUNENA_SECTION'); ?>
 									</td>
 								<?php else
 
-		:
-	?>
+									:
+									?>
 									<td class="center hidden-phone">
-										<a class="btn btn-micro <?php echo ($item->review ? 'active' : ''); ?>" href="javascript: void(0);"
+										<a class="btn btn-micro <?php echo($item->review ? 'active' : ''); ?>" href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
-											<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
+											<?php echo($item->review == 1 ? $img_yes : $img_no); ?>
 										</a>
 									</td>
 									<td class="center hidden-phone">
-										<a class="btn btn-micro <?php echo ($item->allow_polls ? 'active' : ''); ?>" href="javascript: void(0);"
+										<a class="btn btn-micro <?php echo($item->allow_polls ? 'active' : ''); ?>" href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
-											<?php echo ($item->allow_polls == 1 ? $img_yes : $img_no); ?>
+											<?php echo($item->allow_polls == 1 ? $img_yes : $img_no); ?>
 										</a>
 									</td>
 									<td class="center hidden-phone">
-										<a class="btn btn-micro <?php echo ($item->allow_anonymous ? 'active' : ''); ?>" href="javascript: void(0);"
+										<a class="btn btn-micro <?php echo($item->allow_anonymous ? 'active' : ''); ?>" href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
-											<?php echo ($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
+											<?php echo($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
 										</a>
 									</td>
 								<?php endif; ?>
@@ -369,21 +369,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php
 							$i++;
 						endforeach;
-					else					:
-	?>
+					else                    :
+						?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
 										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 											<?php
 											if ($this->filterActive)
-											:
-	?>
+												:
+												?>
 												<button class="btn" type="button"
 												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-											<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 else
-	:
-	?>
+											<?php else
+												:
+												?>
 												<button class="btn btn-success" type="button"
 												        onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_CATEGORY'); ?></button>
 											<?php endif; ?>
@@ -391,7 +391,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								</div>
 							</td>
 						</tr>
-					<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                         endif; ?>
+					<?php endif; ?>
 					</tbody>
 				</table>
 			</form>

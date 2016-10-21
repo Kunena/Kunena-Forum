@@ -19,6 +19,7 @@ class KunenaViewCategory extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
@@ -27,6 +28,7 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param $type
+	 *
 	 * @since Kunena
 	 */
 	protected function _prepareDocument($type)

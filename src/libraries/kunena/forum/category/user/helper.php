@@ -107,6 +107,7 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * @param   array $ids
 	 * @param   null  $user
+	 *
 	 * @since Kunena
 	 */
 	static public function markRead(array $ids, $user = null)

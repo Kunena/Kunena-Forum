@@ -53,6 +53,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
@@ -71,6 +72,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayAnnouncement($tpl = null)
@@ -130,6 +132,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayForumJump($tpl = null)
@@ -161,6 +164,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayBreadcrumb($tpl = null)
@@ -266,6 +270,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayWhosonline($tpl = null)
@@ -348,6 +353,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayStatistics($tpl = null)
@@ -383,6 +389,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayFooter($tpl = null)
@@ -425,6 +432,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayMenu($tpl = null)
@@ -475,6 +483,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayLoginBox($tpl = null)
@@ -579,6 +588,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   string $action
 	 * @param   bool   $xhtml
+	 *
 	 * @since Kunena
 	 */
 	function getUserlistURL($action = '', $xhtml = true)
@@ -625,7 +635,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $rel
 	 * @param   string $params
 	 *
@@ -638,7 +648,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $class
 	 * @param   string $rel
 	 *
@@ -658,8 +668,8 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param        $action
-	 * @param        $name
+	 * @param          $action
+	 * @param          $name
 	 * @param   string $rel
 	 * @param   string $class
 	 *

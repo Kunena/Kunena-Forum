@@ -12,8 +12,8 @@
 defined('_JEXEC') or die;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
-$config = KunenaFactory::getConfig();
-$status = $config->user_status;
+$config         = KunenaFactory::getConfig();
+$status         = $config->user_status;
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
@@ -42,66 +42,66 @@ $status = $config->user_status;
 				</a>
 				<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 				<p>
-					<?php echo KunenaIcons::clock();?>
+					<?php echo KunenaIcons::clock(); ?>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
 			<div class="divider"></div>
 
 			<?php if ($status) : ?>
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
-				<div>
-					<input id="status-online" class="hide" type="radio" value="0" name="status"/>
-					<label for="status-online" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>"
-						   class="btn btn-link">
-							<?php echo KunenaIcons::online();?>
-							<?php echo JText::_('COM_KUNENA_ONLINE') ?>
-						</a>
-					</label>
-				</div>
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
+					<div>
+						<input id="status-online" class="hide" type="radio" value="0" name="status"/>
+						<label for="status-online" class="btn btn-link">
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>"
+							   class="btn btn-link">
+								<?php echo KunenaIcons::online(); ?>
+								<?php echo JText::_('COM_KUNENA_ONLINE') ?>
+							</a>
+						</label>
+					</div>
 
-				<div>
-					<input id="status-away" class="hide" type="radio" value="1" name="status"/>
-					<label for="status-away" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>"
-						   class="btn btn-link">
-							<?php echo KunenaIcons::away();?>
-							<?php echo JText::_('COM_KUNENA_AWAY') ?>
-						</a>
-					</label>
-				</div>
-				<div>
-					<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
-					<label for="status-busy" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>"
-						   class="btn btn-link">
-							<?php echo KunenaIcons::busy();?>
-							<?php echo JText::_('COM_KUNENA_BUSY') ?>
-						</a>
-					</label>
-				</div>
-				<div>
-					<input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
-					<label for="status-invisible" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>"
-						   class="btn btn-link">
-							<?php echo KunenaIcons::invisible();?>
-							<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
-						</a>
-					</label>
-				</div>
-				<input type="hidden" name="view" value="user"/>
-				<input type="hidden" name="task" value="status"/>
-				<?php echo JHtml::_('form.token'); ?>
-			</form>
-			<div class="divider"></div>
+					<div>
+						<input id="status-away" class="hide" type="radio" value="1" name="status"/>
+						<label for="status-away" class="btn btn-link">
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>"
+							   class="btn btn-link">
+								<?php echo KunenaIcons::away(); ?>
+								<?php echo JText::_('COM_KUNENA_AWAY') ?>
+							</a>
+						</label>
+					</div>
+					<div>
+						<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
+						<label for="status-busy" class="btn btn-link">
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>"
+							   class="btn btn-link">
+								<?php echo KunenaIcons::busy(); ?>
+								<?php echo JText::_('COM_KUNENA_BUSY') ?>
+							</a>
+						</label>
+					</div>
+					<div>
+						<input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
+						<label for="status-invisible" class="btn btn-link">
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>"
+							   class="btn btn-link">
+								<?php echo KunenaIcons::invisible(); ?>
+								<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
+							</a>
+						</label>
+					</div>
+					<input type="hidden" name="view" value="user"/>
+					<input type="hidden" name="task" value="status"/>
+					<?php echo JHtml::_('form.token'); ?>
+				</form>
+				<div class="divider"></div>
 			<?php endif; ?>
 
 			<div id="statustext">
 				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
-					<?php echo KunenaIcons::edit();?>
+					<?php echo KunenaIcons::edit(); ?>
 					<?php echo JText::_('COM_KUNENA_STATUS') ?>
 				</a>
 			</div>
@@ -110,7 +110,7 @@ $status = $config->user_status;
 			<?php if (!empty($this->announcementsUrl)) : ?>
 				<div id="announcement">
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-						<?php echo KunenaIcons::pencil();?>
+						<?php echo KunenaIcons::pencil(); ?>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
 				</div>
@@ -119,7 +119,7 @@ $status = $config->user_status;
 			<?php if (!empty($this->pm_link)) : ?>
 				<div id="mail">
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
-						<?php echo KunenaIcons::email();?>
+						<?php echo KunenaIcons::email(); ?>
 						<?php echo $this->inboxCount; ?>
 					</a>
 				</div>
@@ -127,7 +127,7 @@ $status = $config->user_status;
 
 			<div id="settings">
 				<a href="<?php echo $this->profile_edit_url; ?>" class="btn btn-link">
-					<?php echo KunenaIcons::cog();?>
+					<?php echo KunenaIcons::cog(); ?>
 					<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 				</a>
 			</div>
@@ -136,7 +136,7 @@ $status = $config->user_status;
 			<?php if ($markAllReadUrl) : ?>
 				<div id="allread">
 					<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
-						<?php echo KunenaIcons::drawer();?>
+						<?php echo KunenaIcons::drawer(); ?>
 						<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 					</a>
 				</div>
@@ -148,7 +148,7 @@ $status = $config->user_status;
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">
-						<?php echo KunenaIcons::out();?>
+						<?php echo KunenaIcons::out(); ?>
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
 					</button>
 				</div>

@@ -1077,7 +1077,7 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-		$caticon = $ktemplate->params->get('DefaultCategoryicon');
+		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
 
 		if ($new)
 		{

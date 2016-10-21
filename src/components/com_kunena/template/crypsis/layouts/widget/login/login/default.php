@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo KunenaIcons::user();?>
+								<?php echo KunenaIcons::user(); ?>
 								<label for="login-username" class="element-invisible">
 									<?php echo JText::_('JGLOBAL_USERNAME'); ?>
 								</label>
@@ -43,7 +43,7 @@ defined('_JEXEC') or die;
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo KunenaIcons::lock();?>
+								<?php echo KunenaIcons::lock(); ?>
 								<label for="login-passwd" class="element-invisible">
 									<?php echo JText::_('JGLOBAL_PASSWORD'); ?>
 								</label>
@@ -60,7 +60,7 @@ defined('_JEXEC') or die;
 						<div class="controls">
 							<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo KunenaIcons::star();?>
+								<?php echo KunenaIcons::star(); ?>
 								<label for="k-lgn-secretkey" class="element-invisible">
 									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>

@@ -225,6 +225,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * @param   JDatabaseQuery $query
+	 *
 	 * @since Kunena
 	 */
 	protected function build(JDatabaseQuery $query)

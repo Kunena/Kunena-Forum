@@ -18,6 +18,7 @@ class KunenaAdminViewStatistics extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	public function displayDefault($tpl = null)

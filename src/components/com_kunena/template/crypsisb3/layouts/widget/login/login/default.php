@@ -30,13 +30,13 @@ defined('_JEXEC') or die;
 
 				<div class="form-group center">
 					<div class="input-group">
-						<span class="input-group-addon"><?php echo KunenaIcons::user();?></span>
+						<span class="input-group-addon"><?php echo KunenaIcons::user(); ?></span>
 						<input id="login-username" type="text" name="username" class="form-control" tabindex="1" size="18"
 						       placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"/>
 					</div>
 
 					<div class="input-group">
-						<span class="input-group-addon"><?php echo KunenaIcons::lock();?></span>
+						<span class="input-group-addon"><?php echo KunenaIcons::lock(); ?></span>
 						<input id="login-passwd" type="password" name="password" class="form-control" tabindex="2" size="18"
 						       placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required/>
 					</div>
@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 
 
 						<div class="input-group">
-							<span class="input-group-addon"><?php echo KunenaIcons::star();?></span>
+							<span class="input-group-addon"><?php echo KunenaIcons::star(); ?></span>
 							<input id="k-lgn-secretkey" type="text" name="secretkey" class="form-control" tabindex="3" size="18"
 							       placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
 						</div>

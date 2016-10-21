@@ -153,7 +153,7 @@ abstract class KunenaForum
 		$config = KunenaFactory::getConfig();
 
 		return !$config->board_offline
-		|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
+			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
 
 	/**

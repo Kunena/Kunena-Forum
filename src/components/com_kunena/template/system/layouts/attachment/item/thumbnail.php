@@ -24,6 +24,6 @@ $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 	if ($attachment->isImage())
 		:
 		?>
-		<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="<?php echo $attachment->getFilename();?>"/>
+		<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="<?php echo $attachment->getFilename(); ?>"/>
 	<?php endif; ?>
 </a>

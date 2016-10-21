@@ -218,6 +218,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * @param   array $messages
 	 * @param   int   $code
+	 *
 	 * @since Kunena
 	 */
 	public function displayError($messages = array(), $code = 404)
@@ -274,6 +275,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param   array $errors
+	 *
 	 * @since Kunena
 	 */
 	public function displayNoAccess($errors = array())
@@ -289,6 +291,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param $position
+	 *
 	 * @since Kunena
 	 */
 	public function displayModulePosition($position)
@@ -333,9 +336,9 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param     $text
+	 * @param       $text
 	 * @param   int $len
-	 * @param     $parent
+	 * @param       $parent
 	 *
 	 * @return mixed|void
 	 * @since Kunena

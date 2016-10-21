@@ -19,6 +19,7 @@ class KunenaViewTopics extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
@@ -54,6 +55,7 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayUser($tpl = null)
@@ -86,6 +88,7 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
 	 * @since Kunena
 	 */
 	function displayPosts($tpl = null)

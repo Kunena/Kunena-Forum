@@ -58,7 +58,7 @@ $this->addScript('assets/js/search.js');
 						<div class="form-group">
 							<input type="text" name="query" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
+							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -76,11 +76,14 @@ $this->addScript('assets/js/search.js');
 						<div class="form-group">
 							<input id="kusersearch" type="text" name="searchuser" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
-								<div class="checkbox">
+							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
+							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="exactname" value="1"
-									<?php if ($this->state->get('query.exactname')) { echo $this->checked; } ?>  />
+										<?php if ($this->state->get('query.exactname'))
+										{
+											echo $this->checked;
+										} ?> />
 									<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
 								</label>
 							</div>
@@ -128,7 +131,7 @@ $this->addScript('assets/js/search.js');
 								<div class="input-group date">
 									<input class="form-control" type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
 									       value="">
-									<span class="input-group-addon"><?php echo KunenaIcons::calendar();?></span>
+									<span class="input-group-addon"><?php echo KunenaIcons::calendar(); ?></span>
 								</div>
 							</div>
 						</div>
@@ -158,7 +161,10 @@ $this->addScript('assets/js/search.js');
 								<div class="radio">
 									<label>
 										<input type="radio" name="show" value="0"
-											<?php if ($this->state->get('query.show') == 0) { echo 'checked="checked"'; } ?> />
+											<?php if ($this->state->get('query.show') == 0)
+											{
+												echo 'checked="checked"';
+											} ?> />
 										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
 									</label>
 								</div>
@@ -166,7 +172,10 @@ $this->addScript('assets/js/search.js');
 								<div class="radio">
 									<label>
 										<input type="radio" name="show" value="1"
-											<?php if ($this->state->get('query.show') == 1) { echo 'checked="checked"'; } ?> />
+											<?php if ($this->state->get('query.show') == 1)
+											{
+												echo 'checked="checked"';
+											} ?> />
 										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
 									</label>
 								</div>
@@ -174,7 +183,10 @@ $this->addScript('assets/js/search.js');
 								<div class="radio">
 									<label>
 										<input type="radio" name="show" value="2"
-											<?php if ($this->state->get('query.show') == 2) { echo 'checked="checked"'; } ?> />
+											<?php if ($this->state->get('query.show') == 2)
+											{
+												echo 'checked="checked"';
+											} ?> />
 										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
 									</label>
 								</div>

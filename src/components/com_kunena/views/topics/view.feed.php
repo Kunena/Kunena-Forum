@@ -32,13 +32,24 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		KunenaHtmlParser::$relative = false;
+		$config = KunenaFactory::getConfig();
+		$cache = JFactory::getCache('com_kunena_rss', 'output');
 
-		$cache = JFactory::getCache('com_kunena_rss');
-
-		if ($this->caching)
+		if (!$config->get('cache'))
 		{
-			$cache->setCaching(1);
-			$cache->setLifeTime($this->caching);
+			$cache->setCaching(0);
+		}
+		else
+		{
+			if ($config->rss_cache)
+			{
+				$cache->setCaching(1);
+				$cache->setLifeTime($config->rss_timelimit);
+			}
+			else
+			{
+				$cache->setCaching(0);
+			}
 		}
 
 		$this->layout = 'default';

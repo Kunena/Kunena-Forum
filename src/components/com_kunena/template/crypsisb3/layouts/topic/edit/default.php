@@ -46,7 +46,7 @@ $this->addScript('assets/js/jquery.fileupload-video.js');
 $this->addScript('assets/js/jquery.fileupload-ui.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
-$this->addStyleSheet('assets/css/fileupload-ui.css');
+$this->addStyleSheet('assets/css/jquery.fileupload-ui.css');
 
 $this->k = 0;
 

@@ -73,14 +73,7 @@ defined('_JEXEC') or die;
 			$class = ' class="' . trim($class) . '"';
 		}
 
-		if ($item->level == 2)
-		{
-			echo '<li' . $class . ' >';
-		}
-		else
-		{
-			echo '<li' . $class . '>';
-		}
+		echo '<li' . $class . ' >';
 
 		// Render the menu item.
 		if ($item->type == 'separator')
@@ -129,7 +122,6 @@ defined('_JEXEC') or die;
 			if ($item->level < 3)
 			{
 				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
-				echo '<li><a itemprop="url"><span itemprop="name">';
 			}
 			elseif ($item->level == 3)
 			{

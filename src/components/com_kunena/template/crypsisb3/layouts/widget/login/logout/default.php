@@ -112,7 +112,7 @@ $status = $config->user_status;
 			<?php if (!empty($this->pm_link)) : ?>
 				<div>
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
-						<?php echo KunenaIcons::mail();?>
+						<?php echo KunenaIcons::email();?>
 						<?php echo $this->inboxCount; ?>
 					</a>
 				</div>

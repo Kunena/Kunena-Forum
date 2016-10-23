@@ -39,13 +39,8 @@ $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
 $this->addScript('assets/js/jquery.fileupload-process.js');
-$this->addScript('assets/js/jquery.fileupload-image.js');
-$this->addScript('assets/js/jquery.fileupload-audio.js');
-$this->addScript('assets/js/jquery.fileupload-video.js');
-$this->addScript('assets/js/jquery.fileupload-ui.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
-$this->addStyleSheet('assets/css/jquery.fileupload-ui.css');
 
 $this->k = 0;
 

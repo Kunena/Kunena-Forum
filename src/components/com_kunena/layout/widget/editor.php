@@ -82,7 +82,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if ($templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
+		if (!$templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}

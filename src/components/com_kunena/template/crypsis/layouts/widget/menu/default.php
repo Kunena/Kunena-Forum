@@ -92,7 +92,6 @@ defined('_JEXEC') or die;
 			if ($item->level > 1)
 			{
 				require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
-				echo '</a>';
 			}
 			else
 			{

@@ -77,7 +77,7 @@ if ($topic->moved_id > 0)
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, $this->message, null, null, 'hasTooltip topictitle', $category, true, false);
 			}
 			?>
 			<div class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?></div>

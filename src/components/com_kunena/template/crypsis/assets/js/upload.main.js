@@ -48,10 +48,10 @@ jQuery(function ($) {
 
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
-		
+
 		$('#remove-all').hide();
 	    $('#insert-all').hide();
-		
+
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) == false) {
 			$(filesedit).each(function (index, file) {
@@ -130,6 +130,12 @@ jQuery(function ($) {
 				$('#insert-all').addClass('btn-success');
 				$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
+		});
+
+		$('#files .btn.btn-primary').each(function () {
+			$('#files .btn.btn-primary').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-primary');
+			$('#files .btn.btn-success').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		});
 	});
 
@@ -223,10 +229,10 @@ jQuery(function ($) {
 		})
 		.bind('fileuploaddrop', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
-			
+
 			$('#insert-all').show();
 			$('#remove-all').show();
-			
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -240,10 +246,10 @@ jQuery(function ($) {
 		})
 		.bind('fileuploadchange', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
-			
+
 			$('#insert-all').show();
 			$('#remove-all').show();
-			
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
@@ -303,7 +309,7 @@ jQuery(function ($) {
 
 		if (data.result.success == true) {
 			$('#form_submit_button').prop('disabled', false);
-			
+
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
 			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
@@ -317,7 +323,7 @@ jQuery(function ($) {
 			data.context.append(removeButton.clone(true).data(data));
 		} else if (data.result.message) {
 			$('#form_submit_button').prop('disabled', false);
-			
+
 			data.uploaded = false;
 			data.context.append(removeButton.clone(true).data(data));
 

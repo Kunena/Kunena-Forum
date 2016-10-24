@@ -11,6 +11,17 @@
  **/
 defined('_JEXEC') or die();
 
+$document   = JFactory::getDocument();
+$doctype    = $document->getType();
+
+// Only render for HTML output
+if ($doctype == 'html')
+{
+	$document->addCustomTag('<link rel="image_src" href="' . JURI::base() . $attachment->getUrl() . '">');
+	$document->addCustomTag ('<meta property="og:image" content="' . JURI::base() . $attachment->getUrl() . '" />');
+	$document->addCustomTag ('<meta name="twitter:image:src" content="' . JURI::base() . $attachment->getUrl() . '" />');
+}
+
 $title    = $this->title;
 $url      = $this->url;
 $filename = $this->filename;

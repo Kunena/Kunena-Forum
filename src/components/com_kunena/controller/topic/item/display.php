@@ -147,18 +147,21 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$doc->setMetaData('robots', 'noindex, nofollow');
 		}
 
-		foreach ($doc->_links as $key => $value)
+		if (!$start)
 		{
-			if (is_array($value))
+			foreach ($doc->_links as $key => $value)
 			{
-				if (array_key_exists('relation', $value))
+				if (is_array($value))
 				{
-					if ($value['relation'] == 'canonical')
+					if (array_key_exists('relation', $value))
 					{
-						$canonicalUrl = $this->topic->getUrl();
-						$doc->_links[$canonicalUrl] = $value;
-						unset($doc->_links[$key]);
-						break;
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = $this->topic->getUrl();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
 					}
 				}
 			}

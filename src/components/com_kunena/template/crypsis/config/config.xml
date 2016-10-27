@@ -98,7 +98,7 @@
 			<option value="classic">COM_KUNENA_CLASSIC</option>
 			<option value="flat">COM_KUNENA_FLAT</option>
 			<option value="minima">COM_KUNENA_MINIMA</option>
-			<option value="pain">COM_KUNENA_PLAIN</option>
+			<option value="plain">COM_KUNENA_PLAIN</option>
 		</field>
 		<field name="writeaccess" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS" description="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS_DESC">
 			<option value="0">COM_KUNENA_NO</option>

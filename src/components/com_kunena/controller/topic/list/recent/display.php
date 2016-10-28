@@ -126,26 +126,6 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$doc = JFactory::getDocument();
 
-		if (!$start)
-		{
-			foreach ($doc->_links as $key => $value)
-			{
-				if (is_array($value))
-				{
-					if (array_key_exists('relation', $value))
-					{
-						if ($value['relation'] == 'canonical')
-						{
-							$canonicalUrl = KunenaRoute::_();
-							$doc->_links[$canonicalUrl] = $value;
-							unset($doc->_links[$key]);
-							break;
-						}
-					}
-				}
-			}
-		}
-
 		$page = $this->pagination->pagesCurrent;
 
 		$pagdata = $this->pagination->getData();
@@ -161,18 +141,21 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$doc->addHeadLink($pagdata->next->link, 'next');
 		}
 
-		foreach ($doc->_links as $key => $value)
+		if ($page > 1)
 		{
-			if (is_array($value))
+			foreach ($doc->_links as $key => $value)
 			{
-				if (array_key_exists('relation', $value))
+				if (is_array($value))
 				{
-					if ($value['relation'] == 'canonical')
+					if (array_key_exists('relation', $value))
 					{
-						$canonicalUrl = KunenaRoute::_();
-						$doc->_links[$canonicalUrl] = $value;
-						unset($doc->_links[$key]);
-						break;
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
 					}
 				}
 			}

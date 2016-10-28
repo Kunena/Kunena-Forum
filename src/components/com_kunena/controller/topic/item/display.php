@@ -409,6 +409,39 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 

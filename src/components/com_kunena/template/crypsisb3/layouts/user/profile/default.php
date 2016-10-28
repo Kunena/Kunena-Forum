@@ -112,29 +112,42 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('gender'); ?>
-			</li>
+			<?php if ($user->gender) :?>
+				<li>
+					<?php echo $user->profileIcon('gender'); ?>
+				</li>
+			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('birthdate'); ?>
-			</li>
+			<?php if ($user->birthdate) :?>
+				<li>
+					<?php echo $user->profileIcon('birthdate'); ?>
+				</li>
+			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('location'); ?>
-			</li>
+			<?php if ($user->location) :?>
+				<li>
+					<?php echo $user->profileIcon('location'); ?>
+				</li>
+			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('website'); ?>
-			</li>
+			<?php if ($user->websiteurl) :?>
+				<li>
+					<?php echo $user->profileIcon('website'); ?>
+				</li>
+			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('private'); ?>
-			</li>
+			<?php if (KunenaFactory::getPrivateMessaging()) :?>
+				<li>
+					<?php echo $user->profileIcon('private'); ?>
+				</li>
+			<?php endif; ?>
 
-			<li>
-				<?php echo $user->profileIcon('email'); ?>
-			</li>
+			<?php if ($user->email) :?>
+				<li>
+					<?php echo $user->profileIcon('email'); ?>
+				</li>
+			<?php endif; ?>
+
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>
 		</ul>
 	</div>

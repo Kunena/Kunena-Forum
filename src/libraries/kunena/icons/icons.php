@@ -1510,4 +1510,64 @@ class KunenaIcons
 			return '<i class="icon icon-grid-view-2"></i>';
 		}
 	}
+
+	/**
+	 * Return the globe icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function globe()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-globe"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-link"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-globe"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-link"></i>';
+		}
+	}
+
+	/**
+	 * Return the location icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function location()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-location"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-location"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-location"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-location"></i>';
+		}
+	}
 }

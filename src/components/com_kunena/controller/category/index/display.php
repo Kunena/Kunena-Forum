@@ -222,7 +222,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 					WHERE catid IN ({$catlist}) AND hold=1
 					GROUP BY catid"
 				);
-				
+
 				try
 				{
 					$pending = $db->loadAssocList();

@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`last_topic_id` int(11) NOT NULL default '0',
 	`last_post_id` int(11) NOT NULL default '0',
 	`last_post_time` int(11) NOT NULL default '0',
-	`params` text NOT NULL,
+	`params` text NOT NULL default '{}',
 	`allow_ratings` tinyint(4) NOT NULL default '0',
 	PRIMARY KEY (id),
 	KEY `parent_id` (parent_id),
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 
 CREATE TABLE IF NOT EXISTS `#__kunena_configuration` (
 	`id` int(11) NOT NULL default '0',
-	`params` text NULL,
+	`params` text NULL default '{}',
 	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_keywords` (
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	`last_post_message` text NULL,
 	`last_post_guest_name` tinytext NULL,
 	`rating` tinyint(6) NOT NULL default '0',
-	`params` text NOT NULL,
+	`params` text NOT NULL default '{}',
 	PRIMARY KEY (id),
 	KEY `category_id` (category_id),
 	KEY `locked` (locked),
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories` (
 	`role` tinyint(4) NOT NULL default '0',
 	`allreadtime` int(11) NOT NULL default '0',
 	`subscribed` tinyint(4) NOT NULL default '0',
-	`params` text NOT NULL,
+	`params` text NOT NULL default '{}',
 	PRIMARY KEY (user_id,category_id),
 	KEY `category_subscribed` (category_id,subscribed),
 	KEY `role` (role) ) DEFAULT CHARACTER SET utf8;
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics` (
 	`owner` tinyint(4) NOT NULL default '0',
 	`favorite` tinyint(4) NOT NULL default '0',
 	`subscribed` tinyint(4) NOT NULL default '0',
-	`params` text NOT NULL,
+	`params` text NOT NULL default '{}',
 	UNIQUE KEY `user_topic_id` (user_id,topic_id),
 	KEY `topic_id` (topic_id),
 	KEY `posts` (posts),
@@ -354,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned` (
 	`modified_by` int(11) NULL,
 	`modified_time` datetime NULL,
 	`comments` text NULL,
-	`params` text NULL,
+	`params` text NULL default '{}',
 	PRIMARY KEY (id),
 	KEY `userid` (userid),
 	KEY `ip` (ip),

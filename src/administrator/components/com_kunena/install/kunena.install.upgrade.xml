@@ -725,22 +725,6 @@
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords`;</query>
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords_map`;</query>
 		</version>
-		<version version="5.0.4-DEV2"
-		         versiondate="2016-10-28"
-		         versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE COLUMN `params` `params` text NOT NULL default '{}';</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_configuration` CHANGE COLUMN `params` `params` text NULL default '{}';</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_topics` CHANGE COLUMN `params` `params` text NOT NULL default '{}';</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_user_categories` CHANGE COLUMN `params` `params` text NOT NULL default '{}';</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_user_topics` CHANGE COLUMN `params` `params` text NOT NULL default '{}';</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` CHANGE COLUMN `params` `params` text NULL default '{}';</query>
-			<query mode="silenterror">UPDATE `#__kunena_categories` SET `params`=`{}` WHERE `params`='';</query>
-			<query mode="silenterror">UPDATE `#__kunena_configuration` SET `params`=`{}` WHERE `params`='';</query>
-			<query mode="silenterror">UPDATE `#__kunena_topics` SET `params`=`{}` WHERE `params`='';</query>
-			<query mode="silenterror">UPDATE `#__kunena_user_categories` SET `params`=`{}` WHERE `params`='';</query>
-			<query mode="silenterror">UPDATE `#__kunena_user_topics` SET `params`=`{}` WHERE `params`='';</query>
-			<query mode="silenterror">UPDATE `#__kunena_users_banned` SET `params`=`{}` WHERE `params`='';</query>
-		</version>
 		<version version="@kunenaversion@"
 				versiondate="@kunenaversiondate@"
 				versionname="@kunenaversionname@">

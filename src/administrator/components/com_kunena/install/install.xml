@@ -257,7 +257,8 @@
 		       default="0"/>
 		<field name="params"
 		       type="text"
-		       null="0"/>
+		       null="0"
+		       default="{}"/>
 		<field name="allow_ratings"
 			   type="tinyint(4)"
 			   null="0"
@@ -281,7 +282,8 @@
 		       default="0"/>
 		<field name="params"
 		       type="text"
-		       null="1"/>
+		       null="1"
+		       default="{}"/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="id"/>
@@ -379,7 +381,8 @@
 		       null="6"/>
 		<field name="params"
 		       type="text"
-		       null="0"/>
+		       null="0"
+		       default="{}"/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="id"/>
@@ -719,7 +722,8 @@
 		       default="0"/>
 		<field name="params"
 		       type="text"
-		       null="0"/>
+		       null="0"
+		       default="{}"/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="user_id,category_id"/>
@@ -790,7 +794,8 @@
 		       default="0"/>
 		<field name="params"
 		       type="text"
-		       null="0"/>
+		       null="0"
+		       default="{}"/>
 		<key name="user_topic_id"
 		     unique="1"
 		     columns="user_id,topic_id"/>
@@ -1035,7 +1040,8 @@
 		       null="1"/>
 		<field name="params"
 		       type="text"
-		       null="1"/>
+		       null="1"
+		       default="{}"/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="id"/>

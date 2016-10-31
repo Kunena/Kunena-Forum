@@ -1529,11 +1529,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '<a target="_blank" href="http://www.ebay.com/itm/'.$content.'?lang=' . $config->ebaylanguagecode . '&campid='.$config->ebay_affiliate_id.'">www.ebay.com/itm/'.$content.'</a>';
 		}
 
-		// Max display size.
-		$width = (int) $config->rtewidth;
-		$height = (int) $config->rteheight;
-
-		return SELF::renderEbayLayout($content);
+		return self::renderEbayLayout($content);
 	}
 
 	/**
@@ -2891,7 +2887,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		if ($layout->getPath())
 		{
-			$ebay = SELF::getEbayItemFromCache($ItemID);
+			$ebay = self::getEbayItemFromCache($ItemID);
 
 			if (is_object($ebay) && $ebay->Ack == 'Success')
 			{

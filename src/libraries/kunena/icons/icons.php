@@ -1555,15 +1555,15 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-location"></i>';
+			return '<i class="fa fa-map-marker"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-location"></i>';
+			return '<i class="icon icon-map-marker"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-location"></span>';
+			return '<span class="glyphicon glyphicon-map-marker"></span>';
 		}
 		else
 		{

@@ -1695,10 +1695,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$post  = isset($params["post"]) ? $params["post"] : false;
 		$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$wrote = '';
-		$already = preg_match('/[quote]/', $content) ;
 
 		if ($user)
 		{

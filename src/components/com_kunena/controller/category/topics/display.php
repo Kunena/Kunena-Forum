@@ -187,15 +187,15 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$componentParams = $config->getParams('com_config');
 		$robots = $componentParams->get('robots');
 
-		if ($robots == '')
+		if ($robots == '' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, follow');
 		}
-		elseif ($robots == 'noindex, follow')
+		elseif ($robots == 'noindex, follow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'noindex, follow');
 		}
-		elseif ($robots == 'index, nofollow')
+		elseif ($robots == 'index, nofollow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, nofollow');
 		}

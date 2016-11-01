@@ -85,6 +85,26 @@ class KunenaPrivate
 			return '';
 		}
 
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			$class = 'btn btn-small';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			$class = 'btn btn-small';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			$class = 'btn btn-default btn-sm';
+		}
+		else
+		{
+			$class = 'btn btn-small';
+		}
+
 		$url = $this->getURL($userid);
 
 		$onclick = $this->getOnClick($userid);
@@ -96,7 +116,7 @@ class KunenaPrivate
 		}
 
 		// We should offer the user a PM link
-		return '<a class="btn btn-small" href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="icon icon-comments-2"></span></a>';
+		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '">' . KunenaIcons::pm() .'</a>';
 	}
 
 	/**
@@ -107,7 +127,7 @@ class KunenaPrivate
 	 * @return string
 	 * @internal param $text
 	 */
-	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
+	public function shownewIcon($userid, $class = '', $icon = '')
 	{
 		$my = JFactory::getUser();
 		$url = $this->getURL($userid);
@@ -119,17 +139,40 @@ class KunenaPrivate
 			return '';
 		}
 
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if (empty($class))
+		{
+			if ($topicicontype == 'fa')
+			{
+				$class = 'btn btn-small';
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				$class = 'btn btn-small';
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				$class = 'btn btn-default btn-sm';
+			}
+			else
+			{
+				$class = 'btn btn-small';
+			}
+		}
+
 		// Don't send messages from/to anonymous and to yourself
 		if ($userid == $my->id)
 		{
 			$this->pmCount = $this->getUnreadCount($my->id);
 			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
 			$url = $this->getInboxURL();
-			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
+			return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
 		}
 
 		// We should offer the user a PM link
-		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
+		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>'. KunenaIcons::pm() . ' ' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 	}
 
 	public function getInboxLink($text)

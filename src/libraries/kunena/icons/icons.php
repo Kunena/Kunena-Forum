@@ -1570,4 +1570,34 @@ class KunenaIcons
 			return '<i class="icon icon-location"></i>';
 		}
 	}
+
+	/**
+	 * Return the pm icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function pm()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-comments-o"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-comments-2"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-comment"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-comments-2"></i>';
+		}
+	}
 }

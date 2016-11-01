@@ -1559,7 +1559,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-map-marker"></i>';
+			return '<i class="icon icon-location"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
@@ -1567,7 +1567,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-location"></i>';
+			return '<span class="kicon-profile kicon-profile-location"></span>';
 		}
 	}
 

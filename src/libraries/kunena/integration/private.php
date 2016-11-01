@@ -116,7 +116,7 @@ class KunenaPrivate
 		}
 
 		// We should offer the user a PM link
-		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '">' . KunenaIcons::pm() .'</a>';
+		return '<a class="' . $class . '" href="' . $url . '""' . $onclick . '">' . KunenaIcons::pm() .'</a>';
 	}
 
 	/**

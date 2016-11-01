@@ -1388,7 +1388,7 @@ class KunenaUser extends JObject
 						$gender = 'unknown';
 				}
 				$title = JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER' ) . ': ' . JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER_' . $gender );
-				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" title="' . $title . '"></span>';
+				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-toggle="tooltip" data-placement="right" title="' . $title . '"></span>';
 				break;
 			case 'birthdate' :
 				if ($this->birthdate)
@@ -1398,13 +1398,13 @@ class KunenaUser extends JObject
 					{
 						break;
 					}
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" data-toggle="tooltip" data-placement="right" title="' . JText::_( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
 				if ($this->location)
 				{
-					return '<span title="' . $this->escape($this->location) . '">' . KunenaIcons::location() . '</span>';
+					return '<span data-toggle="tooltip" data-placement="right" title="' . $this->escape($this->location) . '">' . KunenaIcons::location() . '</span>';
 				}
 				break;
 			case 'website' :
@@ -1423,15 +1423,15 @@ class KunenaUser extends JObject
 				}
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape($url) . '" target="_blank"><span title="' . $websitename . '">' . KunenaIcons::globe() .'</span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank"><span data-toggle="tooltip" data-placement="right" title="' . $websitename . '">' . KunenaIcons::globe() .'</span></a>';
 				}
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging();
-				return $pms->showIcon($this->userid);
+				return '<span data-toggle="tooltip" data-placement="right" title="' . JText::_( 'COM_KUNENA_VIEW_PMS' ) . '" >' . $pms->showIcon($this->userid) . '</span>';
 				break;
 			case 'email' :
-				return '<span title="' . $this->email . '">' . KunenaIcons::email() . '</span>';
+				return '<span data-toggle="tooltip" data-placement="right" title="' . $this->email . '">' . KunenaIcons::email() . '</span>';
 				break;
 			case 'profile' :
 				if (! $this->userid)

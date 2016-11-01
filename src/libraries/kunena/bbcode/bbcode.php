@@ -1704,7 +1704,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
 		}
 
-		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';
+		$html .= '<blockquote><p class="kmsgtext-quote">' . $content . '</p></blockquote>';
 
 		return $html;
 	}

@@ -160,9 +160,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
 								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
-									<input class="form-control" type="text" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
+									<input class="form-control" type="text" name="ksubject" id="ksubject" value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
 								<?php else : ?>
-									<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"  />
+									<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="ksubject" id="ksubject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"  />
 								<?php endif; ?>
 							</div>
 						</div>

@@ -49,7 +49,7 @@ else
 		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
-				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
+				<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
 			</div>
 			<?php if ($signature) : ?>
 				<div class="ksig">

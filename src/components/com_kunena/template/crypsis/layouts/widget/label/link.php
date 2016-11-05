@@ -12,9 +12,8 @@ defined('_JEXEC') or die;
 
 $label = $this->label;
 $link = ' href="' . $this->link . '"';
-$tooltip = ' data-toggle="tooltip"';
-$description = isset($this->description) ? $tooltip . ' title="' . $this->description . '"' : '';
-$class = ' class="label label-' . $this->state . ' ' . '"';
+$description = isset($this->description) ? ' title="' . $this->description . '"' : '';
+$class = ' class="label label-' . $this->state . ' ' . KunenaTemplate::getInstance()->tooltips() . '"';
 ?>
 <a <?php echo $link . $description . $class; ?>>
 	<?php echo $label; ?>

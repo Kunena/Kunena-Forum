@@ -1467,4 +1467,26 @@ HTML;
 			return ' table-bordered';
 		}
 	}
+
+	public function tooltips($class = false)
+	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$tooltips   = $this->ktemplate->params->get('tooltips');
+
+		if ($tooltips)
+		{
+			if ($class)
+			{
+				return 'class="hasTooltip"';
+			}
+			else
+			{
+				return 'hasTooltip';
+			}
+		}
+		else
+		{
+			return '';
+		}
+	}
 }

@@ -16,7 +16,7 @@ if (!is_null($item->base))
 {
 	// Check if the item can be clicked.
 	$limit = 'limitstart.value=' . (int) $item->base;
-	echo '<li><a href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
+	echo '<li><a ' . KunenaTemplate::getInstance()->tooltips(true) . ' href="' . $item->link . '" title="' . JText::_('COM_KUNENA_PAGE') . $item->text . '">' . $item->text . '</a></li>';
 }
 elseif (!empty($item->active))
 {

@@ -20,7 +20,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 <tr>
 	<td>
 		<h3>
-			<?php echo $this->getCategoryLink($this->category); ?>
+			<?php echo $this->getCategoryLink($this->category, null, $this->category->description, KunenaTemplate::getInstance()->tooltips()); ?>
 			<small class="hidden-phone">
 				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>)
 			</small>
@@ -44,7 +44,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 
 	<td<?php if (!$avatar) { echo ' colspan="2"'; } ?>>
 		<div>
-			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $this->category, true, true); ?>
+			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $this->category, true, true); ?>
 		</div>
 		<div>
 			<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>

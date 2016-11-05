@@ -22,6 +22,10 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="tooltips" type="list" default="1" label="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS" description="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 		<field name="borderless" type="list" default="1" label="COM_KUNENA_TEMPLATE_BORDERLESS" description="COM_KUNENA_TEMPLATE_BORDERLESS_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>

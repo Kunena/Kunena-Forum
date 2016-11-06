@@ -113,7 +113,7 @@ jQuery(document).ready(function ($) {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
 
-		$("#ksubject").attr('required', 'required');
+		$("#subject").attr('required', 'required');
 
 		if ($('#kanynomous-check').length > 0) {
 			if (arrayanynomousbox[catid] !== undefined) {

@@ -55,11 +55,10 @@ JHtml::_('behavior.core');
 					<th class="span1 center">
 						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
 					</th>
-					<th class="span1">
-						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
-					</th>
 				<?php endif; ?>
-
+				<th class="span2">
+					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+				</th>
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>

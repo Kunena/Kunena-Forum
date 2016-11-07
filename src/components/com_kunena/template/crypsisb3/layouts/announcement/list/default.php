@@ -63,10 +63,10 @@ JHtml::_('behavior.core');
 					<th class="col-md-1 center">
 						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
 					</th>
-					<th class="col-md-1">
-						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
-					</th>
 				<?php endif; ?>
+				<th class="col-md-2">
+					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+				</th>
 
 				<th class="col-md-1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>

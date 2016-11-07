@@ -41,10 +41,15 @@ null, 'follow'); ?>
 	'kunenagrid.task', $row, 'publish_x.png',
 JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); } ?>
 	</td>
-	<td>
-		<?php echo $announcement->getAuthor()->username; ?>
-	</td>
 	<?php endif; ?>
+
+	<td>
+		<?php if (KunenaConfig::getInstance()->username) :?>
+			<?php echo $announcement->getAuthor()->username; ?>
+		<?php else :?>
+			<?php echo $announcement->getAuthor()->name; ?>
+		<?php endif; ?>
+	</td>
 
 	<td class="center hidden-xs">
 		<?php echo $announcement->displayField('id'); ?>

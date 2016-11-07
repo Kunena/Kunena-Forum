@@ -97,6 +97,14 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
+
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
 
 		if (file_exists($filenameless) && 0 != filesize($filenameless))
@@ -111,7 +119,6 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 		$doc = JFactory::getDocument();
 

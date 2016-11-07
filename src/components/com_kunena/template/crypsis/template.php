@@ -46,6 +46,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Load JavaScript.
 		$this->addScript('assets/js/main.js');
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
+
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
@@ -65,7 +73,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
 		$doc = JFactory::getDocument();
 

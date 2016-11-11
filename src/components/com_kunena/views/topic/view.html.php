@@ -190,22 +190,6 @@ class KunenaViewTopic extends KunenaView
 	{
 		$this->setLayout('edit');
 
-		// Get captcha
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$this->captchaHtml = $captcha->getHtml();
-
-			if (!$this->captchaHtml)
-			{
-				$this->app->enqueueMessage($captcha->getError(), 'error');
-				$this->redirectBack();
-
-				return;
-			}
-		}
-
 		// Get saved message
 		$saved = $this->app->getUserState('com_kunena.postfields');
 

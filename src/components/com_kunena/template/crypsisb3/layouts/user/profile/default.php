@@ -151,7 +151,7 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->email) :?>
+				<?php if ($user->email && !$user->hideEmail) :?>
 					<li>
 						<?php echo $user->profileIcon('email'); ?>
 					</li>

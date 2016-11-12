@@ -1133,43 +1133,7 @@ class KunenaIcons
 		}
 		else
 		{
-			if ($topicicontype == 'fa')
-			{
-				if (!empty($caticon))
-				{
-					$bigicon = ' ';
-				}
-				else
-				{
-					$bigicon = ' fa-folder-open ';
-				}
-			}
-			elseif ($topicicontype == 'B2')
-			{
-				if (!empty($caticon))
-				{
-					$bigicon = ' ';
-				}
-				else
-				{
-					$bigicon = ' icon-folder ';
-				}
-			}
-			elseif ($topicicontype == 'B3')
-			{
-				if (!empty($caticon))
-				{
-					$bigicon = ' ';
-				}
-				else
-				{
-					$bigicon = ' glyphicon-folder-open ';
-				}
-			}
-			else
-			{
-				$bigicon = ' ';
-			}
+			$bigicon = ' ';
 		}
 
 		if ($topicicontype == 'fa')

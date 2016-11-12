@@ -150,11 +150,31 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			->find();
 
 		$this->prepareMessages($mesid);
+		$doc = JFactory::getDocument();
 
 		if ($this->topic->unread)
 		{
-			$doc = JFactory::getDocument();
 			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
+		if (!$start)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = $this->topic->getUrl();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		// Run events.

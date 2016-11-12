@@ -125,6 +125,43 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
+		$doc = JFactory::getDocument();
+
+		$page = $this->pagination->pagesCurrent;
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		if ($this->moreUri)
 		{
 			$this->pagination->setUri($this->moreUri);
@@ -235,6 +272,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=replies';
 				break;
 		}
+
 
 		$doc = JFactory::getDocument();
 

@@ -159,8 +159,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
 		$doc = JFactory::getDocument();
+		$page = $this->pagination->pagesCurrent;
 
-		if (!$limitstart)
+		if ($page > 1)
 		{
 			foreach ($doc->_links as $key => $value)
 			{

@@ -273,7 +273,6 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				break;
 		}
 
-
 		$doc = JFactory::getDocument();
 
 		foreach ($doc->_links as $key => $value)

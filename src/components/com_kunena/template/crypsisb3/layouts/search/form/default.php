@@ -82,7 +82,7 @@ $this->addScript('assets/js/search.js');
 									<input type="checkbox" name="exactname" value="1"
 										<?php if ($this->state->get('query.exactname'))
 										{
-											echo $this->checked;
+											echo ' checked="checked" ';
 										} ?> />
 									<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
 								</label>

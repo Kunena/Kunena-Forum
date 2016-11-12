@@ -173,10 +173,10 @@ if ($this->config->showuserstats)
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small"
+								<a class="btn btn-small" rel="nofollow" target="_blank"
 								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>
 							<?php elseif (empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small"
+								<a class="btn btn-small" rel="nofollow" target="_blank"
 								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteURL ?></a>
 							<?php elseif (!empty($websiteName) && $websiteURL == 'http://') : ?>
 								<button class="btn btn-small"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></button>

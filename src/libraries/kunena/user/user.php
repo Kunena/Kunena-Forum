@@ -687,6 +687,22 @@ class KunenaUser extends JObject
 				$rels = '';
 			}
 
+			if ($rels == 'rel="canonical"')
+			{
+				$config = JFactory::getApplication('site');
+				$componentParams = $config->getParams('com_config');
+				$robots = $componentParams->get('robots');
+
+				if ($robots == 'noindex, follow' || $robots == 'noindex, nofollow')
+				{
+					$rels = 'rel="nofollow"';
+				}
+				else
+				{
+					$rels = 'rel="canonical"';
+				}
+			}
+
 			if (!empty($link))
 			{
 				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";

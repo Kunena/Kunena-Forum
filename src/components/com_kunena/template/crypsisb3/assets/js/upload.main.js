@@ -130,8 +130,14 @@ jQuery(function ($) {
 
 				$('#insert-all').removeClass('btn-primary');
 				$('#insert-all').addClass('btn-success');
-				$('#insert-all').html('<i class="glyphicon glyphicon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+				$('#insert-all').html('<i class="glyphicon glyphicon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
+		});
+
+		$('#files .btn.btn-primary').each(function () {
+			$('#files .btn.btn-primary').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-primary');
+			$('#files .btn.btn-success').html('<i class="glyphicon glyphicon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		});
 	});
 

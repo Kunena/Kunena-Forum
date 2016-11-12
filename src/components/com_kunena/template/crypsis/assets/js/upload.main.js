@@ -133,6 +133,12 @@ jQuery(function ($) {
 				$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
 		});
+
+		$('#files .btn.btn-primary').each(function () {
+			$('#files .btn.btn-primary').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-primary');
+			$('#files .btn.btn-success').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+		});
 	});
 
 	var insertButton = $('<button>')

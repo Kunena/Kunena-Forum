@@ -364,7 +364,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']      = JHtml::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['channels']        = JHtml::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true) : null;
+		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']       = JHtml::_('select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published);
 		$lists ['forumLocked']     = JHtml::_('select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked);
 		$lists ['forumReview']     = JHtml::_('select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review);

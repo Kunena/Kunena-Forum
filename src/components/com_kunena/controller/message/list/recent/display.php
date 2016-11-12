@@ -146,22 +146,22 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			$doc->setMetaData('robots', 'nofollow, noindex');
 		}
 
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace( 'limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
 		$page = $this->pagination->pagesCurrent;
 		if ($page > 1)
 		{
-			$pagdata = $this->pagination->getData();
-
-			if ($pagdata->previous->link)
-			{
-				$pagdata->previous->link = str_replace( 'limitstart=0', '', $pagdata->previous->link);
-				$doc->addHeadLink($pagdata->previous->link, 'prev');
-			}
-
-			if ($pagdata->next->link)
-			{
-				$doc->addHeadLink($pagdata->next->link, 'next');
-			}
-
 			foreach ($doc->_links as $key => $value)
 			{
 				if (is_array($value))

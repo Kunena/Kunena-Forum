@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-				insertTpl: ':${name}:',
+				insertTpl: '${name}',
 				callbacks: {
 					remoteFilter: function (query, callback) {
 						if (query.length > 0) {

@@ -34,7 +34,7 @@ if ($show)
 <div class="span2">
 	<ul class="profilebox center">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 		<?php if ($optional_username) : ?>
 			<li>

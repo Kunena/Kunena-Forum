@@ -257,10 +257,12 @@ abstract class JHtmlKunenaForum
 	 * @param         $options
 	 * @param   array $selected
 	 *
+	 * @param null    $class_input
+	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public static function checklist($name, $options, $selected = array())
+	public static function checklist($name, $options, $selected = array(), $class_input = null)
 	{
 		if ($selected !== true && !is_array($selected))
 		{
@@ -278,7 +280,7 @@ abstract class JHtmlKunenaForum
 
 			// Build the HTML for the item.
 			$html[] = '	<li>';
-			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '"';
+			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="' . $class_input . '"';
 			$html[] = '			' . $checked . ' />';
 			$html[] = '		<label for="' . $eid . '">';
 			$html[] = '			' . $item;

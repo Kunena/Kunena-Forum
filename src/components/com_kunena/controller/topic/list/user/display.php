@@ -179,6 +179,41 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		$doc = JFactory::getDocument();
 
+		if (!$start)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		$page = $this->pagination->pagesCurrent;
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
 		foreach ($doc->_links as $key => $value)
 		{
 			if (is_array($value))
@@ -187,6 +222,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				{
 					if ($value['relation'] == 'canonical')
 					{
+						$canonicalUrl = KunenaRoute::_();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

@@ -1551,29 +1551,25 @@ class KunenaUser extends JObject
 				if ($this->birthdate)
 				{
 					$date = new KunenaDate($this->birthdate);
-
 					if ($date->format('%Y') < 1902)
 					{
 						break;
 					}
-
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
 				if ($this->location)
 				{
-					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION') . ': ' . $this->escape($this->location) . '"></span>';
+					return '<span title="' . $this->escape($this->location) . '">' . KunenaIcons::location() . '</span>';
 				}
 				break;
 			case 'website' :
 				$url = $this->websiteurl;
-
 				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
 				{
 					$url = 'http://' . $this->websiteurl;
 				}
-
 				if (!$this->websitename)
 				{
 					$websitename = $this->websiteurl;
@@ -1582,28 +1578,24 @@ class KunenaUser extends JObject
 				{
 					$websitename = $this->websitename;
 				}
-
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape($url) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' . $this->escape($websitename) . '"></span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank"><span title="' . $websitename . '">' . KunenaIcons::globe() .'</span></a>';
 				}
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging();
-
 				return $pms->showIcon($this->userid);
 				break;
 			case 'email' :
-				// TODO: show email
-				return; // '<span class="email" title="'. JText::_('COM_KUNENA_MYPROFILE_EMAIL').'"></span>';
+				return '<span title="' . $this->email . '">' . KunenaIcons::email() . '</span>';
 				break;
 			case 'profile' :
-				if (!$this->userid)
+				if (! $this->userid)
 				{
 					return;
 				}
-
-				return $this->getLink('<span class="profile" title="' . JText::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');
+				return $this->getLink('<span class="profile" title="' . JText::_( 'COM_KUNENA_VIEW_PROFILE' ) . '"></span>');
 				break;
 		}
 	}

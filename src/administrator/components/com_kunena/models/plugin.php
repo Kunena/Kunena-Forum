@@ -144,11 +144,11 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
-	 * @return  void
+	 * @param string   $group
 	 *
 	 * @since   Joomla 3.1
 	 */
-	protected function preprocessData($context, &$data)
+	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
 		// Get the dispatcher and load the users plugins.
 		$dispatcher = JEventDispatcher::getInstance();

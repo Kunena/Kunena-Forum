@@ -45,7 +45,7 @@ foreach ($this->sections as $section) :
 		</h2>
 
 		<h1>
-			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', true, false); ?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', false, false); ?>
 			<small class="hidden-phone nowrap">
 				<?php if ($section->getTopics() > 0) : ?>
 					(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)

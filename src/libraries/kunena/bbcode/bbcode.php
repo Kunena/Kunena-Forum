@@ -1591,10 +1591,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return '<a target="_blank" href="http://www.ebay.com/itm/' . $content . '?lang=' . $config->ebaylanguagecode . '&campid=' . $config->ebay_affiliate_id . '">www.ebay.com/itm/' . $content . '</a>';
 		}
 
-		// Max display size.
-		$width  = (int) $config->rtewidth;
-		$height = (int) $config->rteheight;
-
 		return self::renderEbayLayout($content);
 	}
 

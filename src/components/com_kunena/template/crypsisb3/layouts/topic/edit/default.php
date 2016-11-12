@@ -83,6 +83,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
 	<input id="kpreview_url" type="hidden" name="kpreview_url"
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+	<?php if (!$this->config->allow_change_subject) : ?>
+		<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+	<?php endif; ?>
 	<?php if ($this->message->exists()) : ?>
 		<input type="hidden" name="task" value="edit"/>
 		<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>

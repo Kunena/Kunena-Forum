@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
+ * @package     Kunena.Template
  * @subpackage  Layout.Email
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
@@ -19,19 +19,19 @@ $author  = $this->message->getAuthor();
 $config  = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 
-$msg1 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
-$msg2 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+$msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
 $more = ($this->once ?
 	JText::_(
 		$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 			'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0;">
-		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="telephone=no"/>
 
 		<style>
 			body {
@@ -107,10 +107,10 @@ $more = ($this->once ?
 	<body topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0" marginwidth="0" marginheight="0" width="100%" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; width: 100%; height: 100%; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%;
 	background-color: #F0F0F0;
 	color: #000000;"
-		bgcolor="#F0F0F0"
-		text="#000000">
+	      bgcolor="#F0F0F0"
+	      text="#000000">
 	<table border="0" cellpadding="0" cellspacing="0" align="center"
-		style="border-collapse: collapse; border-spacing: 0; padding: 0; width: 100%; background-color: #f0f0f0;" class="wrapper">
+	       style="border-collapse: collapse; border-spacing: 0; padding: 0; width: 100%; background-color: #f0f0f0;" class="wrapper">
 
 		<tr>
 			<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
@@ -123,13 +123,14 @@ $more = ($this->once ?
 		</tr>
 	</table>
 
-	<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; width: 100%;" class="background">
+	<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0"
+	       style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; width: 100%;" class="background">
 		<tr>
 			<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;"
-				bgcolor="#F0F0F0">
+			    bgcolor="#F0F0F0">
 				<table border="0" cellpadding="0" cellspacing="0" align="center"
-					bgcolor="#FFFFFF"
-					width="560" style="border-collapse: collapse; border-spacing: 0; padding: 0; width: inherit;
+				       bgcolor="#FFFFFF"
+				       width="560" style="border-collapse: collapse; border-spacing: 0; padding: 0; width: inherit;
 	max-width: 560px;" class="container">
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
@@ -138,18 +139,19 @@ $more = ($this->once ?
 						</td>
 					</tr>
 
-					<?php if (!empty($config->emailheader)) :?>
-					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
-								href="#"><img border="0" vspace="0" hspace="0"
-									src="<?php echo JUri::base() . KunenaConfig::getInstance()->emailheader;?>"
-									alt="Please enable images to view this content" title="Forum"
-									width="560" style="
+					<?php if (!empty($config->emailheader)) : ?>
+						<tr>
+							<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
+							    class="hero"><a target="_blank" style="text-decoration: none;"
+							                    href="#"><img border="0" vspace="0" hspace="0"
+							                                  src="<?php echo JUri::base() . KunenaConfig::getInstance()->emailheader; ?>"
+							                                  alt="Please enable images to view this content" title="Forum"
+							                                  width="560" style="
 			width: 100%;
 			max-width: 560px;
-			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a>
-						</td>
-					</tr>
+			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;"/></a>
+							</td>
+						</tr>
 					<?php endif; ?>
 
 					<tr>
@@ -164,28 +166,31 @@ $more = ($this->once ?
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
-							<div>
-								<p><?php echo $this->message->displayField('message'); ?></p>
-							</div>
+								<div>
+									<p><?php echo $this->message->displayField('message'); ?></p>
+								</div>
 							<?php endif; ?>
 
 							<?php if ($more) : ?>
-							<div>
-								<p><?php echo $more; ?></p>
-							</div>
+								<div>
+									<p><?php echo $more; ?></p>
+								</div>
 							<?php endif; ?>
 						</td>
 					</tr>
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
 			padding: 25px 6.25% 5px;" class="button"><a
-								href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>" target="_blank" style="text-decoration: underline;">
-								<table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
+								href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"
+								target="_blank" style="text-decoration: underline;">
+								<table border="0" cellpadding="0" cellspacing="0" align="center"
+								       style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
 									<tr>
-										<td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
-											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
+										<td align="center" valign="middle"
+										    style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
+										    bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-												href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>">
+										                         href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
@@ -199,12 +204,12 @@ $more = ($this->once ?
 					</tr>
 				</table>
 				<table border="0" cellpadding="0" cellspacing="0" align="center"
-					width="560" style="border-collapse: collapse; border-spacing: 0; padding: 0; width: inherit;
+				       width="560" style="border-collapse: collapse; border-spacing: 0; padding: 0; width: inherit;
 	max-width: 560px;" class="wrapper">
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
 			padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
-							<?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br />
+							<?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
 							<?php echo $msg2; ?>
 						</td>
 					</tr>
@@ -214,7 +219,7 @@ $more = ($this->once ?
 	</table>
 
 	</body>
-</html>
+	</html>
 <?php
 
 $full = !$config->mailfull ? '' : <<<EOS

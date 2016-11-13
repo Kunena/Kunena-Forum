@@ -15,17 +15,17 @@ jQuery(document).ready(function($) {
 
 		$('#kusersearch').atwho({
 			at: "",
-			tpl: '<li data-value="${username}"><span class="glyphicon glyphicon-user"></span> ${username} <small>(${name})</small></li>',
+			displayTpl: '<li data-value="${name}"><img src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
 			limit: 7,
 			callbacks: {
-				remote_filter: function(query, callback)  {
+				remoteFilter: function(query, callback)  {
 					$.ajax({
 						url: users_url,
 						data: {
 							search : query
 						},
 						success: function(data) {
-							callback(data.names);
+							callback(data);
 						}
 					});
 				}

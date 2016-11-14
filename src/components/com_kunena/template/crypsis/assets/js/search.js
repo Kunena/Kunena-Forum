@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 		$('#kusersearch').atwho({
 			at: "",
 			displayTpl: '<li data-value="${name}"><img src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
-			limit: 7,
+			limit: 5,
 			callbacks: {
 				remoteFilter: function(query, callback)  {
 					$.ajax({

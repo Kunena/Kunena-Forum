@@ -9,7 +9,7 @@
 	<authorUrl>https://www.kunena.org</authorUrl>
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
-	<description>COM_KUNENA_TEMPLATE_CRYPSIS_DESC</description>
+	<description>COM_KUNENA_TEMPLATE_CRYPSISB3_DESC</description>
 	<files>
 		<filename>config.xml</filename>
 		<filename>README.md</filename>

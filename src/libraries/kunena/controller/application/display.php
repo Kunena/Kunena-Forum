@@ -232,7 +232,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		$jinput = JFactory::getApplication()->input;
+		$limitstart = $jinput->getInt('limitstart', 'limitstart', 0);
+
+		if (!$limitstart)
+		{
+			$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		}
 
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();

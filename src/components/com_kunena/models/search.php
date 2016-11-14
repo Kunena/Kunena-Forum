@@ -48,7 +48,7 @@ class KunenaModelSearch extends KunenaModel
 		$this->setState('query.titleonly', $value);
 
 		$value = JFactory::getApplication()->input->getString('searchuser', '');
-		$this->setState('query.searchuser', $value);
+		$this->setState('query.searchuser', rtrim($value));
 
 		$value = JFactory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);

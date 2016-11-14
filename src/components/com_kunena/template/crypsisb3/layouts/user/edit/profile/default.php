@@ -112,8 +112,10 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
+				<?php if ($social != 'qq') :?>
 				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
 					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>" >
+				<?php endif; ?>
 					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>" class="form-control"
 					       value="<?php echo $this->escape($this->profile->$social); ?>" />
 				</span>

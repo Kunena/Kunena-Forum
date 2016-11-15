@@ -1519,9 +1519,5 @@ HTML;
 				return 'hasTooltip';
 			}
 		}
-		else
-		{
-			return '';
-		}
 	}
 }

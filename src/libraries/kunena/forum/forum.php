@@ -182,13 +182,13 @@ abstract class KunenaForum
 	public static function isCompatible($version)
 	{
 		// If requested version is smaller than 2.0, it's not compatible
-		if (version_compare($version, '2.0', '<'))
+		if (version_compare($version, '5.0', '<'))
 		{
 			return false;
 		}
 
 		// Development version support.
-		if ($version == '4.0') {
+		if ($version == '5.0') {
 			return true;
 		}
 

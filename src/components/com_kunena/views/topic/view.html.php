@@ -1270,4 +1270,39 @@ class KunenaViewTopic extends KunenaView
 			$this->document->setMetadata('description', $description);
 		}
 	}
+
+	/**
+	 * Display layout from current layout.
+	 *
+	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
+	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
+	 *
+	 * @param   $path
+	 * @return  KunenaLayout
+	 */
+	public function subLayout($path)
+	{
+		return self::factory($path)
+			->setLayout($this->getLayout())
+			->setOptions($this->getOptions());
+	}
+
+	/**
+	 * Display arbitrary MVC triad from current layout.
+	 *
+	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
+	 * easier to read and gain some context awareness.
+	 *
+	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
+	 * @return  KunenaControllerDisplay
+	 */
+	public function subRequest($path, Jinput $input = null, $options = null)
+	{
+		return KunenaRequest::factory($path . '/Display', $input, $options)
+			->setLayout($this->getLayout());
+	}
+
 }

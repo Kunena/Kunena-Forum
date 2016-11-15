@@ -2526,11 +2526,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 */
 	protected function getTweet($tweetid)
 	{
-		if (!php_ini_loaded_file('allow_url_fopen'))
-		{
-			return false;
-		}
-
 		// FIXME: use AJAX instead...
 		jimport('joomla.filesystem.folder');
 		$config = KunenaFactory::getConfig();

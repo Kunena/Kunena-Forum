@@ -1014,6 +1014,36 @@ HTML;
 			$xml = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
+			if ($topic->ordering)
+			{
+				$topic->icon_id = 504;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->locked)
+			{
+				$topic->icon_id = 505;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->ordering && $topic->locked)
+			{
+				$topic->icon_id = 503;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 2)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 3)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
 			if ($topicicontype == 'B2')
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
@@ -1146,7 +1176,12 @@ HTML;
 
 			if (!$icon)
 			{
-				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+				if (!$icon)
+				{
+					$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				}
 			}
 
 			$attributes = $icon[0]->attributes();

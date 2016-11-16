@@ -14,6 +14,7 @@
 		<folder>alerts</folder>
 		<folder>badges</folder>
 		<folder>points</folder>
+		<folder>language</folder>
 		<filename>activity.php</filename>
 		<filename>avatar.php</filename>
 		<filename plugin="easysocial">easysocial.php</filename>
@@ -22,7 +23,6 @@
 		<filename>login.php</filename>
 		<filename>private.php</filename>
 		<filename>profile.php</filename>
-		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">

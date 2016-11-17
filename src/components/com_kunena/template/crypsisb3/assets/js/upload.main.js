@@ -49,8 +49,12 @@ jQuery(function ($) {
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
+		$('#insert-all').removeClass('btn-success');
+		$('#insert-all').addClass('btn-primary');
+		$('#insert-all').html('<i class="glyphicon glyphicon-upload"></i>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
+
 		$('#remove-all').hide();
-	    $('#insert-all').hide();
+		$('#insert-all').hide();
 
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) == false) {

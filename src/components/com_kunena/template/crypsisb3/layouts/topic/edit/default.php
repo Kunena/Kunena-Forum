@@ -16,6 +16,7 @@ JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
+JText::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 JText::script('COM_KUNENA_EDITOR_INSERT');
 JText::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 JText::script('COM_KUNENA_GEN_REMOVE_FILE');

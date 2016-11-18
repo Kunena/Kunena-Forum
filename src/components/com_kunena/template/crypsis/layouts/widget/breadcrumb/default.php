@@ -14,19 +14,18 @@ $pathway = $this->breadcrumb->getPathway();
 $item    = array_shift($pathway);
 
 if ($item) : ?>
+<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+	<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<?php echo KunenaIcons::home(); ?>
+		<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
+	</li>
 
-	<ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
-		<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-			<?php echo KunenaIcons::home(); ?>
-			<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
-		</li>
+	<?php foreach($pathway as $item) : ?>
+	<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
+	<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
+	</li>
+	<?php endforeach; ?>
 
-		<?php foreach ($pathway as $item) : ?>
-			<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
-			<li itemscope itemtype="http://schema.org/ListItem">
-				<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $this->escape($item->name); ?></a>
-			</li>
-		<?php endforeach; ?>
-
-	</ul>
+</ol>
 <?php endif; ?>

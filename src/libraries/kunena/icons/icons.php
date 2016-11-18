@@ -559,9 +559,13 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-envelope"></span>';
 		}
-		else
+		elseif ($topicicontype == 'image')
 		{
 			return '<span class="kicon-profile kicon-profile-email"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-envelope"></i>';
 		}
 	}
 
@@ -1538,9 +1542,13 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-globe"></span>';
 		}
-		else
+		elseif ($topicicontype == 'image')
 		{
 			return '<span class="kicon-profile kicon-profile-website"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-link"></i>';
 		}
 	}
 
@@ -1568,9 +1576,13 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-map-marker"></span>';
 		}
-		else
+		elseif ($topicicontype == 'image')
 		{
 			return '<span class="kicon-profile kicon-profile-location"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-location"></i>';
 		}
 	}
 
@@ -1598,9 +1610,13 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-comment"></span>';
 		}
-		else
+		elseif ($topicicontype == 'image')
 		{
 			return '<span class="kicon-profile kicon-profile-pm"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-comments-2"></i>';
 		}
 	}
 }

@@ -91,12 +91,11 @@
 			<option value="img-thumbnail">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
 			<option value="none">COM_KUNENA_TEMPLATE_NONE</option>
 		</field>
-		<field name="topicicontype" type="list" default="B3" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS"
-		       description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
-			<option value="0">COM_KUNENA_TEMPLATE_NORMAL</option>
+		<field name="topicicontype" type="list" default="B3" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS" description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
 			<option value="B2">COM_KUNENA_TEMPLATE_BOOTSTRAP2</option>
 			<option value="B3">COM_KUNENA_TEMPLATE_BOOTSTRAP3</option>
 			<option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
+			<option value="image">COM_KUNENA_TEMPLATE_IMAGE_LEGACY</option>
 		</field>
 		<field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME"
 		       description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">

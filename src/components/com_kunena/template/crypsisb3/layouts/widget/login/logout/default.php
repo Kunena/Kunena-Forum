@@ -38,7 +38,7 @@ $status         = $config->user_status;
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
-					<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 128, 128); ?>
+					<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post'); ?>
 				</a>
 				<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 				<p>

@@ -1759,16 +1759,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$post = isset($params["post"]) ? $params["post"] : false;
-		$user = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
-		$html = '';
+		$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+		$wrote = '';
 
 		if ($user)
 		{
-			$html .= "<b>" . $user . " " . JText::_('COM_KUNENA_POST_WROTE') . ":</b>\n";
+			$wrote = $user . " " . JText::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';
+		$html .= '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
 
 		return $html;
 	}

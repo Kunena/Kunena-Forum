@@ -20,8 +20,8 @@ if (!JFile::exists($file))
 	return;
 }
 
-require_once($file);
-require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
+require_once $file;
+require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
 class plgKunenaEasySocial extends EasySocialPlugins
 {

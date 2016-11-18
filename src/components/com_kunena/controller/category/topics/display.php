@@ -227,7 +227,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		if ($pagdata->previous->link)
 		{
-			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
 			$doc->addHeadLink($pagdata->previous->link, 'prev');
 		}
 

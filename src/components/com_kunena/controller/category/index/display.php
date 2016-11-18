@@ -281,6 +281,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		$doc = JFactory::getDocument();
+
 		foreach ($doc->_links as $key => $value)
 		{
 			if (is_array($value))
@@ -290,7 +291,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 					if ($value['relation'] == 'canonical')
 					{
 						$canonicalUrl = KunenaRoute::_();
-						$canonicalUrl = str_replace( '?limitstart=0', '', $canonicalUrl);
+						$canonicalUrl = str_replace('?limitstart=0', '', $canonicalUrl);
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

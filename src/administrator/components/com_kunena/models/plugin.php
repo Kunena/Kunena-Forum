@@ -144,7 +144,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
-	 * @param string   $group
+	 * @param   string   $group
 	 *
 	 * @since   Joomla 3.1
 	 */

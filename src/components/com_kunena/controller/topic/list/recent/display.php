@@ -133,7 +133,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		if ($pagdata->previous->link)
 		{
-			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
 			$doc->addHeadLink($pagdata->previous->link, 'prev');
 		}
 
@@ -152,7 +152,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;

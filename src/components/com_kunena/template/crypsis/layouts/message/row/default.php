@@ -111,9 +111,11 @@ if ($topic->moved_id > 0)
 			<?php endif; ?>
 		</div>
 		<div class="hidden-phone">
-			<?php echo $topic->getAuthor()->getLink(null, null, '', '', null, $category->id); ?>,
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br/>
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(), null, null, 'hasTooltip')); ?>
+			<?php echo $topic->getAuthor()->getLink(null, null, '', '', null, $category->id); ?>
+			<?php if ($config->post_dateformat != 'none') : ?>
+				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
+			<?php endif; ?>
+			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,'hasTooltip')); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">

@@ -104,8 +104,10 @@ if (!empty($this->spacing)) : ?>
 
 		<div class="started">
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?>
-			<br/>
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
+			<?php if ($config->post_dateformat != 'none') : ?>
+			<br />
+				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
+			<?php endif; ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
@@ -120,9 +122,11 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="visible-phone">
-			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') ?>
-			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
-			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
+			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
+			<?php if ($config->post_dateformat != 'none') : ?>
+			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
+			<?php endif; ?>
+			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id);?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">

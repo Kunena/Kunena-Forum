@@ -36,7 +36,7 @@ $status         = $config->user_status;
 		<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
 
 			<div class="center">
-				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>
+				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
 					<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 128, 128); ?>
 				</a>

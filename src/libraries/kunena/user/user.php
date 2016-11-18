@@ -1448,7 +1448,7 @@ class KunenaUser extends JObject
 				else
 				{
 					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';					
+					$karmaPlusIcon = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
 				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
@@ -1679,14 +1679,14 @@ class KunenaUser extends JObject
 		{
 			if (!empty($this->$name))
 			{
-				return '<a href="' . $this->escape($url) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . $this->escape ( $url ) . '" '. KunenaTemplate::getInstance()->tooltips(true) .' target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 			}
 		}
 		else
 		{
 			if (!empty($this->$name))
 			{
-				return '<span class="kicon-profile kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
+				return '<span class="kicon-profile kicon-profile-' . $name . ' ' . KunenaTemplate::getInstance()->tooltips() . '" title="' . $title . ': ' . $value . '"></span>';
 			}
 		}
 

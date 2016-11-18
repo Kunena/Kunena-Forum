@@ -792,33 +792,23 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-
-		if ($text)
-		{
-			$title = 'data-original-title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"';
-			$class = ' hasTooltip';
-		}
-		else
-		{
-			$title = '';
-			$class = '';
-		}
+		$class = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-rss ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span>';
+			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
 		}
 	}
 

@@ -34,7 +34,7 @@ $status = $config->user_status;
 		</a>
 
 		<div class="dropdown-menu" id="nav-menu">
-
+			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) :?>
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
@@ -137,7 +137,7 @@ $status = $config->user_status;
 			<?php endif ?>
 			<div class="divider"></div>
 
-			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
+				<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
 
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
@@ -150,6 +150,8 @@ $status = $config->user_status;
 				<input type="hidden" name="task" value="logout" />
 				<?php echo JHtml::_('form.token'); ?>
 			</form>
+			<?php endif; ?>
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
 		</div>
 	</li>
 </ul>

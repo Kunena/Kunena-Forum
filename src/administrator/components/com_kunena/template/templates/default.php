@@ -101,7 +101,7 @@ JHtml::_('dropdown.init');
 								<?php echo $this->escape($row->creationdate); ?>
 							</td>
 							<td>
-								<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>"
+								<a href="<?php echo $this->escape($row->authorUrl); ?>"
 								   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
 							</td>
 						</tr>

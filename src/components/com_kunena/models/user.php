@@ -195,11 +195,11 @@ class KunenaModelUser extends KunenaModel
 			$db     = JFactory::getDBO();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
+			
 			$query  = $db->getQuery(true);
-			$query  = "SELECT COUNT(*)  
-						FROM #__users AS u  
-						LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id  
-						WHERE {$where} {$search}";
+			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
+					->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+					->where("{$where} {$search}");
 			$db->setQuery($query);
 
 			try
@@ -265,11 +265,12 @@ class KunenaModelUser extends KunenaModel
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 			$query  = $db->getQuery(true);
-			$query  = "SELECT u.id  
-				FROM #__users AS u  
-				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id  
-				WHERE {$where} {$search}";
-			$query .= " ORDER BY {$orderby} {$direction}";
+      
+			$query->select($db->quoteName('u.id'))->from($db->quoteName('#__users', 'u'))
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}")
+				->order("{$orderby} {$direction}"); 
+			                  
 			$db->setQuery($query, $limitstart, $limit);
 
 			try

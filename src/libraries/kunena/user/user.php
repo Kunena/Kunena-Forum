@@ -666,14 +666,15 @@ class KunenaUser extends JObject
 				{
 					$class = $class;
 				}
-				elseif ($class == 'hasTooltip')
-				{
-					$class = $class . ' ' . $this->getType($catid, 'class');
-				}
 				else
 				{
 					$class = $this->getType($catid, 'class');
 				}
+			}
+
+			if (KunenaTemplate::getInstance()->tooltips())
+			{
+				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
 			}
 
 			$link = $this->getURL(true, $task);

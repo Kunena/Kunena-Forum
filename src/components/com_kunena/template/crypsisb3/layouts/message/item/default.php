@@ -51,16 +51,21 @@ $list = array();
 		<span class="visible-xs"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 	</small>
 
-	<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
-	     data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
-		<div class="kmessage">
-			<p class="kmsg">
-				<?php if (!$this->me->userid && !$isReply) :
-					echo $message->displayField('message');
-				else:
-					echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-				endif; ?>
-			</p>
+<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
+	data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
+	<div class="kmessage">
+		<div class="kmsg">
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
+		</div>
+	</div>
+	<?php if ($signature) : ?>
+		<div class="ksig">
+			<hr>
+			<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 		<?php if ($signature) : ?>
 			<div class="ksig">

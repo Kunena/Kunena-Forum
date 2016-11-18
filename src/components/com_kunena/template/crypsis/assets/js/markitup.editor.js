@@ -22,34 +22,8 @@ bbcodeSettings = {
 						jQuery('#code-modal-submit').click(function(event) {
 							event.preventDefault();
 
-				jQuery('#modal-code').modal('hide');
-			});
-
-			jQuery('#modal-code').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-code').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {
-		className: 'tablebutton',
-		name: Joomla.JText._('COM_KUNENA_EDITOR_TABLE'),
-		openWith: '[table]\n  [tr]\n   [td][/td]\n   [td][/td]\n  [/tr]',
-		closeWith: '\n  [tr]\n   [td][/td]\n   [td][/td]\n [/tr]\n[/table] \n'
-	}, {className: 'spoilerbutton', name: 'Spoiler', openWith: '[spoiler]', closeWith: '[/spoiler]'}, {
-		className: 'hiddentextbutton',
-		name: 'Hide',
-		openWith: '[hide]',
-		closeWith: '[/hide]'
-	}, {className: 'confidentialbutton', name: 'confidential', openWith: '[confidential]', closeWith: '[/confidential]'}, {separator: '|'}, {
-		name: 'picture', className: 'picturebutton', beforeInsert: function () {
-			jQuery('#picture-modal-submit').click(function (event) {
-				event.preventDefault();
 
 						jQuery('#modal-code').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -64,21 +38,8 @@ bbcodeSettings = {
 						jQuery('#picture-modal-submit').click(function(event) {
 							event.preventDefault();
 
-			jQuery('#modal-picture').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-picture').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_LINK'), className: 'linkbutton', beforeInsert: function () {
-			jQuery('#link-modal-submit').click(function (event) {
-				event.preventDefault();
 
 						jQuery('#modal-picture').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -93,28 +54,8 @@ bbcodeSettings = {
 						jQuery('#link-modal-submit').click(function(event) {
 							event.preventDefault();
 
-			jQuery('#modal-link').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-link').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {separator: '|'}, {
-		className: 'ebaybutton',
-		name: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),
-		key: 'E',
-		openWith: '[ebay]',
-		closeWith: '[/ebay]'
-	}, {
-		name: 'Video', className: 'videodropdownbutton', dropMenu: [{
-			name: 'videourlprovider', className: 'videourlprovider', beforeInsert: function () {
-				jQuery('#videosettings-modal-submit').click(function (event) {
-					event.preventDefault();
 
 						jQuery('#modal-link').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -129,22 +70,8 @@ bbcodeSettings = {
 							jQuery('#videosettings-modal-submit').click(function(event) {
 								event.preventDefault();
 
-				jQuery('#modal-video-settings').modal(
-					{
-						overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-						dialog.overlay.fadeIn('slow', function () {
-							dialog.container.slideDown('slow', function () {
-								dialog.data.fadeIn('slow');
+								jQuery('#modal-video-settings').modal('hide');
 							});
-						});
-					}
-					});
-			}
-		},
-			{
-				name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL'), className: 'videoURLbutton', beforeInsert: function () {
-				jQuery('#videourlprovider-modal-submit').click(function (event) {
-					event.preventDefault();
 
 							jQuery('#modal-video-settings').modal(
 								{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -159,23 +86,8 @@ bbcodeSettings = {
 							jQuery('#videourlprovider-modal-submit').click(function(event) {
 								event.preventDefault();
 
-				jQuery('#modal-video-urlprovider').modal(
-					{
-						overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-						dialog.overlay.fadeIn('slow', function () {
-							dialog.container.slideDown('slow', function () {
-								dialog.data.fadeIn('slow');
+								jQuery('#modal-video-urlprovider').modal('hide');
 							});
-						});
-					}
-					});
-			}
-			}
-		]
-	}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_MAP'), className: 'mapbutton', beforeInsert: function () {
-			jQuery('#map-modal-submit').click(function (event) {
-				event.preventDefault();
 
 							jQuery('#modal-video-urlprovider').modal(
 								{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -190,21 +102,8 @@ bbcodeSettings = {
 						jQuery('#map-modal-submit').click(function(event) {
 							event.preventDefault();
 
-			jQuery('#modal-map').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-map').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_POLL_SETTINGS'), className: 'pollbutton', beforeInsert: function () {
-			jQuery('#poll-settings-modal-submit').click(function (event) {
-				event.preventDefault();
 
 						jQuery('#modal-map').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -219,31 +118,8 @@ bbcodeSettings = {
 						jQuery('#poll-settings-modal-submit').click(function(event) {
 							event.preventDefault();
 
-			jQuery('#modal-poll-settings').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-poll-settings').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {
-		className: 'tweetbutton',
-		name: Joomla.JText._('COM_KUNENA_EDITOR_TWEET'),
-		openWith: '[tweet]',
-		closeWith: '[/tweet]'
-	}, {className: 'soundcloudbutton', name: 'soundcloud', openWith: '[soundcloud]', closeWith: '[/soundcloud]'}, {
-		className: 'instagrambutton',
-		name: 'instagram',
-		openWith: '[instagram]',
-		closeWith: '[/instagram]'
-	}, {
-		name: 'emoticons', className: 'emoticonsbutton', beforeInsert: function () {
-			jQuery('#emoticons-modal-submit').click(function (event) {
-				event.preventDefault();
 
 						jQuery('#modal-poll-settings').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
@@ -258,19 +134,8 @@ bbcodeSettings = {
 						jQuery('#emoticons-modal-submit').click(function(event) {
 							event.preventDefault();
 
-			jQuery('#modal-emoticons').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+							jQuery('#modal-emoticons').modal('hide');
 						});
-					});
-				}
-				});
-		}
-	}, {separator: '|'},]
-};
 
 						jQuery('#modal-emoticons').modal(
 							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {

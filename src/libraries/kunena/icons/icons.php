@@ -1120,6 +1120,17 @@ class KunenaIcons
 					$bigicon = ' glyphicon-big glyphicon-folder-open ';
 				}
 			}
+			elseif ($topicicontype == 'image')
+			{
+				if ($new)
+				{
+					$bigicon = ' kicon-folder-new ';
+				}
+				else
+				{
+					$bigicon = ' kicon-folder ';
+				}
+			}
 			else
 			{
 				$bigicon = ' icon-big ';
@@ -1128,6 +1139,32 @@ class KunenaIcons
 		else
 		{
 			$bigicon = ' ';
+
+			if ($topicicontype == 'image')
+			{
+				if (!$categoryicon)
+				{
+					if ($new)
+					{
+						$bigicon = 'kicon-folder-sm-new';
+					}
+					else
+					{
+						$bigicon = 'kicon-folder-sm';
+					}
+				}
+				else
+				{
+					if ($new)
+					{
+						$bigicon = $categoryicon . ' knewchar';
+					}
+					else
+					{
+						$bigicon = $categoryicon;
+					}
+				}
+			}
 		}
 
 		if ($topicicontype == 'fa')
@@ -1141,6 +1178,10 @@ class KunenaIcons
 		elseif ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="' . $bigicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
 		}
 		else
 		{

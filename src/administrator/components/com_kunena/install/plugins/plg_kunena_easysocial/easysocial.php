@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        EasySocial
- * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -11,36 +11,20 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-/**
- * Class plgKunenaEasySocial
- * @since Kunena
- */
-class plgKunenaEasySocial extends JPlugin
+jimport('joomla.filesystem.file');
+
+$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+if (!JFile::exists($file))
 {
-	/**
-	 *
-	 * Determines if EasySocial exists on the site.
-	 *
-	 * @since     1.0
-	 * @access    public
-	 * @return    boolean
-	 */
-	public function exists()
-	{
-		$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php';
+	return;
+}
 
-		jimport('joomla.filesystem.file');
+require_once($file);
+require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
 
-		if (!JFile::exists($file))
-		{
-			return false;
-		}
-
-		include_once $file;
-
-		return true;
-	}
-
+class plgKunenaEasySocial extends EasySocialPlugins
+{
 	/**
 	 * plgKunenaEasySocial constructor.
 	 *
@@ -53,12 +37,6 @@ class plgKunenaEasySocial extends JPlugin
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
-		{
-			return true;
-		}
-
-		// Check if easysocial exists
-		if (!$this->exists())
 		{
 			return true;
 		}
@@ -76,11 +54,6 @@ class plgKunenaEasySocial extends JPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
 		if (!$this->params->get('avatar', 1))
 		{
 			return null;
@@ -99,11 +72,6 @@ class plgKunenaEasySocial extends JPlugin
 	 */
 	public function onKunenaGetAvatar()
 	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
 		if (!$this->params->get('avatar', 1))
 		{
 			return null;
@@ -122,11 +90,6 @@ class plgKunenaEasySocial extends JPlugin
 	 */
 	public function onKunenaGetProfile()
 	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
 		if (!$this->params->get('profile', 1))
 		{
 			return null;
@@ -145,11 +108,6 @@ class plgKunenaEasySocial extends JPlugin
 	 */
 	public function onKunenaGetPrivate()
 	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
 		if (!$this->params->get('private', 1))
 		{
 			return null;
@@ -168,11 +126,6 @@ class plgKunenaEasySocial extends JPlugin
 	 */
 	public function onKunenaGetActivity()
 	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
 		if (!$this->params->get('activity', 1))
 		{
 			return null;

@@ -480,11 +480,23 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			if ($total > 1 && $page > 1)
 			{
 				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
+
+				if (empty($small))
+				{
+					$small = $headerText;
+				}
+
 				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
 				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
+
+				if (empty($small))
+				{
+					$small = $headerText;
+				}
+
 				$this->setDescription($small);
 			}
 		}

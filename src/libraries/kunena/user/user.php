@@ -1440,10 +1440,15 @@ class KunenaUser extends JObject
 					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
 					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
 				}
-				else
+				elseif ($topicicontype == 'B2')
 				{
 					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
 					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';					
 				}
 
 				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
@@ -1489,10 +1494,15 @@ class KunenaUser extends JObject
 					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
 					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
 				}
-				else
+				elseif ($topicicontype == 'B2')
 				{
 					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
 					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
 				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);

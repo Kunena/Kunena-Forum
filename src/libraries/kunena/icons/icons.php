@@ -561,7 +561,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-envelope"></i>';
+			return '<span class="kicon-profile kicon-profile-email"></span>';
 		}
 	}
 
@@ -1540,7 +1540,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-link"></i>';
+			return '<span class="kicon-profile kicon-profile-website"></span>';
 		}
 	}
 
@@ -1600,7 +1600,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-comments-2"></i>';
+			return '<span class="kicon-profile kicon-profile-pm"></span>';
 		}
 	}
 }

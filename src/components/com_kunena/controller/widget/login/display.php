@@ -87,6 +87,12 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 * @var
 	 * @since Kunena
 	 */
+	public $inboxCountValue;
+
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $profile_edit_url;
 
 	/**
@@ -126,9 +132,9 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 			if ($private)
 			{
-				$count            = $private->getUnreadCount($this->me->userid);
-				$this->inboxCount = $count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX');
-				$this->pm_link    = $private->getInboxURL();
+				$this->inboxCountValue = $private->getUnreadCount($this->me->userid);
+				$this->inboxCount = $this->inboxCountValue ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : JText::_('COM_KUNENA_PMS_INBOX');
+				$this->pm_link = $private->getInboxURL();
 			}
 
 			$profile = KunenaFactory::getProfile();

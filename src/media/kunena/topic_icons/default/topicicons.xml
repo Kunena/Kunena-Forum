@@ -27,14 +27,14 @@
         <icon id="8" name="solved" published="1" b2="ok" b3="ok" fa="check" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png"/>
     </icons>
 
-    <icons type="system" width="48" height="48">
-        <icon name="moved" published="1" src="system/moved.png"/>
-        <icon name="deleted" published="1" src="system/deleted.png"/>
-        <icon name="unapproved" published="1" src="system/unapproved.png"/>
-        <icon name="sticky_locked" published="1" src="system/sticky_locked.png"/>
-        <icon name="sticky" published="1" src="system/sticky.png"/>
-        <icon name="locked" published="1" src="system/locked.png"/>
-    </icons>
+	<icons type="system" width="48" height="48">
+		<icon id="500" name="moved" published="1" b2="contract" b3="contract" fa="compress" src="system/moved.png" />
+		<icon id="501" name="deleted" published="1" b2="trash" b3="trash" fa="trash-o" src="system/deleted.png" />
+		<icon id="502" name="unapproved" published="1" b2="comments" b3="comment" fa="comment-o" src="system/unapproved.png" />
+		<icon id="503" name="sticky_locked" published="1" b2="lock" b3="file" fa="lock" src="system/sticky_locked.png" />
+		<icon id="504" name="sticky" published="1" b2="notification-2" b3="bullhorn" fa="exclamation" src="system/sticky.png" />
+		<icon id="505" name="locked" published="1" b2="lock" b3="file" fa="lock" src="system/locked.png" />
+	</icons>
 
     <!-- icons type="system" width="16" height="16">
         <icon name="unapproved" published="1" src="system/unapproved.png" />

@@ -83,4 +83,10 @@ jQuery(document).ready(function($) {
 			format: "yyyy-mm-dd"
 		});
 	}
+
+	$('#clearcache').on('click', function (e) {
+		e.preventDefault();
+		$('#clearcache').addClass('btn-success');
+		$('#clearcache').html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.JText._('COM_KUNENA_CLEARED'));
+	});
 });

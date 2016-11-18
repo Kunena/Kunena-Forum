@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+JText::script('COM_KUNENA_CLEARED');
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -18,12 +20,10 @@ defined('_JEXEC') or die;
 	<tbody>
 	<?php foreach ($this->settings as $field) : ?>
 		<tr>
-			<td class="col-md-3">
-				<?php echo $field->label; ?>
-			</td>
-			<td>
-				<?php echo $field->field; ?>
-			</td>
+			<td class="col-md-3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></td>
+				<td>
+					<button id="clearcache" type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
+				</td>
 		</tr>
 	<?php endforeach ?>
 	<tr>

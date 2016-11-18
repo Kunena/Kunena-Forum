@@ -257,7 +257,7 @@ abstract class JHtmlKunenaForum
 	 * @param         $options
 	 * @param   array $selected
 	 *
-	 * @param null    $class_input
+	 * @param   null    $class_input
 	 *
 	 * @return string
 	 * @since Kunena

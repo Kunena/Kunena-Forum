@@ -61,7 +61,7 @@ class KunenaAdminViewCategories extends KunenaView
 		{
 			$db->execute();
 		}
-		catch(JDatabaseExceptionExecuting $e)
+		catch (JDatabaseExceptionExecuting $e)
 		{
 			$response['msg'] = 0;
 		}

@@ -143,6 +143,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 					}
 				}
 			}
+
 			$doc->setMetaData('robots', 'nofollow, noindex');
 		}
 
@@ -150,7 +151,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		if ($pagdata->previous->link)
 		{
-			$pagdata->previous->link = str_replace( 'limitstart=0', '', $pagdata->previous->link);
+			$pagdata->previous->link = str_replace('limitstart=0', '', $pagdata->previous->link);
 			$doc->addHeadLink($pagdata->previous->link, 'prev');
 		}
 
@@ -160,6 +161,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 
 		$page = $this->pagination->pagesCurrent;
+
 		if ($page > 1)
 		{
 			foreach ($doc->_links as $key => $value)

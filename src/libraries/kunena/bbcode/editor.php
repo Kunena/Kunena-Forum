@@ -440,79 +440,79 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 					if ($action['name'] == 'Bold')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_BOLD') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_BOLD') . "'";
 					}
 					elseif ($action['name'] == 'Italic')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_ITALIC') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_ITALIC') . "'";
 					}
 					elseif ($action['name'] == 'Underline')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_UNDERL') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_UNDERL') . "'";
 					}
 					elseif ($action['name'] == 'Stroke')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_STRIKE') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_STRIKE') . "'";
 					}
 					elseif ($action['name'] == 'Subscript')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SUB') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_SUB') . "'";
 					}
 					elseif ($action['name'] == 'Supscript')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SUP') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_SUP') . "'";
 					}
 					elseif ($action['name'] == 'Unordered List')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_ULIST') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_ULIST') . "'";
 					}
 					elseif ($action['name'] == 'Ordered List')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_OLIST') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_OLIST') . "'";
 					}
 					elseif ($action['name'] == 'Li')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_LIST') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_LIST') . "'";
 					}
 					elseif ($action['name'] == 'HR')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_HR') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_HR') . "'";
 					}
 					elseif ($action['name'] == 'Left')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_LEFT') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_LEFT') . "'";
 					}
 					elseif ($action['name'] == 'Center')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_CENTER') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_CENTER') . "'";
 					}
 					elseif ($action['name'] == 'Right')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_RIGHT') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_RIGHT') . "'";
 					}
 					elseif ($action['name'] == 'Quote')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_QUOTE') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_QUOTE') . "'";
 					}
 					elseif ($action['name'] == 'Code')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_CODE') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_CODE') . "'";
 					}
 					elseif ($action['name'] == 'Table')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_TABLE') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_TABLE') . "'";
 					}
 					elseif ($action['name'] == 'Spoiler')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SPOILER') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_SPOILER') . "'";
 					}
 					elseif ($action['name'] == 'Hide')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_HIDE') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_EDITOR_HIDE') . "'";
 					}
 					elseif ($action['name'] == 'confidential')
 					{
-						$selection[] = "name: '" .  JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . "'";
+						$selection[] = "name: '" . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . "'";
 					}
 
 					$key = '';

@@ -137,10 +137,10 @@ foreach ($this->sections as $section) :
 													<?php $totaltopics = $subcategory->getTopics() > 0 ?  JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($subcategory->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 
 													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
-														<?php echo $this->getCategoryLink($subcategory,  $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-phone muted"> ('
+														<?php echo $this->getCategoryLink($subcategory,  $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
 															. $totaltopics . ')</small>';
 													else : ?>
-														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-phone muted"> ('
+														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
 															. $totaltopics . ')</small>';
 													endif;
 

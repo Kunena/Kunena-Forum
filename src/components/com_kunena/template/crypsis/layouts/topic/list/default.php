@@ -22,7 +22,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-sm">
+				<small class="hidden-phone">
 					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 

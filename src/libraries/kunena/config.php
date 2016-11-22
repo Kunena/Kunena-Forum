@@ -1184,6 +1184,12 @@ class KunenaConfig extends JObject
 	public $user_status = 1;
 
 	/**
+	 * @var integer
+	 * @since  K5.0.4
+	 */
+	public $plain_email = 0;
+
+	/**
 	 *
 	 */
 	public function __construct()

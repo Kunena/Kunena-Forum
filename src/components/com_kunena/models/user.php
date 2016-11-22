@@ -85,7 +85,7 @@ class KunenaModelUser extends KunenaModel
 		{
 			$db    = JFactory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($db->quoteName('user_id')->from($db->quoteName('#__user_usergroup_map')->where($db->quoteName('group_id') . ' = 8')));
+			$query->select($db->quoteName('user_id'))->from($db->quoteName('#__user_usergroup_map'))->where($db->quoteName('group_id') . ' = 8');
 			$db->setQuery($query);
 			$superadmins = (array) $db->loadColumn();
 

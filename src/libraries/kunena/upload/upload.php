@@ -612,6 +612,16 @@ class KunenaUpload
 			$file->isAvatar = true;
 		}
 
+		if ($file->isAvatar)
+		{
+			$a = array('gif', 'jpeg', 'jpg', 'png');
+
+			if (!in_array($file->ext, $a, true))
+			{
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
+			}
+		}
+
 		if (!is_uploaded_file($file->tmp_name))
 		{
 			$exception = $this->checkUpload($fileInput);

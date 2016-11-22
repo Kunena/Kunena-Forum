@@ -408,16 +408,16 @@ class KunenaControllerTopic extends KunenaController
 
 			$db = JFactory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
-			
-			try 
+
+			try
 			{
 				$count = $db->loadResult();
 			}
 			catch(JDatabaseExceptionExecuting $e)
 			{
-				KunenaError::displayDatabaseError($e);	
+				KunenaError::displayDatabaseError($e);
 			}
-			
+
 			if ($count)
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection));
@@ -760,7 +760,12 @@ class KunenaControllerTopic extends KunenaController
 			$text = trim(JFilterOutput::cleanText($text));
 		}
 
-		if (!$text)
+		if (!$text && $this->config->userdeletetmessage == 1)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+			return;
+		}
+		elseif (!$text)
 		{
 			// Reload message (we don't want to change it).
 			$message->load();

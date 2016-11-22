@@ -26,7 +26,7 @@ $more = ($this->once ?
 		$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 			'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 ?>
-
+<?php if ($config->plain_email) :?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -221,6 +221,8 @@ $more = ($this->once ?
 
 	</body>
 </html>
+<?php endif ;?>
+
 <?php
 
 $full = !$config->mailfull ? '' : <<<EOS

@@ -50,7 +50,7 @@ if ($topic->moved_id > 0)
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
-	<td class="hidden-phone col-md-1 center topic-item-unread">
+	<td class="hidden-xs col-md-1 center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, true); ?>
 	<?php else :  ?>
 	<td class="col-md-1 hidden-xs center">

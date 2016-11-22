@@ -568,6 +568,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_MAILFULL_DESC') ?></td>
 												</tr>
 												<tr>
+													<td><?php echo JText::_('COM_KUNENA_PLAINEMAIL') ?></td>
+													<td><?php echo $this->lists ['plain_email'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_PLAINEMAIL_DESC') ?></td>
+												</tr>
+												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?></td>
 													<td><?php echo $this->lists ['category_subscriptions'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?></td>

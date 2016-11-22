@@ -15,8 +15,8 @@ $this->mail->isHtml(true);
 $config = KunenaConfig::getInstance();
 $user   = $this->message->getAuthor();
 ?>
-
-	<html xmlns="http://www.w3.org/1999/xhtml">
+<?php if ($config->plain_email) :?>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0;">
@@ -205,8 +205,8 @@ $user   = $this->message->getAuthor();
 	</table>
 
 	</body>
-	</html>
-
+</html>
+<?php endif ;?>
 
 <?php
 

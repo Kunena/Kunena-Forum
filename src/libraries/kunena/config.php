@@ -1207,6 +1207,12 @@ class KunenaConfig extends JObject
 	public $lazyload = 1;
 
 	/**
+	 * @var integer
+	 * @since  K5.0.4
+	 */
+	public $plain_email = 0;
+
+	/**
 	 *
 	 * @since Kunena
 	 */

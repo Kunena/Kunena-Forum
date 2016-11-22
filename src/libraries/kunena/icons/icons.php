@@ -1024,6 +1024,10 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-share-alt"></span>';
 		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-reply"></span>';
+		}
 		else
 		{
 			return '<i class="icon icon-undo"></i>';

@@ -845,7 +845,7 @@ class KunenaControllerUser extends KunenaController
 				$this->deleteOldAvatars();
 			}
 
-			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
+			$upload = KunenaUpload::getInstance();
 
 			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
 

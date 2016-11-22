@@ -20,7 +20,7 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	protected $filename;
-	
+
 	/**
 	 * Get new instance of upload class.
 	 *
@@ -584,6 +584,16 @@ class KunenaUpload
 			$file->isAvatar = true;
 		}
 
+		if ($file->isAvatar)
+		{
+			$a = array('gif', 'jpeg', 'jpg', 'png');
+
+			if (!in_array($file->ext, $a, true))
+			{
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
+			}
+		}
+
 		if (!is_uploaded_file($file->tmp_name))
 		{
 			$exception = $this->checkUpload($fileInput);
@@ -653,7 +663,7 @@ class KunenaUpload
 				}
 			}
 		}
-		
+
 		KunenaImage::correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))

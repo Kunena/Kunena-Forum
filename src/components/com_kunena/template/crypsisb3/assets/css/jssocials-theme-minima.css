@@ -158,6 +158,42 @@
 	color: #1a7c00;
 }
 
+.jssocials-share-viber .jssocials-share-link {
+  color: #7b519d; }
+  .jssocials-share-viber .jssocials-share-link .jssocials-share-label {
+    color: #7b519d; }
+  .jssocials-share-viber .jssocials-share-link:hover, .jssocials-share-viber .jssocials-share-link:focus, .jssocials-share-viber .jssocials-share-link:active {
+    color: #61407b; }
+    .jssocials-share-viber .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-viber .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-viber .jssocials-share-link:active .jssocials-share-label {
+      color: #61407b; }
+
+.jssocials-share-pocket .jssocials-share-link {
+  color: #ef4056; }
+  .jssocials-share-pocket .jssocials-share-link .jssocials-share-label {
+    color: #ef4056; }
+  .jssocials-share-pocket .jssocials-share-link:hover, .jssocials-share-pocket .jssocials-share-link:focus, .jssocials-share-pocket .jssocials-share-link:active {
+    color: #e9132e; }
+    .jssocials-share-pocket .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-pocket .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-pocket .jssocials-share-link:active .jssocials-share-label {
+      color: #e9132e; }
+
+.jssocials-share-messenger .jssocials-share-link {
+  color: #0084ff; }
+  .jssocials-share-messenger .jssocials-share-link .jssocials-share-label {
+    color: #0084ff; }
+  .jssocials-share-messenger .jssocials-share-link:hover, .jssocials-share-messenger .jssocials-share-link:focus, .jssocials-share-messenger .jssocials-share-link:active {
+    color: #006acc; }
+    .jssocials-share-messenger .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-messenger .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-messenger .jssocials-share-link:active .jssocials-share-label {
+      color: #006acc; }
+
+.jssocials-share-vkontakte .jssocials-share-link {
+  color: #45668e; }
+  .jssocials-share-vkontakte .jssocials-share-link .jssocials-share-label {
+    color: #45668e; }
+  .jssocials-share-vkontakte .jssocials-share-link:hover, .jssocials-share-vkontakte .jssocials-share-link:focus, .jssocials-share-vkontakte .jssocials-share-link:active {
+    color: #344d6c; }
+    .jssocials-share-vkontakte .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-vkontakte .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-vkontakte .jssocials-share-link:active .jssocials-share-label {
+      color: #344d6c; }
+
 .jssocials-share-link {
 	-webkit-transition: color 200ms ease-in-out;
 	transition: color 200ms ease-in-out;

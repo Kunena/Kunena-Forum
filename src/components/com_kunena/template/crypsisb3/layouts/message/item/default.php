@@ -35,7 +35,7 @@ $list = array();
 ?>
 
 <small class="text-muted pull-right">
-	<?php if ($this->ipLink) : ?>
+	<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
 	<?php echo KunenaIcons::ip();?>
 	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<?php endif;?>

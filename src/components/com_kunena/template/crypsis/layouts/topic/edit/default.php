@@ -34,6 +34,11 @@ JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
+JFactory::getDocument()->addScriptDeclaration('
+	var imageheight = ' . $this->config->imageheight . ';
+	var imagewidth = ' . $this->config->imagewidth . ';
+');
+
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');

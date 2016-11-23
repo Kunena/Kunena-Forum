@@ -767,7 +767,12 @@ class KunenaControllerTopic extends KunenaController
 			$text = trim(JFilterOutput::cleanText($text));
 		}
 
-		if (!$text)
+		if (!$text && $this->config->userdeletetmessage == 1)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+			return;
+		}
+		elseif (!$text)
 		{
 			// Reload message (we don't want to change it).
 			$message->load();

@@ -308,11 +308,12 @@ class KunenaModelSearch extends KunenaModel
 	 */
 	public function getTotal()
 	{
-		$q = $this->getState('searchwords');
+		$text = $this->getState('searchwords');
+		$q = strlen($text);
 
-		if (!$q && !$this->getState('query.searchuser'))
+		if ($q < 3 && !$this->getState('query.searchuser') && JFactory::getApplication()->input->getString('childforums'))
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
 
 			return 0;
 		}
@@ -369,13 +370,15 @@ class KunenaModelSearch extends KunenaModel
 			return $this->messages;
 		}
 
-		$q = $this->getState('searchwords');
+		$text = $this->getState('searchwords');
+		$q = strlen($text);
 
-		if (!$q && !$this->getState('query.searchuser'))
+		if (!$this->getState('query.searchuser'))
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
-
-			return array();
+			if ($q < 3)
+			{
+				return false;
+			}
 		}
 
 		// Get results
@@ -435,7 +438,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (empty($this->messages))
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', $q));
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'));
 		}
 
 		return $this->messages;

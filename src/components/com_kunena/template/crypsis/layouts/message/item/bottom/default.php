@@ -38,7 +38,7 @@ else
 ?>
 
 	<small class="text-muted pull-right">
-		<?php if ($this->ipLink) : ?>
+		<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
 			<?php echo KunenaIcons::ip(); ?>
 			<span class="ip"> <?php echo $this->ipLink; ?> </span>
 		<?php endif; ?>
@@ -53,6 +53,7 @@ else
 		<div
 			class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $this->message->getState(); ?>"
 			data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
+	<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
 			<div class="kmessage">
 				<div class="kmsg">
 					<?php  if (!$this->me->userid && !$isReply) :

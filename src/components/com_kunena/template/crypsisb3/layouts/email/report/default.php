@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 
 // Report moderator email (HTML)
+if (!$config->plain_email) :
 $this->mail->isHtml(true);
 $config  = KunenaConfig::getInstance();
 $user = $this->message->getAuthor();
 ?>
-<?php if (!$config->plain_email) :?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">

@@ -1123,9 +1123,9 @@ class KunenaIcons
 			}
 			elseif ($topicicontype == 'image')
 			{
-				if ($new)
+				if (!empty($caticon))
 				{
-					$bigicon = ' kicon-folder-new ';
+					$bigicon = ' kicon-foldernew ';
 				}
 				else
 				{
@@ -1154,17 +1154,6 @@ class KunenaIcons
 						$bigicon = 'kicon-folder-sm';
 					}
 				}
-				else
-				{
-					if ($new)
-					{
-						$bigicon = $categoryicon . ' knewchar';
-					}
-					else
-					{
-						$bigicon = $categoryicon;
-					}
-				}
 			}
 		}
 
@@ -1182,7 +1171,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="' . $bigicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
 		}
 		else
 		{

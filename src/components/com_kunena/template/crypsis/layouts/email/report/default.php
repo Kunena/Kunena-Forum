@@ -211,21 +211,21 @@ $this->mail->Encoding = 'base64';
 <?php else : ?>
 
 <?php
-	$this->mail->isHTML(false);
-	$alt = <<<EOS
-	{$this->text('COM_KUNENA_REPORT_RSENDER')} {$this->me->username} ({$this->me->name})
-	{$this->text('COM_KUNENA_REPORT_RREASON')} {$this->title}
-	{$this->text('COM_KUNENA_REPORT_RMESSAGE')} {$this->content}
-	
-	{$this->text('COM_KUNENA_REPORT_POST_POSTER')} {$user->username} ({$user->name})
-	{$this->text('COM_KUNENA_REPORT_POST_SUBJECT')}: {$this->message->getTopic()->subject}
-	
-	{$this->text('COM_KUNENA_REPORT_POST_MESSAGE')}
-	-----
-	{$this->message->displayField('message')}
-	-----
-	
-	{$this->text('COM_KUNENA_REPORT_POST_LINK')} {$this->messageLink}
+$this->mail->isHTML(false);
+$alt = <<<EOS
+{$this->text('COM_KUNENA_REPORT_RSENDER')} {$this->me->username} ({$this->me->name})
+{$this->text('COM_KUNENA_REPORT_RREASON')} {$this->title}
+{$this->text('COM_KUNENA_REPORT_RMESSAGE')} {$this->content}
+
+{$this->text('COM_KUNENA_REPORT_POST_POSTER')} {$user->username} ({$user->name})
+{$this->text('COM_KUNENA_REPORT_POST_SUBJECT')}: {$this->message->getTopic()->subject}
+
+{$this->text('COM_KUNENA_REPORT_POST_MESSAGE')}
+-----
+{$this->message->displayField('message')}
+-----
+
+{$this->text('COM_KUNENA_REPORT_POST_LINK')} {$this->messageLink}
 EOS;
-	echo $alt;
+echo $alt;
 endif ;?>

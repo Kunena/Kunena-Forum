@@ -376,17 +376,17 @@ JHtml::_('behavior.tabstate');
 												<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START') ?></td>
 												<td>
 													<input type="text" name="cfg_attach_start" class="ksm-field" value="<?php echo $this->escape($this->config->attach_start) ?>" />
 												</td>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC') ?></td>
 											</tr><tr>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_END') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END') ?></td>
 												<td>
 													<input type="text" name="cfg_attach_end" class="ksm-field" value="<?php echo $this->escape($this->config->attach_end) ?>" />
 												</td>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_END_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

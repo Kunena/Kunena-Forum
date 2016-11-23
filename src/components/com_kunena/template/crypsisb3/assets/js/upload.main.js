@@ -1,6 +1,15 @@
 jQuery(function ($) {
 	'use strict';
 
+	$.widget('blueimp.fileupload', $.blueimp.fileupload, {
+		options: {
+			// The maximum width of resized images:
+			imageMaxWidth: imageheight,
+			// The maximum height of resized images:
+			imageMaxHeight: imagewidth
+		}
+	});
+
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
 		var value = $('#kbbcode-message').val();

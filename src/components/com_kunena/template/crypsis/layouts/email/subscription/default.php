@@ -225,28 +225,28 @@ $this->mail->Encoding = 'base64';
 <?php else : ?>
 
 <?php
-	$this->mail->isHTML(false);
-	$full = !$config->mailfull ? '' : <<<EOS
-	{$this->text('COM_KUNENA_MESSAGE')}
-	-----
-	{$this->message->displayField('message', false)}
-	-----
+$this->mail->isHTML(false);
+$full = !$config->mailfull ? '' : <<<EOS
+{$this->text('COM_KUNENA_MESSAGE')}
+-----
+{$this->message->displayField('message', false)}
+-----
 
 EOS;
-	echo $full;
+echo $full;
 
-	$alt                 = <<<EOS
-	{$msg1} {$config->board_title}
-	
-	{$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
-	{$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
-	{$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
-	
-	URL : {$this->message->getUrl(null, false)}
-	
-	{$full}{$msg2}{$more}
-	
-	{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
+$alt                 = <<<EOS
+{$msg1} {$config->board_title}
+
+{$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
+{$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
+{$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
+
+URL : {$this->message->getUrl(null, false)}
+
+{$full}{$msg2}{$more}
+
+{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;
-	echo $alt;
+echo $alt;
 endif ;?>

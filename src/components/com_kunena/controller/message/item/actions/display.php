@@ -277,34 +277,37 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Report this.
 		if (KunenaFactory::getConfig()->reportmsg && $me->exists())
 		{
-			$ktemplate = KunenaFactory::getTemplate();
-			$topicicontype = $ktemplate->params->get('topicicontype');
+			if ($me->isModerator($this->topic->getCategory()) || KunenaFactory::getConfig()->user_report && $me->userid != $this->message->userid)
+			{
+				$ktemplate = KunenaFactory::getTemplate();
+				$topicicontype = $ktemplate->params->get('topicicontype');
 
-			if ($topicicontype == 'B2')
-			{
-				$icon = 'icon icon-flag';
-			}
-			elseif ($topicicontype == 'B3')
-			{
-				$icon = 'glyphicon glyphicon-exclamation-sign';
-			}
-			elseif ($topicicontype == 'fa')
-			{
-				$icon = 'fa fa-exclamation';
-			}
-			elseif ($topicicontype == 'image')
-			{
-				$icon = 'kicon-report';
-			}
-			else
-			{
-				$icon = '';
-			}
+				if ($topicicontype == 'B2')
+				{
+					$icon = 'icon icon-flag';
+				}
+				elseif ($topicicontype == 'B3')
+				{
+					$icon = 'glyphicon glyphicon-exclamation-sign';
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$icon = 'fa fa-exclamation';
+				}
+				elseif ($topicicontype == 'image')
+				{
+					$icon = 'kicon-report';
+				}
+				else
+				{
+					$icon = '';
+				}
 
-			echo KunenaLayout::factory('Widget/Button')
-				->setProperties(array('url' => '#report'. $mesid .'', 'name' => 'report', 'scope' => 'message',
-				                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
-				                      'modal' => 'modal', 'pullright' => 'pullright'));
+				echo KunenaLayout::factory('Widget/Button')
+					->setProperties(array('url' => '#report'. $mesid .'', 'name' => 'report', 'scope' => 'message',
+					                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
+					                      'modal' => 'modal', 'pullright' => 'pullright'));
+			}
 		}
 
 		// Moderation and own post actions.

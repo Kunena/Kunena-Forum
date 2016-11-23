@@ -144,12 +144,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
-				$this->setResponseStatus($e->getResponseCode());
-				$this->output->setLayout('unauthorized');
-				$this->document->setTitle($e->getResponseStatus());
-
-				$this->content = KunenaLayout::factory('Widget/Error')
-					->set('header', $e->getResponseStatus());
+				$app = JFactory::getApplication();
+				$app->redirect(JRoute::_('index.php?option=com_kunena', false));
 			}
 			catch (Exception $e)
 			{

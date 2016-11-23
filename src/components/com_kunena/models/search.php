@@ -421,7 +421,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (empty($this->messages))
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', $q));
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'));
 		}
 
 		return $this->messages;

@@ -1101,6 +1101,11 @@ class KunenaIcons
 				{
 					$bigicon = ' fa-big fa-folder-open ';
 				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' fa-big ';
+				}
 			}
 			elseif ($topicicontype == 'B2')
 			{
@@ -1111,6 +1116,11 @@ class KunenaIcons
 				else
 				{
 					$bigicon = ' icon-big icon-folder ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' icon-big ';
 				}
 			}
 			elseif ($topicicontype == 'B3')
@@ -1123,16 +1133,26 @@ class KunenaIcons
 				{
 					$bigicon = ' glyphicon-big glyphicon-folder-open ';
 				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' glyphicon-big ';
+				}
 			}
 			elseif ($topicicontype == 'image')
 			{
-				if ($new)
+				if (!empty($caticon))
 				{
-					$bigicon = ' kicon-folder-new ';
+					$bigicon = ' kicon-foldernew ';
 				}
 				else
 				{
 					$bigicon = ' kicon-folder ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' icon-big ';
 				}
 			}
 			else
@@ -1144,28 +1164,38 @@ class KunenaIcons
 		{
 			$bigicon = ' ';
 
-			if ($topicicontype == 'image')
+			if ($topicicontype == 'fa')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'fa-folder-open ';
+				}
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'icon-folder ';
+				}
+			}
+			if ($topicicontype == 'B3')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'glyphicon-folder-open ';
+				}
+			}
+			elseif ($topicicontype == 'image')
 			{
 				if (!$categoryicon)
 				{
 					if ($new)
 					{
-						$bigicon = 'kicon-folder-sm-new';
+						$bigicon = 'kicon-folder-sm-new ';
 					}
 					else
 					{
-						$bigicon = 'kicon-folder-sm';
-					}
-				}
-				else
-				{
-					if ($new)
-					{
-						$bigicon = $categoryicon . ' knewchar';
-					}
-					else
-					{
-						$bigicon = $categoryicon;
+						$bigicon = 'kicon-folder-sm ';
 					}
 				}
 			}
@@ -1185,7 +1215,7 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="' . $bigicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
 		}
 		else
 		{

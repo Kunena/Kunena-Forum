@@ -26,6 +26,7 @@ if (!$config->plain_email) :
 
 // New post email for subscribers (HTML)
 $this->mail->isHtml(true);
+$this->mail->Encoding = 'base64';
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -216,29 +217,30 @@ $this->mail->isHtml(true);
 
 	</body>
 </html>
-<?php endif ;?>
+<?php else : ?>
 
 <?php
-
-$full = !$config->mailfull ? '' : <<<EOS
-{$this->text('COM_KUNENA_MESSAGE')}
------
-{$this->message->displayField('message', false)}
------
-
+	$this->mail->isHTML(false);
+	$full = !$config->mailfull ? '' : <<<EOS
+	{$this->text('COM_KUNENA_MESSAGE')}
+	-----
+	{$this->message->displayField('message', false)}
+	-----
 EOS;
+	echo $full;
 
-$alt                 = <<<EOS
-{$msg1} {$config->board_title}
-
-{$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
-{$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
-{$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
-
-URL : {$this->messageUrl}
-
-{$full}{$msg2}{$more}
-
-{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
+	$alt                 = <<<EOS
+	{$msg1} {$config->board_title}
+	
+	{$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
+	{$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
+	{$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
+	
+	URL : {$this->messageUrl}
+	
+	{$full}{$msg2}{$more}
+	
+	{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;
-$this->mail->AltBody = $alt;
+	echo $alt;
+endif; ?>

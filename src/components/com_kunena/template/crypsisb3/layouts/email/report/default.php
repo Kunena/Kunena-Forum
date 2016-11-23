@@ -9,12 +9,14 @@
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 $config  = KunenaConfig::getInstance();
 $user = $this->message->getAuthor();
 
 // Report moderator email (HTML)
 if (!$config->plain_email) :
-$this->mail->isHtml(true);
+$this->mail->isHTML(true);
+$this->mail->Encoding = 'base64';
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -201,23 +203,24 @@ $this->mail->isHtml(true);
 
 	</body>
 </html>
-<?php endif ;?>
+<?php else : ?>
 
 <?php
-
-$alt = <<<EOS
-{$this->text('COM_KUNENA_REPORT_RSENDER')} {$this->me->username} ({$this->me->name})
-{$this->text('COM_KUNENA_REPORT_RREASON')} {$this->title}
-{$this->text('COM_KUNENA_REPORT_RMESSAGE')} {$this->content}
-
-{$this->text('COM_KUNENA_REPORT_POST_POSTER')} {$user->username} ({$user->name})
-{$this->text('COM_KUNENA_REPORT_POST_SUBJECT')}: {$this->message->getTopic()->subject}
-
-{$this->text('COM_KUNENA_REPORT_POST_MESSAGE')}
------
-{$this->message->displayField('message', false)}
------
-
-{$this->text('COM_KUNENA_REPORT_POST_LINK')} {$this->messageLink}
+	$this->mail->isHTML(false);
+	$alt = <<<EOS
+	{$this->text('COM_KUNENA_REPORT_RSENDER')} {$this->me->username} ({$this->me->name})
+	{$this->text('COM_KUNENA_REPORT_RREASON')} {$this->title}
+	{$this->text('COM_KUNENA_REPORT_RMESSAGE')} {$this->content}
+	
+	{$this->text('COM_KUNENA_REPORT_POST_POSTER')} {$user->username} ({$user->name})
+	{$this->text('COM_KUNENA_REPORT_POST_SUBJECT')}: {$this->message->getTopic()->subject}
+	
+	{$this->text('COM_KUNENA_REPORT_POST_MESSAGE')}
+	-----
+	{$this->message->displayField('message')}
+	-----
+	
+	{$this->text('COM_KUNENA_REPORT_POST_LINK')} {$this->messageLink}
 EOS;
-$this->mail->AltBody = $alt;
+	echo $alt;
+endif ;?>

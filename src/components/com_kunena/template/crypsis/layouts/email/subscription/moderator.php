@@ -225,7 +225,17 @@ $this->mail->Encoding = 'base64';
 
 <?php
 $this->mail->isHTML(false);
-$full = !$config->mailfull ? $this->text('COM_KUNENA_MESSAGE') : $this->message->displayField('message', false);
+
+if ($config->mailfull)
+{
+	$full = JText::_('COM_KUNENA_MESSAGE') . ': ';
+	$full .= "\n";
+	$full .= $this->message->message;
+}
+else
+{
+	$full = '';
+}
 
 $alt                 = <<<EOS
 {$msg1} {$config->board_title}
@@ -234,9 +244,10 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->messageLink}
+URL: {$this->messageLink}
+{$full}
 
-{$full}{$msg2}{$more}
+{$msg2}{$more}
 
 {$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;

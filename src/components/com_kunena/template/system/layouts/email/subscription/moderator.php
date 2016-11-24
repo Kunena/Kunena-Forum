@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 $author  = $this->message->getAuthor();
 $config  = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
+$this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
 $msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
 $msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
@@ -162,7 +163,7 @@ $this->mail->Encoding = 'base64';
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+								<p>URL : <a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -181,13 +182,13 @@ $this->mail->Encoding = 'base64';
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
 			padding: 25px 6.25% 5px;" class="button"><a
-								href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>" target="_blank" style="text-decoration: underline;">
+								href="<?php echo $this->messageLink; ?>" target="_blank" style="text-decoration: underline;">
 								<table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
 									<tr>
 										<td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
 											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-												href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>">
+												href="<?php echo $this->messageLink; ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
@@ -236,7 +237,7 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->messageUrl}
+URL : {$this->messageLink}
 
 {$full}{$msg2}{$more}
 

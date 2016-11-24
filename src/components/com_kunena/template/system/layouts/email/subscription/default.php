@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 $config  = KunenaConfig::getInstance();
 $author  = $this->message->getAuthor();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
+$this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
 $msg1 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
 $msg2 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
@@ -167,9 +168,7 @@ $this->mail->Encoding = 'base64';
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a
-										href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?></b></a>
-								</p>
+								<p>URL : <a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -198,7 +197,7 @@ $this->mail->Encoding = 'base64';
 										    bgcolor="#0072C6">
 											<a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-											   href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>">
+												href="<?php echo $this->messageLink; ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
@@ -249,7 +248,7 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->message->getUrl(null, false)}
+URL : {$this->messageLink}
 
 {$full}{$msg2}{$more}
 

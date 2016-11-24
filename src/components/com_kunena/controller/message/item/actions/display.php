@@ -300,7 +300,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Report this.
 		if (KunenaFactory::getConfig()->reportmsg && $me->exists())
 		{
-			if ($me->isModerator($this->topic->getCategory()) || KunenaFactory::getConfig()->user_report && $me->userid != $this->message->userid)
+			if ($me->isModerator($this->topic->getCategory()) || KunenaFactory::getConfig()->user_report ||
+				!KunenaFactory::getConfig()->user_report && $me->userid != $this->message->userid)
 			{
 				$ktemplate = KunenaFactory::getTemplate();
 				$topicicontype = $ktemplate->params->get('topicicontype');

@@ -218,7 +218,7 @@ $alt = <<<EOS
 
 {$this->text('COM_KUNENA_REPORT_POST_MESSAGE')}
 -----
-{$this->message->displayField('message')}
+{$this->message->displayField('message', false)}
 -----
 
 {$this->text('COM_KUNENA_REPORT_POST_LINK')} {$this->messageLink}

@@ -232,14 +232,7 @@ $this->mail->Encoding = 'base64';
 
 <?php
 $this->mail->isHTML(false);
-$full = !$config->mailfull ? '' : <<<EOS
-{$this->text('COM_KUNENA_MESSAGE')}
------
-{$this->message->displayField('message', false)}
------
-
-EOS;
-echo $full;
+$full = !$config->mailfull ? $this->text('COM_KUNENA_MESSAGE') : $this->message->displayField('message', false);
 
 $alt                 = <<<EOS
 {$msg1} {$config->board_title}

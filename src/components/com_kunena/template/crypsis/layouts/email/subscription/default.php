@@ -232,7 +232,7 @@ if ($config->mailfull)
 {
 	$full = JText::_('COM_KUNENA_MESSAGE') . ': ';
 	$full .= "\n";
-	$full .= $this->message->message;
+	$full .= $this->message->displayField('message', false);
 }
 else
 {

@@ -144,8 +144,22 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
-				$app = JFactory::getApplication();
-				$app->redirect(JRoute::_('index.php?option=com_kunena', false));
+				if (JFactory::getUser()->guest)
+				{
+					$this->output->setLayout('login');
+					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
+					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+				}
+				else
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('unauthorized');
+					$this->document->setTitle($e->getResponseStatus());
+
+					$this->content = KunenaLayout::factory('Widget/Error')
+						->set('header', $e->getResponseStatus());
+
+				}
 			}
 			catch (Exception $e)
 			{

@@ -722,7 +722,7 @@ HTML;
 
 		if ($config->topicicons)
 		{
-			$category_iconset = 'images/topic_icons/';
+			$category_iconset = 'images/topic_icons';
 			if (!file_exists($category_iconset))
 			{
 				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
@@ -1055,6 +1055,10 @@ HTML;
 			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
+			}
+			elseif ($topicicontype == 'image')
+			{
+				return '<img src="'. JUri::root() .'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{

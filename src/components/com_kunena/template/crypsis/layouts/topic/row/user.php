@@ -56,10 +56,10 @@ if (!empty($this->spacing)) : ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt;?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone span1 center topic-item-unread">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, true); ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic), '', null, $category, true, true); ?>
 	<?php else :  ?>
 	<td class="hidden-phone span1 center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic), '', null, $category, true, false); ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols; ?>">

@@ -432,7 +432,26 @@
 						caretOffset -= fixOperaBug($$.val().substring(0, caretPosition));
 					}
 
-					$.extend(hash, {caretPosition: caretPosition, scrollPosition: scrollPosition});
+					string = { block:lines.join('\n')};
+					start = caretPosition;
+					len = string.block.length + ((browser.opera) ? n - 1 : 0);
+				} else if (ctrlKey === true) {
+					string = build(selection);
+					start = caretPosition + string.openWith.length;
+					len = string.block.length - string.openWith.length - string.closeWith.length;
+					len = len - (string.block.match(/ $/) ? 1 : 0);
+					len -= fixIeBug(string.block);
+				} else if (shiftKey !== true) {
+					string = build(selection);
+					start = caretPosition;
+					len = string.block.length;
+					len -= fixIeBug(string.block);
+				} else {
+					string = build(selection);
+					start = caretPosition + string.block.length;
+					len = 0;
+					start -= fixIeBug(string.block);
+				}
 
 					if (string.block !== selection && abort === false) {
 						insert(string.block);

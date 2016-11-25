@@ -403,7 +403,7 @@
 					len = string.block.length - string.openWith.length - string.closeWith.length;
 					len = len - (string.block.match(/ $/) ? 1 : 0);
 					len -= fixIeBug(string.block);
-				} else if (shiftKey === true) {
+				} else if (shiftKey !== true) {
 					string = build(selection);
 					start = caretPosition;
 					len = string.block.length;

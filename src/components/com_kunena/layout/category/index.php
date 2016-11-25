@@ -146,7 +146,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			$params = '&catid=' . (int) $catid;
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}", $xhtml);
 		}
 
 		return null;

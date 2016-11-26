@@ -53,7 +53,7 @@ defined('_JEXEC') or die;
 		<td class="col-md-3">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 			<input id="kunena_url_avatargallery" type="hidden"
-			       value="<?php echo $this->profile->getUrl(true, 'edit'); ?>" />
+			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 		</td>
 		<td>
 

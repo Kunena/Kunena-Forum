@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 		// Get the list of images from the gallery selected drop-down above
 	 $.ajax({
 			 dataType: "json",
-			 url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
+			 url: $('#kunena_url_avatargallery').val(),
 			 data: 'gallery_name=' + gallery_selected
 		}).done(function(response) {
        $.each(response, function( key, value ) {

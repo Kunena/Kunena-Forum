@@ -15,9 +15,9 @@ var previewActive = false;
 function kPreviewHelper(previewActive) {
 	if (jQuery('#kbbcode-message').val() != null) {
 		jQuery.ajax({
-			type: 'POST',
-			url: 'index.php?option=com_kunena&view=topic&layout=edit&format=raw',
-			async: false,
+			type    : 'POST',
+			url     : jQuery('#kpreview_url').val(),
+			async   : false,
 			dataType: 'json',
 			data: {body: jQuery('#kbbcode-message').val()},
 			success: function (data) {

@@ -89,8 +89,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input id="kurl_topicons_request" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
-		<input id="kpreview_url" type="hidden" name="kpreview_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php JUri::root(true) . '/index.php?option=com_kunena&view=topic&layout=edit&format=raw' ?>" />
 		<?php if (!$this->config->allow_change_subject) : ?>
 			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 		<?php endif; ?>

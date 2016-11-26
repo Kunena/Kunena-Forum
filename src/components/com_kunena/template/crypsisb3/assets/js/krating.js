@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		if ($('#krating').length > 0) {
 			$.ajax({
 				 dataType: "json",
-				 url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
+				url: $('#krating_url').val(),
 				 data: 'topic_id=' + topic_id
 			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);

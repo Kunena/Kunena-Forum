@@ -17,7 +17,7 @@ $this->getBBcodesEnabled();
 ?>
 <div class="form-group">
 	<label class="control-label col-md-4"><?php echo (JText::_('COM_KUNENA_MESSAGE')); ?></label>
-	<div class="controls">
+	<div class="controls" id="kbbcode-preview-real">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs">
 			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>

@@ -49,13 +49,13 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages)) : ?>
-		<tr>
-			<td class="span3">
-				<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
-				<input id="kunena_url_avatargallery" type="hidden"
-				       value="<?php echo $this->profile->getUrl(true, 'edit'); ?>"/>
-			</td>
-			<td>
+	<tr>
+		<td class="span3">
+			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
+			<input id="kunena_url_avatargallery" type="hidden"
+			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+		</td>
+		<td>
 
 				<?php if ($this->galleryOptions) : ?>
 					<div>

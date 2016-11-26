@@ -53,15 +53,15 @@ jQuery(document).ready(function($) {
 		gallery_list.empty();
 
 		// Get the list of images from the gallery selected drop-down above
-		$.ajax({
-			dataType: "json",
-			url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
-			data: 'gallery_name=' + gallery_selected
-		}).done(function (response) {
-			$.each(response, function (key, value) {
-				gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');
-			});
-		}).fail(function (response) {
+	 $.ajax({
+			 dataType: "json",
+			 url: $('#kunena_url_avatargallery').val(),
+			 data: 'gallery_name=' + gallery_selected
+		}).done(function(response) {
+       $.each(response, function( key, value ) {
+				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
+			  });
+		}).fail(function(response) {
 
 		});
 	});

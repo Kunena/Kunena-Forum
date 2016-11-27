@@ -87,7 +87,7 @@ class KunenaForumTopicRate extends JObject
 		$query = $this->_db->getQuery(true);
 		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
-		
+
 		try
 		{
 			$users = (array) $this->_db->loadObjectList();
@@ -104,7 +104,32 @@ class KunenaForumTopicRate extends JObject
 			//}
 
 			//return $this->users;
+	}
+
+	/**
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
+	static public function getTotalUsers($topicid)
+	{
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(*)')->from($db->quoteName('#__kunena_rate'))->where($db->quoteName('topic_id') . '=' . $db->Quote($topicid));
+		$db->setQuery($query);
+
+		try
+		{
+			$total = $db->loadResult();
 		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $total;
+	}
 
 	/**
 	 * Perform insert the rate into table

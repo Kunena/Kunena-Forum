@@ -4,7 +4,7 @@ php:
 - 7.0
 - 7.1
 addons:
-  firefox: "50.0.1"
+  firefox: "47.0.1"
 before_script:
 - sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts
 - sudo apt-get update -qq

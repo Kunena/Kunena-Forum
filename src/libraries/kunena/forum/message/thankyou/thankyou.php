@@ -98,6 +98,13 @@ class KunenaForumMessageThankyou extends JObject
 			return false;
 		}
 
+		if ($user->banned)
+		{
+			$this->setError(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+
+			return false;
+		}
+
 		$db = JFactory::getDBO();
 		$time = JFactory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou

@@ -316,14 +316,14 @@ class Com_KunenaInstallerScript
 
 		// Add custom.less
 		$customcrypsis = $sitePath . '/template/crypsis/assets/less/custom.less';
-		if (!is_file($customcrypsis))
+		if (!file_exists($customcrypsis))
 		{
 			$this->createFile($sitePath . '/template/crypsis/assets/less/custom.less');
 		}
 
 		// Add custom.less
 		$customcrypsisb3 = $sitePath . '/template/crypsisb3/assets/less/custom.less';
-		if (!is_file($customcrypsisb3))
+		if (!file_exists($customcrypsisb3))
 		{
 			$this->createFile($sitePath . '/template/crypsisb3/assets/less/custom.less');
 		}

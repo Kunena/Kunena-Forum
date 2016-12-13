@@ -315,17 +315,17 @@ class Com_KunenaInstallerScript
 		}
 
 		// Add custom.less
-		$customcrypsis = $sitePath . '/template/crypsis/assets/less/custom.less';
+		$customcrypsis = JPATH_ROOT . '/components/com_kunena/template/crypsis/assets/less/custom.less';
 		if (!file_exists($customcrypsis))
 		{
-			$this->createFile($sitePath . '/template/crypsis/assets/less/custom.less');
+			$this->createFile($customcrypsis);
 		}
 
 		// Add custom.less
-		$customcrypsisb3 = $sitePath . '/template/crypsisb3/assets/less/custom.less';
+		$customcrypsisb3 = JPATH_ROOT . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
 		if (!file_exists($customcrypsisb3))
 		{
-			$this->createFile($sitePath . '/template/crypsisb3/assets/less/custom.less');
+			$this->createFile($customcrypsisb3);
 		}
 
 		// Prepare installation.

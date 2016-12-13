@@ -121,7 +121,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="visible-sm">
-			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
+			<?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
 			<?php if ($config->post_dateformat != 'none') : ?>
 				<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
 			<?php endif; ?>

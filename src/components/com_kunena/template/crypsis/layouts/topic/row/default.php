@@ -121,7 +121,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="visible-phone">
-			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
+			<?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
 			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
 			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id);?>
 			<div class="pull-right">

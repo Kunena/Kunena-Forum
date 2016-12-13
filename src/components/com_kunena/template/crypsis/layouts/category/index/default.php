@@ -209,7 +209,7 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="span12">
 											<?php endif; ?>
-												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), null, false, true) ?></span>
+												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>

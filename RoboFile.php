@@ -417,13 +417,11 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
 		{
-			$this->_exec("vendor/bin/selenium-server-standalone -Dwebdriver.chrome.driver=./vendor/joomla-projects/selenium-server-standalone/bin/webdrivers/chrome/chromedriver_linux_64
- >> selenium.log 2>&1 &");
+			$this->_exec("vendor/bin/selenium-server-standalone >> selenium.log 2>&1 &");
 		}
 		else
 		{
-			$this->_exec("START java.exe -jar -Dwebdriver.chrome.driver=.\\vendor\\joomla-projects\\selenium-server-standalone\\bin\\webdrivers\\chrome\\chromedriver.exe
- .\\vendor\\joomla-projects\\selenium-server-standalone\\bin\\selenium-server-standalone.jar");
+			$this->_exec("START java.exe -jar .\\vendor\\joomla-projects\\selenium-server-standalone\\bin\\selenium-server-standalone.jar");
 		}
 
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')

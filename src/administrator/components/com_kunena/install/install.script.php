@@ -314,6 +314,27 @@ class Com_KunenaInstallerScript
 			$db->execute();
 		}
 
+		// Add custom.less
+		$custom = $sitePath . '/template/' . KUNENA_TEMPLATE_DEFAULT . '/assets/less/custom.less';
+		if (!is_file($custom))
+		{
+			$this->createFile($sitePath . '/template/' . KUNENA_TEMPLATE_DEFAULT . '/assets/less/custom.less');
+		}
+
+		// Add custom.less
+		$customcrypsis = $sitePath . '/template/crypsis/assets/less/custom.less';
+		if (!is_file($customcrypsis))
+		{
+			$this->createFile($sitePath . '/template/crypsis/assets/less/custom.less');
+		}
+
+		// Add custom.less
+		$customcrypsisb3 = $sitePath . '/template/crypsisb3/assets/less/custom.less';
+		if (!is_file($customcrypsisb3))
+		{
+			$this->createFile($sitePath . '/template/crypsisb3/assets/less/custom.less');
+		}
+
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 
@@ -608,5 +629,14 @@ class Com_KunenaInstallerScript
 	public function deleteKfolder($path)
 	{
 		JFolder::delete($path);
+	}
+
+	/**
+	 * @param $path
+	 */
+	public function createFile($path)
+	{
+		$ourFileHandle = fopen($path, 'w') or die("can't open file");
+		fclose($ourFileHandle);
 	}
 }

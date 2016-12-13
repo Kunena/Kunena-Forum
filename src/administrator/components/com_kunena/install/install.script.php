@@ -315,10 +315,10 @@ class Com_KunenaInstallerScript
 		}
 
 		// Add custom.less
-		$custom = $sitePath . '/template/' . KUNENA_TEMPLATE_DEFAULT . '/assets/less/custom.less';
+		$custom = $sitePath . '/template/' . KunenaTemplate::getInstance()->name . '/assets/less/custom.less';
 		if (!is_file($custom))
 		{
-			$this->createFile($sitePath . '/template/' . KUNENA_TEMPLATE_DEFAULT . '/assets/less/custom.less');
+			$this->createFile($sitePath . '/template/' . KunenaTemplate::getInstance()->name . '/assets/less/custom.less');
 		}
 
 		// Add custom.less

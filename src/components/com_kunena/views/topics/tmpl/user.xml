@@ -10,7 +10,8 @@
 			<field name="mode"
 			       type="list"
 			       default="default"
-			       label="COM_KUNENA_MENU_SELECTEDVIEW">
+			       label="COM_KUNENA_MENU_SELECTEDVIEW"
+				   description="COM_KUNENA_MENU_SELECTEDVIEW_DESC">
 				<option value="default">COM_KUNENA_TOPICS_MODE_OPTION_MYLATEST</option>
 				<option value="posted">COM_KUNENA_TOPICS_MODE_OPTION_POSTED</option>
 				<option value="started">COM_KUNENA_TOPICS_MODE_OPTION_STARTED</option>

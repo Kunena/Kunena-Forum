@@ -176,7 +176,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$config->read_only)
 		{
-			$loginurl = $login->getLoginURL() . '?return=' . base64_encode((string)JUri::getInstance());
+			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance()));
 			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())

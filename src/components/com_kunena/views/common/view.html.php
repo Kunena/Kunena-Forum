@@ -583,7 +583,7 @@ class KunenaViewCommon extends KunenaView
 				return  $name;
 			}
 		}
-		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed) {
+		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlist_allowed) {
 			return false;
 		}
 		else {

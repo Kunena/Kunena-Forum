@@ -37,25 +37,25 @@ else
 }
 ?>
 
-	<small class="text-muted pull-right">
-		<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
-			<?php echo KunenaIcons::ip(); ?>
-			<span class="ip"> <?php echo $this->ipLink; ?> </span>
-		<?php endif; ?>
-		<?php echo KunenaIcons::clock(); ?>
-		<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-		<?php if ($message->modified_time) :?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); endif;?>
-		<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
-		<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
-	</small>
-	<div class="clear-fix"></div>
-	<div class="horizontal-message">
-		<div class="profile-horizontal-top">
-			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
-		</div>
-		<div
-			class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $this->message->getState(); ?>"
-			data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($message->subject, 0, $subjectlengthmessage); ?>">
+<small class="text-muted pull-right">
+	<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
+	<?php echo KunenaIcons::ip();?>
+	<span class="ip"> <?php echo $this->ipLink; ?> </span>
+	<?php endif;?>
+	<?php echo KunenaIcons::clock();?>
+	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+	<?php if ($message->modified_time) :?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); endif;?>
+	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+	<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink();?></span>
+</small>
+<div class="clear-fix"></div>
+<div class="horizontal-message">
+	<div class="profile-horizontal-top">
+		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+	</div>
+	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?> message-<?php echo $this->message->getState(); ?>"
+		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+	<div class="kmessage">
 			<div class="kmessage">
 				<div class="kmsg">
 					<?php  if (!$this->me->userid && !$isReply) :

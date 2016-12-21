@@ -199,7 +199,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$me->userid && !$this->message->hold && !$config->read_only
 		)
 		{
-			$logintext = '<a class="btn-link" href="#klogin" id="login-link" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance()));
+			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())
 			{

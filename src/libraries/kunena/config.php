@@ -844,7 +844,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-	public $userlist_allowed = 0;
+	public $userlist_allowed = 1;
 
 	/**
 	 * @var    integer  User list count users; select, selection

@@ -67,7 +67,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
+			if (!KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
 				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}

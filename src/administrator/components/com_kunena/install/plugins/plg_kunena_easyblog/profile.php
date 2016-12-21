@@ -2,34 +2,24 @@
 /**
  * Kunena Plugin
  *
- * @package         Kunena.Plugins
- * @subpackage      Easyblog
+ * @package     Kunena.Plugins
+ * @subpackage  Easyblog
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+defined('_JEXEC') or die ();
 
-/**
- * Class KunenaProfileEasyblog
- * @since Kunena
- */
 class KunenaProfileEasyblog extends KunenaProfile
 {
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileEasyblog constructor.
 	 *
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -37,18 +27,17 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param string $action
+	 * @param bool   $xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
+	 * @return bool
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -57,12 +46,11 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task
-	 * @param   bool   $xhtml
+	 * @param        $userid
+	 * @param string $task
+	 * @param bool   $xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
+	 * @return bool
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -78,19 +66,16 @@ class KunenaProfileEasyblog extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml
+	 * @param      $userid
+	 * @param bool $xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
+	 * @return bool
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

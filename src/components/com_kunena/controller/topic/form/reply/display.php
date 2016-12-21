@@ -148,7 +148,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-		$this->headerText   = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 	}
 
 	/**

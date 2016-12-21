@@ -36,7 +36,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->guest)
+		if ($config->userlist_allowed == 0 && $my->guest)
 		{
 			return false;
 		}

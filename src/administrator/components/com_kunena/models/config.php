@@ -278,8 +278,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['show_session_type'] = JHtml::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $this->config->show_session_type);
 
 		$userlist_allowed           = array();
-		$userlist_allowed []        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_NO'));
-		$userlist_allowed []        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_YES'));
+		$userlist_allowed []        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
+		$userlist_allowed []        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
 		$lists ['userlist_allowed'] = JHtml::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_allowed);
 		$lists ['pubprofile']       = JHtml::_('select.genericlist', $yesno, 'cfg_pubprofile', 'class="inputbox" size="1"', 'value', 'text', $this->config->pubprofile);
 

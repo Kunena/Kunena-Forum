@@ -74,6 +74,7 @@ $list = array();
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 				</div>
+			</div>
 			<?php endif; ?>
 		<?php endif; ?>
 	</div>

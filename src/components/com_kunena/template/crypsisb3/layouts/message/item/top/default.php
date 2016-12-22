@@ -76,6 +76,7 @@ else
 								</div>
 							</div>
 						</div>
+					</div>
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>

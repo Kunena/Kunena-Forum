@@ -20,6 +20,8 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * KunenaProfileEasyblog constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since K2.0
 	 */
 	public function __construct($params)
 	{
@@ -31,6 +33,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return bool
+	 * @since K2.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -51,6 +54,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return bool
+	 * @since K2.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -66,6 +70,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 * @since K2.0
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -76,6 +81,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @param bool $xhtml
 	 *
 	 * @return bool
+	 * @since K2.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

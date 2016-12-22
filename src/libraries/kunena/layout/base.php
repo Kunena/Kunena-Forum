@@ -607,7 +607,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   $path
 	 *
-	 * @return  KunenaLayout
+	 * @return JLayoutBase|KunenaLayout
 	 * @since Kunena
 	 */
 	public function subLayout($path)

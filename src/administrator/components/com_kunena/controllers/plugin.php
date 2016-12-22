@@ -124,7 +124,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 		}
 		else
 		{
-			return $this->allowAdd($data);
+			return $this->allowAdd();
 		}
 	}
 

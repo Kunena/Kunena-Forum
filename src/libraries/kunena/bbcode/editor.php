@@ -739,7 +739,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 */
 	public function generateHMVCJs()
 	{
-		$js = $this->editorActionHMVCJs($this->name);
+		$js = $this->editorActionHMVCJs();
 
 		return $js;
 	}

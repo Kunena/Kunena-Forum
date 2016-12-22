@@ -48,7 +48,7 @@ class KunenaViewTopics extends KunenaView
 
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
-		$this->_prepareDocument('default');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
@@ -81,7 +81,7 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('user');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
@@ -115,7 +115,7 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('posts');
+		$this->_prepareDocument();
 
 		$this->render('Message/List', $tpl);
 	}

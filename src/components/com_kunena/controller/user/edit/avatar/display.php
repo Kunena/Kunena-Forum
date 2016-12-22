@@ -83,7 +83,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';
 		$this->gallery        = $this->input->getString('gallery', '');
 		$this->galleries      = $this->getGalleries($path);
-		$this->galleryOptions = $this->getGalleryOptions($path);
+		$this->galleryOptions = $this->getGalleryOptions();
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);

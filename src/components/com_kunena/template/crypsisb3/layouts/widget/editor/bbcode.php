@@ -274,7 +274,7 @@ if (!empty($codeTypes)) : ?>
 						$x = 1;
 						foreach ($this->poll->getOptions() as $poll_option)
 						{
-							echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '")" /></div>';
+							echo '<div class="polloption">Option ' . $x . ' <input type="text" class="form-control" size="100" id="field_option' . $x . ' ' . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '"/></div>';
 							$x++;
 						}
 					}

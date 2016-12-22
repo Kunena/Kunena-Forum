@@ -93,7 +93,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Initialize and display the layout.
 	 *
-	 * @return KunenaLayout
+	 * @return JLayoutBase|KunenaLayout
 	 * @since Kunena
 	 */
 	protected function display()

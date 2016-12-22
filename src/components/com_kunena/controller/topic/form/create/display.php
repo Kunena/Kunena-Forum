@@ -88,7 +88,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		// Get topic icons if they are enabled.
 		if ($this->config->topicicons)
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())

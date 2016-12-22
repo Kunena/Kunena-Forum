@@ -12,14 +12,14 @@ defined('_JEXEC') or die();
 
 // Kunena 5.0.5: Update setting allow guest to see userlist
 /**
- * @param $parent
- *
  * @return array|null
+ * @internal param $parent
+ *
  */
-function kunena_505_2016_12_20_userlist($parent)
+function kunena_505_2016_12_20_userlist()
 {
 	$config = KunenaFactory::getConfig();
-	
+
 	if ($config->userlist_allowed)
 	{
 		$config->userlist_allowed = 0;
@@ -28,7 +28,7 @@ function kunena_505_2016_12_20_userlist($parent)
 	{
 		$config->userlist_allowed = 1;
 	}
-	
+
 	// Save configuration
 	$config->save();
 

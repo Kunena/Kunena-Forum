@@ -60,20 +60,22 @@ JHtml::_('behavior.core');
 				</th>
 			<?php endif; ?>
 
-				<?php if ($options) : ?>
-					<th class="span1 center">
-						<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
-					</th>
-					<th class="span1 center">
-						<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
-					</th>
-					<th class="span1 center">
-						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
-					</th>
-				<?php endif; ?>
-				<th class="span2">
-					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+			<?php if ($options) : ?>
+				<th class="span1 center">
+					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
+				<th class="span1 center">
+					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
+				</th>
+				<th class="span1 center">
+					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
+				</th>
+			<?php endif; ?>
+			<th class="span2">
+				<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+			</th>
+
+			<?php if ($options) : ?>
 				<th class="span1 center">
 					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 				</th>

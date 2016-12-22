@@ -952,7 +952,7 @@ HTML;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
-							$icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+							$icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
 							$this->topicIcons[$icon->id] = $icon;
 						}
 					}
@@ -971,7 +971,7 @@ HTML;
 				$icon->filename      = 'default.png';
 				$icon->width         = 48;
 				$icon->height        = 48;
-				$icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false, $category_iconset);
+				$icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false);
 				$this->topicIcons[0] = $icon;
 			}
 		}
@@ -1090,7 +1090,7 @@ HTML;
 	{
 		if (empty($this->topicIcons))
 		{
-			$this->getTopicIcons(false, 0, $this->category_iconset);
+			$this->getTopicIcons(false, 0);
 		}
 
 		if (empty($this->topicIcons[$index]->published))

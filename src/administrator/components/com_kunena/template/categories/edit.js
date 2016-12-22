@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
 	input_alias.on('input', function() {
 		$.ajax({
 			dataType: "json",
-			url: "index.php?option=com_kunena&view=categories&format=raw&layout=chkAliases&alias="+input_alias.val(),
+			url: "index.php?option=com_kunena&view=categories&format=raw&layout=chkAliases&alias="+input_alias.val()
 		}).done(function(response) {
 			if (!response.msg){
 				input_alias.addClass("inputbox invalid-border");
@@ -37,7 +37,7 @@ jQuery(document).ready(function($) {
 
 			$.ajax({
 				dataType: "json",
-				url: "index.php?option=com_kunena&view=categories&format=raw&layout=DeleteAlias&alias="+alias_name,
+				url: "index.php?option=com_kunena&view=categories&format=raw&layout=DeleteAlias&alias="+alias_name
 			}).done(function(response) {
 				$('#checklist_aliases_'+alias_name).parent().remove();
 			});

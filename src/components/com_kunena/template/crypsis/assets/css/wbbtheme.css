@@ -33,7 +33,7 @@ html {
 }
 
 .wysibb-body ul, .wysibb-body ol {
-	padding: 0 0 0 30px
+	padding: 0 0 0 30px;
 }
 
 .wysibb-texarea, .wysibb-texarea:active {
@@ -342,7 +342,7 @@ html {
 /* CONTENT */
 /* .wysibb-body{text-align:left;min-width:0 !important;overflow:auto !important;margin:0 !important;padding:0 !important;} */
 .wysibb-text-editor {
-	outline: none
+	outline: none;
 }
 
 .bottom-resize-line {
@@ -352,7 +352,7 @@ html {
 }
 
 .bottom-resize-line:hover, .bottom-resize-line.drag {
-	background: #eee
+	background: #eee;
 }
 
 /* END CONTENT */

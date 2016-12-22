@@ -201,8 +201,8 @@ class KunenaDate extends JDate
 				$now->setTimezone($offset);
 			}
 
-			$now  = @getdate($now->toUnix(true));
-			$then = @getdate($this->toUnix(true));
+			$now  = @getdate($now->toUnix());
+			$then = @getdate($this->toUnix());
 
 			// Same day of the year, same year.... Today!
 			if ($then ['yday'] == $now ['yday']

@@ -76,7 +76,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * Display Kunena updates on dashboard
 	 *
-	 * @return array|null
+	 * @return array|null|string
 	 *
 	 * @since    2.0.0-BETA2
 	 */

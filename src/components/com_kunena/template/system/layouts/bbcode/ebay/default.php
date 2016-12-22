@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 <?php if ($this->ack == 'Success') : ?>
 	<div class="kunena_ebay_widget" style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px;">
 		<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif"/>
-		<div style="margin:10px 0;"/>
+		<div style="margin:10px 0;"></div>
 	</div>
 	<div style="text-align: center;"><a href="<?php echo $this->naturalurl; ?>" target="_blank"> <img src="<?php echo $this->pictureurl; ?>"/></a>
 	</div>

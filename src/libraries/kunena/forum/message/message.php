@@ -1393,7 +1393,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		$postDelta = $this->delta(true);
+		$postDelta = $this->delta();
 		$topic     = $this->getTopic();
 
 		// New topic

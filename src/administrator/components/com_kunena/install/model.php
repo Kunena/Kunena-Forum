@@ -1129,7 +1129,7 @@ class KunenaModelInstall extends JModelLegacy
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
 
-		$this->createMenu(false);
+		$this->createMenu();
 
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
 		KunenaForumCategoryHelper::fixAliases();

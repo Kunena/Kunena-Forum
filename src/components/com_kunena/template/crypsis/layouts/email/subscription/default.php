@@ -71,15 +71,7 @@ $this->mail->Encoding = 'base64';
 				padding: 0;
 			}
 
-			.ReadMsgBody {
-				width: 100%;
-			}
-
-			.ExternalClass {
-				width: 100%;
-			}
-
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+			.ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
 				line-height: 100%;
 			}
 

@@ -870,7 +870,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 		}
 
-		$error = $login->loginUser($username, $password, 0, null, $code);
+		$error = $login->loginUser($username, $password, 0, null);
 
 		$user = JFactory::getUser(JUserHelper::getUserId($username));
 

@@ -156,7 +156,7 @@ class KunenaViewTopic extends KunenaView
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
 					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
 					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
-					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false);
 					$topicIcons[]    = $icon;
 				}
 			}

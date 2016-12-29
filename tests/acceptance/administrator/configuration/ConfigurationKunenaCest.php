@@ -50,7 +50,7 @@ class ConfigurationKunenaCest
 		$I->fillField(['name' => 'cfg_filesize'], '5000');
 		$I->comment('I click on save');
 		$I->click(['xpath' => '//div[@id=\'toolbar-save\']//button']);
-		$I->wait(5);
+		$I->wait(3);
 		$I->doAdministratorLogout();
 	}
 }

@@ -52,7 +52,7 @@ before_script:
 # Composer
 - composer install
 - git clone -b master https://github.com/joomla/coding-standards.git Joomla
-- vendor/bin/robo run:checker phpcs
+# - vendor/bin/robo run:checker phpcs
 
 script:
 # Build

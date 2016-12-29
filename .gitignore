@@ -52,63 +52,9 @@ composer.phar
 vendor/*
 
 # Test related files
-tests/kunena*
-tests/_output*
+tests/codeception/kunena*
+tests/codeception/_output*
 selenium-server-standalone.jar
 codecept.phar
 selenium.log
-tests/cache
-
-# Builds
-build/tmp
-releases
-dist/*
-
-# OSX
-.DS_Store
-._*
-.Spotlight-V100
-.Trashes
-
-# Windows
-Thumbs.db
-Desktop.ini
-
-# PHPStorm
-.idea
-
-# Sublime Text
-*.sublime*
-
-# Eclipse
-.buildpath
-.project
-.settings
-
-# Temp files
-*.tmp
-*.bak
-*.swp
-*~.nib
-*~
-
-# Phing
-phing-latest.phar
-RoboFile.ini
-
-# Github pages and Jekyll files
-/_site/
-/Gemfile
-/Gemfile.lock
-
-# composer
-composer.phar
-vendor/*
-
-# Test related files
-tests/kunena*
-tests/_output*
-selenium-server-standalone.jar
-codecept.phar
-selenium.log
-tests/cache
+tests/codeception/cache

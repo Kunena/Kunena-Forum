@@ -12,6 +12,7 @@
         "codegyre/robo": "~0.6",
         "joomla-projects/robo": "dev-master",
         "fzaninotto/faker": "^1.5",
+        "Behat/Gherkin": "^4.4.1",
         "joomla-projects/jorobo": "0.6.1",
         "phing/phing": "2.*"
     }

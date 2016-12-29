@@ -770,6 +770,7 @@ class KunenaControllerTopic extends KunenaController
 		if (!$text && $this->config->userdeletetmessage == 1)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+
 			return;
 		}
 		elseif (!$text)

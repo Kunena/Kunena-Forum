@@ -1178,6 +1178,7 @@ class KunenaIcons
 					$bigicon = 'icon-folder ';
 				}
 			}
+
 			if ($topicicontype == 'B3')
 			{
 				if (!$categoryicon)

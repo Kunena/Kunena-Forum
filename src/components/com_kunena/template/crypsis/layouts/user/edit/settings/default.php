@@ -20,10 +20,12 @@ JText::script('COM_KUNENA_CLEARED');
 	<tbody>
 	<?php foreach ($this->settings as $field) : ?>
 		<tr>
-			<td class="span3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></td>
-				<td>
-					<button id="clearcache" type="button" class="btn btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
-				</td>
+			<td class="span3">
+				<?php echo $field->label; ?>
+			</td>
+			<td>
+				<?php echo $field->field; ?>
+			</td>
 		</tr>
 	<?php endforeach ?>
 	<tr>

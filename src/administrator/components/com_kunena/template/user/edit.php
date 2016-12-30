@@ -373,6 +373,16 @@ jQuery(function($) {
 													<td width="20%"><?php echo JText::_('COM_KUNENA_PREFOR'); ?></td>
 													<td><?php echo $this->selectOrder; ?></td>
 												</tr>
+												<?php foreach ($this->settings as $field) : ?>
+													<tr>
+														<td class="span3">
+															<?php echo $field->label; ?>
+														</td>
+														<td>
+															<?php echo $field->field; ?>
+														</td>
+													</tr>
+												<?php endforeach ?>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_RANKS'); ?></td>
 													<td><?php echo $this->selectRank; ?></td>

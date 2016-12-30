@@ -24,7 +24,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	protected $name = 'Announcement/Item';
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $announcement;

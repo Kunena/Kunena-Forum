@@ -158,7 +158,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 					$this->content = KunenaLayout::factory('Widget/Error')
 						->set('header', $e->getResponseStatus());
-
 				}
 			}
 			catch (Exception $e)

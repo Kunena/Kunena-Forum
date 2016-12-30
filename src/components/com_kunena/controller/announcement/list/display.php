@@ -24,13 +24,13 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	protected $name = 'Announcement/List';
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $announcements;
 
 	/**
-	 * @var
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $pagination;

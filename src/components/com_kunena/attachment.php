@@ -86,9 +86,9 @@ class KunenaApplication extends JApplicationWeb
 	protected $userstate = array();
 
 	/**
-	 * @param   JInput                $input
-	 * @param   JRegistry             $config
-	 * @param   JApplicationWebClient $client
+	 * @param   JInput                $input  input
+	 * @param   JRegistry             $config config
+	 * @param   JApplicationWebClient $client client
 	 *
 	 * @since Kunena
 	 */
@@ -125,7 +125,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param   JSession $session
+	 * @param   JSession $session session
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -174,6 +174,7 @@ class KunenaApplication extends JApplicationWeb
 
 	/**
 	 *
+	 * @return void
 	 * @since Kunena
 	 */
 	protected function doExecute()
@@ -216,7 +217,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param   bool $params
+	 * @param   bool $params params
 	 *
 	 * @return string
 	 * @since Kunena
@@ -227,9 +228,10 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param $name
-	 * @param $value
+	 * @param   string    $name   name
+	 * @param   boolean   $value  value
 	 *
+	 * @return void
 	 * @since Kunena
 	 */
 	public function setUserState($name, $value)
@@ -238,8 +240,8 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param        $name
-	 * @param   null $default
+	 * @param   string  $name     name
+	 * @param   null    $default  default
 	 *
 	 * @return null
 	 * @since Kunena

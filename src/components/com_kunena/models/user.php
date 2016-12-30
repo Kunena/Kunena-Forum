@@ -198,8 +198,8 @@ class KunenaModelUser extends KunenaModel
 
 			$query  = $db->getQuery(true);
 			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
-					->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
-					->where("{$where} {$search}");
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}");
 			$db->setQuery($query);
 
 			try

@@ -49,6 +49,9 @@ class KunenaAdminViewUser extends KunenaView
 		$this->selectOrder = JHtml::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');
+		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
+			'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
+			'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'telegram');
 		$this->display();
 	}
 
@@ -72,6 +75,8 @@ class KunenaAdminViewUser extends KunenaView
 	{
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'users');
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply('apply');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();

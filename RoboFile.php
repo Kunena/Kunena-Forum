@@ -50,6 +50,7 @@ class RoboFile extends \Robo\Tasks
 			->setBaseRepositoryPath(__DIR__)
 			->setCodeStyleStandardsRepo('photodude/coding-standards')
 			->setCodeStyleStandardsBranch('phpcs-2')
+			->setcodeStyleName('Joomla')
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->run();
@@ -59,7 +60,7 @@ class RoboFile extends \Robo\Tasks
 			->setCodeStyleStandardsRepo('Kunena/Codestyle')
 			->setCodeStyleStandardsBranch('master')
 			->setcodeStyleName('Kunena')
-			->setCodeStyleExtraJoomlaFolder(false)
+			->setCodeStyleExtraJoomlaFolder(true)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->setCodeStyleCheckFolders(
 				array(

@@ -52,6 +52,7 @@ before_script:
 - sleep 1 # give fluxbox some time to start
 # Composer
 - composer install
+- git clone -b phpcs-2 --single-branch --depth 1 https://github.com/photodude/coding-standards.git /home/travis/build/Kunena/Kunena-Forum/.tmp/coding-standards
 - vendor/bin/robo check:codestyle
 
 script:

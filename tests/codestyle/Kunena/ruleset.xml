@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<ruleset name="Kunena">
+	<description>The Joomla coding standard.</description>
+
+	<!-- hard-code command line values into the standard to fix tabs vs spaces issue, etc -->
+	<arg name="report" value="full"/>
+	<arg name="tab-width" value="4"/>
+	<arg name="encoding" value="utf-8"/>
+	<arg value="sp"/>
+	<arg name="colors" />
+
+	<!-- Exclude folders not containing production code -->
+	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/layouts/*</exclude-pattern>
+
+	<!-- Include all sniffs in an external standard directory -->
+
+	<!-- Include some additional sniffs from the Generic standard -->
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax" />
+	<rule ref="Generic.ControlStructures.InlineControlStructure" />
+	<rule ref="Generic.Files.EndFileNewline" />
+
+	<rule ref="Kunena.NamingConventions.ValidVariableName">
+		<exclude name="Kunena.NamingConventions.ValidVariableName.ClassVarHasUnderscore"/>
+		<exclude name="Kunena.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+		<exclude name="Kunena.NamingConventions.ValidVariableName.NotCamelCaps"/>
+	</rule>
+
+	<rule ref="Kunena.NamingConventions.ValidFunctionName">
+		<exclude name="Kunena.NamingConventions.ValidFunctionName.FunctionNoCapital"/>
+		<exclude name="Kunena.NamingConventions.ValidFunctionName.MethodUnderscore"/>
+		<exclude name="Kunena.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+		<exclude name="Kunena.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+		<exclude name="Kunena.NamingConventions.ValidFunctionName.NotCamelCaps"/>
+		<exclude name="Kunena.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
+	</rule>
+
+	<rule ref="Generic.Files.LineEndings">
+		<exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
+	</rule>
+	<!-- Include all sniffs in an external standard directory -->
+
+	<!-- Include some additional sniffs from the Generic standard -->
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax" />
+	<rule ref="Generic.ControlStructures.InlineControlStructure" />
+	<rule ref="Generic.Files.EndFileNewline" />
+
+	<!-- Use Unix newlines -->
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n" />
+		</properties>
+	</rule>
+
+	<!-- Lines can be 150 chars long, but never show errors -->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="150" />
+			<property name="absoluteLineLimit" value="0" />
+		</properties>
+	</rule>
+
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
+	<rule ref="Generic.Formatting.SpaceAfterCast" />
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+	<!-- This message is not required as spaces are allowed for alignment -->
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
+	<rule ref="Generic.PHP.DisallowShortOpenTag" />
+	<rule ref="Generic.PHP.DeprecatedFunctions" />
+	<rule ref="Generic.PHP.ForbiddenFunctions" />
+	<rule ref="Generic.PHP.LowerCaseConstant" />
+	<rule ref="Generic.Strings.UnnecessaryStringConcat">
+		<properties>
+			<property name="allowMultiline" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed"/>
+	</rule>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Include some additional sniffs from the PEAR standard -->
+	<rule ref="PEAR.Classes.ClassDeclaration" />
+	<rule ref="PEAR.Commenting.InlineComment" />
+	<rule ref="PEAR.ControlStructures.MultiLineCondition">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<exclude name="PEAR.ControlStructures.MultiLineCondition.NewlineBeforeOpenBrace"/>
+		<exclude name="PEAR.ControlStructures.MultiLineCondition.SpaceBeforeOpenBrace"/>
+		<exclude name="PEAR.ControlStructures.MultiLineCondition.CloseBracketNewLine"/>
+	</rule>
+	<rule ref="PEAR.ControlStructures.MultiLineCondition.Alignment">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<message>Multi-line IF statement not indented correctly; expected %s tabs but found %s</message>
+	</rule>
+	<rule ref="PEAR.Formatting.MultiLineAssignment" />
+	<rule ref="PEAR.Functions.FunctionCallSignature">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<exclude name="PEAR.Functions.FunctionDeclaration.BraceOnNewLine" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
+	</rule>
+	<rule ref="PEAR.Functions.FunctionCallSignature.Indent">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<message>Multi-line function call not indented correctly; expected %s tabs but found %s</message>
+	</rule>
+	<rule ref="PEAR.Functions.FunctionDeclaration">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<exclude name="PEAR.Functions.FunctionDeclaration.NewlineBeforeOpenBrace" />
+	</rule>
+	<rule ref="PEAR.Functions.FunctionDeclaration.Indent">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<message>Multi-line function declaration not indented correctly; expected %s tabs but found %s</message>
+	</rule>
+	<rule ref="PEAR.Functions.ValidDefaultValue" />
+	<rule ref="PEAR.NamingConventions.ValidClassName" />
+	<rule ref="PEAR.WhiteSpace.ObjectOperatorIndent">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+	</rule>
+	<rule ref="PEAR.WhiteSpace.ObjectOperatorIndent.Incorrect">
+		<properties>
+			<property name="indent" value="4"/>
+		</properties>
+		<message>Object operator not indented correctly; expected %s tabs but found %s</message>
+	</rule>
+
+	<!-- Include some additional sniffs from the PSR2 standard -->
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed">
+		<type>error</type>
+	</rule>
+
+	<!-- Include some additional sniffs from the Squiz standard -->
+	<rule ref="Squiz.CSS.ColonSpacing" />
+	<rule ref="Squiz.CSS.DuplicateClassDefinition" />
+	<rule ref="Squiz.CSS.EmptyClassDefinition" />
+	<rule ref="Squiz.CSS.EmptyStyleDefinition" />
+	<rule ref="Squiz.CSS.MissingColon" />
+	<rule ref="Squiz.CSS.SemicolonSpacing" />
+	<rule ref="Squiz.Classes.SelfMemberReference" />
+	<rule ref="Squiz.Commenting.BlockComment">
+		<exclude name="Squiz.Commenting.BlockComment.FirstLineIndent"/>
+		<exclude name="Squiz.Commenting.BlockComment.LineIndent"/>
+		<exclude name="Squiz.Commenting.BlockComment.LastLineIndent"/>
+		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore"/>
+		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineBefore"/>
+		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineAfter"/>
+		<exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
+	</rule>
+	<rule ref="Squiz.Commenting.DocCommentAlignment" />
+	<rule ref="Squiz.Commenting.VariableComment">
+		<exclude name="Squiz.Commenting.VariableComment.TagNotAllowed" />
+	</rule>
+	<rule ref="Squiz.Operators.IncrementDecrementUsage">
+		<exclude name="Squiz.Operators.IncrementDecrementUsage.processAssignment" />
+	</rule>
+	<rule ref="Squiz.PHP.GlobalKeyword">
+		<message>Do not use global variables. Use static class properties or constants instead of globals.</message>
+	</rule>
+	<rule ref="Squiz.Scope.StaticThisUsage" />
+	<rule ref="Squiz.Scope.MemberVarScope" />
+	<rule ref="Squiz.Scope.MethodScope">
+		<message>No scope modifier specified for function "%s</message>
+	</rule>
+
+	<rule ref="Squiz.Scope.StaticThisUsage" />
+
+	<rule ref="Squiz.Strings.ConcatenationSpacing">
+		<properties>
+			<property name="spacing" value="1" />
+			<property name="ignoreNewlines" value="true" />
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.ScopeClosingBrace" />
+	<rule ref="Squiz.WhiteSpace.CastSpacing" />
+	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing">
+		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose" />
+	</rule>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<properties>
+			<property name="ignoreNewlines" value="true" />
+		</properties>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+	<rule ref="Squiz.WhiteSpace.SemicolonSpacing" />
+
+	<!-- Include some additional sniffs from the Zend standard -->
+	<rule ref="Zend.Files.ClosingTag" />
+
+</ruleset>

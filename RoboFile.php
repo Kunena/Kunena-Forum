@@ -43,16 +43,20 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (is_null($sniffersPath))
 		{
-			$sniffersPath = __DIR__ . '/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards';
+			$sniffersPath = __DIR__ . '/.tmp/coding-standards';
 		}
 
 		$this->taskCodeChecks()
 			->setBaseRepositoryPath(__DIR__)
 			->setCodeStyleStandardsRepo('photodude/coding-standards')
 			->setCodeStyleStandardsBranch('phpcs-2')
-			->setcodeStyleName('Joomla')
-			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
+			->setCodeStyleCheckFolders(
+				array(
+					'src'
+				)
+			)
+			->checkCodeStyle()
 			->run();
 
 		$this->taskCodeChecks()

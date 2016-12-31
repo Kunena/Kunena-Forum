@@ -53,7 +53,7 @@ before_script:
 # Composer
 - composer install
 - git clone -b master --single-branch --depth 1 https://github.com/Kunena/Codestyle.git /home/travis/build/Kunena/Kunena-Forum/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Kunena
-- vendor/bin/robo check:codestyle
+- vendor/bin/robo check:codestyle /home/travis/build/Kunena/Kunena-Forum/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Kunena
 
 script:
 # Build

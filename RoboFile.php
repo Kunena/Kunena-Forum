@@ -32,8 +32,31 @@ if (!defined('JPATH_BASE'))
 class RoboFile extends \Robo\Tasks
 {
 	// Load tasks from composer, see composer.json
-	use \joomla_projects\robo\loadTasks;
-	use \Joomla\Jorobo\Tasks\loadTasks;
+	use Joomla\Testing\Robo\Tasks\loadTasks;
+
+	/**
+	 * Check the code style of the project against a passed sniffers using PHP_CodeSniffer_CLI
+	 *
+	 * @param   string $sniffersPath Path to the sniffers. If not provided Joomla Coding Standards will be used.
+	 */
+	public function checkCodestyle($sniffersPath = null)
+	{
+		if (is_null($sniffersPath))
+		{
+			$sniffersPath = __DIR__ . '/.tmp/coding-standards';
+		}
+
+		$this->taskCodeChecks()
+			->setBaseRepositoryPath(__DIR__)
+			->setCodeStyleStandardsRepo('photodude/coding-standards')
+			->setCodeStyleStandardsBranch('phpcs-2')
+			->setCodeStyleExtraJoomlaFolder(false)
+			->setCodeStyleStandardsFolder($sniffersPath)
+			->setCodeStyleCheckFolders(['/src'])
+			->checkCodeStyle()
+			->run()
+			->stopOnFail();
+	}
 
 	/**
 	 * Path to the codeception tests folder

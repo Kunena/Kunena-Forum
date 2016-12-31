@@ -53,11 +53,7 @@ class RoboFile extends \Robo\Tasks
 			->setcodeStyleName('Joomla')
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
-			->setCodeStyleCheckFolders(
-				array(
-					'src'
-				)
-			)
+			->setCodeStyleCheckFolders('src')
 			->checkCodeStyle()
 			->run();
 	}

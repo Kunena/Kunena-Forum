@@ -50,6 +50,7 @@ class RoboFile extends \Robo\Tasks
 			->setBaseRepositoryPath(__DIR__)
 			->setCodeStyleStandardsRepo('Kunena/Codestyle')
 			->setCodeStyleStandardsBranch('master')
+			->setcodeStyleName('Joomla')
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->setCodeStyleCheckFolders(
@@ -58,8 +59,7 @@ class RoboFile extends \Robo\Tasks
 				)
 			)
 			->checkCodeStyle()
-			->run()
-			->stopOnFail();
+			->run();
 	}
 
 	/**

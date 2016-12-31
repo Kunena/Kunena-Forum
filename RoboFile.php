@@ -51,7 +51,8 @@ class RoboFile extends \Robo\Tasks
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->setCodeStyleCheckFolders(['/src'])
-			->checkCodeStyle('Kunena')
+			->setcodeStyleName('Kunena')
+			->checkCodeStyle()
 			->run()
 			->stopOnFail(false);
 	}

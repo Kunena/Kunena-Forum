@@ -48,9 +48,9 @@ class RoboFile extends \Robo\Tasks
 
 		$this->taskCodeChecks()
 			->setBaseRepositoryPath(__DIR__)
-			->setCodeStyleStandardsRepo('Kunena/Codestyle')
-			->setCodeStyleStandardsBranch('master')
-			->setcodeStyleName('Kunena')
+			->setCodeStyleStandardsRepo('photodude/coding-standards')
+			->setCodeStyleStandardsBranch('phpcs-2')
+			->setcodeStyleName('Joomla')
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->setCodeStyleCheckFolders(

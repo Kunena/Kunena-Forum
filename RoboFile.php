@@ -64,8 +64,8 @@ class RoboFile extends \Robo\Tasks
 			->setCodeStyleStandardsRepo('Kunena/Codestyle')
 			->setCodeStyleStandardsBranch('master')
 			->setcodeStyleName('Kunena')
-			->setCodeStyleExtraJoomlaFolder(true)
-			->setCodeStyleStandardsFolder($sniffersPath)
+			->setCodeStyleExtraJoomlaFolder(false)
+			->setCodeStyleStandardsFolder(__DIR__ . '/.tmp/coding-standards2')
 			->setCodeStyleCheckFolders(
 				array(
 					'src'

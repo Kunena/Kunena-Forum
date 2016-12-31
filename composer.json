@@ -3,17 +3,21 @@
     "description": "Kunena forum for joomla",
     "license"    : "GPL-3.0",
     "require"    : {
-        "php": ">=5.5.13"
+        "php": ">=5.5.13",
+        "consolidation/robo" : "~1",
+        "squizlabs/php_codesniffer": "~2",
+        "cloudinary/cloudinary_php": "~1"
     },
     "require-dev": {
         "codeception/codeception": "~2.2",
         "joomla-projects/joomla-browser": "v3.6.5",
         "joomla-projects/selenium-server-standalone": "v3.0.1.2",
         "codegyre/robo": "~0.6",
-        "joomla-projects/robo": "dev-master",
         "fzaninotto/faker": "^1.5",
         "Behat/Gherkin": "^4.4.1",
-        "joomla-projects/jorobo": "0.6.1",
+        "joomla-projects/joomla-testing-robo": "dev-container-test",
         "phing/phing": "2.*"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

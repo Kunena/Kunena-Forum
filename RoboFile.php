@@ -43,18 +43,24 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (is_null($sniffersPath))
 		{
-			$sniffersPath = __DIR__ . '/tests/codestyle';
+			$sniffersPath = __DIR__ . '/.tmp/coding-standards';
 		}
 
 		$this->taskCodeChecks()
 			->setBaseRepositoryPath(__DIR__)
+			->setCodeStyleStandardsRepo('Kunena/Codestyle')
+			->setCodeStyleStandardsBranch('master')
+			->setcodeStyleName('Kunena')
 			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
-			->setCodeStyleCheckFolders(['src'])
-			->setcodeStyleName('Kunena')
+			->setCodeStyleCheckFolders(
+				array(
+					'src'
+				)
+			)
 			->checkCodeStyle()
 			->run()
-			->stopOnFail(false);
+			->stopOnFail();
 	}
 
 	/**

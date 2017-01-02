@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category.User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -169,7 +169,7 @@ abstract class KunenaForumCategoryUserHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadAssocList('category_id');

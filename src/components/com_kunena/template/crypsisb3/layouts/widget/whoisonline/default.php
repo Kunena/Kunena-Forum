@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Statistics
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -32,7 +32,7 @@ defined('_JEXEC') or die;
 		<div class="well well-sm">
 			<div class="container">
 				<div class="row">
-					
+
 					<div class="col-md-1">
 						<ul class="list-unstyled">
 							<li class="btn-link">
@@ -40,7 +40,7 @@ defined('_JEXEC') or die;
 							</li>
 						</ul>
 					</div>
-					
+
 					<div class="col-md-11">
 						<ul class="list-unstyled">
 							<span>

@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -130,7 +130,7 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$list = (array) $db->loadObjectList();
@@ -167,7 +167,7 @@ class KunenaAccessCommunity
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$list = (array) $db->loadColumn();
@@ -209,7 +209,7 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$allow = (array) $db->loadColumn();
@@ -235,7 +235,7 @@ class KunenaAccessCommunity
 				FROM #__community_groups_category
 				ORDER BY parent, name";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$this->categories = (array) $db->loadObjectList('id');
@@ -244,7 +244,7 @@ class KunenaAccessCommunity
 			{
 				KunenaError::displayDatabaseError($e);
 			}
-			
+
 			$this->tree = new KunenaTree($this->categories);
 
 			if ($this->groups !== false)
@@ -266,7 +266,7 @@ class KunenaAccessCommunity
 				FROM #__community_groups
 				ORDER BY categoryid, name";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$this->groups = (array) $db->loadObjectList('id');

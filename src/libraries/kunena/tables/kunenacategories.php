@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -197,7 +197,7 @@ class TableKunenaCategories extends KunenaTable
 			$query = "SELECT id, parent_id FROM #__kunena_categories";
 			$this->_db->setQuery($query);
 
-			try 
+			try
 			{
 				$list = $this->_db->loadObjectList('id');
 			}

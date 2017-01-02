@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -356,7 +356,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$post_name = $this->app->input->post->get('name', '','raw');
 
 		list($title, $alias) = $this->_generateNewTitle($post_catid, $post_alias, $post_name);
-		
+
 		$this->app->setUserState('com_kunena.category_title', $title);
 		$this->app->setUserState('com_kunena.category_alias', $alias);
 		$this->app->setUserState('com_kunena.category_catid', 0);
@@ -388,14 +388,14 @@ class KunenaAdminControllerCategories extends KunenaController
 		$input      = $app->input;
 		$post       = $app->input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
-		
+
 		if ($post['task'] == 'save2copy')
 		{
 			$post['title'] = $this->app->getUserState('com_kunena.category_title');
 			$post['alias'] = $this->app->getUserState('com_kunena.category_alias');
 			$post['catid'] = $this->app->getUserState('com_kunena.category_catid');
 		}
-		
+
 		$post['access'] = $input->getInt("access-{$accesstype}", $input->getInt('access', null));
 		$post['params'] = $input->get("params-{$accesstype}", array(), 'post', 'array');
 		$post['params'] += $input->get("params", array(), 'post', 'array');

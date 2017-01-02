@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -38,9 +38,9 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	public $pm_link;
 
 	public $inboxCount;
-	
+
 	public $inboxCountValue;
-	
+
 	public $profile_edit_url;
 
 	/**
@@ -83,11 +83,11 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 				$this->inboxCount = $this->inboxCountValue ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : JText::_('COM_KUNENA_PMS_INBOX');
 				$this->pm_link = $private->getInboxURL();
 			}
-			
-			$profile = KunenaFactory::getProfile(); 
-						
+
+			$profile = KunenaFactory::getProfile();
+
 			$this->profile_edit_url = $profile->getEditProfileURL($this->me->userid);
-			
+
 			// Display announcements.
 			if ($this->me->isModerator())
 			{

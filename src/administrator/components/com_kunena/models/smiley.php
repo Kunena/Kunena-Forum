@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -56,7 +56,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 		if ($id)
 		{
 			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
-			
+
 			try
 			{
 				$selected = $db->loadObject();
@@ -64,7 +64,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-					
+
 				return;
 			}
 

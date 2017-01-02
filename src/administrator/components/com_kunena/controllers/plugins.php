@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -253,7 +253,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		{
 			$editor = KunenaBbcodeEditor::getInstance();
 			$editor->initializeHMVC();
-			
+
 			// Checkin succeeded.
 			$message = JText::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
@@ -261,17 +261,17 @@ class KunenaAdminControllerPlugins extends KunenaController
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Regenerate editor file
-	 * 
+	 *
 	 * @since 5.0.2
 	 */
 	public function resync()
 	{
 		$editor = KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();
-		
+
 		$message = 'Sync done';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 	}

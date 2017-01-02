@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Kunena
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -104,15 +104,15 @@ class KunenaProfileKunena extends KunenaProfile
 		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
 		$query->where($db->quoteName('ku.uhits') . '>0');
 		$query->order($db->quoteName('ku.uhits') . ' DESC');
-			
+
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$filter = JAccess::getUsersByGroup(8);
 			$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 		}
-		
+
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();

@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -124,15 +124,15 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -144,7 +144,7 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
 				WHERE rank_id={$db->quote($rankid)}");
-			
+
 			try
 			{
 				$db->execute();
@@ -152,7 +152,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-			
+
 				return;
 			}
 		}
@@ -226,15 +226,15 @@ class KunenaAdminControllerRanks extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}

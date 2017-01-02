@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -97,7 +97,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 			WHERE a.profileviews>0
 			ORDER BY a.profileviews DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();

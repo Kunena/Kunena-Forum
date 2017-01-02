@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -271,8 +271,8 @@ class KunenaForumTopicUser extends JObject
 			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
-			$this->_db->setQuery($query, 0, 1);	
-			
+			$this->_db->setQuery($query, 0, 1);
+
 			try
 			{
 				$info = $this->_db->loadAssocList();
@@ -280,7 +280,7 @@ class KunenaForumTopicUser extends JObject
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				return null;
 			}
 

@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 function kunena_505_2016_12_20_userlist($parent)
 {
 	$config = KunenaFactory::getConfig();
-	
+
 	if ($config->userlist_allowed)
 	{
 		$config->userlist_allowed = 0;
@@ -28,7 +28,7 @@ function kunena_505_2016_12_20_userlist($parent)
 	{
 		$config->userlist_allowed = 1;
 	}
-	
+
 	// Save configuration
 	$config->save();
 

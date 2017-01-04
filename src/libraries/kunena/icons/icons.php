@@ -223,6 +223,10 @@ class KunenaIcons
 		{
 			return '<span class="glyphicon glyphicon-star"></span>';
 		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon kfavoritestar ksmall"></span>';
+		}
 		else
 		{
 			return '<span class="icon icon-star"></span>';
@@ -282,6 +286,10 @@ class KunenaIcons
 		elseif ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-flag"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon ktopicmy ksmall"></span>';
 		}
 		else
 		{
@@ -742,6 +750,10 @@ class KunenaIcons
 		elseif ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-paperclip"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon ktopicattach ksmall"></span>';
 		}
 		else
 		{

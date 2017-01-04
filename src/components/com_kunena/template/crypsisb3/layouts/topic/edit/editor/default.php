@@ -220,6 +220,7 @@ $this->getBBcodesEnabled();
 			<div class="modal-footer">
 				<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button id="clearpoll" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_CLEAR_MODAL') ?></button>
 			</div>
 		</div>
 	</div>

@@ -465,8 +465,14 @@ abstract class KunenaForum
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
 			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-			$manifest      = simplexml_load_file($file);
-			self::$version = (string) $manifest->version . '-GIT';
+			if (file_exists($file)) {
+				$manifest      = simplexml_load_file($file);
+				self::$version = (string) $manifest->version . '-GIT';
+			}
+			else
+			{
+				self::$version = strtoupper('@kunenaversion@');
+			}
 		}
 		else
 		{

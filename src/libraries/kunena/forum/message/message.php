@@ -1317,7 +1317,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Flood protection
 		$config = KunenaFactory::getConfig();
 
-		if ($config->floodprotection && !$this->getCategory()->authorise('moderate'))
+		if ($config->floodprotection && !$this->getCategory()->authorise('moderate') && !$this->exists())
 		{
 			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
 

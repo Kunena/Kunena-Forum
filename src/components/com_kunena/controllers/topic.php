@@ -406,7 +406,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && !$this->me->isModerator($category))
+		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip        = $_SERVER ["REMOTE_ADDR"];

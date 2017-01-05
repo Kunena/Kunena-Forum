@@ -479,7 +479,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($total > 1 && $page > 1)
 			{
-				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
+				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 140);
 
 				if (empty($small))
 				{
@@ -490,7 +490,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
+				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160);
 
 				if (empty($small))
 				{

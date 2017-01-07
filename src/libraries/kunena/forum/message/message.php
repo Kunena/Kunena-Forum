@@ -4,7 +4,7 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
@@ -1317,7 +1317,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Flood protection
 		$config = KunenaFactory::getConfig();
 
-		if ($config->floodprotection && !$this->getCategory()->authorise('moderate'))
+		if ($config->floodprotection && !$this->getCategory()->authorise('moderate') && !$this->exists())
 		{
 			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
 

@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -406,7 +406,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && !$this->me->isModerator($category))
+		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip        = $_SERVER ["REMOTE_ADDR"];
@@ -770,6 +770,7 @@ class KunenaControllerTopic extends KunenaController
 		if (!$text && $this->config->userdeletetmessage == 1)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+
 			return;
 		}
 		elseif (!$text)

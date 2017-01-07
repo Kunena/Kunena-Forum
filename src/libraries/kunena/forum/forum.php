@@ -4,7 +4,7 @@
  * @package       Kunena.Framework
  * @subpackage    Forum
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
@@ -465,8 +465,14 @@ abstract class KunenaForum
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
 			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-			$manifest      = simplexml_load_file($file);
-			self::$version = (string) $manifest->version . '-GIT';
+			if (file_exists($file)) {
+				$manifest      = simplexml_load_file($file);
+				self::$version = (string) $manifest->version . '-GIT';
+			}
+			else
+			{
+				self::$version = strtoupper('@kunenaversion@');
+			}
 		}
 		else
 		{

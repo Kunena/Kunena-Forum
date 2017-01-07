@@ -4,7 +4,7 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -94,7 +94,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'image' && !$fullactions)
 			{
 				$this->topicButtons->set('reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'kicon-reply'));
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'kicon-reply')
+				);
 			}
 			else
 			{
@@ -128,7 +129,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'image' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'kicon-unsubscribe'));
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'kicon-unsubscribe')
+				);
 			}
 			else
 			{
@@ -161,7 +163,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'image' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'kicon-subscribe'));
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'kicon-subscribe')
+				);
 			}
 			else
 			{
@@ -195,7 +198,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'image' && !$fullactions)
 			{
 				$this->topicButtons->set('favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'kicon-unfavorite'));
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'kicon-unfavorite')
+				);
 			}
 			else
 			{
@@ -228,7 +232,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'image' && !$fullactions)
 			{
 				$this->topicButtons->set('favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'kicon-favorite'));
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'kicon-favorite')
+				);
 			}
 			else
 			{

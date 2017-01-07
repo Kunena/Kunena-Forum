@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -198,8 +198,8 @@ class KunenaModelUser extends KunenaModel
 
 			$query  = $db->getQuery(true);
 			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
-					->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
-					->where("{$where} {$search}");
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}");
 			$db->setQuery($query);
 
 			try

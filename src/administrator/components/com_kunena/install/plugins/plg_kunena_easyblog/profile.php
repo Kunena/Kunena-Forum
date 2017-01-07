@@ -5,12 +5,12 @@
  * @package     Kunena.Plugins
  * @subpackage  Easyblog
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaProfileEasyblog extends KunenaProfile
 {
@@ -29,10 +29,10 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since K2.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -50,10 +50,10 @@ class KunenaProfileEasyblog extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since K2.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
@@ -78,9 +78,9 @@ class KunenaProfileEasyblog extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since K2.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)

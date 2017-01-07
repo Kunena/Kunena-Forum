@@ -5,7 +5,7 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -486,6 +486,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['lazyload']  = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
 
 		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
+
 		return $lists;
 	}
 }

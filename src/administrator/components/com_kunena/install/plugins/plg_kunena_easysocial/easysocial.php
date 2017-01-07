@@ -49,7 +49,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return bool|KunenaLogin|KunenaLoginEasySocial
+	 * @return boolean|KunenaLogin|KunenaLoginEasySocial
 	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()

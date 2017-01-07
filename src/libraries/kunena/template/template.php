@@ -5,7 +5,7 @@
  * @package         Kunena.Framework
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -34,7 +34,7 @@ class KunenaTemplate extends JObject
 	public $name = null;
 
 	/**
-	 * @var JRegistry|null
+	 * @var null
 	 * @since Kunena
 	 */
 	public $params = null;
@@ -230,15 +230,14 @@ class KunenaTemplate extends JObject
 		$this->default = array_unique($this->default);
 
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$name}/config/config.xml";
+		$xml_path = KPATH_SITE . "/template/{$name}/config/config.xml";
 
-		if (!is_file($this->xml_path))
+		if (!is_file($xml_path))
 		{
 			// Configuration file was not found - legacy template support.
-			$this->xml_path = KPATH_SITE . "/template/{$name}/config/template.xml";
+			$xml_path = KPATH_SITE . "/template/{$name}/config/template.xml";
 		}
 
-		// TODO: move configuration out of filesystem (keep on legacy).
 		$ini     = KPATH_SITE . "/template/{$name}/config/params.ini";
 		$content = '';
 		$format  = 'INI';
@@ -262,7 +261,7 @@ class KunenaTemplate extends JObject
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
-		$this->xml = simplexml_load_file($this->xml_path);
+		$this->xml = simplexml_load_file($xml_path);
 
 		if ($this->xml)
 		{
@@ -296,16 +295,16 @@ class KunenaTemplate extends JObject
 	public function getConfigXml()
 	{
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
+		$xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
 
-		if (!is_file($this->xml_path))
+		if (!is_file($xml_path))
 		{
 			$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
 
 			return false;
 		}
 
-		$xml = file_get_contents($this->xml_path);
+		$xml = file_get_contents($xml_path);
 
 		if (!strstr($xml, '<config>'))
 		{
@@ -1366,14 +1365,12 @@ HTML;
 		$config = KunenaFactory::getConfig();
 		if ($config->categoryicons)
 		{
-			// TODO: use xml file instead
 			$icon    = $category->icon_id;
 			$iconurl = $this->getCategoryIconIndexPath($icon, true);
 		}
 		else
 		{
 			$icon = 'folder';
-			// FIXME: hardcoded to system type...
 			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
 		$html = '<img src="' . $iconurl . '" alt="emo" />';
@@ -1606,10 +1603,10 @@ HTML;
 	 */
 	public function getTopicLabel($topic)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$ktemplate = KunenaFactory::getTemplate();
 
-		$topicicontype = $this->ktemplate->params->get('topicicontype');
-		$topiclabels   = $this->ktemplate->params->get('labels');
+		$topicicontype = $ktemplate->params->get('topicicontype');
+		$topiclabels   = $ktemplate->params->get('labels');
 
 		if ($topiclabels != 0)
 		{
@@ -1676,8 +1673,8 @@ HTML;
 	 */
 	public function borderless()
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$borderless      = $this->ktemplate->params->get('borderless');
+		$ktemplate = KunenaFactory::getTemplate();
+		$borderless      = $ktemplate->params->get('borderless');
 
 		if ($borderless)
 		{
@@ -1691,8 +1688,8 @@ HTML;
 
 	public function tooltips($class = false)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$tooltips   = $this->ktemplate->params->get('tooltips');
+		$ktemplate = KunenaFactory::getTemplate();
+		$tooltips   = $ktemplate->params->get('tooltips');
 
 		if ($tooltips)
 		{

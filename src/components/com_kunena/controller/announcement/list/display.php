@@ -4,7 +4,7 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Announcement
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -24,13 +24,13 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	protected $name = 'Announcement/List';
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $announcements;
 
 	/**
-	 * @var
+	 * @var boolean
 	 * @since Kunena
 	 */
 	public $pagination;

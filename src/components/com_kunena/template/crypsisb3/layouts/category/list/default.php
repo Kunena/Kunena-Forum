@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -18,10 +18,14 @@ defined('_JEXEC') or die;
 		<span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
 
 		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
-			<div class="input-append pull-right">
-				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
-					'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+			<div class="form-group">
+				<div class="input-append pull-right">
+					<div class="input-group-btn">
+						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
+							'kchecktask'); ?>
+						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					</div>
+				</div>
 			</div>
 		<?php endif; ?>
 
@@ -34,7 +38,7 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h3>
 
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped<?php echo KunenaTemplate::getInstance()->borderless();?>">
 
 		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<thead>

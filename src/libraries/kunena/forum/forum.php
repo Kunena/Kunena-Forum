@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -181,14 +181,15 @@ abstract class KunenaForum
 	 */
 	public static function isCompatible($version)
 	{
-		// If requested version is smaller than 2.0, it's not compatible
-		if (version_compare($version, '2.0', '<'))
+		// If requested version is smaller than 4.0, it's not compatible
+		if (version_compare($version, '3.0', '<'))
 		{
 			return false;
 		}
 
 		// Development version support.
-		if ($version == '4.0') {
+		if ($version == '5.0')
+		{
 			return true;
 		}
 
@@ -401,9 +402,15 @@ abstract class KunenaForum
 	{
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
-			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-			$manifest = simplexml_load_file($file);
-			self::$version = (string) $manifest->version . '-GIT';
+			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+			if (file_exists($file)) {
+				$manifest      = simplexml_load_file($file);
+				self::$version = (string) $manifest->version . '-GIT';
+			}
+			else
+			{
+				self::$version = strtoupper('@kunenaversion@');
+			}
 		}
 		else
 		{

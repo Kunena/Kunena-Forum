@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -124,13 +124,22 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
-				$this->setResponseStatus($e->getResponseCode());
-				$this->output->setLayout('unauthorized');
-				$this->document->setTitle($e->getResponseStatus());
+				if (JFactory::getUser()->guest)
+				{
+					$this->output->setLayout('login');
+					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
+					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+				}
+				else
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('unauthorized');
+					$this->document->setTitle($e->getResponseStatus());
 
-				$this->content = KunenaLayout::factory('Widget/Custom')
-					->set('header', $e->getResponseStatus())
-					->set('body', $e->getMessage());
+					$this->content = KunenaLayout::factory('Widget/Error')
+						->set('header', $e->getResponseStatus());
+
+				}
 			}
 			catch (Exception $e)
 			{
@@ -233,7 +242,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		$jinput = JFactory::getApplication()->input;
+		$limitstart = $jinput->getInt('limitstart', 'limitstart', 0);
+
+		if (!$limitstart)
+		{
+			$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		}
 
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();
@@ -306,13 +321,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits = '<div style="text-align:center">';
 		$credits .= JHtml::_(
 	'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
-			JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow',
+			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
 	array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
-		$credits .= ' <a href="https://www.kunena.org" rel="follow"
+		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
 		if (trim($templateText)) {
-			$credits .= ' :: <a href ="' . $templateLink . '" rel="follow" target="_blank" style="text-decoration: none;">'
+			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}
 

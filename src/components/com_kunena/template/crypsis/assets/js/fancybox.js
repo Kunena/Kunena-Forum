@@ -1125,7 +1125,7 @@
 					embed   = '';
 
 					$.each(current.swf, function(name, val) {
-						content += '<param name="' + name + '" value="' + val + '"></param>';
+						content += '<param name="' + name + '" value="' + val + '">';
 						embed   += ' ' + name + '="' + val + '"';
 					});
 

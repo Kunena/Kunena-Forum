@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Statistics
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -30,7 +30,9 @@ defined('_JEXEC') or die;
 
 	<div class="row-fluid collapse in" id="kwho">
 		<div class="well-small">
-			<ul class="unstyled span1 btn-link"><i class="icon-users icon-super"></i></ul>
+			<ul class="unstyled span1 btn-link">
+				<?php echo KunenaIcons::members(); ?>
+			</ul>
 			<ul class="unstyled span11">
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
@@ -54,22 +56,22 @@ defined('_JEXEC') or die;
 				<div>
 					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 					<span class="kwho-admin">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 					</span>
 					<span class="kwho-globalmoderator">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 					</span>
 					<span class="kwho-moderator">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 					</span>
 					<span class="kwho-banned">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
 					</span>
 					<span class="kwho-user">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
 					</span>
 					<span class="kwho-guest">
-						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+						<?php echo KunenaIcons::user(); ?> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 					</span>
 				</div>
 				<?php endif; ?>

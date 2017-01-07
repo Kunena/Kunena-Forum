@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -49,10 +49,13 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
+			$messages = KunenaForumMessageHelper::getMessagesByTopics($ids);
+
 			foreach ($topics as $topic)
 			{
 				if ($topic->authorise('permdelete') && $topic->delete())
@@ -61,10 +64,41 @@ class KunenaControllerTopics extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
+					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
 					$this->app->enqueueMessage($topic->getError(), 'notice');
+				}
+			}
+
+			// Delete attachments in each message
+			$finder = new KunenaAttachmentFinder;
+			$finder->where('mesid', 'IN', array_keys($messages));
+
+			$attachments = $finder->find();
+
+			if (!empty($attachments))
+			{
+				foreach ($attachments as $instance)
+				{
+					$instance->exists(false);
+					unset($instance);
+				}
+
+				$db = JFactory::getDBO();
+				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+
+					return false;
 				}
 			}
 		}
@@ -85,7 +119,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-				
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -113,7 +147,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -146,7 +181,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -174,7 +209,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -207,7 +243,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -235,7 +271,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -269,7 +306,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -289,18 +326,24 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		$topics_ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		Joomla\Utilities\ArrayHelper::toInteger($topics_ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($ids);
+		$topics = KunenaForumTopicHelper::getTopics($topics_ids);
 
-		if (!$topics)
+		$messages_ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		Joomla\Utilities\ArrayHelper::toInteger($messages_ids);
+
+		$messages = KunenaForumMessageHelper::getMessages($messages_ids);
+
+		if (!$topics && !$messages)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_OR_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
-			$target = KunenaForumCategoryHelper::get(JFactory::getApplication()->input->getInt('target', 0));
+			$target = KunenaForumCategoryHelper::get($this->app->input->getInt('target', 0));
 
 			if (!$target->authorise('read'))
 			{
@@ -308,16 +351,35 @@ class KunenaControllerTopics extends KunenaController
 			}
 			else
 			{
-				foreach ($topics as $topic)
+				if ($topics)
 				{
-					if ($topic->authorise('move') && $topic->move($target))
+					foreach ($topics as $topic)
 					{
-						$message = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
+						if ($topic->authorise('move') && $topic->move($target))
+						{
+							$message = JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
+						}
+						else
+						{
+							$this->app->enqueueMessage($topic->getError(), 'notice');
+						}
 					}
-					else
+				}
+				else
+				{
+					foreach ($messages as $message)
 					{
-						$this->app->enqueueMessage($topic->getError(), 'notice');
-					}
+						$topic = $message->getTopic();
+
+						if ($message->authorise('move') && $topic->move($target, $message->id))
+  						{
+  							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+  						}
+  						else
+  						{
+  							$this->app->enqueueMessage($message->getError(), 'notice');
+  						}
+  					}
 				}
 			}
 		}
@@ -341,7 +403,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -382,7 +444,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else
@@ -444,7 +506,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -491,7 +553,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -537,7 +599,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -583,7 +645,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{

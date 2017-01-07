@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -298,6 +298,19 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$results = parent::find();
 
 		return KunenaForumTopicHelper::getTopics($results, $access);
+	}
+
+	/**
+	 * Access to the query select
+	 *
+	 * @param   mixed  $columns  A string or an array of field names.
+	 * @return $this
+	 */
+	public function select($columns)
+	{
+		$this->query->select($columns);
+
+		return $this;
 	}
 
 	/**

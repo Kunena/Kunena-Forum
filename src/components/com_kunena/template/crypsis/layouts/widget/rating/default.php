@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Rating
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 if ($this->config->ratingenabled && $this->category->allow_ratings) :
 	if ($this->topic->rating) : ?>
-		<div>
+		<div id="krating-top">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>
 				<li class="c-rating__item <?php echo $this->topic->rating >= 2 ? 'is-active': ''; ?>" data-index="1"></li>

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Logs view for Kunena backend
- * 
+ *
  * @since 5.0
  */
 class KunenaAdminViewLogs extends KunenaView
@@ -23,7 +23,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->group = $this->state->get('group');
 		$this->items = $this->get('items');
 		$this->pagination = $this->get('Pagination');
-		
+
 		$this->filterUserFields = $this->getFilterUserFields();
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
@@ -42,7 +42,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->filterTimeStop = $this->escape($this->state->get('filter.time_stop'));
 		$this->filterOperation = $this->escape($this->state->get('filter.operation'));
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
-		
+
 		$this->filterUsertypes	= $this->escape($this->state->get('filter.usertypes'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
@@ -61,14 +61,14 @@ class KunenaAdminViewLogs extends KunenaView
 	{
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
-	
+
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_LOG_MANAGER'), 'users' );
-	
+
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES');
 	}
-	
+
 	/**
 	 *
 	 */
@@ -77,7 +77,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->setToolBarClean();
 		$this->display();
 	}
-	
+
 	/**
 	 *
 	 */
@@ -85,38 +85,38 @@ class KunenaAdminViewLogs extends KunenaView
 	{
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_LOG_MANAGER'), 'users' );
-	
+
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
-	
+
 	}
-	
+
 	protected function getFilterUserFields()
 	{
 		$filterFields = array();
-		$filterFields[] = JHtml::_('select.option', 0, 'Guests');
-		$filterFields[] = JHtml::_('select.option', 1, 'Registered users');
-		$filterFields[] = JHtml::_('select.option', 2, 'Regular members');
-		$filterFields[] = JHtml::_('select.option', 3, 'Moderators');
-		$filterFields[] = JHtml::_('select.option', 4, 'Administrators');
-		$filterFields[] = JHtml::_('select.option', 5, 'Mods and Admins');
-		
+		$filterFields[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 3, JText::_('COM_KUNENA_LOG_MODERATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_LOG_ADMINISTRATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = JHtml::_('select.option', 5, JText::_('COM_KUNENA_LOG_MOD_AND_ADMIN_FILTER_USERTYPE_LABEL'));
+
 		return $filterFields;
 	}
-	
+
 	protected function getSortFields()
 	{
 		$sortFields = array();
-		// TODO: translate
-		$sortFields[] = JHtml::_('select.option', 'id', 'Id');
-		$sortFields[] = JHtml::_('select.option', 'type', 'Type (by id)');
-		$sortFields[] = JHtml::_('select.option', 'user', 'User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'category', 'Category (by id)');
-		$sortFields[] = JHtml::_('select.option', 'topic', 'Topic (by id)');
-		$sortFields[] = JHtml::_('select.option', 'target_user', 'Target User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'time', 'Time (by id)');
+
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'type', JText::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'user', JText::_('COM_KUNENA_LOG_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_LOG_CATEGORY_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'topic', JText::_('COM_KUNENA_LOG_TOPIC_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'target_user', JText::_('COM_KUNENA_LOG_TARGET_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_LOG_TIME_SORT_FIELD_LABEL'));
 
 		return $sortFields;
 	}
@@ -169,11 +169,11 @@ class KunenaAdminViewLogs extends KunenaView
 
 		return isset($types[$id]) ? $types[$id] : '???';
 	}
-	
+
 	public function getGroupCheckbox($name)
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';
-		
+
 		return '<input type="checkbox" name="group_'.$name.'" value="1" title="Group By" '.$checked.' class="filter" />';
 	}
 }

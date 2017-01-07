@@ -11,6 +11,8 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\String\StringHelper;
+
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	protected $params = null;
@@ -60,12 +62,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onAfterPost($message)
 	{
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			$this->assignPoints('thread.new');
 		}
 
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
 		{
 			$this->assignBadge('thread.new', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
 		}
@@ -94,7 +96,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onAfterReply($message)
 	{
-		$length = JString::strlen($message->message);
+		$length = StringHelper::strlen($message->message);
 
 		// Assign points for replying a thread
 		if ($length > $this->params->get('activity_points_limit', 0))
@@ -229,7 +231,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
-		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			$this->assignPoints('thread.thanks', $target);
 		}

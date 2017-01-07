@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 class plgKunenaComprofiler extends JPlugin
 {
-	public $minCBVersion = '1.8.1';
+	public $minCBVersion = '2.0.0';
 
 	/**
 	 * plgKunenaComprofiler constructor.
@@ -23,6 +23,8 @@ class plgKunenaComprofiler extends JPlugin
 	 */
 	public function __construct(&$subject, $config)
 	{
+		global $ueConfig;
+
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
 		{
@@ -32,20 +34,15 @@ class plgKunenaComprofiler extends JPlugin
 		$app = JFactory::getApplication();
 
 		// Do not load if CommunityBuilder is not installed
-		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-
-		if (!is_file($path))
+		if ((!file_exists( JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
 			return;
 		}
 
-		require_once($path);
-		cbimport('cb.database');
-		cbimport('cb.tables');
+		require_once JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+
+		cbimport('cb.html');
 		cbimport('language.front');
-		cbimport('cb.tabs');
-		cbimport('cb.field');
-		global $ueConfig;
 
 		parent::__construct($subject, $config);
 

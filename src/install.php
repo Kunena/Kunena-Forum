@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Package
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
@@ -22,20 +22,21 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'7.1' => '7.1.0',
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
-			'5.5' => '5.5.13',
+			'5.5' => '5.5.9',
 			'5.4' => '5.4.13',
 			'5.3' => '5.3.10',
-			'0'   => '7.0.4' // Preferred version
+			'0'   => '7.0.11' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',
 			'0'   => '5.5' // Preferred version
 		),
 		'Joomla!' => array(
-			'3.5' => '3.5.0-beta',
-			'0'   => '3.5.0' // Preferred version
+			'3.5' => '3.5.1',
+			'0'   => '3.6.2' // Preferred version
 		)
 	);
 	/**
@@ -308,15 +309,15 @@ EOS;
 		// Find all update sites.
 		$query = $db->getQuery(true)
 			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
-			->where($db->quoteName('location') . ' LIKE ' . $db->quote('http://update.kunena.org/%'))
+			->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'))
 			->order($db->quoteName('update_site_id') . ' ASC');
 		$db->setQuery($query);
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name') . '=' . $db->quote('Kunena 4.0 Update Site'))
+			->set($db->quoteName('name') . '=' . $db->quote('Kunena 5.0 Update Site'))
 			->set($db->quoteName('type') . '=' . $db->quote('collection'))
-			->set($db->quoteName('location') . '=' . $db->quote('http://update.kunena.org/5.0/list.xml'))
+			->set($db->quoteName('location') . '=' . $db->quote('https://update.kunena.org/5.0/list.xml'))
 			->set($db->quoteName('enabled') . '=1')
 			->set($db->quoteName('last_check_timestamp') . '=0');
 

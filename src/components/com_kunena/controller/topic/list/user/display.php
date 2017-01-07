@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -38,8 +38,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		if ($this->embedded)
 		{
 			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
-				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time')
-				. '&limit=' . $this->state->get('list.limit'));
+				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit'));
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
@@ -70,10 +69,21 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$authorise = 'read';
 		$order = 'last_post_time';
 
+		$holding = $this->getOptions()->get('topics_deletedtopics');
+
+		if ($holding)
+		{
+			$hold = '0,2,3';
+		}
+		else
+		{
+			$hold = '0';
+		}
+
 		$finder = new KunenaForumTopicFinder;
 		$finder
 			->filterByMoved(false)
-			->filterByHold(array(0))
+			->filterByHold(array($hold))
 			->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))
@@ -96,6 +106,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				$finder->filterByUser($user, 'subscribed');
 				break;
 
+			case 'plugin':
+				$pluginmode = $this->state->get('list.modetype');
+				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher->trigger('onKunenaGetUserTopics', array($pluginmode, &$finder, &$order, &$categoryIds, $this));
+				break;
+
 			default :
 				$finder
 					->filterByUser($user, 'involved')
@@ -103,8 +119,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
-		$finder->filterByCategories($categories);
+		if ($categoryIds !== null)
+		{
+			$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+			$finder->filterByCategories($categories);
+		}
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
@@ -130,23 +149,83 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		{
 			case 'posted' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=posted';
 				break;
 			case 'started' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=started';
 				break;
 			case 'favorites' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=favorites';
 				$actions = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions';
 				$actions = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=plugin';
 				break;
 			default :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
+		}
+
+		$doc = JFactory::getDocument();
+
+		if (!$start)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		$page = $this->pagination->pagesCurrent;
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace( '?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = KunenaRoute::_();
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
 		}
 
 		$this->actions = $this->getTopicActions($this->topics, $actions);

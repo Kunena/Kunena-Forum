@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -72,10 +72,25 @@ class KunenaModelTopics extends KunenaModel
 
 		$catid = $this->getInt('catid');
 
+		$this->setState('list.categories.exclude', 0);
+
 		if ($catid)
 		{
 			$latestcategory    = array($catid);
 			$latestcategory_in = true;
+
+			// Check if the category is in exclued list
+			if (!empty($this->config->rss_excluded_categories))
+			{
+				$cat_exclued = explode(',',$this->config->rss_excluded_categories);
+
+				if (in_array($catid, $cat_exclued))
+				{
+					$latestcategory    = $this->config->rss_excluded_categories;
+					$latestcategory_in = 0;
+					$this->setState('list.categories.exclude', 1);
+				}
+			}
 		}
 		else
 		{
@@ -306,6 +321,7 @@ class KunenaModelTopics extends KunenaModel
 
 		$params = array(
 			'reverse'   => !$latestcategory_in,
+			'exclude'   => $this->setState('list.categories.exclude', 0),
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,

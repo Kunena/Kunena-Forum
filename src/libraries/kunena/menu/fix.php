@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Menu
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
@@ -50,6 +50,7 @@ abstract class KunenaMenuFix
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
 	 * @return array
+	 * @throws Exception
 	 */
 	protected static function load()
 	{
@@ -71,9 +72,7 @@ abstract class KunenaMenuFix
 
 		if (!(self::$items = $db->loadObjectList('id')))
 		{
-			JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
-
-			return false;
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
 		}
 
 		foreach (self::$items as &$item)

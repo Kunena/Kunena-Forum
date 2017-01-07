@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
-	protected $name = 'Widget/Credits';
+	protected $name = 'Widget/Login';
 
 	public $me;
 
@@ -38,6 +38,10 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	public $pm_link;
 
 	public $inboxCount;
+
+	public $inboxCountValue;
+
+	public $profile_edit_url;
 
 	/**
 	 * Prepare login display.
@@ -75,10 +79,14 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 			if ($private)
 			{
-				$count = $private->getUnreadCount($this->me->userid);
-				$this->inboxCount = $count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX');
+				$this->inboxCountValue = $private->getUnreadCount($this->me->userid);
+				$this->inboxCount = $this->inboxCountValue ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : JText::_('COM_KUNENA_PMS_INBOX');
 				$this->pm_link = $private->getInboxURL();
 			}
+
+			$profile = KunenaFactory::getProfile();
+
+			$this->profile_edit_url = $profile->getEditProfileURL($this->me->userid);
 
 			// Display announcements.
 			if ($this->me->isModerator())

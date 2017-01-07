@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -19,10 +19,10 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if ($this->category->headerdesc) : ?>
 	<div class="clearfix"></div>
 	<br>
-	<div class="alert alert-info">
+	<h1 class="alert alert-info">
 		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
-	</div>
+	</h1>
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
@@ -30,15 +30,11 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if (!empty($this->topics)) : ?>
 <div class="row">
 	<div class="col-md-12">
-		<h3>
-			<?php echo $this->escape($this->headerText); ?>
-		</h3>
-
-		<div class="pull-right">
+		<h2 class="pull-right">
 			<?php echo $this->subLayout('Widget/Search')
 	->set('catid', $this->category->id)
 	->setLayout('topic'); ?>
-		</div>
+		</h2>
 
 		<div class="pull-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
@@ -62,13 +58,13 @@ $this->addStyleSheet('assets/css/rating.css');
 		</ul>
 	</div>
 	<?php if ($this->topics) : ?>
-	<table class="table table-bordered">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 		<thead>
 		<tr>
 			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
-					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
+					<?php echo KunenaIcons::arrowdown();?>
 				</a>
 			</td>
 			<td class="col-md-<?php echo $cols ?>">
@@ -112,7 +108,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
-					<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+					<?php echo KunenaIcons::arrowup();?>
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>

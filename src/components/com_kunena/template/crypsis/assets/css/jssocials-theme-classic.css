@@ -34,11 +34,23 @@
   .jssocials-share-email .jssocials-share-link:hover {
     background: #0e76e6; }
 
+.jssocials-share-stumbleupon .jssocials-share-link {
+  background: #eb4823;
+  border: 1px solid #e03a14; }
+  .jssocials-share-stumbleupon .jssocials-share-link:hover {
+    background: #c93412; }
+
 .jssocials-share-whatsapp .jssocials-share-link {
   background: #29a628;
   border: 1px solid #249123; }
   .jssocials-share-whatsapp .jssocials-share-link:hover {
     background: #1f7d1e; }
+
+.jssocials-share-telegram .jssocials-share-link {
+  background: #2ca5e0;
+  border: 1px solid #1f98d3; }
+  .jssocials-share-telegram .jssocials-share-link:hover {
+    background: #1c88bd; }
 
 .jssocials-share-line .jssocials-share-link {
   background: #25af00;
@@ -46,11 +58,29 @@
   .jssocials-share-line .jssocials-share-link:hover {
     background: #1a7c00; }
 
-.jssocials-share-stumbleupon .jssocials-share-link {
-  background: #eb4823;
-  border: 1px solid #e03a14; }
-  .jssocials-share-stumbleupon .jssocials-share-link:hover {
-    background: #c93412; }
+.jssocials-share-viber .jssocials-share-link {
+  background: #7b519d;
+  border: 1px solid #6e488c; }
+  .jssocials-share-viber .jssocials-share-link:hover {
+    background: #61407b; }
+
+.jssocials-share-pocket .jssocials-share-link {
+  background: #ef4056;
+  border: 1px solid #ed2841; }
+  .jssocials-share-pocket .jssocials-share-link:hover {
+    background: #e9132e; }
+
+.jssocials-share-messenger .jssocials-share-link {
+  background: #0084ff;
+  border: 1px solid #0077e6; }
+  .jssocials-share-messenger .jssocials-share-link:hover {
+    background: #006acc; }
+
+.jssocials-share-vkontakte .jssocials-share-link {
+  background: #45668e;
+  border: 1px solid #3d5a7d; }
+  .jssocials-share-vkontakte .jssocials-share-link:hover {
+    background: #344d6c; }
 
 .jssocials-share-link {
   padding: .5em .6em;
@@ -97,6 +127,6 @@
         -ms-transform: rotate(90deg);
             transform: rotate(90deg); }
   .jssocials-share-count-box .jssocials-share-count {
-    line-height: 2.5em;
+    line-height: 2.75em;
     color: #444;
     font-size: .9em; }

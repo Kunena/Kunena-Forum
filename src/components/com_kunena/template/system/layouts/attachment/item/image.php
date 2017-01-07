@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -23,5 +23,5 @@ $attributesImg = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="<?php echo $attachment->getFilename();?>" />
 </a>

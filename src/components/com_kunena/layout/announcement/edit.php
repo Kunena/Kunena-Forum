@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Announcement.Edit
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -41,11 +41,11 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 			case 'description':
 				return '<textarea name="description" ' . $attributes . '>' . $this->escape($this->announcement->description) . '</textarea>';
 			case 'created':
-				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id, '%Y-%m-%d %H:%M');
+				return '<input type="text" class="span12" name="created" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->created) . '">' . $attributes;
 			case 'publish_up':
-				return JHtml::_('calendar', $this->escape($this->announcement->publish_up), 'publish_up', $id, '%Y-%m-%d %H:%M');
+				return '<input type="text" class="span12" name="publish_up" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->publish_up) . '">' . $attributes;
 			case 'publish_down':
-				return JHtml::_('calendar', $this->escape($this->announcement->publish_down), 'publish_down', $id, '%Y-%m-%d %H:%M');
+				return '<input type="text" class="span12" name="publish_down" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->publish_down) . '">' . $attributes;
 			case 'showdate':
 				$options   = array();
 				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));

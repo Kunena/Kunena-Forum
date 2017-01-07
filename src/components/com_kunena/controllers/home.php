@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -64,7 +64,7 @@ class KunenaControllerHome extends KunenaController
 
 			if (!$default)
 			{
-				JError::raiseError(500, JText::_('COM_KUNENA_NO_ACCESS'));
+				throw new Exception(JText::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item

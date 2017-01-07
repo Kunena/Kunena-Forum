@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Ranks
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -57,7 +57,7 @@ JHtml::_('behavior.multiselect');
 							<?php if (!$this->state->get('item.id')) : ?>
 							<img name="rank_image" src="" border="0" alt="" />
 							<?php else: ?>
-							<img name="rank_image" src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>" border="0" alt="" />
+							<img name="rank_image" src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>" border="0" alt="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>" />
 							<?php endif; ?>
 						</td>
 					</tr>

@@ -59,6 +59,7 @@ class KunenaUploadHelper
 		{
 			$filepath = JPath::clean($uploadfolder . '/' . strtolower($file['name']));
 
+			/* This part doesn't work
 			if (!JHelperMedia::canUpload($file, $err))
 			{
 				if ($format == 'json')
@@ -73,7 +74,7 @@ class KunenaUploadHelper
 				{
 					return false;
 				}
-			}
+			}*/
 
 			if (JFile::exists($filepath))
 			{

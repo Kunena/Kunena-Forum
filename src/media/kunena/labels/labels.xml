@@ -16,12 +16,12 @@
 		<label id="1" name="COM_KUNENA_LABELS_IMPORTANT" b2="notification-circle" b3="exclamation-sign" fa="exclamation-circle" labeltype="primary" />
 		<label id="2" name="COM_KUNENA_LABELS_QUESTION" b2="question-sign" b3="question-sign" fa="question-circle" labeltype="primary"/>
 		<label id="3" name="COM_KUNENA_LABELS_IDEA" b2="lamp" b3="lamp" fa="lightbulb-o" labeltype="primary"/>
-		<label id="4" name="COM_KUNENA_LABELS_LOVED" b2="heart" b3="heart" fa="heart" labeltype="primary"/>
+		<label id="4" name="COM_KUNENA_LABELS_LOVED" b2="heart" b3="heart" fa="heart" labeltype="danger label-important"/>
 		<!-- <label id="5" name="Bug" b2="file" b3="file" fa="file" labeltype="primary"/> -->
 		<!-- <label id="6" name="Bug" b2="file" b3="file" fa="file" labeltype="primary"/> -->
 		<!-- <label id="7" name="Bug" b2="file" b3="file" fa="file" labeltype="primary"/> -->
-		<label id="8" name="COM_KUNENA_LABELS_SOLVED" b2="ok" b3="ok" fa="check"  labeltype="primary"/>
-		<label id="9" name="COM_KUNENA_LABELS_MERGED" b2="contract" b3="resize-small" fa="compress" labeltype="primary"/>
+		<label id="8" name="COM_KUNENA_LABELS_SOLVED" b2="ok" b3="ok" fa="check" labeltype="success"/>
+		<label id="9" name="COM_KUNENA_LABELS_MERGED" b2="contract" b3="resize-small" fa="compress" labeltype="info"/>
 		<label id="10" name="COM_KUNENA_LABELS_DELETED" b2="remove" b3="remove" fa="times" labeltype="primary"/>
 	</labels>
 </kunena-topiclabels>

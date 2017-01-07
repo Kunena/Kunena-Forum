@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -15,49 +15,78 @@ function kunenatableOrdering( order, dir, task, form ) {
 	form.submit( task );
 }
 
-jQuery(document).ready(function() {
-	/* To hide or open collapse localStorage */
-	jQuery('.collapse').on('hidden', function() {
-				if (this.id) {
-						localStorage[this.id] = 'true';
-				}
-		}).on('shown', function() {
-				if (this.id) {
-						localStorage.removeItem(this.id);
-				}
-		}).each(function() {
-				if (this.id && localStorage[this.id] === 'true' ) {
-						jQuery(this).collapse('hide');
-				}
-	});
-
+jQuery(document).ready(function($) {
 	/* To check or uncheck boxes to select items */
-	jQuery('input.kcheckall').click(function() {
-		jQuery( '.kcheck' ).each(function( ) {
-			jQuery(this).prop('checked',!jQuery(this).prop('checked'));
-		});
+	$('input.kcheckall').click(function() {
+		$('.kcheck').prop('checked', $(this).prop("checked"));
 	});
 
 	/* Allow to make working drop-down choose destination */
-	jQuery('#kchecktask').change(function() {
-		var task = jQuery("select#kchecktask").val();
+	$('#kchecktask').change(function() {
+		var task = $("select#kchecktask").val();
 		if (task=='move') {
-			jQuery("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
+			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
 		} else {
-			jQuery("#kchecktarget").attr('disabled', true);
+			$("#kchecktarget").attr('disabled', true);
 		}
 	});
 
-	jQuery("input.kcatcheckall").click(function(){
-		jQuery("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);
+	$("input.kcatcheckall").click(function(){
+		$("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	jQuery("input.kcheckallcategories").click(function(){
-		jQuery("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
+	$("input.kcheckallcategories").click(function(){
+		$("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	jQuery(document).ready(function() {
-		jQuery('[rel=popover]').popover();
+	$(document).ready(function() {
+		$('[rel=popover]').popover();
+	});
+
+	$('#avatar_gallery_select').change(function() {
+		var gallery_selected = $("select#avatar_gallery_select").val();
+
+		var gallery_list = $('#gallery_list');
+
+		// We remove avatar which exist in td tag to allow us to put new one items
+		gallery_list.empty();
+
+		// Get the list of images from the gallery selected drop-down above
+	 $.ajax({
+			 dataType: "json",
+			 url: $('#kunena_url_avatargallery').val(),
+			 data: 'gallery_name=' + gallery_selected
+		}).done(function(response) {
+       $.each(response, function( key, value ) {
+				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
+			  });
+		}).fail(function(response) {
+
+		});
+	});
+
+	if ($.fn.datepicker != undefined) {
+		// Load datepicker for announcement
+		$('#ann-date .input-group.date').datepicker({
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
+		});
+
+		$('#ann-date2 .input-group.date').datepicker({
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
+		});
+
+		$('#ann-date3 .input-group.date').datepicker({
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
+		});
+	}
+
+	$('#clearcache').on('click', function (e) {
+		e.preventDefault();
+		$('#clearcache').addClass('btn-success');
+		$('#clearcache').html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
 });
 

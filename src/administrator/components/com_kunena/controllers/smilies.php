@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -21,7 +21,11 @@ class KunenaAdminControllerSmilies extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -30,9 +34,13 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Add
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function add()
+	public function add()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -46,9 +54,14 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 * @throws Exception
 	 */
-	function edit()
+	public function edit()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -75,11 +88,17 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function save()
+	public function save()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -101,10 +120,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			$db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+
 				return;
 			}
 		}
@@ -116,10 +140,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
 				WHERE id = '$smileyid'");
-			$db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+
 				return;
 			}
 		}
@@ -129,9 +158,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Smiley upload
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function smileyupload()
+	public function smileyupload()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -141,12 +176,10 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+		$file   = $this->app->input->files->get('Filedata');
 
-		// File upload
-		$format = JFactory::getApplication()->input->getCmd('format', 'html');
-
-		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
+		// TODO : change this part to use other method than KunenaUploadHelper::upload()
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
 
 		if ($upload)
 		{
@@ -161,12 +194,18 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function remove()
+	public function remove()
 	{
 		jimport('joomla.utilities.arrayhelper');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -184,10 +223,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			$db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+
 				return;
 			}
 		}

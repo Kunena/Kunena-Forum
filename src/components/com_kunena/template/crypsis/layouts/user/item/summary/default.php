@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -30,6 +30,7 @@ $medals = $activityIntegration->getUserMedals($profile->userid);
 
 if ($this->config->showuserstats)
 {
+	$showKarma = KunenaConfig::getInstance()->showkarma;
 	$rankImage = $profile->getRank(0, 'image');
 	$rankTitle = $profile->getRank(0, 'title');
 }
@@ -59,14 +60,12 @@ if ($this->config->showuserstats)
 									<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
 								</li>
 							<?php endif ?>
-							<?php if ($this->config->showuserstats) : ?>
+							<?php if ($this->config->showuserstats && $this->config->showranking) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
-										<?php /** @var TYPE_NAME $rankTitle */
-										echo $this->escape($rankTitle); ?>
-										<?php /** @var TYPE_NAME $rankImage */
-										echo $rankImage; ?>
+										<?php echo $this->escape($rankTitle); ?>
+										<?php echo $rankImage; ?>
 									</span>
 								</li>
 							<?php endif; ?>
@@ -100,13 +99,19 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
 							</li>
 							<?php endif; ?>
+							<?php if (!empty($showKarma) && !empty($profile->karma) && KunenaConfig::getInstance()->showkarma) : ?>
+							<li>
+								<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
+								<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
+							</li>
+							<?php endif; ?>
 							<?php if (!empty($profile->uhits)) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($profile->thankyou)) : ?>
+							<?php if (!empty($profile->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
@@ -126,7 +131,7 @@ if ($this->config->showuserstats)
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -162,14 +167,14 @@ if ($this->config->showuserstats)
 								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
+								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>" rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteName ?></a>
+								<a class="btn btn-small" rel="nofollow" target="_blank" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
 							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteURL ?></a>
+								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
 							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-small"><i class="icon-bookmark"></i> <?php echo $websiteName ?></button>
+								<button class="btn btn-small"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

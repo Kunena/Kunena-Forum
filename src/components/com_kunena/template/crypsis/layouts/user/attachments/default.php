@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -66,7 +66,7 @@ $attachments = $this->attachments;
 					</td>
 				</tr>
 			<?php else :
-				$i = 0;
+				$i = $this->pagination->limitstart;
 				foreach ($attachments as $attachment) :
 					$message = $attachment->getMessage();
 					$canDelete = $attachment->isAuthorised('delete');
@@ -77,7 +77,7 @@ $attachments = $this->attachments;
 							<?php if ($canDelete) { echo JHtml::_('grid.id', $i, intval($attachment->id)); } ?>
 						</td>
 						<td class="center">
-							<?php echo $attachment->isImage()	? '<i class="large-kicon icon-picture"></i>' : '<i class="large-kicon icon-file"></i>'; ?>
+							<?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
 						</td>
 						<td>
 							<?php echo $attachment->getShortName(10, 5); ?>
@@ -86,7 +86,7 @@ $attachments = $this->attachments;
 							<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 						</td>
 						<td>
-							<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
+							<?php echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true); ?>
 						</td>
 						<td class="center">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
@@ -95,7 +95,7 @@ $attachments = $this->attachments;
 
 							<?php if ($canDelete) : ?>
 								<a class="center" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
-									<i class="icon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
+									<?php echo KunenaIcons::delete();?>
 								</a>
 							<?php endif; ?>
 
@@ -105,6 +105,11 @@ $attachments = $this->attachments;
 			<?php endif; ?>
 		</tbody>
 	</table>
+	<div class="pull-left">
+		<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true);	?>
+	</div>
 	<?php if ($attachments) : ?>
 		<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
 	<?php endif; ?>

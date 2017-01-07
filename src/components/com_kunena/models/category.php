@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -207,8 +207,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				foreach ($pending as $item)
 				{

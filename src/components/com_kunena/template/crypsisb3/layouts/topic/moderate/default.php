@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -19,6 +19,7 @@ kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&
 $this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$labels = $this->ktemplate->params->get('labels');
 ?>
 <div class="well">
 	<h3> <?php echo !isset($this->message)
@@ -38,7 +39,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a></li>
 				<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
-				<?php if (isset($this->message)) : ?>
+				<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
 					<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a></li>
 					<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 				<?php endif; ?>
@@ -68,11 +69,30 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 							<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 							<?php else : ?>
-								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0" />
 							<?php endif; ?>
 								</label>
 							<?php endforeach; ?>
 						</div>
+					<?php elseif ($labels && !$this->config->topicicons) : ?>
+						<div><strong><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
+						<br>
+						<div class="kmoderate-topicicons">
+							<?php foreach ($this->topicIcons as $id => $icon) : ?>
+								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+									<?php if ($topicicontype == 'B3') : ?>
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="label label-<?php echo $icon->name; ?>"><span class="icon icon-<?php echo $icon->b3; ?>" aria-hidden="true"></span><span class="sr-only"></span><?php echo $icon->name; ?></span>
+									<?php elseif ($topicicontype == 'B2') : ?>
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="label label-<?php echo $icon->name; ?>"><span class="icon icon-<?php echo $icon->b2; ?>" aria-hidden="true"></span><span class="sr-only"></span><?php echo $icon->name; ?></span>
+									<?php elseif ($topicicontype == 'fa') : ?>
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+									<?php else : ?>
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0" />
+									<?php endif; ?>
+										</label>
+								<?php endforeach; ?>
+						</div>
+						<br>
 					<?php endif; ?>
 					<br>
 					<?php if (isset($this->message)) : ?>
@@ -126,7 +146,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 						<div class="controls">
 							<input type="text" class="form-control" name="subject"  id="ktitle_moderate_subject" value="<?php echo !isset($this->message)
 								? $this->topic->displayField('subject')
-								: $this->message->displayField('subject'); ?>" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>"/>
+								: $this->message->displayField('subject'); ?>" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"/>
 						</div>
 					</div>
 					<?php if (!empty($this->replies)) : ?>

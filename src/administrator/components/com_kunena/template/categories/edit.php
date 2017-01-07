@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Categories
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -17,6 +17,9 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
 
+JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
+
+JFactory::getDocument()->addScript(JUri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
 ?>
 
 <div id="kunena" class="admin override">
@@ -86,11 +89,9 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
+													<input class="inputbox" id="jform_aliases" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
 													<?php if ($this->options ['aliases']) : ?>
-													<div>
-														<?php echo $this->options ['aliases']; ?>
-													</div>
+														<?php echo '<span id="aliascheck">' . $this->options ['aliases'] . '</span>'; ?>
 													<?php endif ?>
 												</td>
 											</tr>
@@ -116,6 +117,7 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 												<td>
 													<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
+													<p><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
 												</td>
 											</tr>
 											<tr>

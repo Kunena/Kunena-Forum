@@ -11,7 +11,8 @@
 			<field name="mode"
 			       type="list"
 			       default="recent"
-			       label="COM_KUNENA_MENU_SELECTEDVIEW">
+			       label="COM_KUNENA_MENU_SELECTEDVIEW"
+				   description="COM_KUNENA_MENU_SELECTEDVIEW_DESC">
 				<option value="recent">COM_KUNENA_POSTS_MODE_OPTION_RECENT</option>
 				<option value="thankyou">COM_KUNENA_POSTS_MODE_OPTION_THANKYOU</option>
 				<option value="mythanks">COM_KUNENA_POSTS_MODE_OPTION_MYTHANKS</option>
@@ -21,7 +22,8 @@
 			<field name="userid"
 			       type="text"
 			       default=""
-			       label="COM_KUNENA_MENU_USERID"/>
+			       label="COM_KUNENA_MENU_USERID"
+				   description="COM_KUNENA_MENU_USERID_DESC"/>
 		</fieldset>
 	</fields>
 	<fields name="params">
@@ -49,6 +51,14 @@
 			       size="10">
 				<option value="">COM_KUNENA_A_USE_GLOBAL</option>
 				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+			</field>
+			<field name="topics_deletedtopics"
+			       type="radio"
+			       default="0"
+			       label="COM_KUNENA_TOPICS_MODE_OPTION_DELETED"
+			       description="COM_KUNENA_TOPICS_MODE_OPTION_DELETED_DESC">
+				<option value="1">COM_KUNENA_SHOW</option>
+				<option value="0">COM_KUNENA_HIDE</option>
 			</field>
 			<field name="topics_time"
 			       type="list"

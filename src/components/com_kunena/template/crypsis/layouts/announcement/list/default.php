@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -55,11 +55,10 @@ JHtml::_('behavior.core');
 					<th class="span1 center">
 						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
 					</th>
-					<th class="span1">
-						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
-					</th>
 				<?php endif; ?>
-
+				<th class="span2">
+					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+				</th>
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>

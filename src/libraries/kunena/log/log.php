@@ -4,7 +4,7 @@
  * @package Kunena.Libraries
  * @subpackage Log
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Implements Kunena Log.
- * 
+ *
  * @since 5.0
  */
 class KunenaLog
@@ -44,9 +44,9 @@ class KunenaLog
 	const LOG_POST_REPORT = 'LOG_POST_REPORT';
 	const LOG_POST_THANKYOU = 'LOG_POST_THANKYOU';
 	const LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
-	
+
 	const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
-	
+
 	const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 	const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 	const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';

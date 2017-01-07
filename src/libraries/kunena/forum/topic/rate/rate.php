@@ -5,7 +5,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -52,11 +52,11 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param int $pid
 	 * @param int $userid
 	 *
 	 * @return int userid if hes in table else empty
-	 * @since 2.0
+	 * @internal param int $pid
+	 * @since    2.0
 	 */
 	public function exists($userid)
 	{
@@ -87,9 +87,15 @@ class KunenaForumTopicRate extends JObject
 		$query = $this->_db->getQuery(true);
 		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
-		$users = (array) $this->_db->loadObjectList();
 
-		KunenaError::checkDatabaseError();
+		try
+		{
+			$users = (array) $this->_db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach($users as $user)
 		{
@@ -98,7 +104,32 @@ class KunenaForumTopicRate extends JObject
 			//}
 
 			//return $this->users;
+	}
+
+	/**
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
+	static public function getTotalUsers($topicid)
+	{
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(*)')->from($db->quoteName('#__kunena_rate'))->where($db->quoteName('topic_id') . '=' . $db->Quote($topicid));
+		$db->setQuery($query);
+
+		try
+		{
+			$total = $db->loadResult();
 		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $total;
+	}
 
 	/**
 	 * Perform insert the rate into table

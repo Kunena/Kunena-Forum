@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -21,9 +21,13 @@ class KunenaAdminControllerPlugins extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -54,12 +58,15 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
-	 * @param   string $name
-	 * @param   string $prefix
-	 * @param   array  $config
+	 * Getmodel
+	 *
+	 * @param   string  $name    name
+	 * @param   string  $prefix  prefix
+	 * @param   array   $config  config
 	 *
 	 * @return object
 	 *
+	 * @since    2.0
 	 */
 	public function getModel($name = '', $prefix = '', $config = array())
 	{
@@ -128,6 +135,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 				$this->setMessage(JText::plural($ntext, count($cid)));
 			}
 		}
+
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
 
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
@@ -241,11 +251,28 @@ class KunenaAdminControllerPlugins extends KunenaController
 		}
 		else
 		{
+			$editor = KunenaBbcodeEditor::getInstance();
+			$editor->initializeHMVC();
+
 			// Checkin succeeded.
 			$message = JText::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 
 			return true;
 		}
+	}
+
+	/**
+	 * Regenerate editor file
+	 *
+	 * @since 5.0.2
+	 */
+	public function resync()
+	{
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
+		$message = 'Sync done';
+		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 	}
 }

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -37,6 +37,12 @@ switch ($status)
 		$label = JText::_("COM_KUNENA_OFFLINE");
 		$state = "default";
 		break;
+}
+
+if (!$user->showOnline)
+{
+	$label = JText::_("COM_KUNENA_OFFLINE");
+	$state = "default";
 }
 
 echo $this->subLayout('Widget/Label')

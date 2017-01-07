@@ -4,11 +4,13 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+JText::script('COM_KUNENA_CLEARED');
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -29,7 +31,7 @@ defined('_JEXEC') or die;
 		<tr>
 			<td class="span3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></td>
 				<td>
-					<button type="button" class="btn btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
+					<button id="clearcache" type="button" class="btn btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
 				</td>
 		</tr>
 	</tbody>

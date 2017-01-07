@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -20,6 +20,11 @@ $show   = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
 {
+	if (KunenaConfig::getInstance()->showkarma)
+	{
+		$karma = $user->getKarma();
+	}
+
 	$rankImage    = $user->getRank($this->category_id, 'image');
 	$rankTitle    = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();
@@ -29,18 +34,18 @@ if ($show)
 <div class="col-md-2">
 	<ul class="unstyled center profilebox">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 		<?php if ($avatar) : ?>
 			<li>
-				<?php echo $user->getLink($avatar); ?>
+				<?php echo $user->getLink($avatar, null, ''); ?>
 			</li>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+					<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;?>
-				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
-					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
-				<?php endif;?>
+				<?php /*if (!$this->topic_starter && $user->isModerator()) : */?><!--
+					<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */?></span>
+				--><?php /*endif;*/?>
 
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
@@ -81,7 +86,14 @@ if ($show)
 	</li>
 	<?php endif; ?>
 
-	<?php if ($show && isset($user->thankyou)) : ?>
+	<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
+	<li>
+		<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
+		<span> <?php echo $karma; ?> </span>
+	</li>
+	<?php endif; ?>
+
+	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 		<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>

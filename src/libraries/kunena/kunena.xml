@@ -9,7 +9,7 @@
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2016 Kunena Team. All rights reserved.</copyright>
+	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Framework.</description>
 	<files>
@@ -29,6 +29,7 @@
 		<folder>form</folder>
 		<folder>forum</folder>
 		<folder>html</folder>
+		<folder>icons</folder>
 		<folder>image</folder>
 		<folder>integration</folder>
 		<folder>layout</folder>

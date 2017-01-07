@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -75,7 +75,7 @@ class KunenaAdminViewUsers extends KunenaView
 
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolBarHelper::deleteList();
+		JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		JToolBarHelper::spacer();

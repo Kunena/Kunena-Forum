@@ -3,7 +3,7 @@
  * Kunena Component
  * @package    Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -50,9 +50,11 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param   string	$prefix
-	 * @param   mixed	$config
-	 * @return	KunenaController
+	 * @param   string $prefix
+	 * @param   mixed  $config
+	 *
+	 * @return KunenaController
+	 * @throws Exception
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{
@@ -97,7 +99,7 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)));
+			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
 		}
 
 		// Set the name for the controller and instantiate it.
@@ -123,7 +125,7 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class));
+			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
 		}
 
 		return $instance;
@@ -255,7 +257,7 @@ class KunenaController extends JControllerLegacy
 			if (!$this->redirect)
 			{
 				// If controller didn't set a new redirect, try if request has return url in it.
-				$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+				$return = base64_decode($app->input->get('return', '', 'BASE64'));
 
 				// Only allow internal urls to be used.
 				if ($return && JUri::isInternal($return))

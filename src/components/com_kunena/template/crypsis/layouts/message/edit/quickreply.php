@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -75,9 +75,16 @@ if ($me->canDoCaptcha() )
 		}
 	}
 }
+$template = KunenaTemplate::getInstance();
+$quick = $template->params->get('quick');
+
 ?>
 
-<div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php if ($quick == 1) : ?>
+<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;">
+<?php elseif ($quick == 0) : ?>
+<div class="kreply-form col-md-12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php endif;?>
 	<div class="modal-header">
 		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
@@ -102,14 +109,14 @@ if ($me->canDoCaptcha() )
 					<label>
 						<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 					</label>
-					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
 				</div>
 			<?php endif; ?>
 
 			<?php if ($config->askemail && !$me->exists()): ?>
 				<div class="controls">
 					<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="35" value="" required />
+					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="45" value="" required />
 				</div>
 			<?php endif; ?>
 
@@ -118,15 +125,15 @@ if ($me->canDoCaptcha() )
 					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 				</label>
 				<input type="text" id="subject" name="subject" class="inputbox span12"
-				       maxlength="<?php echo (int) $config->maxsubject; ?>"
-				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+				       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
+				       <?php if (!$config->allow_change_subject && !$me->isModerator()): ?>disabled<?php endif; ?>
 				       value="<?php echo $message->displayField('subject'); ?>" />
 			</div>
 			<div class="controls">
 				<label>
 					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
-				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"></textarea>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>

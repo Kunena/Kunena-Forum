@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -54,6 +54,26 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->results = array();
 		$this->total = $this->model->getTotal();
 		$this->results = $this->model->getResults();
+
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = 'index.php?option=com_kunena&view=search';
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
 
 		$this->pagination = new KunenaPagination(
 			$this->total,

@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Stats
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -100,7 +100,7 @@ $k = 0;
 				<?php echo $item->link ?>
 			</td>
 			<td>
-				<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
+				<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15" width="<?php echo $item->percent ?>%" />
 			</td>
 			<td>
 				<?php echo $item->count ?>

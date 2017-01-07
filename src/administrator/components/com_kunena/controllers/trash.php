@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -21,7 +21,11 @@ class KunenaAdminControllerTrash extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -30,9 +34,15 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Purge
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function purge()
+	public function purge()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -74,7 +84,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					if ($success)
+					{
+						KunenaForumTopicHelper::recount($ids);
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					}
 				}
 				elseif ($type == 'messages')
 				{
@@ -98,7 +113,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					if ($success)
+					{
+						KunenaForumTopicHelper::recount($ids);
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					}
 				}
 			}
 			else
@@ -132,9 +152,15 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Restore
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function restore()
+	public function restore()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -181,7 +207,16 @@ class KunenaAdminControllerTrash extends KunenaController
 
 			foreach ($topics as $target)
 			{
-				if ($target->publish(KunenaForum::PUBLISHED))
+				if ($target->getState() == KunenaForum::UNAPPROVED)
+				{
+					$status = KunenaForum::UNAPPROVED;
+				}
+				else
+				{
+					$status = KunenaForum::PUBLISHED;
+				}
+
+				if ($target->publish($status))
 				{
 					$nb_items++;
 				}
@@ -213,6 +248,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @since    2.0
 	 */
 	public function cancel()
 	{

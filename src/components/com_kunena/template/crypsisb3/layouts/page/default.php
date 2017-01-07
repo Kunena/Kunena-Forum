@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -33,11 +33,6 @@ $config = KunenaFactory::getTemplate()->params;
 	if ($config->get('displayAnnouncement'))
 	{
 		echo $this->subRequest('Widget/Announcement');
-	}
-
-	if ($config->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 	}
 
 	// Display current view/layout

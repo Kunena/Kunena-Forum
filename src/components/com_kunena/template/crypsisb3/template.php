@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -97,17 +97,41 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
+
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
+
+		if (file_exists($filenameless) && 0 != filesize($filenameless))
+		{
+			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
+			$this->addStyleSheet('kunena-custom.css');
+		}
+
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';
 		if (file_exists($filename))
 		{
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		if ($fontawesome) : ?>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<?php endif;
+		$doc = JFactory::getDocument();
+
+		if ($fontawesome)
+		{
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+		}
+
+		$icons = $this->ktemplate->params->get('icons');
+		if ($icons)
+		{
+			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+		}
 
 		// Load template colors settings
 		$styles = <<<EOF
@@ -126,7 +150,7 @@ EOF;
 		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
 		if ($iconcolornew) {
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .glyphicon { color: {$iconcolornew} !important;}

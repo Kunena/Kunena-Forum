@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -86,8 +86,46 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('profile:username', $this->profile->getName(), 'property');
+
+		if ($this->profile->getGender() == 1)
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
+		}
+		elseif ($this->profile->getGender() == 2)
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
+		}
+		else
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
+		}
+
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
+
+		$doc = JFactory::getDocument();
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		if ($menu_item)
 		{
@@ -95,6 +133,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -128,6 +167,12 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
 					$this->config->board_title, $this->profile->getName(), $this->config->board_title);
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

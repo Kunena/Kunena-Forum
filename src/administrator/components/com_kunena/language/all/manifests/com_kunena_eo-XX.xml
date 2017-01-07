@@ -7,7 +7,7 @@
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2016 Kunena Team. All rights reserved.</copyright>
+	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
 	<description>Esperanto language file for Kunena Forum Component</description>
 
@@ -20,8 +20,12 @@
 			<filename>eo-XX.com_kunena.sys.ini</filename>
 			<filename>eo-XX.com_kunena.views.ini</filename>
 			<filename>eo-XX.plg_kunena_alphauserpoints.sys.ini</filename>
+			<filename>eo-XX.plg_kunena_altauserpoints.sys.ini</filename>
 			<filename>eo-XX.plg_kunena_community.sys.ini</filename>
 			<filename>eo-XX.plg_kunena_comprofiler.sys.ini</filename>
+			<filename>eo-XX.plg_kunena_easyblog.sys.ini</filename>
+			<filename>eo-XX.plg_kunena_easyprofile.sys.ini</filename>
+			<filename>eo-XX.plg_kunena_easysocial.sys.ini</filename>
 			<filename>eo-XX.plg_kunena_gravatar.sys.ini</filename>
 			<filename>eo-XX.plg_kunena_joomla.sys.ini</filename>
 			<filename>eo-XX.plg_kunena_kunena.sys.ini</filename>
@@ -34,7 +38,6 @@
 			<filename>eo-XX.com_kunena.ini</filename>
 			<filename>eo-XX.com_kunena.models.ini</filename>
 			<filename>eo-XX.com_kunena.templates.ini</filename>
-			<filename>eo-XX.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>eo-XX.com_kunena.views.ini</filename>
 			<filename>eo-XX.kunena_tmpl_crypsis.ini</filename>
 		</files>

@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Kunena
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -34,7 +34,7 @@ class KunenaProfileKunena extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -98,14 +98,29 @@ class KunenaProfileKunena extends KunenaProfile
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
-		$query = "SELECT u.id, ku.uhits AS count
-			FROM #__kunena_users AS ku
-			INNER JOIN #__users AS u ON u.id=ku.userid
-			WHERE ku.uhits>0
-			ORDER BY ku.uhits DESC";
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName(array('u.id', 'ku.uhits'), array(null, 'count')));
+		$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
+		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
+		$query->where($db->quoteName('ku.uhits') . '>0');
+		$query->order($db->quoteName('ku.uhits') . ' DESC');
+
+		if (KunenaFactory::getConfig()->superadmin_userlist)
+		{
+			$filter = JAccess::getUsersByGroup(8);
+			$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
+		}
+
 		$db->setQuery($query, 0, $limit);
-		$top = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$top = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $top;
 	}

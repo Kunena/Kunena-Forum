@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaLogFinder
- * 
+ *
  * @since 5.0
  */
 class KunenaLogFinder extends KunenaDatabaseObjectFinder
@@ -37,10 +37,10 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
-		if ($starting && $ending) 
+		if ($starting && $ending)
 		{
 			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
-		} 
+		}
 		elseif ($starting)
 		{
 			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");
@@ -90,8 +90,15 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -45,6 +45,20 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		// Get sections to display.
 		$catid = $this->input->getInt('catid', 0);
+
+
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		/*$cache   = JFactory::getCache('com_kunena', 'output');
+
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		{
+		return;
+		}*/
+
+		$options            = array();
+		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		if ($catid)
 		{
@@ -208,8 +222,15 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 					WHERE catid IN ({$catlist}) AND hold=1
 					GROUP BY catid"
 				);
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				foreach ($pending as $item)
 				{
@@ -235,6 +256,25 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 			}
 		}
+
+		$doc = JFactory::getDocument();
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = KunenaRoute::_();
+						$canonicalUrl = str_replace( '?limitstart=0', '', $canonicalUrl);
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -246,6 +286,28 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	{
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
+		$doc = JFactory::getDocument();
+
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		if ($menu_item)
 		{
@@ -253,6 +315,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -272,7 +335,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 				$this->setKeywords($keywords);
 			}
 
@@ -283,8 +346,14 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+				$description = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

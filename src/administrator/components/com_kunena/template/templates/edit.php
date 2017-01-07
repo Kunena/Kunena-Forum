@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Templates
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 
 // @var KunenaAdminViewTemplates $this
 
-JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 ?>
@@ -45,7 +44,6 @@ JHtml::_('dropdown.init');
 										<a href="#tab_basic" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_BASIC'); ?> </a>
 									</li>
-									<?php if ($this->details->version >= '4.0') : ?>
 									<li>
 										<a href="#tab_features" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FEATURES'); ?> </a>
@@ -58,12 +56,10 @@ JHtml::_('dropdown.init');
 										<a href="#tab_colors" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COLORS'); ?> </a>
 									</li>
-									<!--<li>
+									<li>
 										<a href="#tab_avatars" data-toggle="tab">
-											<?php // echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS');
-?> </a>
-									</li>-->
-									<?php endif; ?>
+											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS');?> </a>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_info">
@@ -84,7 +80,7 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>:</td>
 												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 													if (is_file($path)) : ?>
-														<div><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png" alt="" /></div>
+														<div><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png" alt="<?php echo $this->escape($this->templatename); ?>" /></div>
 													<?php endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>
@@ -154,6 +150,23 @@ endforeach; ?>
 endforeach; ?>
 											</table>
 										<?php
+										else :
+											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+										endif;
+										?>
+									</div>
+									<div class="tab-pane" id="tab_avatars">
+										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+											<table class="table table-bordered table-striped">
+												<?php foreach($this->form->getFieldset('avatar') as $field) : if (!$field->hidden) : ?>
+													<tr>
+														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+														<td class="paramlist_value"><?php echo $field->input; ?></td>
+													</tr>
+												<?php endif;
+												endforeach; ?>
+											</table>
+											<?php
 										else :
 											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 										endif;

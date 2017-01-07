@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  CPanel
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -107,7 +107,7 @@ defined('_JEXEC') or die();
 							<dd><a href="https://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
-							<dd>&copy; 2008 - 2016 Kunena, All rights reserved.</dd>
+							<dd>&copy; 2008 - 2017 Kunena, All rights reserved.</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>
 							<dd>GNU General Public License</dd>
@@ -117,24 +117,19 @@ defined('_JEXEC') or die();
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
 							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons();?></dd>
+							<hr class="hr-condensed">
+							<dt><?php echo JText::_('COM_KUNENA_DONATE');?></dt>
+							<dd>
+								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+									<input name="cmd" type="hidden" value="_s-xclick">
+									<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
+									<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!" src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+									<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
+								</form>
+							</dd>
 						</dl>
 					</div>
 				</div>
 		</section>
-		<div tabindex="-1" class="modal hide fade" id="kunena_changelog" role="dialog">
-			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">×</button>
-				<h3>Changelog</h3>
-			</div>
-			<div class="modal-body">
-				<iframe src="https://www.kunena.org/docs/en/changelog" width="100%" height="400px" frameborder="0"></iframe>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-		<div class="pull-right small">
-			<?php echo KunenaVersion::getLongVersionHTML(); ?>
-		</div>
 	</div>
 </div>

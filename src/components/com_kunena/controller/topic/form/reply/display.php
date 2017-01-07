@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -58,6 +58,27 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$parent = KunenaForumMessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
+
+		$doc = JFactory::getDocument();
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = $this->topic->getUrl();
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
+
+		$doc->addHeadLink($this->topic->getUrl(), 'canonical');
 
 		$this->category = $this->topic->getCategory();
 
@@ -117,7 +138,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 	}
 
 	/**
@@ -130,12 +151,16 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -165,6 +190,12 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			else
 			{
 				$this->setDescription($this->headerText);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

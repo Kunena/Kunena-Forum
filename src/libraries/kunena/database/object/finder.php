@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Database
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -187,8 +187,15 @@ abstract class KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.' . $this->primaryKey);
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $this->db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -202,9 +209,9 @@ abstract class KunenaDatabaseObjectFinder
 	{
 		$query = clone $this->query;
 		$this->build($query);
-		
+
 		if ($query->group)
-		{	
+		{
 			$countQuery = $this->db->getQuery(true);
 			$countQuery->select('COUNT(*)')->from("({$query}) AS c");
 			$this->db->setQuery($countQuery);
@@ -214,9 +221,15 @@ abstract class KunenaDatabaseObjectFinder
 			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
-	
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$count = (int) $this->db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $count;
 	}

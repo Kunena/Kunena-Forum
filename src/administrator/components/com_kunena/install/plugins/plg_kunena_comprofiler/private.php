@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -53,7 +53,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		outputCbTemplate($_CB_framework->getUi());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
-		$url = 'index.php?option=com_comprofiler&task=userProfile&user=' . $userid . getCBprofileItemid();
+		$url = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
@@ -92,7 +92,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return '';
 		}
 
-		$url = 'index.php?option=com_comprofiler&task=userProfile&user=' . $userid . getCBprofileItemid();
+		$url = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a class="' . $class . '" href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 
@@ -115,6 +115,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 */
 	public function getInboxLink($text)
 	{
+		global $_CB_framework;
+
 		if (!$text)
 		{
 			$text = JText::_('COM_KUNENA_PMS_INBOX');
@@ -127,9 +129,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		$itemid = getCBprofileItemid();
-
-		return '<a href="' . cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $userid . $itemid) . '" rel="follow">' . $text . '</a>';
+		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
 	}
 
 	/**
@@ -167,6 +167,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 */
 	public function getInboxURL()
 	{
+		global $_CB_framework;
+
 		$userid = $this->getCBUserid();
 
 		if ($userid === null)
@@ -174,8 +176,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		$itemid = getCBprofileItemid();
-
-		return cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $userid . $itemid);
+		return $_CB_framework->userProfileUrl($userid);
 	}
 }

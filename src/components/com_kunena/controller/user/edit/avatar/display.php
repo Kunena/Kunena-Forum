@@ -4,11 +4,13 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\String\StringHelper;
 
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
@@ -130,7 +132,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		foreach ($this->galleries as $gallery => $files)
 		{
-			$text = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
+			$text = $gallery ? StringHelper::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = JHtml::_('select.option', $gallery, $text);
 		}
 

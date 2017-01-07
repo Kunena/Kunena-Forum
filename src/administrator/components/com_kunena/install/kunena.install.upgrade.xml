@@ -719,6 +719,17 @@
 		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `label_id` int(11) NOT NULL default '0' AFTER `icon_id`;</query>
 		</version>
+		<version version="5.0.0"
+		         versiondate="2016-08-06"
+		         versionname="Internal">
+			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords`;</query>
+			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords_map`;</query>
+		</version>
+		<version version="5.0.5"
+		         versiondate="2016-12-20"
+		         versionname="Internal">
+			<phpfile name="5.0.5-2016-12-20_userlist"/>
+		</version>
 		<version version="@kunenaversion@"
 				versiondate="@kunenaversiondate@"
 				versionname="@kunenaversionname@">

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -30,6 +30,6 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<div class="input-append">
 		<input class="input-medium search-query" type="text" name="query" value="" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
-		<button class="btn btn-default" type="submit"><span class="icon icon-search"></span></button>
+		<button class="btn btn-default" type="submit"><?php echo KunenaIcons::search();?></button>
 	</div>
 </form>

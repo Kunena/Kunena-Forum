@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Upload
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -329,7 +329,7 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') !== true)
+				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0)
 				{
 					if (!$this->checkFileSizeFileAttachment($size))
 					{
@@ -337,13 +337,18 @@ class KunenaUpload
 					}
 				}
 
-				if (stripos($type, 'image/') !== false)
+				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{
 						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
+
+				// Get filename from stream
+				$meta_data = stream_get_meta_data($out);
+				$filename  = $meta_data['uri'];
+				KunenaImage::correctImageOrientation($filename);
 			}
 		}
 		catch (Exception $exception)
@@ -557,7 +562,18 @@ class KunenaUpload
 		$file = new stdClass;
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
-		$file->tmp_name = $fileInput['tmp_name'];
+		$config = KunenaFactory::getConfig();
+
+		if ($type != 'attachment' && $config->attachment_utf8)
+		{
+			$file->tmp_name = $fileInput['tmp_name'];
+		}
+		else
+		{
+			$pathInfo = pathinfo($fileInput['tmp_name']);
+			$file->tmp_name = $pathInfo['dirname'] . '/' . JFile::makeSafe($pathInfo['basename']);
+		}
+
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
@@ -566,6 +582,16 @@ class KunenaUpload
 		if ($type != 'attachment')
 		{
 			$file->isAvatar = true;
+		}
+
+		if ($file->isAvatar)
+		{
+			$a = array('gif', 'jpeg', 'jpg', 'png');
+
+			if (!in_array($file->ext, $a, true))
+			{
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
+			}
 		}
 
 		if (!is_uploaded_file($file->tmp_name))
@@ -638,6 +664,7 @@ class KunenaUpload
 			}
 		}
 
+		KunenaImage::correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{

@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -18,10 +18,19 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerCpanel extends KunenaController
 {
+	/**
+	 * @var null|string
+	 *
+	 * @since    2.0.0-BETA2
+	 */
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  construct
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
 	{
@@ -30,10 +39,14 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
-	 * @param   bool $cachable
-	 * @param   bool $urlparams
+	 * Display
+	 *
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return JControllerLegacy|void
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -48,7 +61,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__update_sites'))
 				->set($db->quoteName('enabled') . '=1')
-				->where($db->quoteName('location') . ' LIKE ' . $db->quote('http://update.kunena.org/%'));
+				->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
 			$db->setQuery($query);
 			$db->execute();
 
@@ -59,11 +72,13 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
+	 * On get icons
 	 *
 	 * Display Kunena updates on dashboard
 	 *
-	 *
 	 * @return array|null
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public static function onGetIcons()
 	{

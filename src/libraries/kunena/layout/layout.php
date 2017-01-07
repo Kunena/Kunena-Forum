@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Categories
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -23,6 +23,13 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @var array
 	 */
 	protected $after = array();
+
+	/**
+	 * Object KunenaView
+	 *
+	 * @var unknown
+	 */
+	protected $legacy;
 
 	/**
 	 * Append HTML after the layout content.
@@ -143,9 +150,12 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $title
 	 * @param   null                $class
 	 *
+	 * @param bool                  $follow
+	 * @param null                  $canonical
+	 *
 	 * @return mixed
 	 */
-	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -156,10 +166,34 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -174,9 +208,12 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $class
 	 * @param   KunenaForumCategory $category
 	 *
+	 * @param bool                  $follow
+	 * @param bool                  $canonical
+	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -191,28 +228,52 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 						break;
 					case 'last':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					case 'unread':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					default:
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 				}
+			}
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
 			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -220,15 +281,18 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param      $category
+	 * @param        $category
 	 * @param   null $content
 	 * @param   null $title
 	 * @param   null $class
 	 * @param   int  $length
 	 *
+	 * @param bool   $follow
+	 * @param null   $canonical
+	 *
 	 * @return mixed
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -248,9 +312,49 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+			$title = KunenaHtmlParser::stripBBCode($lastTopic->last_post_message, 200, false);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);
+	}
+
+	/**
+	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
+	 *
+	 * @param KunenaView $view
+	 *
+	 * @since      4.0
+	 *
+	 * @deprecated 5.0
+	 * @return $this
+	 */
+	public function setLegacy(KunenaView $view = null) {
+		$this->legacy = $view;
+
+		return $this;
 	}
 }

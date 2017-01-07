@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -113,7 +113,7 @@ abstract class KunenaForumAnnouncementHelper
 				->from('#__kunena_announcement')
 				->order('id DESC')
 				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up >= ' . $nowDate . ')')
+				->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
 				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 		}
 		else
@@ -125,8 +125,15 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query, $start, $limit);
-		$results = (array) $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		self::$_instances = array();
 		$list = array();
@@ -169,7 +176,7 @@ abstract class KunenaForumAnnouncementHelper
 				->from('#__kunena_announcement')
 				->order('id DESC')
 				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up >= ' . $nowDate . ')')
+				->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
 				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 		}
 		else
@@ -181,8 +188,15 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $total;
 	}

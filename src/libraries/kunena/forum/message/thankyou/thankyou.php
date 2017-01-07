@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -95,6 +95,13 @@ class KunenaForumMessageThankyou extends JObject
 		if ($this->exists($user->userid))
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
+			return false;
+		}
+
+		if ($user->banned)
+		{
+			$this->setError(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+
 			return false;
 		}
 

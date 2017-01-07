@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Statistics
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -46,7 +46,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 
-		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
+		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
 	}
 

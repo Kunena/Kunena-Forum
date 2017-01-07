@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -16,7 +16,7 @@ $this->me = KunenaUserHelper::getMyself();
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
-	'<i class="glyphicon glyphicon-arrow-left"></i> ' . JText::_('COM_KUNENA_BACK'),
+		KunenaIcons::back() . ' ' . JText::_('COM_KUNENA_BACK'),
 	JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default pull-right'
 ); ?>
 </h2>
@@ -76,12 +76,11 @@ $this->me = KunenaUserHelper::getMyself();
 
 			<div class="center">
 				<button class="btn btn-primary validate" type="submit">
-					<?php echo JText::_('COM_KUNENA_SAVE'); ?>
+					<?php echo KunenaIcons::save();?> <?php echo JText::_('COM_KUNENA_SAVE'); ?>
 				</button>
-				<input type="button" name="cancel" class="btn btn-default"
-				       value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
-				       onclick="window.history.back();"
-				       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" />
+				<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
+					<?php echo KunenaIcons::cancel();?> <?php echo JText::_('COM_KUNENA_CANCEL'); ?>
+				</button>
 			</div>
 		</div>
 	</div>

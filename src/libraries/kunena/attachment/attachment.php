@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Message.Attachment
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -246,7 +246,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$download = $inline ? '' : '&download=1';
 		$filename = urlencode($this->getFilename(false));
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
+		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
+
+		if (JApplicationCms::getInstance('site')->get('sef_suffix'))
+		{
+			$url = preg_replace('/.html/', '', $url);
+		}
+
+		return $url;
 	}
 
 	/**
@@ -310,7 +317,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return KunenauserHelper::get($this->userid);
+		return KunenaUserHelper::get($this->userid);
 	}
 
 	/**

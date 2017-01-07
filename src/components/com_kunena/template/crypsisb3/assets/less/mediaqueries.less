@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link https://www.kunena.org
 **/
@@ -21,8 +21,8 @@
 		-webkit-transform: translate3d(0, 0, 0);
 	}
 
-	[class*="badger"] {
-		padding: 30% 19px 14px;
+	.visible-xs .text-muted {
+		margin-top: -30px;
 	}
 
 	.form-search {
@@ -83,7 +83,7 @@
 	}
 
 	.modal {
-		position: static;
+		position: relative;
 	}
 
 	ul.breadcrumb {
@@ -249,6 +249,10 @@
 
 	#recent-list {
 		width: 53%;
+	}
+
+	.navbar-nav > li > .dropdown-menu {
+		min-width: 190px;
 	}
 }
 

@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -18,22 +18,35 @@ class KunenaViewTopics extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		KunenaHtmlParser::$relative = false;
+		$config = KunenaFactory::getConfig();
+		$cache = JFactory::getCache('com_kunena_rss', 'output');
 
-		$cache = JFactory::getCache('com_kunena_rss');
-
-		if ($this->caching)
+		if (!$config->get('cache'))
 		{
-			$cache->setCaching(1);
-			$cache->setLifeTime($this->caching);
+			$cache->setCaching(0);
+		}
+		else
+		{
+			if ($config->rss_cache >= 1)
+			{
+				$cache->setCaching(1);
+				$cache->setLifeTime($config->rss_cache);
+			}
+			else
+			{
+				$cache->setCaching(0);
+			}
 		}
 
 		$this->layout = 'default';
@@ -76,12 +89,14 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayUser($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout = 'user';
@@ -117,12 +132,14 @@ class KunenaViewTopics extends KunenaView
 
 	/**
 	 * @param   null $tpl
+	 *
+	 * @return JException
 	 */
 	function displayPosts($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout   = 'posts';

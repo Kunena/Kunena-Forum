@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -75,6 +75,35 @@ class KunenaViewUser extends KunenaView
 
 				$response[] = $user_obj;
 			}
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
+	}
+
+	/**
+	 * Return the list of files for the avatar gallery selected by the user
+	 *
+	 * @since K5.0
+	 * @return JSON
+	 */
+	public function displayGalleryimages()
+	{
+		$response = array();
+
+		$gallery_name = $this->app->input->get('gallery_name', null, 'string');
+
+		jimport( 'joomla.filesystem.folder' );
+
+		$list_files = JFolder::files(JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name);
+
+		foreach($list_files as $key => $file)
+		{
+			$response[$key]['filename'] = $file;
+			$response[$key]['url'] = JUri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
 		}
 
 		// Set the MIME type and header for JSON output.

@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -228,8 +228,15 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		$_db = JFactory::getDBO();
 
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		$userpoints = $_db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$userpoints = $_db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $userpoints;
 	}

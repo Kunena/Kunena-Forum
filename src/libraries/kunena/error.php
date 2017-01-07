@@ -3,7 +3,7 @@
  * Kunena Component
  * @package    Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -101,6 +101,36 @@ abstract class KunenaError
 	}
 
 	/**
+	  * Return different error if it's an admin or a simple user
+	  *
+	  * @return string
+	  *
+	  * @since 5.0
+	  */
+	public static function displayDatabaseError($exception)
+	{
+		$app = JFactory::getApplication();
+		$db = JFactory::getDBO();
+
+		if (JFactory::getApplication()->isAdmin())
+		{
+			$app->enqueueMessage($exception->getMessage(), 'error');
+		}
+		elseif (self::$debug || self::$admin)
+		{
+			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>'), 'error');
+		}
+		else
+		{
+			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
+		}
+	}
+
+	/**
+	 * Return the error in the database query (deprecated use exception in queries instead)
+	 *
+	 * @deprecated
+	 *
 	 * @return boolean
 	 * @throws Exception
 	 */
@@ -132,6 +162,10 @@ abstract class KunenaError
 	}
 
 	/**
+	 * Get the last error message from database
+	 *
+	 * @deprecated
+	 *
 	 * @return string
 	 */
 	public static function getDatabaseError()

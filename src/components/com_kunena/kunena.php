@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Site
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -38,13 +38,13 @@ if (!KunenaConfig::getInstance()->get('access_component', 1))
 	{
 		// Prevent access without using a menu item.
 		JLog::add("Kunena: Direct access denied: " . JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
-		JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+		throw new Exception(JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 	elseif ($active->type != 'component' || $active->component != 'com_kunena')
 	{
 		// Prevent spoofed access by using random menu item.
 		JLog::add("Kunena: spoofed access denied: " . JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
-		JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+		throw new Exception(JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 }
 
@@ -121,7 +121,7 @@ else
 	}
 	else
 	{
-		return JError::raiseError(404, "Kunena view '{$view}' not found");
+		throw new Exception("Kunena view '{$view}' not found", 404);
 	}
 }
 

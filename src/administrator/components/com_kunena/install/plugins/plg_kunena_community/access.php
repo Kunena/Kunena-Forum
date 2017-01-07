@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -130,8 +130,15 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
 		$db->setQuery($query);
-		$list = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$list = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $list;
 	}
@@ -160,8 +167,15 @@ class KunenaAccessCommunity
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
 			$db->setQuery($query);
-			$list = (array) $db->loadColumn();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$list = (array) $db->loadColumn();
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			foreach ($list as $catid)
 			{
@@ -195,9 +209,16 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
 		$db->setQuery($query);
-		$allow = (array) $db->loadColumn();
-		$deny  = array();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$allow = (array) $db->loadColumn();
+			$deny  = array();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return array($allow, $deny);
 	}
@@ -214,8 +235,16 @@ class KunenaAccessCommunity
 				FROM #__community_groups_category
 				ORDER BY parent, name";
 			$db->setQuery($query);
-			$this->categories = (array) $db->loadObjectList('id');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->categories = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
 			$this->tree = new KunenaTree($this->categories);
 
 			if ($this->groups !== false)
@@ -237,8 +266,15 @@ class KunenaAccessCommunity
 				FROM #__community_groups
 				ORDER BY categoryid, name";
 			$db->setQuery($query);
-			$this->groups = (array) $db->loadObjectList('id');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->groups = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			if ($this->categories !== false)
 			{

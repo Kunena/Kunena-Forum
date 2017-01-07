@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -23,7 +23,7 @@ $announcement = $this->announcement;
 		<div class="overflow">
 			<?php echo JHtml::_(
 	'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-null, 'follow'); ?>
+null, null, ''); ?>
 		</div>
 	</td>
 
@@ -41,10 +41,14 @@ null, 'follow'); ?>
 	'kunenagrid.task', $row, 'publish_x.png',
 JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); } ?>
 	</td>
-	<td>
-		<?php echo $announcement->getAuthor()->username; ?>
-	</td>
 	<?php endif; ?>
+	<td>
+		<?php if (KunenaConfig::getInstance()->username) :?>
+			<?php echo $announcement->getAuthor()->username; ?>
+		<?php else :?>
+			<?php echo $announcement->getAuthor()->name; ?>
+		<?php endif; ?>
+	</td>
 
 	<td class="center hidden-phone">
 		<?php echo $announcement->displayField('id'); ?>

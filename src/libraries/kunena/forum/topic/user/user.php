@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -272,10 +272,15 @@ class KunenaForumTopicUser extends JObject
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
 			$this->_db->setQuery($query, 0, 1);
-			$info = $this->_db->loadAssocList();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$info = $this->_db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				return null;
 			}
 

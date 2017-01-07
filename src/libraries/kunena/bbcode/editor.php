@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -173,11 +173,6 @@ class KunenaBbcodeEditor
 		$template = KunenaFactory::getTemplate();
 
 		$this->isHMVC = $template->isHmvc();
-
-		if ($this->isHMVC)
-		{
-			$this->initializeHMVC();
-		}
 	}
 
 	/**
@@ -385,6 +380,83 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 						$selection[] = "name: '" . $action['name'] . "'";
 					}
 
+					if ($action['name'] == 'Bold')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_BOLD') . "'";
+					}
+					elseif ($action['name'] == 'Italic')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_ITALIC') . "'";
+					}
+					elseif ($action['name'] == 'Underline')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_UNDERL') . "'";
+					}
+					elseif ($action['name'] == 'Stroke')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_STRIKE') . "'";
+					}
+					elseif ($action['name'] == 'Subscript')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SUB') . "'";
+					}
+					elseif ($action['name'] == 'Supscript')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SUP') . "'";
+					}
+					elseif ($action['name'] == 'Unordered List')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_ULIST') . "'";
+					}
+					elseif ($action['name'] == 'Ordered List')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_OLIST') . "'";
+					}
+					elseif ($action['name'] == 'Li')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_LIST') . "'";
+					}
+					elseif ($action['name'] == 'HR')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_HR') . "'";
+					}
+					elseif ($action['name'] == 'Left')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_LEFT') . "'";
+					}
+					elseif ($action['name'] == 'Center')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_CENTER') . "'";
+					}
+					elseif ($action['name'] == 'Right')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_RIGHT') . "'";
+					}
+					elseif ($action['name'] == 'Quote')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_QUOTE') . "'";
+					}
+					elseif ($action['name'] == 'Code')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_CODE') . "'";
+					}
+					elseif ($action['name'] == 'Table')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_TABLE') . "'";
+					}
+					elseif ($action['name'] == 'Spoiler')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_SPOILER') . "'";
+					}
+					elseif ($action['name'] == 'Hide')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_EDITOR_HIDE') . "'";
+					}
+					elseif ($action['name'] == 'confidential')
+					{
+						$selection[] = "name: '" .  JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . "'";
+					}
+
 					$key = '';
 
 					if (!empty($action['key']))
@@ -413,18 +485,18 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 				case 'dropdown':
 					if ($action['name'] == "Size")
 					{
-						$js = "{className: '" . $action['class'] . "', name:'" . $action['name'] . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
-						{name:'Very very small', openWith:'[size=1]', 	closeWith:'[/size]' },
-						{name:'Very Small', openWith:'[size=2]', 	closeWith:'[/size]' },
-						{name:'Small', openWith:'[size=3]', closeWith:'[/size]' },
-						{name:'Normal', openWith:'[size=4]', closeWith:'[/size]' },
-						{name:'Big', openWith:'[size=5]', closeWith:'[/size]' },
-						{name:'Super Bigger', openWith:'[size=6]', closeWith:'[/size]' }
+						$js = "{className: '" . $action['class'] . "', name:'" . JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE') . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL') . "', openWith:'[size=1]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_VERY_SMALL') . "', openWith:'[size=2]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_SMALL') . "', openWith:'[size=3]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_NORMAL') . "', openWith:'[size=4]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_BIG') . "', openWith:'[size=5]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER') . "', openWith:'[size=6]', closeWith:'[/size]' }
 						]}";
 					}
 					elseif ($action['name'] == "videodropdownbutton")
 					{
-						$js = "{name:'Video', className: 'videodropdownbutton', dropMenu: [{name: '" . $action['class'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{name: '" . JText::_('COM_KUNENA_EDITOR_VIDEO') . "', className: 'videodropdownbutton', dropMenu: [{name:  '" . JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER') . "', className: '" . $action['class'] . "', beforeInsert:function() {
 							jQuery('#videosettings-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -440,7 +512,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 									});
 								}});
 							} },
-						{name: 'Video Provider URL', className: 'videoURLbutton', beforeInsert:function() {
+						{name: '" . JText::_('COM_KUNENA_EDITOR_VIDEO') . "', className: 'videoURLbutton', beforeInsert:function() {
 							jQuery('#videourlprovider-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -460,22 +532,24 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "Colors")
 					{
-						$js = "{className: '" . $action['class'] . "', name:'" . $action['name'] . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
-						{name:'Black',	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
-						{name:'Orange',	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
-						{name:'Red', 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
+						$js = "{className: '" . $action['class'] . "', name:'" . JText::_('COM_KUNENA_EDITOR_COLOR') . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_BLACK') . "',	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_ORANGE') . "',	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_RED') . "', 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
 
-						{name:'Blue', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
-						{name:'Purple', openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
-						{name:'Green', 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_BLUE') . "', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_PURPLE') . "', openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_GREEN') . "', 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
 
-						{name:'White', 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
-						{name:'Gray', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_WHITE') . "', 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_GRAY') . "', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
 						]}";
 					}
 					break;
 				case 'modal':
-					$js = "{name:'" . $action['name'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
+					if ($action['name'] == "picture")
+					{
+						$js = "{name:'" . JText::_('COM_KUNENA_EDITOR_IMAGELINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -492,6 +566,107 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 							}});
 						}
 					}";
+					}
+					elseif ($action['name'] == "link")
+					{
+						$js = "{name:'" . JText::_('COM_KUNENA_EDITOR_LINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
+							event.preventDefault();
+
+							jQuery('#modal-" . $action['name'] . "').modal('hide');
+						});
+
+						jQuery('#modal-" . $action['name'] . "').modal(
+							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}});
+						}
+					}";
+					}
+					elseif ($action['name'] == "map")
+					{
+						$js = "{name:'" . JText::_('COM_KUNENA_EDITOR_MAP') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
+							event.preventDefault();
+
+							jQuery('#modal-" . $action['name'] . "').modal('hide');
+						});
+
+						jQuery('#modal-" . $action['name'] . "').modal(
+							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}});
+						}
+					}";
+					}
+					elseif ($action['name'] == "Tweet")
+					{
+						$js = "{name:'" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
+							event.preventDefault();
+
+							jQuery('#modal-" . $action['name'] . "').modal('hide');
+						});
+
+						jQuery('#modal-" . $action['name'] . "').modal(
+							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}});
+						}
+					}";
+					}
+					elseif ($action['name'] == "emoticons")
+					{
+						$js = "{name:'" . JText::_('COM_KUNENA_EDITOR_EMOTICONS') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
+							event.preventDefault();
+
+							jQuery('#modal-" . $action['name'] . "').modal('hide');
+						});
+
+						jQuery('#modal-" . $action['name'] . "').modal(
+							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}});
+						}
+					}";
+					}
+					else
+					{
+						$js = "{name:'" . $action['name'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
+							event.preventDefault();
+
+							jQuery('#modal-" . $action['name'] . "').modal('hide');
+						});
+
+						jQuery('#modal-" . $action['name'] . "').modal(
+							{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}});
+						}
+					}";
+					}
 					break;
 			}
 		}

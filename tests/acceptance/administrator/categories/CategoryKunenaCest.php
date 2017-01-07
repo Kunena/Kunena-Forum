@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Package
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
@@ -39,7 +39,6 @@ class CategoryKunenaCest
 		$I->fillField(['id' => 'headerdesc'], 'headerdesc');
 		$I->clickToolbarButton('save');
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category name updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -73,7 +72,6 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category category4 updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -107,7 +105,6 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category subcategory1 updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 

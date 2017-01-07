@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -54,5 +54,16 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		}
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
+	protected function prepareDocument()
+	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
 	}
 }

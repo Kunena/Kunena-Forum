@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -18,12 +18,14 @@ class KunenaViewCategory extends KunenaView
 {
 	/**
 	 * @param   null $tpl
+	 *
+	 * @throws Exception
 	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
 
 		KunenaHtmlParser::$relative = false;
@@ -32,7 +34,7 @@ class KunenaViewCategory extends KunenaView
 
 		if (!$this->category->authorise('read'))
 		{
-			JError::raiseError(404, $this->category->getError());
+			throw new Exception($this->category->getError(), 404);
 		}
 
 		$this->topics = $this->get('Topics');

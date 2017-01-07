@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Smilies
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -45,7 +45,7 @@ JHtml::_('behavior.multiselect');
 						</td>
 						<td width="80%">
 							<input class="span2" type="text" name="smiley_code" value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" />
-							<img name="smiley_image" src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>" border="0" alt="" />
+							<img name="smiley_image" src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>" border="0" alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" />
 						</td>
 					</tr>
 					<tr>

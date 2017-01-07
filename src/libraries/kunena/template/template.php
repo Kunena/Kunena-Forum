@@ -5,7 +5,7 @@
  * @package     Kunena.Framework
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -254,10 +254,11 @@ class KunenaTemplate extends JObject
 		}
 		?>
 		<script>
-			jQuery(document).ready(function() {
+			jQuery(document).ready(function($) {
 				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'],  $sef) !== false){ echo "true"; } else echo "false";?>;
 				if (isForumActive){
-					jQuery('.current').addClass("active alias-parent-active");
+					$('.current').addClass("active alias-parent-active");
+					$('.alias-parent-active').addClass("active alias-parent-active");
 				}
 			});
 		</script>
@@ -721,7 +722,7 @@ HTML;
 
 		if ($config->topicicons)
 		{
-			$category_iconset = 'images/topic_icons/';
+			$category_iconset = 'images/topic_icons';
 			if (!file_exists($category_iconset))
 			{
 				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
@@ -990,9 +991,9 @@ HTML;
 	/**
 	 * @param KunenaForumTopic $topic
 	 *
-	 * @param string           $category_iconset
-	 *
 	 * @return string
+	 * @internal param string $category_iconset
+	 *
 	 */
 	public function getTopicIcon($topic)
 	{
@@ -1013,17 +1014,51 @@ HTML;
 			$xml = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
+			if ($topic->ordering)
+			{
+				$topic->icon_id = 504;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->locked)
+			{
+				$topic->icon_id = 505;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->ordering && $topic->locked)
+			{
+				$topic->icon_id = 503;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 2)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 3)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
 			if ($topicicontype == 'B2')
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
+				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
 			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
+			}
+			elseif ($topicicontype == 'image')
+			{
+				return '<img src="'. JUri::root() .'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
@@ -1092,7 +1127,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
+				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1119,6 +1154,12 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1136,6 +1177,17 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+				if (!$icon)
+				{
+					$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				}
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1242,7 +1294,7 @@ HTML;
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 
-			return "url({$q}{$class->getFile($value, true, 'media', 'media/kunena')}{$q})";
+			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
 		});
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
@@ -1420,6 +1472,12 @@ HTML;
 		if (isset($src->labels))
 		{
 			$label       = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+
+			if (!$label)
+			{
+				$label   = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
+			}
+
 			$attributes = $label[0]->attributes();
 			$label       = new stdClass;
 			$label->id   = (int) $attributes->id;
@@ -1431,6 +1489,39 @@ HTML;
 			$label->labeltype = (string) $attributes->labeltype;
 
 			return $label;
+		}
+	}
+
+	public function borderless()
+	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$borderless   = $this->ktemplate->params->get('borderless');
+
+		if ($borderless)
+		{
+			return '';
+		}
+		else
+		{
+			return ' table-bordered';
+		}
+	}
+
+	public function tooltips($class = false)
+	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$tooltips   = $this->ktemplate->params->get('tooltips');
+
+		if ($tooltips)
+		{
+			if ($class)
+			{
+				return 'class="hasTooltip"';
+			}
+			else
+			{
+				return 'hasTooltip';
+			}
 		}
 	}
 }

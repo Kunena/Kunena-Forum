@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -83,7 +83,9 @@ class KunenaLoginComprofiler
 	 */
 	public function getLoginURL()
 	{
-		return cbSef('index.php?option=com_comprofiler&task=login');
+		global $_CB_framework;
+
+		return $_CB_framework->viewUrl('login');
 	}
 
 	/**
@@ -91,7 +93,9 @@ class KunenaLoginComprofiler
 	 */
 	public function getLogoutURL()
 	{
-		return cbSef('index.php?option=com_comprofiler&task=logout');
+		global $_CB_framework;
+
+		return $_CB_framework->viewUrl('logout');
 	}
 
 	/**
@@ -99,13 +103,14 @@ class KunenaLoginComprofiler
 	 */
 	public function getRegistrationURL()
 	{
-		global $ueConfig;
+		global $_CB_framework, $ueConfig;
+
 		$usersConfig = JComponentHelper::getParams('com_comprofiler');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
 			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
 		{
-			return cbSef('index.php?option=com_comprofiler&task=registers');
+			return $_CB_framework->viewUrl('registers');
 		}
 
 		return null;
@@ -116,7 +121,9 @@ class KunenaLoginComprofiler
 	 */
 	public function getResetURL()
 	{
-		return cbSef('index.php?option=com_comprofiler&task=lostPassword');
+		global $_CB_framework;
+
+		return $_CB_framework->viewUrl('lostpassword');
 	}
 
 	/**
@@ -124,6 +131,8 @@ class KunenaLoginComprofiler
 	 */
 	public function getRemindURL()
 	{
-		return cbSef('index.php?option=com_comprofiler&task=lostPassword');
+		global $_CB_framework;
+
+		return $_CB_framework->viewUrl('lostpassword');
 	}
 }

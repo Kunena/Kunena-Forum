@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  Kunena
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -53,11 +53,11 @@ class KunenaAvatarKunena extends KunenaAvatar
 			// If avatar does not exist use default image.
 			if ($sizex <= 90)
 			{
-				$avatar = 's_nophoto.jpg';
+				$avatar = 's_nophoto.png';
 			}
 			else
 			{
-				$avatar = 'nophoto.jpg';
+				$avatar = 'nophoto.png';
 			}
 
 			// Search from the template.

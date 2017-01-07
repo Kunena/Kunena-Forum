@@ -1,4 +1,4 @@
-/*! jssocials - v1.2.1 - 2016-04-10
+/*! jssocials - v1.4.0 - 2016-10-10
 * http://js-socials.com
 * Copyright (c) 2016 Artem Tabalin; Licensed MIT */
 (function(window, $, undefined) {
@@ -13,7 +13,7 @@
         return value;
     };
 
-    var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp)$|^data:image\/(jpeg|png|gif|bmp);base64)/i;
+    var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp|svg)$|^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64)/i;
     var URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g;
 
     var MEASURES = {
@@ -449,11 +449,19 @@
             label: "Like",
             logo: "fa fa-facebook",
             shareUrl: "https://facebook.com/sharer/sharer.php?u={url}",
-            countUrl: function() {
-                return "https://graph.facebook.com/fql?q=SELECT total_count FROM link_stat WHERE url='" + window.encodeURIComponent(this.url) + "'";
-            },
+            countUrl: "https://graph.facebook.com/?id={url}",
             getCount: function(data) {
-                return (data.data.length && data.data[0].total_count) || 0;
+                return data.share && data.share.share_count || 0;
+            }
+        },
+
+        vkontakte: {
+            label: "Like",
+            logo: "fa fa-vk",
+            shareUrl: "https://vk.com/share.php?url={url}&title={title}&description={text}",
+            countUrl: "https://vk.com/share.php?act=count&index=1&url={url}",
+            getCount: function(data) {
+                return parseInt(data.slice(15, -2).split(', ')[1]);
             }
         },
 
@@ -461,12 +469,7 @@
             label: "+1",
             logo: "fa fa-google",
             shareUrl: "https://plus.google.com/share?url={url}",
-            countUrl: function() {
-                return "https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url="+ window.encodeURIComponent(this.url);
-            },
-            getCount: function(data) {
-                return parseFloat((data.match(/\{c: ([.0-9E]+)/) || [])[1]);
-            }
+            countUrl: ""
         },
 
         linkedin: {
@@ -499,6 +502,14 @@
             }
         },
 
+        telegram: {
+            label: "Telegram",
+            logo: "fa fa-paper-plane",
+            shareUrl: "tg://msg?text={url} {text}",
+            countUrl: "",
+            shareIn: "self"
+        },
+
         whatsapp: {
             label: "WhatsApp",
             logo: "fa fa-whatsapp",
@@ -512,6 +523,29 @@
             logo: "fa fa-comment",
             shareUrl: "http://line.me/R/msg/text/?{text} {url}",
             countUrl: ""
+        },
+
+        viber: {
+            label: "Viber",
+            logo: "fa fa-volume-control-phone",
+            shareUrl: "viber://forward?text={url} {text}",
+            countUrl: "",
+            shareIn: "self"
+        },
+
+        pocket: {
+            label: "Pocket",
+            logo: "fa fa-get-pocket",
+            shareUrl: "https://getpocket.com/save?url={url}&title={title}",
+            countUrl: ""
+        },
+
+        messenger: {
+            label: "Share",
+            logo: "fa fa-commenting",
+            shareUrl: "fb-messenger://share?link={url}",
+            countUrl: "",
+            shareIn: "self"
         }
 
     });

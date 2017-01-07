@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -229,49 +229,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public function getKeywords($user = null, $glue = false)
 	{
-		$config = KunenaFactory::getConfig();
 
-		if ($user !== false)
-		{
-			$user = KunenaUserHelper::get($user);
-
-			// Guests or non-existing cannot have personal keywords
-			if (!$config->userkeywords || !$user->exists())
-			{
-				return $glue ? '' : array();
-			}
-
-			$user = $user->userid;
-		}
-		elseif (!$config->keywords)
-		{
-			return $glue ? '' : array();
-		}
-
-		$user = (int) $user;
-
-		if (!isset($this->_keywords[$user]))
-		{
-			$this->_keywords[$user] = KunenaKeywordHelper::getByTopics($this->id, $user);
-			ksort($this->_keywords[$user]);
-		}
-
-		if ($glue)
-		{
-			$keywords = array_keys($this->_keywords[$user]);
-
-			foreach ($keywords as &$keyword)
-			{
-				if (strpos($keyword, ' ') !== false)
-				{
-					$keyword = '"' . $keyword . '"';
-				}
-			}
-
-			return implode($glue, $keywords);
-		}
-
-		return $this->_keywords[$user];
+		return ;
 	}
 
 	/**
@@ -292,10 +251,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			->where("thread={$this->id}")->where("hold={$this->_hold}");
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -1397,8 +1361,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return true;
@@ -1434,12 +1405,19 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
 			// Delete user read
 			$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($this->id)}";
-			// Delete poll (users)
-			$queries[] = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->quote($this->poll_id)}";
-			// Delete poll (options)
-			$queries[] = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->quote($this->poll_id)}";
-			// Delete poll
-			$queries[] = "DELETE FROM #__kunena_polls WHERE id={$db->quote($this->poll_id)}";
+			// Delete rating
+			$queries[] = "DELETE FROM #__kunena_rate WHERE topic_id={$db->quote($this->id)}";
+
+			if ($this->poll_id)
+			{
+				// Delete poll (users)
+				$queries[] = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->quote($this->poll_id)}";
+				// Delete poll (options)
+				$queries[] = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->quote($this->poll_id)}";
+				// Delete poll
+				$queries[] = "DELETE FROM #__kunena_polls WHERE id={$db->quote($this->poll_id)}";
+			}
+
 			// Delete thank yous
 			$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread={$db->quote($this->id)}";
 			// Delete all messages
@@ -1448,16 +1426,20 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			foreach ($queries as $query)
 			{
 				$db->setQuery($query);
-				$db->execute();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 
-			// FIXME: add recount statistics
 			if ($recount)
 			{
 				KunenaUserHelper::recount();
-				KunenaForumCategoryHelper::recount();
-				KunenaAttachmentHelper::cleanup();
 				KunenaForumMessageThankyouHelper::recount();
 			}
 		}
@@ -1549,8 +1531,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
 				$db->setQuery($query, 0, 1);
-				$first = $db->loadObject();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$first = $db->loadObject();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				if ($first)
 				{
@@ -1570,8 +1559,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
 				$db->setQuery($query, 0, 1);
-				$last = $db->loadObject();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$last = $db->loadObject();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				if ($last)
 				{
@@ -1645,10 +1641,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 					WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
 					GROUP BY m.thread";
 			$this->_db->setQuery($query);
-			$result = $this->_db->loadAssoc();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$result = $this->_db->loadAssoc();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				return false;
 			}
 
@@ -1661,10 +1662,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 						WHERE m.thread={$this->_db->quote($this->id)}
 						GROUP BY m.thread";
 				$this->_db->setQuery($query);
-				$result = $this->_db->loadAssoc();
 
-				if (KunenaError::checkDatabaseError())
+				try
 				{
+					$result = $this->_db->loadAssoc();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+
 					return false;
 				}
 
@@ -1694,20 +1700,30 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$query = "UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
-			$this->_db->setQuery($query);
-			$this->_db->execute();
+		$this->_db->setQuery($query);
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
-			$this->_db->setQuery($query);
-			$this->_db->execute();
+		$this->_db->setQuery($query);
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 

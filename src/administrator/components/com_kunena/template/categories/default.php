@@ -4,7 +4,7 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Categories
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -103,14 +103,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 						</th>
-						<th class="nowrap">
+						<th width="1%" class="nowrap">
 							<?php echo JText::_('COM_KUNENA_GO'); ?>
 						</th>
-						<th class="nowrap">
+						<th width="51%" class="nowrap">
 							<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 						</th>
-						<th width="24%" class="nowrap center hidden-phone">
-							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
+						<th width="20%" class="nowrap center hidden-phone">
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
@@ -272,7 +272,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php
 								echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
 								if ($item->checked_out) {
-									$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->tryAuthorise('core.admin', 'com_checkin');
+									$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
 									$editor = KunenaFactory::getUser($item->editor)->getName();
 									echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 								}

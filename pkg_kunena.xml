@@ -3,13 +3,13 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.0.0-BETA4_DEV</version>
+	<version>5.0.6-dev</version>
 	<versionname>Internal</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2016 Kunena Team. All rights reserved.</copyright>
+	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Forum Package.</description>
 
@@ -35,7 +35,7 @@
 	</files>
 
 	<updateservers>
-		<server type="collection" priority="1" name="Kunena 5.0 Update Site">http://update.kunena.org/5.0/list.xml</server>
+		<server type="collection" priority="1" name="Kunena 5.0 Update Site">https://update.kunena.org/5.0/list.xml</server>
 	</updateservers>
 
 	<restorepoint>
@@ -57,9 +57,12 @@
 		<langfiles>
 			<lang>com_kunena</lang>
 			<lang>plg_kunena_alphauserpoints</lang>
-      <lang>plg_kunena_altauserpoints</lang>
+			<lang>plg_kunena_altauserpoints</lang>
 			<lang>plg_kunena_community</lang>
 			<lang>plg_kunena_comprofiler</lang>
+			<lang>plg_kunena_easyblog</lang>
+			<lang>plg_kunena_easyprofile</lang>
+			<lang>plg_kunena_easysocial</lang>
 			<lang>plg_kunena_gravatar</lang>
 			<lang>plg_kunena_joomla</lang>
 			<lang>plg_kunena_kunena</lang>

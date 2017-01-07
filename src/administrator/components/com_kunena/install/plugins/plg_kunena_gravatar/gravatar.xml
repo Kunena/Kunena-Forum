@@ -23,6 +23,7 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field name="default_image" type="text" label="PLG_KUNENA_GRAVATAR_DEFAULT_IMAGE" description="PLG_KUNENA_GRAVATAR_DEFAULT_IMAGE_DESC" />
 			</fieldset>
 		</fields>
 	</config>

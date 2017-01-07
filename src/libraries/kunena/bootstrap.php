@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Integration
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -34,7 +34,6 @@ JHtml::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 JForm::addFieldPath(KPATH_FRAMEWORK . '/form/fields');
 
 // Register classes where the names have been changed to fit the autoloader rules.
-// @deprecated
 JLoader::register('KunenaAccess', KPATH_FRAMEWORK . '/access.php');
 JLoader::register('KunenaConfig', KPATH_FRAMEWORK . '/config.php');
 JLoader::register('KunenaController', KPATH_FRAMEWORK . '/controller.php');
@@ -62,3 +61,4 @@ JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/p
 JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/user.php');
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
 JLoader::register('KunenaForumTopicRate', KPATH_FRAMEWORK . '/forum/topic/rate/rate.php');
+JLoader::register('KunenaIcons', KPATH_FRAMEWORK . '/icons/icons.php');

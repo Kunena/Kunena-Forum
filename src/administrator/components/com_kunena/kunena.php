@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Administrator
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 // Access check.
 if (!JFactory::getUser()->authorise('core.manage', 'com_kunena'))
 {
-	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 }
 
 // Check if installation hasn't been completed.

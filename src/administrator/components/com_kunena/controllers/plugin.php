@@ -21,10 +21,13 @@ jimport('joomla.application.component.controllerform');
 class KunenaAdminControllerPlugin extends KunenaController
 {
 	/**
+	 * construct
 	 *
-	 * @param   array $config
+	 * @param   array  $config  config
 	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -46,9 +49,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string $name   The model name. Optional.
-	 * @param   string $prefix The class prefix. Optional.
-	 * @param   array  $config Configuration array for model. Optional.
+	 * @param   string  $name    The model name.  Optional.
+	 * @param   string  $prefix  The class prefix.  Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  object  The model.
 	 *
@@ -87,8 +90,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param   array  $data An array of input data.
-	 * @param   string $key  The name of the key for the primary key; default is id.
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
 	 *
 	 * @return  boolean
 	 *
@@ -105,7 +108,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 * Extended classes can override this if necessary.
 	 *
 	 * @param   array   $data  An array of input data.
-	 * @param   string  $key  The name of the key for the primary key.
+	 * @param   string  $key   The name of the key for the primary key.
 	 *
 	 * @return  boolean
 	 *
@@ -128,9 +131,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to edit an existing record.
 	 *
-	 * @param   string $key    The name of the primary key of the URL variable.
-	 * @param   string $urlVar The name of the URL variable if different from the primary key
-	 *                         (sometimes required to avoid router collisions).
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key
+	 *                           (sometimes required to avoid router collisions).
 	 *
 	 * @return  boolean  True if access level check and checkout passes, false otherwise.
 	 *
@@ -212,7 +215,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   string $key The name of the primary key of the URL variable.
+	 * @param   string  $key  The name of the primary key of the URL variable.
 	 *
 	 * @return  boolean  True if access level checks pass, false otherwise.
 	 *
@@ -292,8 +295,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Gets the URL arguments to append to an item redirect.
 	 *
-	 * @param   integer $recordId The primary key id for the item.
-	 * @param   string  $urlVar   The name of the URL variable for the id.
+	 * @param   integer  $recordId  The primary key id for the item.
+	 * @param   string   $urlVar    The name of the URL variable for the id.
 	 *
 	 * @return  string  The arguments to append to the redirect URL.
 	 *
@@ -349,8 +352,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 * Function that allows child controller access to model data
 	 * after the data has been saved.
 	 *
-	 * @param   JModelLegacy $model     The data model object.
-	 * @param   array        $validData The validated data.
+	 * @param   JModelLegacy  $model      The data model object.
+	 * @param   array         $validData  The validated data.
 	 *
 	 * @return  void
 	 *
@@ -363,8 +366,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param   string $key    The name of the primary key of the URL variable.
-	 * @param   string $urlVar The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @return  boolean  True if successful, false otherwise.
 	 *
@@ -553,6 +556,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 			)
 		);
 
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+		
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)
 		{

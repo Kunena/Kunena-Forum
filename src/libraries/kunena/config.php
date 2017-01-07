@@ -3,7 +3,7 @@
  * Kunena Component
  * @package    Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  *
@@ -230,6 +230,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  Max subject; input, number
 	 * @since  1.0.0
+	 * @depricated K5.0
 	 */
 	public $maxsubject = 50;
 
@@ -843,7 +844,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-	public $userlist_allowed = 0;
+	public $userlist_allowed = 1;
 
 	/**
 	 * @var    integer  User list count users; select, selection
@@ -1139,19 +1140,55 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.0
 	 */
 	public $log_moderation = 0;
-	
+
 	/**
 	 * @var integer Define the number of caracters from start when shorthen attachments filemane
 	 * @since  K5.0.0
 	 */
 	public $attach_start = 0;
-	
+
 	/**
 	 * @var integer Define the number of caracters from end when shorthen attachments filemane
 	 * @since  K5.0.0
 	 */
 	public $attach_end = 14;
-	
+
+	/**
+	 * @var string Define the google maps API key
+	 * @since  K5.0.0
+	 */
+	public $google_map_api_key = '';
+
+	/**
+	 * @var integer Allow to remove utf8 characters from filename of attachments
+	 * @since  K5.0.0
+	 */
+	public $attachment_utf8 = 1;
+
+	/**
+	 * @var integer Allow to auto-embded soundcloud item when you put just the URL in a message
+	 * @since  K5.0.0
+	 */
+	public $autoembedsoundcloud = 1;
+
+	/**
+	 * @var string to define the image location
+	 * @since  K5.0.2
+	 */
+	public $emailheader = '/media/kunena/email/hero-wide.png';
+
+	/**
+	 * @var integer
+	 * @since  K5.0.3
+	 */
+	public $user_status = 1;
+
+	/**
+	 * @var integer
+	 * @since  K5.0.4
+	 */
+	public $plain_email = 0;
+
 	/**
 	 *
 	 */
@@ -1209,8 +1246,15 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1233,8 +1277,15 @@ class KunenaConfig extends JObject
 	{
 		$db = JFactory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
-		$config = $db->loadAssoc();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$config = $db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if ($config)
 		{

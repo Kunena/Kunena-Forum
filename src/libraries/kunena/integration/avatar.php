@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -135,7 +135,7 @@ class KunenaAvatar
 	 *
 	 * @return string|void
 	 */
-	public function getLink($user, $class='', $sizex = 90, $sizey = 90)
+	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
 		$size = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
@@ -145,7 +145,11 @@ class KunenaAvatar
 			return;
 		}
 
-		if ($class)
+		if ($class == 'none')
+		{
+			$class = ' class="kavatar"';
+		}
+		elseif ($class)
 		{
 			$class = ' class="' . $class . '"';
 		}

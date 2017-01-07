@@ -4,12 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
@@ -55,7 +57,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 			</label>
 			<div class="controls" id="ann-date">
-				<?php echo $this->displayInput('created', '', 'addcreated'); ?>
+				<div class="input-group date">
+					<?php echo $this->displayInput('created', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'addcreated'); ?>
+				</div>
 			</div>
 		</div>
 
@@ -64,7 +68,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE_UP'); ?>
 			</label>
 			<div class="controls" id="ann-date2">
-				<?php echo $this->displayInput('publish_up', '', 'publish_up'); ?>
+				<div class="input-group date">
+					<?php echo $this->displayInput('publish_up', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'publish_up'); ?>
+				</div>
 			</div>
 		</div>
 
@@ -73,7 +79,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
 			</label>
 			<div class="controls" id="ann-date3">
-				<?php echo $this->displayInput('publish_down', '', 'publish_down'); ?>
+				<div class="input-group date">
+					<?php echo $this->displayInput('publish_down', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'publish_down'); ?>
+				</div>
 			</div>
 		</div>
 

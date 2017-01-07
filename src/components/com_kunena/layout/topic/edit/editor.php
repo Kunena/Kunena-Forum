@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -131,7 +131,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlinktag=0;");
 		}
 
-		if ($this->config->image_upload != "" && $templatesettings->get('picture'))
+		if ($templatesettings->get('picture'))
 		{
 			$this->addScriptDeclaration("kunena_showpicturetag=1;");
 		}
@@ -201,6 +201,150 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		else
 		{
 			$this->addScriptDeclaration("kunena_showsoundcloudtag=0;");
+		}
+
+		if ($templatesettings->get('confidential'))
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=0;");
+		}
+
+		if ($templatesettings->get('hr'))
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=0;");
+		}
+
+		if ($templatesettings->get('listitem'))
+		{
+			$this->addScriptDeclaration("kunena_showlistitemtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showlistitemtag=0;");
+		}
+
+		if ($templatesettings->get('supscript'))
+		{
+			$this->addScriptDeclaration("kunena_showsupscripttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsupscripttag=0;");
+		}
+
+		if ($templatesettings->get('subscript'))
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=0;");
+		}
+
+		if ($templatesettings->get('numericlist'))
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=0;");
+		}
+
+		if ($templatesettings->get('bulletedlist'))
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=0;");
+		}
+
+		if ($templatesettings->get('alignright'))
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=0;");
+		}
+
+		if ($templatesettings->get('alignleft'))
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=0;");
+		}
+
+		if ($templatesettings->get('center'))
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=0;");
+		}
+
+		if ($templatesettings->get('underline'))
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
+		}
+
+		if ($templatesettings->get('italic'))
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=0;");
+		}
+
+		if ($templatesettings->get('bold'))
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=0;");
+		}
+
+		if ($templatesettings->get('strikethrough'))
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=0;");
+		}
+
+		if ($templatesettings->get('colors'))
+		{
+			$this->addScriptDeclaration("kunena_showcolorstag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcolorstag=0;");
+		}
+
+		if ($templatesettings->get('size'))
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=0;");
 		}
 	}
 }

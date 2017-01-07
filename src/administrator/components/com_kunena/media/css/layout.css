@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Administrator
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -223,4 +223,18 @@ dt {
 	border-top: 0;
 	border-bottom: 1px solid #eee;
 	padding-bottom: 15px;
+}
+
+.valid {
+	color: green;
+	width: 300px !important;
+}
+
+.invalid {
+	color: red;
+	width: 300px !important;
+}
+
+.invalid-border {
+	border-color: red !important;
 }

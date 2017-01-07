@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -23,7 +23,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function displayEdit($tpl = null)
 	{
-		$body     = JFactory::getApplication()->input->get('body', '', 'post', 'string', 'raw');
+		$body     = JFactory::getApplication()->input->post->get('body', '', 'raw');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->pubwrite)
@@ -60,8 +60,15 @@ class KunenaViewTopic extends KunenaView
 			$kquery = new KunenaDatabaseQuery;
 			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
-			$smileys = $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$smileys = $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			foreach ($smileys as $smiley)
 			{

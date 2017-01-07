@@ -2,85 +2,139 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function ($) {
 
 	/* To hide or open spoiler on click */
-	jQuery('.kspoiler').each(function( index ) {
-		jQuery( this ).click(function() {
-			if ( !jQuery(this).find('.kspoiler-content').is(':visible') ) {
-				jQuery(this).find('.kspoiler-content').show();
-				jQuery(this).find('.kspoiler-expand').hide();
-				jQuery(this).find('.kspoiler-hide').show();
+	$('.kspoiler').each(function( index ) {
+		$( this ).click(function() {
+			if ( !$(this).find('.kspoiler-content').is(':visible') ) {
+				$(this).find('.kspoiler-content').show();
+				$(this).find('.kspoiler-expand').hide();
+				$(this).find('.kspoiler-hide').show();
 			} else {
-				jQuery(this).find('.kspoiler-content').hide();
-				jQuery(this).find('.kspoiler-expand').show();
-				jQuery(this).find('.kspoiler-hide').hide();
+				$(this).find('.kspoiler-content').hide();
+				$(this).find('.kspoiler-expand').show();
+				$(this).find('.kspoiler-hide').hide();
 			}
 		});
 	});
 
 	/* To allow to close or open the quick-reply modal box */
-	jQuery('.openmodal').click(function () {
-		var boxToOpen = jQuery(this).attr('href');
-		jQuery(boxToOpen).css('visibility', 'visible');
+	$('.openmodal').click(function () {
+		var boxToOpen = $(this).attr('href');
+		$(boxToOpen).css('visibility', 'visible');
 	});
 
 	/* Button to show more info on profilebox */
-	jQuery(".heading").click(function () {
-		if (!jQuery(this).hasClass('heading-less')) {
-			jQuery(this).prev(".heading").show();
-			jQuery(this).hide();
-			jQuery(this).next(".content").slideToggle(500);
+	$(".heading").click(function () {
+		if (!$(this).hasClass('heading-less')) {
+			$(this).prev(".heading").show();
+			$(this).hide();
+			$(this).next(".content").slideToggle(500);
 		} else {
-			var content = jQuery(this).next(".heading").show();
-			jQuery(this).hide();
+			var content = $(this).next(".heading").show();
+			$(this).hide();
 			content.next(".content").slideToggle(500);
 		}
 	});
 
+	$('[id^="login-link"]').click(function() {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$(this).addClass('kdelay');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
+			}
+		});
+	});
+
+	$(document).click(function() {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
+	});
+
+	$('#userdropdown').click(function(e){
+		e.stopPropagation();
+	});
+
 	/* On moderate page display subject or field to enter manually the topic ID */
-	jQuery('#kmod_topics').change(function () {
-		var id_item_selected = jQuery(this).val();
+	$('#kmod_topics').change(function () {
+		var id_item_selected = $(this).val();
 		if (id_item_selected != 0) {
-			jQuery('#kmod_subject').hide();
+			$('#kmod_subject').hide();
 		} else {
-			jQuery('#kmod_subject').show();
+			$('#kmod_subject').show();
 		}
 
 		if (id_item_selected == -1) {
-			jQuery('#kmod_targetid').show();
+			$('#kmod_targetid').show();
 		} else {
-			jQuery('#kmod_targetid').hide();
+			$('#kmod_targetid').hide();
 		}
 	});
 
-	if (jQuery.fn.jsSocials != undefined) {
-		jQuery("#share").jsSocials({
+	if ($.fn.jsSocials != undefined) {
+		$("#share").jsSocials({
 			showCount: true,
 			showLabel: true,
-			shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+			shares: [
+			{
+				share: "email",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
+			},
+			{
+				share: "twitter",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+			},
+			{
+				share: "facebook",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
+			},
+			{
+				share: "googleplus",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
+			},
+			{
+				share: "linkedin",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
+			}, {
+				share: "pinterest",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
+			},
+			{
+				share: "stumbleupon",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
+			},
+			{
+				share: "whatsapp",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
+			}]
 		});
+		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
 	}
 
-	jQuery('#kmod_categories').change(function () {
-		jQuery.getJSON(
-			kunena_url_ajax, {catid: jQuery(this).val()}
+	$('#kmod_categories').change(function () {
+		$.getJSON(
+			kunena_url_ajax, {catid: $(this).val()}
 		).done(function (json) {
-			var first_item = jQuery('#kmod_topics option:nth(0)').clone();
-			var second_item = jQuery('#kmod_topics option:nth(1)').clone();
+			var first_item = $('#kmod_topics option:nth(0)').clone();
+			var second_item = $('#kmod_topics option:nth(1)').clone();
 
-			jQuery('#kmod_topics').empty();
+			$('#kmod_topics').empty();
 			first_item.appendTo('#kmod_topics');
 			second_item.appendTo('#kmod_topics');
 
-			jQuery.each(json, function (index, object) {
-				jQuery.each(object, function (key, element) {
-					jQuery('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
+			$.each(json, function (index, object) {
+				$.each(object, function (key, element) {
+					$('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
 				});
 			});
 		});

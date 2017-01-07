@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -255,15 +255,22 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Obey Joomla configuration.
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				if ($this->config->board_title == $this->app->get('sitename'))
+				{
+					$title = JText::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
+				}
+				else
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				}
 			}
 			else
 			{
-				$title = KunenaFactory::getConfig()->board_title . ' - ' . $title;
+				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
 			}
 		}
 
@@ -287,6 +294,14 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setDescription($description)
 	{
-		$this->document->setMetadata('description',  $description);
+		$this->document->setMetadata('description', $description);
+	}
+
+	/**
+	 * @param $robots
+	 */
+	protected function setRobots($robots)
+	{
+		$this->document->setMetaData('robots', $robots, 'robots');
 	}
 }

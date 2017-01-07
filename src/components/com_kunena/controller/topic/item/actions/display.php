@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -49,6 +49,12 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$this->template = KunenaFactory::getTemplate();
 		$this->topicButtons = new JObject;
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$fullactions = $this->ktemplate->params->get('fullactions');
+		$topicicontype =  $this->ktemplate->params->get('topicicontype');
+
+		$button = $fullactions ? true : false;
+
 		if ($this->config->read_only)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
@@ -57,39 +63,154 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		if ($this->topic->isAuthorised('reply'))
 		{
 			// Add Reply topic button.
-			$this->topicButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication')
-			);
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'icon icon-undo'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'glyphicon glyphicon-share-alt'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'fa fa-reply'));
+			}
+			elseif ($topicicontype == 'image' && !$fullactions)
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'kicon-reply'));
+			}
+			else
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button)
+				);
+			}
 		}
 
 		if ($userTopic->subscribed)
 		{
 			// User can always remove existing subscription.
-			$this->topicButtons->set('subscribe',
-				$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user')
-			);
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'icon icon-bookmark'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-bookmark'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-bookmark'));
+			}
+			elseif ($topicicontype == 'image' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'kicon-unsubscribe'));
+			}
+			else
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button)
+				);
+			}
 		}
 		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// Add subscribe topic button.
-			$this->topicButtons->set('subscribe',
-				$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user')
-			);
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-bookmark-2'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-bookmark'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-bookmark-o'));
+			}
+			elseif ($topicicontype == 'image' && !$fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'kicon-subscribe'));
+			}
+			else
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button)
+				);
+			}
 		}
 
 		if ($userTopic->favorite)
 		{
 			// User can always remove existing favorite.
-			$this->topicButtons->set('favorite',
-				$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user')
-			);
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'icon icon-star'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'glyphicon glyphicon-star'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'fa fa-star'));
+			}
+			elseif ($topicicontype == 'image' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'kicon-unfavorite'));
+			}
+			else
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button)
+				);
+			}
 		}
 		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// Add favorite topic button.
-			$this->topicButtons->set('favorite',
-				$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user')
-			);
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'icon icon-star-empty'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'glyphicon glyphicon-star-empty'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'fa fa-star-o'));
+			}
+			elseif ($topicicontype == 'image' && !$fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'kicon-favorite'));
+			}
+			else
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button)
+				);
+			}
 		}
 
 		if ($this->topic->getCategory()->isAuthorised('moderate'))
@@ -99,32 +220,34 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			$lock = $this->topic->locked ? 'unlock' : 'lock';
 
 			$this->topicButtons->set('sticky',
-				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation')
+				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button)
 			);
+
 			$this->topicButtons->set('lock',
-				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation')
+				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button)
 			);
+
 			$this->topicButtons->set('moderate',
-				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation')
+				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button)
 			);
 
 			if ($this->topic->hold == 1)
 			{
 				$this->topicButtons->set('approve',
-					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button)
 				);
 			}
 
 			if ($this->topic->hold == 1 || $this->topic->hold == 0)
 			{
 				$this->topicButtons->set('delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button)
 				);
 			}
 			elseif ($this->topic->hold == 2 || $this->topic->hold == 3)
 			{
 				$this->topicButtons->set('undelete',
-					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
 				);
 			}
 		}
@@ -137,21 +260,21 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			if ($this->layout != 'default')
 			{
 				$this->topicButtons->set('flat',
-					$this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user')
+					$this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user', false, $button)
 				);
 			}
 
 			if ($this->layout != 'threaded')
 			{
 				$this->topicButtons->set('threaded',
-					$this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user')
+					$this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user', false, $button)
 				);
 			}
 
 			if ($this->layout != 'indented')
 			{
 				$this->topicButtons->set('indented',
-					$this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user')
+					$this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user', false, $button)
 				);
 			}
 		}
@@ -173,10 +296,10 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 *
 	 * @return  string
 	 */
-	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true)
+	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name,
-				'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => ''));
+				'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon));
 	}
 }

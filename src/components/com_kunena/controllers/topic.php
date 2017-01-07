@@ -5,7 +5,7 @@
  * @package     Kunena.Site
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -65,7 +65,16 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			$object->path    = $attach->getUrl();
+
+			if ($attach->protected)
+			{
+				$object->path    = $attach->getUrl();
+			}
+			else
+			{
+				$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+			}
+
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
@@ -291,15 +300,13 @@ class KunenaControllerTopic extends KunenaController
 			'catid'             => $this->catid,
 			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
 			'email'             => JFactory::getApplication()->input->getString('email', null),
-			'subject'           => JFactory::getApplication()->input->get('subject', null, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', null, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null),
 			'subscribe'         => JFactory::getApplication()->input->getInt('subscribeMe', 0)
 		);
 
@@ -394,16 +401,24 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && !$this->me->isModerator($category))
+		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip        = $_SERVER ["REMOTE_ADDR"];
 
 			$db = JFactory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
-			$count = $db->loadResult();
 
-			if (KunenaError::checkDatabaseError() || $count)
+			try
+			{
+				$count = $db->loadResult();
+			}
+			catch(JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			if ($count)
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection));
 				$this->setRedirectBack();
@@ -644,16 +659,14 @@ class KunenaControllerTopic extends KunenaController
 		$fields  = array(
 			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
 			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
-			'subject'           => JFactory::getApplication()->input->get('subject', $message->subject, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', $message->message, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null)
+			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0)
 		);
 
 		if (!JSession::checkToken('post'))
@@ -747,7 +760,12 @@ class KunenaControllerTopic extends KunenaController
 			$text = trim(JFilterOutput::cleanText($text));
 		}
 
-		if (!$text)
+		if (!$text && $this->config->userdeletetmessage == 1)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+			return;
+		}
+		elseif (!$text)
 		{
 			// Reload message (we don't want to change it).
 			$message->load();
@@ -901,21 +919,31 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_MODERATED'));
 		}
 
-		$this->setRedirect($message->getUrl($this->return, false));
+		// Redirect edit first message when category is under review
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
+		{
+			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
+		}
+		else
+		{
+			$this->setRedirect($message->getUrl($this->return, false));
+		}
 	}
 
 	/**
 	 * Check if title of topic or message contains URL to limit part of spam
 	 *
-	 * @param string $usbject
+	 * @param $subject
 	 *
-	 * @return boolean
+	 * @return bool
+	 * @internal param string $usbject
+	 *
 	 */
 	protected function checkURLInSubject($subject)
 	{
 		if ($this->config->url_subject_topic)
 		{
-			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
 			$ignore = false;
 
@@ -1767,7 +1795,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
 		}
 
 		if ($targetobject)
@@ -1923,26 +1951,9 @@ class KunenaControllerTopic extends KunenaController
 					$body = trim($layout->render());
 					$mail->setBody($body);
 				}
-
 				catch (Exception $e)
 				{
-					// TODO: Deprecated in K4.0, remove in K5.0
-					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RREASON') . " " . $reason;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $text;
-					$mailmessage .= "\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_POSTER') . " {$baduser->username} ({$baduser->name})";
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $topic->subject;
-					$mailmessage .= "\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_MESSAGE') . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
-					$mailmessage .= "\n-----\n\n";
-					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_POST_LINK') . " " . $msglink;
-					$mailmessage = JMailHelper::cleanBody(strtr($mailmessage, array('&#32;' => '')));
 
-					$mail->setBody($mailmessage);
 				}
 
 				$receivers = array();

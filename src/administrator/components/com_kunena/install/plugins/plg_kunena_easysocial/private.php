@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        EasySocial
- * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -27,12 +27,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 		$this->params = $params;
 
 		// Process scripts
-		$page = FD::page();
-		$page->processScripts();
-
-		// Process styling
-		$doc = FD::document();
-		$doc->init();
+		ES::initialize();
 	}
 
 	/**

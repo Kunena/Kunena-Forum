@@ -146,7 +146,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 *
 	 * @since   Joomla 3.1
 	 */
-	protected function preprocessData($context, &$data)
+	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
 		// Get the dispatcher and load the users plugins.
 		$dispatcher = JEventDispatcher::getInstance();

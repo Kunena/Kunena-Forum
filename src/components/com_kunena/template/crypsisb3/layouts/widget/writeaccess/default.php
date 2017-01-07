@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -16,12 +16,12 @@ $config = KunenaFactory::getConfig();
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-small" data-toggle="collapse" data-target="#writeaccess"></div>
+			<div class="btn btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#writeaccess"></div>
 		</div>
 	</div>
 
 	<h3 class="btn-link">
-		Forum Access	<?php //echo JText::_('COM_KUNENA_WRITEACCESS'); ?>
+		<?php echo JText::_('COM_KUNENA_WRITEACCESS'); ?>
 	</h3>
 
 	<div class="row-fluid collapse in" id="writeaccess">

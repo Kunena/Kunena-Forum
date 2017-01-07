@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -513,9 +513,10 @@ abstract class KunenaRoute
 			}
 		}
 
-		$jinput = JFactory::getApplication()->input;
 		// If values are both in GET and POST, they are only stored in POST
-		foreach ($jinput->post->getArray(array()) as $key => $value)
+		$post = JFactory::getApplication()->input->post->getArray(array());
+
+		foreach ($post as $key => $value)
 		{
 			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 			{
@@ -524,7 +525,9 @@ abstract class KunenaRoute
 		}
 
 		// Make sure that request URI is not broken
-		foreach ($jinput->post->getArray(array()) as $key => $value)
+		$get = JFactory::getApplication()->input->get->getArray(array());
+
+		foreach ($get as $key => $value)
 		{
 			if (preg_match('/[^a-zA-Z]/', $key))
 			{

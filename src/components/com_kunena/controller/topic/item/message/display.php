@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -56,6 +56,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->category = $this->topic->getCategory();
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
+
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
 
 		$this->captchaEnabled = false;
 
@@ -151,7 +157,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			if (!empty($this->message->ip))
 			{
 				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip
-					. '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					. '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 			}
 			else
 			{

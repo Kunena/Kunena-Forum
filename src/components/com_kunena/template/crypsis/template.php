@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -46,9 +46,25 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Load JavaScript.
 		$this->addScript('assets/js/main.js');
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
+
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
+
+		if (file_exists($filenameless) && 0 != filesize($filenameless))
+		{
+			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
+			$this->addStyleSheet('kunena-custom.css');
+		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css';
 
@@ -57,21 +73,27 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
+		$doc = JFactory::getDocument();
 
-		if ($bootstrap) : ?>
-			<link rel="stylesheet" href="media\jui\css\bootstrap.min.css">
-			<link rel="stylesheet" href="media\jui\css\bootstrap-extended.css">
-			<link rel="stylesheet" href="media\jui\css\bootstrap-responsive.min.css">
-			<link rel="stylesheet" href="media\jui\css\icomoon.css">
-		<?php endif;
+		if ($bootstrap)
+		{
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$doc->addStyleSheet(JUri::base(true). '/media/jui/css/bootstrap-extended.css');
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+
+			if ($this->ktemplate->params->get('icomoon'))
+			{
+				$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
+			}
+		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 
-		if ($fontawesome) : ?>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<?php endif;
+		if ($fontawesome)
+		{
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+		}
 
 		// Load template colors settings
 		$styles = <<<EOF
@@ -95,7 +117,7 @@ EOF;
 		if ($iconcolornew)
 		{
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}

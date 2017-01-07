@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Attachment
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -422,10 +422,15 @@ abstract class KunenaAttachmentHelper
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -444,9 +449,17 @@ abstract class KunenaAttachmentHelper
 		unset($results);
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
 		$db->setQuery($query);
-		$db->execute();
 
-		return KunenaError::checkDatabaseError();
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
 	}
 
 	/**
@@ -513,8 +526,15 @@ abstract class KunenaAttachmentHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery($query, 0, $params['limit']);
-		$results = $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 		foreach ($results as $instance)
@@ -555,8 +575,15 @@ abstract class KunenaAttachmentHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -599,8 +626,15 @@ abstract class KunenaAttachmentHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $mesid)
 		{

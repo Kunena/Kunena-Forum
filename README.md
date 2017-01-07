@@ -9,7 +9,7 @@
 
 *Kunena* 5.0 requires
 
-    Joomla: version 3.5.0 or greater (>= 3.5.0 recommended)
+    Joomla: version 3.5.1 or greater (>= 3.6.2 recommended)
     PHP: version 5.4.35 or greater (>= 7.0.4 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
@@ -20,6 +20,7 @@ In addition we recommend the following PHP settings:
     max_execution_time     >= 30
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
     safe_mode               = off
+    allow_url_fopen		   = on
     upload_max_filesize    >= 3M
     GD, DOM, JSON support installed and OpenSSL only to embedded tweets
 

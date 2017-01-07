@@ -5,7 +5,7 @@
  * @package     Kunena.Administrator
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -262,8 +262,18 @@ class KunenaAdminModelCategories extends KunenaModel
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO();
 				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
-				$sections = $db->loadObjectList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$sections = $db->loadObjectList();
+				}
+				catch (RuntimeException $e)
+				{
+					JFactory::getApplication()->enqueueMessage($e->getMessage());
+
+					return;
+				}
+
 				$category->parent_id     = $this->getState('item.parent_id');
 				$category->published     = 0;
 				$category->ordering      = 9999;
@@ -343,7 +353,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']      = JHtml::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['channels']        = JHtml::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true) : null;
+		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']       = JHtml::_('select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published);
 		$lists ['forumLocked']     = JHtml::_('select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked);
 		$lists ['forumReview']     = JHtml::_('select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review);
@@ -366,13 +376,21 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$topicicons = array ();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
-
 		foreach ($topiciconslist as $icon)
 		{
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 
-		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset);
+		if (empty($category->iconset))
+		{
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
+		}
+		else
+		{
+			$value = $category->iconset;
+		}
+
+		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $value);
 
 		return $lists;
 	}

@@ -4,13 +4,14 @@
  * @package     Kunena.Framework
  * @subpackage  User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 KunenaUserHelper::initialize();
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class KunenaUserHelper
@@ -194,8 +195,15 @@ abstract class KunenaUserHelper
 				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
 				WHERE u.id IN ({$userlist})";
 			$db->setQuery($query);
-			$results = $db->loadAssocList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$results = $db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			foreach ($results as $user)
 			{
@@ -263,8 +271,15 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
-			list (self::$_total, self::$_lastid) = $db->loadRow();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				list (self::$_total, self::$_lastid) = $db->loadRow();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return (int) self::$_total;
@@ -282,14 +297,29 @@ abstract class KunenaUserHelper
 		if (count(self::$_topposters) < $limit)
 		{
 			$db = JFactory::getDBO();
-			$query = "SELECT u.id, ku.posts AS count
-				FROM #__kunena_users AS ku
-				INNER JOIN #__users AS u ON u.id=ku.userid
-				WHERE ku.posts>0
-				ORDER BY ku.posts DESC";
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName(array('u.id', 'ku.posts'), array(null, 'count')));
+			$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
+			$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
+			$query->where($db->quoteName('ku.posts') . '>0');
+			$query->order($db->quoteName('ku.posts') . ' DESC');
+
+			if (KunenaFactory::getConfig()->superadmin_userlist)
+			{
+				$filter = JAccess::getUsersByGroup(8);
+				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
+			}
+
 			$db->setQuery($query, 0, $limit);
-			self::$_topposters = (array) $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				self::$_topposters = (array) $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return self::$_topposters;
@@ -329,13 +359,20 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			self::$_online = (array) $db->loadObjectList('userid');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				self::$_online = (array) $db->loadObjectList('userid');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return self::$_online;
 	}
-	
+
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
@@ -345,23 +382,23 @@ abstract class KunenaUserHelper
 	 *
 	 * @return  array  List of userid => array(group, group, ...).
 	 * @throws  BadMethodCallException  If first two parameters are both null.
-	 * 
+	 *
 	 * @since 5.0
 	 */
 	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false)
 	{
 		// Check for bad calls.
-		if (is_null($userIds) && is_null($groupIds)) 
+		if (is_null($userIds) && is_null($groupIds))
 		{
 			throw new BadMethodCallException(__CLASS__ . '::' . __FUNCTION__ . '(): Cannot load all groups for all users.');
 		}
-		
+
 		// Check if there's anything to load.
 		if ((is_array($groupIds) && empty($groupIds)) || (is_array($userIds) && empty($userIds)))
 		{
 			return array();
 		}
-		
+
 		$test = $recursive ? '>=' : '=';
 		// Find users and their groups.
 		$db = JFactory::getDbo();
@@ -370,40 +407,40 @@ abstract class KunenaUserHelper
 		->from('#__usergroups AS ug1')
 		->join('INNER','#__usergroups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt')
 		->join('INNER','#__user_usergroup_map AS m ON ug2.id=m.group_id');
-		
+
 		if ($groupIds)
 		{
-			JArrayHelper::toInteger($groupIds);
+			ArrayHelper::toInteger($groupIds);
 			$groupList = implode(',', $groupIds);
 			$query->where("ug1.id IN ({$groupList})");
 		}
-		
+
 		if ($userIds)
 		{
-			JArrayHelper::toInteger($userIds);
+			ArrayHelper::toInteger($userIds);
 			$userList = implode(',', $userIds);
 			$query->where("user_id IN ({$userList})");
 		}
-		
+
 		$db->setQuery($query);
 		$results = (array) $db->loadObjectList();
 		$list = array();
-		
+
 		// Make sure that we list all given users (if provided).
-		if ($userIds) 
+		if ($userIds)
 		{
 			foreach ($userIds as $userId)
 			{
 				$list[$userId] = array();
 			}
 		}
-		
+
 		// Fill up the user groups.
 		foreach ($results as $result)
 		{
 			$list[$result->user_id][$result->group_id] = $result->group_id;
 		}
-		
+
 		return $list;
 	}
 
@@ -441,8 +478,15 @@ abstract class KunenaUserHelper
 			}
 
 			$db->setQuery($query);
-			$count = $db->loadResult();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$count = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			$counts = array();
 			$counts['user'] = count(self::getOnlineUsers());
@@ -461,6 +505,14 @@ abstract class KunenaUserHelper
 	 */
 	public static function getStatus($user)
 	{
+		$config = KunenaFactory::getConfig();
+		$status = $config->user_status;
+
+		if (!$status)
+		{
+			return false;
+		}
+
 		$user = self::get($user);
 		$online = false;
 
@@ -494,21 +546,6 @@ abstract class KunenaUserHelper
 	{
 		$db = JFactory::getDBO();
 
-		// If user has no user_topics, set posts into 0
-		$query = "UPDATE #__kunena_users AS u
-			LEFT JOIN #__kunena_user_topics AS ut ON ut.user_id=u.userid
-			SET u.posts = 0
-			WHERE ut.user_id IS NULL";
-		$db->setQuery($query);
-		$db->execute();
-
-		if (KunenaError::checkDatabaseError())
-		{
-			return false;
-		}
-
-		$rows = $db->getAffectedRows();
-
 		// Update user post count
 		$query = "INSERT INTO #__kunena_users (userid, posts)
 				SELECT user_id AS userid, SUM(posts) AS posts
@@ -516,31 +553,77 @@ abstract class KunenaUserHelper
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
-		$rows += $db->getAffectedRows();
+		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	/**
+	 * @return boolean|integer
+	 */
+	public static function recountBanned()
+	{
+		$db = JFactory::getDBO();
 
 		// Update banned state
-		// TODO: move out of here, it's slow
 		$query = "UPDATE #__kunena_users AS u
 			LEFT JOIN (
 				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
-		$rows += $db->getAffectedRows();
+		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	public static function recountPostsNull()
+	{
+		$db = JFactory::getDBO();
+
+		// If user has no user_topics, set posts into 0
+		$query = "UPDATE #__kunena_users AS u
+			LEFT JOIN #__kunena_user_topics AS ut ON ut.user_id=u.userid
+			SET u.posts = 0
+			WHERE ut.user_id IS NULL";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		$rows = $db->getAffectedRows();
 
 		return $rows;
 	}

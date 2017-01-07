@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -13,29 +13,32 @@ defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
+$view = JFactory::getApplication()->input->getWord('view');
 ?>
 
 <div class="row">
 	<div class="col-md-12">
 		<div class="pull-left">
-			<h3>
+			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo(JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+					(<?php echo JText::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-			</h3>
+			</h1>
 		</div>
 
-		<div class="pull-right" id="filter-time">
+		<?php if ($view != 'user') : ?>
+		<h2 class="filter-time pull-right" id="filter-time">
 			<div class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-xs">
 					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
-		</div>
+		</h2>
+		<?php endif; ?>
 	</div>
 </div>
 
@@ -69,7 +72,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				<td class="col-md-1 center hidden-xs">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
+						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
 				</td>
 				<td class="col-md-<?php echo $cols; ?>">
@@ -98,7 +101,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 					<td class="center hidden-xs">
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
-							<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+							<?php echo KunenaIcons::arrowup(); ?>
 						</a>
 						<?php // FIXME: $this->displayCategoryActions() ?>
 					</td>
@@ -144,8 +147,11 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 	->set('display', true); ?>
 </div>
 
+<?php if ($view != 'user') : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 	method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
+<?php endif; ?>
 
+<div class="clearfix"></div>

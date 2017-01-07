@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
-			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
+			<?php echo KunenaIcons::user();?>
+			<span class="login-text"><?php echo JText::_('JLOGIN');?></span>
 			<b class="caret"></b>
 		</a>
 
@@ -27,7 +28,7 @@ defined('_JEXEC') or die;
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
-								<i class="icon-user tip" title="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"></i>
+								<?php echo KunenaIcons::user();?>
 								<label for="login-username" class="element-invisible">
 									<?php echo JText::_('JGLOBAL_USERNAME'); ?>
 								</label>
@@ -42,7 +43,7 @@ defined('_JEXEC') or die;
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
-								<i class="icon-lock tip" title="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"></i>
+								<?php echo KunenaIcons::lock();?>
 								<label for="login-passwd" class="element-invisible">
 									<?php echo JText::_('JGLOBAL_PASSWORD'); ?>
 								</label>
@@ -59,7 +60,7 @@ defined('_JEXEC') or die;
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
-								<i class="icon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
+								<?php echo KunenaIcons::star();?>
 								<label for="k-lgn-secretkey" class="element-invisible">
 									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>

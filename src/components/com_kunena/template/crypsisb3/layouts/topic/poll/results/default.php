@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -23,7 +23,7 @@ $this->addScript('assets/js/poll.js');
 </h2>
 <?php endif; ?>
 
-<div class="collapse in" id="poll-results">
+<div class="collapse in" id="poll-results" <?php echo $this->show_title ? '' : 'style="display:none;"'; ?>>
 <table class="table table-striped table-bordered table-condensed">
 
 	<?php
@@ -60,13 +60,14 @@ $this->addScript('assets/js/poll.js');
 			<td colspan="4">
 				<?php
 				echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
-				if (!empty($this->users_voted_list)) { echo " ( " . implode(', ', $this->users_voted_list) . " ) "; } ?>
+				if (!empty($this->users_voted_list)): echo " ( " . implode(', ', $this->users_voted_list) . " ) "; ?>
 				<?php if ($this->usercount > '5') : ?>
 					<a href="#" id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE')?></a>
 					<div style="display: none;" id="kpoll-moreusers-div">
 						<?php echo implode(', ', $this->users_voted_morelist); ?>
 					</div>
-				<?php endif; ?>
+				<?php endif;
+				endif; ?>
 			</td>
 		</tr>
 		<?php if (!$this->me->exists()) : ?>

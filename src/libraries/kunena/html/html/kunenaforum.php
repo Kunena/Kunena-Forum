@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -63,28 +63,45 @@ abstract class JHtmlKunenaForum
 
 		if (!isset($categories))
 		{
-			$category = KunenaForumCategoryHelper::get($parent);
-			$children = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
-
-			if ($params['action'] == 'topic.create')
+			if (!is_array($parent))
 			{
-				$channels = $category->getChannels();
-
-				if (empty($children) && !isset($channels[$category->id]))
-				{
-					$category = KunenaForumCategoryHelper::get();
-				}
-
-				foreach ($channels as $id => $channel)
-				{
-					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
-					{
-						unset($channels[$id]);
-					}
-				}
+				$parent = array($parent);
 			}
 
-			$categories = $category->id > 0 ? array($category->id => $category) + $children : $children;
+			$categories = array();
+			$channels   = array();
+
+			foreach ($parent as $p)
+			{
+				$channels_local = array();
+				$category       = KunenaForumCategoryHelper::get($p);
+				$children       = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
+
+				if ($params['action'] == 'topic.create')
+				{
+					$channels_local = $category->getChannels();
+
+					if (empty($children) && !isset($channels_local[$category->id]))
+					{
+						$category = KunenaForumCategoryHelper::get();
+					}
+
+					foreach ($channels_local as $id => $channel)
+					{
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
+						{
+							unset ($channels_local[$id]);
+						}
+					}
+				}
+
+				$categories += $category->id > 0 ? array($category->id => $category) + $children : $children;
+
+				if (!empty($channels_local))
+				{
+					$channels += $channels_local;
+				}
+			}
 
 			if ($hide_lonely && count($categories) + count($channels) <= 1)
 			{
@@ -188,22 +205,22 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @return string
 	 */
-	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '')
+	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
 		if ($title)
 		{
-			$list['title'] = $title;
+			$list['title'] = htmlspecialchars($title);
 		}
 
 		if ($class)
 		{
-			$list['class'] = $class;
+			$list['class'] = htmlspecialchars($class);
 		}
 
 		if ($rel)
 		{
-			$list['rel'] = $rel;
+			$list['rel'] = htmlspecialchars($rel);
 		}
 
 		if (is_array($attributes))
@@ -228,7 +245,7 @@ abstract class JHtmlKunenaForum
 		return "<a {$attributes}>{$content}</a>";
 	}
 
-	public static function checklist($name, $options, $selected = array())
+	public static function checklist($name, $options, $selected = array(), $class_input = null)
 	{
 		if ($selected !== true && !is_array($selected))
 		{
@@ -246,7 +263,7 @@ abstract class JHtmlKunenaForum
 
 			// Build the HTML for the item.
 			$html[] = '	<li>';
-			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '"';
+			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="' .$class_input. '"';
 			$html[] = '			' . $checked . ' />';
 			$html[] = '		<label for="' . $eid . '">';
 			$html[] = '			' . $item;

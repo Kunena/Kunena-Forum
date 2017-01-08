@@ -7,10 +7,10 @@
     },
     "require-dev": {
         "codeception/codeception": "~2.2",
-        "joomla-projects/joomla-browser": "dev-master",
         "codegyre/robo": "~0.5",
         "joomla-projects/robo": "dev-master",
-        "joomla-projects/selenium-server-standalone": "v2.53.1",
+        "joomla-projects/joomla-browser": "dev-develop",
+        "joomla-projects/selenium-server-standalone": "v3.0.1.3",
         "fzaninotto/faker": "^1.5",
         "joomla-projects/jorobo": "0.3",
         "Behat/Gherkin": "^4.4.1",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9675c1597fa22ee9bc422fe3e72687d8",
+    "content-hash": "21b32991c18c632f9d6d3bbbaa557526",
     "packages": [],
     "packages-dev": [
         {
@@ -1593,24 +1593,24 @@
         },
         {
             "name": "joomla-projects/joomla-browser",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "833e113544dc05b34ef024b0634f17c69f95be42"
+                "reference": "b0a583d09435d9941219fef06fcc27a6487df976"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/833e113544dc05b34ef024b0634f17c69f95be42",
-                "reference": "833e113544dc05b34ef024b0634f17c69f95be42",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/b0a583d09435d9941219fef06fcc27a6487df976",
+                "reference": "b0a583d09435d9941219fef06fcc27a6487df976",
                 "shasum": ""
             },
             "require": {
-                "consolidation/robo": "~1",
-                "php": ">=5.5.9"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "joomla-projects/joomla-testing-robo": "~1.0"
+                "codegyre/robo": "^0.5.3",
+                "joomla-projects/robo": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -1640,7 +1640,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2017-01-08 06:44:16"
+            "time": "2016-05-21T13:48:02+00:00"
         },
         {
             "name": "joomla-projects/jorobo",

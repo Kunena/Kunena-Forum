@@ -111,13 +111,13 @@ JHtml::_('dropdown.init');
 						<td style="width: 5%">€10 euro
 						</td>
 						<td style="width: 7%">
-							<?php $img_path = 'https://www.kunena.org/components/com_rdsubs/images/product-3.png'; ?>
+							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
 							<span class="editlinktip hasTip" title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank">Blue Eagle 5</a>
 							</span>
 						</td>
 						<td style="width: 7%">
-							Kunena Team
+							<a href="mailto:team@kunena.org">Kunena Team</a>
 						</td>
 						<td style="width: 5%">
 							K5.0.X

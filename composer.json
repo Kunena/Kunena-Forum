@@ -10,12 +10,9 @@
     },
     "require-dev": {
         "codeception/codeception": "~2.2",
-        "joomla-projects/joomla-browser": "v3.6.5",
+        "joomla-projects/joomla-browser": "dev-container-test",
         "joomla-projects/selenium-server-standalone": "v3.0.1.2",
-        "codegyre/robo": "~0.6",
-        "fzaninotto/faker": "^1.5",
-        "Behat/Gherkin": "^4.4.1",
-        "joomla-projects/joomla-testing-robo": "dev-container-test",
+        "Behat/Gherkin": "^4.4.5",
         "phing/phing": "2.*"
     },
     "minimum-stability": "dev",

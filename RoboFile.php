@@ -344,12 +344,6 @@ class RoboFile extends \Robo\Tasks
 		{
 			sleep(3);
 		}
-		else
-		{
-			$this->taskWaitForSeleniumStandaloneServer()
-				->run()
-				->stopOnFail();
-		}
 	}
 
 	/**

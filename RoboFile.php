@@ -240,10 +240,7 @@ class RoboFile extends \Robo\Tasks
 		}
 
 		$this->build();
-
-		$exclude = ['tests', 'tests-phpunit', '.run', '.github', '.git'];
-
-		$this->copyJoomla($this->cmsPath, $exclude);
+		$this->_copyDir('tests/codeception/cache', $this->cmsPath);
 
 		// Optionally change owner to fix permissions issues
 		if (!empty($this->configuration->localUser))
@@ -322,10 +319,7 @@ class RoboFile extends \Robo\Tasks
 	private function getComposer()
 	{
 		// Make sure we have Composer
-		if (!file_exists($this->testsPath . 'composer.phar'))
-		{
-			$this->_exec('curl -o ' . $this->testsPath . 'composer.phar  --retry 3 --retry-delay 5 -sS https://getcomposer.org/installer | php');
-		}
+
 	}
 
 	/**
@@ -377,7 +371,6 @@ class RoboFile extends \Robo\Tasks
 		$this->createDatabase();
 
 		$this->getComposer();
-		$this->taskComposerInstall('composer.phar')->run();
 
 		$this->runSelenium();
 
@@ -398,7 +391,6 @@ class RoboFile extends \Robo\Tasks
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
 			->arg($this->testsPath . 'acceptance/install/')
 			->run()
 			->stopOnFail();
@@ -407,7 +399,6 @@ class RoboFile extends \Robo\Tasks
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
 			->arg($this->testsPath . 'acceptance/administrator/')
 			->run()
 			->stopOnFail();
@@ -416,7 +407,6 @@ class RoboFile extends \Robo\Tasks
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
 			->arg($this->testsPath . 'acceptance/frontend/')
 			->run()
 			->stopOnFail();
@@ -650,6 +640,11 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (!$this->suiteConfig)
 		{
+			if (!file_exists('tests/codeception/acceptance.suite.yml'))
+			{
+				$this->_copy('tests/codeception/acceptance.suite.dist.yml', 'tests/codeception/acceptance.suite.yml');
+			}
+
 			$this->suiteConfig = Symfony\Component\Yaml\Yaml::parse(file_get_contents("tests/codeception/{$suite}.suite.yml"));
 		}
 

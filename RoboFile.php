@@ -182,6 +182,24 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function createTestingSite($useHtaccess = false)
 	{
+		if (!empty($this->configuration->skipClone))
+		{
+			$this->say('Reusing Joomla CMS site already present at ' . $this->cmsPath);
+
+			return;
+		}
+
+		// Caching cloned installations locally
+		if (!is_dir('tests/codeception/cache') || (time() - filemtime('tests/codeception/cache') > 60 * 60 * 24))
+		{
+			if (file_exists('tests/codeception/cache'))
+			{
+				$this->taskDeleteDir('tests/codeception/cache')->run();
+			}
+
+			$this->_exec($this->buildGitCloneCommand());
+		}
+
 		// Clean old testing site
 		if (is_dir($this->cmsPath))
 		{
@@ -214,7 +232,7 @@ class RoboFile extends \Robo\Tasks
 		if ($useHtaccess == true)
 		{
 			$this->say("Renaming htaccess.txt to .htaccess");
-			$this->_copy('./htaccess.txt', $this->cmsPath . '/.htaccess');
+			$this->_copy($this->cmsPath . '/htaccess.txt', $this->cmsPath . '/.htaccess');
 			$this->_exec('sed -e "s,# RewriteBase /,RewriteBase /tests/codeception/kunena/,g" -in-place tests/codeception/kunena/.htaccess');
 		}
 	}
@@ -233,7 +251,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	protected function copyJoomla($dst, $exclude = array())
 	{
-		$dir = @opendir(".");
+		$dir = @opendir("tests/codeception/cache");
 
 		if (false === $dir)
 		{
@@ -642,5 +660,17 @@ class RoboFile extends \Robo\Tasks
 		{
 			$this->yell("Error creating database: " . $connection->error);
 		}
+	}
+
+	/**
+	 * Build correct git clone command according to local configuration and OS
+	 *
+	 * @return string
+	 */
+	private function buildGitCloneCommand()
+	{
+		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
+
+		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
 	}
 }

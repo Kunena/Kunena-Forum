@@ -343,7 +343,7 @@ class RoboFile extends \Robo\Tasks
 		else
 		{
 			$this->taskSeleniumStandaloneServer()
-				->setBinary($this->getWebDriver() . ' vendor\joomla-projects\selenium-server-standalone\bin\selenium-server-standalone.jar >> selenium.log 2>&1 &')
+				->setBinary("vendor/bin/selenium-server-standalone " . $this->getWebDriver() . ' >> selenium.log 2>&1 &')
 				->runSelenium()
 				->waitForSelenium()
 				->run();

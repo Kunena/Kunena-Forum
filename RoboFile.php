@@ -91,6 +91,13 @@ class RoboFile extends \Robo\Tasks
 	protected $cmsPath = null;
 
 	/**
+	 * File extension for executables
+	 *
+	 * @var string
+	 */
+	private $executableExtension = '';
+
+	/**
 	 * RoboFile constructor.
 	 *
 	 * @since   __DEPLOY_VERSION__
@@ -100,9 +107,25 @@ class RoboFile extends \Robo\Tasks
 	{
 		$this->configuration = $this->getConfiguration();
 		$this->cmsPath       = $this->getTestingPath();
+		$this->executableExtension = $this->getExecutableExtension();
 
 		// Set default timezone (so no warnings are generated if it is not set)
 		date_default_timezone_set('UTC');
+	}
+
+	/**
+	 * Get the executable extension according to Operating System
+	 *
+	 * @return void
+	 */
+	private function getExecutableExtension()
+	{
+		if ($this->isWindows())
+		{
+			return '.exe';
+		}
+
+		return '';
 	}
 
 	/**

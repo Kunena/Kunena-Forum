@@ -344,6 +344,13 @@ class RoboFile extends \Robo\Tasks
 		{
 			sleep(3);
 		}
+		else
+		{
+			$this->taskSeleniumStandaloneServer()
+				->runSelenium()
+				->waitForSelenium()
+				->run();
+		}
 	}
 
 	/**

@@ -19,6 +19,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 if (!defined('JPATH_BASE'))
 {
+	/**
+	 *
+	 */
 	define('JPATH_BASE', __DIR__);
 }
 
@@ -38,6 +41,7 @@ class RoboFile extends \Robo\Tasks
 	 * Check the code style of the project against a passed sniffers using PHP_CodeSniffer_CLI
 	 *
 	 * @param   string $sniffersPath Path to the sniffers. If not provided Joomla Coding Standards will be used.
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function checkCodestyle($sniffersPath = null)
 	{
@@ -65,6 +69,7 @@ class RoboFile extends \Robo\Tasks
 	 * Path to the codeception tests folder
 	 *
 	 * @var   string
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private $testsPath = 'tests/codeception/';
 
@@ -94,6 +99,7 @@ class RoboFile extends \Robo\Tasks
 	 * File extension for executables
 	 *
 	 * @var string
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private $executableExtension = '';
 
@@ -116,7 +122,8 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Get the executable extension according to Operating System
 	 *
-	 * @return void
+	 * @return string
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private function getExecutableExtension()
 	{
@@ -421,11 +428,11 @@ class RoboFile extends \Robo\Tasks
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 *
-	 * @return  mixed
 	 */
 	public function runTest($pathToTestFile = null, $suite = 'acceptance')
 	{
 		$this->runSelenium();
+		$test = '';
 
 		// Make sure to run the build command to generate AcceptanceTester
 
@@ -530,6 +537,7 @@ class RoboFile extends \Robo\Tasks
 	 * Check if local OS is Windows
 	 *
 	 * @return bool
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private function isWindows()
 	{
@@ -542,6 +550,7 @@ class RoboFile extends \Robo\Tasks
 	 * @param   string $path - The linux path
 	 *
 	 * @return string
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private function getWindowsPath($path)
 	{
@@ -636,6 +645,7 @@ class RoboFile extends \Robo\Tasks
 	 * @param string $suite
 	 *
 	 * @return array
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private function getSuiteConfig($suite = 'acceptance')
 	{
@@ -652,6 +662,11 @@ class RoboFile extends \Robo\Tasks
 		return $this->suiteConfig;
 	}
 
+	/**
+	 * createDatabase
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
 	private function createDatabase()
 	{
 		$suiteConfig = $this->getSuiteConfig();
@@ -685,11 +700,13 @@ class RoboFile extends \Robo\Tasks
 	 * Build correct git clone command according to local configuration and OS
 	 *
 	 * @return string
+	 * @since  __DEPLOY_VERSION__
 	 */
 	private function buildGitCloneCommand()
 	{
 		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
 
-		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
+		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1
+		 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
 	}
 }

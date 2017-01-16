@@ -334,7 +334,7 @@ class RoboFile extends \Robo\Tasks
 		if ($this->isWindows())
 		{
 			$this->taskSeleniumStandaloneServer()
-				->setBinary("START java.exe -jar " . $this->getWebDriver() . ' vendor\joomla-projects\selenium-server-standalone\bin\selenium-server-standalone.jar ')
+				->setWebdriver($this->getWebDriver())
 				->runSelenium()
 				->setTimeOut(3)
 				->waitForSelenium()
@@ -343,7 +343,7 @@ class RoboFile extends \Robo\Tasks
 		else
 		{
 			$this->taskSeleniumStandaloneServer()
-				->setDebug(true)
+				->setWebdriver($this->getWebDriver())
 				->runSelenium()
 				->waitForSelenium()
 				->run();

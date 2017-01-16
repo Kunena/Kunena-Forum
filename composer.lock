@@ -951,7 +951,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2016-12-30T23:33:22+00:00"
+            "time": "2016-12-30 23:33:22"
         },
         {
             "name": "joomla-projects/joomla-testing",
@@ -1000,7 +1000,7 @@
                 "task",
                 "tests"
             ],
-            "time": "2016-12-17T16:18:26+00:00"
+            "time": "2016-12-17 16:18:26"
         },
         {
             "name": "joomla-projects/joomla-testing-robo",
@@ -1008,12 +1008,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-testing-robo.git",
-                "reference": "32d5f955a5bbd162230cd6ab8dab8832a7e7be7f"
+                "reference": "88b4c0eac33556d0015dc212ec649d6ff970eef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-testing-robo/zipball/32d5f955a5bbd162230cd6ab8dab8832a7e7be7f",
-                "reference": "32d5f955a5bbd162230cd6ab8dab8832a7e7be7f",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-testing-robo/zipball/88b4c0eac33556d0015dc212ec649d6ff970eef2",
+                "reference": "88b4c0eac33556d0015dc212ec649d6ff970eef2",
                 "shasum": ""
             },
             "require": {
@@ -1050,7 +1050,7 @@
                 "task",
                 "tests"
             ],
-            "time": "2016-12-31T05:57:31+00:00"
+            "time": "2017-01-16T14:28:00+00:00"
         },
         {
             "name": "joomla-projects/selenium-server-standalone",

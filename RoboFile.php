@@ -706,7 +706,6 @@ class RoboFile extends \Robo\Tasks
 	{
 		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
 
-		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1
-		 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
+		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
 	}
 }

@@ -331,10 +331,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function runSelenium()
 	{
-
-		$test = 'vendor/bin/selenium-server-standalone ' . $this->getWebDriver() . ' ';
-		$this->say($test);
-
 		if ($this->isWindows())
 		{
 			$this->taskSeleniumStandaloneServer()
@@ -347,7 +343,6 @@ class RoboFile extends \Robo\Tasks
 		else
 		{
 			$this->taskSeleniumStandaloneServer()
-				->setBinary($test)
 				->setDebug(true)
 				->runSelenium()
 				->waitForSelenium()

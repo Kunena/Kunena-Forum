@@ -315,10 +315,17 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 	</div>
 	<div class="center">
-		<button id="form_submit_button" type="submit" class="btn btn-success" tabindex="8">
-			<?php echo KunenaIcons::save(); ?>
-			<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
-		</button>
+		<?php if ($editor == 1): ?>
+			<input type="submit" class="btn btn-success" name="submit"
+			       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
+			       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
+		<?php else : ?>
+			<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
+				<?php echo KunenaIcons::save(); ?>
+				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+			</button>
+		<?php endif ;?>
+
 		<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="9">
 			<?php echo KunenaIcons::cancel(); ?>
 			<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>

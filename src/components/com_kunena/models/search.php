@@ -327,8 +327,8 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($this->total == 0)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
-
+			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
+			
 			return 0;
 		}
 

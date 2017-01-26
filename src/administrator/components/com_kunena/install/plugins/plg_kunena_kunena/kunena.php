@@ -28,6 +28,22 @@ class PlgKunenaKunena extends JPlugin
 
 		parent::__construct($subject, $config);
 
+		if (!JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
+		}
+
+		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
+		{
+			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads', 'notice');
+		}
+
 		$this->loadLanguage('plg_kunena_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_kunena.sys', KPATH_ADMIN);
 	}
 

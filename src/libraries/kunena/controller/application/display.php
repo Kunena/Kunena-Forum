@@ -333,6 +333,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$credits .= '</div>';
 
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$credits = '';
+		}
+
 		return $credits;
 	}
 }

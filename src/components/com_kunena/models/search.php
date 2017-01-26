@@ -328,7 +328,7 @@ class KunenaModelSearch extends KunenaModel
 		if ($this->total == 0)
 		{
 			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
-			
+
 			return 0;
 		}
 

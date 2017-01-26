@@ -53,7 +53,8 @@ class KunenaAdminViewUser extends KunenaView
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($this->user->hideEmail), 'khidemail');
+            'text', $this->escape($this->user->hideEmail), 'khidemail'
+        );
 		$this->settings[] = $item;
 
 		$item = new StdClass;
@@ -63,7 +64,8 @@ class KunenaAdminViewUser extends KunenaView
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($this->user->showOnline), 'kshowonline');
+            'text', $this->escape($this->user->showOnline), 'kshowonline'
+        );
 		$this->settings[] = $item;
 
 		$item = new StdClass;
@@ -74,7 +76,8 @@ class KunenaAdminViewUser extends KunenaView
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($this->user->canSubscribe), 'kcansubscribe');
+            'text', $this->escape($this->user->canSubscribe), 'kcansubscribe'
+        );
 		$this->settings[] = $item;
 
 		$item = new StdClass;
@@ -93,7 +96,8 @@ class KunenaAdminViewUser extends KunenaView
 		$options[] = JHtml::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
 		$options[] = JHtml::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
 		$item->field = JHtml::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($this->user->userListtime), 'kuserlisttime');
+            'text', $this->escape($this->user->userListtime), 'kuserlisttime'
+        );
 		$this->settings[] = $item;
 
 		$this->selectOrder = JHtml::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering);

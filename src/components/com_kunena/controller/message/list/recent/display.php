@@ -312,7 +312,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			}
 			else
 			{
-				$description = $this->headerText  . ' ' . JText::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = $this->headerText . ' ' . JText::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 		}

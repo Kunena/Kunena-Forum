@@ -66,7 +66,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
 		{
-			// TODO: we need to deal with other formats in the future.
 			return false;
 		}
 
@@ -360,6 +359,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 
 		$credits .= '</div>';
+
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$credits = '';
+		}
 
 		return $credits;
 	}

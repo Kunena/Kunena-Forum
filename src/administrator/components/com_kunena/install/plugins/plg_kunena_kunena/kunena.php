@@ -28,7 +28,8 @@ class PlgKunenaKunena extends JPlugin
 
 		parent::__construct($subject, $config);
 
-		if (!JPluginHelper::isEnabled('kunena', 'powered'))
+		$powered = JPluginHelper::isEnabled('kunena', 'powered');
+		if (!$powered)
 		{
 			$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
@@ -39,7 +40,8 @@ EOF;
 			$document->addStyleDeclaration($styles);
 		}
 
-		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
+		$method = method_exists(get_class(new KunenaControllerApplicationDisplay), 'poweredBy');
+		if (!$method)
 		{
 			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads', 'notice');
 		}

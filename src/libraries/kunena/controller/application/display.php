@@ -348,7 +348,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$credits .= '</div>';
 
-		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		$powered = JPluginHelper::isEnabled('kunena', 'powered');
+		if ($powered)
 		{
 			$credits = '';
 		}

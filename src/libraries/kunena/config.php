@@ -1001,7 +1001,13 @@ class KunenaConfig extends JObject
 	 * @since  2.0.0
 	 */
 	public $iptracking = 1;
-
+	
+	/**
+	 * @var    string  StopForumSpam key; input, text
+	 * @since  2.0.0
+	*/
+	public $stopforumspam_key = '';
+	
 	/**
 	 * @var    string  RSS feebburner URL; input, text
 	 * @since  2.0.3

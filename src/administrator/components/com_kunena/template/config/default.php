@@ -699,6 +699,27 @@ JHtml::_('behavior.tabstate');
 											</tbody>
 										</table>
 									</fieldset>
+									<fieldset>
+										<legend><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION') ?></legend>
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
+												<td>
+													<input type="text" name="cfg_stopforumspam_key" class="ksm-field-large" value="<?php echo $this->escape($this->config->stopforumspam_key) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
+											</tr>
+											</tbody>
+										</table>
+									</fieldset>
 								</div>
 
 								<div class="tab-pane" id="tab_avatars">

@@ -17,6 +17,7 @@ $this->ktemplate = KunenaFactory::getTemplate();
 
 $this->addStyleSheet('assets/css/rating.css');
 ?>
+<div><?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_list_top'); ?></div>
 <div class="row">
 	<div class="col-md-12">
 		<div class="pull-left">

@@ -523,7 +523,7 @@ class RoboFile extends \Robo\Tasks
 			$pathToTestFile = $pathToTestFile . ':' . $method;
 		}
 
-		$testPathCodecept = 'vendor/bin/codecept';
+		$testPathCodecept = $this->testsPath . 'vendor/bin/codecept';
 
 		$this->taskCodecept($this->isWindows() ? $this->getWindowsPath($testPathCodecept) : $testPathCodecept)
 			->test($pathToTestFile)

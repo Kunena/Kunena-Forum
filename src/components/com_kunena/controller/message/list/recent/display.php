@@ -261,7 +261,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
-			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
+			$list_mode = $this->state->get('list.mode');
+			$user_state = $this->state->get('user');
+
+			if ($list_mode == 'latest' && !empty($user_state))
 			{
 				$this->setTitle($headerText);
 			}
@@ -276,7 +279,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				$this->setTitle($this->title);
 			}
 
-			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
+			if ($list_mode == 'latest' && !empty($user_state))
 			{
 				$keywords = $this->config->board_title . ', ' . $user->getName();
 				$this->setKeywords($keywords);
@@ -292,7 +295,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				$this->setKeywords($keywords);
 			}
 
-			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
+			if ($list_mode == 'latest' && !empty($user_state))
 			{
 				$this->setDescription($headerText);
 			}
@@ -308,7 +311,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			}
 		}
 
-		if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
+		if ($list_mode == 'latest' && !empty($user_state))
 		{
 			$doc = JFactory::getDocument();
 			$doc->setMetaData('robots', 'nofollow, noindex');

@@ -201,15 +201,18 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showAttachments)
 		{
-			$params = array(
-				'embedded' => 1,
-				'userid' => $this->profile->userid
-			);
-			$tab                 = new stdClass;
-			$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
-			$tab->content        = $this->subRequest('User/Attachments', new JInput($params), $params);
-			$tab->active         = false;
-			$tabs['attachments'] = $tab;
+			if (KunenaConfig::getInstance()->file_upload != '' | KunenaConfig::getInstance()->image_upload != '')
+			{
+				$params = array(
+					'embedded' => 1,
+					'userid' => $this->profile->userid
+				);
+				$tab                 = new stdClass;
+				$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+				$tab->content        = $this->subRequest('User/Attachments', new JInput($params), $params);
+				$tab->active         = false;
+				$tabs['attachments'] = $tab;
+			}
 		}
 
 		if ($showBanManager)

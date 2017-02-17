@@ -181,6 +181,17 @@ class KunenaAttachment extends KunenaDatabaseObject
 		return (stripos($this->filetype, 'video/') !== false);
 	}
 
+	/**
+	 * Check if attachment is pdf.
+	 *
+	 * @return  bool  True if attachment is pdf.
+	 *
+	 * @since  K5.1
+	 */
+	public function isPdf()
+	{
+		return (stripos($this->filetype, 'application/pdf') !== false);
+	}
 
 	/**
 	 * Get path for the file.

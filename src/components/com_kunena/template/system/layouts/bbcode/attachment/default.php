@@ -25,6 +25,10 @@ elseif ($attachment->isVideo())
 {
 	echo $this->render('video');
 }
+elseif ($attachment->isPdf())
+{
+	echo $this->render('pdf');
+}
 else
 {
 	echo $this->render('file');

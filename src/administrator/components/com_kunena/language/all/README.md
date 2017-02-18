@@ -52,11 +52,11 @@ If you want to help us to translate your language, please register into Transife
 
 Here are our wiki pages for the translators (please read them before starting your work):
 
-http://docs.kunena.org/index.php/Transifex
-http://docs.kunena.org/index.php/Translating_Kunena
+https://docs.kunena.org/index.php/Transifex
+https://docs.kunena.org/index.php/Translating_Kunena
 
 More Information
 ================
 
 For more information, please read:
-http://docs.kunena.org/index.php/K_2.0_Language_Support
+https://docs.kunena.org/index.php/K_2.0_Language_Support

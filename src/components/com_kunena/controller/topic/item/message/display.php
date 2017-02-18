@@ -5,7 +5,7 @@
  * @subpackage  Controller.Topic
  *
  * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -156,7 +156,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if (!empty($this->message->ip))
 			{
-				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip
+				$this->ipLink = '<a href="https://whois.domaintools.com/' . $this->message->ip
 					. '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 			}
 			else

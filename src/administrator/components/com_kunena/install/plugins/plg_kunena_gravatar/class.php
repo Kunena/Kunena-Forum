@@ -7,7 +7,7 @@
  * "A gravatar is a dynamic image resource that is requested from our server. The request
  * URL is presented here, broken into its segments."
  * Source:
- * http://site.gravatar.com/site/implement
+ * https://site.gravatar.com/site/implement
  *
  * @package gravatarlib
  * @author  emberlabs.org
@@ -34,7 +34,7 @@ class KunenaGravatar
 	/**
 	 * @var string - URL constants for the avatar images
 	 */
-	const HTTP_URL = 'http://www.gravatar.com/avatar/';
+	const HTTP_URL = 'https://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 
 	/**

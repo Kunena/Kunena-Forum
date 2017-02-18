@@ -5,7 +5,7 @@
  * @subpackage  Layout.Search
  *
  * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -28,7 +28,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post" xmlns="https://www.w3.org/1999/html" xmlns="https://www.w3.org/1999/html">
 	<input type="hidden" name="task" value="results" />
 	<?php if ($this->me->exists()) : ?>
 		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />

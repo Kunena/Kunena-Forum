@@ -50,7 +50,7 @@ foreach ($languages as $language) {
 			$contents = '; Sorry, this language file hasn\'t been translated yet.
 ;
 ; If you want to help us, please start by reading our documentation on translating Kunena:
-; http://docs.kunena.org/index.php/Translating_Kunena
+; https://docs.kunena.org/index.php/Translating_Kunena
 ';
 
 			echo "Create $outfile\n";

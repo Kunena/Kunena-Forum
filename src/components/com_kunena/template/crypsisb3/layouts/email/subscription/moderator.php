@@ -6,7 +6,7 @@
  * @subpackage  Layout.Email
  *
  * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -30,7 +30,7 @@ $this->mail->isHtml(true);
 $this->mail->Encoding = 'base64';
 ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="https://www.w3.org/1999/xhtml">
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0;">

@@ -37,18 +37,18 @@ License:	Apache License v2.0: https://www.apache.org/licenses/LICENSE-2.0
 Nawte
 -----
 Copyright:	2008 Jean-Nicolas Jolivet (www.silverscripting.com)
-License:	MIT license; https://www.opensource.org/licenses/mit-license.php
+License:	MIT license; https://opensource.org/licenses/MIT
 
 NBBC
 ----
 Copyright:	2008-2009, the Phantom Inker.  All rights reserved.
 			Portions Copyright (c) 2004-2008 AddedBytes.com
-License:	BSD license; https://www.opensource.org/licenses/bsd-license.php
+License:	BSD license; http://www.opensource.org/licenses/bsd-license.php
 
 mediaboxAdvanced
 ----------------
 Copyright:	2007-2011 John Einselen - http://iaian7.com
 			2007-2008 Christophe Beyls - http://www.digitalia.be
-License:	MIT license; https://www.opensource.org/licenses/mit-license.php
+License:	MIT license; https://opensource.org/licenses/MIT
 
  -->

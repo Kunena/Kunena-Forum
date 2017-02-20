@@ -142,6 +142,15 @@ class Com_KunenaInstallerScript
 			$this->deleteKfolder($sitePath . '/template/blue_eagle');
 		}
 
+		// Move old topic_icons
+		$topic_icons = JPATH_SITE . '/media/kunena/topic_icons';
+		if (is_dir($topic_icons))
+		{
+			$path_old = JPATH_SITE . '/media/kunena/topic_icons';
+			$path_new = JPATH_SITE . '/media/kunena/archive/topic_icons';
+			$this->movefolder($path_old, $path_new);
+		}
+
 		// Delete languages files related to blue eagle in en-gb and others languages
 		if (JFolder::exists($sitePath . '/language'))
 		{
@@ -608,5 +617,15 @@ class Com_KunenaInstallerScript
 	public function deleteKfolder($path)
 	{
 		JFolder::delete($path);
+	}
+
+	/**
+	 * @param   $path_old
+	 * @param   $path_new
+	 */
+	public function movefolder($path_old, $path_new)
+	{
+		JFolder::copy($path_old, $path_new);
+		$this->deleteFolder($path_old);
 	}
 }

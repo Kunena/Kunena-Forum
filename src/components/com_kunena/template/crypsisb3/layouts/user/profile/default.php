@@ -20,6 +20,7 @@ $show = KunenaConfig::getInstance()->showuserstats;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points = $activityIntegration->getUserPoints($user->userid);
 $medals = $activityIntegration->getUserMedals($user->userid);
+$config = KunenaConfig::getInstance();
 
 if ($show)
 {
@@ -142,7 +143,7 @@ if ($show)
 				</li>
 			<?php endif; ?>
 
-			<?php if ($user->email && !$user->hideEmail) :?>
+			<?php if ($user->email && !$user->hideEmail && $config->showemail) :?>
 				<li>
 					<?php echo $user->profileIcon('email'); ?>
 				</li>

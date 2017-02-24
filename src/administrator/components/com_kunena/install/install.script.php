@@ -331,20 +331,6 @@ class Com_KunenaInstallerScript
 			$db->execute();
 		}
 
-		// Add custom.less
-		$customcrypsis = JPATH_ROOT . '/components/com_kunena/template/crypsis/assets/less/custom.less';
-		if (!file_exists($customcrypsis))
-		{
-			$this->createFile($customcrypsis);
-		}
-
-		// Add custom.less
-		$customcrypsisb3 = JPATH_ROOT . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
-		if (!file_exists($customcrypsisb3))
-		{
-			$this->createFile($customcrypsisb3);
-		}
-
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 
@@ -367,6 +353,20 @@ class Com_KunenaInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
+		// Add custom.less
+		$customcrypsis = JPATH_ROOT . '/components/com_kunena/template/crypsis/assets/less/custom.less';
+		if (!file_exists($customcrypsis))
+		{
+			$this->createFile($customcrypsis);
+		}
+
+		// Add custom.less
+		$customcrypsisb3 = JPATH_ROOT . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
+		if (!file_exists($customcrypsisb3))
+		{
+			$this->createFile($customcrypsisb3);
+		}
+
 		return true;
 	}
 
@@ -660,7 +660,9 @@ class Com_KunenaInstallerScript
 	 */
 	public function createFile($path)
 	{
-		$ourFileHandle = fopen($path, 'w') or die("can't open file");
+		$ourFileHandle = fopen($path, 'w');
+		$txt = "\n";
+		fwrite($ourFileHandle, $txt);
 		fclose($ourFileHandle);
 	}
 }

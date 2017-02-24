@@ -58,7 +58,7 @@ class CategoryKunenaPublishCest
 	 *
 	 * @return InstallKunenaCategoryCest
 	 */
-	public function unpublishCategoryKunenaBybButton(\AcceptanceTester $I)
+	public function unpublishCategoryKunenaByButton(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
@@ -77,7 +77,7 @@ class CategoryKunenaPublishCest
 	 *
 	 * @return InstallKunenaCategoryCest
 	 */
-	public function publishCategoryKunenaBybButton(\AcceptanceTester $I)
+	public function publishCategoryKunenaByButton(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');

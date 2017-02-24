@@ -5,8 +5,8 @@
  * @package     Kunena.Plugins
  * @subpackage  System
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -216,7 +216,7 @@ class plgSystemKunena extends JPlugin
 				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 			$db->setQuery ( $query );
-			
+
 			try
 			{
 				$db->execute();

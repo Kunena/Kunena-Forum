@@ -5,8 +5,8 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -86,7 +86,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 
 		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer'))
 		{
-			$updateSite = 'http://update.kunena.org/%';
+			$updateSite = 'https://update.kunena.org/%';
 			$db         = JFactory::getDbo();
 
 			$query = $db->getQuery(true)

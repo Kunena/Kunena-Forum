@@ -5,8 +5,8 @@
  * @package     Kunena.Site
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -66,7 +66,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
+			if (!KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
 				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
@@ -271,6 +271,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
+			$this->report($user->userid);
 		}
 		else
 		{
@@ -971,5 +972,62 @@ class KunenaControllerUser extends KunenaController
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'));
 		$this->setRedirectBack();
+	}
+	
+	/**
+	 * Reports a user to stopforumspam.com
+	 * 
+	 * @return boolean
+	 */
+	protected function report($userid)
+	{
+		if (!$this->config->stopforumspam_key || !$userid)
+		{
+			return false;
+		}
+		
+		$spammer = JFactory::getUser($userid);
+		
+		$db = JFactory::getDBO();
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$ip = $db->loadResult();
+		
+		// TODO: replace this code by using JHttpTransport class
+		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
+		$fp   = fsockopen("www.stopforumspam.com", 80);
+		fputs($fp, "POST /add.php HTTP/1.1\n");
+		fputs($fp, "Host: www.stopforumspam.com\n");
+		fputs($fp, "Content-type: application/x-www-form-urlencoded\n");
+		fputs($fp, "Content-length: " . strlen($data) . "\n");
+		fputs($fp, "Connection: close\n\n");
+		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+		
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
+		fclose($fp);
+		
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+		
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+		
+			return false;
+		}
 	}
 }

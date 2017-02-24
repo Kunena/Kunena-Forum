@@ -2,8 +2,8 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
@@ -87,35 +87,35 @@ jQuery(document).ready(function ($) {
 			showLabel: true,
 			shares: [
 			{
-				share: "email",           
+				share: "email",
 				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
-			}, 
+			},
 			{
-				share: "twitter",           
+				share: "twitter",
 				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
-			}, 
+			},
 			{
-				share: "facebook",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL') 
-			}, 
+				share: "facebook",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
+			},
 			{
-				share: "googleplus",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL') 
-			}, 
+				share: "googleplus",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
+			},
 			{
-				share: "linkedin",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL') 
+				share: "linkedin",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
 			}, {
-				share: "pinterest",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL') 
-			}, 
+				share: "pinterest",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
+			},
 			{
-				share: "stumbleupon",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL') 
-			}, 
+				share: "stumbleupon",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
+			},
 			{
-				share: "whatsapp",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL') 
+				share: "whatsapp",
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
 			}]
 		});
 		$('.jssocials-share-whatsapp').addClass('visible-phone');

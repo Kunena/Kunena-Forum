@@ -5,9 +5,9 @@
  * @package     Kunena.Plugins
  * @subpackage  Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -37,7 +37,7 @@ class KunenaProfileCommunity extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -77,7 +77,7 @@ class KunenaProfileCommunity extends KunenaProfile
 			WHERE cu.view>0
 			ORDER BY cu.view DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();

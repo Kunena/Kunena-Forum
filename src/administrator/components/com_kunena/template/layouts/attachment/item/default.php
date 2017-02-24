@@ -4,8 +4,8 @@
  * @package     Kunena.Administrator.Template
  * @subpackage  Layouts.Attachment
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -17,7 +17,7 @@ $config = KunenaFactory::getConfig();
 if ($config->access_component)
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+	<a href="<?php echo JUri::root() . $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
 		<?php if ($attachment->isImage())
 		{
 			echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';

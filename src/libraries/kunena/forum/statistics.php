@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
@@ -221,7 +221,7 @@ class KunenaForumStatistics
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
 				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0" );
-			
+
 			try
 			{
 				$counts = $this->_db->loadObject ();
@@ -370,7 +370,7 @@ class KunenaForumStatistics
 					HAVING count > 0
 					ORDER BY count DESC";
 			$this->_db->setQuery($query, 0, $limit);
-			
+
 			try
 			{
 				$polls = (array) $this->_db->loadObjectList('id');
@@ -379,7 +379,7 @@ class KunenaForumStatistics
 			{
 				KunenaError::displayDatabaseError($e);
 			}
-			
+
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
@@ -424,15 +424,15 @@ class KunenaForumStatistics
 			$query->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'));
 			$query->group($this->_db->quoteName('t.targetuserid'));
 			$query->order($this->_db->quoteName('count') . ' DESC');
-				
+
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = JAccess::getUsersByGroup(8);
 				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 			}
-			
+
 			$this->_db->setQuery ( $query, 0, $limit );
-			
+
 			try
 			{
 				$this->topThanks = (array) $this->_db->loadObjectList ();

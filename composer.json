@@ -7,7 +7,7 @@
     },
     "require-dev": {
         "codeception/codeception": "~2.2",
-        "joomla-projects/joomla-browser": "v3.6.0.1",
+        "joomla-projects/joomla-browser": "dev-master",
         "codegyre/robo": "~0.5",
         "joomla-projects/robo": "dev-master",
         "joomla-projects/selenium-server-standalone": "v2.53.1",

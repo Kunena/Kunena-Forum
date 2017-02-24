@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Attachment
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -422,18 +422,18 @@ abstract class KunenaAttachmentHelper
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
-		
-		try 
+
+		try
 		{
 			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		if (empty($results))
 		{
 			return true;
@@ -450,14 +450,14 @@ abstract class KunenaAttachmentHelper
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
 		$db->setQuery($query);
 
-		try 
+		try
 		{
 			$db->execute();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 	}
@@ -525,8 +525,8 @@ abstract class KunenaAttachmentHelper
 
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
-		$db->setQuery($query, 0, $params['limit']);	
-		
+		$db->setQuery($query, 0, $params['limit']);
+
 		try
 		{
 			$results = $db->loadObjectList('id', 'KunenaAttachment');
@@ -575,7 +575,7 @@ abstract class KunenaAttachmentHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
@@ -626,7 +626,7 @@ abstract class KunenaAttachmentHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');

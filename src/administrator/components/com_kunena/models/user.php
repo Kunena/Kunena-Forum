@@ -5,8 +5,8 @@
  * @package     Kunena.Administrator
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -67,7 +67,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1");
-		
+
 		try
 		{
 			$subslist = (array) $db->loadObjectList();
@@ -75,7 +75,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -119,7 +119,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip");
-		
+
 		try
 		{
 			$iplist = implode("','", (array) $db->loadColumn());
@@ -127,7 +127,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -137,7 +137,7 @@ class KunenaAdminModelUser extends KunenaModel
 		{
 			$iplist = "'{$iplist}'";
 			$db->setQuery("SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip");
-			
+
 			try
 			{
 				$list = (array) $db->loadObjectlist();
@@ -145,7 +145,7 @@ class KunenaAdminModelUser extends KunenaModel
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -200,7 +200,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$user = $this->getUser();
 		//grab all special ranks
 		$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_special = '1'");
-		
+
 		try
 		{
 			$specialRanks = (array) $db->loadObjectList();
@@ -208,7 +208,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -251,7 +251,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 		$userids = implode(',', $userids);
 		$db->setQuery("SELECT id,username FROM #__users WHERE id IN(" . $userids . ")");
-		
+
 		try
 		{
 			$userids = (array) $db->loadObjectList();
@@ -259,7 +259,7 @@ class KunenaAdminModelUser extends KunenaModel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 

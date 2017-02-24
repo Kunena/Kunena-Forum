@@ -5,8 +5,8 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 
@@ -207,7 +207,7 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="col-md-12">
 											<?php endif; ?>
-												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), null, false, true) ?></span>
+												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>

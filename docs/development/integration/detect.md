@@ -5,7 +5,7 @@ Kunena. This document describes how to detect different versions of Kunena and h
 our API.
 
 This document will only consider Kunena 2.0 or later versions. To detect older versions, please see
-[our wiki article](http://www.kunena.org/docs/Detecting_Kunena_Version).
+[our wiki article](https://www.kunena.org/docs/Detecting_Kunena_Version).
 
 ## Use Standard Methods
 

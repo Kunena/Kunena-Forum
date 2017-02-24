@@ -4,8 +4,8 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -220,34 +220,34 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			$lock = $this->topic->locked ? 'unlock' : 'lock';
 
 			$this->topicButtons->set('sticky',
-				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation')
+				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button)
 			);
 
 			$this->topicButtons->set('lock',
-				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation')
+				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button)
 			);
 
 			$this->topicButtons->set('moderate',
-				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation')
+				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button)
 			);
 
 			if ($this->topic->hold == 1)
 			{
 				$this->topicButtons->set('approve',
-					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button)
 				);
 			}
 
 			if ($this->topic->hold == 1 || $this->topic->hold == 0)
 			{
 				$this->topicButtons->set('delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button)
 				);
 			}
 			elseif ($this->topic->hold == 2 || $this->topic->hold == 3)
 			{
 				$this->topicButtons->set('undelete',
-					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation')
+					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
 				);
 			}
 		}

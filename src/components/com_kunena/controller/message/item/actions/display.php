@@ -4,8 +4,8 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Message
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -176,7 +176,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$config->read_only)
 		{
-			$logintext =  '<a class="btn-link" href="#klogin" id="login-link" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance()));
+			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())
 			{

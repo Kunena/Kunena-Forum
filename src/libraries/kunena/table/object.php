@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Table
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -182,7 +182,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/setDbo
+	 * @link    https://docs.joomla.org/JTable/setDbo
 	 * @since  K4.0
 	 */
 	public static function setDbo(JDatabaseDriver $db)

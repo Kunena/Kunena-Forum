@@ -5,8 +5,8 @@
  * @package     Kunena.Administrator
  * @subpackage  Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -77,9 +77,9 @@ class KunenaAdminControllerConfig extends KunenaController
 		}
 
 		$properties = $this->config->getProperties();
-		
+
 		$post_config = $this->app->input->post->getArray();
-		
+
 		// TODO: fix depricated value
 		foreach ($post_config as $postsetting => $postvalue)
 		{

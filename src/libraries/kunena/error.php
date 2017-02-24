@@ -3,8 +3,8 @@
  * Kunena Component
  * @package    Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -341,8 +341,8 @@ abstract class KunenaError
 				return;
 			}
 
-			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
+			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>500 Internal Server Error</title>

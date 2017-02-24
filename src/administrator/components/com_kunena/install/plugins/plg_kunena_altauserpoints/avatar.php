@@ -5,8 +5,8 @@
  * @package     Kunena.Plugins
  * @subpackage  AltaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
@@ -62,16 +62,16 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 		{
 			$profile = AltaUserPointsHelper::getUserInfo('', $user->userid);
 
-			$avatar = ($profile->avatar!='') ? _AUP_AVATAR_LIVE_PATH . $profile->avatar : JPATH_ROOT . '/components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png'; 
+			$avatar = ($profile->avatar!='') ? _AUP_AVATAR_LIVE_PATH . $profile->avatar : JPATH_ROOT . '/components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png';
 			$width = 100 * (float) $size->x / (float) $size->y;
 			$avatar = '<img src="' . $avatar . '" border="0" alt="" width="' .$width. '" height="100" />';
 		}
 		else
 		{
 			$profile = AltaUserPointsHelper::getUserInfo('', $user->userid);
-			
+
 			$avatar = ($profile->avatar!='') ? JURI::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar : JURI::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
-			
+
 			$avatar = '<img src="' . $avatar . '" border="0" alt="" width="' .$size->x. '" height="' .$size->y . '" />';
 		}
 

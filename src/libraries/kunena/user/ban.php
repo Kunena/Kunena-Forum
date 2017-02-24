@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -253,7 +253,7 @@ class KunenaUserBan extends JObject
 			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
 			ORDER BY b.created_time DESC";
 		$db->setQuery($query, $start, $limit);
-		
+
 		try
 		{
 			$results = $db->loadAssocList();
@@ -296,7 +296,7 @@ class KunenaUserBan extends JObject
 			WHERE `userid`={$db->quote($userid)}
 			ORDER BY id DESC";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$results = $db->loadAssocList();

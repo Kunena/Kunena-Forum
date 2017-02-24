@@ -4,8 +4,8 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -463,10 +463,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$this->setKeywords($headerText);
 			}
 
-
 			if ($total > 1 && $page > 1)
 			{
-				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
+				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 140);
 
 				if (empty($small))
 				{
@@ -477,7 +476,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
+				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160);
 
 				if (empty($small))
 				{

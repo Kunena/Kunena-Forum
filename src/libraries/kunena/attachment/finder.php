@@ -4,15 +4,15 @@
  * @package Kunena.Framework
  * @subpackage Attachment
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaAttachmentFinder
- * 
+ *
  * @since 5.0
  */
 class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
@@ -35,7 +35,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
-		
+
 		try
 		{
 			$results = new KunenaCollection((array) $this->db->loadObjectList('id', 'KunenaAttachment'));

@@ -5,8 +5,8 @@
  * @package     Kunena.Site
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -201,15 +201,18 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showAttachments)
 		{
-			$params = array(
-				'embedded' => 1,
-				'userid' => $this->profile->userid
-			);
-			$tab                 = new stdClass;
-			$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
-			$tab->content        = $this->subRequest('User/Attachments', new JInput($params), $params);
-			$tab->active         = false;
-			$tabs['attachments'] = $tab;
+			if (KunenaConfig::getInstance()->file_upload != '' | KunenaConfig::getInstance()->image_upload != '')
+			{
+				$params = array(
+					'embedded' => 1,
+					'userid' => $this->profile->userid
+				);
+				$tab                 = new stdClass;
+				$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+				$tab->content        = $this->subRequest('User/Attachments', new JInput($params), $params);
+				$tab->active         = false;
+				$tabs['attachments'] = $tab;
+			}
 		}
 
 		if ($showBanManager)

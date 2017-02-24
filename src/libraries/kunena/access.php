@@ -4,8 +4,8 @@
  * @package     Kunena.Framework
  * @subpackage  Integration
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -130,7 +130,7 @@ class KunenaAccess
 		$db = JFactory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$this->storeRoles((array) $db->loadObjectList());
@@ -293,7 +293,7 @@ window.addEvent('domready', function(){
 
 		return $list;
 	}
-	
+
 	/**
 	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
 	 *
@@ -309,7 +309,7 @@ window.addEvent('domready', function(){
 		{
 			return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		}
-		
+
 		/** @var KunenaAccess $access */
 		foreach ($this->accesstypes[$accesstype] as $access)
 		{
@@ -843,7 +843,7 @@ window.addEvent('domready', function(){
 			$query->where("u.id IN ({$userlist})");
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$userids = (array) $db->loadObjectList();
@@ -916,7 +916,7 @@ window.addEvent('domready', function(){
 
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$userids = (array) $db->loadColumn();

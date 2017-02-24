@@ -2810,7 +2810,7 @@ trait AcceptanceTesterActions
      *
      * ``` php
      * $I->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webdriver) {
-     *   $webdriver->get('http://google.com');
+     *   $webdriver->get('https://google.com');
      * });
      * ```
      *

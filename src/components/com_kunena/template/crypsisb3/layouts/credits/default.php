@@ -4,8 +4,8 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Credits
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -60,8 +60,8 @@ defined('_JEXEC') or die;
 		</p>
 
 		<p class="center">
-			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2016 <a href = "https://www.kunena.org" target = "_blank">Kunena</a>,
-			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
+			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2017 <a href = "https://www.kunena.org" target = "_blank">Kunena</a>,
+			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
 		</p>
 	</div>
 </div>

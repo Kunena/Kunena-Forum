@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -130,14 +130,14 @@ abstract class KunenaForumCategoryHelper
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
 		$db->setQuery($query);
 
-		try 
+		try
 		{
 			$subscribed = (array) $db->loadColumn();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return array();
 		}
 
@@ -206,20 +206,20 @@ abstract class KunenaForumCategoryHelper
 		// Get total count
 		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$total = (int) $db->loadResult();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-			
+
 			return array(0, array());
 		}
-		
+
 		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -235,15 +235,15 @@ abstract class KunenaForumCategoryHelper
 
 		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery($query, $limitstart, $limit);
-		
-		try 
+
+		try
 		{
 			$subscribed = (array) $db->loadColumn();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return array(0, array());
 		}
 
@@ -297,14 +297,14 @@ abstract class KunenaForumCategoryHelper
 			GROUP BY category_id";
 		$db->setQuery($query);
 
-		try 
+		try
 		{
 			$newlist = (array) $db->loadObjectList('category_id');
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return;
 		}
 
@@ -731,14 +731,14 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_time = tt.last_post_time";
 		$db->setQuery($query);
 
-		try 
+		try
 		{
 			$db->execute();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -755,14 +755,14 @@ abstract class KunenaForumCategoryHelper
 			WHERE tt.id IS NULL";
 		$db->setQuery($query);
 
-		try 
+		try
 		{
 			$db->execute();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -796,15 +796,15 @@ abstract class KunenaForumCategoryHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				KunenaError::displayDatabaseError($e);
-				
+
 				return false;
 			}
 
@@ -827,18 +827,18 @@ abstract class KunenaForumCategoryHelper
 		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$category_items = $db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		if (is_array($category_items))
 		{
 			return true;
@@ -859,8 +859,8 @@ abstract class KunenaForumCategoryHelper
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
 		}

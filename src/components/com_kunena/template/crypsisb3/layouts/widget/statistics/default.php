@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 						</ul>
 					</div>
 
-					<div class="col-md-3">		
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -78,7 +78,7 @@ defined('_JEXEC') or die;
 						</ul>
 					</div>
 
-					<div class="col-md-3">	
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:

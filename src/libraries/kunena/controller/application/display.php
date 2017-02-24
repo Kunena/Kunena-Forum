@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -124,11 +124,26 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
+				$banned = KunenaUserHelper::getMyself()->banned;
+
 				if (JFactory::getUser()->guest)
 				{
 					$this->output->setLayout('login');
 					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
 					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+				}
+				elseif ($banned)
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('unauthorized');
+					$this->document->setTitle($e->getResponseStatus());
+
+					$bannedtime = KunenaUserBan::getInstanceByUserid(KunenaUserHelper::getMyself()->userid, true);
+
+					$this->content = KunenaLayout::factory('Widget/Custom')
+						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
+						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+							KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')));
 				}
 				else
 				{
@@ -332,6 +347,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 
 		$credits .= '</div>';
+
+		$powered = JPluginHelper::isEnabled('kunena', 'powered');
+		if ($powered)
+		{
+			$credits = '';
+		}
 
 		return $credits;
 	}

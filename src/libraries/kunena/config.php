@@ -3,13 +3,13 @@
  * Kunena Component
  * @package    Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright  (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  *
  * Based on FireBoard Component
  * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.bestofjoomla.com
  **/
 
@@ -844,7 +844,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-	public $userlist_allowed = 0;
+	public $userlist_allowed = 1;
 
 	/**
 	 * @var    integer  User list count users; select, selection
@@ -1001,7 +1001,13 @@ class KunenaConfig extends JObject
 	 * @since  2.0.0
 	 */
 	public $iptracking = 1;
-
+	
+	/**
+	 * @var    string  StopForumSpam key; input, text
+	 * @since  2.0.0
+	*/
+	public $stopforumspam_key = '';
+	
 	/**
 	 * @var    string  RSS feebburner URL; input, text
 	 * @since  2.0.3

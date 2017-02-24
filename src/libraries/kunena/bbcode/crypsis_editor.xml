@@ -327,6 +327,6 @@
 	<button name="help"
 	        title="COM_KUNENA_EDITOR_HELP"
 	        alt="COM_KUNENA_EDITOR_HELPLINE_HELP">
-		<link url="http://docs.kunena.org/index.php/bbcode"/>
+		<link url="https://docs.kunena.org/index.php/bbcode"/>
 	</button>
 </bbcode-editor>

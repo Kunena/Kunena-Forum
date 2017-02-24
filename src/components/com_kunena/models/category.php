@@ -5,8 +5,8 @@
  * @package     Kunena.Site
  * @subpackage  Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -207,7 +207,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
-				
+
 				try
 				{
 					$pending = $db->loadAssocList();
@@ -216,7 +216,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				{
 					KunenaError::displayDatabaseError($e);
 				}
-				
+
 				foreach ($pending as $item)
 				{
 					if ($item ['count'])

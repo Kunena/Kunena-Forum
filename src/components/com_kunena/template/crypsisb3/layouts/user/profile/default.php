@@ -4,8 +4,8 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -20,6 +20,7 @@ $show = KunenaConfig::getInstance()->showuserstats;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points = $activityIntegration->getUserPoints($user->userid);
 $medals = $activityIntegration->getUserMedals($user->userid);
+$config = KunenaConfig::getInstance();
 
 if ($show)
 {
@@ -142,7 +143,7 @@ if ($show)
 				</li>
 			<?php endif; ?>
 
-			<?php if ($user->email && !$user->hideEmail) :?>
+			<?php if ($user->email && !$user->hideEmail && $config->showemail) :?>
 				<li>
 					<?php echo $user->profileIcon('email'); ?>
 				</li>

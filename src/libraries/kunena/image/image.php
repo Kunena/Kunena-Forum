@@ -4,8 +4,8 @@
  * @package     Kunena.Framework
  * @subpackage  Image
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -227,7 +227,7 @@ $t = round(($x + 1) * $rX);
 		// We should return true since ImageCopyResampled/ImageCopyResized do it
 		return true;
 	}
-	
+
 	/**
 	 * Correct Image Orientation
 	 *
@@ -238,7 +238,7 @@ $t = round(($x + 1) * $rX);
 	public static function correctImageOrientation($filename)
 	{
 		$testForJpg = @getimagesize($filename);
-	
+
 		if ($testForJpg[2] == 2)
 		{
 			if (function_exists('exif_read_data'))
@@ -247,15 +247,15 @@ $t = round(($x + 1) * $rX);
 				$exif = @exif_read_data($filename);
 				$flip = '';
 				$img  = '';
-	
+
 				if ($exif && isset($exif['Orientation']))
 				{
 					$orientation = $exif['Orientation'];
-	
+
 					if ($orientation != 1)
 					{
 						$img = @imagecreatefromjpeg($filename);
-	
+
 						switch ($orientation)
 						{
 							case 1: // nothing
@@ -293,12 +293,12 @@ $t = round(($x + 1) * $rX);
 						}
 					}
 				}
-	
+
 				if ($deg > 0)
 				{
 					$img = @imagerotate($img, $deg, 0);
 				}
-	
+
 				if ($flip != 0)
 				{
 					if ($flip == 1)
@@ -310,10 +310,10 @@ $t = round(($x + 1) * $rX);
 						@imageflip($img, IMG_FLIP_VERTICAL);
 					}
 				}
-	
+
 				@imagejpeg($img, $filename, 95);
 			}
 		}
 	}
-	
+
 }

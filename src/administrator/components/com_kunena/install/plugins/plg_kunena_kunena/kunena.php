@@ -5,8 +5,8 @@
  * @package     Kunena.Plugins
  * @subpackage  Kunena
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -27,6 +27,24 @@ class PlgKunenaKunena extends JPlugin
 		}
 
 		parent::__construct($subject, $config);
+
+		$powered = JPluginHelper::isEnabled('kunena', 'powered');
+		if (!$powered)
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
+		}
+
+		$method = method_exists(get_class(new KunenaControllerApplicationDisplay), 'poweredBy');
+		if (!$method)
+		{
+			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads', 'notice');
+		}
 
 		$this->loadLanguage('plg_kunena_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_kunena.sys', KPATH_ADMIN);
 	}

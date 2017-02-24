@@ -4,8 +4,8 @@
  * @package Kunena.Framework
  * @subpackage Table
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -148,7 +148,7 @@ class KunenaTableMap
 	 *
 	 * @return  string  The name of the database table being modeled.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getTableName
+	 * @link    https://docs.joomla.org/JTable/getTableName
 	 */
 	public function getTableName()
 	{
@@ -160,7 +160,7 @@ class KunenaTableMap
 	 *
 	 * @return  string  The name of the primary key for the table.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getKeyName
+	 * @link    https://docs.joomla.org/JTable/getKeyName
 	 */
 	public function getKeyName()
 	{
@@ -182,7 +182,7 @@ class KunenaTableMap
 	 *
 	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getDBO
+	 * @link    https://docs.joomla.org/JTable/getDBO
 	 */
 	public function getDbo()
 	{
@@ -277,7 +277,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/setDbo
+	 * @link    https://docs.joomla.org/JTable/setDbo
 	 */
 	public function setDbo(JDatabaseDriver $db)
 	{
@@ -293,7 +293,7 @@ class KunenaTableMap
 	 *
 	 * @return  void
 	 *
-	 * @link    http://docs.joomla.org/JTable/reset
+	 * @link    https://docs.joomla.org/JTable/reset
 	 */
 	public function reset()
 	{
@@ -318,7 +318,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/bind
+	 * @link    https://docs.joomla.org/JTable/bind
 	 * @throws  InvalidArgumentException
 	 */
 	public function bind($src, $ignore = array())
@@ -367,7 +367,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True if successful. False if no rows were found.
 	 *
-	 * @link    http://docs.joomla.org/JTable/load
+	 * @link    https://docs.joomla.org/JTable/load
 	 * @throws  RuntimeException
 	 * @throws  UnexpectedValueException
 	 */
@@ -432,7 +432,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
-	 * @link    http://docs.joomla.org/JTable/check
+	 * @link    https://docs.joomla.org/JTable/check
 	 */
 	public function check()
 	{
@@ -446,7 +446,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/store
+	 * @link    https://docs.joomla.org/JTable/store
 	 * @throws  UnexpectedValueException
 	 */
 	public function store(array $filter = null)
@@ -553,7 +553,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/delete
+	 * @link    https://docs.joomla.org/JTable/delete
 	 * @throws  UnexpectedValueException
 	 */
 	public function delete($pk = null)

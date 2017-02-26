@@ -96,7 +96,7 @@ foreach ($this->sections as $section) :
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-										<small class="hidden-phone nowrap">
+										<small class="nowrap">
 											<?php if ($category->getTopics() > 0) : ?>
 												(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())); ?>)
 											<?php else : ?>

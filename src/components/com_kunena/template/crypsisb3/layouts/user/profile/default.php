@@ -19,8 +19,9 @@ $show              = KunenaConfig::getInstance()->showuserstats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points              = $activityIntegration->getUserPoints($user->userid);
-$medals              = $activityIntegration->getUserMedals($user->userid);
+$points = $activityIntegration->getUserPoints($user->userid);
+$medals = $activityIntegration->getUserMedals($user->userid);
+$config = KunenaConfig::getInstance();
 
 if ($show)
 {
@@ -127,11 +128,11 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->birthdate) :?>
-					<li>
-						<?php echo $user->profileIcon('birthdate'); ?>
-					</li>
-				<?php endif; ?>
+			<?php if ($user->email && !$user->hideEmail && $config->showemail) :?>
+				<li>
+					<?php echo $user->profileIcon('email'); ?>
+				</li>
+			<?php endif; ?>
 
 				<?php if ($user->location) :?>
 					<li>

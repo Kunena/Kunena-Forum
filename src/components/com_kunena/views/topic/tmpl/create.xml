@@ -12,7 +12,7 @@
 			       type="kunenacategorylist"
 			       default=""
 			       sections="0"
-			       label="COM_KUNENA_MENU_CATID">
+			       label="COM_KUNENA_MENU_CATID" description="COM_KUNENA_MENU_CATID_DESC">
 				<option value="">COM_KUNENA_A_ALL_CATEGORIES</option>
 			</field>
 		</fieldset>

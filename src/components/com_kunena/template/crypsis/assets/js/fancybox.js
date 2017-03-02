@@ -1,7 +1,7 @@
 /*!
  * fancyBox - jQuery Plugin
  * version: 2.1.5 (Fri, 14 Jun 2013)
- * @requires jQuery v1.6 or later
+ * requires jQuery v1.6 or later
  *
  * Examples at http://fancyapps.com/fancybox/
  * License: www.fancyapps.com/fancybox/#license
@@ -10,7 +10,7 @@
  *
  */
 
-(function (window, document, $, undefined) {
+;(function (window, document, $, undefined) {
 	"use strict";
 
 	var H = $("html"),
@@ -137,13 +137,14 @@
 
 			// HTML templates
 			tpl: {
-				wrap: '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>',
-				image: '<img class="fancybox-image" src="{href}" alt="" />',
-				iframe: '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + '></iframe>',
-				error: '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
-				closeBtn: '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
-				next: '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
-				prev: '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
+				wrap     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>',
+				image    : '<img class="fancybox-image" src="{href}" alt="" />',
+				iframe   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + '></iframe>',
+				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
+				closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
+				next     : '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
+				prev     : '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>',
+				loading  : '<div id="fancybox-loading"><div></div></div>'
 			},
 
 			// Properties for each animation type
@@ -260,10 +261,10 @@
 
 					if (isQuery(element)) {
 						obj = {
-							href: element.data('fancybox-href') || element.attr('href'),
-							title: element.data('fancybox-title') || element.attr('title'),
-							isDom: true,
-							element: element
+							href    : element.data('fancybox-href') || element.attr('href'),
+							title   : $('<div/>').text( element.data('fancybox-title') || element.attr('title') || '' ).html(),
+							isDom   : true,
+							element : element
 						};
 
 						if ($.metadata) {
@@ -363,11 +364,15 @@
 		cancel: function () {
 			var coming = F.coming;
 
-			if (!coming || false === F.trigger('onCancel')) {
+			if (coming && false === F.trigger('onCancel')) {
 				return;
 			}
 
 			F.hideLoading();
+
+			if (!coming) {
+				return;
+			}
 
 			if (F.ajaxLoad) {
 				F.ajaxLoad.abort();
@@ -547,7 +552,7 @@
 		},
 
 		update: function (e) {
-			var type = (e && e.type),
+			var type = (e && e.originalEvent && e.originalEvent.type),
 				anyway = !type || type === 'orientationchange';
 
 			if (anyway) {
@@ -611,7 +616,7 @@
 
 			F.hideLoading();
 
-			el = $('<div id="fancybox-loading"><div></div></div>').click(F.cancel).appendTo('body');
+			el = $(F.opts.tpl.loading).click(F.cancel).appendTo('body');
 
 			// If user will press the escape-button, the request will be canceled
 			D.bind('keydown.loading', function (e) {
@@ -631,6 +636,8 @@
 					left: (viewport.w * 0.5) + viewport.x
 				});
 			}
+
+			F.trigger('onLoading');
 		},
 
 		getViewport: function () {
@@ -640,7 +647,7 @@
 					y: W.scrollTop()
 				};
 
-			if (locked) {
+			if (locked && locked.length) {
 				rez.w = locked[0].clientWidth;
 				rez.h = locked[0].clientHeight;
 			}
@@ -742,24 +749,22 @@
 		trigger: function (event, o) {
 			var ret, obj = o || F.coming || F.current;
 
-			if (!obj) {
-				return;
-			}
+			if (obj) {
+				if ($.isFunction( obj[event] )) {
+					ret = obj[event].apply(obj, Array.prototype.slice.call(arguments, 1));
+				}
 
-			if ($.isFunction(obj[event])) {
-				ret = obj[event].apply(obj, Array.prototype.slice.call(arguments, 1));
-			}
+				if (ret === false) {
+					return false;
+				}
 
-			if (ret === false) {
-				return false;
-			}
-
-			if (obj.helpers) {
-				$.each(obj.helpers, function (helper, opts) {
-					if (opts && F.helpers[helper] && $.isFunction(F.helpers[helper][event])) {
-						F.helpers[helper][event]($.extend(true, {}, F.helpers[helper].defaults, opts), obj);
-					}
-				});
+				if (obj.helpers) {
+					$.each(obj.helpers, function (helper, opts) {
+						if (opts && F.helpers[helper] && $.isFunction(F.helpers[helper][event])) {
+							F.helpers[helper][event]($.extend(true, {}, F.helpers[helper].defaults, opts), obj);
+						}
+					});
+				}
 			}
 
 			D.trigger(event);
@@ -1120,16 +1125,16 @@
 					break;
 
 				case 'image':
-					content = current.tpl.image.replace('{href}', href);
-					break;
+					content = current.tpl.image.replace(/\{href\}/g, href);
+				break;
 
 				case 'swf':
 					content = '<object id="fancybox-swf" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"><param name="movie" value="' + href + '"></param>';
 					embed = '';
 
-					$.each(current.swf, function (name, val) {
-						content += '<param name="' + name + '" value="' + val + '">';
-						embed += ' ' + name + '="' + val + '"';
+					$.each(current.swf, function(name, val) {
+						content += '<param name="' + name + '" value="' + val + '"></param>';
+						embed   += ' ' + name + '="' + val + '"';
 					});
 
 					content += '<embed src="' + href + '" type="application/x-shockwave-flash" width="100%" height="100%"' + embed + '></embed></object>';
@@ -1220,7 +1225,7 @@
 			if (current.type === 'iframe') {
 				iframe = current.content;
 
-				if (current.autoHeight && iframe.data('ready') === 1) {
+				if (current.autoHeight && iframe && iframe.data('ready') === 1) {
 					try {
 						if (iframe[0].contentWindow.document.location) {
 							inner.width(origWidth).height(9999);
@@ -1430,7 +1435,7 @@
 
 			F.isOpen = F.isOpened = true;
 
-			F.wrap.css('overflow', 'visible').addClass('fancybox-opened');
+			F.wrap.css('overflow', 'visible').addClass('fancybox-opened').hide().show(0);
 
 			F.update();
 
@@ -1469,12 +1474,13 @@
 
 			// Stop the slideshow if this is the last item
 			if (!current.loop && current.index === current.group.length - 1) {
-				F.play(false);
-			}
-			else if (F.opts.autoPlay && !F.player.isActive) {
+
+				F.play( false );
+
+			} else if (F.opts.autoPlay && !F.player.isActive) {
 				F.opts.autoPlay = false;
 
-				F.play();
+				F.play(true);
 			}
 		},
 
@@ -1706,15 +1712,19 @@
 		el: $('html'), // element that contains "the lock"
 
 		// Public methods
-		create: function (opts) {
+		create : function(opts) {
+			var parent;
+
 			opts = $.extend({}, this.defaults, opts);
 
 			if (this.overlay) {
 				this.close();
 			}
 
-			this.overlay = $('<div class="fancybox-overlay"></div>').appendTo(F.coming ? F.coming.parent : opts.parent);
-			this.fixed = false;
+			parent = F.coming ? F.coming.parent : opts.parent;
+
+			this.overlay = $('<div class="fancybox-overlay"></div>').appendTo( parent && parent.length ? parent : 'body' );
+			this.fixed   = false;
 
 			if (opts.fixed && F.defaults.fixed) {
 				this.overlay.addClass('fancybox-overlay-fixed');
@@ -1759,20 +1769,15 @@
 			this.overlay.css(opts.css).show();
 		},
 
-		close: function () {
-			var scrollV, scrollH;
-
+		close : function() {
 			W.unbind('resize.overlay');
 
 			if (this.el.hasClass('fancybox-lock')) {
 				$('.fancybox-margin').removeClass('fancybox-margin');
 
-				scrollV = W.scrollTop();
-				scrollH = W.scrollLeft();
-
 				this.el.removeClass('fancybox-lock');
 
-				W.scrollTop(scrollV).scrollLeft(scrollH);
+				W.scrollTop( this.scrollV ).scrollLeft( this.scrollH );
 			}
 
 			$('.fancybox-overlay').remove().hide();
@@ -1817,12 +1822,8 @@
 			}
 
 			if (opts.locked && this.fixed && obj.fixed) {
-				if (!overlay) {
-					this.margin = D.height() > W.height() ? $('html').css('margin-right').replace("px", "") : false;
-				}
-
-				obj.locked = this.overlay.append(obj.wrap);
-				obj.fixed = false;
+				obj.locked = this.overlay.append( obj.wrap );
+				obj.fixed  = false;
 			}
 
 			if (opts.showEarly === true) {
@@ -1830,24 +1831,22 @@
 			}
 		},
 
-		beforeShow: function (opts, obj) {
-			var scrollV, scrollH;
-
-			if (obj.locked) {
-				if (this.margin !== false) {
-					$('*').filter(function () {
+		beforeShow : function(opts, obj) {
+			if (obj.locked && !this.el.hasClass('fancybox-lock')) {
+				if (this.fixPosition !== false) {
+					$('*:not(object)').filter(function(){
 						return ($(this).css('position') === 'fixed' && !$(this).hasClass("fancybox-overlay") && !$(this).hasClass("fancybox-wrap") );
 					}).addClass('fancybox-margin');
-
-					this.el.addClass('fancybox-margin');
 				}
 
-				scrollV = W.scrollTop();
-				scrollH = W.scrollLeft();
+				this.el.addClass('fancybox-margin');
+
+				this.scrollV = W.scrollTop();
+				this.scrollH = W.scrollLeft();
 
 				this.el.addClass('fancybox-lock');
 
-				W.scrollTop(scrollV).scrollLeft(scrollH);
+				W.scrollTop( this.scrollV ).scrollLeft( this.scrollH );
 			}
 
 			this.open(opts);
@@ -1862,7 +1861,6 @@
 		afterClose: function (opts) {
 			// Remove overlay if exists and fancyBox is not opening
 			// (e.g., it is not being open using afterClose callback)
-			//if (this.overlay && !F.isActive) {
 			if (this.overlay && !F.coming) {
 				this.overlay.fadeOut(opts.speedOut, $.proxy(this.close, this));
 			}

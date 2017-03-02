@@ -11,6 +11,25 @@
 defined('_JEXEC') or die;
 
 // [size=6]HUGE![/size]
+if ($this->size == 200) {
+	$this->size = 6;
+}
+elseif ($this->size == 150)
+{
+	$this->size = 5;
+}
+elseif ($this->size == 100)
+{
+	$this->size = 4;
+}
+elseif ($this->size == 85)
+{
+	$this->size = 3;
+}
+elseif ($this->size == 50)
+{
+	$this->size = 2;
+}
 
 // Change text size.
 $size_css = array(1 => '0.6em', '0.8em', '1em', '1.2em', '1.4em', '1.8em');

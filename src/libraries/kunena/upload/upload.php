@@ -360,7 +360,7 @@ class KunenaUpload
 					}
 				}
 
-				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+				if (stripos($type, 'image/') == true)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{

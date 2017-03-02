@@ -90,16 +90,16 @@ $list = array();
 			<?php foreach ($attachments as $attachment) : ?>
 				<?php if ($attachment->isAudio()) :
 					echo $attachment->getLayout()->render('audio'); ?>
-				<?php endif; ?>
-				<?php if ($attachment->isVideo()) :
+				<?php elseif ($attachment->isVideo()) :
 					echo $attachment->getLayout()->render('video'); ?>
+				<?php else : ?>
+					<li class="col-md-3 text-center">
+						<div class="thumbnail">
+							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+							<?php echo $attachment->getLayout()->render('textlink'); ?>
+						</div>
+					</li>
 				<?php endif; ?>
-				<li class="col-md-3 text-center">
-					<div class="thumbnail">
-						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-						<?php echo $attachment->getLayout()->render('textlink'); ?>
-					</div>
-				</li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

@@ -5,7 +5,7 @@
  * @subpackage      Layout.User
  *
  * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -19,9 +19,8 @@ $show              = KunenaConfig::getInstance()->showuserstats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points = $activityIntegration->getUserPoints($user->userid);
-$medals = $activityIntegration->getUserMedals($user->userid);
-$config = KunenaConfig::getInstance();
+$points              = $activityIntegration->getUserPoints($user->userid);
+$medals              = $activityIntegration->getUserMedals($user->userid);
 
 if ($show)
 {
@@ -128,11 +127,11 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-			<?php if ($user->email && !$user->hideEmail && $config->showemail) :?>
-				<li>
-					<?php echo $user->profileIcon('email'); ?>
-				</li>
-			<?php endif; ?>
+				<?php if ($user->birthdate) :?>
+					<li>
+						<?php echo $user->profileIcon('birthdate'); ?>
+					</li>
+				<?php endif; ?>
 
 				<?php if ($user->location) :?>
 					<li>

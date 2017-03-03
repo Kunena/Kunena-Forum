@@ -5,7 +5,7 @@
  * @package        Kunena.Installer
  *
  * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -353,20 +353,6 @@ class Com_KunenaInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		// Add custom.less
-		$customcrypsis = JPATH_ROOT . '/components/com_kunena/template/crypsis/assets/less/custom.less';
-		if (!file_exists($customcrypsis))
-		{
-			$this->createFile($customcrypsis);
-		}
-
-		// Add custom.less
-		$customcrypsisb3 = JPATH_ROOT . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
-		if (!file_exists($customcrypsisb3))
-		{
-			$this->createFile($customcrypsisb3);
-		}
-
 		return true;
 	}
 
@@ -653,17 +639,6 @@ class Com_KunenaInstallerScript
 	public function deleteKfolder($path)
 	{
 		JFolder::delete($path);
-	}
-
-	/**
-	 * @param $path
-	 */
-	public function createFile($path)
-	{
-		$ourFileHandle = fopen($path, 'w');
-		$txt = "\n";
-		fwrite($ourFileHandle, $txt);
-		fclose($ourFileHandle);
 	}
 }
 

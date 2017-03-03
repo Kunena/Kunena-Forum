@@ -6,8 +6,8 @@
  * @package        Kunena.Package
  *
  * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           http://www.kunena.org
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 class CategoryKunenaPublishCest
 {
@@ -57,7 +57,7 @@ class CategoryKunenaPublishCest
 	 *
 	 * @return InstallKunenaCategoryCest
 	 */
-	public function unpublishCategoryKunenaByButton(\AcceptanceTester $I)
+	public function unpublishCategoryKunenaBybButton(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
@@ -76,7 +76,7 @@ class CategoryKunenaPublishCest
 	 *
 	 * @return InstallKunenaCategoryCest
 	 */
-	public function publishCategoryKunenaByButton(\AcceptanceTester $I)
+	public function publishCategoryKunenaBybButton(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');

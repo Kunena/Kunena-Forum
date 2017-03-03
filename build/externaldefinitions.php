@@ -4,8 +4,8 @@
  * @package Kunena.Build
  *
  * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
  **/
 
 // Never use this file in any code - it is only here to provide declarations for external functions

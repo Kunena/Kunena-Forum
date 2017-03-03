@@ -11,7 +11,7 @@
 			<field name="catid"
 			       type="kunenacategorylist"
 			       sections="1"
-			       label="COM_KUNENA_MENU_CATID"/>
+			       label="COM_KUNENA_MENU_CATID" description="COM_KUNENA_MENU_CATID_DESC"/>
 		</fieldset>
 	</fields>
 </metadata>

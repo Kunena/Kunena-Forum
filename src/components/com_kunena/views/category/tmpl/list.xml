@@ -13,7 +13,7 @@
 			       default="0"
 			       sections="1"
 			       toplevel="COM_KUNENA_TOPLEVEL"
-			       label="COM_KUNENA_MENU_CATID"/>
+			       label="COM_KUNENA_MENU_CATID" description="COM_KUNENA_MENU_CATID_DESC"/>
 		</fieldset>
 	</fields>
 </metadata>

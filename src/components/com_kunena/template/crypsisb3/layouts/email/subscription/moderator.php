@@ -18,11 +18,11 @@ $this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port
 
 if ($this->message->hold != 1)
 {
-	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD3');
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
 }
 else
 {
-	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD3');
 }
 
 $msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');

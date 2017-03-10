@@ -73,7 +73,7 @@ if (!empty($this->spacing)) : ?>
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink($topic,  'unread', $this->escape($topic->subject) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
-					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, KunenaTemplate::getInstance()->tooltips(), $category, true, true);
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, true);
 			}
 			else
 			{

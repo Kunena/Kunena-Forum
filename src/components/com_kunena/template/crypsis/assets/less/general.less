@@ -1119,3 +1119,31 @@ div.krating > label:active {
 .search-query {
 	width: auto;
 }
+
+/* styling for message header */
+.mykmsg-header {
+    margin-top: 0px; 
+    background: rgba(229,229,229,0.4); 
+    padding: 10px 19px 12px 14px !important; 
+    margin-left: -15px;
+    margin-right:-20px; 
+    font-weight: bold;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+ 
+/* make .badger-left::after invisible */
+.badger-left::after {
+    border-radius: 0px !important;
+    height: 0px !important;
+}
+ 
+[class*="badger"]::after {
+    padding: 0 !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
+ 
+[class*="badger-left"] {
+    padding: 0 19px 0 14px !important;
+}

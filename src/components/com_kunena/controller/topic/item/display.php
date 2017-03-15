@@ -144,7 +144,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		if ($this->topic->unread)
 		{
-			$doc->setMetaData('robots', 'noindex, nofollow');
+			$doc->setMetaData('robots', 'noindex, follow');
 		}
 
 		if (!$start)

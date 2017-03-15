@@ -56,7 +56,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->results = $this->model->getResults();
 
 		$doc = JFactory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$doc->setMetaData('robots', 'follow, noindex');
 
 		foreach ($doc->_links as $key => $value)
 		{

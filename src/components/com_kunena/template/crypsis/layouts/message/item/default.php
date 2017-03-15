@@ -45,23 +45,28 @@ $list = array();
 	<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink();?></span>
 </small>
 
-<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>  message-<?php echo $this->message->getState(); ?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+<div class="badger-left badger-info">
 	<div class="kmessage">
-		<div class="kmsg">
-			<?php  if (!$this->me->userid && !$isReply) :
-				echo $message->displayField('message');
-			else:
-				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-			endif;?>
-		</div>
+		<div class="mykmsg-header">
+            <?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>
+        </div>
+
+   	    <div class="kmsg">
+		    <?php  if (!$this->me->userid && !$isReply) :
+			    echo $message->displayField('message');
+		    else:
+			    echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+		    endif;?>
+	    </div>
+		
+	    <?php if ($signature) : ?>
+		    <div class="ksig">
+			    <hr>
+			    <span class="ksignature"><?php echo $signature; ?></span>
+		    </div>
+	    <?php endif ?>
 	</div>
-	<?php if ($signature) : ?>
-		<div class="ksig">
-			<hr>
-			<span class="ksignature"><?php echo $signature; ?></span>
-		</div>
-	<?php endif ?>
+
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 			<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -73,6 +78,7 @@ $list = array();
 		<?php endif; ?>
 	<?php endif; ?>
 </div>
+
 <?php if (!empty($attachments)) : ?>
 	<div class="kattach">
 		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>

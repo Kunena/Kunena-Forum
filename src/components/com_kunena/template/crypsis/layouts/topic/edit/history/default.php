@@ -48,7 +48,10 @@ $k = 0;
 				<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
 					<?php echo KunenaIcons::clock();?> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
-				<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+				<div class="badger-left badger-info khistory" >
+					<div class="mykmsg-header">
+						<?php echo $this->message->displayField('subject'); ?>  
+					</div>
 					<div class="kmessage">
 						<p class="kmsg"><?php echo KunenaHtmlParser::parseBBCode($this->message->message, $this) ?></p>
 					</div>

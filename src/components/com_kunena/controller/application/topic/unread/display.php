@@ -67,6 +67,6 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	protected function prepareDocument()
 	{
 		$doc = JFactory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$doc->setMetaData('robots', 'follow, noindex');
 	}
 }

@@ -314,7 +314,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		if ($list_mode == 'latest' && !empty($user_state))
 		{
 			$doc = JFactory::getDocument();
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$doc->setMetaData('robots', 'follow, noindex');
 		}
 		else
 		{

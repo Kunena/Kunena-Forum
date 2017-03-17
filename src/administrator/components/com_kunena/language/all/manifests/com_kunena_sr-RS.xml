@@ -7,7 +7,7 @@
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>translations@kunena.org</authorEmail>
-	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/sr_RS/</authorUrl>
+	<authorUrl>https://www.transifex.com/projects/p/Kunena/team/sr_RS/</authorUrl>
 	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
 	<description>Serbian (Serbia) language file for Kunena Forum Component</description>

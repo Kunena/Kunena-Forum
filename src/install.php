@@ -5,8 +5,8 @@
  * @package    Kunena.Package
  *
  * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.kunena.org
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -120,7 +120,7 @@ class Pkg_KunenaInstallerScript
 
 		$app   = JFactory::getApplication();
 		$modal = <<<EOS
-			<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+			<div id="kunena-modal" class="modal hide fade" style="width:auto;min-width:32%;margin-left:-13%;top:25%;padding:10px;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
 		$app->enqueueMessage('Installing Kunena... ' . $modal);
 

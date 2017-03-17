@@ -5,7 +5,7 @@
  * @subpackage      Layout.Message
  *
  * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -93,14 +93,14 @@ else
 			<?php foreach ($attachments as $attachment) : ?>
 				<?php if ($attachment->isAudio()) :
 					echo $attachment->getLayout()->render('audio'); ?>
-				<?php endif; ?>
-				<?php if ($attachment->isVideo()) :
+				<?php elseif ($attachment->isVideo()) :
 					echo $attachment->getLayout()->render('video'); ?>
+				<?php else : ?>
+					<li class="span3 center">
+						<div
+							class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>
+					</li>
 				<?php endif; ?>
-				<li class="span3 center">
-					<div
-						class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>
-				</li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

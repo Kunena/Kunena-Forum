@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 2.5.
+This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 3.6.x
 
 We recommend that you install the most recent language package every time you have upgraded Kunena.
 
@@ -46,17 +46,17 @@ Translating languages
 =====================
 
 Many of the languages in this package are missing translations. To see the status of your language, please visit our Transifex status page:
-https://www.transifex.com/projects/p/Kunena/
+https://www.transifex.com/Kunena-Forum/Kunena/
 
 If you want to help us to translate your language, please register into Transifex site and request a membership to a team.
 
 Here are our wiki pages for the translators (please read them before starting your work):
 
-http://docs.kunena.org/index.php/Transifex
-http://docs.kunena.org/index.php/Translating_Kunena
+https://docs.kunena.org/en/languages/transifex
+https://docs.kunena.org/en/languages/translating-kunena
 
 More Information
 ================
 
 For more information, please read:
-http://docs.kunena.org/index.php/K_2.0_Language_Support
+https://docs.kunena.org/en/languages

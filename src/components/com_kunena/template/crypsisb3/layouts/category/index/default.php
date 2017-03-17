@@ -6,7 +6,7 @@
  * @subpackage      Layout.Category
  *
  * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 
@@ -98,7 +98,7 @@ foreach ($this->sections as $section) :
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-										<small class="hidden-xs nowrap">
+										<small class="nowrap">
 											<?php if ($category->getTopics() > 0) : ?>
 												(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())); ?>)
 											<?php else : ?>

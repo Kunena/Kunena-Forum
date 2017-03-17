@@ -5,7 +5,7 @@
  * @subpackage    Controller
  *
  * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -66,7 +66,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
 		{
-			// TODO: we need to deal with other formats in the future.
 			return false;
 		}
 
@@ -360,6 +359,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 
 		$credits .= '</div>';
+
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$credits = '';
+		}
 
 		return $credits;
 	}

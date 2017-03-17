@@ -5,7 +5,7 @@
  * @subpackage    Forum
  *
  * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -465,7 +465,9 @@ abstract class KunenaForum
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
 			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-			if (file_exists($file)) {
+
+			if (file_exists($file))
+			{
 				$manifest      = simplexml_load_file($file);
 				self::$version = (string) $manifest->version . '-GIT';
 			}

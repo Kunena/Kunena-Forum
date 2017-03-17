@@ -6,7 +6,7 @@
  * @subpackage      Models
  *
  * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -327,7 +327,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($this->total == 0)
 		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
+			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
 
 			return 0;
 		}

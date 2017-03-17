@@ -5,7 +5,7 @@
  * @subpackage      CPanel
  *
  * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -44,14 +44,14 @@ defined('_JEXEC') or die();
 								<i class="icon-big icon-star-2"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></span>
 							</a>
-							<a class="btn" href="index.php?option=com_kunena&view=labels">
+							<!--<a class="btn" href="index.php?option=com_kunena&view=labels">
 								<i class="icon-big icon-tags-2"></i><br/>
-								<span><?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?></span>
+								<span><?php /*echo JText::_('COM_KUNENA_A_LABELS_MANAGER') */?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=icons">
 								<i class="icon-big icon-grid-2"></i><br/>
-								<span><?php echo JText::_('COM_KUNENA_A_ICONS_MANAGER') ?></span>
-							</a>
+								<span><?php /*echo JText::_('COM_KUNENA_A_ICONS_MANAGER') */?></span>
+							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
 								<i class="icon-big icon-color-palette"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?></span>
@@ -64,18 +64,18 @@ defined('_JEXEC') or die();
 								<i class="icon-big icon-puzzle"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
 							</a>
-							<a class="btn" href="index.php?option=com_kunena&view=email">
+							<!--<a class="btn" href="index.php?option=com_kunena&view=email">
 								<i class="icon-big icon-mail"></i><br/>
-								<span><?php echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') ?></span>
+								<span><?php /*echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') */?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=blockips">
 								<i class="icon-big icon-compass"></i><br/>
-								<span><?php echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') ?></span>
+								<span><?php /*echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') */?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=badwords">
 								<i class="icon-big icon-smiley-sad-2"></i><br/>
-								<span><?php echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER') ?></span>
-							</a>
+								<span><?php /*echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER') */?></span>
+							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=logs">
 								<i class="icon-big icon-search"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?></span>

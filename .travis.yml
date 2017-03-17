@@ -42,14 +42,17 @@ before_script:
 - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
 - git submodule update --init --recursive
 - sudo service apache2 restart
+
 # Xvfb
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 1 # give xvfb some time to start
+
 # Fluxbox
 - sudo apt-get install fluxbox -y --force-yes
 - fluxbox &
 - sleep 1 # give fluxbox some time to start
+
 # Install Chrome
 - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 - sudo dpkg -i google-chrome*.deb

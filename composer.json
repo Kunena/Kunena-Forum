@@ -10,7 +10,7 @@
         "squizlabs/php_codesniffer": "~2",
         "codeception/codeception": "~2.2",
         "joomla-projects/joomla-browser": "dev-container-test",
-        "joomla-projects/selenium-server-standalone": "v3.0.1.2",
+        "joomla-projects/selenium-server-standalone": "dev-master",
         "joomla-projects/joomla-testing-robo": "dev-container-test",
         "Behat/Gherkin": "^4.4.5",
         "phing/phing": "2.*",

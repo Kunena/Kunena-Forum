@@ -1188,7 +1188,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function query_ratingOrphaned()
 	{
-		// Query to find user read which do not belong in any existing topic
+		// Query to find orphaned ratings
 		$query = new KunenaDatabaseQuery();
 		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
 
@@ -1225,7 +1225,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function query_channelOrphaned()
 	{
-		// Query to find user read which do not belong in any existing topic
+		// Query to find orphaned categories channels
 		$query = new KunenaDatabaseQuery();
 		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
 

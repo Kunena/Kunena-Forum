@@ -144,7 +144,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				}
 			}
 
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$doc->setMetaData('robots', 'follow, noindex');
 		}
 
 		$pagdata = $this->pagination->getData();
@@ -320,7 +320,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
 		{
 			$doc = JFactory::getDocument();
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$doc->setMetaData('robots', 'follow, noindex');
 		}
 		else
 		{

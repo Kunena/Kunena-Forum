@@ -93,7 +93,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		if ($this->topic->unread)
 		{
 			$doc = JFactory::getDocument();
-			$doc->setMetaData('robots', 'noindex, nofollow');
+			$doc->setMetaData('robots', 'noindex, follow');
 		}
 
 		$this->captchaEnabled = false;

@@ -808,7 +808,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"> aria-hidden="true"</i>';
+			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{

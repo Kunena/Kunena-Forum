@@ -587,6 +587,7 @@ class KunenaUpload
 		if ($file->isAvatar)
 		{
 			$a = array('gif', 'jpeg', 'jpg', 'png');
+			$file->ext = strtolower($file->ext);
 
 			if (!in_array($file->ext, $a, true))
 			{

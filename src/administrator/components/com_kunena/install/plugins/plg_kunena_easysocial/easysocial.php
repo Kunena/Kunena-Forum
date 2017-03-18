@@ -51,7 +51,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 */
 	public function onKunenaGetLogin()
 	{
-		if (!$this->params->get('avatar', 1))
+		if (!$this->params->get('login', 1))
 		{
 			return null;
 		}

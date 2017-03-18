@@ -70,7 +70,7 @@ class KunenaModelUser extends KunenaModel
 
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH'))
 		{
-			$this->setState('list.search', $value);
+			$this->setState('list.search', rtrim($value));
 		}
 	}
 

@@ -74,7 +74,7 @@ $quick = $template->params->get('quick');
 ?>
 
 <?php if ($quick == 1) : ?>
-<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;">
+<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;" data-backdrop="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 

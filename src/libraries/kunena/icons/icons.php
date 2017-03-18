@@ -33,19 +33,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-arrow-down hasTooltip"></i>';
+			return '<i class="fa fa-arrow-down hasTooltip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-arrow-down hasTooltip"></span>';
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-down hasTooltip"></span>';
+			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-arrow-down hasTooltip"></span>';
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 	}
 
@@ -63,19 +63,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-arrow-up hasTooltip"></i>';
+			return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-arrow-up hasTooltip"></span>';
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-up hasTooltip"></span>';
+			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-arrow-up hasTooltip"></span>';
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 	}
 
@@ -97,15 +97,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-chevron-right"></span>';
+			return '<span class="icon icon-chevron-right" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-chevron-right"></span>';
+			return '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-chevron-right"></span>';
+			return '<span class="icon icon-chevron-right" aria-hidden="true"></span>';
 		}
 	}
 
@@ -127,15 +127,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-user icon-big"></span>';
+			return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-user glyphicon-super"></span>';
+			return '<span class="glyphicon glyphicon-user glyphicon-super" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-user icon-big"></span>';
+			return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
 		}
 	}
 
@@ -157,15 +157,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-user"></span>';
+			return '<span class="icon icon-user" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-user"></span>';
+			return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-user"></span>';
+			return '<span class="icon icon-user" aria-hidden="true"></span>';
 		}
 	}
 
@@ -187,15 +187,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-lock"></span>';
+			return '<span class="icon icon-lock" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-lock"></span>';
+			return '<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-lock"></span>';
+			return '<span class="icon icon-lock" aria-hidden="true"></span>';
 		}
 	}
 
@@ -217,19 +217,19 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-star"></span>';
+			return '<span class="icon icon-star" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-star"></span>';
+			return '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon kfavoritestar ksmall"></span>';
+			return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-star"></span>';
+			return '<span class="icon icon-star" aria-hidden="true"></span>';
 		}
 	}
 
@@ -251,15 +251,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-eye-open"></span>';
+			return '<span class="icon icon-eye-open" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-eye-open"></span>';
+			return '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-eye-open"></span>';
+			return '<span class="icon icon-eye-open" aria-hidden="true"></span>';
 		}
 	}
 
@@ -281,19 +281,19 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-flag"></span>';
+			return '<span class="icon icon-flag" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-flag"></span>';
+			return '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon ktopicmy ksmall"></span>';
+			return '<span class="kicon ktopicmy ksmall" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-flag"></span>';
+			return '<span class="icon icon-flag" aria-hidden="true"></span>';
 		}
 	}
 
@@ -315,15 +315,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-bars"></span>';
+			return '<span class="icon icon-bars" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-stats"></span>';
+			return '<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-bars"></span>';
+			return '<span class="icon icon-bars" aria-hidden="true"></span>';
 		}
 	}
 
@@ -345,15 +345,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-bars icon-big"></span>';
+			return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-stats glyphicon-super"></span>';
+			return '<span class="glyphicon glyphicon-stats glyphicon-super" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-bars icon-big"></span>';
+			return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
 		}
 	}
 
@@ -376,15 +376,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-search"></span>';
+			return '<span class="icon icon-search" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-search"></span>';
+			return '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-search"></span>';
+			return '<span class="icon icon-search" aria-hidden="true"></span>';
 		}
 	}
 
@@ -432,19 +432,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-clock-o"></i>';
+			return '<i class="fa fa-clock-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-clock"></i>';
+			return '<i class="icon icon-clock" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-time"></span>';
+			return '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-clock"></i>';
+			return '<i class="icon icon-clock" aria-hidden="true"></i>';
 		}
 	}
 
@@ -462,19 +462,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-thumbs-o-up"></i>';
+			return '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-thumbs-up"></i>';
+			return '<i class="icon icon-thumbs-up" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-thumbs-up"></span>';
+			return '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-thumbs-up"></i>';
+			return '<i class="icon icon-thumbs-up" aria-hidden="true"></i>';
 		}
 	}
 
@@ -492,19 +492,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-times"></i>';
+			return '<i class="fa fa-times" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-remove"></i>';
+			return '<i class="icon icon-remove" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-remove"></span>';
+			return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-remove"></i>';
+			return '<i class="icon icon-remove" aria-hidden="true"></i>';
 		}
 	}
 
@@ -527,19 +527,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-compass"></i>';
+			return '<i class="fa fa-compass" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-compass"></i>';
+			return '<i class="icon icon-compass" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-compass"></span>';
+			return '<span class="glyphicon glyphicon-compass" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-compass"></i>';
+			return '<i class="icon icon-compass" aria-hidden="true"></i>';
 		}
 	}
 
@@ -557,23 +557,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-envelope"></i>';
+			return '<i class="fa fa-envelope" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-envelope"></i>';
+			return '<i class="icon icon-envelope" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-envelope"></span>';
+			return '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon-profile kicon-profile-email"></span>';
+			return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-envelope"></i>';
+			return '<i class="icon icon-envelope" aria-hidden="true"></i>';
 		}
 	}
 
@@ -591,19 +591,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bookmark"></i>';
+			return '<i class="fa fa-bookmark" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-bookmark"></i>';
+			return '<i class="icon icon-bookmark" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-bookmark"></span>';
+			return '<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-bookmark"></i>';
+			return '<i class="icon icon-bookmark" aria-hidden="true"></i>';
 		}
 	}
 
@@ -621,19 +621,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-angle-left"></i>';
+			return '<i class="fa fa-angle-left" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-arrow-left"></i>';
+			return '<i class="icon icon-arrow-left" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-left"></span>';
+			return '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-arrow-left"></i>';
+			return '<i class="icon icon-arrow-left" aria-hidden="true"></i>';
 		}
 	}
 
@@ -651,19 +651,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-save"></i>';
+			return '<i class="fa fa-save" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-save"></i>';
+			return '<i class="icon icon-save" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-save"></span>';
+			return '<span class="glyphicon glyphicon-save" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-save"></i>';
+			return '<i class="icon icon-save" aria-hidden="true"></i>';
 		}
 	}
 
@@ -681,19 +681,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-edit"></i>';
+			return '<i class="fa fa-edit" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-edit"></i>';
+			return '<i class="icon icon-edit" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-edit"></span>';
+			return '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-edit"></i>';
+			return '<i class="icon icon-edit" aria-hidden="true"></i>';
 		}
 	}
 
@@ -711,19 +711,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-pencil"></i>';
+			return '<i class="fa fa-pencil" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-pencil-2"></i>';
+			return '<i class="icon icon-pencil-2" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-pencil"></span>';
+			return '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-pencil-2"></i>';
+			return '<i class="icon icon-pencil-2" aria-hidden="true"></i>';
 		}
 	}
 
@@ -741,23 +741,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-paperclip"></i>';
+			return '<i class="fa fa-paperclip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-flag-2 icon-white"></i>';
+			return '<i class="icon icon-flag-2 icon-white" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-paperclip"></span>';
+			return '<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon ktopicattach ksmall"></span>';
+			return '<span class="kicon ktopicattach ksmall" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-flag-2 icon-white"></i>';
+			return '<i class="icon icon-flag-2 icon-white" aria-hidden="true"></i>';
 		}
 	}
 
@@ -775,19 +775,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-plus"></i>';
+			return '<i class="fa fa-plus" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-plus"></i>';
+			return '<i class="icon icon-plus" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-plus"></span>';
+			return '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-plus"></i>';
+			return '<i class="icon icon-plus" aria-hidden="true"></i>';
 		}
 	}
 
@@ -808,19 +808,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"> aria-hidden="true"</i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span>';
+			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 	}
 
@@ -838,19 +838,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-upload"></i>';
+			return '<i class="fa fa-upload" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-upload"></i>';
+			return '<i class="icon icon-upload" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-upload"></span>';
+			return '<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-upload"></i>';
+			return '<i class="icon icon-upload" aria-hidden="true"></i>';
 		}
 	}
 
@@ -868,19 +868,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-picture-o"></i>';
+			return '<i class="large-kicon fa fa-picture-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-picture"></i>';
+			return '<i class="large-kicon icon icon-picture" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-picture"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-picture" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-picture"></i>';
+			return '<i class="large-kicon icon icon-picture" aria-hidden="true"></i>';
 		}
 	}
 
@@ -898,19 +898,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-file-o"></i>';
+			return '<i class="large-kicon fa fa-file-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-file"></i>';
+			return '<i class="large-kicon icon icon-file" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-file"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-file" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-file"></i>';
+			return '<i class="large-kicon icon icon-file" aria-hidden="true"></i>';
 		}
 	}
 
@@ -928,19 +928,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-trash"></i>';
+			return '<i class="large-kicon fa fa-trash" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-trash"></i>';
+			return '<i class="large-kicon icon icon-trash" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-trash"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-trash" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-trash"></i>';
+			return '<i class="large-kicon icon icon-trash" aria-hidden="true"></i>';
 		}
 	}
 
@@ -959,22 +959,22 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-add" class="fa fa-plus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 	}
 
@@ -993,22 +993,22 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 	}
 
@@ -1026,23 +1026,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-reply"></i>';
+			return '<i class="fa fa-reply" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-undo"></i>';
+			return '<i class="icon icon-undo" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-share-alt"></span>';
+			return '<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon-reply"></span>';
+			return '<span class="kicon-reply" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-undo"></i>';
+			return '<i class="icon icon-undo" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1060,19 +1060,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-random"></i>';
+			return '<i class="fa fa-random" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-shuffle"></i>';
+			return '<i class="icon icon-shuffle" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-random"></span>';
+			return '<span class="glyphicon glyphicon-random" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-shuffle"></i>';
+			return '<i class="icon icon-shuffle" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1212,23 +1212,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </span>';
+			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
 		}
 		else
 		{
-			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 		}
 	}
 
@@ -1246,19 +1246,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-home hasTooltip"></i>';
+			return '<i class="fa fa-home hasTooltip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-home hasTooltip"></span>';
+			return '<span class="icon icon-home hasTooltip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-home hasTooltip"></span>';
+			return '<span class="glyphicon glyphicon-home hasTooltip" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-home hasTooltip"></span>';
+			return '<span class="icon icon-home hasTooltip" aria-hidden="true"></span>';
 		}
 	}
 
@@ -1276,19 +1276,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-calendar"></i>';
+			return '<i class="fa fa-calendar" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-calendar"></i>';
+			return '<i class="icon icon-calendar" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-calendar"></span>';
+			return '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-calendar"></i>';
+			return '<i class="icon icon-calendar" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1306,19 +1306,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bars fa-large"></i> <b class="caret"></b>';
+			return '<i class="fa fa-bars fa-large" aria-hidden="true"></i> <b class="caret"></b>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon-large icon-list"></i> <b class="caret"></b>';
+			return '<i class="icon-large icon-list" aria-hidden="true"></i> <b class="caret"></b>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-large glyphicon-menu-hamburger"></span> <b class="caret"></b>';
+			return '<span class="glyphicon glyphicon-large glyphicon-menu-hamburger" aria-hidden="true"></span> <b class="caret"></b>';
 		}
 		else
 		{
-			return '<i class="icon-large icon-list"></i> <b class="caret"></b>';
+			return '<i class="icon-large icon-list" aria-hidden="true"></i> <b class="caret"></b>';
 		}
 	}
 
@@ -1336,19 +1336,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-info-circle"></i>';
+			return '<i class="fa fa-info-circle" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-info"></i>';
+			return '<i class="icon icon-info" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-info-sign"></span>';
+			return '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-info"></i>';
+			return '<i class="icon icon-info" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1366,19 +1366,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-plus green"></i>';
+			return '<i class="fa fa-plus green" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon-plus green"></i>';
+			return '<i class="icon-plus green" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-plus green"></span>';
+			return '<span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon-plus green"></i>';
+			return '<i class="icon-plus green" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1396,19 +1396,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-plus yellow"></i>';
+			return '<i class="fa fa-plus yellow" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon-plus yellow"></i>';
+			return '<i class="icon-plus yellow" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-plus yellow"></span>';
+			return '<span class="glyphicon glyphicon-plus yellow" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon-plus yellow"></i>';
+			return '<i class="icon-plus yellow" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1426,19 +1426,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-minus red"></i>';
+			return '<i class="fa fa-minus red" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon-minus red"></i>';
+			return '<i class="icon-minus red" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-minus red"></span>';
+			return '<span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon-minus red"></i>';
+			return '<i class="icon-minus red" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1456,19 +1456,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-minus grey"></i>';
+			return '<i class="fa fa-minus grey" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon-minus grey"></i>';
+			return '<i class="icon-minus grey" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-minus grey"></span>';
+			return '<span class="glyphicon glyphicon-minus grey" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon-minus grey"></i>';
+			return '<i class="icon-minus grey" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1486,19 +1486,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-cog"></i>';
+			return '<i class="fa fa-cog" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-cog"></i>';
+			return '<i class="icon icon-cog" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-cog"></span>';
+			return '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-cog"></i>';
+			return '<i class="icon icon-cog" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1516,19 +1516,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-inbox"></i>';
+			return '<i class="fa fa-inbox" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-drawer"></i>';
+			return '<i class="icon icon-drawer" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-inbox"></span>';
+			return '<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-drawer"></i>';
+			return '<i class="icon icon-drawer" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1546,19 +1546,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-sign-out"></i>';
+			return '<i class="fa fa-sign-out" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-out"></i>';
+			return '<i class="icon icon-out" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-log-out"></span>';
+			return '<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-out"></i>';
+			return '<i class="icon icon-out" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1576,19 +1576,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-th"></i>';
+			return '<i class="fa fa-th" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-grid-view-2"></i>';
+			return '<i class="icon icon-grid-view-2" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-th"></span>';
+			return '<span class="glyphicon glyphicon-th" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-grid-view-2"></i>';
+			return '<i class="icon icon-grid-view-2" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1606,23 +1606,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-globe"></i>';
+			return '<i class="fa fa-globe" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-link"></i>';
+			return '<i class="icon icon-link" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-globe"></span>';
+			return '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon-profile kicon-profile-website"></span>';
+			return '<span class="kicon-profile kicon-profile-website" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-link"></i>';
+			return '<i class="icon icon-link" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1640,23 +1640,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-map-marker"></i>';
+			return '<i class="fa fa-map-marker" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-location"></i>';
+			return '<i class="icon icon-location" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-map-marker"></span>';
+			return '<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon-profile kicon-profile-location"></span>';
+			return '<span class="kicon-profile kicon-profile-location" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-location"></i>';
+			return '<i class="icon icon-location" aria-hidden="true"></i>';
 		}
 	}
 
@@ -1674,23 +1674,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-comments-o"></i>';
+			return '<i class="fa fa-comments-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-comments-2"></i>';
+			return '<i class="icon icon-comments-2" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-comment"></span>';
+			return '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'image')
 		{
-			return '<span class="kicon-profile kicon-profile-pm"></span>';
+			return '<span class="kicon-profile kicon-profile-pm" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-comments-2"></i>';
+			return '<i class="icon icon-comments-2" aria-hidden="true"></i>';
 		}
 	}
 }

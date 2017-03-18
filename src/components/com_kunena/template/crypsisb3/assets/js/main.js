@@ -16,9 +16,6 @@ function kunenatableOrdering( order, dir, task, form ) {
 }
 
 jQuery(document).ready(function($) {
-	$('modal-backdrop').css("z-index", "1050");
-	$('modal').css("z-index", "1060");
-
 	/* To check or uncheck boxes to select items */
 	$('input.kcheckall').click(function() {
 		$('.kcheck').prop('checked', $(this).prop("checked"));

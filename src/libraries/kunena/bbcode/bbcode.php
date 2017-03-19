@@ -1470,6 +1470,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		if (empty(trim($content)))
+		{
+			echo '<div class="alert alert-error">' . JText::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
+
+			return;
+		}
+
 		$config = KunenaFactory::getTemplate()->params;
 
 		$document = JFactory::getDocument();

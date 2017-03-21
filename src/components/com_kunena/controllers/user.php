@@ -722,138 +722,138 @@ class KunenaControllerUser extends KunenaController
 
 				return false;
 			}
-		}
 
-		$value            = $post_password;
-		$meter            = isset($element['strengthmeter'])  ? ' meter="0"' : '1';
-		$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
-		$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : 4;
-		$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
-		$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
-		$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
+			$value            = $post_password;
+			$meter            = isset($element['strengthmeter'])  ? ' meter="0"' : '1';
+			$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
+			$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : 4;
+			$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
+			$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
+			$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
 
-		// If we have parameters from com_users, use those instead.
-		// Some of these may be empty for legacy reasons.
-		$params = JComponentHelper::getParams('com_users');
+			// If we have parameters from com_users, use those instead.
+			// Some of these may be empty for legacy reasons.
+			$params = JComponentHelper::getParams('com_users');
 
-		if (!empty($params))
-		{
-			$minimumLengthp    = $params->get('minimum_length');
-			$minimumIntegersp  = $params->get('minimum_integers');
-			$minimumSymbolsp   = $params->get('minimum_symbols');
-			$minimumUppercasep = $params->get('minimum_uppercase');
-			$meterp            = $params->get('meter');
-			$thresholdp        = $params->get('threshold');
+			if (!empty($params))
+			{
+				$minimumLengthp    = $params->get('minimum_length');
+				$minimumIntegersp  = $params->get('minimum_integers');
+				$minimumSymbolsp   = $params->get('minimum_symbols');
+				$minimumUppercasep = $params->get('minimum_uppercase');
+				$meterp            = $params->get('meter');
+				$thresholdp        = $params->get('threshold');
 
-			empty($minimumLengthp) ? : $minimumLength = (int) $minimumLengthp;
-			empty($minimumIntegersp) ? : $minimumIntegers = (int) $minimumIntegersp;
-			empty($minimumSymbolsp) ? : $minimumSymbols = (int) $minimumSymbolsp;
-			empty($minimumUppercasep) ? : $minimumUppercase = (int) $minimumUppercasep;
-			empty($meterp) ? : $meter = $meterp;
-			empty($thresholdp) ? : $threshold = $thresholdp;
-		}
+				empty($minimumLengthp) ? : $minimumLength = (int) $minimumLengthp;
+				empty($minimumIntegersp) ? : $minimumIntegers = (int) $minimumIntegersp;
+				empty($minimumSymbolsp) ? : $minimumSymbols = (int) $minimumSymbolsp;
+				empty($minimumUppercasep) ? : $minimumUppercase = (int) $minimumUppercasep;
+				empty($meterp) ? : $meter = $meterp;
+				empty($thresholdp) ? : $threshold = $thresholdp;
+			}
 
-		// If the field is empty and not required, the field is valid.
-		$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
+			// If the field is empty and not required, the field is valid.
+			$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
 
-		if (!$required && empty($value))
-		{
-			return true;
-		}
+			if (!$required && empty($value))
+			{
+				return true;
+			}
 
-		$valueLength = strlen($value);
+			$valueLength = strlen($value);
 
-		// Load language file of com_users component
-		JFactory::getLanguage()->load('com_users');
+			// Load language file of com_users component
+			JFactory::getLanguage()->load('com_users');
 
-		// We set a maximum length to prevent abuse since it is unfiltered.
-		if ($valueLength > 4096)
-		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
-		}
+			// We set a maximum length to prevent abuse since it is unfiltered.
+			if ($valueLength > 4096)
+			{
+				JFactory::getApplication()->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+			}
 
-		// We don't allow white space inside passwords
-		$valueTrim = trim($value);
+			// We don't allow white space inside passwords
+			$valueTrim = trim($value);
 
-		// Set a variable to check if any errors are made in password
-		$validPassword = true;
+			// Set a variable to check if any errors are made in password
+			$validPassword = true;
 
-		if (strlen($valueTrim) != $valueLength)
-		{
-			JFactory::getApplication()->enqueueMessage(
-				JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
-				'warning'
-			);
-
-			$validPassword = false;
-		}
-
-		// Minimum number of integers required
-		if (!empty($minimumIntegers))
-		{
-			$nInts = preg_match_all('/[0-9]/', $value, $imatch);
-
-			if ($nInts < $minimumIntegers)
+			if (strlen($valueTrim) != $valueLength)
 			{
 				JFactory::getApplication()->enqueueMessage(
-					JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
 					'warning'
 				);
 
 				$validPassword = false;
 			}
-		}
 
-		// Minimum number of symbols required
-		if (!empty($minimumSymbols))
-		{
-			$nsymbols = preg_match_all('[\W]', $value, $smatch);
-
-			if ($nsymbols < $minimumSymbols)
+			// Minimum number of integers required
+			if (!empty($minimumIntegers))
 			{
-				JFactory::getApplication()->enqueueMessage(
-					JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
-					'warning'
-				);
+				$nInts = preg_match_all('/[0-9]/', $value, $imatch);
 
-				$validPassword = false;
+				if ($nInts < $minimumIntegers)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
 			}
-		}
 
-		// Minimum number of upper case ASCII characters required
-		if (!empty($minimumUppercase))
-		{
-			$nUppercase = preg_match_all('/[A-Z]/', $value, $umatch);
-
-			if ($nUppercase < $minimumUppercase)
+			// Minimum number of symbols required
+			if (!empty($minimumSymbols))
 			{
-				JFactory::getApplication()->enqueueMessage(
-					JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
-					'warning'
-				);
+				$nsymbols = preg_match_all('[\W]', $value, $smatch);
 
-				$validPassword = false;
+				if ($nsymbols < $minimumSymbols)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
 			}
-		}
 
-		// Minimum length option
-		if (!empty($minimumLength))
-		{
-			if (strlen((string) $value) < $minimumLength)
+			// Minimum number of upper case ASCII characters required
+			if (!empty($minimumUppercase))
 			{
-				JFactory::getApplication()->enqueueMessage(
-					JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
-					'warning'
-				);
+				$nUppercase = preg_match_all('/[A-Z]/', $value, $umatch);
 
-				$validPassword = false;
+				if ($nUppercase < $minimumUppercase)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
 			}
-		}
 
-		// If valid has violated any rules above return false.
-		if (!$validPassword)
-		{
-			return false;
+			// Minimum length option
+			if (!empty($minimumLength))
+			{
+				if (strlen((string) $value) < $minimumLength)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
+			}
+
+			// If valid has violated any rules above return false.
+			if (!$validPassword)
+			{
+				return false;
+			}
 		}
 
 		$post = array_intersect_key($post, array_flip($allow));
@@ -884,6 +884,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$table = JTable::getInstance('session', 'JTable');
 			$table->load($session->getId());
+
 			$table->username = $this->user->username;
 			$table->store();
 		}

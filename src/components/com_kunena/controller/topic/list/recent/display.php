@@ -307,9 +307,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
 
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{

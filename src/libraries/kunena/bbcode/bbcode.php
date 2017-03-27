@@ -1486,7 +1486,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
-			return '<a href="' . $url . '" rel="nofollow" target="_blank">' . $content . '</a>';
+			return '<a href="' . $url . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
 		}
 
 		$this->mapid++;
@@ -1533,7 +1533,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
-			return '<a target="_blank" href="http://www.ebay.com/itm/'.$content.'?lang=' . $config->ebaylanguagecode . '&campid='.$config->ebay_affiliate_id.'">www.ebay.com/itm/'.$content.'</a>';
+			return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/'.$content.'?lang=' . $config->ebaylanguagecode . '&campid='.$config->ebay_affiliate_id.'">www.ebay.com/itm/'.$content.'</a>';
 		}
 
 		return self::renderEbayLayout($content);
@@ -2644,7 +2644,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 							$link = $url->url;
 						}
 
-						$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow">' . $d_url . '</a>', $tweet_data->text);
+						$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow noopener noreferrer">' . $d_url . '</a>', $tweet_data->text);
 					}
 				}
 
@@ -2652,7 +2652,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				{
 					foreach ($tweet_data->entities->user_mentions as $mention)
 					{
-						$tweet_data->text = str_replace('@' . $mention->screen_name, '<a href="https://twitter.com/' . $mention->screen_name . '" target="_blank" rel="nofollow">@' . $mention->screen_name . '</a>', $tweet_data->text);
+						$tweet_data->text = str_replace('@' . $mention->screen_name, '<a href="https://twitter.com/' . $mention->screen_name . '" target="_blank" rel="nofollow noopener noreferrer">@' . $mention->screen_name . '</a>', $tweet_data->text);
 					}
 				}
 
@@ -2660,7 +2660,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				{
 					foreach ($tweet_data->entities->hashtags as $hashtag)
 					{
-						$tweet_data->text = str_replace('#' . $hashtag->text, '<a href="https://twitter.com/hashtag/' . $hashtag->text . '?src=hash" target="_blank" rel="nofollow">#' . $hashtag->text . '</a>', $tweet_data->text);
+						$tweet_data->text = str_replace('#' . $hashtag->text, '<a href="https://twitter.com/hashtag/' . $hashtag->text . '?src=hash" target="_blank" rel="nofollow noopener noreferrer">#' . $hashtag->text . '</a>', $tweet_data->text);
 					}
 				}
 

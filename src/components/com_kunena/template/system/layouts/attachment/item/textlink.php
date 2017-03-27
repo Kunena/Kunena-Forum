@@ -18,7 +18,7 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[simple' . $attachment->mesid . ']"' : '';
 ?>
-<a href="<?php echo $attachment->getUrl(); ?>" target="_blank" title="<?php echo $attachment->getShortName(0, 7); ?>" <?php echo $attributesLink ?>>
+<a href="<?php echo $attachment->getUrl(); ?>" target="_blank" rel="noopener noreferrer" title="<?php echo $attachment->getShortName(0, 7); ?>" <?php echo $attributesLink ?>>
 	<?php echo $attachment->getShortName(); ?>
 </a>
 (<?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>)

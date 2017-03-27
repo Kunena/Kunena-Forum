@@ -131,7 +131,7 @@ if ($this->config->showuserstats)
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow noopener noreferrer"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -170,7 +170,7 @@ if ($this->config->showuserstats)
 								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>" rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small" rel="nofollow" target="_blank" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
+								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
 							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
 								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
 							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>

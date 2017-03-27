@@ -78,7 +78,7 @@ $view = JFactory::getApplication()->input->getWord('view');
 				<td class="col-md-<?php echo $cols; ?>">
 					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 hidden-xs">
 					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="col-md-3">

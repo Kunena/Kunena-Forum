@@ -228,7 +228,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-				$actions = array('delete', 'permdelete');
+				$actions = array('approve', 'delete', 'move', 'permdelete');
 		}
 
 		$this->actions = $this->getMessageActions($this->messages, $actions);

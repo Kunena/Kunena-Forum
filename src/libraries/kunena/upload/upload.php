@@ -481,7 +481,7 @@ class KunenaUpload
 	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
-		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
 		{
 			return false;
 		}
@@ -580,13 +580,18 @@ class KunenaUpload
 		$file->success = false;
 		$file->isAvatar = false;
 
-		if ($type != 'attachment')
+		if ($type == 'avatar')
 		{
 			$file->isAvatar = true;
 		}
 
 		if ($file->isAvatar)
 		{
+			if (!$this->checkFileSizeAvatar($file->size))
+			{
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			}
+
 			$a = array('gif', 'jpeg', 'jpg', 'png');
 
 			if (!in_array($file->ext, $a, true))
@@ -638,14 +643,6 @@ class KunenaUpload
 			{
 				$info = getimagesize($file->tmp_name);
 				$type = $info['mime'];
-			}
-
-			if ($file->isAvatar)
-			{
-				if (!$this->checkFileSizeAvatar($file->size))
-				{
-					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-				}
 			}
 
 			if (!$file->isAvatar && stripos($type, 'image/') !== false)

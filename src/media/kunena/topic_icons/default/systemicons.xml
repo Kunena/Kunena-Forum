@@ -1,24 +1,24 @@
 <?xml version="1.0" ?>
 <!DOCTYPE kunena-systemicons>
 <kunena-systemicons>
-	<name>system</name>
-	<version>@kunenaversion@</version>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<author>Kunena Team</author>
-	<authorEmail>Kunena@kunena.org</authorEmail>
-	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPL</license>
-	<description>System topic icons for Kunena</description>
+    <name>system</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPL</license>
+    <description>System topic icons for Kunena</description>
 
 	<icons type="system" width="48" height="48">
-		<icon id="0" name="normal" b2="comments-2" b3="comment" fa="comments-o" src="normal.png"/>
-		<icon id="1" name="unapproved" b2="eye" b3="eye" fa="eye" src="unapproved.png"/>
-		<icon id="2" name="deleted" b2="trash" b3="trash" fa="trash-o" src="deleted.png"/>
-		<icon id="3" name="sticky" b2="pin" b3="pushpin" fa="map-pin" src="sticky.png"/>
-		<icon id="4" name="locked" b2="lock" b3="file" fa="lock" src="locked.png"/>
-		<icon id="5" name="moved" b2="contract" b3="contract" fa="compress" src="moved.png"/>
-		<icon id="6" name="unanswered" b2="comments" b3="comment" fa="comment-o" src="unanswered.png"/>
-		<icon id="7" name="stickyandlocked" b2="lock" b3="lock" fa="lock" src="sticky_locked.png"/>
+		<icon id="0" name="normal" b2="comments-2" b3="comment" fa="comments-o" src="normal.png" new="normal_new.png"/>
+		<icon id="1" name="unapproved" b2="eye" b3="eye" fa="eye" src="unapproved.png" new="unapproved_new.png"/>
+		<icon id="2" name="deleted" b2="trash" b3="trash" fa="trash-o" src="deleted.png" new="deleted_new.png"/>
+		<icon id="3" name="sticky" b2="pin" b3="pushpin" fa="map-pin" src="sticky.png" new="sticky_new.png"/>
+		<icon id="4" name="locked" b2="lock" b3="file" fa="lock" src="locked.png" new="locked_new.png"/>
+		<icon id="5" name="moved" b2="contract" b3="contract" fa="compress" src="moved.png" new="moved.png"/>
+		<icon id="6" name="unanswered" b2="comments" b3="comment" fa="comment-o" src="unanswered.png" new="unanswered_new.png"/>
+		<icon id="7" name="stickyandlocked" b2="lock" b3="lock" fa="lock" src="sticky_locked.png" new="sticky_and_locked_new.png"/>
 	</icons>
 </kunena-systemicons>

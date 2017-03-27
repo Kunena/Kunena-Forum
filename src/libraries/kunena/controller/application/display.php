@@ -339,10 +339,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
 	array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
 		$credits .= ' <a href="https://www.kunena.org"
-			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
+			target="_blank" rel="noopener noreferrer" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
 		if (trim($templateText)) {
-			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'
+			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}
 

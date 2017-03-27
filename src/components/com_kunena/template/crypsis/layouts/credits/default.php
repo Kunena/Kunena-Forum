@@ -29,7 +29,7 @@ defined('_JEXEC') or die;
 		<dl class="dl-horizontal">
 			<?php foreach($this->memberList as $member) : ?>
 			<dt>
-				<a href="<?php echo $member['url']; ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']); ?></a>
+				<a href="<?php echo $member['url']; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
 			</dt>
 			<dd>
 				<?php echo $member['title']; ?>

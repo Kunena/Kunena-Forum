@@ -724,6 +724,138 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
+		$value            = $post_password;
+		$meter            = isset($element['strengthmeter'])  ? ' meter="0"' : '1';
+		$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
+		$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : 4;
+		$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
+		$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
+		$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
+
+		// If we have parameters from com_users, use those instead.
+		// Some of these may be empty for legacy reasons.
+		$params = JComponentHelper::getParams('com_users');
+
+		if (!empty($params))
+		{
+			$minimumLengthp    = $params->get('minimum_length');
+			$minimumIntegersp  = $params->get('minimum_integers');
+			$minimumSymbolsp   = $params->get('minimum_symbols');
+			$minimumUppercasep = $params->get('minimum_uppercase');
+			$meterp            = $params->get('meter');
+			$thresholdp        = $params->get('threshold');
+
+			empty($minimumLengthp) ? : $minimumLength = (int) $minimumLengthp;
+			empty($minimumIntegersp) ? : $minimumIntegers = (int) $minimumIntegersp;
+			empty($minimumSymbolsp) ? : $minimumSymbols = (int) $minimumSymbolsp;
+			empty($minimumUppercasep) ? : $minimumUppercase = (int) $minimumUppercasep;
+			empty($meterp) ? : $meter = $meterp;
+			empty($thresholdp) ? : $threshold = $thresholdp;
+		}
+
+		// If the field is empty and not required, the field is valid.
+		$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
+
+		if (!$required && empty($value))
+		{
+			return true;
+		}
+
+		$valueLength = strlen($value);
+
+		// Load language file of com_users component
+		JFactory::getLanguage()->load('com_users');
+
+		// We set a maximum length to prevent abuse since it is unfiltered.
+		if ($valueLength > 4096)
+		{
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+		}
+
+		// We don't allow white space inside passwords
+		$valueTrim = trim($value);
+
+		// Set a variable to check if any errors are made in password
+		$validPassword = true;
+
+		if (strlen($valueTrim) != $valueLength)
+		{
+			JFactory::getApplication()->enqueueMessage(
+				JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+				'warning'
+			);
+
+			$validPassword = false;
+		}
+
+		// Minimum number of integers required
+		if (!empty($minimumIntegers))
+		{
+			$nInts = preg_match_all('/[0-9]/', $value, $imatch);
+
+			if ($nInts < $minimumIntegers)
+			{
+				JFactory::getApplication()->enqueueMessage(
+					JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+					'warning'
+				);
+
+				$validPassword = false;
+			}
+		}
+
+		// Minimum number of symbols required
+		if (!empty($minimumSymbols))
+		{
+			$nsymbols = preg_match_all('[\W]', $value, $smatch);
+
+			if ($nsymbols < $minimumSymbols)
+			{
+				JFactory::getApplication()->enqueueMessage(
+					JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+					'warning'
+				);
+
+				$validPassword = false;
+			}
+		}
+
+		// Minimum number of upper case ASCII characters required
+		if (!empty($minimumUppercase))
+		{
+			$nUppercase = preg_match_all('/[A-Z]/', $value, $umatch);
+
+			if ($nUppercase < $minimumUppercase)
+			{
+				JFactory::getApplication()->enqueueMessage(
+					JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+					'warning'
+				);
+
+				$validPassword = false;
+			}
+		}
+
+		// Minimum length option
+		if (!empty($minimumLength))
+		{
+			if (strlen((string) $value) < $minimumLength)
+			{
+				JFactory::getApplication()->enqueueMessage(
+					JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+					'warning'
+				);
+
+				$validPassword = false;
+			}
+		}
+
+		// If valid has violated any rules above return false.
+		if (!$validPassword)
+		{
+			return false;
+		}
+
 		$post = array_intersect_key($post, array_flip($allow));
 
 		if (empty($post))
@@ -988,5 +1120,62 @@ class KunenaControllerUser extends KunenaController
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'));
 		$this->setRedirectBack();
+	}
+
+	/**
+	 * Reports a user to stopforumspam.com
+	 *
+	 * @return boolean
+	 */
+	protected function report($userid)
+	{
+		if (!$this->config->stopforumspam_key || !$userid)
+		{
+			return false;
+		}
+
+		$spammer = JFactory::getUser($userid);
+
+		$db = JFactory::getDBO();
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$ip = $db->loadResult();
+
+		// TODO: replace this code by using JHttpTransport class
+		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
+		$fp   = fsockopen("www.stopforumspam.com", 80);
+		fputs($fp, "POST /add.php HTTP/1.1\n");
+		fputs($fp, "Host: www.stopforumspam.com\n");
+		fputs($fp, "Content-type: application/x-www-form-urlencoded\n");
+		fputs($fp, "Content-length: " . strlen($data) . "\n");
+		fputs($fp, "Connection: close\n\n");
+		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
+		fclose($fp);
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+
+			return false;
+		}
 	}
 }

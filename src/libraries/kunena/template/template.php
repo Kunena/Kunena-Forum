@@ -1280,9 +1280,19 @@ HTML;
 					$category_iconset = 'default';
 				}
 
+				if (!empty($topic->unread))
+				{
+					$icon->src = $icon->new;
+				}
+
+				if (empty($icon->name))
+				{
+					$icon->name = "";
+				}
+
 				$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon->src}", true);
 
-				return '<img src="' . $iconurl . '" alt="" />';
+				return '<img src="' . $iconurl . '" alt="' . $icon->name .'" />';
 			}
 		}
 	}
@@ -1309,10 +1319,12 @@ HTML;
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
+			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
+			$icon->new = (string) $attributes->new;
 
 			return $icon;
 		}
@@ -1345,10 +1357,12 @@ HTML;
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
+			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
+			$icon->new  = (string) $attributes->new;
 
 			return $icon;
 		}
@@ -1653,14 +1667,15 @@ HTML;
 				$label = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
 			}
 
-			$attributes       = $label[0]->attributes();
-			$label            = new stdClass;
-			$label->id        = (int) $attributes->id;
-			$label->b2        = (string) $attributes->b2;
-			$label->b3        = (string) $attributes->b3;
-			$label->fa        = (string) $attributes->fa;
-			$label->src       = (string) $attributes->src;
-			$label->name      = (string) $attributes->name;
+			$attributes = $label[0]->attributes();
+			$label       = new stdClass;
+			$label->id   = (int) $attributes->id;
+			$label->b2   = (string) $attributes->b2;
+			$label->b3   = (string) $attributes->b3;
+			$label->fa   = (string) $attributes->fa;
+			$label->src  = (string) $attributes->src;
+			$label->name = (string) $attributes->name;
+			$label->new  = (string) $attributes->new;
 			$label->labeltype = (string) $attributes->labeltype;
 
 			return $label;

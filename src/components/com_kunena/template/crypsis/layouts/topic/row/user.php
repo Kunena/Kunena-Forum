@@ -107,7 +107,7 @@ if (!empty($this->spacing)) : ?>
 			<br />
 				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<?php endif; ?>
-			<div class="pull-right">
+			<div class="pull-right hidden-phone">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
 				 * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>

@@ -80,7 +80,6 @@ $list = array();
 					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 				</div>
 			</div>
-			<?php endif; ?>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>

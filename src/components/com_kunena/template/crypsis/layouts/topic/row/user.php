@@ -126,17 +126,6 @@ if (!empty($this->spacing)) : ?>
 			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
 			<?php endif; ?>
 			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id);?>
-			<div class="pull-right">
-				<?php /** TODO: New Feature - LABELS
-				<span class="label label-info">
-				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-				</span>	*/ ?>
-				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-important">
-						<?php echo KunenaIcons::lock(); ?> <?php echo JText::_('COM_KUNENA_LOCKED'); ?>
-					</span>
-				<?php endif; ?>
-			</div>
 		</div>
 
 		<div class="pull-left">

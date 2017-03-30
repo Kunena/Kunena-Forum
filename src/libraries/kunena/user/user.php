@@ -1329,7 +1329,7 @@ class KunenaUser extends JObject
 
 			$name = $this->getWebsiteName();
 
-			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
+			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer">' . $this->escape($name) . '</a>';
 		}
 
 		return (string) $this->_website;
@@ -1612,7 +1612,7 @@ return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-to
 
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape($url) . '" target="_blank"><span data-toggle="tooltip" data-placement="right" title="' . $websitename . '">' . KunenaIcons::globe() . '</span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer"><span data-toggle="tooltip" data-placement="right" title="' . $websitename . '">' . KunenaIcons::globe() .'</span></a>';
 				}
 				break;
 			case 'private' :
@@ -1689,7 +1689,7 @@ return $this->getLink('<span class="profile" title="' . JText::_('COM_KUNENA_VIE
 		{
 			if (!empty($this->$name))
 			{
-				return '<a href="' . $this->escape($url) . '" ' . KunenaTemplate::getInstance()->tooltips(true) . ' target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . $this->escape ( $url ) . '" '. KunenaTemplate::getInstance()->tooltips(true) .' target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 			}
 		}
 		else

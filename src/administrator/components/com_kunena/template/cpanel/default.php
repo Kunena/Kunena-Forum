@@ -99,17 +99,9 @@ defined('_JEXEC') or die();
 						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 						<hr class="hr-condensed">
 						<ul class="pull-left">
-							<li><i class="icon icon-question"></i>
-								<a href="https://www.kunena.org/docs/en/setup"
-								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
-							</li>
-							<li><i class="icon icon-question"></i>
-								<a href="https://www.kunena.org/docs/en/setup/sections-categories"
-								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
-							</li>
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum"
-							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
-							</li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup/sections-categories" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -132,7 +124,7 @@ defined('_JEXEC') or die();
 							<dd><?php echo KunenaForum::versionDate(); ?></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_AUTHOR') ?>:</dt>
-							<dd><a href="https://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
+							<dd><a href="https://www.kunena.org/team" target="_blank" rel="noopener noreferrer">Kunena Team</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
 							<dd>&copy; 2008 - 2017 Kunena, All rights reserved.</dd>
@@ -141,7 +133,7 @@ defined('_JEXEC') or die();
 							<dd>GNU General Public License</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
-							<dd><a href="https://www.kunena.org/terms-of-use" target="_blank">https://www.kunena.org/terms-of-use</a></dd>
+							<dd><a href="https://www.kunena.org/terms-of-use" target="_blank" rel="noopener noreferrer">https://www.kunena.org/terms-of-use</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
 							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons(); ?></dd>

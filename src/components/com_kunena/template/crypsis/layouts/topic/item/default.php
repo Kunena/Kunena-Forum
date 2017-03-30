@@ -86,8 +86,12 @@ $quick           = $this->ktemplate->params->get('quick');
 
 <div class="clearfix"></div>
 
-<?php if ($social) : ?>
-	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+<?php if ($social == 1) : ?>
+        <div><?php echo $this->subLayout('Widget/Social'); ?></div>
+<?php endif; ?>
+
+<?php if ($social == 2) : ?>
+        <div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 <?php endif; ?>
 
 <?php

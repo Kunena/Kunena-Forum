@@ -525,8 +525,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$fileInput['name'] = preg_replace('/[[:space:]]/', '', $fileInput['name']);
 
 		$fileNameWithoutExt = JFile::stripExt($fileInput['name']);
-		$fileExt            = JFile::getExt($fileInput['name']);
-		$fileNameWithExt    = $fileInput['name'];
+		$fileNameWithoutExt = strtolower($fileNameWithoutExt);
+
+		$fileExt = JFile::getExt($fileInput['name']);
+		$fileExt = strtolower($fileExt);
+
+		$fileNameWithExt = $fileInput['name'];
+		$fileNameWithExt = strtolower($fileNameWithExt);
 
 		if (file_exists($uploadBasePath . $fileInput['name']))
 		{

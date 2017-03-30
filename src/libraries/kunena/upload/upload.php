@@ -587,8 +587,9 @@ class KunenaUpload
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
-		$file       = new stdClass;
-		$file->ext  = JFile::getExt($fileInput['name']);
+		$file = new stdClass;
+		$file->ext = JFile::getExt($fileInput['name']);
+		$file->ext = strtolower($file->ext);
 		$file->size = $fileInput['size'];
 		$config     = KunenaFactory::getConfig();
 
@@ -615,7 +616,6 @@ class KunenaUpload
 		if ($file->isAvatar)
 		{
 			$a = array('gif', 'jpeg', 'jpg', 'png');
-			$file->ext = strtolower($file->ext);
 
 			if (!in_array($file->ext, $a, true))
 			{

@@ -36,6 +36,12 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$this->baseurl  = 'index.php?option=com_kunena';
+			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+		}
+
 		$this->logo = KunenaFactory::getTemplate()->getImagePath('icons/kunena-logo-48-white.png');
 
 		$this->intro = JText::sprintf('COM_KUNENA_CREDITS_INTRO', 'https://www.kunena.org/team');

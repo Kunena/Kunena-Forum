@@ -16,7 +16,15 @@ $config  = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 $this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
-$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+if (empty($this->message->modified_time))
+{
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+}
+else
+{
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD3');
+}
+
 $msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
 $more = ($this->once ?
 	JText::_(

@@ -254,6 +254,8 @@ jQuery(function ($) {
 			$('#remove-all').show();
 			$('#insert-all').show();
 
+			$('#kattach_form').show();
+			
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {

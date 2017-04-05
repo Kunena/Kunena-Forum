@@ -310,11 +310,13 @@ class KunenaUserBan extends JObject
 		$c     = __CLASS__;
 		$db    = JFactory::getDBO();
 		$now   = new JDate;
-		$query = "SELECT b.*
-			FROM #__kunena_users_banned AS b
-			INNER JOIN #__users AS u ON u.id=b.userid
-			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
-			ORDER BY b.created_time DESC";
+
+		$query  = $db->getQuery(true);
+		$query->select('b.*')
+			->from($db->quoteName('#__kunena_users_banned') . ' AS b')
+			->innerJoin($db->quoteName('#__users') . ' AS u ON u.id=b.userid')
+			->where('b.expiration = ' . $db->quote($db->getNullDate()) . ' OR b.expiration > ' . $db->quote($now->toSql()))
+			->order('b.created_time DESC');
 		$db->setQuery($query, $start, $limit);
 
 		try
@@ -355,10 +357,12 @@ class KunenaUserBan extends JObject
 
 		$c     = __CLASS__;
 		$db    = JFactory::getDBO();
-		$query = "SELECT *
-			FROM #__kunena_users_banned
-			WHERE `userid`={$db->quote($userid)}
-			ORDER BY id DESC";
+
+		$query  = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_users_banned'))
+			->where('userid = ' . $db->quote($userid))
+			->order('id DESC');
 		$db->setQuery($query);
 
 		try

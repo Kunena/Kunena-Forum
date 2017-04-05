@@ -225,12 +225,13 @@ abstract class KunenaUserHelper
 			$userlist = implode(',', $e_userids);
 
 			$db    = JFactory::getDBO();
-			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid
-				FROM #__users AS u
-				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
-				WHERE u.id IN ({$userlist})";
+
+			$query  = $db->getQuery(true);
+			$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
+				->from($db->quoteName('#__users') . 'AS u')
+				->leftJoin($db->quoteName('#__kunena_users') . ' AS ku ON u.id = ku.userid')
+				->where('u.id IN (' . $userlist . ')');
 			$db->setQuery($query);
-			$results = $db->loadAssocList();
 
 			try
 			{
@@ -311,7 +312,11 @@ abstract class KunenaUserHelper
 				$where = '1';
 			}
 
-			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
+			$query  = $db->getQuery(true);
+			$query->select('COUNT(*), MAX(id)')
+				->from($db->quoteName('#__users'))
+				->where($where);
+			$db->setQuery($query);
 
 			try
 			{

@@ -28,17 +28,14 @@ class Com_KunenaInstallerScript
 			'7.1' => '7.1.0',
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
-			'5.5' => '5.5.9',
-			'5.4' => '5.4.13',
-			'5.3' => '5.3.10',
-			'0'   => '7.0.10' // Preferred version
+			'0'   => '7.0.17' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',
 			'0'   => '5.5' // Preferred version
 		),
 		'Joomla!' => array(
-			'3.5' => '3.5.1',
+			'3.6' => '3.6.5',
 			'0'   => '3.7.0' // Preferred version
 		)
 	);

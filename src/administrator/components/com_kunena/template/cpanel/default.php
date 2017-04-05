@@ -46,11 +46,13 @@ defined('_JEXEC') or die();
 							</a>
 							<!--<a class="btn" href="index.php?option=com_kunena&view=labels">
 								<i class="icon-big icon-tags-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_LABELS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_LABELS_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=icons">
 								<i class="icon-big icon-grid-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_ICONS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_ICONS_MANAGER')
+?></span>
 							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
 								<i class="icon-big icon-color-palette"></i><br/>
@@ -66,15 +68,18 @@ defined('_JEXEC') or die();
 							</a>
 							<!--<a class="btn" href="index.php?option=com_kunena&view=email">
 								<i class="icon-big icon-mail"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_EMAIL_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=blockips">
 								<i class="icon-big icon-compass"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=badwords">
 								<i class="icon-big icon-smiley-sad-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER')
+?></span>
 							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=logs">
 								<i class="icon-big icon-search"></i><br/>

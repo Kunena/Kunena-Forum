@@ -724,7 +724,7 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			$value            = $post_password;
-			$meter            = isset($element['strengthmeter'])  ? ' meter="0"' : '1';
+			$meter            = isset($element['strengthmeter']) ? ' meter="0"' : '1';
 			$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
 			$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : 4;
 			$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
@@ -1150,6 +1150,7 @@ class KunenaControllerUser extends KunenaController
 		fputs($fp, "Content-length: " . strlen($data) . "\n");
 		fputs($fp, "Connection: close\n\n");
 		fputs($fp, $data);
+
 		// Create a buffer which holds the response
 		$response = '';
 
@@ -1158,6 +1159,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$response .= fread($fp, 1024);
 		}
+
 		// The file pointer is no longer needed. Close it
 		fclose($fp);
 
@@ -1173,7 +1175,8 @@ class KunenaControllerUser extends KunenaController
 			// Report failed or refused
 			$reasons = array();
 			preg_match('/<p>.*<\/p>/', $response, $reasons);
-			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+
+			// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
 
 			return false;

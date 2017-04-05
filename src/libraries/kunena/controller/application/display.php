@@ -351,7 +351,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
-		if (trim($templateText)) {
+
+		if (trim($templateText))
+		{
 			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}

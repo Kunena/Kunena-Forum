@@ -479,6 +479,8 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @return bool
 	 */
 	static protected function loadMessages(array $ids)
 	{

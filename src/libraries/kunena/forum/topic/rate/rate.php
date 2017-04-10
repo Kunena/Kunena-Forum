@@ -107,10 +107,12 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param int $start
-	 * @param int $limit
+	 * @param $topicid
 	 *
 	 * @return array
+	 * @internal param int $start
+	 * @internal param int $limit
+	 *
 	 */
 	static public function getTotalUsers($topicid)
 	{

@@ -79,8 +79,8 @@ defined('_JEXEC') or die();
 						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 						<hr class="hr-condensed">
 						<ul class="pull-left">
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/docs/en/setup/sections-categories" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://docs.kunena.org/en/setup" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://docs.kunena.org/en/setup/sections-categories" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
 							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
 						</ul>
 						<div class="clearfix"></div>

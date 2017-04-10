@@ -101,12 +101,13 @@ abstract class KunenaError
 	}
 
 	/**
-	  * Return different error if it's an admin or a simple user
-	  *
-	  * @return string
-	  *
-	  * @since 5.0
-	  */
+	 * Return different error if it's an admin or a simple user
+	 *
+	 * @param $exception
+	 *
+	 * @return string
+	 * @since 5.0
+	 */
 	public static function displayDatabaseError($exception)
 	{
 		$app = JFactory::getApplication();

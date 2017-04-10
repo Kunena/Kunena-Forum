@@ -287,14 +287,16 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	/**
 	 * Get button.
 	 *
-	 * @param   string  $url      Target link (do not route it).
-	 * @param   string  $name     Name of the button.
-	 * @param   string  $scope    Scope of the button.
-	 * @param   string  $type     Type of the button.
-	 * @param   bool    $primary  True if primary button.
-	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
+	 * @param   string $url     Target link (do not route it).
+	 * @param   string $name    Name of the button.
+	 * @param   string $scope   Scope of the button.
+	 * @param   string $type    Type of the button.
+	 * @param   bool   $primary True if primary button.
+	 * @param   bool   $normal  Define if the button will have the class btn or btn-small
 	 *
-	 * @return  string
+	 * @param string   $icon
+	 *
+	 * @return string
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{

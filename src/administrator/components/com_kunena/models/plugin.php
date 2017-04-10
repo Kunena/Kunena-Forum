@@ -139,11 +139,12 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string  $context  The context identifier.
+	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
-	 * @return  void
+	 * @param string   $group
 	 *
+	 * @return void
 	 * @since   Joomla 3.1
 	 */
 	protected function preprocessData($context, &$data, $group = 'kunena')

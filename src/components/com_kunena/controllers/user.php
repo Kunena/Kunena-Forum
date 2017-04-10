@@ -1110,7 +1110,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @return boolean
+	 * @param $userid
+	 *
+	 * @return bool
 	 */
 	protected function report($userid)
 	{

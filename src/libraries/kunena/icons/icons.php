@@ -1079,8 +1079,11 @@ class KunenaIcons
 	/**
 	 * Return the category icon
 	 *
-	 * @return string
+	 * @param      $categoryicon
+	 * @param null $new
+	 * @param bool $big
 	 *
+	 * @return string
 	 * @since K5.0
 	 */
 	static public function caticon($categoryicon, $new = null, $big = true)

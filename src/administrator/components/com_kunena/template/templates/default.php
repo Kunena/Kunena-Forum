@@ -90,7 +90,7 @@ JHtml::_('dropdown.init');
 				<?php endforeach; ?>
 			</tbody>
 			</table>
-			<table class="table table-striped" style="padding-top: 200px">
+			<table class="table table-striped" style="padding-top: 200px;">
 				<thead>
 				<tr>
 					<td colspan="7"><strong><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PREMIUM'); ?></strong></td>
@@ -108,27 +108,27 @@ JHtml::_('dropdown.init');
 					</tr>
 
 					<tr>
-						<td style="width: 5%">€10 euro
+						<td style="width: 5%;">€10 euro
 						</td>
-						<td style="width: 7%">
+						<td style="width: 7%;">
 							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
 							<span class="editlinktip hasTip" title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank" rel="noopener noreferrer">Blue Eagle 5</a>
 							</span>
 						</td>
-						<td style="width: 7%">
+						<td style="width: 7%;">
 							<a href="mailto:team@kunena.org">Kunena Team</a>
 						</td>
-						<td style="width: 5%">
+						<td style="width: 5%;">
 							K5.0.X
 						</td>
-						<td style="width: 5%">
+						<td style="width: 5%;">
 							<a href="https://www.kunena.org/download/templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 						</td>
-						<td style="width: 25%">
+						<td style="width: 25%;">
 							<a href="https://www.kunena.org" target="_blank" rel="noopener noreferrer">https://www.kunena.org</a>
 						</td>
-						<td style="width: 30%">
+						<td style="width: 30%;">
 						</td>
 					</tr>
 				</tbody>

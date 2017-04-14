@@ -686,7 +686,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugins_list = array('finder' => 'Kunena - Finder', 'alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
 		$plugin_final = array();
 
 		foreach ($plugins_list as $name => $desc)
@@ -697,11 +697,19 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			{
 				$pluginParams   = new JRegistry($plugin->params);
 				$params         = $pluginParams->toArray();
-				$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
-
-				foreach ($params as $param => $value)
+				
+				if (!empty($params))
 				{
-					$plugin_final[] = "{$param}={$value} ";
+					$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
+	
+					foreach ($params as $param => $value)
+					{
+						$plugin_final[] = "{$param}={$value} ";
+					}
+				}
+				else 
+				{
+					$plugin_final[] = '[b]' . $desc . '[/b] Enabled';
 				}
 
 				$plugin_final[] = "\n";

@@ -232,6 +232,14 @@ class KunenaAdminModelAttachments extends JModelList
 			default:
 				$query->order('a.id ' . $direction);
 		}
+		
+		$filter = $this->getState('filter.search');
+		
+		if (!empty($filter))
+		{
+			$post = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$query->where('(a.filename LIKE ' . $post . ')');
+		}
 
 		return $query;
 	}

@@ -550,9 +550,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			foreach ($params as $key => $value)
 			{
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
-					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
-					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key'
-				)
+					&& $key != 'email_visible_address' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' 
+					&& $key != 'ebay_api_key' && $key != 'twitter_consumer_key' && $key != 'twitter_consumer_secret' 
+					&& $key != 'google_map_api_key')
 				{
 					$kconfigsettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
 				}

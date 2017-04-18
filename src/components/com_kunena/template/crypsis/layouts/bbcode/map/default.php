@@ -32,11 +32,11 @@ if (!isset($id))
 
 	if ($uri->isSSL())
 	{
-		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 	else
 	{
-		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 
 	$id = 0;

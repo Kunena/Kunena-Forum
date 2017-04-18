@@ -32,11 +32,11 @@ if (!isset($id))
 
 	if ($uri->isSSL())
 	{
-		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 	else
 	{
-		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 
 	$id = 0;
@@ -78,7 +78,7 @@ if (!empty($this->config->google_map_api_key))
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
-						{$mapid}.setcenter(results[0].geometry.location);
+						{$mapid}.setCenter(results[0].geometry.location);
 						var marker = new google.maps.Marker({
 							position: results[0].geometry.location,
 							map: {$mapid}

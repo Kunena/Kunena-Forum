@@ -156,11 +156,6 @@ class KunenaView extends JViewLegacy
 
 		$this->state = $this->get('State');
 
-		if ($layoutFunction = 'common')
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_PAGE'), 404);
-		}
-
 		if (method_exists($this, $layoutFunction))
 		{
 			$contents = $this->$layoutFunction($tpl ? $tpl : null);

@@ -132,6 +132,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					$this->output->setLayout('login');
 					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
 					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+					$this->document->setMetaData('robots', 'noindex, follow');
 				}
 				elseif ($banned)
 				{
@@ -145,6 +146,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
 						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
 							KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')));
+					$this->document->setMetaData('robots', 'noindex, follow');
 				}
 				else
 				{
@@ -154,7 +156,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 					$this->content = KunenaLayout::factory('Widget/Error')
 						->set('header', $e->getResponseStatus());
-
+					$this->document->setMetaData('robots', 'noindex, follow');
 				}
 			}
 			catch (Exception $e)

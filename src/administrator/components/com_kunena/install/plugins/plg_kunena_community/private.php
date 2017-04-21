@@ -56,7 +56,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 			$config   = CFactory::getConfig();
 			$document = JFactory::getDocument();
 			$document->addStyleSheet('components/com_community/assets/window.css');
-			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/css/style.css');
+			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/assets/css/style.css');
 			$this->loaded = true;
 		}
 

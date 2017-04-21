@@ -128,6 +128,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 				if (JFactory::getUser()->guest)
 				{
+					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
 					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
 					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));

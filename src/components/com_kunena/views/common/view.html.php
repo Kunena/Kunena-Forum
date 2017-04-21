@@ -48,6 +48,11 @@ class KunenaViewCommon extends KunenaView
 			$this->offline = true;
 		}
 
+		if (!$layout)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_PAGE'), 404);
+		}
+
 		return $this->displayLayout($layout, $tpl);
 	}
 

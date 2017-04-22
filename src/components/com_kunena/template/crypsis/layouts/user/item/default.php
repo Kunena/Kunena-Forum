@@ -33,7 +33,7 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs hidden-phone">
+<div class="tabs">
 <br />
 <br />
 

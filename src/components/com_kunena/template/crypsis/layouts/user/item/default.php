@@ -33,9 +33,9 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs hidden-phone">
-	<br/>
-	<br/>
+<div class="tabs">
+<br />
+<br />
 
 	<ul class="nav nav-tabs">
 

@@ -15,11 +15,6 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
-$this->addScriptDeclaration(
-	'// <![CDATA[
-var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
-// ]]>');
-
 JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');

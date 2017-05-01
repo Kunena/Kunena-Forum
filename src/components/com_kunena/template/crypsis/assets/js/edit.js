@@ -161,7 +161,7 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (kunena_topicicontype == 'B2') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'B2') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
@@ -171,7 +171,7 @@ jQuery(document).ready(function ($) {
 								'al': ''
 							}));
 						}
-						else if (kunena_topicicontype == 'fa') {
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id

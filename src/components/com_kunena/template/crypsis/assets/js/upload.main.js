@@ -4,9 +4,9 @@ jQuery(function ($) {
 	$.widget('blueimp.fileupload', $.blueimp.fileupload, {
 		options: {
 			// The maximum width of resized images:
-			imageMaxWidth: imageheight,
+			imageMaxWidth: Joomla.getOptions('com_kunena.imageheight'),
 			// The maximum height of resized images:
-			imageMaxHeight: imagewidth
+			imageMaxHeight: Joomla.getOptions('com_kunena.imagewidth')
 		}
 	});
 
@@ -78,7 +78,7 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url: kunena_upload_files_rem + '&fil_id=' + file.id,
+					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + file.id,
 					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
@@ -106,7 +106,7 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url: kunena_upload_files_rem + '&fil_id=' + fileid,
+					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + fileid,
 					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
@@ -215,7 +215,7 @@ jQuery(function ($) {
 			
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
-				url: kunena_upload_files_rem + '&fil_id=' + file_id,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + file_id,
 				type: 'POST',
 				success: function (result) {
 					$this.parent().remove();
@@ -258,7 +258,7 @@ jQuery(function ($) {
 			
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
-			if (filecoutntmp > kunena_upload_files_maxfiles) {
+			if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
 				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
 				
 				$('#form_submit_button').prop('disabled', false);
@@ -277,7 +277,7 @@ jQuery(function ($) {
 
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
-			if (filecoutntmp > kunena_upload_files_maxfiles) {
+			if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
 				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
 				
 				$('#form_submit_button').prop('disabled', false);
@@ -382,7 +382,7 @@ jQuery(function ($) {
 	if ($('#kmessageid').val() > 0) {
 		$.ajax({
 			type: 'POST',
-			url: kunena_upload_files_preload,
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_preload'),
 			async: false,
 			dataType: 'json',
 			data: {mes_id: $('#kmessageid').val()},

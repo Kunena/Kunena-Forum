@@ -71,6 +71,8 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 
+JFactory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+
 JFactory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');

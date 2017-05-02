@@ -12,10 +12,24 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		var value = $('#kbbcode-message').val();
+		if(Joomla.getOptions('com_kunena.editor'))
+    {
+      var value = $('#editor').val();
+    }
+    else
+    {
+      var value = $('#kbbcode-message').val();
+    }
 
-		$('#kbbcode-message').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
-
+    if(Joomla.getOptions('com_kunena.editor'))
+    {
+		  $('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+    }
+    else
+    {
+      $('#kbbcode-message').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+    }
+    
 		if (button != undefined) {
 			button.removeClass('btn-primary');
 			button.addClass('btn-success');

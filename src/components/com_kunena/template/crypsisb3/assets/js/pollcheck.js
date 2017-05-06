@@ -8,6 +8,8 @@
  **/
 
 jQuery(document).ready(function ($) {
+	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+	
 	if (typeof pollcategoriesid != 'undefined' && $('#poll_exist_edit').length == 0) {
 		var catid = $('#kcategory_poll').val();
 

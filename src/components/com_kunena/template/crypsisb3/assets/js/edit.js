@@ -131,6 +131,7 @@ jQuery(document).ready(function ($) {
 		$("#subject").attr('required', 'required');
 
 		if ($('#kanynomous-check').length > 0) {
+			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);

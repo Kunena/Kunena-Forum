@@ -204,7 +204,7 @@ class KunenaUpload
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-				
+				$value *= 1024;
 			// Continue , do not put break here
 			case 'k':
 			case 'kb':
@@ -234,7 +234,8 @@ class KunenaUpload
 			'mime'       => null,
 			'hash'       => null,
 			'chunkStart' => 0,
-			'chunkEnd'   => 0
+			'chunkEnd'   => 0,
+			'image_type' => null
 		);
 
 		$options += $defaults;
@@ -351,19 +352,29 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false)
+				if ($options['image_type'] == 'avatar')
 				{
-					if (!$this->checkFileSizeFileAttachment($size))
+					if (!$this->checkFileSizeAvatar($size))
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
-
-				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+				else
 				{
-					if (!$this->checkFileSizeImageAttachment($size))
+					if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false)
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						if (!$this->checkFileSizeFileAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
+					}
+	
+					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+					{
+						if (!$this->checkFileSizeImageAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
 					}
 				}
 
@@ -496,9 +507,9 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
+	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
 	 *
-	 * @param   int $filesize The size of file in bytes
+	 * @param   int $filesize The size of avatar in bytes
 	 *
 	 * @return boolean
 	 * @since Kunena

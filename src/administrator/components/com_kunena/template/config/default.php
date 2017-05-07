@@ -755,6 +755,12 @@ JHtml::_('behavior.tabstate');
 												</tr>
 												</thead>
 												<tbody>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
+													<td><input type="text" name="cfg_avatarypes"
+														       value="<?php echo $this->escape($this->config->avatartypes) ?>"/></td>
+													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>
+												</tr>
+												<tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATARUPLOAD') ?></td>
 													<td><?php echo $this->lists ['allowavatarupload'] ?></td>

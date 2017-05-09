@@ -408,7 +408,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 
 		$thirdparty              = array();
-		$thirdparty['aup']       = $this->getExtensionVersion('com_alphauserpoints', 'AlphaUserPoints');
 		$thirdparty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
@@ -823,7 +822,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('finder' => 'Kunena - Finder', 'alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugins_list = array('finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
 		$plugin_final = array();
 
 		foreach ($plugins_list as $name => $desc)

@@ -144,7 +144,7 @@ abstract class KunenaError
 		}
 		elseif (self::$debug || self::$admin)
 		{
-			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>'), 'error');
+			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
 		}
 		else
 		{

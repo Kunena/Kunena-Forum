@@ -1211,11 +1211,11 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.4
 	 */
 	public $plain_email = 0;
-	
+
 	/**
 	 * @var string
 	 * @since  K5.1.0
-	*/
+     */
 	public $avatartypes = 'gif, jpeg, jpg, png';
 
 	/**

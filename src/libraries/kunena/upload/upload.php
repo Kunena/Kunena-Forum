@@ -199,18 +199,19 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
-				
-			// Continue , do not put break here
+
+				// Continue , do not put break here
 			case 'm':
 			case 'mb':
 				$value *= 1024;
 				$value *= 1024;
-			// Continue , do not put break here
+
+				// Continue , do not put break here
 			case 'k':
 			case 'kb':
 				$value *= 1024;
-				
-			// Continue, do not put break here
+
+				// Continue, do not put break here
 		}
 
 		return (int) $value;
@@ -368,7 +369,7 @@ class KunenaUpload
 							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
 					}
-	
+
 					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 					{
 						if (!$this->checkFileSizeImageAttachment($size))

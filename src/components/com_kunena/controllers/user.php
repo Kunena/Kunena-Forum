@@ -970,13 +970,13 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 	}
-	
+
 	/**
 	 * Upload avatar with AJAX.
 	 *
 	 * @throws RuntimeException
 	 * @since 5.1
-	*/
+     */
 	public function upload()
 	{
 		// Only support JSON requests.
@@ -984,14 +984,14 @@ class KunenaControllerUser extends KunenaController
 		{
 			throw new RuntimeException(JText::_('Bad Request'), 400);
 		}
-	
+
 		$upload = KunenaUpload::getInstance();
-	
+
 		// We are converting all exceptions into JSON.
 		try
 		{
 			$me    = KunenaUserHelper::getMyself();
-	
+
 			$caption = $this->input->getString('caption');
 			$options = array(
 				'filename'   => $this->input->getString('filename'),
@@ -1002,54 +1002,54 @@ class KunenaControllerUser extends KunenaController
 				'chunkEnd'   => $this->input->getInt('chunkEnd', 0),
 				'image_type' => 'avatar',
 			);
-	
+
 			// Upload!
 			$this->config->avatartypes = strtolower($this->config->avatartypes);
 			$upload->addExtensions(explode(',', $this->config->avatartypes));
 			$response = (object) $upload->ajaxUpload($options);
-			
+
 			if (!empty($response->completed))
 			{
 				// We have it all, lets update the avatar in user table
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
-			
-				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' .$extension);
-			
-				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' .$extension);
-			
+
+				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+
+				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+
 				// Save in the table KunenaUser
 				$kuser = KunenaFactory::getUser();
-				$kuser->avatar = 'users/avatar' . $this->me->userid . '.' .$extension;
+				$kuser->avatar = 'users/avatar' . $this->me->userid . '.' . $extension;
 				$kuser->save();
 			}
 		}
 		catch (Exception $response)
 		{
 			$upload->cleanup();
-		
+
 			// Use the exception as the response.
 		}
-		
+
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		
+
 		while (@ob_end_clean())
 		{
 		}
-		
+
 		echo $upload->ajaxResponse($response);
-		
+
 		jexit();
 	}
-	
+
 	/**
 	 * Remove avatar with AJAX
-	 * 
+	 *
 	 * @since 5.1
 	 */
 	public function removeAvatar()
@@ -1059,37 +1059,37 @@ class KunenaControllerUser extends KunenaController
 		{
 			throw new RuntimeException(JText::_('Bad Request'), 400);
 		}
-	
+
 		if (!JSession::checkToken('request'))
 		{
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
-		
+
 		$success           = array();
-		
+
 		// Save in the table KunenaUser
 		$kuser = KunenaFactory::getUser();
 		$kuser->avatar = '';
 		$success = $kuser->save();
-		
+
 		$this->deleteOldAvatars();
-		
+
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-	
+
 		while (@ob_end_clean())
 		{
 		}
-	
+
 		echo json_encode($success);
-	
+
 		jexit();
 	}
-	
+
 	/**
 	 * Get avatar attached to a profile with AJAX.
 	 *
@@ -1105,35 +1105,35 @@ class KunenaControllerUser extends KunenaController
 		{
 			throw new RuntimeException(JText::_('Bad Request'), 400);
 		}
-	
+
 		if (!JSession::checkToken('request'))
 		{
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
-	
+
 		$userid      = $this->input->getInt('userid', 0);
 		$kuser = KunenaFactory::getUser($userid);
-	
+
 		$avatar          = new stdClass;
 		$avatar->name    = $kuser->avatar;
 		$avatar->path = JURI::root() . 'media/kunena/avatars/' . $kuser->avatar;
-		
+
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-	
+
 		while (@ob_end_clean())
 		{
 		}
-	
+
 		echo json_encode($avatar);
-	
+
 		jexit();
 	}
-		
+
 	/**
 	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
 	 *

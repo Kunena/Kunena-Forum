@@ -648,8 +648,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			case 'subject':
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
-				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode
-					($this->message, 0, $html);
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode($this->message, 0, $html);
 		}
 
 		return '';

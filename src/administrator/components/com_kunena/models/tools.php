@@ -549,8 +549,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			foreach ($params as $key => $value)
 			{
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
-					&& $key != 'email_visible_address' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' 
-					&& $key != 'ebay_api_key' && $key != 'twitter_consumer_key' && $key != 'twitter_consumer_secret' 
+					&& $key != 'email_visible_address' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id'
+					&& $key != 'ebay_api_key' && $key != 'twitter_consumer_key' && $key != 'twitter_consumer_secret'
 					&& $key != 'google_map_api_key')
 				{
 					$kconfigsettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
@@ -833,17 +833,17 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			{
 				$pluginParams   = new JRegistry($plugin->params);
 				$params         = $pluginParams->toArray();
-				
+
 				if (!empty($params))
 				{
 					$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
-	
+
 					foreach ($params as $param => $value)
 					{
 						$plugin_final[] = "{$param}={$value} ";
 					}
 				}
-				else 
+				else
 				{
 					$plugin_final[] = '[b]' . $desc . '[/b] Enabled';
 				}

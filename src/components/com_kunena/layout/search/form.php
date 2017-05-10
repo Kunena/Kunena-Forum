@@ -134,7 +134,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options   = array();
 		$options[] = JHtml::_('select.option', $this->config->messages_per_page_search, JText::sprintf('COM_KUNENA_SEARCH_LIMIT',
             $this->config->messages_per_page_search
-        )
+            )
         );
 		$options[] = JHtml::_('select.option', '5', JText::_('COM_KUNENA_SEARCH_LIMIT5'));
 		$options[] = JHtml::_('select.option', '10', JText::_('COM_KUNENA_SEARCH_LIMIT10'));

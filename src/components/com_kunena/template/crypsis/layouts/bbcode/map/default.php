@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.BBCode
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -32,11 +32,11 @@ if (!isset($id))
 
 	if ($uri->isSSL())
 	{
-		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 	else
 	{
-		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
+		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp' . $map_key);
 	}
 
 	$id = 0;

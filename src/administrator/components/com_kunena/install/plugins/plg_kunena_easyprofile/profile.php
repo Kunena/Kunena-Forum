@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      Easyprofile
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaProfileEasyprofile
+ * @since Kunena
+ */
 class KunenaProfileEasyprofile extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileEasyprofile constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -30,13 +40,14 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -56,6 +67,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -73,6 +85,8 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -83,6 +97,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

@@ -5,23 +5,33 @@
  * @package          Kunena.Plugins
  * @subpackage       Community
  *
- * @copyright   (C)  2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license          http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 jimport('joomla.utilities.string');
 
+/**
+ * Class KunenaActivityCommunity
+ * @since Kunena
+ */
 class KunenaActivityCommunity extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -30,6 +40,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterPost($message)
 	{
@@ -78,6 +90,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterReply($message)
 	{
@@ -150,6 +164,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -208,6 +224,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($target)
 	{
@@ -222,6 +240,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $category
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected function getAccess($category)
 	{
@@ -262,6 +281,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return mixed|string|void
+	 * @since Kunena
 	 */
 	private function buildContent($message)
 	{

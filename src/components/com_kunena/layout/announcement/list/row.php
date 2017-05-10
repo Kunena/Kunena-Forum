@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Announcement.List
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -22,6 +22,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * Method to check if the user can publish an announcement
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function canPublish()
 	{
@@ -32,6 +33,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * Method to check if the user can edit an announcement
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function canEdit()
 	{
@@ -42,6 +44,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * Method to check if the user can delete an announcement
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function canDelete()
 	{
@@ -55,6 +58,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * @param   string $mode Define the way to display the date on the field
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function displayField($name, $mode = null)
 	{

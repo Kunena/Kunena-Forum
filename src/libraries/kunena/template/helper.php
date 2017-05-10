@@ -4,8 +4,8 @@
  * @package         Kunena.Framework
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaTemplateHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -25,6 +29,7 @@ abstract class KunenaTemplateHelper
 	 * @param $template
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public static function isDefault($template)
 	{
@@ -40,6 +45,7 @@ abstract class KunenaTemplateHelper
 	 * @param   null $templateBaseDir
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function parseXmlFiles($templateBaseDir = null)
 	{
@@ -89,6 +95,7 @@ abstract class KunenaTemplateHelper
 	 * @param   null $templateBaseDir
 	 *
 	 * @return boolean|stdClass
+	 * @since Kunena
 	 */
 	public static function parseXmlFile($templateDir, $templateBaseDir = null)
 	{
@@ -122,6 +129,7 @@ abstract class KunenaTemplateHelper
 	 * @param   $path
 	 *
 	 * @return boolean|stdClass
+	 * @since Kunena
 	 */
 	public static function parseKunenaInstallFile($path)
 	{
@@ -179,6 +187,7 @@ abstract class KunenaTemplateHelper
 	 * @param   string $templatename The name of template which needs to be checked
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function templateCanBeUsed($templatename)
 	{

@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Announcement
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -55,7 +55,7 @@ JHtml::_('behavior.core');
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
-				<th class="span1">
+				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 			<?php endif; ?>
@@ -64,7 +64,7 @@ JHtml::_('behavior.core');
 				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
-			<?php if ($options) : ?>
+			<?php if (!empty($this->announcements)) : ?>
 				<th class="span1 center">
 					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 				</th>

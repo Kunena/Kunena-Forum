@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -22,6 +22,7 @@ class KunenaAdminViewRank extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed|void
+	 * @since Kunena
 	 */
 	public function display($tpl = null)
 	{
@@ -37,6 +38,7 @@ class KunenaAdminViewRank extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{

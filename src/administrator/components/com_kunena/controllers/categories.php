@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -40,6 +40,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since    2.0.0-BETA2
 	 *
+	 * @since    Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -56,6 +57,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return  void
+	 * @since    Kunena
 	 */
 	public function lock()
 	{
@@ -92,6 +94,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function review()
 	{
@@ -110,6 +113,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function unreview()
 	{
@@ -128,6 +132,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function allow_anonymous()
 	{
@@ -146,6 +151,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function deny_anonymous()
 	{
@@ -164,6 +170,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function allow_polls()
 	{
@@ -182,6 +189,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function deny_polls()
 	{
@@ -200,6 +208,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function publish()
 	{
@@ -218,6 +227,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function unpublish()
 	{
@@ -236,6 +246,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function add()
 	{
@@ -264,6 +275,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @since    2.0.0-BETA2
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function edit()
 	{
@@ -368,7 +380,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return KunenaForumCategory|void
 	 *
 	 * @since    2.0.0-BETA2
 	 */
@@ -939,6 +951,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since K4.0
 	 *
+	 * @since Kunena
 	 */
 	public function trash()
 	{
@@ -954,7 +967,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to do batch process on selected categories, to move or copy them.
 	 *
-	 * @return  boolean  Return true if success.
+	 * @return boolean|void
 	 *
 	 * @since  5.1.0
 	 */
@@ -985,7 +998,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 			foreach ($cid as $cat)
 			{
-				if ($category != $cat)
+				if ($cat_parent != $cat)
 				{
 					$query = $db->getQuery(true);
 					$query->update($db->quoteName('#__kunena_categories'));

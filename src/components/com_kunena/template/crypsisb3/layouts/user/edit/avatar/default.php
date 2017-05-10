@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -49,13 +49,13 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages)) : ?>
-		<tr>
-			<td class="col-md-3">
-				<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
-				<input id="kunena_url_avatargallery" type="hidden"
-				       value="<?php echo $this->profile->getUrl(true, 'edit'); ?>"/>
-			</td>
-			<td>
+	<tr>
+		<td class="col-md-3">
+			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
+			<input id="kunena_url_avatargallery" type="hidden"
+			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+		</td>
+		<td>
 
 				<?php if ($this->galleryOptions) : ?>
 					<div>
@@ -74,7 +74,7 @@ defined('_JEXEC') or die;
 								<input type="radio" name="avatar" id="radio<?php echo $image ?>"
 								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
-									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt=""/>
+									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
 								</label>
 							</li>
 						<?php endforeach; ?>

@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerUsers extends KunenaController
 {
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $baseurl = null;
 
 	/**
@@ -38,7 +42,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @throws Exception
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 *
 	 * @since    2.0
 	 */
@@ -113,6 +117,49 @@ class KunenaAdminControllerUsers extends KunenaController
 				$user->signature = $signature;
 			}
 
+			$user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
+			$birthdate                = JFactory::getApplication()->input->getString('birthdate');
+
+			if ($birthdate)
+			{
+				$date = JFactory::getDate($birthdate);
+
+				$birthdate = $date->format('Y-m-d');
+			}
+
+			$user->birthdate   = $birthdate;
+			$user->location    = trim(JFactory::getApplication()->input->getString('location', ''));
+			$user->gender      = JFactory::getApplication()->input->getInt('gender', '');
+			$user->icq         = trim(JFactory::getApplication()->input->getString('icq', ''));
+			$user->aim         = trim(JFactory::getApplication()->input->getString('aim', ''));
+			$user->yim         = trim(JFactory::getApplication()->input->getString('yim', ''));
+			$user->microsoft   = trim(JFactory::getApplication()->input->getString('microsoft', ''));
+			$user->skype       = trim(JFactory::getApplication()->input->getString('skype', ''));
+			$user->google      = trim(JFactory::getApplication()->input->getString('google', ''));
+			$user->twitter     = trim(JFactory::getApplication()->input->getString('twitter', ''));
+			$user->facebook    = trim(JFactory::getApplication()->input->getString('facebook', ''));
+			$user->myspace     = trim(JFactory::getApplication()->input->getString('myspace', ''));
+			$user->linkedin    = trim(JFactory::getApplication()->input->getString('linkedin', ''));
+			$user->delicious   = trim(JFactory::getApplication()->input->getString('delicious', ''));
+			$user->friendfeed  = trim(JFactory::getApplication()->input->getString('friendfeed', ''));
+			$user->digg        = trim(JFactory::getApplication()->input->getString('digg', ''));
+			$user->blogspot    = trim(JFactory::getApplication()->input->getString('blogspot', ''));
+			$user->flickr      = trim(JFactory::getApplication()->input->getString('flickr', ''));
+			$user->bebo        = trim(JFactory::getApplication()->input->getString('bebo', ''));
+			$user->instagram   = trim(JFactory::getApplication()->input->getString('instagram', ''));
+			$user->qq          = trim(JFactory::getApplication()->input->getString('qq', ''));
+			$user->qzone       = trim(JFactory::getApplication()->input->getString('qzone', ''));
+			$user->weibo       = trim(JFactory::getApplication()->input->getString('weibo', ''));
+			$user->wechat      = trim(JFactory::getApplication()->input->getString('wechat', ''));
+			$user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
+			$user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
+			$user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+			$user->websitename = JFactory::getApplication()->input->getString('websitename', '');
+			$user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
+			$user->hideEmail   = JFactory::getApplication()->input->getString('hidemail');
+			$user->showOnline  = JFactory::getApplication()->input->getString('showonline');
+			$user->cansubscribe  = JFactory::getApplication()->input->getString('cansubscribe');
+			$user->userlisttime  = JFactory::getApplication()->input->getString('userlisttime');
 			$user->view     = $newview;
 			$user->ordering = $neworder;
 			$user->rank     = $newrank;
@@ -191,6 +238,50 @@ class KunenaAdminControllerUsers extends KunenaController
 			{
 				$user->signature = $signature;
 			}
+
+			$user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
+			$birthdate                = JFactory::getApplication()->input->getString('birthdate');
+
+			if ($birthdate)
+			{
+				$date = JFactory::getDate($birthdate);
+
+				$birthdate = $date->format('Y-m-d');
+			}
+
+			$user->birthdate   = $birthdate;
+			$user->location    = trim(JFactory::getApplication()->input->getString('location', ''));
+			$user->gender      = JFactory::getApplication()->input->getInt('gender', '');
+			$user->icq         = trim(JFactory::getApplication()->input->getString('icq', ''));
+			$user->aim         = trim(JFactory::getApplication()->input->getString('aim', ''));
+			$user->yim         = trim(JFactory::getApplication()->input->getString('yim', ''));
+			$user->microsoft   = trim(JFactory::getApplication()->input->getString('microsoft', ''));
+			$user->skype       = trim(JFactory::getApplication()->input->getString('skype', ''));
+			$user->google      = trim(JFactory::getApplication()->input->getString('google', ''));
+			$user->twitter     = trim(JFactory::getApplication()->input->getString('twitter', ''));
+			$user->facebook    = trim(JFactory::getApplication()->input->getString('facebook', ''));
+			$user->myspace     = trim(JFactory::getApplication()->input->getString('myspace', ''));
+			$user->linkedin    = trim(JFactory::getApplication()->input->getString('linkedin', ''));
+			$user->delicious   = trim(JFactory::getApplication()->input->getString('delicious', ''));
+			$user->friendfeed  = trim(JFactory::getApplication()->input->getString('friendfeed', ''));
+			$user->digg        = trim(JFactory::getApplication()->input->getString('digg', ''));
+			$user->blogspot    = trim(JFactory::getApplication()->input->getString('blogspot', ''));
+			$user->flickr      = trim(JFactory::getApplication()->input->getString('flickr', ''));
+			$user->bebo        = trim(JFactory::getApplication()->input->getString('bebo', ''));
+			$user->instagram   = trim(JFactory::getApplication()->input->getString('instagram', ''));
+			$user->qq          = trim(JFactory::getApplication()->input->getString('qq', ''));
+			$user->qzone       = trim(JFactory::getApplication()->input->getString('qzone', ''));
+			$user->weibo       = trim(JFactory::getApplication()->input->getString('weibo', ''));
+			$user->wechat      = trim(JFactory::getApplication()->input->getString('wechat', ''));
+			$user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
+			$user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
+			$user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+			$user->websitename = JFactory::getApplication()->input->getString('websitename', '');
+			$user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
+			$user->hideEmail   = JFactory::getApplication()->input->getString('hidemail');
+			$user->showOnline  = JFactory::getApplication()->input->getString('showonline');
+			$user->cansubscribe  = JFactory::getApplication()->input->getString('cansubscribe');
+			$user->userlisttime  = JFactory::getApplication()->input->getString('userlisttime');
 
 			$user->view     = $newview;
 			$user->ordering = $neworder;
@@ -819,6 +910,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function removecatsubscriptions()
 	{
@@ -862,6 +954,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function removetopicsubscriptions()
 	{

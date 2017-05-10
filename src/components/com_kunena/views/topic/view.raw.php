@@ -5,14 +5,15 @@
  * @package         Kunena.Site
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Topic View
+ * @since Kunena
  */
 class KunenaViewTopic extends KunenaView
 {
@@ -20,6 +21,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	function displayEdit($tpl = null)
 	{
@@ -47,6 +49,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since K4.0
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayListEmoji($tpl = null)
 	{
@@ -60,8 +63,15 @@ class KunenaViewTopic extends KunenaView
 			$kquery = new KunenaDatabaseQuery;
 			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
-			$smileys = $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$smileys = $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			foreach ($smileys as $smiley)
 			{
@@ -84,6 +94,7 @@ class KunenaViewTopic extends KunenaView
 	 * Send list of topic icons in JSON for the category set selected
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function displayTopicIcons()
 	{
@@ -93,6 +104,7 @@ class KunenaViewTopic extends KunenaView
 
 		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
+		$app              = JFactory::getApplication();
 
 		if (empty($category_iconset))
 		{
@@ -100,7 +112,7 @@ class KunenaViewTopic extends KunenaView
 
 			// Set the MIME type and header for JSON output.
 			$this->document->setMimeEncoding('application/json');
-			JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+			$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 			echo json_encode($response);
 		}
@@ -144,7 +156,7 @@ class KunenaViewTopic extends KunenaView
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
 					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
 					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
-					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false);
 					$topicIcons[]    = $icon;
 				}
 			}
@@ -152,13 +164,14 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($topicIcons);
 	}
 
 	/**
 	 * Load global rate for the topic
+	 * @since Kunena
 	 */
 	public function displayGetrate()
 	{
@@ -166,6 +179,7 @@ class KunenaViewTopic extends KunenaView
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
+		$app      = JFactory::getApplication();
 
 		if ($user->id == 0)
 		{
@@ -180,7 +194,7 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -189,12 +203,15 @@ class KunenaViewTopic extends KunenaView
 	 * Save rate for user logged in by JSON call
 	 *
 	 * @param   null $tpl
+	 *
+	 * @since Kunena
 	 */
 	public function displayRate($tpl = null)
 	{
 		$starid   = $this->app->input->get('starid', 0, 'int');
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
+		$app      = JFactory::getApplication();
 
 		if ($this->me->exists() || $this->config->ratingenabled)
 		{
@@ -213,7 +230,7 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo $response;
 	}

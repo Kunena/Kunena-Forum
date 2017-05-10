@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -21,6 +21,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function none()
 	{
@@ -30,6 +31,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function permdel()
 	{
@@ -54,6 +56,8 @@ class KunenaControllerTopics extends KunenaController
 		}
 		else
 		{
+			$messages = KunenaForumMessageHelper::getMessagesByTopics($ids);
+
 			foreach ($topics as $topic)
 			{
 				if ($topic->authorise('permdelete') && $topic->delete())
@@ -62,10 +66,40 @@ class KunenaControllerTopics extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
+					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
 					$this->app->enqueueMessage($topic->getError(), 'notice');
+				}
+			}
+
+			// Delete attachments in each message
+			$finder = new KunenaAttachmentFinder;
+			$finder->where('mesid', 'IN', array_keys($messages));
+			$attachments = $finder->find();
+
+			if (!empty($attachments))
+			{
+				foreach ($attachments as $instance)
+				{
+					$instance->exists(false);
+					unset($instance);
+				}
+
+				$db    = JFactory::getDBO();
+				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+
+					return false;
 				}
 			}
 		}
@@ -95,6 +129,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -157,6 +192,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function restore()
 	{
@@ -219,6 +255,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function approve()
 	{
@@ -282,6 +319,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function move()
 	{
@@ -379,6 +417,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unfavorite()
 	{
@@ -424,6 +463,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unsubscribe()
 	{
@@ -454,6 +494,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function approve_posts()
 	{
@@ -501,6 +542,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete_posts()
 	{
@@ -547,6 +589,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function restore_posts()
 	{
@@ -593,6 +636,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function permdel_posts()
 	{

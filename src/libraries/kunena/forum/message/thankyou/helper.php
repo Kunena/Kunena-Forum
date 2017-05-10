@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message.Thankyou
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,6 +18,7 @@ abstract class KunenaForumMessageThankyouHelper
 {
 	/**
 	 * @var KunenaForumMessageThankyou[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
@@ -30,7 +31,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $identifier The message to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
-	 * @return KunenaForumMessageThankyou
+	 * @return KunenaForumMessageThankyou|void
+	 * @since Kunena
 	 */
 	static public function get($identifier, $reload = false)
 	{
@@ -63,6 +65,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $endtime   Ending time as unix timestamp.
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	static public function getTotal($starttime = null, $endtime = null)
 	{
@@ -87,8 +90,15 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		$db->setQuery($query);
-		$results = (int) $db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -101,6 +111,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
 	{
@@ -119,8 +130,15 @@ abstract class KunenaForumMessageThankyouHelper
 				GROUP BY s.{$field}
 				ORDER BY countid DESC";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -132,6 +150,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function getTopMessages($limitstart = 0, $limit = 10)
 	{
@@ -147,8 +166,15 @@ abstract class KunenaForumMessageThankyouHelper
 				ORDER BY countid DESC";
 
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -162,6 +188,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
@@ -181,8 +208,15 @@ abstract class KunenaForumMessageThankyouHelper
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
 				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -191,6 +225,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Load users who have given thank you to listed messages.
 	 *
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
 	{
@@ -216,8 +252,15 @@ abstract class KunenaForumMessageThankyouHelper
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -233,11 +276,13 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * Recount thank yous.
+	 * Recount thank yous is null.
 	 *
 	 * @return boolean|int    Number of rows is successful, false on error.
+	 *
+	 * @since K2.0
 	 */
-	static public function recount()
+	static public function recountThankyou()
 	{
 		$db = JFactory::getDBO();
 
@@ -247,14 +292,32 @@ abstract class KunenaForumMessageThankyouHelper
 			SET u.thankyou = 0
 			WHERE t.targetuserid IS NULL";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
 		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
+	/**
+	 * Recount thank yous.
+	 *
+	 * @return boolean|int    Number of rows is successful, false on error.
+	 * @since K2.0
+	 */
+	static public function recount()
+	{
+		$db = JFactory::getDBO();
 
 		// Update user thankyou count
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)
@@ -263,14 +326,19 @@ abstract class KunenaForumMessageThankyouHelper
 			GROUP BY targetuserid
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
-		$rows += $db->getAffectedRows();
+		$rows = $db->getAffectedRows();
 
 		return $rows;
 	}
@@ -281,6 +349,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int $ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
+	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false)
 	{

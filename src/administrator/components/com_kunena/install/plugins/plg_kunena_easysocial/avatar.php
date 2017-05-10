@@ -13,15 +13,22 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 /**
  * Class KunenaAvatarEasySocial
+ * @since Kunena
  */
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAvatarEasySocial constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -30,6 +37,8 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{
@@ -45,6 +54,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getEditURL()
 	{
@@ -57,6 +67,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

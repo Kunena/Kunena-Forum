@@ -124,7 +124,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 		}
 		else
 		{
-			return $this->allowAdd($data);
+			return $this->allowAdd();
 		}
 	}
 
@@ -546,6 +546,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 					: 'JLIB_APPLICATION') . ($recordId == 0 && $app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
 			)
 		);
+
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
 
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)

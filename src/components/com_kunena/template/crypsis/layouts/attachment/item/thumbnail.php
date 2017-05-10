@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -40,7 +40,7 @@ if ($attachment->isImage())
 		<a href="<?php echo $name; ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
-			     height="<?php echo $config->thumbheight; ?>" alt=""/>
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}
@@ -48,11 +48,11 @@ if ($attachment->isImage())
 	{
 		?>
 		<a href="<?php echo $name; ?>"
-			title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 			<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
-			     height="<?php echo $config->thumbheight; ?>" alt=""/>
-			</a>
-	<?php
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
 	}
 }
 else

@@ -4,20 +4,22 @@
  * @package       Kunena.Framework
  * @subpackage    Cache
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
+ * @since Kunena
  */
 abstract class KunenaCacheHelper
 {
 	/**
 	 * Clear all cache types. Please avoid using this function except after installation and
 	 * when user wants to do it manually.
+	 * @since Kunena
 	 */
 	public static function clearAll()
 	{
@@ -33,6 +35,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Perform normal cache cleanup.
+	 * @since Kunena
 	 */
 	public static function clear()
 	{
@@ -44,6 +47,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear Kunena cache.
+	 * @since Kunena
 	 */
 	public static function clearKunena()
 	{
@@ -55,6 +59,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear Category cache.
+	 * @since Kunena
 	 */
 	public static function clearCategories()
 	{
@@ -66,6 +71,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear Joomla system cache.
+	 * @since Kunena
 	 */
 	public static function clearSystem()
 	{
@@ -77,6 +83,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear Joomla menu cache.
+	 * @since Kunena
 	 */
 	public static function clearMenu()
 	{
@@ -85,6 +92,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear Kunena access cache.
+	 * @since Kunena
 	 */
 	public static function clearAccess()
 	{
@@ -93,6 +101,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear cached files from Kunena.
+	 * @since Kunena
 	 */
 	public static function clearCacheFiles()
 	{
@@ -109,6 +118,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear cached template files.
+	 * @since Kunena
 	 */
 	public static function clearTemplateFiles()
 	{
@@ -125,6 +135,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear PHP statcache (contains file size etc).
+	 * @since Kunena
 	 */
 	public static function clearStatCache()
 	{
@@ -133,6 +144,7 @@ abstract class KunenaCacheHelper
 
 	/**
 	 * Clear compiled PHP files, handy during installation when PHP files change.
+	 * @since Kunena
 	 */
 	public static function clearCompiledPHP()
 	{

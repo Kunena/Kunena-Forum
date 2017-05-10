@@ -4,14 +4,15 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaVersion
+ * @since Kunena
  */
 class KunenaVersion
 {
@@ -73,6 +74,7 @@ class KunenaVersion
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	function checkVersion()
 	{
@@ -131,6 +133,7 @@ class KunenaVersion
 	 * Retrieve installed Kunena version as string.
 	 *
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
+	 * @since Kunena
 	 */
 	static function getVersionHTML()
 	{
@@ -140,20 +143,22 @@ class KunenaVersion
 	/**
 	 * Retrieve copyright information as string.
 	 *
-	 * @return string "© 2008 - 2016 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @return string "© 2008 - 2017 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @since Kunena
 	 */
 	static function getCopyrightHTML()
 	{
-		return ': &copy; 2008 - 2016 ' . JText::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
-		. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
-		. ': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
-		. JText::_('COM_KUNENA_VERSION_GPL') . '</a>';
+		return ': &copy; 2008 - 2017 ' . JText::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
+			. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
+			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
+			. JText::_('COM_KUNENA_VERSION_GPL') . '</a>';
 	}
 
 	/**
 	 * Retrieve installed Kunena version, copyright and license as string.
 	 *
-	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2016 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2017 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @since Kunena
 	 */
 	static function getLongVersionHTML()
 	{
@@ -161,6 +166,10 @@ class KunenaVersion
 	}
 }
 
+/**
+ * Class KunenaVersionException
+ * @since Kunena
+ */
 class KunenaVersionException extends Exception
 {
 }

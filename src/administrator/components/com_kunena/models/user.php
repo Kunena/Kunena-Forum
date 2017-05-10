@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -22,6 +22,7 @@ class KunenaAdminModelUser extends KunenaModel
 {
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -46,6 +47,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 * @return KunenaUser
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getUser()
 	{
@@ -57,9 +59,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|KunenaForumTopic[]
+	 * @return array|KunenaForumTopic[]|void
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getSubscriptions()
 	{
@@ -98,6 +101,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 * @return KunenaForumCategory[]
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getCatsubcriptions()
 	{
@@ -109,9 +113,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array
+	 * @return array|void
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getIPlist()
 	{
@@ -163,6 +168,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	public function getListmodcats()
 	{
@@ -192,7 +198,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
-	 *
+	 * @since Kunena
 	 */
 	public function getListuserranks()
 	{
@@ -229,6 +235,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	public function getMovecatslist()
 	{
@@ -237,7 +244,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
-	 *
+	 * @since Kunena
 	 */
 	public function getMoveuser()
 	{

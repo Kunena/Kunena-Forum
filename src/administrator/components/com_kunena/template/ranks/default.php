@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Ranks
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -42,8 +42,9 @@ JHtml::_('behavior.tabstate');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-star-2"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-star-2"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div class="tabbable-panel">

@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,18 +17,28 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Report';
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaForumMessage|null
+	 * @since Kunena
 	 */
 	public $message;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $uri;
 
 	/**
@@ -37,6 +47,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -81,6 +92,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

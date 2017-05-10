@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -45,6 +45,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return KunenaForumRate
+	 * @since Kunena
 	 */
 	function getNewRate()
 	{
@@ -53,6 +54,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function getRate()
 	{
@@ -61,6 +63,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function getRates()
 	{
@@ -69,6 +72,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getRateActions()
 	{

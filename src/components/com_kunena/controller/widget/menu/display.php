@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,28 +17,65 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/Menu';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $basemenu;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $list;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $menu;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $active;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $path;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $active_id;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $showAll;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $class_sfx;
 
 	/**
 	 * Prepare menu display.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function before()
 	{

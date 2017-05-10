@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      Community
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginCommunity
+ * @since Kunena
+ */
 class KunenaLoginCommunity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaLoginCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -27,6 +37,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -35,6 +46,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -43,6 +55,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{

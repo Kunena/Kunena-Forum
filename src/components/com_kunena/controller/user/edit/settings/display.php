@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,14 +17,23 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaControllerUserEditDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit/Settings';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $settings;
 
 	/**
 	 * Prepare Kunena user settings.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -103,6 +112,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -154,6 +164,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * @param   string $string String to be escaped.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	protected function escape($string)
 	{

@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Route
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -14,10 +14,14 @@ require_once KPATH_SITE . '/router.php';
 
 /**
  * Class KunenaRouteLegacy
+ * @since Kunena
  */
 abstract class KunenaRouteLegacy
 {
-	// List of legacy views from previous releases
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $functions = array(
 		'entrypage'       => 1,
 		'listcat'         => 1,
@@ -69,6 +73,7 @@ abstract class KunenaRouteLegacy
 	 * @param $view
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function isLegacy($view)
 	{
@@ -84,8 +89,9 @@ abstract class KunenaRouteLegacy
 	 * @param       $uri
 	 * @param   int $showstart
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function convert($uri, $showstart = 1)
 	{
@@ -206,6 +212,7 @@ abstract class KunenaRouteLegacy
 						break;
 					case 'userposts' :
 						$uri->setVar('userid', '0');
+						break;
 
 					// Continue in latestposts
 					case 'latestposts' :
@@ -273,6 +280,7 @@ abstract class KunenaRouteLegacy
 				{
 					$uri->setVar('layout', 'moderate');
 				}
+				break;
 
 			// Continue to user profile
 			case 'myprofile' :
@@ -696,6 +704,8 @@ abstract class KunenaRouteLegacy
 
 	/**
 	 * @param $item
+	 *
+	 * @since Kunena
 	 */
 	public static function convertMenuItem($item)
 	{

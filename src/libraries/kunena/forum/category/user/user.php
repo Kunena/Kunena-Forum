@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Category.User
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -19,12 +19,21 @@ defined('_JEXEC') or die();
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
+ * @since Kunena
  *
  */
 class KunenaForumCategoryUser extends JObject
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
 	protected $_db = null;
 
 	/**
@@ -32,6 +41,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   mixed $user
 	 *
 	 * @internal
+	 * @since Kunena
 	 */
 	public function __construct($category = 0, $user = null)
 	{
@@ -54,6 +64,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   bool     $reload
 	 *
 	 * @return KunenaForumCategoryUser
+	 * @since Kunena
 	 */
 	static public function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -62,6 +73,7 @@ class KunenaForumCategoryUser extends JObject
 
 	/**
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getCategory()
 	{
@@ -72,6 +84,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   null|bool $exists True/false will change the state of the object.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	function exists($exists = null)
 	{
@@ -96,6 +109,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   string $prefix The categories table prefix to be used
 	 *
 	 * @return JTable|TableKunenaUserCategories        The categories table object
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
 	{
@@ -115,6 +129,8 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * @param   array $data
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -129,6 +145,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   mixed    $user        The user to be loaded.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($category_id = null, $user = null)
 	{
@@ -162,6 +179,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
 	 * @return bool    True on success
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{
@@ -206,6 +224,7 @@ class KunenaForumCategoryUser extends JObject
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
 	 * @return bool    True on success
+	 * @since Kunena
 	 */
 	public function delete()
 	{

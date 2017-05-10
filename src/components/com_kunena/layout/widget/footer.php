@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers.Misc
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -23,6 +23,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the time of page generation
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getTime()
 	{
@@ -43,6 +44,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the RSS URL link with image
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getRSS()
 	{

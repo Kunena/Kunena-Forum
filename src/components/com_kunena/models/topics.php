@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,18 +18,39 @@ defined('_JEXEC') or die();
  */
 class KunenaModelTopics extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topics = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $messages = false;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $total = 0;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topicActions = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $actionMove = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -71,11 +92,25 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.modetype', $modetype);
 
 		$catid = $this->getInt('catid');
+		$this->setState('list.categories.exclude', 0);
 
 		if ($catid)
 		{
 			$latestcategory    = array($catid);
 			$latestcategory_in = true;
+
+			// Check if the category is in exclued list
+			if (!empty($this->config->rss_excluded_categories))
+			{
+				$cat_exclued = explode(',', $this->config->rss_excluded_categories);
+
+				if (in_array($catid, $cat_exclued))
+				{
+					$latestcategory    = $this->config->rss_excluded_categories;
+					$latestcategory_in = 0;
+					$this->setState('list.categories.exclude', 1);
+				}
+			}
 		}
 		else
 		{
@@ -184,6 +219,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getTopics()
 	{
@@ -232,6 +268,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function getRecentTopics()
 	{
@@ -309,6 +346,7 @@ class KunenaModelTopics extends KunenaModel
 
 		$params = array(
 			'reverse'   => !$latestcategory_in,
+			'exclude'   => $this->setState('list.categories.exclude', 0),
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
@@ -321,6 +359,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function getUserTopics()
 	{
@@ -379,6 +418,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function getPosts()
 	{
@@ -432,6 +472,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @param   array $userlist
 	 * @param   array $postlist
+	 *
+	 * @since Kunena
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{
@@ -466,6 +508,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getMessages()
 	{
@@ -479,6 +522,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
@@ -492,6 +536,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getTopicActions()
 	{
@@ -577,6 +622,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getPostActions()
 	{
@@ -642,6 +688,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getActionMove()
 	{

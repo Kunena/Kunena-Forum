@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        EasySocial
- * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -11,34 +11,44 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * Class KunenaPrivateEasySocial
+ * @since Kunena
+ */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $loaded = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 
 		// Process scripts
-		$page = FD::page();
-		$page->processScripts();
-
-		// Process styling
-		$doc = FD::document();
-		$doc->init();
+		ES::initialize();
 	}
 
 	/**
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getOnClick($userid)
 	{
@@ -51,6 +61,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getURL($userid)
 	{
@@ -61,6 +72,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getInboxLink($text)
 	{
@@ -76,6 +88,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getInboxURL()
 	{

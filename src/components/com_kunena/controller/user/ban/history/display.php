@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,23 +17,34 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Ban/History';
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $profile;
 
 	/**
 	 * @var array|KunenaUserBan[]
+	 * @since Kunena
 	 */
 	public $banHistory;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
@@ -42,6 +53,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -62,6 +74,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

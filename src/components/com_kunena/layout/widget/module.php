@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers.Misc
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -19,12 +19,17 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutWidgetModule extends KunenaLayout
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $position = null;
 
 	/**
 	 * Renders module position.
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function renderPosition()
 	{

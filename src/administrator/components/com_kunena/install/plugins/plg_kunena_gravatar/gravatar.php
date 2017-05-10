@@ -2,15 +2,19 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Kunena
+ * @package        Kunena.Plugins
+ * @subpackage     Kunena
  *
- * @Copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaGravatar
+ * @since Kunena
+ */
 class plgKunenaGravatar extends JPlugin
 {
 	/**
@@ -18,6 +22,8 @@ class plgKunenaGravatar extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -34,6 +40,7 @@ class plgKunenaGravatar extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{

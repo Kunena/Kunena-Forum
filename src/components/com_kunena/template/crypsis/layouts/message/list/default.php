@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -22,8 +22,8 @@ $view    = JFactory::getApplication()->input->getWord('view');
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-sm">
-					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
+				<small class="hidden-phone">
+					(<?php echo JText::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
@@ -74,13 +74,13 @@ $view    = JFactory::getApplication()->input->getWord('view');
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<i class="icon-arrow-down hasTooltip"></i>
+						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
 				</td>
 				<td class="span<?php echo $cols; ?>">
 					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="span2">
+				<td class="span2 hidden-phone">
 					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="span3">
@@ -102,7 +102,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 				<td class="center hidden-phone">
 					<a id="forumbottom"> </a>
 					<a href="#forumtop" rel="nofollow">
-						<i class="icon-arrow-up hasTooltip"></i>
+						<?php echo KunenaIcons::arrowup(); ?>
 					</a>
 					<?php // FIXME: $this->displayCategoryActions() ?>
 				</td>

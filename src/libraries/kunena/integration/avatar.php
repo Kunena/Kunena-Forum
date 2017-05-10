@@ -4,27 +4,41 @@
  * @package       Kunena.Framework
  * @subpackage    Integration
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatar
+ * @since Kunena
  */
 class KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $avatarSizes = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $resize = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaAvatar
+	 * @since Kunena
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -56,6 +70,8 @@ class KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{
@@ -64,6 +80,7 @@ class KunenaAvatar
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getEditURL()
 	{
@@ -76,6 +93,7 @@ class KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
@@ -87,6 +105,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return StdClass
+	 * @since Kunena
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
@@ -111,6 +130,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
@@ -135,6 +155,7 @@ class KunenaAvatar
 	 * @param   int    $sizey
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{

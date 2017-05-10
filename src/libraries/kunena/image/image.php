@@ -4,8 +4,8 @@
  * @package         Kunena.Framework
  * @subpackage      Image
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -15,6 +15,7 @@ define('MIME_PNG', 'image/png');
 
 /**
  * Helper class for image manipulation.
+ * @since Kunena
  */
 class KunenaImage extends KunenaCompatImage
 {
@@ -184,6 +185,7 @@ class KunenaImage extends KunenaCompatImage
 	 * @param $src_h
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
 	{

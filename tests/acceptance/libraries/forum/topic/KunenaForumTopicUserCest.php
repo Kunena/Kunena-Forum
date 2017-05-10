@@ -1,28 +1,31 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.UnitTest
- * @subpackage Utilities
+ * @package       Kunena.UnitTest
+ * @subpackage    Utilities
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Test class for KunenaForumTopicUser.
  */
-class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
+class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
+{
 	static public $topic = null;
+
 	/**
 	 * Test new KunenaForumTopicUser()
 	 */
-	public function testNew() {
+	public function testNew()
+	{
 		$admin = KunenaFactory::getUser('admin');
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 1);
 		self::$topic = reset($topics);
-		$topicuser = new KunenaForumTopicUser(self::$topic->id, $admin);
+		$topicuser   = new KunenaForumTopicUser(self::$topic->id, $admin);
 		$this->assertInstanceOf('KunenaForumTopicUser', $topicuser);
 		$this->assertFalse($topicuser->exists());
 		$this->assertEquals(self::$topic->id, $topicuser->topic_id);
@@ -34,8 +37,9 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @return KunenaForumTopicUser
 	 */
-	public function testCreate() {
-		$admin = KunenaFactory::getUser('admin');
+	public function testCreate()
+	{
+		$admin     = KunenaFactory::getUser('admin');
 		$topicuser = KunenaForumTopicUser::getInstance(self::$topic->id, $admin->userid);
 		$this->assertEquals(self::$topic->id, $topicuser->topic_id);
 		$this->assertEquals($admin->userid, $topicuser->user_id);
@@ -54,6 +58,7 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 
 		// Check that instance remains the same
 		$topicuser2 = KunenaForumTopicUser::getInstance(self::$topic->id, $admin->userid);
+
 		return $topicuser2;
 	}
 
@@ -61,14 +66,16 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 * Test load()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
+	 *
 	 * @return KunenaForumTopicUser
 	 * @depends testCreate
 	 */
-	public function testLoad(KunenaForumTopicUser $topicuser) {
-		$admin = KunenaFactory::getUser('admin');
+	public function testLoad(KunenaForumTopicUser $topicuser)
+	{
+		$admin     = KunenaFactory::getUser('admin');
 		$topicuser = new KunenaForumTopicUser();
 		$this->assertFalse($topicuser->load());
-		$this->assertFalse($topicuser->load(self::$topic->id,0));
+		$this->assertFalse($topicuser->load(self::$topic->id, 0));
 		$this->assertTrue($topicuser->load(self::$topic->id, $admin));
 		$this->assertTrue($topicuser->load());
 	}
@@ -77,14 +84,17 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 * Test getInstance()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
+	 *
 	 * @return KunenaForumTopicUser
 	 * @depends testCreate
 	 */
-	public function testGetInstance(KunenaForumTopicUser $topicuser) {
+	public function testGetInstance(KunenaForumTopicUser $topicuser)
+	{
 		$admin = KunenaFactory::getUser('admin');
 
 		$topicuser2 = KunenaForumTopicUser::getInstance($topicuser->topic_id, $admin->userid);
 		$this->assertSame($topicuser, $topicuser2);
+
 		return $topicuser;
 	}
 
@@ -92,9 +102,11 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 * Test getTopic()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
+	 *
 	 * @depends testGetInstance
 	 */
-	public function testGetTopic(KunenaForumTopicUser $topicuser) {
+	public function testGetTopic(KunenaForumTopicUser $topicuser)
+	{
 		$topic = $topicuser->getTopic();
 		$this->assertTrue($topic->exists());
 		$this->assertEquals($topicuser->topic_id, $topic->id);
@@ -104,9 +116,11 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 * Test save()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
+	 *
 	 * @depends testGetInstance
 	 */
-	public function testSave(KunenaForumTopicUser $topicuser) {
+	public function testSave(KunenaForumTopicUser $topicuser)
+	{
 		$topicuser->favorite = 0;
 		$this->assertTrue($topicuser->save());
 
@@ -120,9 +134,11 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase {
 	 * Test delete()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
+	 *
 	 * @depends testGetInstance
 	 */
-	public function testDelete(KunenaForumTopicUser $topicuser) {
+	public function testDelete(KunenaForumTopicUser $topicuser)
+	{
 		$this->assertTrue($topicuser->delete());
 		$this->assertFalse($topicuser->exists());
 		self::$topic = null;

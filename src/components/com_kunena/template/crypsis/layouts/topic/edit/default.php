@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,6 +15,7 @@ JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
+JText::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 JText::script('COM_KUNENA_EDITOR_INSERT');
 JText::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 JText::script('COM_KUNENA_GEN_REMOVE_FILE');
@@ -23,47 +24,36 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
-
-JText::script('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL');
-JText::script('COM_KUNENA_EDITOR_SIZE_VERY_SMALL');
-JText::script('COM_KUNENA_EDITOR_SIZE_SMALL');
-JText::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
-JText::script('COM_KUNENA_EDITOR_SIZE_BIG');
-JText::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
-JText::script('COM_KUNENA_EDITOR_COLOR_BLACK');
-JText::script('COM_KUNENA_EDITOR_COLOR_ORANGE');
-JText::script('COM_KUNENA_EDITOR_COLOR_RED');
-JText::script('COM_KUNENA_EDITOR_COLOR_BLUE');
-JText::script('COM_KUNENA_EDITOR_COLOR_PURPLE');
-JText::script('COM_KUNENA_EDITOR_COLOR_GREEN');
-JText::script('COM_KUNENA_EDITOR_COLOR_WHITE');
-JText::script('COM_KUNENA_EDITOR_COLOR_GRAY');
 JText::script('COM_KUNENA_EDITOR_BOLD');
 JText::script('COM_KUNENA_EDITOR_COLORS');
 JText::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
 JText::script('COM_KUNENA_EDITOR_TABLE');
 JText::script('COM_KUNENA_EDITOR_LINK');
 JText::script('COM_KUNENA_EDITOR_EBAY');
-JText::script('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL');
 JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
+JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
+JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imagewidth);
+
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
-$this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
 $this->addScript('assets/js/jquery.fileupload-process.js');
+$this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
+$this->addScript('assets/js/jquery.fileupload-audio.js');
+$this->addScript('assets/js/jquery.fileupload-video.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
-$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
-$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "';");
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false));
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false));
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
 
@@ -81,7 +71,9 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 
-$this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
+JFactory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
 
@@ -97,8 +89,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input id="kurl_topicons_request" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
-		<input id="kpreview_url" type="hidden" name="kpreview_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php JUri::root(true) . '/index.php?option=com_kunena&view=topic&layout=edit&format=raw' ?>" />
+		<?php if (!$this->config->allow_change_subject) : ?>
+			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+		<?php endif; ?>
 		<?php if ($this->message->exists()) : ?>
 			<input type="hidden" name="task" value="edit"/>
 			<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
@@ -159,9 +153,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
-								<input type="text" id="kauthorname" name="authorname" size="35"
-								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge"
-								       maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required/>
+								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>"/>
+						<!-- Encourage guest user to login or register -->
+						<?php
+			            $login =  '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
+			            $register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
+						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ;
+			            ?>
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
@@ -170,7 +168,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<input type="text" id="email" name="email" size="35"
-									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge"
+									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xxlarge"
 									       maxlength="45" tabindex="5"
 									       value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required/>
 									<br/>
@@ -182,13 +180,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
-								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
-								       name="subject" id="subject"
-								       maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6"
-								       <?php if (!$this->config->allow_change_subject && $this->message->parent) : ?>disabled<?php endif; ?>
-								       value="<?php echo $this->escape($this->message->subject); ?>" required/>
-								<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
-									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
+								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
+									<input class="span12" type="text"  id="subject" value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
+								<?php else : ?>
+									<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"  />
 								<?php endif; ?>
 							</div>
 						</div>
@@ -196,7 +191,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group" id="kpost-topicicons">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
-									<div id="iconset_topic_list">
+									<div class="span12" id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
 										       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
@@ -208,7 +203,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 													class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 												<?php else : ?>
 												<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-														src="<?php echo $icon->relpath; ?>" alt="" border="0"/>
+														src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0"/>
 													<?php endif; ?>
 												</label>
 												<?php endforeach; ?>
@@ -231,8 +226,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
 								<div class="controls">
-									<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text"
-									          value="<?php echo $this->modified_reason; ?>"></textarea>
+									<input class="input-xxlarge" name="modified_reason" maxlength="200" type="text"
+									       value="<?php echo $this->message->modified_reason; ?>" title="reason" placeholder="<?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -255,14 +250,18 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 											<!-- The file input field used as target for the file upload widget -->
 											<input id="fileupload" type="file" name="file" multiple>
 										</span>
-										<button id="insert-all" class="btn btn-primary" type="submit">
+										<button id="insert-all" class="btn btn-primary" type="submit" style="display:none;">
 											<?php echo KunenaIcons::upload(); ?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
 										</button>
-										<button id="remove-all" class="btn btn-danger" type="submit">
+										<button id="remove-all" class="btn btn-danger" type="submit" style="display:none;">
 											<?php echo KunenaIcons::cancel(); ?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
+										<div class="clearfix"></div>
+										<div id="progress" class="progress progress-striped">
+											<div class="bar"></div>
+										</div>
 										<!-- The container for the uploaded files -->
 										<div id="files" class="files"></div>
 										<div id="dropzone">
@@ -302,10 +301,17 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<button id="form_submit_button" type="submit" class="btn btn-success" tabindex="8">
-				<?php echo KunenaIcons::save(); ?>
-				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
-			</button>
+			<?php if ($editor == 1): ?>
+				<input type="submit" class="btn btn-success" name="submit"
+				       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
+				       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
+			<?php else : ?>
+				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
+					<?php echo KunenaIcons::save(); ?>
+					<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+				</button>
+			<?php endif ;?>
+
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<?php echo KunenaIcons::cancel(); ?>
 				<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>

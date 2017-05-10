@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Smilies
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -34,10 +34,10 @@ JHtml::_('behavior.multiselect');
 			<input type="hidden" name="view" value="smilies"/>
 			<input type="hidden" name="task" value="save"/>
 			<?php if ($this->state->get('item.id'))
-			:
-	?><input type="hidden" name="smileyid"
-			                                                   value="<?php echo $this->state->get('item.id') ?>" /><?php
-endif; ?>
+				:
+				?><input type="hidden" name="smileyid"
+				         value="<?php echo $this->state->get('item.id') ?>" /><?php
+			endif; ?>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -52,7 +52,7 @@ endif; ?>
 							       value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
 							<img name="smiley_image"
 							     src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
-							     border="0" alt=""/>
+							     border="0" alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
 						</td>
 					</tr>
 					<tr>

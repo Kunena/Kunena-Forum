@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -64,10 +64,8 @@ if ($this->config->showuserstats)
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
-										<?php /** @var TYPE_NAME $rankTitle */
-										echo $this->escape($rankTitle); ?>
-										<?php /** @var TYPE_NAME $rankImage */
-										echo $rankImage; ?>
+										<?php echo $this->escape($rankTitle); ?>
+										<?php echo $rankImage; ?>
 									</span>
 								</li>
 							<?php endif; ?>
@@ -135,7 +133,7 @@ if ($this->config->showuserstats)
 									<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow noopener noreferrer"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -175,13 +173,11 @@ if ($this->config->showuserstats)
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>
-							<?php elseif (empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteURL ?></a>
-							<?php elseif (!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-small"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></button>
+								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
+							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
+								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
+							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>
+								<button class="btn btn-small"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

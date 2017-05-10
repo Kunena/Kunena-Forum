@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="finder" method="upgrade">
-    <name>plg_finder_kunena</name>
-    <version>@kunenaversion@</version>
-    <creationDate>@kunenaversiondate@</creationDate>
-    <author>Kunena Team</author>
-    <authorEmail>Kunena@kunena.org</authorEmail>
-    <authorUrl>https://www.kunena.org</authorUrl>
-    <copyright>(C) 2008 - 2016 Kunena Team. All rights reserved.</copyright>
-    <license>GNU/GPLv3 or later</license>
-    <description>PLG_FINDER_KUNENA_DESCRIPTION</description>
-    <files>
-        <filename plugin="kunena">kunena.php</filename>
-        <folder>language</folder>
-    </files>
+	<name>plg_finder_kunena</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>https://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_FINDER_KUNENA_DESCRIPTION</description>
+	<files>
+		<filename plugin="kunena">kunena.php</filename>
+		<folder>language</folder>
+	</files>
 </extension>

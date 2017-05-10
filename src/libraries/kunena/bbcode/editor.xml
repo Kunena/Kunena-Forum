@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE bbcode-editor>
 <bbcode-editor>
-    <button tag="b" name="bold" title="COM_KUNENA_EDITOR_BOLD" alt="COM_KUNENA_EDITOR_HELPLINE_BOLD">
-        <wrap-selection/>
-    </button>
-    <button tag="i" name="italic" title="COM_KUNENA_EDITOR_ITALIC" alt="COM_KUNENA_EDITOR_HELPLINE_ITALIC">
-        <wrap-selection/>
-    </button>
-    <button tag="u" name="underline" title="COM_KUNENA_EDITOR_UNDERL" alt="COM_KUNENA_EDITOR_HELPLINE_UNDERL">
-        <wrap-selection/>
-    </button>
-    <button tag="strike" name="strike" title="COM_KUNENA_EDITOR_STRIKE" alt="COM_KUNENA_EDITOR_HELPLINE_STRIKE">
-        <wrap-selection/>
-    </button>
-    <button tag="sub" name="sub" title="COM_KUNENA_EDITOR_SUB" alt="COM_KUNENA_EDITOR_HELPLINE_SUB">
-        <wrap-selection/>
-    </button>
-    <button tag="sup" name="sup" title="COM_KUNENA_EDITOR_SUP" alt="COM_KUNENA_EDITOR_HELPLINE_SUP">
-        <wrap-selection/>
-    </button>
-    <button tag="size" name="size" title="COM_KUNENA_EDITOR_FONTSIZE" alt="COM_KUNENA_EDITOR_HELPLINE_FONTSIZE">
-        <display name="kbbcode-size-options"/>
-    </button>
-    <button tag="color" name="color" title="COM_KUNENA_EDITOR_COLOR" alt="COM_KUNENA_EDITOR_HELPLINE_COLOR">
-        <display name="kbbcode-colorpalette"/>
-    </button>
+	<button tag="b" name="bold" title="COM_KUNENA_EDITOR_BOLD" alt="COM_KUNENA_EDITOR_HELPLINE_BOLD">
+		<wrap-selection/>
+	</button>
+	<button tag="i" name="italic" title="COM_KUNENA_EDITOR_ITALIC" alt="COM_KUNENA_EDITOR_HELPLINE_ITALIC">
+		<wrap-selection/>
+	</button>
+	<button tag="u" name="underline" title="COM_KUNENA_EDITOR_UNDERL" alt="COM_KUNENA_EDITOR_HELPLINE_UNDERL">
+		<wrap-selection/>
+	</button>
+	<button tag="strike" name="strike" title="COM_KUNENA_EDITOR_STRIKE" alt="COM_KUNENA_EDITOR_HELPLINE_STRIKE">
+		<wrap-selection/>
+	</button>
+	<button tag="sub" name="sub" title="COM_KUNENA_EDITOR_SUB" alt="COM_KUNENA_EDITOR_HELPLINE_SUB">
+		<wrap-selection/>
+	</button>
+	<button tag="sup" name="sup" title="COM_KUNENA_EDITOR_SUP" alt="COM_KUNENA_EDITOR_HELPLINE_SUP">
+		<wrap-selection/>
+	</button>
+	<button tag="size" name="size" title="COM_KUNENA_EDITOR_FONTSIZE" alt="COM_KUNENA_EDITOR_HELPLINE_FONTSIZE">
+		<display name="kbbcode-size-options"/>
+	</button>
+	<button tag="color" name="color" title="COM_KUNENA_EDITOR_COLOR" alt="COM_KUNENA_EDITOR_HELPLINE_COLOR">
+		<display name="kbbcode-colorpalette"/>
+	</button>
 
-    <separator name="structure"/>
+	<separator name="structure"/>
 
-    <button tag="ul" name="ulist" title="COM_KUNENA_EDITOR_ULIST" alt="COM_KUNENA_EDITOR_HELPLINE_ULIST">
-        <wrap-selection empty_before="[ul]\n  [li]"
-                        empty_after="[/li]\n  [li][/li]\n[/ul]"
-                        repeat="line"
-                        tag="li"
-                        before="[ul]\n"
-                        after="\n[/ul]"/>
-    </button>
-    <button tag="ol" name="olist" title="COM_KUNENA_EDITOR_OLIST" alt="COM_KUNENA_EDITOR_HELPLINE_OLIST">
-        <wrap-selection empty_before="[ol]\n  [li]"
-                        empty_after="[/li]\n  [li][/li]\n[/ol]"
-                        repeat="line"
-                        tag="li"
-                        before="[ol]\n"
-                        after="\n[/ol]"/>
-    </button>
-    <button tag="li" name="list" title="COM_KUNENA_EDITOR_LIST" alt="COM_KUNENA_EDITOR_HELPLINE_LIST">
-        <wrap-selection/>
-    </button>
-    <button tag="hr" name="hr" title="COM_KUNENA_EDITOR_HR" alt="COM_KUNENA_EDITOR_HELPLINE_HR">
-        <wrap-selection empty_before="\n[hr]\n"
-                        empty_after="\n"
-                        repeat="line"
-                        before="\n[hr]\n"
-                        after="\n"/>
-    </button>
-    <button tag="left" name="left" title="COM_KUNENA_EDITOR_LEFT" alt="COM_KUNENA_EDITOR_HELPLINE_LEFT">
-        <wrap-selection/>
-    </button>
-    <button tag="center" name="center" title="COM_KUNENA_EDITOR_CENTER" alt="COM_KUNENA_EDITOR_HELPLINE_CENTER">
-        <wrap-selection/>
-    </button>
-    <button tag="right" name="right" title="COM_KUNENA_EDITOR_RIGHT" alt="COM_KUNENA_EDITOR_HELPLINE_RIGHT">
-        <wrap-selection/>
-    </button>
+	<button tag="ul" name="ulist" title="COM_KUNENA_EDITOR_ULIST" alt="COM_KUNENA_EDITOR_HELPLINE_ULIST">
+		<wrap-selection empty_before="[ul]\n  [li]"
+		                empty_after="[/li]\n  [li][/li]\n[/ul]"
+		                repeat="line"
+		                tag="li"
+		                before="[ul]\n"
+		                after="\n[/ul]"/>
+	</button>
+	<button tag="ol" name="olist" title="COM_KUNENA_EDITOR_OLIST" alt="COM_KUNENA_EDITOR_HELPLINE_OLIST">
+		<wrap-selection empty_before="[ol]\n  [li]"
+		                empty_after="[/li]\n  [li][/li]\n[/ol]"
+		                repeat="line"
+		                tag="li"
+		                before="[ol]\n"
+		                after="\n[/ol]"/>
+	</button>
+	<button tag="li" name="list" title="COM_KUNENA_EDITOR_LIST" alt="COM_KUNENA_EDITOR_HELPLINE_LIST">
+		<wrap-selection/>
+	</button>
+	<button tag="hr" name="hr" title="COM_KUNENA_EDITOR_HR" alt="COM_KUNENA_EDITOR_HELPLINE_HR">
+		<wrap-selection empty_before="\n[hr]\n"
+		                empty_after="\n"
+		                repeat="line"
+		                before="\n[hr]\n"
+		                after="\n"/>
+	</button>
+	<button tag="left" name="left" title="COM_KUNENA_EDITOR_LEFT" alt="COM_KUNENA_EDITOR_HELPLINE_LEFT">
+		<wrap-selection/>
+	</button>
+	<button tag="center" name="center" title="COM_KUNENA_EDITOR_CENTER" alt="COM_KUNENA_EDITOR_HELPLINE_CENTER">
+		<wrap-selection/>
+	</button>
+	<button tag="right" name="right" title="COM_KUNENA_EDITOR_RIGHT" alt="COM_KUNENA_EDITOR_HELPLINE_RIGHT">
+		<wrap-selection/>
+	</button>
 
-    <separator name="blocks"/>
+	<separator name="blocks"/>
 
-    <button tag="quote" name="quote" title="COM_KUNENA_EDITOR_QUOTE" alt="COM_KUNENA_EDITOR_HELPLINE_QUOTE">
-        <wrap-selection/>
-    </button>
-    <button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">
-        <wrap-selection config="!highlightcode"/>
-        <display name="kbbcode-colorpalette" config="highlightcode"/>
-    </button>
-    <button tag="table" name="table" title="COM_KUNENA_EDITOR_TABLE" alt="COM_KUNENA_EDITOR_HELPLINE_TABLE">
-        <wrap-selection empty_before="[table]\n  [tr]\n    [td]"
-                        empty_after="[/td]\n    [td][/td]\n  [/tr]\n  [tr]\n    [td][/td]\n    [td][/td]\n  [/tr]\n[/table]"
-                        repeat="line"
-                        start="[tr]\n    [td]"
-                        end="[/td]\n  [/tr]"
-                        before="\n[table]\n"
-                        after="\n[/table]\n"/>
-    </button>
-    <button tag="spoiler" name="spoiler" config="showspoilertag" title="COM_KUNENA_EDITOR_SPOILER" alt="COM_KUNENA_EDITOR_HELPLINE_SPOILER">
-        <wrap-selection/>
-    </button>
-    <button tag="hide" name="hide" title="COM_KUNENA_EDITOR_HIDE" alt="COM_KUNENA_EDITOR_HELPLINE_HIDE">
-        <wrap-selection/>
-    </button>
-    <button tag="confidential" name="confidential" title="COM_KUNENA_EDITOR_CONFIDENTIAL" alt="COM_KUNENA_EDITOR_HELPLINE_CONFIDENTIAL">
-        <wrap-selection/>
-    </button>
+	<button tag="quote" name="quote" title="COM_KUNENA_EDITOR_QUOTE" alt="COM_KUNENA_EDITOR_HELPLINE_QUOTE">
+		<wrap-selection/>
+	</button>
+	<button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">
+		<wrap-selection config="!highlightcode"/>
+		<display name="kbbcode-colorpalette" config="highlightcode"/>
+	</button>
+	<button tag="table" name="table" title="COM_KUNENA_EDITOR_TABLE" alt="COM_KUNENA_EDITOR_HELPLINE_TABLE">
+		<wrap-selection empty_before="[table]\n  [tr]\n    [td]"
+		                empty_after="[/td]\n    [td][/td]\n  [/tr]\n  [tr]\n    [td][/td]\n    [td][/td]\n  [/tr]\n[/table]"
+		                repeat="line"
+		                start="[tr]\n    [td]"
+		                end="[/td]\n  [/tr]"
+		                before="\n[table]\n"
+		                after="\n[/table]\n"/>
+	</button>
+	<button tag="spoiler" name="spoiler" config="showspoilertag" title="COM_KUNENA_EDITOR_SPOILER" alt="COM_KUNENA_EDITOR_HELPLINE_SPOILER">
+		<wrap-selection/>
+	</button>
+	<button tag="hide" name="hide" title="COM_KUNENA_EDITOR_HIDE" alt="COM_KUNENA_EDITOR_HELPLINE_HIDE">
+		<wrap-selection/>
+	</button>
+	<button tag="confidential" name="confidential" title="COM_KUNENA_EDITOR_CONFIDENTIAL" alt="COM_KUNENA_EDITOR_HELPLINE_CONFIDENTIAL">
+		<wrap-selection/>
+	</button>
 
-    <separator name="embeding"/>
+	<separator name="embeding"/>
 
-    <button tag="img" name="image" title="COM_KUNENA_EDITOR_IMAGELINK" alt="COM_KUNENA_EDITOR_HELPLINE_IMAGELINK">
-        <display name="kbbcode-image-options"/>
-    </button>
-    <button tag="url" name="link" title="COM_KUNENA_EDITOR_LINK" alt="COM_KUNENA_EDITOR_HELPLINE_LINK">
-        <display name="kbbcode-link-options" selection="kbbcode-link_text"/>
-    </button>
+	<button tag="img" name="image" title="COM_KUNENA_EDITOR_IMAGELINK" alt="COM_KUNENA_EDITOR_HELPLINE_IMAGELINK">
+		<display name="kbbcode-image-options"/>
+	</button>
+	<button tag="url" name="link" title="COM_KUNENA_EDITOR_LINK" alt="COM_KUNENA_EDITOR_HELPLINE_LINK">
+		<display name="kbbcode-link-options" selection="kbbcode-link_text"/>
+	</button>
 
-    <separator name="external"/>
+	<separator name="external"/>
 
-    <button tag="ebay" name="ebay" config="showebaytag" title="COM_KUNENA_EDITOR_EBAY" alt="COM_KUNENA_EDITOR_HELPLINE_EBAY">
-        <wrap-selection/>
-    </button>
-    <button tag="video" name="video" config="showvideotag" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
-        <display name="kbbcode-video-options"/>
-    </button>
-    <button tag="map" name="map" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
-        <wrap-selection/>
-    </button>
-    <button tag="smilies" name="smilies" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
-        <display name="kbbcode-smilies-options" selection="kbbcode-smilies-options"/>
-    </button>
+	<button tag="ebay" name="ebay" config="showebaytag" title="COM_KUNENA_EDITOR_EBAY" alt="COM_KUNENA_EDITOR_HELPLINE_EBAY">
+		<wrap-selection/>
+	</button>
+	<button tag="video" name="video" config="showvideotag" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
+		<display name="kbbcode-video-options"/>
+	</button>
+	<button tag="map" name="map" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
+		<wrap-selection/>
+	</button>
+	<button tag="smilies" name="smilies" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
+		<display name="kbbcode-smilies-options" selection="kbbcode-smilies-options"/>
+	</button>
 
-    <button tag="tweet" name="tweet" title="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK" alt="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK">
-        <wrap-selection/>
-    </button>
+	<button tag="tweet" name="tweet" title="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK" alt="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK">
+		<wrap-selection/>
+	</button>
 
-    <button tag="soundcloud" name="soundcloud" title="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD" alt="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD_ALT">
-        <wrap-selection/>
-    </button>
+	<button tag="soundcloud" name="soundcloud" title="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD" alt="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD_ALT">
+		<wrap-selection/>
+	</button>
 
-    <button tag="instagram" name="instagram" title="COM_KUNENA_LIB_BBCODE_INSTAGRAM" alt="COM_KUNENA_LIB_BBCODE_INSTAGRAM_ALT">
-        <wrap-selection/>
-    </button>
+	<button tag="instagram" name="instagram" title="COM_KUNENA_LIB_BBCODE_INSTAGRAM" alt="COM_KUNENA_LIB_BBCODE_INSTAGRAM_ALT">
+		<wrap-selection/>
+	</button>
 
-    <separator name="misc"/>
+	<separator name="misc"/>
 
-    <button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">
-        <link url="http://docs.kunena.org/index.php/bbcode"/>
-    </button>
+	<button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">
+		<link url="http://docs.kunena.org/index.php/bbcode"/>
+	</button>
 </bbcode-editor>

@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Category
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,26 +17,45 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Item';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
 	 * @var KunenaForumCategory
+	 * @since Kunena
 	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
+	 * @since Kunena
 	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
@@ -46,6 +65,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -138,12 +158,35 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
+		$doc = JFactory::getDocument();
+		$page = $this->pagination->pagesCurrent;
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = $this->category->getUrl();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -158,26 +201,58 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = JFactory::getDocument();
-		$config          = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots          = $componentParams->get('robots');
+		$doc = JFactory::getDocument();
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
-		if ($robots == '')
+		if ($robots == '' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, follow');
 		}
-		elseif ($robots == 'noindex, follow')
+		elseif ($robots == 'noindex, follow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'noindex, follow');
 		}
-		elseif ($robots == 'index, nofollow')
+		elseif ($robots == 'index, nofollow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
 			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		if ($menu_item)

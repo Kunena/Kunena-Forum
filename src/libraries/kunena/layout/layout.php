@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Categories
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -13,7 +13,8 @@ defined('_JEXEC') or die();
 /**
  * Implements Kunena specific functions for all layouts.
  *
- * @see KunenaLayoutBase
+ * @see   KunenaLayoutBase
+ * @since Kunena
  */
 class KunenaLayout extends KunenaLayoutBase
 {
@@ -21,6 +22,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Content to be appended after the main output.
 	 *
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $after = array();
 
@@ -28,6 +30,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Object KunenaView
 	 *
 	 * @var unknown
+	 * @since Kunena
 	 */
 	protected $legacy;
 
@@ -35,6 +38,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Append HTML after the layout content.
 	 *
 	 * @param   string $content
+	 *
+	 * @since Kunena
 	 */
 	public function appendAfter($content)
 	{
@@ -45,6 +50,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $key
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function text($key)
 	{
@@ -59,6 +65,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @return  string  The rendered view.
 	 *
 	 * @throws  Exception|RunTimeException
+	 * @since Kunena
 	 */
 	public function render($layout = null)
 	{
@@ -92,6 +99,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $id
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -103,6 +111,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string $title
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -120,6 +129,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   int $precision Significant digits for output
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function formatLargeNumber($number, $precision = 3)
 	{
@@ -156,6 +166,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                $canonical
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
@@ -214,6 +225,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   bool                $canonical
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{
@@ -228,76 +240,25 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$cloak = JPluginHelper::isEnabled('content', 'emailcloak');
-
-			$first = $topic->first_post_message;
-			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
-			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
-			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
-			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
-			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
-
-			$last = $topic->last_post_message;
-			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
-			$last = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $last);
-			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
-			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
-			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
-
 			if ($action instanceof KunenaForumMessage)
 			{
-				if ($cloak)
-				{
-					$title = KunenaHtmlParser::parseText($first, 200, false);
-				}
-				else
-				{
-					$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-				}
+				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($first, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 						break;
 					case 'last':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($last, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					case 'unread':
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($last, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					default:
-						if ($cloak)
-						{
-							$title = KunenaHtmlParser::parseText($first, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-						}
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 				}
 			}
 
@@ -344,6 +305,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $canonical
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
@@ -404,6 +366,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @deprecated 5.0
 	 * @return $this
+	 * @since      Kunena
 	 */
 	public function setLegacy(KunenaView $view = null)
 	{

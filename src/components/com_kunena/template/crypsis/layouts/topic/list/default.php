@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -22,7 +22,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-sm">
+				<small class="hidden-phone">
 					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 

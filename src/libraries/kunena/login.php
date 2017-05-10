@@ -4,26 +4,33 @@
  * @package         Kunena.Framework
  * @subpackage      Integration
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaLogin
+ * @since Kunena
  */
 class KunenaLogin
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**
 	 * @var array|KunenaLogin[]
+	 * @since Kunena
 	 */
 	protected $instances = array();
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -44,17 +51,18 @@ class KunenaLogin
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function enabled()
 	{
-		// TODO: do better
 		return !empty($this->instances);
 	}
 
 	/**
-	 * @param   null $integration
+	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaLogin
+	 * @since Kunena
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -75,6 +83,7 @@ class KunenaLogin
 	 * @param   string $secretkey  The secret key for the TFA feature
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
@@ -90,9 +99,10 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param   null $return
+	 * @param   null $return logout user
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function logoutUser($return = null)
 	{
@@ -109,6 +119,7 @@ class KunenaLogin
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getRememberMe()
 	{
@@ -125,6 +136,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -141,6 +153,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -157,6 +170,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{
@@ -173,6 +187,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getResetURL()
 	{
@@ -189,6 +204,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getRemindURL()
 	{
@@ -211,6 +227,7 @@ class KunenaLogin
 	 * @param   integer $userId The user ID to check. Skip to use the current user.
 	 *
 	 * @return boolean True if TFA is enabled for this user
+	 * @since Kunena
 	 */
 	public function isTFAEnabled($userId = null)
 	{
@@ -243,6 +260,7 @@ class KunenaLogin
 	 * Method to check if TFA is enabled when user ins't logged
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public static function getTwoFactorMethods()
 	{

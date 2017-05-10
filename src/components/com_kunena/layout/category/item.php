@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Category.Item
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -23,6 +23,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display categories Index sublayout
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayCategories()
 	{
@@ -37,6 +38,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display category action sublayout
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayCategoryActions()
 	{
@@ -49,7 +51,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to return array of actions sublayout
 	 *
-	 * @return array
+	 * @return array|boolean
+	 * @since Kunena
 	 */
 	public function getCategoryActions()
 	{
@@ -181,7 +184,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   bool                $canonical
 	 *
 	 * @return string
-	 * @see KunenaLayout::getLastPostLink()
+	 * @see   KunenaLayout::getLastPostLink()
+	 * @since Kunena
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20, $follow = true, $canonical = false)
 	{
@@ -214,6 +218,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   int $maxpages The maximum number of pages
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getPagination($maxpages)
 	{

@@ -5,17 +5,23 @@
  * @package         Kunena.Site
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Topics View
+ * @since Kunena
  */
 class KunenaViewTopics extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
@@ -42,11 +48,16 @@ class KunenaViewTopics extends KunenaView
 
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
-		$this->_prepareDocument('default');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayUser($tpl = null)
 	{
 		$this->layout           = 'user';
@@ -70,11 +81,16 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('user');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayPosts($tpl = null)
 	{
 		$this->layout           = 'posts';
@@ -99,7 +115,7 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('posts');
+		$this->_prepareDocument();
 
 		$this->render('Message/List', $tpl);
 	}
@@ -127,7 +143,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -195,6 +211,12 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
@@ -223,7 +245,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));

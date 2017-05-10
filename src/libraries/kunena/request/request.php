@@ -4,8 +4,8 @@
  * @package       Kunena.Administrator.Template
  * @subpackage    Categories
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -27,7 +27,8 @@ defined('_JEXEC') or die();
  * Individual controller classes are located in /components/com_kunena/controller
  * sub-folders eg: controller/user/login/display.php
  *
- * @see KunenaLayout
+ * @see   KunenaLayout
+ * @since Kunena
  */
 class KunenaRequest
 {
@@ -40,6 +41,7 @@ class KunenaRequest
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws    InvalidArgumentException
+	 * @since Kunena
 	 */
 	public static function factory($path, JInput $input = null, $options = null)
 	{

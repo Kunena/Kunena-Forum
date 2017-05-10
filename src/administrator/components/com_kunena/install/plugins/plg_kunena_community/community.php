@@ -5,13 +5,17 @@
  * @package          Kunena.Plugins
  * @subpackage       Community
  *
- * @copyright   (C)  2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license          http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaCommunity
+ * @since Kunena
+ */
 class plgKunenaCommunity extends JPlugin
 {
 	/**
@@ -19,6 +23,8 @@ class plgKunenaCommunity extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -46,9 +52,10 @@ class plgKunenaCommunity extends JPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess
+	 * @return KunenaAccess|KunenaAccessCommunity
 	 *
-	 * @todo Should we remove category ACL integration?
+	 * @todo  Should we remove category ACL integration?
+	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -66,6 +73,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena login integration object.
 	 *
 	 * @return \KunenaLoginCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -83,6 +91,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -100,6 +109,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -117,6 +127,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena private message integration object.
 	 *
 	 * @return \KunenaPrivateCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -134,6 +145,7 @@ class plgKunenaCommunity extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return \KunenaActivityCommunity|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

@@ -3,17 +3,22 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaFactory
+ * @since Kunena
  */
 abstract class KunenaFactory
 {
+	/**
+	 * @var void
+	 * @since Kunena
+	 */
 	static $session = null;
 
 	/**
@@ -22,6 +27,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaConfig
+	 * @since Kunena
 	 */
 	public static function getConfig()
 	{
@@ -33,9 +39,10 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param    string $name
+	 * @param   string $name name
 	 *
 	 * @return KunenaTemplate
+	 * @since Kunena
 	 */
 	public static function getTemplate($name = null)
 	{
@@ -47,7 +54,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return KunenaTemplate
+	 * @return KunenaAdminTemplate|KunenaTemplate
+	 * @since Kunena
 	 */
 	public static function getAdminTemplate()
 	{
@@ -62,10 +70,11 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param    int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param    bool $reload
+	 * @param   int  $id     The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param   bool $reload reload
 	 *
 	 * @return KunenaUser
+	 * @since Kunena
 	 */
 	public static function getUser($id = null, $reload = false)
 	{
@@ -80,6 +89,7 @@ abstract class KunenaFactory
 	 * @param   array|bool $update An array containing session options
 	 *
 	 * @return KunenaSession
+	 * @since Kunena
 	 */
 	public static function getSession($update = false)
 	{
@@ -97,6 +107,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public static function getAvatarIntegration()
 	{
@@ -109,6 +120,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaPrivate
+	 * @since Kunena
 	 */
 	public static function getPrivateMessaging()
 	{
@@ -121,6 +133,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaIntegrationActivity
+	 * @since Kunena
 	 */
 	public static function getActivityIntegration()
 	{
@@ -133,6 +146,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaProfile
+	 * @since Kunena
 	 */
 	public static function getProfile()
 	{
@@ -144,10 +158,11 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param   string $file
-	 * @param   string $client
+	 * @param   string $file   file
+	 * @param   string $client client
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
@@ -190,10 +205,22 @@ abstract class KunenaFactory
 	}
 
 	/**
-	 * @param $lang
-	 * @param $filename
+	 * @param   boolean $session null
+	 * @since Kunena
+	 *
+	 * @return void
+	 */
+	public static function setSession($session)
+	{
+		self::$session = $session;
+	}
+
+	/**
+	 * @param   string  $lang     language
+	 * @param   string  $filename filename
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected static function parseLanguage($lang, $filename)
 	{

@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Search
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -18,6 +18,13 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
+
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/search.js');
 ?>
 
@@ -69,7 +76,7 @@ $this->addScript('assets/js/search.js');
 							<input type="checkbox" name="exactname" value="1"
 								<?php if ($this->state->get('query.exactname'))
 								{
-									echo $this->checked;
+									echo ' checked="checked" ';
 								} ?> />
 						</label>
 					</fieldset>
@@ -85,7 +92,7 @@ $this->addScript('assets/js/search.js');
 		<div class="collapse in" id="search-options">
 			<div class="well">
 				<div class="row-fluid">
-					<fieldset class="span6">
+					<fieldset class="span4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
@@ -93,12 +100,25 @@ $this->addScript('assets/js/search.js');
 						<?php $this->displayBeforeAfterList('beforeafter'); ?>
 					</fieldset>
 
-					<fieldset class="span6">
+					<fieldset class="span4">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
 						<?php $this->displaySortByList('sort'); ?>
 						<?php $this->displayOrderList('order'); ?>
+					</fieldset>
+
+					<fieldset class="span4">
+						<legend>
+							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+						</legend>
+						<div id="searchatdate">
+							<div class="input-append date">
+								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
+								       value="">
+								<span class="input-group-addon"><?php echo KunenaIcons::calendar(); ?></span>
+							</div>
+						</div>
 					</fieldset>
 				</div>
 
@@ -167,10 +187,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="center">
 			<button type="submit" class="btn btn-primary">
-				<i class="icon-search icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+				<?php echo KunenaIcons::search() . ' ' . JText::_('COM_KUNENA_SEARCH_SEND'); ?>
 			</button>
 			<button type="reset" class="btn" onclick="window.history.back();">
-				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel() . ' ' . JText::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>
 	</div>

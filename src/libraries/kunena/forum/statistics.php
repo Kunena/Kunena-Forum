@@ -4,70 +4,165 @@
  * @package       Kunena.Framework
  * @subpackage    Forum
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumStatistics
+ * @since Kunena
  */
 class KunenaForumStatistics
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $_instance = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 * @since Kunena
+	 */
 	protected $_config = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $lastUserId = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $memberCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $sectionCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $categoryCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $messageCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayTopicCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $todayReplyCount = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $yesterdayReplyCount = null;
 
 	/**
 	 * @var array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public $topTopics = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPosters = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topProfiles = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topPolls = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topThanks = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $top = array();
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showgenstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopuserstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopsubjectstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpoppollstats = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $showpopthankyoustats = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -89,6 +184,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @return KunenaForumStatistics
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -102,6 +198,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $force
+	 *
+	 * @since Kunena
 	 */
 	public function loadAll($force = false)
 	{
@@ -113,6 +211,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $force
+	 *
+	 * @since Kunena
 	 */
 	public function loadGeneral($force = false)
 	{
@@ -129,6 +229,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $override
+	 *
+	 * @since Kunena
 	 */
 	public function loadUserStats($override = false)
 	{
@@ -163,6 +265,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @param   bool $override
+	 *
+	 * @since Kunena
 	 */
 	public function loadTopicStats($override = false)
 	{
@@ -243,10 +347,17 @@ class KunenaForumStatistics
 				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
 				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0");
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
+			);
 
-			$counts = $this->_db->loadObject();
-			KunenaError::checkDatabaseError();
+			try
+			{
+				$counts = $this->_db->loadObject();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			if ($counts)
 			{
@@ -266,6 +377,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public function loadTopTopics($limit = 0)
 	{
@@ -303,6 +415,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function loadTopPosters($limit = 0)
 	{
@@ -338,6 +451,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function loadTopProfiles($limit = 0)
 	{
@@ -373,6 +487,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function loadTopPolls($limit = 0)
 	{
@@ -387,8 +502,16 @@ class KunenaForumStatistics
 					HAVING count > 0
 					ORDER BY count DESC";
 			$this->_db->setQuery($query, 0, $limit);
-			$polls = (array) $this->_db->loadObjectList('id');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$polls = (array) $this->_db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
@@ -419,6 +542,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function loadTopThankyous($limit = 0)
 	{
@@ -426,14 +550,30 @@ class KunenaForumStatistics
 
 		if (count($this->topThanks) < $limit)
 		{
-			$query = "SELECT t.targetuserid AS id, COUNT(t.targetuserid) AS count
-				FROM `#__kunena_thankyou` AS t
-				INNER JOIN `#__users` AS u ON u.id=t.targetuserid
-				GROUP BY t.targetuserid
-				ORDER BY count DESC";
+			$query = $this->_db->getQuery(true);
+			$query->select($this->_db->quoteName(array('t.targetuserid'), array('id')));
+			$query->select('COUNT(t.targetuserid) AS count');
+			$query->from($this->_db->quoteName(array('#__kunena_thankyou'), array('t')));
+			$query->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'));
+			$query->group($this->_db->quoteName('t.targetuserid'));
+			$query->order($this->_db->quoteName('count') . ' DESC');
+
+			if (KunenaFactory::getConfig()->superadmin_userlist)
+			{
+				$filter = JAccess::getUsersByGroup(8);
+				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
+			}
+
 			$this->_db->setQuery($query, 0, $limit);
-			$this->topThanks = (array) $this->_db->loadObjectList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->topThanks = (array) $this->_db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			$top = reset($this->topThanks);
 

@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Route
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,10 +18,14 @@ KunenaRoute::initialize();
 
 /**
  * Class KunenaRoute
+ * @since Kunena
  */
 abstract class KunenaRoute
 {
-	// List of views: array of default variable=>value pairs, which can be removed from URI
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $views = array(
 		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
 		'announcement' => array('layout' => 'default'),
@@ -37,50 +41,125 @@ abstract class KunenaRoute
 		'user'         => array('layout' => 'default', 'userid' => '0'),
 	);
 
-	// Reserved layout names for category view
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
-	// Use category name only in these views
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	static $time = 0;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $adminApp = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $config = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $menus = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $menu = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $default = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $active = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $home = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $search = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $current = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $childlist = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $subtree = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $parent = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static $uris = array();
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	static $urisSave = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	static protected $filtered = array();
 
 	/**
 	 * @param   bool $object
 	 *
 	 * @return boolean|JUri|null|string
+	 * @since Kunena
 	 */
 	public static function current($object = false)
 	{
@@ -107,6 +186,7 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return array|boolean|integer
+	 * @since Kunena
 	 */
 	public static function getItemID($uri = null)
 	{
@@ -140,6 +220,7 @@ abstract class KunenaRoute
 	 * @param   int  $ssl
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
@@ -211,6 +292,7 @@ abstract class KunenaRoute
 	 * @param   string $anchor  Anchor (location in the page).
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function getReferrer($default = null, $anchor = null)
 	{
@@ -261,6 +343,7 @@ abstract class KunenaRoute
 	 * @param   bool $object
 	 *
 	 * @return JUri|string
+	 * @since Kunena
 	 */
 	public static function normalize($uri = null, $object = false)
 	{
@@ -292,6 +375,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function getMenu()
 	{
@@ -302,6 +386,7 @@ abstract class KunenaRoute
 	 * @param $item
 	 *
 	 * @return null
+	 * @since Kunena
 	 */
 	public static function getHome($item)
 	{
@@ -334,6 +419,7 @@ abstract class KunenaRoute
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function cacheLoad()
 	{
@@ -360,6 +446,7 @@ abstract class KunenaRoute
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function cacheStore()
 	{
@@ -386,6 +473,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return JCacheController
+	 * @since Kunena
 	 */
 	protected static function getCache()
 	{
@@ -397,6 +485,7 @@ abstract class KunenaRoute
 	 * @param   null $default
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public static function stringURLSafe($string, $default = null)
 	{
@@ -427,6 +516,7 @@ abstract class KunenaRoute
 	 * @param   string $string String to process
 	 *
 	 * @return  string  Processed string
+	 * @since Kunena
 	 */
 	protected static function stringURLUnicodeSlug($string)
 	{
@@ -457,6 +547,7 @@ abstract class KunenaRoute
 	 * @param $alias
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function resolveAlias($alias)
 	{
@@ -491,6 +582,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function initialize()
 	{
@@ -582,6 +674,7 @@ abstract class KunenaRoute
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -593,6 +686,7 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return boolean|JUri|null
+	 * @since Kunena
 	 */
 	protected static function prepare($uri = null)
 	{
@@ -713,6 +807,7 @@ abstract class KunenaRoute
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected static function build()
 	{
@@ -787,6 +882,7 @@ abstract class KunenaRoute
 	 * @param   bool                $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
@@ -797,6 +893,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return array|boolean|integer
+	 * @since Kunena
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
 	{
@@ -810,6 +907,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
 	{
@@ -828,6 +926,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
 	{
@@ -850,6 +949,7 @@ abstract class KunenaRoute
 	 * @param   bool       $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
@@ -860,6 +960,7 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected static function setItemID(JUri $uri)
 	{
@@ -953,6 +1054,7 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected static function checkItem($item, JUri $uri)
 	{
@@ -993,6 +1095,7 @@ abstract class KunenaRoute
 	 * @param $catid
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected static function checkHome($item, $catid)
 	{
@@ -1030,6 +1133,7 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected static function checkCategory($item, JUri $uri)
 	{
@@ -1061,6 +1165,7 @@ abstract class KunenaRoute
 	 * @param   JUri $uri
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	protected static function check($item, JUri $uri)
 	{

@@ -4,8 +4,8 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -13,34 +13,44 @@ defined('_JEXEC') or die();
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
+/**
+ * Class Com_KunenaInstallerScript
+ * @since Kunena
+ */
 class Com_KunenaInstallerScript
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'7.1' => '7.1.0',
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
-			'5.5' => '5.5.9',
-			'5.4' => '5.4.13',
-			'5.3' => '5.3.10',
-			'0'   => '7.0.4' // Preferred version
+			'0'   => '7.0.17' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',
 			'0'   => '5.5' // Preferred version
 		),
 		'Joomla!' => array(
-			'3.5' => '3.5.0-beta',
-			'0'   => '3.5.0' // Preferred version
+			'3.6' => '3.6.5',
+			'0'   => '3.7.0' // Preferred version
 		)
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
 	 * @param $parent
 	 *
 	 * @return boolean
-	 *
+	 * @since Kunena
 	 */
 	public function install($parent)
 	{
@@ -61,6 +71,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function discover_install($parent)
 	{
@@ -71,6 +82,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function update($parent)
 	{
@@ -81,6 +93,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function uninstall($parent)
 	{
@@ -102,6 +115,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function preflight($type, $parent)
 	{
@@ -332,6 +346,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function postflight($type, $parent)
 	{
@@ -342,6 +357,7 @@ class Com_KunenaInstallerScript
 	 * @param $version
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public function checkRequirements($version)
 	{
@@ -360,8 +376,9 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
-	 *
-	 * @param   string $version The PHP version to clean
+	 * @return string
+	 * @internal param string $version The PHP version to clean
+	 * @since    Kunena
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -377,6 +394,7 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function checkVersion($name, $version)
 	{
@@ -417,6 +435,7 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function checkDbo($name, $types)
 	{
@@ -438,6 +457,7 @@ class Com_KunenaInstallerScript
 	 * @return integer
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function checkExtensions($extensions)
 	{
@@ -463,6 +483,7 @@ class Com_KunenaInstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function checkKunena($version)
 	{
@@ -538,7 +559,9 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 *
+	 * @internal param array $ignore
+	 * @since    Kunena
 	 */
 	public function deleteFile($path)
 	{
@@ -551,6 +574,8 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function deleteFiles($path, $ignore = array())
 	{
@@ -571,6 +596,8 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function deleteFolders($path, $ignore = array())
 	{
@@ -591,6 +618,8 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param         $path
 	 * @param   array $ignore
+	 *
+	 * @since Kunena
 	 */
 	public function deleteFolder($path, $ignore = array())
 	{
@@ -600,7 +629,9 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 *
+	 * @internal param array $ignore
+	 * @since    Kunena
 	 */
 	public function deleteKfolder($path)
 	{

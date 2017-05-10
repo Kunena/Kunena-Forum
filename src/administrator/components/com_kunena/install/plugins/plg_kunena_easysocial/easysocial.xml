@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
-    <name>plg_kunena_easysocial</name>
-    <version>@kunenaversion@</version>
-    <creationDate>@kunenaversiondate@</creationDate>
-    <author>StackIdeas</author>
-    <authorEmail>support@stackideas.com</authorEmail>
-    <authorUrl>http://stackideas.com</authorUrl>
-    <copyright>http://stackideas.com</copyright>
-    <license>GNU/GPLv3 or later</license>
-    <description>PLG_KUNENA_EASYSOCIAL_DESCRIPTION</description>
-    <files>
-        <folder>alerts</folder>
-        <folder>badges</folder>
-        <folder>points</folder>
-        <filename>activity.php</filename>
-        <filename>avatar.php</filename>
-        <filename plugin="easysocial">easysocial.php</filename>
-        <filename>easysocial.xml</filename>
-        <filename>index.html</filename>
-        <filename>login.php</filename>
-        <filename>private.php</filename>
-        <filename>profile.php</filename>
-        <folder>language</folder>
-    </files>
-    <config>
-        <fields name="params">
-            <fieldset name="basic">
-                <field name="login" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_LOGIN" description="PLG_KUNENA_EASYSOCIAL_LOGIN_DESC"
-                       class="inputbox">
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field name="activity" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY"
-                       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_DESC" class="inputbox">
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field name="avatar" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_AVATAR" description="PLG_KUNENA_EASYSOCIAL_AVATAR_DESC"
-                       class="inputbox">
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field name="profile" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_PROFILE" description="PLG_KUNENA_EASYSOCIAL_PROFILE_DESC"
-                       class="inputbox">
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field name="private" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_PRIVATE" description="PLG_KUNENA_EASYSOCIAL_PRIVATE_DESC"
-                       class="inputbox">
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field name="activity_badge_limit" type="text" default="0" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY_BADGE_LIMIT"
-                       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_BADGE_LIMIT_DESC"/>
-                <field name="activity_points_limit" type="text" default="0" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY_POINTS_LIMIT"
-                       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_POINTS_LIMIT_DESC"/>
-            </fieldset>
-        </fields>
-    </config>
+	<name>plg_kunena_easysocial</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>StackIdeas</author>
+	<authorEmail>support@stackideas.com</authorEmail>
+	<authorUrl>http://stackideas.com</authorUrl>
+	<copyright>http://stackideas.com</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_EASYSOCIAL_DESCRIPTION</description>
+	<files>
+		<folder>alerts</folder>
+		<folder>badges</folder>
+		<folder>points</folder>
+		<folder>language</folder>
+		<filename>activity.php</filename>
+		<filename>avatar.php</filename>
+		<filename plugin="easysocial">easysocial.php</filename>
+		<filename>easysocial.xml</filename>
+		<filename>index.html</filename>
+		<filename>login.php</filename>
+		<filename>private.php</filename>
+		<filename>profile.php</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="login" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_LOGIN" description="PLG_KUNENA_EASYSOCIAL_LOGIN_DESC"
+				       class="inputbox">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY"
+				       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_DESC" class="inputbox">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="avatar" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_AVATAR" description="PLG_KUNENA_EASYSOCIAL_AVATAR_DESC"
+				       class="inputbox">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="profile" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_PROFILE" description="PLG_KUNENA_EASYSOCIAL_PROFILE_DESC"
+				       class="inputbox">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="private" type="list" default="1" label="PLG_KUNENA_EASYSOCIAL_PRIVATE" description="PLG_KUNENA_EASYSOCIAL_PRIVATE_DESC"
+				       class="inputbox">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity_badge_limit" type="text" default="0" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY_BADGE_LIMIT"
+				       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_BADGE_LIMIT_DESC"/>
+				<field name="activity_points_limit" type="text" default="0" label="PLG_KUNENA_EASYSOCIAL_ACTIVITY_POINTS_LIMIT"
+				       description="PLG_KUNENA_EASYSOCIAL_ACTIVITY_POINTS_LIMIT_DESC"/>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -22,6 +22,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param   array $config
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -38,6 +39,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @throws RuntimeException
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function loadattachments()
 	{
@@ -101,6 +103,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @throws RuntimeException
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function removeattachments()
 	{
@@ -140,6 +143,7 @@ class KunenaControllerTopic extends KunenaController
 	 * Upload files with AJAX.
 	 *
 	 * @throws RuntimeException
+	 * @since Kunena
 	 */
 	public function upload()
 	{
@@ -292,6 +296,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function post()
 	{
@@ -401,16 +406,24 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && !$this->me->isModerator($category))
+		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip        = $_SERVER ["REMOTE_ADDR"];
 
 			$db = JFactory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
-			$count = $db->loadResult();
 
-			if (KunenaError::checkDatabaseError() || $count)
+			try
+			{
+				$count = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			if ($count)
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection));
 				$this->setRedirectBack();
@@ -642,6 +655,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function edit()
 	{
@@ -753,7 +767,13 @@ class KunenaControllerTopic extends KunenaController
 			$text = trim(JFilterOutput::cleanText($text));
 		}
 
-		if (!$text)
+		if (!$text && $this->config->userdeletetmessage == 1)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+
+			return;
+		}
+		elseif (!$text)
 		{
 			// Reload message (we don't want to change it).
 			$message->load();
@@ -925,7 +945,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return boolean
 	 * @internal param string $usbject
-	 *
+	 * @since    Kunena
 	 */
 	protected function checkURLInSubject($subject)
 	{
@@ -956,6 +976,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $topic
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -1003,6 +1024,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function thankyou()
 	{
@@ -1012,6 +1034,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unthankyou()
 	{
@@ -1023,6 +1046,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $type
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function setThankyou($type)
 	{
@@ -1108,6 +1132,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function subscribe()
 	{
@@ -1139,6 +1164,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function unsubscribe()
 	{
@@ -1170,6 +1196,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function favorite()
 	{
@@ -1201,6 +1228,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function unfavorite()
 	{
@@ -1232,6 +1260,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function sticky()
 	{
@@ -1278,6 +1307,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function unsticky()
 	{
@@ -1324,6 +1354,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function lock()
 	{
@@ -1370,6 +1401,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function unlock()
 	{
@@ -1416,6 +1448,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -1485,6 +1518,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function undelete()
 	{
@@ -1539,6 +1573,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function permdelete()
 	{
@@ -1610,6 +1645,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function approve()
 	{
@@ -1678,6 +1714,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function move()
 	{
@@ -1802,6 +1839,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	function report()
 	{
@@ -1974,6 +2012,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function vote()
 	{
@@ -2030,6 +2069,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function resetvotes()
 	{

@@ -5,8 +5,8 @@
  * @package         Kunena.Plugins
  * @subpackage      AltaUserPoints
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -23,6 +23,8 @@ class plgKunenaAltaUserPoints extends JPlugin
 	 *
 	 * @param   object &$subject The object to observe
 	 * @param   array  $config   An optional associative array of configuration settings.
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -50,6 +52,7 @@ class plgKunenaAltaUserPoints extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -67,6 +70,7 @@ class plgKunenaAltaUserPoints extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -84,6 +88,7 @@ class plgKunenaAltaUserPoints extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

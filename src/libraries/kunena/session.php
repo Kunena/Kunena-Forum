@@ -3,27 +3,46 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaSession
+ * @since Kunena
  */
 class KunenaSession extends JObject
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_sessiontimeout = false;
 
+	/**
+	 * @var int|string
+	 * @since Kunena
+	 */
 	protected $allreadtime;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	private static $_instance;
 
 	/**
 	 * @param   mixed|null $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier)
 	{
@@ -51,6 +70,7 @@ class KunenaSession extends JObject
 	 * @param   null $userid
 	 *
 	 * @return KunenaSession
+	 * @since Kunena
 	 */
 	public static function getInstance($update = false, $userid = null)
 	{
@@ -214,6 +234,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isNewUser()
 	{
@@ -222,6 +243,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isNewSession()
 	{
@@ -234,6 +256,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @return integer|string
+	 * @since Kunena
 	 */
 	public function getAllReadTime()
 	{
@@ -246,6 +269,7 @@ class KunenaSession extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function markAllCategoriesRead()
 	{
@@ -255,6 +279,7 @@ class KunenaSession extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function updateSessionInfo()
 	{

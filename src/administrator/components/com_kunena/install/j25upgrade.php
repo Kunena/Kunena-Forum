@@ -4,21 +4,23 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
- *
+ * @since Kunena
  */
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
 	/**
 	 * @param   null $step
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($step = null)
 	{
@@ -169,6 +171,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @return array
 	 *
+	 * @since Kunena
 	 */
 	protected function mapUserGroups($list)
 	{

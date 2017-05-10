@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,53 +15,140 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Messages
  * Provides access to the #__kunena_messages table
+ * @since Kunena
  */
 class TableKunenaMessages extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $parent = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $thread = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $catid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $email = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $subject = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ip = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topic_emoticon = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $locked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hold = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hits = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $moved = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_reason = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $message = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -70,6 +157,7 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -82,6 +170,7 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -111,7 +200,7 @@ class TableKunenaMessages extends KunenaTable
 		// Load the user data.
 		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id = {$this->$k}";
 		$this->_db->setQuery($query);
-		
+
 		try
 		{
 			$data = $this->_db->loadAssoc();
@@ -119,10 +208,10 @@ class TableKunenaMessages extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-				
+
 			return false;
 		}
-		
+
 		if (!$data)
 		{
 			$this->$k = 0;
@@ -140,6 +229,7 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -183,7 +273,8 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   boolean $updateNulls has no effect.
 	 *
 	 * @return boolean
-	 * @see KunenaTable::store()
+	 * @see   KunenaTable::store()
+	 * @since Kunena
 	 */
 	public function store($updateNulls = false)
 	{
@@ -217,7 +308,7 @@ class TableKunenaMessages extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 

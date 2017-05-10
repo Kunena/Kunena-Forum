@@ -4,8 +4,8 @@
  * @package       Kunena.Administrator.Template
  * @subpackage    Logs
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -42,8 +42,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-search"
-			                                        alt="<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>
+			<div class="module-title nav-header"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs'); ?>" method="post" name="adminForm"
@@ -56,8 +55,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter input-medium btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE'))); ?>
-						<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter input-medium btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
+						<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE'))); ?>
+						<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
 					</div>
 					<div class="btn-group pull-left">
 						<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
@@ -132,8 +131,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo $this->getGroupCheckbox('ip'); ?>
 						</th>
 						<?php if (!$this->group)
-						:
-	?>
+							:
+							?>
 							<th class="nowrap center">
 								Data
 							</th>
@@ -192,8 +191,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<?php if (!$this->group)
-						:
-	?>
+							:
+							?>
 							<td>
 							</td>
 						<?php endif; ?>
@@ -211,9 +210,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					$i                = 0;
 
 					if ($this->pagination->total > 0)
-					:
-						foreach ($this->items as $item)
 						:
+						foreach ($this->items as $item)
+							:
 							$date = new KunenaDate($item->time);
 							$user     = KunenaUserHelper::get($item->user_id);
 							$category = KunenaForumCategoryHelper::get($item->category_id);
@@ -249,8 +248,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
 								</td>
 								<?php if (!$this->group)
-								:
-	?>
+									:
+									?>
 									<td>
 										<a class="btn hasPopover" title="Data" data-content="<?php echo
 										$this->escape("<pre>{$this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))}</pre>"); ?>"
@@ -263,23 +262,23 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							$i++;
 						endforeach;
 					else:
-	?>
+						?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
 							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 								<?php
 								if ($this->filterActive)
-	:
-	?>
+									:
+									?>
 									<button class="btn" type="button"
 									        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-								<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 endif; ?>
+								<?php endif; ?>
 							</span>
 								</div>
 							</td>
 						</tr>
-					<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                         endif; ?>
+					<?php endif; ?>
 					</tbody>
 				</table>
 			</form>

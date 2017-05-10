@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists()
 	{
@@ -33,6 +34,7 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 * Change topic layout to indented.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{

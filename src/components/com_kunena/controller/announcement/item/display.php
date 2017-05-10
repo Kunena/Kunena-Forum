@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Announcement
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,14 +17,23 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Announcement/Item';
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $announcement;
 
 	/**
 	 * Prepare announcement display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -40,6 +49,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

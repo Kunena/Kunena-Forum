@@ -5,14 +5,15 @@
  * @package         Kunena.Plugins
  * @subpackage      System
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class plgSystemKunena
+ * @since Kunena
  */
 class plgSystemKunena extends JPlugin
 {
@@ -20,6 +21,8 @@ class plgSystemKunena extends JPlugin
 	/**
 	 * @param   object $subject
 	 * @param   array  $config
+	 *
+	 * @since Kunena
 	 */
 	function __construct(&$subject, $config)
 	{
@@ -50,6 +53,22 @@ class plgSystemKunena extends JPlugin
 
 		parent::__construct($subject, $config);
 
+		if (!JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
+		}
+
+		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
+		{
+			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads', 'notice');
+		}
+
 		// ! Always load language after parent::construct else the name of plugin isn't yet set
 		$this->loadLanguage('plg_system_kunena.sys');
 	}
@@ -59,6 +78,8 @@ class plgSystemKunena extends JPlugin
 	 *
 	 * @param $context
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function onKunenaGetConfiguration($context, &$params)
 	{
@@ -189,6 +210,8 @@ class plgSystemKunena extends JPlugin
 	 * @param $isnew
 	 * @param $success
 	 * @param $msg
+	 *
+	 * @since Kunena
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)
 	{
@@ -216,8 +239,15 @@ class plgSystemKunena extends JPlugin
 				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 			$db->setQuery ( $query );
-			$db->query ();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			// Here's also query to subscribe all users (including blocked) to all existing cats:
 			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
@@ -239,6 +269,7 @@ class plgSystemKunena extends JPlugin
 	 * @param $eid
 	 *
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
 	{
@@ -259,6 +290,7 @@ class plgSystemKunena extends JPlugin
 	 *
 	 * @return boolean
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
 	{

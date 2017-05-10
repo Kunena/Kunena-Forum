@@ -3,13 +3,13 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           http://www.bestofjoomla.com
  **/
 
@@ -18,6 +18,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaConfig
+ * @since Kunena
  */
 class KunenaConfig extends JObject
 {
@@ -843,7 +844,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-	public $userlist_allowed = 0;
+	public $userlist_allowed = 1;
 
 	/**
 	 * @var    integer  User list count users; select, selection
@@ -1176,6 +1177,12 @@ class KunenaConfig extends JObject
 	public $emailheader = '/media/kunena/email/hero-wide.png';
 
 	/**
+	 * @var integer
+	 * @since  K5.0.3
+	 */
+	public $user_status = 1;
+
+	/**
 	 * @var integer Allow user signatures
 	 * @since  K5.1.0
 	 */
@@ -1200,7 +1207,20 @@ class KunenaConfig extends JObject
 	public $lazyload = 1;
 
 	/**
+	 * @var integer
+	 * @since  K5.0.4
+	 */
+	public $plain_email = 0;
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+     */
+	public $avatartypes = 'gif, jpeg, jpg, png';
+
+	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -1209,6 +1229,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @return KunenaConfig|mixed
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -1235,6 +1256,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @param   mixed $properties
+	 *
+	 * @since Kunena
 	 */
 	public function bind($properties)
 	{
@@ -1243,6 +1266,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function save()
 	{
@@ -1256,8 +1280,15 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1265,6 +1296,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -1276,13 +1308,22 @@ class KunenaConfig extends JObject
 	 * Load config settings from database table.
 	 *
 	 * @param   null $userinfo Not used.
+	 *
+	 * @since Kunena
 	 */
 	public function load($userinfo = null)
 	{
 		$db = JFactory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
-		$config = $db->loadAssoc();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$config = $db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if ($config)
 		{
@@ -1318,6 +1359,7 @@ class KunenaConfig extends JObject
 	 * @return JRegistry
 	 *
 	 * @internal
+	 * @since Kunena
 	 */
 	public function getPlugin($name)
 	{
@@ -1326,6 +1368,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * Messages per page
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -1341,6 +1384,7 @@ class KunenaConfig extends JObject
 	 * Email set for the configuration
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getEmail()
 	{

@@ -4,11 +4,13 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\String\StringHelper;
 
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
@@ -17,18 +19,46 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit/Avatar';
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $gallery;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleries;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleryOptions;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $galleryImages;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
@@ -37,6 +67,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -52,7 +83,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';
 		$this->gallery        = $this->input->getString('gallery', '');
 		$this->galleries      = $this->getGalleries($path);
-		$this->galleryOptions = $this->getGalleryOptions($path);
+		$this->galleryOptions = $this->getGalleryOptions();
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
@@ -65,6 +96,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -77,6 +109,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string $path Absolute path for the gallery.
 	 *
 	 * @return  array|string[]  List of directories.
+	 * @since Kunena
 	 */
 	protected function getGalleries($path)
 	{
@@ -113,6 +146,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string $path Absolute path for the gallery.
 	 *
 	 * @return  array
+	 * @since Kunena
 	 */
 	protected function getGallery($path)
 	{
@@ -123,6 +157,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Get avatar galleries and make them select option list.
 	 *
 	 * @return array|string[]  List of options.
+	 * @since Kunena
 	 */
 	protected function getGalleryOptions()
 	{
@@ -130,7 +165,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		foreach ($this->galleries as $gallery => $files)
 		{
-			$text      = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
+			$text      = $gallery ? StringHelper::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = JHtml::_('select.option', $gallery, $text);
 		}
 

@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -59,7 +59,7 @@ if ($me->canDoCaptcha())
 		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 		{
 			JPluginHelper::importPlugin('captcha');
-			$dispatcher                = JDispatcher::getInstance();
+			$dispatcher                = JEventDispatcher::getInstance();
 			$result                    = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
 			$output                    = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
 				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"'));
@@ -132,7 +132,7 @@ $quick    = $template->params->get('quick');
 									</label>
 									<input type="text" id="subject" name="subject" class="form-control"
 									       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
-									       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+									       <?php if (!$config->allow_change_subject && !$me->isModerator()): ?>disabled<?php endif; ?>
 									       value="<?php echo $message->displayField('subject'); ?>"/>
 								</div>
 								<div class="form-group">
@@ -145,7 +145,7 @@ $quick    = $template->params->get('quick');
 									}
 									else
 									{
-										echo '<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>';
+										echo '<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 									} ?>
 								</div>
 

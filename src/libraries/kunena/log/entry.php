@@ -4,8 +4,8 @@
  * @package       Kunena.Libraries
  * @subpackage    Log
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -17,6 +17,10 @@ defined('_JEXEC') or die();
  */
 class KunenaLogEntry
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $data;
 
 	/**
@@ -26,6 +30,8 @@ class KunenaLogEntry
 	 * @param   KunenaForumCategory $category
 	 * @param   KunenaForumTopic    $topic
 	 * @param   KunenaUser          $user
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(
 		$type,
@@ -55,6 +61,7 @@ class KunenaLogEntry
 	 * Get all the data.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getData()
 	{

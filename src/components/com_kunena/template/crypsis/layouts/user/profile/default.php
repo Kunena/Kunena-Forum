@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -34,13 +34,13 @@ if ($show)
 ?>
 	<ul class="unstyled center profilebox">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 
 		<?php if ($optional_username) : ?>
-		<li>
-			[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
-		</li>
+			<li>
+				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+			</li>
 		<?php endif; ?>
 
 		<?php if ($avatar) : ?>
@@ -86,9 +86,10 @@ if ($show)
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">
-		<span class="heading btn btn-small heading-less" style="display:none;"><i
-				class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-small"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+		<span class="heading btn btn-small heading-less"
+		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+		<span
+			class="heading btn btn-small"><?php echo KunenaIcons::arrowdown(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1) : ?>
@@ -121,29 +122,42 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('gender'); ?>
-				</li>
+				<?php if ($user->gender) :?>
+					<li>
+						<?php echo $user->profileIcon('gender'); ?>
+					</li>
+				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('birthdate'); ?>
-				</li>
+				<?php if ($user->birthdate) :?>
+					<li>
+						<?php echo $user->profileIcon('birthdate'); ?>
+					</li>
+				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('location'); ?>
-				</li>
+				<?php if ($user->location) :?>
+					<li>
+						<?php echo $user->profileIcon('location'); ?>
+					</li>
+				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('website'); ?>
-				</li>
+				<?php if ($user->websiteurl) :?>
+					<li>
+						<?php echo $user->profileIcon('website'); ?>
+					</li>
+				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('private'); ?>
-				</li>
+				<?php if (KunenaFactory::getPrivateMessaging()) :?>
+					<li>
+						<?php echo $user->profileIcon('private'); ?>
+					</li>
+				<?php endif; ?>
 
-				<li>
-					<?php echo $user->profileIcon('email'); ?>
-				</li>
+				<?php if ($user->email && !$user->hideEmail) :?>
+					<li>
+						<?php echo $user->profileIcon('email'); ?>
+					</li>
+				<?php endif; ?>
+
 				<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>
 			</ul>
 		</div>

@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,15 +17,21 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit';
 
 	/**
 	 * @var jUser
+	 * @since Kunena
 	 */
 	public $user;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $profile;
 
@@ -35,6 +41,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -61,6 +68,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

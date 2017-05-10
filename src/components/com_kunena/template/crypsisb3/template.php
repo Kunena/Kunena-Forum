@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -25,6 +25,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * The feature allows you to create one base template and only override changed files.
 	 *
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $default = array('crypsis');
 
@@ -34,6 +35,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * These will override default files in JROOT/media/kunena
 	 *
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
@@ -49,6 +51,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * User group initialization.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected $userClasses = array(
 		'kwho-',
@@ -67,6 +70,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * By default language files are also loaded from the parent templates.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function loadLanguage()
 	{
@@ -84,6 +88,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function initialize()
 	{
@@ -97,7 +102,15 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
+
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
 
 		if (file_exists($filenameless) && 0 != filesize($filenameless))
 		{
@@ -112,13 +125,12 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$fontawesome     = $this->ktemplate->params->get('fontawesome');
-		$doc             = JFactory::getDocument();
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$doc = JFactory::getDocument();
 
 		if ($fontawesome)
 		{
-			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
@@ -149,7 +161,7 @@ EOF;
 		if ($iconcolornew)
 		{
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .glyphicon { color: {$iconcolornew} !important;}
@@ -168,6 +180,7 @@ EOF;
 	 * @param   string $group
 	 *
 	 * @return JDocument
+	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
@@ -184,6 +197,7 @@ EOF;
 	 * @param   null $id
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -209,7 +223,7 @@ EOF;
 		if (in_array($name, $buttonsDropdown))
 		{
 			return <<<HTML
-				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
 				{$text}
 				</a>
 HTML;
@@ -217,7 +231,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
@@ -230,6 +244,7 @@ HTML;
 	 * @param   string $title
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -241,6 +256,7 @@ HTML;
 	 * @param   string $alt
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getImage($image, $alt = '')
 	{

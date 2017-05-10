@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -39,7 +39,7 @@ $labels          = $this->ktemplate->params->get('labels');
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a></li>
 				<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
-				<?php if (isset($this->message)) : ?>
+				<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
 					<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a></li>
 					<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 				<?php endif; ?>
@@ -72,7 +72,8 @@ $labels          = $this->ktemplate->params->get('labels');
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 										class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 									<?php else : ?>
-									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt=""
+									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>"
+									                                                                     alt="<?php echo $icon->name; ?>"
 									                                                                     border="0"/>
 										<?php endif; ?>
 									</label>
@@ -99,7 +100,8 @@ $labels          = $this->ktemplate->params->get('labels');
 											class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 										<?php else : ?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>"
-										                                                                     alt="" border="0"/>
+										                                                                     alt="<?php echo $icon->name; ?>"
+										                                                                     border="0"/>
 											<?php endif; ?>
 										</label>
 										<?php endforeach; ?>

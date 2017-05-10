@@ -4,8 +4,8 @@
  * @package         Kunena.Framework
  * @subpackage      Forum.Message.Attachment
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -34,26 +34,56 @@ class KunenaAttachment extends KunenaDatabaseObject
 {
 	/**
 	 * @var integer
+	 * @since Kunena
 	 */
 	public $id = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaAttachments';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $path;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $width;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $height;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $shortname;
 
 	/**
 	 * @var boolean
+	 * @since Kunena
 	 */
 	public $disabled = false;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected static $_directory = 'media/kunena/attachments';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'read'        => array('Read'),
 		'createimage' => array(),
@@ -127,6 +157,41 @@ class KunenaAttachment extends KunenaDatabaseObject
 		return (stripos($this->filetype, 'image/') !== false);
 	}
 
+	/**
+	 * Check if attachment is audio.
+	 *
+	 * @return  bool  True if attachment is image.
+	 *
+	 * @since  K5.1
+	 */
+	public function isAudio()
+	{
+		return (stripos($this->filetype, 'audio/') !== false);
+	}
+
+	/**
+	 * Check if attachment is audio.
+	 *
+	 * @return  bool  True if attachment is image.
+	 *
+	 * @since  K5.1
+	 */
+	public function isVideo()
+	{
+		return (stripos($this->filetype, 'video/') !== false);
+	}
+
+	/**
+	 * Check if attachment is pdf.
+	 *
+	 * @return  bool  True if attachment is pdf.
+	 *
+	 * @since  K5.1
+	 */
+	public function isPdf()
+	{
+		return (stripos($this->filetype, 'application/pdf') !== false);
+	}
 
 	/**
 	 * Get path for the file.
@@ -260,6 +325,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * Get attachment layout.
 	 *
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	public function getLayout()
 	{
@@ -317,7 +383,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return KunenauserHelper::get($this->userid);
+		return KunenaUserHelper::get($this->userid);
 	}
 
 	/**
@@ -402,6 +468,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -458,8 +525,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$fileInput['name'] = preg_replace('/[[:space:]]/', '', $fileInput['name']);
 
 		$fileNameWithoutExt = JFile::stripExt($fileInput['name']);
-		$fileExt            = JFile::getExt($fileInput['name']);
-		$fileNameWithExt    = $fileInput['name'];
+		$fileNameWithoutExt = strtolower($fileNameWithoutExt);
+
+		$fileExt = JFile::getExt($fileInput['name']);
+		$fileExt = strtolower($fileExt);
+
+		$fileNameWithExt = $fileInput['name'];
+		$fileNameWithExt = strtolower($fileNameWithExt);
 
 		if (file_exists($uploadBasePath . $fileInput['name']))
 		{

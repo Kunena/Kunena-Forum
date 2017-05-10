@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -474,6 +474,7 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->topics)
 						{
 							// Update topic statistics
+							KunenaAttachmentHelper::cleanup();
 							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg = JText::sprintf(
@@ -507,7 +508,9 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->users)
 						{
 							// Update user statistics
+							KunenaForumMessageThankyouHelper::recountThankyou();
 							KunenaUserHelper::recount();
+							KunenaUserHelper::recountPostsNull();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
 						break;
@@ -867,7 +870,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 		}
 
-		$error = $login->loginUser($username, $password, 0, null, $code);
+		$error = $login->loginUser($username, $password, 0, null);
 
 		$user = JFactory::getUser(JUserHelper::getUserId($username));
 

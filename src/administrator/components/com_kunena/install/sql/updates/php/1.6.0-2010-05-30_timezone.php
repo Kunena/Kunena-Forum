@@ -4,8 +4,8 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
  *
  * @return array|null
  * @throws KunenaInstallerException
+ * @since Kunena
  */
 function kunena_160_2010_05_30_timezone($parent)
 {
@@ -29,35 +30,47 @@ function kunena_160_2010_05_30_timezone($parent)
 		$timeshift = (float) date('Z') + ((float) $config->get('board_ofset') * 3600);
 
 		$db->setQuery("UPDATE #__kunena_categories SET time_last_msg = time_last_msg - {$timeshift}");
-		$db->query();
 
-		if ($db->getErrorNum())
+		try
 		{
-			throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_sessions SET lasttime = lasttime - {$timeshift}, currvisit  = currvisit  - {$timeshift}");
-		$db->query();
 
-		if ($db->getErrorNum())
+		try
 		{
-			throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_whoisonline SET time = time - {$timeshift}");
-		$db->query();
 
-		if ($db->getErrorNum())
+		try
 		{
-			throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		$db->setQuery("UPDATE #__kunena_messages SET time = time - {$timeshift}, modified_time = modified_time - {$timeshift}");
-		$db->query();
 
-		if ($db->getErrorNum())
+		try
 		{
-			throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		unset($config->board_ofset);

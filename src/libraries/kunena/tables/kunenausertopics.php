@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,29 +15,68 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Topics Table
  * Provides access to the #__kunena_user_topics table
+ * @since Kunena
  */
 class TableKunenaUserTopics extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $user_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topic_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $category_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $posts = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $owner = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $favorite = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $subscribed = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -46,6 +85,7 @@ class TableKunenaUserTopics extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{

@@ -4,8 +4,8 @@
  * @package         Kunena.Framework
  * @subpackage      Upload
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class KunenaUpload
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $validExtensions = array();
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $filename;
 
 	/**
@@ -27,6 +35,7 @@ class KunenaUpload
 	 * @param   array $extensions List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
+	 * @since Kunena
 	 */
 	public static function getInstance(array $extensions = array())
 	{
@@ -46,6 +55,7 @@ class KunenaUpload
 	 * @param   array $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function addExtensions(array $extensions)
 	{
@@ -72,6 +82,7 @@ class KunenaUpload
 	 *
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
+	 * @since Kunena
 	 */
 	public function splitFilename($filename = null)
 	{
@@ -112,6 +123,7 @@ class KunenaUpload
 	 * @param   string $filename Original filename.
 	 *
 	 * @return string  Path pointing to the protected file.
+	 * @since Kunena
 	 */
 	public function getProtectedFile($filename = null)
 	{
@@ -124,6 +136,7 @@ class KunenaUpload
 	 * @param   string $filename Original filename.
 	 *
 	 * @return string     Protected filename.
+	 * @since Kunena
 	 */
 	public function getProtectedFilename($filename = null)
 	{
@@ -141,6 +154,7 @@ class KunenaUpload
 	 * Get upload folder.
 	 *
 	 * @return string  Absolute path.
+	 * @since Kunena
 	 */
 	public function getFolder()
 	{
@@ -155,6 +169,7 @@ class KunenaUpload
 	 * @param   string $value Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return int  Value in bytes.
+	 * @since Kunena
 	 */
 	public static function toBytes($value)
 	{
@@ -185,15 +200,18 @@ class KunenaUpload
 			case 'gb':
 				$value *= 1024;
 
-			// Continue.
+				// Continue , do not put break here
 			case 'm':
 			case 'mb':
 				$value *= 1024;
+				$value *= 1024;
 
-			// Continue.
+				// Continue , do not put break here
 			case 'k':
 			case 'kb':
 				$value *= 1024;
+
+				// Continue, do not put break here
 		}
 
 		return (int) $value;
@@ -206,6 +224,7 @@ class KunenaUpload
 	 *
 	 * @return array Updated options.
 	 * @throws null
+	 * @since Kunena
 	 */
 	public function ajaxUpload(array $options)
 	{
@@ -216,7 +235,8 @@ class KunenaUpload
 			'mime'       => null,
 			'hash'       => null,
 			'chunkStart' => 0,
-			'chunkEnd'   => 0
+			'chunkEnd'   => 0,
+			'image_type' => null
 		);
 
 		$options += $defaults;
@@ -333,19 +353,29 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0)
+				if ($options['image_type'] == 'avatar')
 				{
-					if (!$this->checkFileSizeFileAttachment($size))
+					if (!$this->checkFileSizeAvatar($size))
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
-
-				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+				else
 				{
-					if (!$this->checkFileSizeImageAttachment($size))
+					if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false)
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						if (!$this->checkFileSizeFileAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
+					}
+
+					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+					{
+						if (!$this->checkFileSizeImageAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
 					}
 				}
 
@@ -408,6 +438,7 @@ class KunenaUpload
 	 * Clean up temporary file if it exists.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function cleanup()
 	{
@@ -425,6 +456,7 @@ class KunenaUpload
 	 * @param   mixed $content
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function ajaxResponse($content)
 	{
@@ -459,7 +491,8 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			} while (JDEBUG && $e);
+			}
+			while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
@@ -475,15 +508,16 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
+	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
 	 *
-	 * @param   int $filesize The size of file in bytes
+	 * @param   int $filesize The size of avatar in bytes
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
-		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
 		{
 			return false;
 		}
@@ -504,6 +538,7 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
@@ -530,6 +565,7 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function checkFileSizeImageAttachment($filesize)
 	{
@@ -558,11 +594,13 @@ class KunenaUpload
 	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
+	 * @since Kunena
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
-		$file       = new stdClass;
-		$file->ext  = JFile::getExt($fileInput['name']);
+		$file = new stdClass;
+		$file->ext = JFile::getExt($fileInput['name']);
+		$file->ext = strtolower($file->ext);
 		$file->size = $fileInput['size'];
 		$config     = KunenaFactory::getConfig();
 
@@ -581,9 +619,24 @@ class KunenaUpload
 		$file->success     = false;
 		$file->isAvatar    = false;
 
-		if ($type != 'attachment')
+		if ($type == 'avatar')
 		{
 			$file->isAvatar = true;
+		}
+
+		if ($file->isAvatar)
+		{
+			if (!$this->checkFileSizeAvatar($file->size))
+			{
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			}
+
+			$a = array('gif', 'jpeg', 'jpg', 'png');
+
+			if (!in_array($file->ext, $a, true))
+			{
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
+			}
 		}
 
 		if (!is_uploaded_file($file->tmp_name))
@@ -631,14 +684,6 @@ class KunenaUpload
 				$type = $info['mime'];
 			}
 
-			if ($file->isAvatar)
-			{
-				if (!$this->checkFileSizeAvatar($file->size))
-				{
-					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-				}
-			}
-
 			if (!$file->isAvatar && stripos($type, 'image/') !== false)
 			{
 				if (!$this->checkFileSizeImageAttachment($file->size))
@@ -678,6 +723,7 @@ class KunenaUpload
 	 * @param   array $file Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
+	 * @since Kunena
 	 */
 	protected function checkUpload($file)
 	{
@@ -734,6 +780,7 @@ class KunenaUpload
 	 * @param   boolean $si         whether to use SI prefixes or IEC
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function bytes($bytes, $force_unit = null, $format = null, $si = true)
 	{

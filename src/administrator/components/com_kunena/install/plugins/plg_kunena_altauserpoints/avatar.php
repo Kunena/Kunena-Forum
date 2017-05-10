@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      AltaUserPoints
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAvatarAltaUserPoints
+ * @since Kunena
+ */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAvatarAltaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -27,6 +37,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getEditURL()
 	{
@@ -39,6 +50,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
@@ -52,6 +64,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param   int    $sizey
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{

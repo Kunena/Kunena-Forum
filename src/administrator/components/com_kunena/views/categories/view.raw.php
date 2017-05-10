@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -20,6 +20,7 @@ class KunenaAdminViewCategories extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function displayChkAliases()
 	{
@@ -37,6 +38,32 @@ class KunenaAdminViewCategories extends KunenaView
 		else
 		{
 			$response['msg'] = 1;
+		}
+
+		echo json_encode($response);
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public function displayDeleteAlias()
+	{
+		$alias = $this->app->input->get('alias', null, 'string');
+
+		$db = JFactory::getDbo();
+		$query = 'DELETE FROM #__kunena_aliases WHERE alias = ' . $db->quote($alias);
+		$db->setQuery($query);
+
+		$response['msg'] = 1;
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			$response['msg'] = 0;
 		}
 
 		echo json_encode($response);

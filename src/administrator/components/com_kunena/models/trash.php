@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -20,16 +20,33 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelTrash extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $__state_set = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_items = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_items_order = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_object = false;
 
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -230,10 +247,20 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		try
+		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+
+			return array();
+		}
+
+		if (!$total)
 		{
 			return array();
 		}
@@ -347,10 +374,20 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		try
+		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+
+			return array();
+		}
+
+		if (!$total)
 		{
 			return array();
 		}
@@ -425,7 +462,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * @return JPagination
-	 *
+	 * @since Kunena
 	 */
 	public function getNavigation()
 	{

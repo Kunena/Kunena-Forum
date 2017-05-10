@@ -6,7 +6,7 @@
  * @subpackage      Comprofiler
  *
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,21 +15,40 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Kunena Access Control for CommunityBuilder
+ * @since Kunena
  */
 class KunenaAccessComprofiler
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $categories = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $groups = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $tree = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAccessComprofiler constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -42,6 +61,7 @@ class KunenaAccessComprofiler
 	 * List all access types you want to handle. All names must be less than 20 characters.
 	 *
 	 * @return array    Supported access types.
+	 * @since Kunena
 	 */
 	public function getAccessTypes()
 	{
@@ -61,6 +81,7 @@ class KunenaAccessComprofiler
 	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -91,6 +112,7 @@ class KunenaAccessComprofiler
 	 * @param   int    $category   Group id.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -144,6 +166,7 @@ class KunenaAccessComprofiler
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -163,6 +186,7 @@ class KunenaAccessComprofiler
 	 * @param   int                 $userid
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
@@ -186,6 +210,7 @@ class KunenaAccessComprofiler
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -215,6 +240,7 @@ class KunenaAccessComprofiler
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
@@ -235,6 +261,7 @@ class KunenaAccessComprofiler
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function loadCategories()
 	{
@@ -254,6 +281,7 @@ class KunenaAccessComprofiler
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function loadGroups()
 	{

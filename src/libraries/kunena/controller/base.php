@@ -4,14 +4,15 @@
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
- * @see JController in Joomla! 3.0
+ * @see   JController in Joomla! 3.0
+ * @since Kunena
  */
 abstract class KunenaControllerBase implements Serializable
 {
@@ -19,6 +20,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * The application object.
 	 *
 	 * @var    JApplicationBase|JSite|JAdministrator
+	 * @since Kunena
 	 */
 	protected $app;
 
@@ -26,6 +28,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * The input object.
 	 *
 	 * @var    JInput
+	 * @since Kunena
 	 */
 	protected $input;
 
@@ -43,6 +46,8 @@ abstract class KunenaControllerBase implements Serializable
 	 * @param   JInput           $input   The input object.
 	 * @param   JApplicationBase $app     The application object.
 	 * @param   JRegistry|array  $options Array / JRegistry object with the options to load.
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(JInput $input = null, $app = null, $options = null)
 	{
@@ -122,6 +127,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @throws  LogicException
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	abstract public function execute();
 
@@ -129,6 +135,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the application object.
 	 *
 	 * @return  JApplicationBase  The application object.
+	 * @since Kunena
 	 */
 	public function getApplication()
 	{
@@ -139,6 +146,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the input object.
 	 *
 	 * @return  JInput  The input object.
+	 * @since Kunena
 	 */
 	public function getInput()
 	{
@@ -149,6 +157,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Serialize the controller.
 	 *
 	 * @return  string  The serialized controller.
+	 * @since Kunena
 	 */
 	public function serialize()
 	{
@@ -160,9 +169,10 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @param   string $input The serialized controller.
 	 *
-	 * @return  JController  Supports chaining.
+	 * @return JController|KunenaControllerBase
 	 *
 	 * @throws  UnexpectedValueException if input is not the right class.
+	 * @since Kunena
 	 */
 	public function unserialize($input)
 	{
@@ -184,6 +194,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the application object.
 	 *
 	 * @return  JApplicationBase  The application object.
+	 * @since Kunena
 	 */
 	protected function loadApplication()
 	{
@@ -194,6 +205,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the input object.
 	 *
 	 * @return  JInput  The input object.
+	 * @since Kunena
 	 */
 	protected function loadInput()
 	{

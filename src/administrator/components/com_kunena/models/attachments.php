@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -23,6 +23,8 @@ class KunenaAdminModelAttachments extends JModelList
 
 	/**
 	 * @param   array $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -99,6 +101,7 @@ class KunenaAdminModelAttachments extends JModelList
 	 * @param   string $id
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -119,6 +122,7 @@ class KunenaAdminModelAttachments extends JModelList
 	 * @param   int    $limit
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
@@ -142,6 +146,7 @@ class KunenaAdminModelAttachments extends JModelList
 
 	/**
 	 * @return JDatabaseQuery
+	 * @since Kunena
 	 */
 	protected function getListQuery()
 	{
@@ -226,6 +231,14 @@ class KunenaAdminModelAttachments extends JModelList
 				break;
 			default:
 				$query->order('a.id ' . $direction);
+		}
+
+		$filter = $this->getState('filter.search');
+
+		if (!empty($filter))
+		{
+			$post = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$query->where('(a.filename LIKE ' . $post . ')');
 		}
 
 		return $query;

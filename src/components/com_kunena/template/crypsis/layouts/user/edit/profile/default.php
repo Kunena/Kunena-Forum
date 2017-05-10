@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -84,7 +84,7 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 					<input id="social-site" type="text" name="websitename"
 					       value="<?php echo $this->escape($this->profile->websitename); ?>"/>
@@ -98,7 +98,7 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-				<span class="hasTip"
+				<span class="hasTooltip"
 				      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 					<input id="social-url" type="text" name="websiteurl"
 					       value="<?php echo $this->escape($this->profile->websiteurl); ?>"/>
@@ -108,20 +108,22 @@ $this->addScript('assets/js/profile.js');
 
 	<?php if ($this->config->social) : ?>
 		<?php foreach ($this->social as $social) : ?>
-			<tr>
-				<td>
-					<label for="social-<?php echo $social; ?>">
-						<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $social); ?>
-					</label>
-				</td>
-				<td>
-					<span class="hasTip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
-						. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>">
-						<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
-						       value="<?php echo $this->escape($this->profile->$social); ?>"/>
-					</span>
-				</td>
-			</tr>
+		<tr>
+			<td>
+				<label for="social-<?php echo $social; ?>">
+					<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $social); ?>
+				</label>
+			</td>
+			<td>
+				<?php if ($social != 'qq') :?>
+				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
+					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>" >
+				<?php endif; ?>
+					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
+					       value="<?php echo $this->escape($this->profile->$social); ?>" />
+				</span>
+			</td>
+		</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>
 
@@ -132,7 +134,7 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
+				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
 					<textarea class="input-xxlarge" maxlength="<?php echo (int) $this->config->maxsig; ?>"
 					          name="signature" id="signature" rows="10"

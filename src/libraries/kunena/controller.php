@@ -3,8 +3,8 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -13,19 +13,33 @@ jimport('joomla.application.component.helper');
 
 /**
  * Class KunenaController
+ * @since Kunena
  */
 class KunenaController extends JControllerLegacy
 {
+	/**
+	 * @var JApplicationCms|null
+	 * @since Kunena
+	 */
 	public $app = null;
 
+	/**
+	 * @var KunenaUser|null
+	 * @since Kunena
+	 */
 	public $me = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 * @since Kunena
+	 */
 	public $config = null;
 
 	/**
 	 * @param   array $config
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -55,6 +69,7 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @return KunenaController
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{
@@ -139,7 +154,7 @@ class KunenaController extends JControllerLegacy
 	 * @return mixed
 	 * @throws Exception
 	 *
-	 * @todo Check if the parent function override is still needed.
+	 * @since Kunena
 	 */
 	protected function executeTask($task)
 	{
@@ -190,6 +205,7 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function execute($task)
 	{
@@ -305,6 +321,7 @@ class KunenaController extends JControllerLegacy
 	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -428,6 +445,7 @@ class KunenaController extends JControllerLegacy
 	 * @param   string $var The output to escape.
 	 *
 	 * @return string The escaped value.
+	 * @since Kunena
 	 */
 	public function escape($var)
 	{
@@ -436,6 +454,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRedirect()
 	{
@@ -444,6 +463,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getMessage()
 	{
@@ -452,6 +472,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getMessageType()
 	{
@@ -466,6 +487,8 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @param   string $default
 	 * @param   string $anchor
+	 *
+	 * @since Kunena
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

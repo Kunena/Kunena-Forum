@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Edit';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $captchaHtml = null;
 
 	/**
@@ -27,6 +35,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * @return boolean
 	 *
 	 * @throws RuntimeException
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -46,14 +55,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		{
 			if (!$category->isSection() && $category->allow_anonymous)
 			{
-				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->post_anonymous;
+				$arrayanynomousbox[$category->id] = $category->post_anonymous;
 			}
 
 			if ($this->config->pollenabled)
 			{
 				if (!$category->isSection() && $category->allow_polls)
 				{
-					$arraypollcatid[] = '"' . $category->id . '":1';
+					$arraypollcatid[$category->id] = 1;
 				}
 			}
 		}
@@ -63,14 +72,11 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$arrayanynomousbox = implode(',', $arrayanynomousbox);
-		$arraypollcatid    = implode(',', $arraypollcatid);
-
 		// FIXME: We need to proxy this...
 		$this->document = JFactory::getDocument();
-		$this->document->addScriptDeclaration('var arrayanynomousbox={' . $arrayanynomousbox . '}');
-		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
-
+		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
@@ -79,7 +85,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		// Get topic icons if they are enabled.
 		if ($this->config->topicicons)
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
@@ -165,6 +171,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -224,6 +231,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * Can user subscribe to the topic?
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function canSubscribe()
 	{

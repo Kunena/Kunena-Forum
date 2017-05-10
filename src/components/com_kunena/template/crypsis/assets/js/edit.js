@@ -2,8 +2,8 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
@@ -15,9 +15,9 @@ var previewActive = false;
 function kPreviewHelper(previewActive) {
 	if (jQuery('#kbbcode-message').val() != null) {
 		jQuery.ajax({
-			type: 'POST',
-			url: 'index.php?option=com_kunena&view=topic&layout=edit&format=raw',
-			async: false,
+			type    : 'POST',
+			url     : jQuery('#kpreview_url').val(),
+			async   : false,
 			dataType: 'json',
 			data: {body: jQuery('#kbbcode-message').val()},
 			success: function (data) {
@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-				insertTpl: ':${name}:',
+				insertTpl: '${name}',
 				callbacks: {
 					remoteFilter: function (query, callback) {
 						if (query.length > 0) {
@@ -128,7 +128,10 @@ jQuery(document).ready(function ($) {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
 
+		$("#subject").attr('required', 'required');
+
 		if ($('#kanynomous-check').length > 0) {
+			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
@@ -173,7 +176,7 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (kunena_topicicontype == 'B2') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'B2') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
@@ -183,7 +186,7 @@ jQuery(document).ready(function ($) {
 								'al': ''
 							}));
 						}
-						else if (kunena_topicicontype == 'fa') {
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id

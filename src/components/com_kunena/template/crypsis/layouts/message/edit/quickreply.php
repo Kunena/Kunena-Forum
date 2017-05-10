@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -43,7 +43,7 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
-$this->addScriptDeclaration("kunena_topicicontype = '';");
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/edit.js');
 
@@ -66,7 +66,7 @@ if ($me->canDoCaptcha())
 		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 		{
 			JPluginHelper::importPlugin('captcha');
-			$dispatcher                = JDispatcher::getInstance();
+			$dispatcher                = JEventDispatcher::getInstance();
 			$result                    = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
 			$output                    = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
 				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"'));
@@ -101,7 +101,7 @@ $editor   = $template->params->get('editor');
 			<input type="hidden" name="task" value="post"/>
 			<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>"/>
 			<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>"/>
-			<?php if (!$config->allow_change_subject) : ?>
+			<?php if (!$config->allow_change_subject && !$me->isModerator()) : ?>
 				<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
 			<?php endif; ?>
 			<?php if ($me->exists()) : ?>
@@ -148,7 +148,7 @@ $editor   = $template->params->get('editor');
 					}
 					else
 					{
-						echo '<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>';
+						echo '<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 					} ?>
 				</div>
 

@@ -4,37 +4,75 @@
  * @package         Kunena.Framework
  * @subpackage      Integration
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaAccess
+ * @since Kunena
  */
 class KunenaAccess
 {
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const CATEGORY_SUBSCRIPTION = 1;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_SUBSCRIPTION = 2;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $instance = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $accesstypes = array('all' => array());
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $adminsByCatid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $adminsByUserid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $moderatorsByCatid = null;
 
+	/**
+	 * @var array|null
+	 * @since Kunena
+	 */
 	protected $moderatorsByUserid = null;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -87,6 +125,7 @@ class KunenaAccess
 
 	/**
 	 * @return KunenaAccess|null
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -104,6 +143,7 @@ class KunenaAccess
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function clearCache()
 	{
@@ -130,8 +170,15 @@ class KunenaAccess
 		$db    = JFactory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
-		$this->storeRoles((array) $db->loadObjectList());
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$this->storeRoles((array) $db->loadObjectList());
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// FIXME: enable caching after fixing the issues
 		if (KunenaConfig::getInstance()->get('cache_adm'))
@@ -145,7 +192,9 @@ class KunenaAccess
 						'au' => $this->adminsByUserid,
 						'mc' => $this->moderatorsByCatid,
 						'mu' => $this->moderatorsByUserid,
-					)), self::$cacheKey, 'com_kunena');
+					)
+				), self::$cacheKey, 'com_kunena'
+			);
 		}
 	}
 
@@ -153,10 +202,12 @@ class KunenaAccess
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAccessOptions($category)
 	{
 		$list = array();
+
 		// @var KunenaAccess $access
 
 		foreach ($this->accesstypes['all'] as $access)
@@ -186,6 +237,7 @@ class KunenaAccess
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getAccessTypesList($category)
 	{
@@ -211,7 +263,8 @@ window.addEvent('domready', function(){
 	if (item) {
 		kShowAccessType('kaccess', item);
 	}
-});");
+});"
+			);
 		}
 
 		$exists      = 0;
@@ -255,6 +308,7 @@ window.addEvent('domready', function(){
 	 * @param   KunenaForumCategory $category Category
 	 *
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
@@ -292,12 +346,13 @@ window.addEvent('domready', function(){
 	/**
 	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
 	 *
-	 * @param string $accesstype Access type.
-	 * @param mixed  $id         Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   mixed  $id         Group id.
 	 *
 	 * @return string|null
 	 *
 	 * @deprecated 3.0.1
+	 * @since      Kunena
 	 */
 	public function getGroupName($accesstype, $id)
 	{
@@ -325,6 +380,7 @@ window.addEvent('domready', function(){
 	 * @param   bool $all
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAdmins($catid = 0, $all = false)
 	{
@@ -345,6 +401,7 @@ window.addEvent('domready', function(){
 	 * @param   bool $all
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getModerators($catid = 0, $all = false)
 	{
@@ -362,6 +419,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAdminStatus($user = null)
 	{
@@ -377,6 +435,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getModeratorStatus($user = null)
 	{
@@ -393,6 +452,7 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isAdmin($user = null, $catid = 0)
 	{
@@ -433,6 +493,7 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isModerator($user = null, $catid = 0)
 	{
@@ -481,6 +542,7 @@ window.addEvent('domready', function(){
 	 * @return boolean
 	 *
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 * @since   Kunena
 	 */
 	public function setModerator($category, $user = null, $status = true)
 	{
@@ -532,6 +594,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getAllowedCategories($user = null)
 	{
@@ -610,6 +673,7 @@ window.addEvent('domready', function(){
 	 * @param   int                 $userid
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
 	{
@@ -644,10 +708,11 @@ window.addEvent('domready', function(){
 	 * @param   bool  $string
 	 *
 	 * @return string|array
+	 * @since Kunena
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
 	{
-		// hold = 0: normal
+		// Hold = 0: normal
 		// hold = 1: unapproved
 		// hold = 2: deleted
 		if (!($user instanceof KunenaUser))
@@ -689,6 +754,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $excludeList
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null)
 	{
@@ -823,7 +889,7 @@ window.addEvent('domready', function(){
 		}
 		elseif (is_array($excludeList))
 		{
-			// array() needs to be flipped to get userids into keys
+			// Array() needs to be flipped to get userids into keys
 			$excludeList = array_flip($excludeList);
 		}
 		else
@@ -841,8 +907,15 @@ window.addEvent('domready', function(){
 			$query->where("u.id IN ({$userlist})");
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-			$userids = (array) $db->loadObjectList();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$userids = (array) $db->loadObjectList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $userids;
@@ -850,6 +923,8 @@ window.addEvent('domready', function(){
 
 	/**
 	 * @param   array $list
+	 *
+	 * @since Kunena
 	 */
 	protected function storeRoles(array $list = null)
 	{
@@ -886,6 +961,7 @@ window.addEvent('domready', function(){
 	 * @param   bool             $type
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{
@@ -907,8 +983,15 @@ window.addEvent('domready', function(){
 
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
-		$userids = (array) $db->loadColumn();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$userids = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $userids;
 	}

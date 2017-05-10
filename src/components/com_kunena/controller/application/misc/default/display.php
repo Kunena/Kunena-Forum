@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,14 +17,23 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
 {
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $header;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $body;
 
 	/**
 	 * Return custom display layout.
 	 *
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	protected function display()
 	{
@@ -113,6 +122,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * Prepare custom text output.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{

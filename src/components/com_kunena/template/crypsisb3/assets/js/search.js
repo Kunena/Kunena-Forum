@@ -2,8 +2,8 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
@@ -15,17 +15,17 @@ jQuery(document).ready(function ($) {
 
 		$('#kusersearch').atwho({
 			at: "",
-			tpl: '<li data-value="${username}"><i class="icon-user"></i> ${username} <small>(${name})</small></li>',
-			limit: 7,
+			displayTpl: '<li data-value="${name}"><img src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
+			limit: 5,
 			callbacks: {
-				remote_filter: function (query, callback) {
+				remoteFilter: function(query, callback)  {
 					$.ajax({
 						url: users_url,
 						data: {
 							search: query
 						},
-						success: function (data) {
-							callback(data.names);
+						success: function(data) {
+							callback(data);
 						}
 					});
 				}
@@ -38,4 +38,9 @@ jQuery(document).ready(function ($) {
 		$('#search').collapse("hide");
 	}
 
+	if (jQuery.fn.datepicker != undefined) {
+		jQuery('#searchatdate .input-append.date').datepicker({
+			orientation: "top auto"
+		});
+	}
 });

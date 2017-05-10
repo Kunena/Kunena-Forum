@@ -5,8 +5,8 @@
  * @package       Kunena.Administrator.Template
  * @subpackage    Logs
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -28,8 +28,9 @@ JHtml::_('bootstrap.popover');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-tags-2"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_LABELS_MANAGER') ?>"></i> <?php echo JText::_('Labels') ?>
+			<div class="module-title nav-header">
+				<i class="icon-tags-2"></i>
+				<?php echo JText::_('Labels') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">

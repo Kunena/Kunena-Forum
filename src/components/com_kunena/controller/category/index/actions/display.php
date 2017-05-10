@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,19 +17,29 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Index/Actions';
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $categoryButtons;
 
 	/**
 	 * Prepare message actions display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -98,6 +108,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   bool   $id    Id of the button.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

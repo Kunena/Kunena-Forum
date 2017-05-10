@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists()
 	{
@@ -30,9 +31,10 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return KunenaLayout
+	 * @return JLayoutBase|KunenaLayout
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	public function execute()
 	{
@@ -115,6 +117,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   array     $visited Already visited menu items.
 	 *
 	 * @return object|null
+	 * @since Kunena
 	 */
 	protected function getDefaultMenuItem(JMenuSite $menu, $active, $visited = array())
 	{

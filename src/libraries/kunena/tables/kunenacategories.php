@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,79 +15,218 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Categories
  * Provides access to the #__kunena_categories table
+ * @since Kunena
  */
 class TableKunenaCategories extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $parent_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $alias = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $icon = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $icon_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $locked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $accesstype = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $pub_access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $pub_recurse = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $admin_access = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $admin_recurse = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $published = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $channels = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $checked_out = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $checked_out_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $review = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allow_anonymous = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $post_anonymous = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hits = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $description = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $headerdesc = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $class_sfx = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allow_polls = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $topic_ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $iconset = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $numTopics = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $numPosts = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_topic_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -99,6 +238,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string $ignore
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function bind($array, $ignore = '')
 	{
@@ -135,6 +275,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -172,7 +313,7 @@ class TableKunenaCategories extends KunenaTable
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -194,6 +335,7 @@ class TableKunenaCategories extends KunenaTable
 	// Check for potential problems
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -229,6 +371,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param $id
 	 *
 	 * @return integer|void
+	 * @since Kunena
 	 */
 	public function isChild($id)
 	{
@@ -237,10 +380,15 @@ class TableKunenaCategories extends KunenaTable
 		{
 			$query = "SELECT id, parent_id FROM #__kunena_categories";
 			$this->_db->setQuery($query);
-			$list = $this->_db->loadObjectList('id');
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$list = $this->_db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				return;
 			}
 
@@ -280,6 +428,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string $where
 	 *
 	 * @return boolean|mixed
+	 * @since Kunena
 	 */
 	public function reorder($where = '')
 	{
@@ -308,6 +457,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function store($updateNulls = false)
 	{

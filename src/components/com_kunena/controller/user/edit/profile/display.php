@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,12 +17,17 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaControllerUserEditDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Edit/Profile';
 
 	/**
 	 * Prepare profile form items.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -42,6 +47,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$config = KunenaConfig::getInstance();
+
 		if ($config->social)
 		{
 			$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
@@ -60,6 +66,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

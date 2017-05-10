@@ -4,8 +4,8 @@
  * @package         Kunena.Framework
  * @subpackage      Pagination
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @copyright       Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @link            https://www.kunena.org
  **/
@@ -76,25 +76,44 @@ class KunenaPagination
 
 	/**
 	 * @var    integer
+	 * @since Kunena
 	 */
 	public $stickyStart = null;
 
 	/**
 	 * @var    integer
+	 * @since Kunena
 	 */
 	public $stickyStop = null;
 
 	/**
 	 * @var    JUri
+	 * @since Kunena
 	 */
 	public $uri = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $itemActiveChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $itemInactiveChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $listChrome = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $footerChrome = null;
 
 	/**
@@ -170,6 +189,7 @@ class KunenaPagination
 	 * @param   Juri $uri JUri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 * @since Kunena
 	 */
 	public function setUri(JUri $uri)
 	{
@@ -186,6 +206,7 @@ class KunenaPagination
 	 * @param   int $end       How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 * @since Kunena
 	 */
 	public function setDisplayedPages($displayed = 10, $start = 0, $end = 0)
 	{
@@ -301,6 +322,7 @@ class KunenaPagination
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setChrome()
 	{
@@ -668,12 +690,12 @@ class KunenaPagination
 			if ($item->base > 0)
 			{
 				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base
-				. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
+					. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
 			}
 			else
 			{
 				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
-				. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
+					. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
 			}
 		}
 		else

@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Table
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -219,6 +219,10 @@ abstract class KunenaTableObject
 		return array_keys(static::$tbl_fields);
 	}
 
+	/**
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	public function getId()
 	{
 		return $this->_key;
@@ -306,6 +310,7 @@ abstract class KunenaTableObject
 	/**
 	 * For internal use only.
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function &getInstances()
 	{
@@ -387,7 +392,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns an associative array of object properties.
 	 *
-	 * @return  array
+	 * @return array|Closure
 	 *
 	 * @since  K4.0
 	 */
@@ -457,6 +462,7 @@ abstract class KunenaTableObject
 	 * @param   bool $reset
 	 *
 	 * @return boolean|KunenaTableObject
+	 * @since Kunena
 	 */
 	protected function load($keys = null, $reset = true)
 	{
@@ -534,6 +540,7 @@ abstract class KunenaTableObject
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function store($updateNulls = false)
 	{
@@ -867,6 +874,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * @internal
+	 * @since Kunena
 	 */
 	static public function getQuery()
 	{
@@ -882,6 +890,7 @@ abstract class KunenaTableObject
 	 * @param   JDatabaseQuery $query
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function &loadInstances(JDatabaseQuery $query)
 	{

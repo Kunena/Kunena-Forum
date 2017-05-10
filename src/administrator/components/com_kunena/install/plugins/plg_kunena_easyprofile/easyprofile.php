@@ -5,12 +5,16 @@
  * @package         Kunena.Plugins
  * @subpackage      Easyprofile
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaEasyprofile
+ * @since Kunena
+ */
 class plgKunenaEasyprofile extends JPlugin
 {
 	/**
@@ -18,6 +22,8 @@ class plgKunenaEasyprofile extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -46,6 +52,7 @@ class plgKunenaEasyprofile extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarEasyprofile|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -63,6 +70,7 @@ class plgKunenaEasyprofile extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileEasyprofile|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{

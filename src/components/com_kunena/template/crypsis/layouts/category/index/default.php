@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 
@@ -39,13 +39,13 @@ foreach ($this->sections as $section) :
 	?>
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
-			<?php if (count($this->sections) > 0) : ?>
+			<?php if (count($this->sections) > 1) : ?>
 				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
 			<?php endif; ?>
 		</h2>
 
 		<h1>
-			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', true, false); ?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), false, false); ?>
 			<small class="hidden-phone nowrap">
 				<?php if ($section->getTopics() > 0) : ?>
 					(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
@@ -55,8 +55,8 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
+		<div class="row-fluid section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif;?> in collapse" id="section<?php echo $section->id; ?>">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-phone">
 					<tr>
@@ -95,7 +95,7 @@ foreach ($this->sections as $section) :
 							<td class="span8">
 								<div>
 									<h3>
-										<?php echo $this->getCategoryLink($category, null, null, null, true, false); ?>
+										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 										<small class="hidden-phone nowrap">
 											<?php if ($category->getTopics() > 0) : ?>
 												(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())); ?>)
@@ -107,18 +107,14 @@ foreach ($this->sections as $section) :
 													<sup class="knewchar"> (<?php echo $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-													<span class="icon-lock hasTooltip"
-													      data-original-title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY'); ?>"></span>
+													<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-													<span class="icon-shield hasTooltip"
-													      data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
+													<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
 												<?php endif; ?>
 
 												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
-													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate"
-													   type="application/rss+xml"
-													   data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS'); ?>">
+													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate" type="application/rss+xml">
 														 <?php echo KunenaIcons::rss(); ?>
 													</a>
 												<?php endif; ?>
@@ -139,10 +135,15 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php $totaltopics = $category->getTopics() > 0 ? JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
+													<?php $totaltopics = $subcategory->getTopics() > 0 ? JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($subcategory->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 
-													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, null, true, false) . '<small class="hidden-phone muted"> ('
-														. $totaltopics . ')</small>';
+													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
+														<?php echo $this->getCategoryLink($subcategory,  $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-phone muted"> ('
+															. $totaltopics . ')</small>';
+													else : ?>
+														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-phone muted"> ('
+															. $totaltopics . ')</small>';
+													endif;
 
 													if (($new = $subcategory->getNewCount()) > 0)
 													{
@@ -154,7 +155,7 @@ foreach ($this->sections as $section) :
 
 											<?php if (!empty($this->more[$category->id])) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE'), null, null, true, false); ?>
+													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE'), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 													<small class="hidden-phone muted">
 														(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
 													</small>
@@ -174,7 +175,7 @@ foreach ($this->sections as $section) :
 										$modslist = array();
 										foreach ($category->getmoderators() as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '');
+											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, KunenaTemplate::getInstance()->tooltips());
 										}
 
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
@@ -184,10 +185,7 @@ foreach ($this->sections as $section) :
 
 								<?php if (!empty($this->pending[$category->id])) : ?>
 									<div class="alert" style="margin-top:20px;">
-										<a class="alert-link"
-										   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
-										   title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
-										   rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
+										<a class="alert-link <?php echo KunenaTemplate::getInstance()->tooltips();?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>" title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING')?>" rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING')?></a>
 									</div>
 								<?php endif; ?>
 							</td>
@@ -204,19 +202,18 @@ foreach ($this->sections as $section) :
 									<div class="container-fluid">
 										<div class="row-fluid">
 											<?php if ($avatar) : ?>
-											<div class="span3">
-												<?php echo $author->getLink($avatar); ?>
-											</div>
-											<div class="span9">
-												<?php else : ?>
-												<div class="span12">
-													<?php endif; ?>
-													<span><?php echo $this->getLastPostLink($category, null, null, null, null, false, true) ?></span>
-													<br>
-													<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>
-													<br>
-													<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
+												<div class="span3">
+													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 												</div>
+												<div class="span9">
+											<?php else : ?>
+												<div class="span12">
+											<?php endif; ?>
+												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+												<br>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+												<br>
+												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
 										</div>
 								</td>

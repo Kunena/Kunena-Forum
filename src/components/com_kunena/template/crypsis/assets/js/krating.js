@@ -2,8 +2,8 @@
  * Kunena       Component
  * @package     Kunena.Template.Crypsis
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
 
@@ -17,10 +17,10 @@ jQuery(document).ready(function ($) {
 
 		if ($('#krating').length > 0) {
 			$.ajax({
-				dataType: "json",
-				url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
-				data: 'topic_id=' + topic_id
-			}).done(function (response) {
+				 dataType: "json",
+				url: $('#krating_url').val(),
+				 data: 'topic_id=' + topic_id
+			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function (reponse) {
 
@@ -31,8 +31,7 @@ jQuery(document).ready(function ($) {
 	// Build krating item
 	function buildItem() {
 		var ratingItem = document.createElement('div');
-		var html = '<ul class="c-rating"></ul>';
-		ratingItem.innerHTML = html;
+		ratingItem.innerHTML = '<ul class="c-rating"></ul>';
 		krating.appendChild(ratingItem);
 		return ratingItem;
 	}

@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Templates
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -25,8 +25,9 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-color-palette"
-			                                        alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
+			<div class="module-title nav-header">
+				<i class="icon-color-palette"></i>
+				<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
@@ -80,13 +81,13 @@ JHtml::_('dropdown.init');
 								<?php if ($row->published == 1)
 									:
 									?>
-									<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
+									<i class="icon-star"></i>
 								<?php else
 									:
 									?>
 									<a href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-										<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
+										<i class="icon-star-empty"></i>
 									</a>
 								<?php endif; ?>
 							</td>
@@ -100,11 +101,55 @@ JHtml::_('dropdown.init');
 								<?php echo $this->escape($row->creationdate); ?>
 							</td>
 							<td>
-								<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>"
+								<a href="<?php echo $this->escape($row->authorUrl); ?>"
 								   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
+					</tbody>
+				</table>
+
+				<table class="table table-striped" style="padding-top: 200px">
+					<thead>
+					<tr>
+						<td colspan="7"><strong><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PREMIUM'); ?></strong></td>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<th width="5%">Price</th>
+						<th width="10%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
+						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
+						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
+						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></th>
+						<th width="25%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
+						<th width="30%"></th>
+					</tr>
+
+					<tr>
+						<td style="width: 5%">€10 euro
+						</td>
+						<td style="width: 7%">
+							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
+							<span class="editlinktip hasTip" title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank" rel="noopener noreferrer">Blue Eagle 5</a>
+							</span>
+						</td>
+						<td style="width: 7%">
+							<a href="mailto:team@kunena.org">Kunena Team</a>
+						</td>
+						<td style="width: 5%">
+							K5.0.X
+						</td>
+						<td style="width: 5%">
+							<a href="https://www.kunena.org/download/templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+						</td>
+						<td style="width: 25%">
+							<a href="https://www.kunena.org" target="_blank" rel="noopener noreferrer">https://www.kunena.org</a>
+						</td>
+						<td style="width: 30%">
+						</td>
+					</tr>
 					</tbody>
 				</table>
 			</form>

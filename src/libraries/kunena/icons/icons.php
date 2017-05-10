@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package         Kunena.Framework
- * @subpackage      Icons
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
+ * @package    Kunena.Framework
+ * @subpackage Icons
+ *
+ * @copyright  Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -14,8 +15,7 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaIcons
  *
- * @since  5.0
- *
+ * @since 5.0
  */
 class KunenaIcons
 {
@@ -23,6 +23,8 @@ class KunenaIcons
 	 * Return the arrow down icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function arrowdown()
 	{
@@ -31,26 +33,28 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-arrow-down hasTooltip"></i>';
+			return '<i class="fa fa-arrow-down hasTooltip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-arrow-down hasTooltip"></span>';
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-down hasTooltip"></span>';
+			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-arrow-down hasTooltip"></span>';
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 	}
 
 	/**
-	 * Return the arrwo up icon
+	 * Return the arrow up icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function arrowup()
 	{
@@ -59,19 +63,49 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-arrow-up hasTooltip"></i>';
+			return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-arrow-up hasTooltip"></span>';
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-up hasTooltip"></span>';
+			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-arrow-up hasTooltip"></span>';
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the chevron right icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function chevronright()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-chevron-right" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-chevron-right" aria-hidden="true"></span>';
 		}
 	}
 
@@ -79,6 +113,8 @@ class KunenaIcons
 	 * Return the members icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function members()
 	{
@@ -91,15 +127,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-user icon-big"></span>';
+			return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-user glyphicon-super"></span>';
+			return '<span class="glyphicon glyphicon-user glyphicon-super" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-user icon-big"></span>';
+			return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
 		}
 	}
 
@@ -107,6 +143,8 @@ class KunenaIcons
 	 * Return the user icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function user()
 	{
@@ -119,15 +157,173 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-user"></span>';
+			return '<span class="icon icon-user" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-user"></span>';
+			return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-user"></span>';
+			return '<span class="icon icon-user" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the lock icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function lock()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-lock" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-lock" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-lock" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the star icon (secret key)
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function star()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-star" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-star" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-star" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the shield icon (reviewed)
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function shield()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-shield" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-eye-open" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-eye-open" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the flag icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function flag()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-flag" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-flag" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon ktopicmy ksmall"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-flag" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the poll icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function poll()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-bars" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-bars" aria-hidden="true"></span>';
 		}
 	}
 
@@ -135,6 +331,8 @@ class KunenaIcons
 	 * Return the stats icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function stats()
 	{
@@ -147,15 +345,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-bars icon-big"></span>';
+			return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-stats glyphicon-super"></span>';
+			return '<span class="glyphicon glyphicon-stats glyphicon-super" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-bars icon-big"></span>';
+			return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
 		}
 	}
 
@@ -164,6 +362,8 @@ class KunenaIcons
 	 * Return the search icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function search()
 	{
@@ -176,15 +376,15 @@ class KunenaIcons
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<span class="icon icon-search"></span>';
+			return '<span class="icon icon-search" aria-hidden="true"></span>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-search"></span>';
+			return '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<span class="icon icon-search"></span>';
+			return '<span class="icon icon-search" aria-hidden="true"></span>';
 		}
 	}
 
@@ -192,6 +392,8 @@ class KunenaIcons
 	 * Return the collapse icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function collapse()
 	{
@@ -217,9 +419,71 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the clock icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function clock()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-clock-o" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-clock" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-clock" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the thumbs-up icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function thumbsup()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-thumbs-up" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-thumbs-up" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
 	 * Return the cancel icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function cancel()
 	{
@@ -228,19 +492,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-times"></i>';
+			return '<i class="fa fa-times" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-cancel"></i>';
+			return '<i class="icon icon-remove" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-remove-sign"></span>';
+			return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-cancel"></i>';
+			return '<i class="icon icon-remove" aria-hidden="true"></i>';
 		}
 	}
 
@@ -248,6 +512,8 @@ class KunenaIcons
 	 * Return the ip icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function ip()
 	{
@@ -261,19 +527,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-compass"></i>';
+			return '<i class="fa fa-compass" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-compass"></i>';
+			return '<i class="icon icon-compass" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-compass"></span>';
+			return '<span class="glyphicon glyphicon-compass" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-compass"></i>';
+			return '<i class="icon icon-compass" aria-hidden="true"></i>';
 		}
 	}
 
@@ -281,6 +547,8 @@ class KunenaIcons
 	 * Return the email icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function email()
 	{
@@ -289,19 +557,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-envelope"></i>';
+			return '<i class="fa fa-envelope" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-envelope"></i>';
+			return '<i class="icon icon-envelope" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-envelope"></span>';
+			return '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-envelope"></i>';
+			return '<i class="icon icon-envelope" aria-hidden="true"></i>';
 		}
 	}
 
@@ -309,6 +581,8 @@ class KunenaIcons
 	 * Return the bookmark icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function bookmark()
 	{
@@ -317,19 +591,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bookmark"></i>';
+			return '<i class="fa fa-bookmark" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-bookmark"></i>';
+			return '<i class="icon icon-bookmark" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-bookmark"></span>';
+			return '<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-bookmark"></i>';
+			return '<i class="icon icon-bookmark" aria-hidden="true"></i>';
 		}
 	}
 
@@ -337,6 +611,8 @@ class KunenaIcons
 	 * Return the back icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function back()
 	{
@@ -345,19 +621,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-angle-left"></i>';
+			return '<i class="fa fa-angle-left" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-arrow-left"></i>';
+			return '<i class="icon icon-arrow-left" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-arrow-left"></span>';
+			return '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-arrow-left"></i>';
+			return '<i class="icon icon-arrow-left" aria-hidden="true"></i>';
 		}
 	}
 
@@ -365,6 +641,8 @@ class KunenaIcons
 	 * Return the save icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function save()
 	{
@@ -373,19 +651,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-save"></i>';
+			return '<i class="fa fa-save" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-save"></i>';
+			return '<i class="icon icon-save" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-save"></span>';
+			return '<span class="glyphicon glyphicon-save" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-save"></i>';
+			return '<i class="icon icon-save" aria-hidden="true"></i>';
 		}
 	}
 
@@ -393,6 +671,8 @@ class KunenaIcons
 	 * Return the edit icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function edit()
 	{
@@ -401,19 +681,49 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-edit"></i>';
+			return '<i class="fa fa-edit" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-edit"></i>';
+			return '<i class="icon icon-edit" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-edit"></span>';
+			return '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-edit"></i>';
+			return '<i class="icon icon-edit" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the pencel icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function pencil()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-pencil" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-pencil-2" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-pencil-2" aria-hidden="true"></i>';
 		}
 	}
 
@@ -421,6 +731,8 @@ class KunenaIcons
 	 * Return the attach icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function attach()
 	{
@@ -429,19 +741,23 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-paperclip"></i>';
+			return '<i class="fa fa-paperclip" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-flag-2 icon-white"></i>';
+			return '<i class="icon icon-flag-2 icon-white" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-paperclip"></span>';
+			return '<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon ktopicattach ksmall"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-flag-2 icon-white"></i>';
+			return '<i class="icon icon-flag-2 icon-white" aria-hidden="true"></i>';
 		}
 	}
 
@@ -449,6 +765,8 @@ class KunenaIcons
 	 * Return the plus icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function plus()
 	{
@@ -457,19 +775,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-plus"></i>';
+			return '<i class="fa fa-plus" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-plus"></i>';
+			return '<i class="icon icon-plus" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-plus"></span>';
+			return '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-plus"></i>';
+			return '<i class="icon icon-plus" aria-hidden="true"></i>';
 		}
 	}
 
@@ -479,38 +797,30 @@ class KunenaIcons
 	 * @param   null $text
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function rss($text = null)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-
-		if ($text)
-		{
-			$title = 'data-original-title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"';
-			$class = ' hasTooltip';
-		}
-		else
-		{
-			$title = '';
-			$class = '';
-		}
+		$class = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-rss ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="fa fa-rss ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></span>';
+			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-feed ' . $class . '" ' . $title . ' title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '"></i>';
+			return '<i class="icon icon-feed ' . $class . '" title="' . JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 	}
 
@@ -518,6 +828,8 @@ class KunenaIcons
 	 * Return the upload icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function upload()
 	{
@@ -526,19 +838,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-upload"></i>';
+			return '<i class="fa fa-upload" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="icon icon-upload"></i>';
+			return '<i class="icon icon-upload" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="glyphicon glyphicon-upload"></span>';
+			return '<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="icon icon-upload"></i>';
+			return '<i class="icon icon-upload" aria-hidden="true"></i>';
 		}
 	}
 
@@ -546,6 +858,8 @@ class KunenaIcons
 	 * Return the picture icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function picture()
 	{
@@ -554,19 +868,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-picture-o"></i>';
+			return '<i class="large-kicon fa fa-picture-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-picture"></i>';
+			return '<i class="large-kicon icon icon-picture" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-picture"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-picture" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-picture"></i>';
+			return '<i class="large-kicon icon icon-picture" aria-hidden="true"></i>';
 		}
 	}
 
@@ -574,6 +888,8 @@ class KunenaIcons
 	 * Return the file icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function file()
 	{
@@ -582,19 +898,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-file-o"></i>';
+			return '<i class="large-kicon fa fa-file-o" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-file"></i>';
+			return '<i class="large-kicon icon icon-file" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-file"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-file" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-file"></i>';
+			return '<i class="large-kicon icon icon-file" aria-hidden="true"></i>';
 		}
 	}
 
@@ -602,6 +918,8 @@ class KunenaIcons
 	 * Return the delete icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function delete()
 	{
@@ -610,19 +928,19 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-trash"></i>';
+			return '<i class="large-kicon fa fa-trash" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-trash"></i>';
+			return '<i class="large-kicon icon icon-trash" aria-hidden="true"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-trash"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-trash" aria-hidden="true"></span>';
 		}
 		else
 		{
-			return '<i class="large-kicon icon icon-trash"></i>';
+			return '<i class="large-kicon icon icon-trash" aria-hidden="true"></i>';
 		}
 	}
 
@@ -630,6 +948,8 @@ class KunenaIcons
 	 * Return the poll add icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function poll_add()
 	{
@@ -639,22 +959,22 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-add" class="fa fa-plus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 	}
 
@@ -662,6 +982,8 @@ class KunenaIcons
 	 * Return the poll rem icon
 	 *
 	 * @return string
+	 *
+	 * @since K5.0
 	 */
 	static public function poll_rem()
 	{
@@ -671,22 +993,708 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
 			return '<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 		else
 		{
 			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '"> </i>';
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
+		}
+	}
+
+	/**
+	 * Return the undo icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function undo()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-reply" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-undo" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-reply" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-undo" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the shuffle icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function shuffle()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-random" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-shuffle" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-random" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-shuffle" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the category icon
+	 *
+	 * @param      $categoryicon
+	 * @param   null $new
+	 * @param   bool $big
+	 *
+	 * @return string
+	 * @since K5.0
+	 */
+	static public function caticon($categoryicon, $new = null, $big = true)
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
+
+		if ($new)
+		{
+			$newchar = 'knewchar';
+		}
+		else
+		{
+			$newchar = '';
+		}
+
+		if ($big)
+		{
+			if ($topicicontype == 'fa')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' fa-big ';
+				}
+				else
+				{
+					$bigicon = ' fa-big fa-folder-open ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' fa-big ';
+				}
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' icon-big ';
+				}
+				else
+				{
+					$bigicon = ' icon-big icon-folder ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' icon-big ';
+				}
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' glyphicon-big ';
+				}
+				else
+				{
+					$bigicon = ' glyphicon-big glyphicon-folder-open ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' glyphicon-big ';
+				}
+			}
+			elseif ($topicicontype == 'image')
+			{
+				if (!empty($caticon))
+				{
+					$bigicon = ' kicon-foldernew ';
+				}
+				else
+				{
+					$bigicon = ' kicon-folder ';
+				}
+
+				if ($categoryicon)
+				{
+					$bigicon = ' icon-big ';
+				}
+			}
+			else
+			{
+				$bigicon = ' icon-big ';
+			}
+		}
+		else
+		{
+			$bigicon = ' ';
+
+			if ($topicicontype == 'fa')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'fa-folder-open ';
+				}
+			}
+			elseif ($topicicontype == 'B2')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'icon-folder ';
+				}
+			}
+
+			if ($topicicontype == 'B3')
+			{
+				if (!$categoryicon)
+				{
+					$bigicon = 'glyphicon-folder-open ';
+				}
+			}
+			elseif ($topicicontype == 'image')
+			{
+				if (!$categoryicon)
+				{
+					if ($new)
+					{
+						$bigicon = 'kicon-folder-sm-new ';
+					}
+					else
+					{
+						$bigicon = 'kicon-folder-sm ';
+					}
+				}
+			}
+		}
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
+		}
+		else
+		{
+			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
+		}
+	}
+
+	/**
+	 * Return the home icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function home()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-home hasTooltip" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-home hasTooltip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-home hasTooltip" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-home hasTooltip" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the calendar icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function calendar()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-calendar" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-calendar" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-calendar" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the hamburger icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function hamburger()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-bars fa-large" aria-hidden="true"></i> <b class="caret"></b>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon-large icon-list" aria-hidden="true"></i> <b class="caret"></b>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-large glyphicon-menu-hamburger" aria-hidden="true"></span> <b class="caret"></b>';
+		}
+		else
+		{
+			return '<i class="icon-large icon-list" aria-hidden="true"></i> <b class="caret"></b>';
+		}
+	}
+
+	/**
+	 * Return the info icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function info()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-info-circle" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-info" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-info" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the online icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function online()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-plus green" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon-plus green" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon-plus green" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the away icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function away()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-plus yellow" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon-plus yellow" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-plus yellow" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon-plus yellow" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the busy icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function busy()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-minus red" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon-minus red" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon-minus red" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the invisible icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function invisible()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-minus grey" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon-minus grey" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-minus grey" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon-minus grey" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the cog icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function cog()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-cog" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-cog" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-cog" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the drawer icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function drawer()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-inbox" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-drawer" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-drawer" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the out icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function out()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-sign-out" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-out" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-out" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the grid icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function grid()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-th" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-grid-view-2" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-th" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-grid-view-2" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the globe icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function globe()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-globe" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-link" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-profile kicon-profile-website" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-link" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the location icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function location()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-map-marker" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-location" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-profile kicon-profile-location" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-location" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the pm icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function pm()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-comments-o" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-comments-2" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-profile kicon-profile-pm" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-comments-2" aria-hidden="true"></i>';
 		}
 	}
 }

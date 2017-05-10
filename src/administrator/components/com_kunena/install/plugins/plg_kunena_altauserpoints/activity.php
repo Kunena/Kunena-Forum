@@ -5,8 +5,8 @@
  * @package        Kunena.Plugins
  * @subpackag      AltaUserPoints
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -19,12 +19,18 @@ jimport('joomla.utilities.string');
  */
 class KunenaActivityAltaUserPoints extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityAltaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -33,6 +39,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function _getAUPversion()
 	{
@@ -44,6 +51,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   string $spc
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
@@ -54,6 +62,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function onAfterPost($message)
 	{
@@ -78,6 +87,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterReply($message)
 	{
@@ -98,6 +109,11 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @since Kunena
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permissions of the current category - activity only if public or registered
@@ -119,6 +135,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -153,6 +171,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $var
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	function escape($var)
 	{
@@ -163,6 +182,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $userid
 	 *
 	 * @return array|boolean
+	 * @since Kunena
 	 */
 	public function getUserMedals($userid)
 	{
@@ -191,6 +211,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $userid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getUserPoints($userid)
 	{
@@ -218,6 +239,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	private function _checkPermissions($message)
 	{
@@ -250,6 +272,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	private function _checkRuleEnabled($ruleName)
 	{
@@ -262,6 +285,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return null
+	 * @since Kunena
 	 */
 	private function _getPointsOnThankyou($ruleName)
 	{

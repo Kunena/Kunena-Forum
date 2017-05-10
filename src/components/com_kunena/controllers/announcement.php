@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -21,6 +21,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function none()
 	{
@@ -30,6 +31,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function publish()
 	{
@@ -76,6 +78,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unpublish()
 	{
@@ -122,6 +125,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function edit()
 	{
@@ -135,6 +139,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -173,6 +178,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function save()
 	{

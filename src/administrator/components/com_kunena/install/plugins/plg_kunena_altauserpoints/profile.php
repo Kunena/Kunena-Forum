@@ -5,8 +5,8 @@
  * @package         Kunena.Plugins
  * @subpackage      AltaUserPoints
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,12 +18,18 @@ defined('_JEXEC') or die();
  */
 class KunenaProfileAltaUserPoints extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileAltaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -35,13 +41,14 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -55,6 +62,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -81,6 +89,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array|boolean
+	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -109,6 +118,8 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -119,6 +130,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

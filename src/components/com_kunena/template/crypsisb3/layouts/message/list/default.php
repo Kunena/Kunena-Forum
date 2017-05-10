@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -22,7 +22,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
+					(<?php echo JText::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
@@ -30,16 +30,16 @@ $view    = JFactory::getApplication()->input->getWord('view');
 		</div>
 
 		<?php if ($view != 'user') : ?>
-		<h2 class="filter-time pull-right" id="filter-time">
-			<div class="filter-sel pull-right">
-				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-				      method="post" target="_self" class="form-inline hidden-xs">
-					<?php $this->displayTimeFilter('sel'); ?>
-				</form>
-			</div>
+			<h2 class="filter-time pull-right" id="filter-time">
+				<div class="filter-sel pull-right">
+					<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					      method="post" target="_self" class="form-inline hidden-xs">
+						<?php $this->displayTimeFilter('sel'); ?>
+					</form>
+				</div>
+			</h2>
+		<?php endif; ?>
 	</div>
-	<?php endif; ?>
-</div>
 </div>
 
 <div class="pull-right">
@@ -78,7 +78,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 				<td class="col-md-<?php echo $cols; ?>">
 					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 hidden-xs">
 					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="col-md-3">
@@ -143,7 +143,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 	</table>
 </form>
 
-<div class="pagination pull-left">
+<div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>

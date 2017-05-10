@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,17 +17,34 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $category;
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $topic;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $poll;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $uri;
 
 	/**
@@ -36,6 +53,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -110,6 +128,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

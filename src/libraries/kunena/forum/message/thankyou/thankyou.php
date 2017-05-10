@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message.Thankyou
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -17,20 +17,27 @@ defined('_JEXEC') or die();
  * @property int    $userid
  * @property int    $targetuserid
  * @property string $time
+ * @since Kunena
  */
 class KunenaForumMessageThankyou extends JObject
 {
 	/**
 	 * @var integer
+	 * @since Kunena
 	 */
 	protected $id = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $users = array();
 
 	/**
 	 * @param   int $id
 	 *
 	 * @internal
+	 * @since Kunena
 	 */
 	public function __construct($id)
 	{
@@ -42,6 +49,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -54,6 +62,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   int $userid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists($userid)
 	{
@@ -63,6 +72,8 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * @param   int    $userid
 	 * @param   string $time
+	 *
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -75,6 +86,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function save($user)
 	{
@@ -107,12 +119,14 @@ class KunenaForumMessageThankyou extends JObject
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery($query);
-		$db->execute();
 
-		// Check for an error message.
-		if ($db->getErrorNum())
+		try
 		{
-			$this->setError($db->getErrorMsg());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -126,6 +140,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   KunenaForumMessage $message
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
@@ -133,12 +148,14 @@ class KunenaForumMessageThankyou extends JObject
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
-		$db->execute();
 
-		// Check for an error message.
-		if ($db->getErrorNum())
+		try
 		{
-			$this->setError($db->getErrorMsg());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -149,6 +166,7 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Get all users who have given thank you to this message.
 	 * @return array List of userid=>time.
+	 * @since Kunena
 	 */
 	public function getList()
 	{
@@ -161,6 +179,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function delete($user)
 	{
@@ -188,12 +207,14 @@ class KunenaForumMessageThankyou extends JObject
 
 		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
-		$db->execute();
 
-		// Check for an error message.
-		if ($db->getErrorNum())
+		try
 		{
-			$this->setError($db->getErrorMsg());
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}

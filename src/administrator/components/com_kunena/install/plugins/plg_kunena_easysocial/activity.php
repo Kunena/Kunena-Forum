@@ -11,14 +11,26 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\String\StringHelper;
+
+/**
+ * Class KunenaActivityEasySocial
+ * @since Kunena
+ */
 class KunenaActivityEasySocial extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -31,6 +43,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function assignBadge($command, $message, $target = null)
 	{
@@ -45,6 +58,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function assignPoints($command, $target = null)
 	{
@@ -57,15 +71,17 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterPost($message)
 	{
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			$this->assignPoints('thread.new');
 		}
 
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
 		{
 			$this->assignBadge('thread.new', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
 		}
@@ -94,7 +110,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onAfterReply($message)
 	{
-		$length = JString::strlen($message->message);
+		$length = StringHelper::strlen($message->message);
 
 		// Assign points for replying a thread
 		if ($length > $this->params->get('activity_points_limit', 0))
@@ -226,10 +242,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int $actor
 	 * @param   int $target
 	 * @param   int $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
-		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			$this->assignPoints('thread.thanks', $target);
 		}
@@ -249,6 +267,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since Kunena
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -257,6 +277,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $topic
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

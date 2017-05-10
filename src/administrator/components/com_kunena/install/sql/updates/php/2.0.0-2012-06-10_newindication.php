@@ -4,8 +4,8 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
  *
  * @return array
  * @throws KunenaInstallerException
+ * @since Kunena
  */
 function kunena_200_2012_06_10_newindication($parent)
 {
@@ -26,11 +27,14 @@ function kunena_200_2012_06_10_newindication($parent)
 	$lasttime = $now - max(intval(JFactory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
 	$query    = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
-	$db->query();
 
-	if ($db->getErrorNum())
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
+	}
+	catch (JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	$limit = 100;
@@ -42,11 +46,14 @@ function kunena_200_2012_06_10_newindication($parent)
 		// Then look at users who have read the thread
 		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics != '0'";
 		$db->setQuery($query, 0, $limit);
-		$sessions = $db->loadObjectList();
 
-		if ($db->getErrorNum())
+		try
 		{
-			throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$sessions = $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
 		// Create new data
@@ -88,11 +95,14 @@ function kunena_200_2012_06_10_newindication($parent)
 				$values = implode(',', $chunk);
 				$query  = "REPLACE INTO #__kunena_user_read (`user_id`, `topic_id`, `category_id`, `message_id`, `time`) VALUES {$values}";
 				$db->setQuery($query);
-				$db->query();
 
-				if ($db->getErrorNum())
+				try
 				{
-					throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
 			}
 		}
@@ -105,11 +115,14 @@ function kunena_200_2012_06_10_newindication($parent)
 			$users = implode(',', $users);
 			$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE userid IN ({$users})";
 			$db->setQuery($query);
-			$db->query();
 
-			if ($db->getErrorNum())
+			try
 			{
-				throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
 		}
 
@@ -123,11 +136,14 @@ function kunena_200_2012_06_10_newindication($parent)
 		SET ur.category_id=t.category_id,
 			ur.message_id=t.last_post_id";
 	$db->setQuery($query);
-	$db->query();
 
-	if ($db->getErrorNum())
+	try
 	{
-		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$db->execute();
+	}
+	catch (JDatabaseExceptionExecuting $e)
+	{
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_NEW_INDICATION'), 'success' => true);

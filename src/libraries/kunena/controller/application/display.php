@@ -4,51 +4,68 @@
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaControllerApplicationDisplay
+ * @since Kunena
+ */
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaLayout
+	 * @since Kunena
 	 */
 	protected $page;
+
 	/**
 	 * @var KunenaLayout
+	 * @since Kunena
 	 */
 	protected $content;
+
 	/**
 	 * @var JPathway
+	 * @since Kunena
 	 */
 	protected $breadcrumb;
+
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	protected $me;
+
 	/**
 	 * @var KunenaConfig
+	 * @since Kunena
 	 */
 	public $config;
+
 	/**
 	 * @var KunenaTemplate
+	 * @since Kunena
 	 */
 	protected $template;
+
 	/**
 	 * @var JDocument
+	 * @since Kunena
 	 */
 	protected $document;
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
 		{
-			// TODO: we need to deal with other formats in the future.
 			return false;
 		}
 
@@ -60,6 +77,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return KunenaLayout
+	 * @since Kunena
 	 */
 	protected function display()
 	{
@@ -74,6 +92,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return JLayoutBase
+	 * @since Kunena
 	 */
 	public function execute()
 	{
@@ -124,12 +143,39 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
-				$this->setResponseStatus($e->getResponseCode());
-				$this->output->setLayout('unauthorized');
-				$this->document->setTitle($e->getResponseStatus());
+				if (JFactory::getUser()->guest)
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('login');
+					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
+					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+					$this->document->setMetaData('robots', 'noindex, follow');
+				}
+				elseif ($banned)
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('unauthorized');
+					$this->document->setTitle($e->getResponseStatus());
 
-				$this->content = KunenaLayout::factory('Widget/Error')
-					->set('header', $e->getResponseStatus());
+					$bannedtime = KunenaUserBan::getInstanceByUserid(KunenaUserHelper::getMyself()->userid, true);
+
+					$this->content = KunenaLayout::factory('Widget/Custom')
+						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
+						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+                            KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
+                        )
+                        );
+					$this->document->setMetaData('robots', 'noindex, follow');
+				}
+				else
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->output->setLayout('unauthorized');
+					$this->document->setTitle($e->getResponseStatus());
+
+					$this->content = KunenaLayout::factory('Widget/Error')
+						->set('header', $e->getResponseStatus());
+				}
 			}
 			catch (Exception $e)
 			{
@@ -170,6 +216,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -222,7 +269,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->app->enqueueMessage(
 					JText::sprintf(
 						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
+						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
+					), 'notice'
+				);
 			}
 			else
 			{
@@ -232,7 +281,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		$jinput = JFactory::getApplication()->input;
+		$limitstart = $jinput->getInt('limitstart', 'limitstart', 0);
+
+		if (!$limitstart)
+		{
+			$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+		}
 
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();
@@ -242,6 +297,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function after()
 	{
@@ -265,6 +321,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @param   int $code
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function setResponseStatus($code = 404)
 	{
@@ -296,27 +353,35 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
-		$credits      = '<div style="text-align:center">';
+		$credits      = '<div style="text-align:center;">';
 		$credits .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
-			array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
+			array('style' => 'display: inline; visibility: visible; text-decoration: none;')
+		);
 		$credits .= ' <a href="https://www.kunena.org"
-			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
+			target="_blank" rel="noopener noreferrer" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
+
 		if (trim($templateText))
 		{
-			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'
+			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}
 
 		$credits .= '</div>';
+
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$credits = '';
+		}
 
 		return $credits;
 	}

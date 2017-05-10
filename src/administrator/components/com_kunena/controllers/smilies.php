@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerSmilies extends KunenaController
 {
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $baseurl = null;
 
 	/**
@@ -60,6 +64,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function edit()
 	{

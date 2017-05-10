@@ -4,9 +4,9 @@
  * @package         Kunena.Framework
  * @subpackage      Forum.Menu
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,30 +15,61 @@ KunenaMenuFix::initialize();
 
 /**
  * Class KunenaMenuFix
+ * @since Kunena
  */
 abstract class KunenaMenuFix
 {
 	/**
 	 * @var array|StdClass[]
+	 * @since Kunena
 	 */
 	public static $items = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $filtered = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $aliases = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $invalid = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $legacy = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $same = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $structure = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $parent = null;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function initialize()
 	{
@@ -51,6 +82,7 @@ abstract class KunenaMenuFix
 	 *
 	 * @return array
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected static function load()
 	{
@@ -70,9 +102,13 @@ abstract class KunenaMenuFix
 		// Set the query
 		$db->setQuery($query);
 
-		if (!(self::$items = $db->loadObjectList('id')))
+		try
 		{
-			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
+			self::$items = $db->loadObjectList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
 		foreach (self::$items as &$item)
@@ -99,6 +135,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getLegacy()
 	{
@@ -114,6 +151,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public static function fixLegacy()
 	{
@@ -145,6 +183,7 @@ abstract class KunenaMenuFix
 	 * @param $itemid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function delete($itemid)
 	{
@@ -163,6 +202,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getAll()
 	{
@@ -181,6 +221,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getAliases()
 	{
@@ -196,6 +237,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getInvalid()
 	{
@@ -209,6 +251,10 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	public static function getConflicts()
 	{
 		return array();
@@ -216,6 +262,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected static function build()
 	{
@@ -277,6 +324,7 @@ abstract class KunenaMenuFix
 	 * @param   StdClass $item
 	 *
 	 * @return object
+	 * @since Kunena
 	 */
 	protected static function getHome($item)
 	{

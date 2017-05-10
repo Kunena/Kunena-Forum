@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,33 +15,80 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
+ * @since Kunena
  */
 class TableKunenaAnnouncements extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $title = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $sdescription = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $description = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $publish_up = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $publish_down = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $published = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $showdate = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -50,6 +97,7 @@ class TableKunenaAnnouncements extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{

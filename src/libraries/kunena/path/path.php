@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Path
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,20 +15,34 @@ jimport('joomla.filesystem.path');
 /**
  * Class KunenaPath
  *
- * @see JPath
+ * @see   JPath
+ * @since Kunena
  */
 class KunenaPath extends JPath
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $tmpdir = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $apache = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $owner = null;
 
 	/**
 	 * Returns server writable temporary directory, preferring to Joomla tmp if possible.
 	 *
 	 * @return  string  Path to temporary directory.
+	 * @since Kunena
 	 */
 	public static function tmpdir()
 	{
@@ -61,6 +75,7 @@ class KunenaPath extends JPath
 	 * @param   string $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
+	 * @since Kunena
 	 */
 	public static function isOwner($path)
 	{
@@ -96,6 +111,7 @@ class KunenaPath extends JPath
 	 * @param $path
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function isWritable($path)
 	{

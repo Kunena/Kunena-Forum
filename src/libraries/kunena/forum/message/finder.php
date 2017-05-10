@@ -4,25 +4,39 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumMessageFinder
+ * @since Kunena
  */
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_messages';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $hold = array(0);
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $moved = null;
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -38,6 +52,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @return $this
 	 * @deprecated Use where() instead.
+	 * @since      Kunena
 	 */
 	public function filterBy($field, $operation, $value)
 	{
@@ -53,6 +68,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser $user
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUserAccess(KunenaUser $user)
 	{
@@ -74,6 +90,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $categories
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByCategories(array $categories)
 	{
@@ -107,6 +124,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
@@ -135,6 +153,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUser(KunenaUser $user = null, $action = 'posted')
 	{
@@ -180,6 +199,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $hold List of hold states to display.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByHold(array $hold = array(0))
 	{
@@ -194,6 +214,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	public function find($access = 'read')
 	{
@@ -202,6 +223,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		return KunenaForumMessageHelper::getMessages($results, $access);
 	}
 
+	/**
+	 * @param   JDatabaseQuery $query
+	 *
+	 * @since Kunena
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 		// TODO: remove the field..

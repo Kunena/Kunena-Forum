@@ -4,22 +4,28 @@
  * @package       Kunena.Framework
  * @subpackage    Attachment
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Attachment Helper Class
+ * @since Kunena
  */
 abstract class KunenaAttachmentHelper
 {
 	/**
 	 * @var KunenaAttachment[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_messages = array();
 
 	/**
@@ -28,6 +34,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string $mime
 	 *
 	 * @return  bool  True if mime is image.
+	 * @since Kunena
 	 */
 	public function isImageMime($mime)
 	{
@@ -41,6 +48,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaAttachment
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -78,6 +86,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getById($ids = false, $authorise = 'read')
 	{
@@ -120,6 +129,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|string $ids
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getNumberAttachments($ids = false)
 	{
@@ -145,6 +155,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false, $authorise = 'read')
 	{
@@ -226,7 +237,8 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			}
+			while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -261,7 +273,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $category
 	 * @param   null  $user
 	 *
-	 * @return array
+	 * @return array|boolean
+	 * @since Kunena
 	 */
 	static public function getExtensions($category, $user = null)
 	{
@@ -281,6 +294,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $user
 	 *
 	 * @return array|boolean
+	 * @since Kunena
 	 */
 	static public function getImageExtensions($category = null, $user = null)
 	{
@@ -355,6 +369,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $user
 	 *
 	 * @return array|boolean
+	 * @since Kunena
 	 */
 	static public function getFileExtensions($category = null, $user = null)
 	{
@@ -422,6 +437,7 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	static public function cleanup()
 	{
@@ -430,10 +446,15 @@ abstract class KunenaAttachmentHelper
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -452,9 +473,17 @@ abstract class KunenaAttachmentHelper
 		unset($results);
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
 		$db->setQuery($query);
-		$db->execute();
 
-		return KunenaError::checkDatabaseError();
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
 	}
 
 	/**
@@ -468,6 +497,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string $filler
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
@@ -490,6 +520,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaAttachment[]
+	 * @since Kunena
 	 */
 	public static function getByUserid($user, array $params)
 	{
@@ -522,8 +553,15 @@ abstract class KunenaAttachmentHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery($query, 0, $params['limit']);
-		$results = $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 
@@ -545,6 +583,8 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadById(array $ids)
 	{
@@ -565,8 +605,15 @@ abstract class KunenaAttachmentHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -587,6 +634,8 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadByMessage(array $ids)
 	{
@@ -609,8 +658,15 @@ abstract class KunenaAttachmentHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $mesid)
 		{

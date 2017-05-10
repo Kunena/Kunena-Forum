@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -17,10 +17,15 @@ defined('_JEXEC') or die();
  */
 class KunenaLogFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_logs';
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -34,6 +39,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param   JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
@@ -53,6 +59,12 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $condition
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
 	public function innerJoin($condition)
 	{
 		$this->query->innerJoin($condition);
@@ -60,6 +72,12 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $columns
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
 	public function select($columns)
 	{
 		$this->query->select($columns);
@@ -67,6 +85,12 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $columns
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
 	public function group($columns)
 	{
 		$this->query->group($columns);
@@ -78,6 +102,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
+	 * @since Kunena
 	 */
 	public function find()
 	{
@@ -90,12 +115,24 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
 
+	/**
+	 * @param   JDatabaseQuery $query
+	 *
+	 * @since Kunena
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 	}

@@ -5,17 +5,17 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user   = $this->user;
-$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
-$show   = KunenaConfig::getInstance()->showuserstats;
+$user              = $this->user;
+$avatar            = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+$show              = KunenaConfig::getInstance()->showuserstats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
@@ -34,7 +34,7 @@ if ($show)
 <div class="span2">
 	<ul class="profilebox center">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 		<?php if ($optional_username) : ?>
 			<li>

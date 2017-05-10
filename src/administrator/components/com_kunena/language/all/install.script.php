@@ -3,17 +3,23 @@
  * Kunena Component
  * @package       Kunena.Installer
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class pkg_kunena_languagesInstallerScript
+ * @since Kunena
+ */
 class pkg_kunena_languagesInstallerScript
 {
 
 	/**
 	 * @param   JInstallerFile $parent
+	 *
+	 * @since Kunena
 	 */
 	public function uninstall($parent)
 	{
@@ -31,6 +37,7 @@ class pkg_kunena_languagesInstallerScript
 	 * @param   JInstallerFile $parent
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function preflight($type, $parent)
 	{
@@ -102,6 +109,12 @@ class pkg_kunena_languagesInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $tag
+	 * @param $name
+	 *
+	 * @since Kunena
+	 */
 	public function uninstallLanguage($tag, $name)
 	{
 		$table = JTable::getInstance('extension');

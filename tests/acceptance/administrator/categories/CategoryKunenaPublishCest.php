@@ -1,14 +1,14 @@
 <?php
+
 /**
  * Kunena Package
  *
- * @package    Kunena.Package
+ * @package        Kunena.Package
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
-
 class CategoryKunenaPublishCest
 {
 	/**
@@ -27,7 +27,6 @@ class CategoryKunenaPublishCest
 		$I->click(['xpath' => "//input[@id='cb2']"]);
 		$I->click(['xpath' => "//div[@id='toolbar-unpublish']/button"]);
 		$I->wait(1);
-		$I->waitForText('Category Suggestion Box updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -48,7 +47,6 @@ class CategoryKunenaPublishCest
 		$I->click(['xpath' => "//div[@id='toolbar-publish']/button"]);
 		$I->expectTo('see an error when trying to save a category without title');
 		$I->wait(1);
-		$I->waitForText('Category Suggestion Box updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 

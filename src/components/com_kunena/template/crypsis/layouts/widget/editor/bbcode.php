@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -34,7 +34,7 @@ $this->getBBcodesEnabled();
 <div class="control-group">
 	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
 	<div class="controls">
-		<ul id="tabs_kunena_editor" class="nav nav-tabs">
+		<ul id="tabs_kunena_editor" class="nav nav-tabs span12">
 			<li><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
@@ -62,7 +62,7 @@ $this->getBBcodesEnabled();
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ZOOM_LEVEL') ?>: <select id="modal-map-zoomlevel">
 				<option value="2">2</option>
 				<option value="4">4</option>
-				<option type="6">6</option>
+				<option value="6">6</option>
 				<option value="8">8</option>
 				<option value="10">10</option>
 				<option value="12">12</option>
@@ -71,7 +71,9 @@ $this->getBBcodesEnabled();
 				<option value="18">18</option>
 			</select><br/>
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city" id="modal-map-city" type="text"
-			                                                                            value=""/></p>
+			                                                                            value=""
+			                                                                            placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/>
+		</p>
 	</div>
 	<div class="modal-footer">
 		<button id="map-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -102,10 +104,26 @@ if (!empty($codeTypes)) : ?>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
-		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size"
-		                                                                                         type="text" value=""/>
+		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
+			<select id="kpicture-size-list-modal"
+			        name="modal-picture-size" class="kbutton">
+				<?php
+				$vid_provider = array('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
+
+				foreach ($vid_provider as $vid_type)
+				{
+					$vid_type = explode(',', $vid_type);
+					echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+				}
+				?>
+			</select>
+			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt"
+			                                                                                     id="modal-picture-alt" type="text" value=""
+			                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
 			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url"
-			                                                                                     type="text" value=""/></p>
+			                                                                                     type="text" value=""
+			                                                                                     placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
+		</p>
 	</div>
 	<div class="modal-footer">
 		<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -118,10 +136,14 @@ if (!empty($codeTypes)) : ?>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
-		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>: <input name="modal-link-url" id="modal-link-url" type="text"
-		                                                                                     value=""/>
-			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>: <input name="modal-link-text" id="modal-link-text" type="text"
-			                                                                                   value=""/></p>
+		<p>
+			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
+			<input name="modal-link-url" id="modal-link-url" type="text" value=""
+			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>"/>
+			<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
+			<input name="modal-link-text" id="modal-link-text" type="text" value=""
+			       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
+		</p>
 	</div>
 	<div class="modal-footer">
 		<button id="link-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
@@ -200,7 +222,7 @@ if (!empty($codeTypes)) : ?>
 						<div class="input-append date">
 							<input type="text" class="span12 kpoll-time-to-live-input" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
 							       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span
-								class="add-on"><i class="icon-grid-view-2 "></i></span>
+								class="add-on"><?php echo KunenaIcons::grid(); ?></span>
 						</div>
 					</div>
 				</div>
@@ -239,7 +261,6 @@ if (!empty($codeTypes)) : ?>
 		<h3 id="myModalLabel">Emoticons</h3>
 	</div>
 	<div class="modal-body">
-		<p>
 		<div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 			foreach ($emoticons as $emo_code => $emo_url)
@@ -251,7 +272,6 @@ if (!empty($codeTypes)) : ?>
 			}
 			?>
 		</div>
-		</p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>

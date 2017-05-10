@@ -4,14 +4,15 @@
  * @package       Kunena.Framework
  * @subpackage    HTML
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class JHtmlKunenaForum
+ * @since Kunena
  */
 abstract class JHtmlKunenaForum
 {
@@ -28,6 +29,7 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $translate
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
@@ -206,6 +208,7 @@ abstract class JHtmlKunenaForum
 	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
@@ -249,7 +252,17 @@ abstract class JHtmlKunenaForum
 		return "<a {$attributes}>{$content}</a>";
 	}
 
-	public static function checklist($name, $options, $selected = array())
+	/**
+	 * @param         $name
+	 * @param         $options
+	 * @param   array $selected
+	 *
+	 * @param   null    $class_input
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public static function checklist($name, $options, $selected = array(), $class_input = null)
 	{
 		if ($selected !== true && !is_array($selected))
 		{
@@ -267,7 +280,7 @@ abstract class JHtmlKunenaForum
 
 			// Build the HTML for the item.
 			$html[] = '	<li>';
-			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '"';
+			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="' . $class_input . '"';
 			$html[] = '			' . $checked . ' />';
 			$html[] = '		<label for="' . $eid . '">';
 			$html[] = '			' . $item;

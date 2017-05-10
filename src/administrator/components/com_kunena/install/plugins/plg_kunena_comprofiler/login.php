@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      Comprofiler
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginComprofiler
+ * @since Kunena
+ */
 class KunenaLoginComprofiler
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaLoginComprofiler constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -31,6 +41,7 @@ class KunenaLoginComprofiler
 	 * @param $rememberme
 	 *
 	 * @return null
+	 * @since Kunena
 	 */
 	public function loginUser($username, $password, $rememberme)
 	{
@@ -51,6 +62,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function logoutUser()
 	{
@@ -66,6 +78,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getRememberMe()
 	{
@@ -81,6 +94,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -91,6 +105,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -101,6 +116,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{
@@ -120,6 +136,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getResetURL()
 	{
@@ -130,6 +147,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRemindURL()
 	{

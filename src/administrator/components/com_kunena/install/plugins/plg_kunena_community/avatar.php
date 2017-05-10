@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      Community
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAvatarCommunity
+ * @since Kunena
+ */
 class KunenaAvatarCommunity extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAvatarCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -27,6 +37,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @param $userlist
+	 *
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{
@@ -42,6 +54,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getEditURL()
 	{
@@ -54,6 +67,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

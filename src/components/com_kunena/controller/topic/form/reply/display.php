@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Edit';
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $captchaHtml = null;
 
 	/**
@@ -28,6 +36,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 *
 	 * @throws RuntimeException
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -98,7 +107,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					$dispatcher           = JEventDispatcher::getInstance();
 					$result               = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 					$output               = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-						. $captcha_pubkey . '" data-theme="light"')
+							. $captcha_pubkey . '" data-theme="light"')
 					);
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
@@ -139,13 +148,14 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-		$this->headerText   = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 	}
 
 	/**
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -205,6 +215,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 * Can user subscribe to the topic?
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function canSubscribe()
 	{

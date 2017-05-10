@@ -4,18 +4,22 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Category.User
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryUserHelper
+ * @since Kunena
  */
 abstract class KunenaForumCategoryUserHelper
 {
-	// Global for every instance
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -26,6 +30,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   bool     $reload   Reload objects from the database.
 	 *
 	 * @return KunenaForumCategoryUser    The user category object.
+	 * @since Kunena
 	 */
 	static public function get($category = null, $user = null, $reload = false)
 	{
@@ -58,6 +63,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   mixed          $user The user id to load.
 	 *
 	 * @return KunenaForumCategoryUser[]
+	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $user = null)
 	{
@@ -98,6 +104,12 @@ abstract class KunenaForumCategoryUserHelper
 		return $list;
 	}
 
+	/**
+	 * @param   array $ids
+	 * @param   null  $user
+	 *
+	 * @since Kunena
+	 */
 	static public function markRead(array $ids, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
@@ -153,6 +165,8 @@ abstract class KunenaForumCategoryUserHelper
 	 *
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)
 	{
@@ -175,8 +189,15 @@ abstract class KunenaForumCategoryUserHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('category_id');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadAssocList('category_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{

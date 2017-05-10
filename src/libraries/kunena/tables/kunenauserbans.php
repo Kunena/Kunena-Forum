@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,40 +15,103 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Bans
  * Provides access to the #__kunena_users_banned table
+ * @since Kunena
  */
 class TableKunenaUserBans extends JTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ip = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $blocked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $expiration = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $reason_private = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $reason_public = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_by = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $comments = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ANY = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ACTIVE = 1;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -60,6 +123,7 @@ class TableKunenaUserBans extends JTable
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
@@ -82,15 +146,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -112,6 +176,7 @@ class TableKunenaUserBans extends JTable
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
@@ -134,15 +199,15 @@ class TableKunenaUserBans extends JTable
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -161,6 +226,7 @@ class TableKunenaUserBans extends JTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -182,6 +248,7 @@ class TableKunenaUserBans extends JTable
 	 * @param   array $ignore
 	 *
 	 * @return boolean|void
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{

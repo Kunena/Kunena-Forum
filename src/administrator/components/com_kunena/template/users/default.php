@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Users
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -42,8 +42,9 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-users"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
+			<div class="module-title nav-header">
+				<i class="icon-users"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm"
@@ -188,8 +189,10 @@ JHtml::_('dropdown.init');
 					$img_no                 = '<i class="icon-cancel"></i>';
 					$img_yes                = '<i class="icon-checkmark"></i>';
 
-					if ($this->pagination->total > 0) :
-						foreach ($this->users as $user) :
+					if ($this->pagination->total > 0)
+						:
+						foreach ($this->users as $user)
+							:
 							$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
 							$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
 							?>
@@ -223,13 +226,16 @@ JHtml::_('dropdown.init');
 								<td class="center hidden-phone hidden-tablet">
 									<span class="editlinktip <?php echo($user->signature ? 'hasTip' : ''); ?>"
 									      title="<?php echo $this->escape($user->signature); ?> ">
-										<?php if ($user->signature)
-										{ ?>
+										<?php
+										if ($user->signature)
+										{
+											?>
 											<a href="#edit"
 											   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
 										<?php }
 										else
-										{ ?>
+										{
+											?>
 											<a href="#edit"
 											   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
 										<?php } ?>
@@ -256,7 +262,10 @@ JHtml::_('dropdown.init');
 							</tr>
 							<?php $i++;
 						endforeach;
-					else : ?>
+					else
+
+						:
+						?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">

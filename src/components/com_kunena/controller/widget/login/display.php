@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,34 +17,89 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/Login';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $my;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $registrationUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $resetPasswordUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $remindUsernameUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $rememberMe;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $lastvisitDate;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $announcementsUrl;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pm_link;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $inboxCount;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $inboxCountValue;
+
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $profile_edit_url;
 
 	/**
 	 * Prepare login display.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -77,9 +132,9 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 			if ($private)
 			{
-				$count            = $private->getUnreadCount($this->me->userid);
-				$this->inboxCount = $count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX');
-				$this->pm_link    = $private->getInboxURL();
+				$this->inboxCountValue = $private->getUnreadCount($this->me->userid);
+				$this->inboxCount = $this->inboxCountValue ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : JText::_('COM_KUNENA_PMS_INBOX');
+				$this->pm_link = $private->getInboxURL();
 			}
 
 			$profile = KunenaFactory::getProfile();

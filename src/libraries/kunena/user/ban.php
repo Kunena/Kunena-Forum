@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    User
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -14,29 +14,67 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaUserBan
+ * @since Kunena
  */
 class KunenaUserBan extends JObject
 {
 	/**
 	 * @var array|KunenaUserBan[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instancesByUserid = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instancesByIP = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_useridcache = array();
 
+	/**
+	 * @var JDate|null
+	 * @since Kunena
+	 */
 	protected static $_now = null;
 
+	/**
+	 * @var JUser|null
+	 * @since Kunena
+	 */
 	protected static $_my = null;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ANY = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ACTIVE = 1;
 
 	/**
@@ -45,6 +83,8 @@ class KunenaUserBan extends JObject
 	 * @access    protected
 	 *
 	 * @param   null $identifier
+	 *
+	 * @since     Kunena
 	 */
 	public function __construct($identifier = null)
 	{
@@ -65,6 +105,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @since Kunena
 	 */
 	public function getUser()
 	{
@@ -73,6 +114,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @since Kunena
 	 */
 	public function getCreator()
 	{
@@ -81,6 +123,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @since Kunena
 	 */
 	public function getModifier()
 	{
@@ -91,6 +134,7 @@ class KunenaUserBan extends JObject
 	 * Return ban creation date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getCreationDate()
 	{
@@ -101,6 +145,7 @@ class KunenaUserBan extends JObject
 	 * Return ban expiration date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getExpirationDate()
 	{
@@ -111,6 +156,7 @@ class KunenaUserBan extends JObject
 	 * Return ban modification date.
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public function getModificationDate()
 	{
@@ -119,6 +165,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param   KunenaUserBan $instance
+	 *
+	 * @since Kunena
 	 */
 	private static function storeInstance($instance)
 	{
@@ -150,6 +198,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $userid
+	 *
+	 * @since Kunena
 	 */
 	private static function cacheUserid($userid)
 	{
@@ -253,20 +303,30 @@ class KunenaUserBan extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
 		$c     = __CLASS__;
 		$db    = JFactory::getDBO();
 		$now   = new JDate;
-		$query = "SELECT b.*
-			FROM #__kunena_users_banned AS b
-			INNER JOIN #__users AS u ON u.id=b.userid
-			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
-			ORDER BY b.created_time DESC";
+
+		$query  = $db->getQuery(true);
+		$query->select('b.*')
+			->from($db->quoteName('#__kunena_users_banned') . ' AS b')
+			->innerJoin($db->quoteName('#__users') . ' AS u ON u.id=b.userid')
+			->where('b.expiration = ' . $db->quote($db->getNullDate()) . ' OR b.expiration > ' . $db->quote($now->toSql()))
+			->order('b.created_time DESC');
 		$db->setQuery($query, $start, $limit);
-		$results = $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 
@@ -286,6 +346,7 @@ class KunenaUserBan extends JObject
 	 * @param $userid
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getUserHistory($userid)
 	{
@@ -296,13 +357,22 @@ class KunenaUserBan extends JObject
 
 		$c     = __CLASS__;
 		$db    = JFactory::getDBO();
-		$query = "SELECT *
-			FROM #__kunena_users_banned
-			WHERE `userid`={$db->quote($userid)}
-			ORDER BY id DESC";
+
+		$query  = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_users_banned'))
+			->where('userid = ' . $db->quote($userid))
+			->order('id DESC');
 		$db->setQuery($query);
-		$results = $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$list = array();
 
@@ -320,6 +390,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists()
 	{
@@ -358,6 +429,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $data
+	 *
+	 * @since Kunena
 	 */
 	protected function bind($data)
 	{
@@ -441,6 +514,8 @@ class KunenaUserBan extends JObject
 	/**
 	 * @param   null $public
 	 * @param   null $private
+	 *
+	 * @since Kunena
 	 */
 	public function setReason($public = null, $private = null)
 	{
@@ -467,6 +542,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function canBan()
 	{
@@ -514,6 +590,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isEnabled()
 	{
@@ -534,6 +611,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isLifetime()
 	{
@@ -542,6 +620,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param $comment
+	 *
+	 * @since Kunena
 	 */
 	public function addComment($comment)
 	{
@@ -558,6 +638,8 @@ class KunenaUserBan extends JObject
 	/**
 	 * @param          $expiration
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function setExpiration($expiration, $comment = '')
 	{
@@ -594,6 +676,8 @@ class KunenaUserBan extends JObject
 	 * @param   string $reason_private
 	 * @param   string $reason_public
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
@@ -608,6 +692,8 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param   string $comment
+	 *
+	 * @since Kunena
 	 */
 	public function unBan($comment = '')
 	{

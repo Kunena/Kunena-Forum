@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Categories
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -46,8 +46,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-list-view"
-			                                        alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i> <?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
+			<div class="module-title nav-header">
+				<i class="icon-list-view"></i>
+				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm"
@@ -94,10 +95,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					</div>
 					<!-- TODO: not implemented
 						<div class="btn-group pull-right">
-							<label for="sortTable" class="element-invisible"><?php //echo JText::_('JGLOBAL_SORT_BY');?></label>
+							<label for="sortTable" class="element-invisible"><?php // Echo JText::_('JGLOBAL_SORT_BY');?></label>
 							<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-								<option value=""><?php //echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
-								<?php //echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
+								<option value=""><?php // Echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
+								<?php // echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
 							</select>
 						</div>-->
 					<div class="clearfix"></div>
@@ -203,8 +204,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<tfoot>
 					<tr>
 						<td colspan="10">
-							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
-							<?php //Load the batch processing form. ?>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination);
+							?>
+							<?php // Load the batch processing form. ?>
 							<?php echo $this->loadTemplate('batch'); ?>
 						</td>
 					</tr>
@@ -215,8 +217,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					$img_yes            = '<i class="icon-checkmark"></i>';
 					$i                  = 0;
 
-					if ($this->pagination->total > 0) :
-						foreach ($this->categories as $item) :
+					if ($this->pagination->total > 0)
+						:
+						foreach ($this->categories as $item)
+							:
 							$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
 							$canEdit    = $this->me->isAdmin($item);
 							$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
@@ -229,6 +233,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								$parentsStr       = "";
 								$_currentParentId = $item->parent_id;
 								$parentsStr       = " " . $_currentParentId;
+
 								for ($i2 = 0; $i2 < $item->level; $i2++)
 								{
 									foreach ($this->ordering as $k => $v)
@@ -253,11 +258,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<tr sortable-group-id="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>"
 							    parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 								<td class="order nowrap center hidden-phone">
-									<?php if ($canChange) :
+									<?php if ($canChange)
+										:
 										$disableClassName = '';
 										$disabledLabel = '';
 
-										if (!$this->saveOrder) :
+										if (!$this->saveOrder)
+											:
 											$disabledLabel    = JText::_('JORDERINGDISABLED');
 											$disableClassName = 'inactive tip-top';
 										endif; ?>
@@ -266,7 +273,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<i class="icon-menu"></i>
 									</span>
 										<input type="text" style="display:none;" name="order[]" size="5" value="<?php echo $orderkey; ?>"/>
-									<?php else : ?>
+									<?php else:
+										?>
 										<span class="sortable-handler inactive">
 										<i class="icon-menu"></i>
 									</span>
@@ -279,12 +287,15 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<?php echo JHtml::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 								</td>
 								<td class="center">
-									<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id)) : ?>
+									<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id))
+										:
+										?>
 										<button class="btn btn-micro" title="Display only this item and its children"
 										        onclick="jQuery('input[name=catid]').val(<?php echo $item->id ?>);this.form.submit()">
 											<i class="icon-location"></i>
 										</button>
-									<?php else : ?>
+									<?php else:
+										?>
 										<button class="btn btn-micro" title="Display only this item and its children"
 										        onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
 											<i class="icon-arrow-up"></i>
@@ -294,9 +305,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<td class="has-context">
 									<?php
 									echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
+
 									if ($item->checked_out)
 									{
-										$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->tryAuthorise('core.admin', 'com_checkin');
+										$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
 										$editor     = KunenaFactory::getUser($item->editor)->getName();
 										echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 									}
@@ -320,11 +332,16 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php echo($item->locked == 1 ? $img_yes : $img_no); ?>
 									</a>
 								</td>
-								<?php if ($item->isSection()) : ?>
+								<?php if ($item->isSection())
+									:
+									?>
 									<td class="center hidden-phone" colspan="3">
 										<?php echo JText::_('COM_KUNENA_SECTION'); ?>
 									</td>
-								<?php else : ?>
+								<?php else
+
+									:
+									?>
 									<td class="center hidden-phone">
 										<a class="btn btn-micro <?php echo($item->review ? 'active' : ''); ?>" href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
@@ -352,15 +369,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php
 							$i++;
 						endforeach;
-					else : ?>
+					else                    :
+						?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
 										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-											<?php if ($this->filterActive) : ?>
+											<?php
+											if ($this->filterActive)
+												:
+												?>
 												<button class="btn" type="button"
 												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-											<?php else : ?>
+											<?php else
+												:
+												?>
 												<button class="btn btn-success" type="button"
 												        onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_CATEGORY'); ?></button>
 											<?php endif; ?>

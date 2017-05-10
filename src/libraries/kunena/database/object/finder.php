@@ -4,16 +4,17 @@
  * @package       Kunena.Framework
  * @subpackage    Database
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 
-// no direct access
+// No direct access
 defined('_JEXEC') or die;
 
 /**
  * Class KunenaDatabaseObjectFinder
+ * @since Kunena
  */
 abstract class KunenaDatabaseObjectFinder
 {
@@ -21,32 +22,49 @@ abstract class KunenaDatabaseObjectFinder
 	 * Table associated with the model.
 	 *
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $table;
 
 	/**
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $primaryKey = 'id';
 
 	/**
 	 * @var JDatabaseQuery
+	 * @since Kunena
 	 */
 	protected $query;
 
 	/**
 	 * @var JDatabase
+	 * @since Kunena
 	 */
 	protected $db;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $start = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $limit = 20;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $skip = false;
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -66,6 +84,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int $limitstart
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function start($limitstart = 0)
 	{
@@ -82,6 +101,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int $limit
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function limit($limit = null)
 	{
@@ -103,11 +123,12 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string $alias
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by        = $alias . '.' . $this->db->quoteName($by);
+		$by        = (!empty($alias) ? ($alias . '.') : '') . $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -119,13 +140,15 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string       $field     Field name.
 	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array $value     Value.
-	 * @param  bool          $escape    Only works for LIKE / NOT LIKE.
+	 * @param   bool         $escape    Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
+
 		switch ($operation)
 		{
 			case '>':
@@ -148,6 +171,7 @@ abstract class KunenaDatabaseObjectFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
+
 				if (empty($value))
 				{
 					// WHERE field IN (nothing).
@@ -158,9 +182,10 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db)
-					{
-						$item = $db->quote($item);
-					});
+						{
+							$item = $db->quote($item);
+						}
+					);
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
@@ -176,6 +201,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function find()
 	{
@@ -188,8 +214,15 @@ abstract class KunenaDatabaseObjectFinder
 		$this->build($query);
 		$query->select('a.' . $this->primaryKey);
 		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $this->db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $results;
 	}
@@ -198,6 +231,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function count()
 	{
@@ -212,12 +246,18 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		else
 		{
-			$query->clear('select')->select('COUNT(*)');
+			$query->clear('select')->clear('order')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
 
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
+		try
+		{
+			$count = (int) $this->db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $count;
 	}
@@ -228,6 +268,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   JDatabaseQuery $query
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

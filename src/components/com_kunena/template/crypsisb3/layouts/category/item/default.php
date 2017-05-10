@@ -5,8 +5,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -64,7 +64,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
-					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
+					<?php echo KunenaIcons::arrowdown(); ?>
 				</a>
 			</td>
 			<td class="col-md-<?php echo $cols ?>">
@@ -108,7 +108,7 @@ $this->addStyleSheet('assets/css/rating.css');
 					<a id="forumbottom"> </a>
 					<a href="#forumtop" rel="nofollow">
 						<span class="divider"></span>
-						<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+						<?php echo KunenaIcons::arrowup(); ?>
 					</a>
 					<?php // FIXME: $this->displayCategoryActions() ?>
 				</td>

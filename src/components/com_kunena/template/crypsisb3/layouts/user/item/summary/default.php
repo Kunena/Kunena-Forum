@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -50,7 +50,7 @@ if ($this->config->showuserstats)
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-md-12">
-						<ul class="unstyled col-md-2">
+						<ul class="list-unstyled col-md-3">
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
 								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
@@ -65,15 +65,13 @@ if ($this->config->showuserstats)
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
-										<?php /** @var TYPE_NAME $rankTitle */
-										echo $this->escape($rankTitle); ?>
-										<?php /** @var TYPE_NAME $rankImage */
-										echo $rankImage; ?>
+										<?php echo $this->escape($rankTitle); ?>
+										<?php echo $rankImage; ?>
 									</span>
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="unstyled col-md-3">
+						<ul class="list-unstyled col-md-3">
 							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
@@ -97,7 +95,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo $profile->getTime()->toKunena('time'); ?> </span>
 							</li>
 						</ul>
-						<ul class="unstyled col-md-2">
+						<ul class="list-unstyled col-md-3">
 							<?php if (!empty($profile->posts)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
@@ -129,14 +127,14 @@ if ($this->config->showuserstats)
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="unstyled col-md-3">
+						<ul class="list-unstyled col-md-3">
 							<?php if (!empty($profile->location)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 									<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow noopener noreferrer"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -169,20 +167,18 @@ if ($this->config->showuserstats)
 						</div>
 						<div class="col-md-3 pull-right">
 							<?php if ($private) : ?>
-								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-xs', 'glyphicon glyphicon-comments-2'); ?>
+								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-sm', 'glyphicon glyphicon-comment'); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"
+								<a class="btn btn-default btn-sm" href="mailto:<?php echo $profile->email; ?>"
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>
-							<?php elseif (empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteURL ?></a>
-							<?php elseif (!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-default btn-small"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></button>
+								<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
+							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
+								<a class="btn btn-default btn-sm" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
+							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>
+								<button class="btn btn-default btn-sm"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -21,7 +21,7 @@ $right   = isset($this->pullright) ? ' pull-right' : '';
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
-$normal  = !empty($this->normal) ? 'btn-small' : 'btn';
+$normal  = !empty($this->normal) ? 'btn-sm' : 'btn';
 $icon    = $this->icon;
 ?>
 

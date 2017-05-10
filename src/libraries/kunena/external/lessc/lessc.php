@@ -6,8 +6,8 @@
  *
  * LESS css compiler, adapted from http://lesscss.org
  *
- * Copyright 2012, Leaf Corcoran <leafot@gmail.com>
- * Licensed under MIT or GPLv3, see LICENSE
+ * @copyright Copyright 2012, Leaf Corcoran <leafot@gmail.com>
+ * @license   Licensed under MIT or GPLv3, see LICENSE
  */
 
 
@@ -36,38 +36,113 @@
  *
  * The `lessc_formatter` takes a CSS tree, and dumps it to a formatted string,
  * handling things like indentation.
+ * @since LESSC
  */
 class lessc
 {
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static public $VERSION = "v0.4.0";
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $TRUE = array("keyword", "true");
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $FALSE = array("keyword", "false");
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	protected $libFunctions = array();
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	protected $registeredVars = array();
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	protected $preserveComments = false;
 
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $vPrefix = '@'; // prefix of abstract properties
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $mPrefix = '$'; // prefix of abstract blocks
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $parentSelector = '&';
 
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $importDisabled = false;
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $importDir = '';
 
+	/**
+	 * @var null
+	 * @since LESSC
+	 */
 	protected $numberPrecision = null;
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	protected $allParsedFiles = array();
 
 	// set to the parser that generated the current line when compiling
 	// so we know how to create error messages
+	/**
+	 * @var null
+	 * @since LESSC
+	 */
 	protected $sourceParser = null;
+	/**
+	 * @var null
+	 * @since LESSC
+	 */
 	protected $sourceLoc = null;
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static public $defaultValue = array("keyword", "");
 
+	/**
+	 * @var int
+	 * @since LESSC
+	 */
 	static protected $nextImportId = 0; // uniquely identify imports
 
 	// attempts to find the path of an import url, returns null for css files
+	/**
+	 * @param $url
+	 *
+	 * @return null|string
+	 * @since LESSC
+	 */
 	protected function findImport($url)
 	{
 		foreach ((array) $this->importDir as $dir)
@@ -83,11 +158,24 @@ class lessc
 		return null;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function fileExists($name)
 	{
 		return is_file($name);
 	}
 
+	/**
+	 * @param $items
+	 * @param $delim
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	static public function compressList($items, $delim)
 	{
 		if (!isset($items[1]) && isset($items[0]))
@@ -100,11 +188,25 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $what
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	static public function preg_quote($what)
 	{
 		return preg_quote($what, '/');
 	}
 
+	/**
+	 * @param $importPath
+	 * @param $parentBlock
+	 * @param $out
+	 *
+	 * @return array|bool
+	 * @since LESSC
+	 */
 	protected function tryImport($importPath, $parentBlock, $out)
 	{
 		if ($importPath[0] == "function" && $importPath[1] == "url")
@@ -183,6 +285,15 @@ class lessc
 		return array(true, $bottom, $parser, $dir);
 	}
 
+	/**
+	 * @param $props
+	 * @param $block
+	 * @param $out
+	 * @param $sourceParser
+	 * @param $importDir
+	 *
+	 * @since LESSC
+	 */
 	protected function compileImportedProps($props, $block, $out, $sourceParser, $importDir)
 	{
 		$oldSourceParser = $this->sourceParser;
@@ -224,7 +335,8 @@ class lessc
 	 *
 	 * @param $block
 	 *
-	 * @throws exception
+	 * @throws Exception
+	 * @since LESSC
 	 */
 	protected function compileBlock($block)
 	{
@@ -254,6 +366,11 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $block
+	 *
+	 * @since LESSC
+	 */
 	protected function compileCSSBlock($block)
 	{
 		$env = $this->pushEnv();
@@ -269,6 +386,11 @@ class lessc
 		$this->popEnv();
 	}
 
+	/**
+	 * @param $media
+	 *
+	 * @since LESSC
+	 */
 	protected function compileMedia($media)
 	{
 		$env         = $this->pushEnv($media);
@@ -297,6 +419,12 @@ class lessc
 		$this->popEnv();
 	}
 
+	/**
+	 * @param $scope
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function mediaParent($scope)
 	{
 		while (!empty($scope->parent))
@@ -311,6 +439,12 @@ class lessc
 		return $scope;
 	}
 
+	/**
+	 * @param $block
+	 * @param $selectors
+	 *
+	 * @since LESSC
+	 */
 	protected function compileNestedBlock($block, $selectors)
 	{
 		$this->pushEnv($block);
@@ -323,6 +457,11 @@ class lessc
 		$this->popEnv();
 	}
 
+	/**
+	 * @param $root
+	 *
+	 * @since LESSC
+	 */
 	protected function compileRoot($root)
 	{
 		$this->pushEnv();
@@ -331,6 +470,12 @@ class lessc
 		$this->popEnv();
 	}
 
+	/**
+	 * @param $block
+	 * @param $out
+	 *
+	 * @since LESSC
+	 */
 	protected function compileProps($block, $out)
 	{
 		foreach ($this->sortProps($block->props) as $prop)
@@ -341,6 +486,13 @@ class lessc
 		$out->lines = array_values(array_unique($out->lines));
 	}
 
+	/**
+	 * @param      $props
+	 * @param bool $split
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function sortProps($props, $split = false)
 	{
 		$vars    = array();
@@ -382,6 +534,12 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $queries
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	protected function compileMediaQuery($queries)
 	{
 		$compiledQueries = array();
@@ -428,6 +586,13 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param      $env
+	 * @param null $childQueries
+	 *
+	 * @return null
+	 * @since LESSC
+	 */
 	protected function multiplyMedia($env, $childQueries = null)
 	{
 		if (is_null($env) ||
@@ -464,6 +629,13 @@ class lessc
 		return $this->multiplyMedia($env->parent, $out);
 	}
 
+	/**
+	 * @param $tag
+	 * @param $replace
+	 *
+	 * @return int
+	 * @since LESSC
+	 */
 	protected function expandParentSelectors(&$tag, $replace)
 	{
 		$parts = explode("$&$", $tag);
@@ -480,6 +652,10 @@ class lessc
 		return $count;
 	}
 
+	/**
+	 * @return null
+	 * @since LESSC
+	 */
 	protected function findClosestSelectors()
 	{
 		$env       = $this->env;
@@ -500,6 +676,12 @@ class lessc
 
 
 	// multiply $selectors against the nearest selectors in env
+	/**
+	 * @param $selectors
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function multiplySelectors($selectors)
 	{
 		// find parent selectors
@@ -539,6 +721,12 @@ class lessc
 	}
 
 	// reduces selector expressions
+	/**
+	 * @param $selectors
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function compileSelectors($selectors)
 	{
 		$out = array();
@@ -559,11 +747,26 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param $left
+	 * @param $right
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function eq($left, $right)
 	{
 		return $left == $right;
 	}
 
+	/**
+	 * @param $block
+	 * @param $orderedArgs
+	 * @param $keywordArgs
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function patternMatch($block, $orderedArgs, $keywordArgs)
 	{
 		// match the guards if it has them
@@ -671,6 +874,15 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param       $blocks
+	 * @param       $orderedArgs
+	 * @param       $keywordArgs
+	 * @param array $skip
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function patternMatchAll($blocks, $orderedArgs, $keywordArgs, $skip = array())
 	{
 		$matches = null;
@@ -692,6 +904,16 @@ class lessc
 	}
 
 	// attempt to find blocks matched by path and args
+	/**
+	 * @param       $searchIn
+	 * @param       $path
+	 * @param       $orderedArgs
+	 * @param       $keywordArgs
+	 * @param array $seen
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function findBlocks($searchIn, $path, $orderedArgs, $keywordArgs, $seen = array())
 	{
 		if ($searchIn == null)
@@ -753,6 +975,13 @@ class lessc
 
 	// sets all argument names in $args to either the default value
 	// or the one passed in through $values
+	/**
+	 * @param $args
+	 * @param $orderedValues
+	 * @param $keywordValues
+	 *
+	 * @since LESSC
+	 */
 	protected function zipSetArgs($args, $orderedValues, $keywordValues)
 	{
 		$assignedValues = array();
@@ -808,6 +1037,13 @@ class lessc
 	}
 
 	// compile a prop and update $lines or $blocks appropriately
+	/**
+	 * @param $prop
+	 * @param $block
+	 * @param $out
+	 *
+	 * @since LESSC
+	 */
 	protected function compileProp($prop, $block, $out)
 	{
 		// set error position context
@@ -995,6 +1231,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return string
+	 * @since LESSC
 	 */
 	protected function compileValue($value)
 	{
@@ -1074,6 +1311,12 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return number
+	 * @since LESSC
+	 */
 	protected function lib_pow($args)
 	{
 		list($base, $exp) = $this->assertArgs($args, 2, "pow");
@@ -1081,11 +1324,21 @@ class lessc
 		return pow($this->assertNumber($base), $this->assertNumber($exp));
 	}
 
+	/**
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_pi()
 	{
 		return pi();
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return int
+	 * @since LESSC
+	 */
 	protected function lib_mod($args)
 	{
 		list($a, $b) = $this->assertArgs($args, 2, "mod");
@@ -1093,21 +1346,45 @@ class lessc
 		return $this->assertNumber($a) % $this->assertNumber($b);
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_tan($num)
 	{
 		return tan($this->assertNumber($num));
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_sin($num)
 	{
 		return sin($this->assertNumber($num));
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_cos($num)
 	{
 		return cos($this->assertNumber($num));
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_atan($num)
 	{
 		$num = atan($this->assertNumber($num));
@@ -1115,6 +1392,12 @@ class lessc
 		return array("number", $num, "rad");
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_asin($num)
 	{
 		$num = asin($this->assertNumber($num));
@@ -1122,6 +1405,12 @@ class lessc
 		return array("number", $num, "rad");
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_acos($num)
 	{
 		$num = acos($this->assertNumber($num));
@@ -1129,11 +1418,23 @@ class lessc
 		return array("number", $num, "rad");
 	}
 
+	/**
+	 * @param $num
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_sqrt($num)
 	{
 		return sqrt($this->assertNumber($num));
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function lib_extract($value)
 	{
 		list($list, $idx) = $this->assertArgs($value, 2, "extract");
@@ -1146,46 +1447,100 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_isnumber($value)
 	{
 		return $this->toBool($value[0] == "number");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_isstring($value)
 	{
 		return $this->toBool($value[0] == "string");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_iscolor($value)
 	{
 		return $this->toBool($this->coerceColor($value));
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_iskeyword($value)
 	{
 		return $this->toBool($value[0] == "keyword");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_ispixel($value)
 	{
 		return $this->toBool($value[0] == "number" && $value[2] == "px");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_ispercentage($value)
 	{
 		return $this->toBool($value[0] == "number" && $value[2] == "%");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_isem($value)
 	{
 		return $this->toBool($value[0] == "number" && $value[2] == "em");
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_isrem($value)
 	{
 		return $this->toBool($value[0] == "number" && $value[2] == "rem");
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	protected function lib_rgbahex($color)
 	{
 		$color = $this->coerceColor($color);
@@ -1200,12 +1555,24 @@ class lessc
 			$color[1], $color[2], $color[3]);
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	protected function lib_argb($color)
 	{
 		return $this->lib_rgbahex($color);
 	}
 
 	// utility func to unquote a string
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_e($arg)
 	{
 		switch ($arg[0])
@@ -1229,6 +1596,12 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib__sprintf($args)
 	{
 		if ($args[0] != "list")
@@ -1266,6 +1639,12 @@ class lessc
 		return array("string", $d, array($template));
 	}
 
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_floor($arg)
 	{
 		$value = $this->assertNumber($arg);
@@ -1273,6 +1652,12 @@ class lessc
 		return array("number", floor($value), $arg[2]);
 	}
 
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_ceil($arg)
 	{
 		$value = $this->assertNumber($arg);
@@ -1280,6 +1665,12 @@ class lessc
 		return array("number", ceil($value), $arg[2]);
 	}
 
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_round($arg)
 	{
 		$value = $this->assertNumber($arg);
@@ -1287,6 +1678,12 @@ class lessc
 		return array("number", round($value), $arg[2]);
 	}
 
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_unit($arg)
 	{
 		if ($arg[0] == "list")
@@ -1309,6 +1706,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @since LESSC
 	 */
 	protected function colorArgs($args)
 	{
@@ -1324,6 +1722,12 @@ class lessc
 		return array($color, $delta);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_darken($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1334,6 +1738,12 @@ class lessc
 		return $this->toRGB($hsl);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_lighten($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1344,6 +1754,12 @@ class lessc
 		return $this->toRGB($hsl);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_saturate($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1354,6 +1770,12 @@ class lessc
 		return $this->toRGB($hsl);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_desaturate($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1364,6 +1786,12 @@ class lessc
 		return $this->toRGB($hsl);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_spin($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1376,6 +1804,12 @@ class lessc
 		return $this->toRGB($hsl);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function lib_fadeout($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1384,6 +1818,12 @@ class lessc
 		return $color;
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function lib_fadein($args)
 	{
 		list($color, $delta) = $this->colorArgs($args);
@@ -1392,6 +1832,12 @@ class lessc
 		return $color;
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_hue($color)
 	{
 		$hsl = $this->toHSL($this->assertColor($color));
@@ -1399,6 +1845,12 @@ class lessc
 		return round($hsl[1]);
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_saturation($color)
 	{
 		$hsl = $this->toHSL($this->assertColor($color));
@@ -1406,6 +1858,12 @@ class lessc
 		return round($hsl[2]);
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return float
+	 * @since LESSC
+	 */
 	protected function lib_lightness($color)
 	{
 		$hsl = $this->toHSL($this->assertColor($color));
@@ -1415,6 +1873,12 @@ class lessc
 
 	// get the alpha of a color
 	// defaults to 1 for non-colors or colors without an alpha
+	/**
+	 * @param $value
+	 *
+	 * @return int|mixed
+	 * @since LESSC
+	 */
 	protected function lib_alpha($value)
 	{
 		if (!is_null($color = $this->coerceColor($value)))
@@ -1424,6 +1888,12 @@ class lessc
 	}
 
 	// set the alpha of the color
+	/**
+	 * @param $args
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function lib_fade($args)
 	{
 		list($color, $alpha) = $this->colorArgs($args);
@@ -1432,6 +1902,12 @@ class lessc
 		return $color;
 	}
 
+	/**
+	 * @param $arg
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function lib_percentage($arg)
 	{
 		$num = $this->assertNumber($arg);
@@ -1442,6 +1918,12 @@ class lessc
 	// mixes two colors by weight
 	// mix(@color1, @color2, [@weight: 50%]);
 	// http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html#mix-instance_method
+	/**
+	 * @param $args
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function lib_mix($args)
 	{
 		if ($args[0] != "list" || count($args[2]) < 2)
@@ -1485,6 +1967,12 @@ class lessc
 		return $this->fixColor($new);
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function lib_contrast($args)
 	{
 		if ($args[0] != 'list' || count($args[2]) < 3)
@@ -1507,6 +1995,13 @@ class lessc
 		return $lightColor;
 	}
 
+	/**
+	 * @param        $value
+	 * @param string $error
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function assertColor($value, $error = "expected color value")
 	{
 		$color = $this->coerceColor($value);
@@ -1519,6 +2014,13 @@ class lessc
 		return $color;
 	}
 
+	/**
+	 * @param        $value
+	 * @param string $error
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function assertNumber($value, $error = "expecting number")
 	{
 		if ($value[0] == "number")
@@ -1529,6 +2031,14 @@ class lessc
 		$this->throwError($error);
 	}
 
+	/**
+	 * @param        $value
+	 * @param        $expectedArgs
+	 * @param string $name
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function assertArgs($value, $expectedArgs, $name = "")
 	{
 		if ($expectedArgs == 1)
@@ -1559,6 +2069,12 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function toHSL($color)
 	{
 		if ($color[0] == 'hsl')
@@ -1615,6 +2131,14 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param $comp
+	 * @param $temp1
+	 * @param $temp2
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function toRGB_helper($comp, $temp1, $temp2)
 	{
 		if ($comp < 0)
@@ -1651,6 +2175,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return array
+	 * @since LESSC
 	 */
 	protected function toRGB($color)
 	{
@@ -1693,6 +2218,14 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param     $v
+	 * @param int $max
+	 * @param int $min
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function clamp($v, $max = 1, $min = 0)
 	{
 		return min($max, max($min, $v));
@@ -1704,7 +2237,8 @@ class lessc
 	 *
 	 * @param $func
 	 *
-	 * @return bool
+	 * @return array|bool
+	 * @since LESSC
 	 */
 	protected function funcToColor($func)
 	{
@@ -1799,6 +2333,13 @@ class lessc
 		return false;
 	}
 
+	/**
+	 * @param      $value
+	 * @param bool $forExpression
+	 *
+	 * @return array|bool|null
+	 * @since LESSC
+	 */
 	protected function reduce($value, $forExpression = false)
 	{
 		switch ($value[0])
@@ -1958,6 +2499,12 @@ class lessc
 
 
 	// coerce a value for use in color operation
+	/**
+	 * @param $value
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function coerceColor($value)
 	{
 		switch ($value[0])
@@ -1999,6 +2546,12 @@ class lessc
 	}
 
 	// make something string like into a string
+	/**
+	 * @param $value
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function coerceString($value)
 	{
 		switch ($value[0])
@@ -2013,6 +2566,12 @@ class lessc
 	}
 
 	// turn list of length 1 into value type
+	/**
+	 * @param $value
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function flattenList($value)
 	{
 		if ($value[0] == "list" && count($value[2]) == 1)
@@ -2023,6 +2582,12 @@ class lessc
 		return $value;
 	}
 
+	/**
+	 * @param $a
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function toBool($a)
 	{
 		if ($a)
@@ -2036,6 +2601,12 @@ class lessc
 	}
 
 	// evaluate an expression
+	/**
+	 * @param $exp
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function evaluate($exp)
 	{
 		list(, $op, $left, $right, $whiteBefore, $whiteAfter) = $exp;
@@ -2097,6 +2668,13 @@ class lessc
 		return array("string", "", array($left, $paddedOp, $right));
 	}
 
+	/**
+	 * @param $left
+	 * @param $right
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function stringConcatenate($left, $right)
 	{
 		if ($strLeft = $this->coerceString($left))
@@ -2121,6 +2699,12 @@ class lessc
 
 
 	// make sure a color's components don't go out of bounds
+	/**
+	 * @param $c
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function fixColor($c)
 	{
 		foreach (range(1, 3) as $i)
@@ -2139,6 +2723,14 @@ class lessc
 		return $c;
 	}
 
+	/**
+	 * @param $op
+	 * @param $lft
+	 * @param $rgt
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function op_number_color($op, $lft, $rgt)
 	{
 		if ($op == '+' || $op == '*')
@@ -2147,6 +2739,14 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param $op
+	 * @param $lft
+	 * @param $rgt
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function op_color_number($op, $lft, $rgt)
 	{
 		if ($rgt[0] == '%')
@@ -2158,6 +2758,14 @@ class lessc
 			array_fill(1, count($lft) - 1, $rgt[1]));
 	}
 
+	/**
+	 * @param $op
+	 * @param $left
+	 * @param $right
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function op_color_color($op, $left, $right)
 	{
 		$out = array('color');
@@ -2193,6 +2801,12 @@ class lessc
 		return $this->fixColor($out);
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	function lib_red($color)
 	{
 		$color = $this->coerceColor($color);
@@ -2205,6 +2819,12 @@ class lessc
 		return $color[1];
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	function lib_green($color)
 	{
 		$color = $this->coerceColor($color);
@@ -2217,6 +2837,12 @@ class lessc
 		return $color[2];
 	}
 
+	/**
+	 * @param $color
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	function lib_blue($color)
 	{
 		$color = $this->coerceColor($color);
@@ -2231,6 +2857,14 @@ class lessc
 
 
 	// operator on two numbers
+	/**
+	 * @param $op
+	 * @param $left
+	 * @param $right
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	protected function op_number_number($op, $left, $right)
 	{
 		$unit = empty($left[2]) ? $right[2] : $left[2];
@@ -2272,6 +2906,13 @@ class lessc
 
 	/* environment functions */
 
+	/**
+	 * @param      $type
+	 * @param null $selectors
+	 *
+	 * @return stdclass
+	 * @since LESSC
+	 */
 	protected function makeOutputBlock($type, $selectors = null)
 	{
 		$b            = new stdclass;
@@ -2285,6 +2926,12 @@ class lessc
 	}
 
 	// the state of execution
+	/**
+	 * @param null $block
+	 *
+	 * @return stdclass
+	 * @since LESSC
+	 */
 	protected function pushEnv($block = null)
 	{
 		$e         = new stdclass;
@@ -2298,6 +2945,10 @@ class lessc
 	}
 
 	// pop something off the stack
+	/**
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function popEnv()
 	{
 		$old       = $this->env;
@@ -2307,6 +2958,12 @@ class lessc
 	}
 
 	// set something in the current env
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @since LESSC
+	 */
 	protected function set($name, $value)
 	{
 		$this->env->store[$name] = $value;
@@ -2314,6 +2971,13 @@ class lessc
 
 
 	// get the highest occurrence entry for a name
+	/**
+	 * @param      $name
+	 * @param null $default
+	 *
+	 * @return array|null
+	 * @since LESSC
+	 */
 	protected function get($name, $default = null)
 	{
 		$current = $this->env;
@@ -2339,6 +3003,12 @@ class lessc
 	}
 
 	// inject array of unparsed strings into environment as variables
+	/**
+	 * @param $args
+	 *
+	 * @throws Exception
+	 * @since LESSC
+	 */
 	protected function injectVariables($args)
 	{
 		$this->pushEnv();
@@ -2367,6 +3037,8 @@ class lessc
 	 * $opts isn't used yet
 	 *
 	 * @param null $fname
+	 *
+	 * @since LESSC
 	 */
 	public function __construct($fname = null)
 	{
@@ -2377,6 +3049,13 @@ class lessc
 		}
 	}
 
+	/**
+	 * @param      $string
+	 * @param null $name
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	public function compile($string, $name = null)
 	{
 		$locale = setlocale(LC_NUMERIC, 0);
@@ -2406,6 +3085,14 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param      $fname
+	 * @param null $outFname
+	 *
+	 * @return int|string
+	 * @throws Exception
+	 * @since LESSC
+	 */
 	public function compileFile($fname, $outFname = null)
 	{
 		if (!is_readable($fname))
@@ -2435,6 +3122,13 @@ class lessc
 	}
 
 	// compile only if changed input has changed or output doesn't exist
+	/**
+	 * @param $in
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	public function checkedCompile($in, $out)
 	{
 		if (!is_file($out) || filemtime($in) > filemtime($out))
@@ -2467,6 +3161,7 @@ class lessc
 	 * @param bool  $force Force rebuild?
 	 *
 	 * @return array lessphp cache structure
+	 * @since LESSC
 	 */
 	public function cachedCompile($in, $force = false)
 	{
@@ -2529,6 +3224,14 @@ class lessc
 
 	// parse and compile buffer
 	// This is deprecated
+	/**
+	 * @param null $str
+	 * @param null $initialVariables
+	 *
+	 * @return int|string
+	 * @throws exception
+	 * @since LESSC
+	 */
 	public function parse($str = null, $initialVariables = null)
 	{
 		if (is_array($str))
@@ -2563,6 +3266,12 @@ class lessc
 		return $out;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return lessc_parser
+	 * @since LESSC
+	 */
 	protected function makeParser($name)
 	{
 		$parser                = new lessc_parser($this, $name);
@@ -2571,11 +3280,20 @@ class lessc
 		return $parser;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @since LESSC
+	 */
 	public function setFormatter($name)
 	{
 		$this->formatterName = $name;
 	}
 
+	/**
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function newFormatter()
 	{
 		$className = "lessc_formatter_lessjs";
@@ -2589,47 +3307,92 @@ class lessc
 		return new $className;
 	}
 
+	/**
+	 * @param $preserve
+	 *
+	 * @since LESSC
+	 */
 	public function setPreserveComments($preserve)
 	{
 		$this->preserveComments = $preserve;
 	}
 
+	/**
+	 * @param $name
+	 * @param $func
+	 *
+	 * @since LESSC
+	 */
 	public function registerFunction($name, $func)
 	{
 		$this->libFunctions[$name] = $func;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @since LESSC
+	 */
 	public function unregisterFunction($name)
 	{
 		unset($this->libFunctions[$name]);
 	}
 
+	/**
+	 * @param $variables
+	 *
+	 * @since LESSC
+	 */
 	public function setVariables($variables)
 	{
 		$this->registeredVars = array_merge($this->registeredVars, $variables);
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @since LESSC
+	 */
 	public function unsetVariable($name)
 	{
 		unset($this->registeredVars[$name]);
 	}
 
+	/**
+	 * @param $dirs
+	 *
+	 * @since LESSC
+	 */
 	public function setImportDir($dirs)
 	{
 		$this->importDir = (array) $dirs;
 	}
 
+	/**
+	 * @param $dir
+	 *
+	 * @since LESSC
+	 */
 	public function addImportDir($dir)
 	{
 		$this->importDir   = (array) $this->importDir;
 		$this->importDir[] = $dir;
 	}
 
+	/**
+	 * @return array
+	 * @since LESSC
+	 */
 	public function allParsedFiles()
 	{
 		return $this->allParsedFiles;
 	}
 
+	/**
+	 * @param $file
+	 *
+	 * @since LESSC
+	 */
 	protected function addParsedFile($file)
 	{
 		$this->allParsedFiles[realpath($file)] = filemtime($file);
@@ -2640,7 +3403,8 @@ class lessc
 	 *
 	 * @param null $msg
 	 *
-	 * @throws exception
+	 * @throws Exception
+	 * @since LESSC
 	 */
 	protected function throwError($msg = null)
 	{
@@ -2653,6 +3417,14 @@ class lessc
 
 	// compile file $in to file $out if $in is newer than $out
 	// returns true when it compiles, false otherwise
+	/**
+	 * @param      $in
+	 * @param      $out
+	 * @param null $less
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	public static function ccompile($in, $out, $less = null)
 	{
 		if ($less === null)
@@ -2663,6 +3435,14 @@ class lessc
 		return $less->checkedCompile($in, $out);
 	}
 
+	/**
+	 * @param      $in
+	 * @param bool $force
+	 * @param null $less
+	 *
+	 * @return array
+	 * @since LESSC
+	 */
 	public static function cexecute($in, $force = false, $less = null)
 	{
 		if ($less === null)
@@ -2673,6 +3453,10 @@ class lessc
 		return $less->cachedCompile($in, $force);
 	}
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $cssColors = array(
 		'aliceblue'            => '240,248,255',
 		'antiquewhite'         => '250,235,215',
@@ -2827,10 +3611,22 @@ class lessc
 
 // responsible for taking a string of LESS code and converting it into a
 // syntax tree
+/**
+ * Class lessc_parser
+ * @since LESSC
+ */
 class lessc_parser
 {
+	/**
+	 * @var int
+	 * @since LESSC
+	 */
 	static protected $nextBlockId = 0; // used to uniquely identify blocks
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $precedence = array(
 		'=<' => 0,
 		'>=' => 0,
@@ -2845,21 +3641,57 @@ class lessc_parser
 		'%' => 2,
 	);
 
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $whitePattern;
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $commentMulti;
 
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $commentSingle = "//";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $commentMultiLeft = "/*";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $commentMultiRight = "*/";
 
 	// regex string to match any of the operators
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	static protected $operatorString;
 
 	// these properties will supress division unless it's inside parenthases
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $supressDivisionProps =
 		array('/border-radius$/i', '/^font$/i');
 
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	protected $blockDirectives = array("font-face", "keyframes", "page", "-moz-document", "viewport", "-moz-viewport", "-o-viewport", "-ms-viewport");
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	protected $lineDirectives = array("charset");
 
 	/**
@@ -2870,12 +3702,25 @@ class lessc_parser
 	 * Consider:
 	 *     property1: 10 -5; // is two numbers, 10 and -5
 	 *     property2: (10 -5); // should evaluate to 5
+	 * @since LESSC
 	 */
 	protected $inParens = false;
 
 	// caches preg escaped literals
+	/**
+	 * @var array
+	 * @since LESSC
+	 */
 	static protected $literalCache = array();
 
+	/**
+	 * lessc_parser constructor.
+	 *
+	 * @param      $lessc
+	 * @param null $sourceName
+	 *
+	 * @since LESSC
+	 */
 	public function __construct($lessc, $sourceName = null)
 	{
 		$this->eatWhiteDefault = true;
@@ -2901,6 +3746,13 @@ class lessc_parser
 		}
 	}
 
+	/**
+	 * @param $buffer
+	 *
+	 * @return null
+	 * @throws exception
+	 * @since LESSC
+	 */
 	public function parse($buffer)
 	{
 		$this->count = 0;
@@ -2968,6 +3820,7 @@ class lessc_parser
 	 * Before parsing a chain, use $s = $this->seek() to remember the current
 	 * position into $s. Then if a chain fails, use $this->seek($s) to
 	 * go back where we started.
+	 * @since LESSC
 	 */
 	protected function parseChunk()
 	{
@@ -3167,6 +4020,13 @@ class lessc_parser
 		return false; // got nothing, throw error
 	}
 
+	/**
+	 * @param $dirname
+	 * @param $directives
+	 *
+	 * @return int
+	 * @since LESSC
+	 */
 	protected function isDirective($dirname, $directives)
 	{
 		// TODO: cache pattern in parser
@@ -3177,6 +4037,12 @@ class lessc_parser
 		return preg_match($pattern, $dirname);
 	}
 
+	/**
+	 * @param $tags
+	 *
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function fixTags($tags)
 	{
 		// move @ tags out of variable namespace
@@ -3190,6 +4056,12 @@ class lessc_parser
 	}
 
 	// a list of expressions
+	/**
+	 * @param $exps
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function expressionList(&$exps)
 	{
 		$values = array();
@@ -3209,11 +4081,12 @@ class lessc_parser
 	/**
 	 * Attempt to consume an expression.
 	 *
-	 * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
+	 * @link  http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
 	 *
 	 * @param $out
 	 *
 	 * @return bool
+	 * @since LESSC
 	 */
 	protected function expression(&$out)
 	{
@@ -3250,6 +4123,7 @@ class lessc_parser
 	 * @param $minP
 	 *
 	 * @return array
+	 * @since LESSC
 	 */
 	protected function expHelper($lhs, $minP)
 	{
@@ -3306,6 +4180,13 @@ class lessc_parser
 	}
 
 	// consume a list of values for a property
+	/**
+	 * @param      $value
+	 * @param null $keyName
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	public function propertyValue(&$value, $keyName = null)
 	{
 		$values = array();
@@ -3331,6 +4212,12 @@ class lessc_parser
 		return true;
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function parenValue(&$out)
 	{
 		$s = $this->seek();
@@ -3362,6 +4249,12 @@ class lessc_parser
 	}
 
 	// a single value
+	/**
+	 * @param $value
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function value(&$value)
 	{
 		$s = $this->seek();
@@ -3435,6 +4328,12 @@ class lessc_parser
 	}
 
 	// an import statement
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function import(&$out)
 	{
 		$s = $this->seek();
@@ -3452,6 +4351,12 @@ class lessc_parser
 		}
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function mediaQueryList(&$out)
 	{
 		if ($this->genericList($list, "mediaQuery", ",", false))
@@ -3464,6 +4369,12 @@ class lessc_parser
 		return false;
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function mediaQuery(&$out)
 	{
 		$s = $this->seek();
@@ -3507,6 +4418,12 @@ class lessc_parser
 		return true;
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function mediaExpression(&$out)
 	{
 		$s     = $this->seek();
@@ -3535,6 +4452,15 @@ class lessc_parser
 	}
 
 	// an unbounded string stopped by $end
+	/**
+	 * @param      $end
+	 * @param      $out
+	 * @param null $nestingOpen
+	 * @param null $rejectStrs
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function openString($end, &$out, $nestingOpen = null, $rejectStrs = null)
 	{
 		$oldWhite              = $this->eatWhiteDefault;
@@ -3616,6 +4542,12 @@ class lessc_parser
 		return true;
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function string(&$out)
 	{
 		$s = $this->seek();
@@ -3647,7 +4579,7 @@ class lessc_parser
 			if ($m[2] == "@{")
 			{
 				$this->count -= strlen($m[2]);
-				if ($this->interpolation($inter, false))
+				if ($this->interpolation($inter))
 				{
 					$content[] = $inter;
 				}
@@ -3686,6 +4618,12 @@ class lessc_parser
 		return false;
 	}
 
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function interpolation(&$out)
 	{
 		$oldWhite              = $this->eatWhiteDefault;
@@ -3710,6 +4648,12 @@ class lessc_parser
 		return false;
 	}
 
+	/**
+	 * @param $unit
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function unit(&$unit)
 	{
 		// speed shortcut
@@ -3730,6 +4674,12 @@ class lessc_parser
 	}
 
 	// a # color
+	/**
+	 * @param $out
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function color(&$out)
 	{
 		if ($this->match('(#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3}))', $m))
@@ -3754,6 +4704,13 @@ class lessc_parser
 	// or at the end a ... or a variable named followed by ...
 	// arguments are separated by , unless a ; is in the list, then ; is the
 	// delimiter.
+	/**
+	 * @param $args
+	 * @param $isVararg
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function argumentDef(&$args, &$isVararg)
 	{
 		$s = $this->seek();
@@ -3879,6 +4836,14 @@ class lessc_parser
 
 	// consume a list of tags
 	// this accepts a hanging delimiter
+	/**
+	 * @param        $tags
+	 * @param bool   $simple
+	 * @param string $delim
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function tags(&$tags, $simple = false, $delim = ',')
 	{
 		$tags = array();
@@ -3894,6 +4859,12 @@ class lessc_parser
 
 	// list of tags of specifying mixin path
 	// optionally separated by > (lazy, accepts extra >)
+	/**
+	 * @param $tags
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function mixinTags(&$tags)
 	{
 		$s    = $this->seek();
@@ -3910,6 +4881,13 @@ class lessc_parser
 	}
 
 	// a bracketed value (contained within in a tag definition)
+	/**
+	 * @param $parts
+	 * @param $hasExpression
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function tagBracket(&$parts, &$hasExpression)
 	{
 		// speed shortcut
@@ -3958,7 +4936,7 @@ class lessc_parser
 					continue;
 				}
 
-				if ($this->interpolation($inter, false))
+				if ($this->interpolation($inter))
 				{
 					$attrParts[]      = $inter;
 					$hasInterpolation = true;
@@ -3995,6 +4973,13 @@ class lessc_parser
 	}
 
 	// a space separated list of selectors
+	/**
+	 * @param      $tag
+	 * @param bool $simple
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function tag(&$tag, $simple = false)
 	{
 		if ($simple)
@@ -4072,6 +5057,12 @@ class lessc_parser
 	}
 
 	// a css function
+	/**
+	 * @param $func
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function func(&$func)
 	{
 		$s = $this->seek();
@@ -4129,6 +5120,12 @@ class lessc_parser
 	}
 
 	// consume a less variable
+	/**
+	 * @param $name
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function variable(&$name)
 	{
 		$s = $this->seek();
@@ -4161,6 +5158,7 @@ class lessc_parser
 	 * @param null $name
 	 *
 	 * @return bool
+	 * @since LESSC
 	 */
 	protected function assign($name = null)
 	{
@@ -4170,6 +5168,12 @@ class lessc_parser
 	}
 
 	// consume a keyword
+	/**
+	 * @param $word
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function keyword(&$word)
 	{
 		if ($this->match('([\w_\-\*!"][\w\-_"]*)', $m))
@@ -4183,6 +5187,10 @@ class lessc_parser
 	}
 
 	// consume an end of statement delimiter
+	/**
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function end()
 	{
 		if ($this->literal(';'))
@@ -4198,6 +5206,12 @@ class lessc_parser
 		return false;
 	}
 
+	/**
+	 * @param $guards
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function guards(&$guards)
 	{
 		$s = $this->seek();
@@ -4230,6 +5244,12 @@ class lessc_parser
 
 	// a bunch of guards that are and'd together
 	// TODO rename to guardGroup
+	/**
+	 * @param $guardGroup
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function guardGroup(&$guardGroup)
 	{
 		$s          = $this->seek();
@@ -4251,6 +5271,12 @@ class lessc_parser
 		return true;
 	}
 
+	/**
+	 * @param $guard
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function guard(&$guard)
 	{
 		$s      = $this->seek();
@@ -4271,6 +5297,13 @@ class lessc_parser
 
 	/* raw parsing functions */
 
+	/**
+	 * @param      $what
+	 * @param null $eatWhitespace
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function literal($what, $eatWhitespace = null)
 	{
 		if ($eatWhitespace === null) $eatWhitespace = $this->eatWhiteDefault;
@@ -4302,6 +5335,15 @@ class lessc_parser
 		return $this->match(self::$literalCache[$what], $m, $eatWhitespace);
 	}
 
+	/**
+	 * @param        $out
+	 * @param        $parseItem
+	 * @param string $delim
+	 * @param bool   $flatten
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function genericList(&$out, $parseItem, $delim = "", $flatten = true)
 	{
 		$s     = $this->seek();
@@ -4338,6 +5380,15 @@ class lessc_parser
 	// advance counter to next occurrence of $what
 	// $until - don't include $what in advance
 	// $allowNewline, if string, will be used as valid char set
+	/**
+	 * @param      $what
+	 * @param      $out
+	 * @param bool $until
+	 * @param bool $allowNewline
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function to($what, &$out, $until = false, $allowNewline = false)
 	{
 		if (is_string($allowNewline))
@@ -4356,6 +5407,14 @@ class lessc_parser
 	}
 
 	// try to match something on head of buffer
+	/**
+	 * @param      $regex
+	 * @param      $out
+	 * @param null $eatWhitespace
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function match($regex, &$out, $eatWhitespace = null)
 	{
 		if ($eatWhitespace === null) $eatWhitespace = $this->eatWhiteDefault;
@@ -4373,6 +5432,10 @@ class lessc_parser
 	}
 
 	// match some whitespace
+	/**
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function whitespace()
 	{
 		if ($this->writeComments)
@@ -4400,6 +5463,14 @@ class lessc_parser
 	}
 
 	// match something without consuming it
+	/**
+	 * @param      $regex
+	 * @param null $out
+	 * @param null $from
+	 *
+	 * @return int
+	 * @since LESSC
+	 */
 	protected function peek($regex, &$out = null, $from = null)
 	{
 		if (is_null($from)) $from = $this->count;
@@ -4410,6 +5481,12 @@ class lessc_parser
 	}
 
 	// seek to a spot in the buffer or return where we are on no argument
+	/**
+	 * @param null $where
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function seek($where = null)
 	{
 		if ($where === null) return $this->count;
@@ -4420,6 +5497,13 @@ class lessc_parser
 
 	/* misc functions */
 
+	/**
+	 * @param string $msg
+	 * @param null   $count
+	 *
+	 * @throws exception
+	 * @since LESSC
+	 */
 	public function throwError($msg = "parse error", $count = null)
 	{
 		$count = is_null($count) ? $this->count : $count;
@@ -4447,6 +5531,13 @@ class lessc_parser
 		}
 	}
 
+	/**
+	 * @param null $selectors
+	 * @param null $type
+	 *
+	 * @return stdclass
+	 * @since LESSC
+	 */
 	protected function pushBlock($selectors = null, $type = null)
 	{
 		$b         = new stdclass;
@@ -4467,12 +5558,24 @@ class lessc_parser
 	}
 
 	// push a block that doesn't multiply tags
+	/**
+	 * @param $type
+	 *
+	 * @return stdclass
+	 * @since LESSC
+	 */
 	protected function pushSpecialBlock($type)
 	{
 		return $this->pushBlock(null, $type);
 	}
 
 	// append a property to the current block
+	/**
+	 * @param      $prop
+	 * @param null $pos
+	 *
+	 * @since LESSC
+	 */
 	protected function append($prop, $pos = null)
 	{
 		if ($pos !== null) $prop[-1] = $pos;
@@ -4480,6 +5583,10 @@ class lessc_parser
 	}
 
 	// pop something off the stack
+	/**
+	 * @return mixed
+	 * @since LESSC
+	 */
 	protected function pop()
 	{
 		$old       = $this->env;
@@ -4490,6 +5597,12 @@ class lessc_parser
 
 	// remove comments from $text
 	// todo: make it work for all functions, not just url
+	/**
+	 * @param $text
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	protected function removeComments($text)
 	{
 		$look = array(
@@ -4553,39 +5666,110 @@ class lessc_parser
 
 }
 
+/**
+ * Class lessc_formatter_classic
+ * @since LESSC
+ */
 class lessc_formatter_classic
 {
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $indentChar = "  ";
 
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $break = "\n";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $open = " {";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $close = "}";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $selectorSeparator = ", ";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $assignSeparator = ":";
 
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $openSingle = " { ";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $closeSingle = " }";
 
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $disableSingle = false;
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $breakSelectors = false;
 
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $compressColors = false;
 
+	/**
+	 * lessc_formatter_classic constructor.
+	 * @since LESS
+	 */
 	public function __construct()
 	{
 		$this->indentLevel = 0;
 	}
 
+	/**
+	 * @param int $n
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	public function indentStr($n = 0)
 	{
 		return str_repeat($this->indentChar, max($this->indentLevel + $n, 0));
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	public function property($name, $value)
 	{
 		return $name . $this->assignSeparator . $value . ";";
 	}
 
+	/**
+	 * @param $block
+	 *
+	 * @return bool
+	 * @since LESSC
+	 */
 	protected function isEmpty($block)
 	{
 		if (empty($block->lines))
@@ -4601,6 +5785,11 @@ class lessc_formatter_classic
 		return false;
 	}
 
+	/**
+	 * @param $block
+	 *
+	 * @since LESSC
+	 */
 	public function block($block)
 	{
 		if ($this->isEmpty($block)) return;
@@ -4671,26 +5860,80 @@ class lessc_formatter_classic
 	}
 }
 
+/**
+ * Class lessc_formatter_compressed
+ * @since LESSC
+ */
 class lessc_formatter_compressed extends lessc_formatter_classic
 {
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $disableSingle = true;
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $open = "{";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $selectorSeparator = ",";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $assignSeparator = ":";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $break = "";
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $compressColors = true;
 
+	/**
+	 * @param int $n
+	 *
+	 * @return string
+	 * @since LESSC
+	 */
 	public function indentStr($n = 0)
 	{
 		return "";
 	}
 }
 
+/**
+ * Class lessc_formatter_lessjs
+ * @since LESSC
+ */
 class lessc_formatter_lessjs extends lessc_formatter_classic
 {
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $disableSingle = true;
+	/**
+	 * @var bool
+	 * @since LESSC
+	 */
 	public $breakSelectors = true;
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $assignSeparator = ": ";
+	/**
+	 * @var string
+	 * @since LESSC
+	 */
 	public $selectorSeparator = ",";
 }
 

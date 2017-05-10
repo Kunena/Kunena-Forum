@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -18,20 +18,19 @@ $quick           = $this->ktemplate->params->get('quick');
 
 <?php if (!$fullactions) : ?>
 
-	<?php if (empty($this->message_closed)) : ?>
-		<div class="kmessagepadding">
-			<?php if ($this->quickreply && $quick != 2) : ?>
-				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i
-						class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-				</a>
-			<?php endif; ?>
+<?php if (empty($this->message_closed)) : ?>
+<div class="kmessagepadding">
+	<?php if($this->quickreply && $quick != 2) : ?>
+		<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
+			data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
+				<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+		</a>
+	<?php endif; ?>
 
 			<?php echo $this->messageButtons->get('reply'); ?>
 			<?php echo $this->messageButtons->get('quote'); ?>
 			<?php echo $this->messageButtons->get('edit'); ?>
-			<?php if ($config->userdeletetmessage > 0) : ?>
-				<br/>
+			<?php if ($this->message->isAuthorised('delete')) : ?>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
 			<?php echo $this->messageButtons->get('thankyou'); ?>
@@ -41,7 +40,6 @@ $quick           = $this->ktemplate->params->get('quick');
 				<br/>
 				<br/>
 				<?php echo $this->messageButtons->get('moderate'); ?>
-				<?php echo $this->messageButtons->get('delete'); ?>
 				<?php echo $this->messageButtons->get('undelete'); ?>
 				<?php echo $this->messageButtons->get('permdelete'); ?>
 				<?php echo $this->messageButtons->get('publish'); ?>
@@ -61,15 +59,15 @@ endif; ?>
 
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if ($this->quickreply && $quick != 2) : ?>
+			<?php if($this->quickreply  && $quick != 2) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-				   data-toggle="modal" rel="nofollow"><i
-						class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					data-toggle="modal" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
 				<button class="btn" data-toggle="dropdown">
-					<i class="icon-pencil"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
+					<?php echo KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
 				<button class="btn dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
@@ -87,7 +85,7 @@ endif; ?>
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
 					<button class="btn" data-toggle="dropdown">
-						<i class="icon-shuffle"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+						<?php echo KunenaIcons::shuffle() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
 					<button class="btn dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>

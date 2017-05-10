@@ -5,20 +5,30 @@
  * @package         Kunena.Plugins
  * @subpackage      Comprofiler
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaPrivateComprofiler
+ * @since Kunena
+ */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaPrivateComprofiler constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -29,6 +39,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string|void
+	 * @since Kunena
 	 */
 	protected function getURL($userid)
 	{
@@ -38,6 +49,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function showIcon($userid)
 	{
@@ -79,6 +91,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param   string $icon
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
@@ -112,6 +125,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getInboxLink($text)
 	{
@@ -134,6 +148,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	protected function getCBUserid()
 	{
@@ -164,6 +179,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getInboxURL()
 	{

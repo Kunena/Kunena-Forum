@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,25 +17,33 @@ defined('_JEXEC') or die;
  */
 abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/List';
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
 	/**
 	 * @var array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
+	 * @since Kunena
 	 */
 	public $pagination;
 
 	/**
 	 * @var string
+	 * @since Kunena
 	 */
 	public $headerText;
 
@@ -46,6 +54,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $mesIds  List of additional message Ids to be loaded.
 	 *
 	 * @return  void
+	 * @since Kunena
 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
 	{
@@ -102,6 +111,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -112,10 +122,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = JFactory::getDocument();
-		$config          = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots          = $componentParams->get('robots');
+		$doc = JFactory::getDocument();
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
@@ -190,6 +199,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $actions
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
 	{
@@ -253,6 +263,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $actions
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{

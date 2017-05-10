@@ -8,8 +8,8 @@
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
-	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2016 Kunena Team. All rights reserved.</copyright>
+	<authorUrl>https://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2017 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Forum Package.</description>
 
@@ -24,7 +24,7 @@
 <!--
 		<filename type="plugin"  group="finder"    id="kunena"         >plg_finder_kunena_v@kunenaversion@.zip</filename>
 		<filename type="plugin"  group="kunena"    id="finder"         >plg_kunena_finder_v@kunenaversion@.zip</filename>
-		<filename type="plugin"  group="kunena"    id="alphauserpoints">plg_kunena_alphauserpoints_v@kunenaversion@.zip</filename>
+		<filename type="plugin"  group="kunena"    id="altauserpoints">plg_kunena_altauserpoints_v@kunenaversion@.zip</filename>
 		<filename type="plugin"  group="kunena"    id="community"      >plg_kunena_community_v@kunenaversion@.zip</filename>
 		<filename type="plugin"  group="kunena"    id="comprofiler"    >plg_kunena_comprofiler_v@kunenaversion@.zip</filename>
 		<filename type="plugin"  group="kunena"    id="gravatar"       >plg_kunena_gravatar_v@kunenaversion@.zip</filename>
@@ -56,7 +56,6 @@
 		</customfiles>
 		<langfiles>
 			<lang>com_kunena</lang>
-			<lang>plg_kunena_alphauserpoints</lang>
 			<lang>plg_kunena_altauserpoints</lang>
 			<lang>plg_kunena_community</lang>
 			<lang>plg_kunena_comprofiler</lang>

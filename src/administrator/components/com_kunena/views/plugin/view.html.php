@@ -18,10 +18,22 @@ defined('_JEXEC') or die;
  */
 class KunenaAdminViewPlugin extends KunenaView
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $item = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $form = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $state = null;
 
 	/**
@@ -32,6 +44,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function displayEdit($tpl = null)
 	{

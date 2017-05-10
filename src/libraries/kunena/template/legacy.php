@@ -4,19 +4,21 @@
  * @package       Kunena.Framework
  * @subpackage    Template
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
+ * @since Kunena
  */
 class KunenaTemplateLegacy
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function load()
 	{
@@ -88,6 +90,7 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 
 /**
  * Class CKunenaTools is legacy class from Kunena 1.6/1.7
+ * @since Kunena
  */
 class CKunenaTools
 {

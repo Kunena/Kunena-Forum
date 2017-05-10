@@ -5,18 +5,28 @@
  * @package         Kunena.Plugins
  * @subpackage      Kunena
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAvatarKunena
+ * @since Kunena
+ */
 class KunenaAvatarKunena extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -26,6 +36,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getEditURL()
 	{
@@ -38,6 +49,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

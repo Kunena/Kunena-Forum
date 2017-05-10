@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Announcement.List
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -19,12 +19,17 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $buttons;
 
 	/**
 	 * Method to get moderation actions for announcements
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getActions()
 	{
@@ -59,6 +64,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{

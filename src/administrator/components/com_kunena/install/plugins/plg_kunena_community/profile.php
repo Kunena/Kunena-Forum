@@ -5,21 +5,31 @@
  * @package          Kunena.Plugins
  * @subpackage       Community
  *
- * @copyright   (C)  2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license          http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaProfileCommunity
+ * @since Kunena
+ */
 class KunenaProfileCommunity extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -31,13 +41,14 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -51,6 +62,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -67,6 +79,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -93,6 +106,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -103,6 +118,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

@@ -4,14 +4,15 @@
  * @package       Kunena.Framework
  * @subpackage    Table
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaTableMap
+ * @since Kunena
  */
 class KunenaTableMap
 {
@@ -19,6 +20,7 @@ class KunenaTableMap
 	 * Name of the database table to model.
 	 *
 	 * @var    string
+	 * @since Kunena
 	 */
 	protected $_tbl = '';
 
@@ -26,6 +28,7 @@ class KunenaTableMap
 	 * Name of the primary key field in the table.
 	 *
 	 * @var    string
+	 * @since Kunena
 	 */
 	protected $_tbl_key = '';
 
@@ -33,6 +36,7 @@ class KunenaTableMap
 	 * Name of the mapped key field in the table.
 	 *
 	 * @var    string
+	 * @since Kunena
 	 */
 	protected $_tbl_mapped = '';
 
@@ -40,6 +44,7 @@ class KunenaTableMap
 	 * JDatabaseDriver object.
 	 *
 	 * @var    JDatabaseDriver
+	 * @since Kunena
 	 */
 	protected $_db = null;
 
@@ -47,6 +52,7 @@ class KunenaTableMap
 	 * Indicator that the tables have been locked.
 	 *
 	 * @var    boolean
+	 * @since Kunena
 	 */
 	protected $_locked = false;
 
@@ -59,6 +65,8 @@ class KunenaTableMap
 	 * @param   string          $key    Name of the primary key field in the table.
 	 * @param   string          $mapped Name of the mapped key field in the table.
 	 * @param   JDatabaseDriver $db     JDatabaseDriver object.
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($table, $key, $mapped, JDatabaseDriver $db = null)
 	{
@@ -88,6 +96,7 @@ class KunenaTableMap
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
 	 * @throws  UnexpectedValueException
+	 * @since Kunena
 	 */
 	public function getFields()
 	{
@@ -115,6 +124,7 @@ class KunenaTableMap
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array
+	 * @since Kunena
 	 */
 	public function getProperties()
 	{
@@ -134,6 +144,7 @@ class KunenaTableMap
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getMirrorInstance()
 	{
@@ -156,6 +167,7 @@ class KunenaTableMap
 	 * @return  string  The name of the database table being modeled.
 	 *
 	 * @link    http://docs.joomla.org/JTable/getTableName
+	 * @since   Kunena
 	 */
 	public function getTableName()
 	{
@@ -168,6 +180,7 @@ class KunenaTableMap
 	 * @return  string  The name of the primary key for the table.
 	 *
 	 * @link    http://docs.joomla.org/JTable/getKeyName
+	 * @since   Kunena
 	 */
 	public function getKeyName()
 	{
@@ -178,6 +191,7 @@ class KunenaTableMap
 	 * Method to get the mapped field name for the table.
 	 *
 	 * @return  string  The name of the map field for the table.
+	 * @since Kunena
 	 */
 	public function getMappedName()
 	{
@@ -190,6 +204,7 @@ class KunenaTableMap
 	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
 	 * @link    http://docs.joomla.org/JTable/getDBO
+	 * @since   Kunena
 	 */
 	public function getDbo()
 	{
@@ -200,6 +215,7 @@ class KunenaTableMap
 	 * Method to get the primary key.
 	 *
 	 * @return  int  Get value for the primary key.
+	 * @since Kunena
 	 */
 	public function getKey()
 	{
@@ -212,6 +228,7 @@ class KunenaTableMap
 	 * @param   int $id Set value for the primary key.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function setKey($id)
 	{
@@ -224,6 +241,7 @@ class KunenaTableMap
 	 * Method to get the mapped value.
 	 *
 	 * @return  array  Get array of mapped objects.
+	 * @since Kunena
 	 */
 	public function getMapped()
 	{
@@ -234,6 +252,8 @@ class KunenaTableMap
 	 * Method to set the mapped value.
 	 *
 	 * @param   array $list Set array of mapped objects.
+	 *
+	 * @since Kunena
 	 */
 	public function setMapped(array $list)
 	{
@@ -247,6 +267,7 @@ class KunenaTableMap
 	 * @param   int $id Add Id.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function add($id)
 	{
@@ -264,6 +285,7 @@ class KunenaTableMap
 	 * @param   int $id Add Id.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	protected function remove($id)
 	{
@@ -285,6 +307,7 @@ class KunenaTableMap
 	 * @return  boolean  True on success.
 	 *
 	 * @link    http://docs.joomla.org/JTable/setDbo
+	 * @since   Kunena
 	 */
 	public function setDbo(JDatabaseDriver $db)
 	{
@@ -301,6 +324,7 @@ class KunenaTableMap
 	 * @return  void
 	 *
 	 * @link    http://docs.joomla.org/JTable/reset
+	 * @since   Kunena
 	 */
 	public function reset()
 	{
@@ -327,6 +351,7 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/JTable/bind
 	 * @throws  InvalidArgumentException
+	 * @since   Kunena
 	 */
 	public function bind($src, $ignore = array())
 	{
@@ -377,6 +402,7 @@ class KunenaTableMap
 	 * @link    http://docs.joomla.org/JTable/load
 	 * @throws  RuntimeException
 	 * @throws  UnexpectedValueException
+	 * @since   Kunena
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -441,6 +467,7 @@ class KunenaTableMap
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
 	 * @link    http://docs.joomla.org/JTable/check
+	 * @since   Kunena
 	 */
 	public function check()
 	{
@@ -456,6 +483,7 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/JTable/store
 	 * @throws  UnexpectedValueException
+	 * @since   Kunena
 	 */
 	public function store(array $filter = null)
 	{
@@ -534,6 +562,7 @@ class KunenaTableMap
 	 * @return  boolean  True on success.
 	 *
 	 * @throws  UnexpectedValueException
+	 * @since Kunena
 	 */
 	public function save(array $map = null, array $filter = null)
 	{
@@ -566,6 +595,7 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/JTable/delete
 	 * @throws  UnexpectedValueException
+	 * @since   Kunena
 	 */
 	public function delete($pk = null)
 	{
@@ -608,6 +638,7 @@ class KunenaTableMap
 	 * @return  boolean  True on success.
 	 *
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	protected function _lock()
 	{
@@ -621,6 +652,7 @@ class KunenaTableMap
 	 * Method to unlock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
+	 * @since Kunena
 	 */
 	protected function _unlock()
 	{

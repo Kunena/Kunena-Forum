@@ -3,28 +3,37 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaInstaller
+ * @since Kunena
  */
 class KunenaInstaller
 {
-	// Minimum supported versions during downgrade.
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $downgrade = array('3.1' => '3.0.95');
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected static $tables = null;
 
 	/**
 	 * Check if we are allowed to downgrade from the new to the old version.
 	 *
-	 * @param   string $version
+	 * @param   string $version version
 	 *
 	 * @return  boolean  True if version can be safely downgraded.
+	 * @since Kunena
 	 */
 	public static function canDowngrade($version)
 	{
@@ -53,6 +62,7 @@ class KunenaInstaller
 	 * Get Kunena database schema version.
 	 *
 	 * @return  string  Version number or null.
+	 * @since Kunena
 	 */
 	public static function getSchemaVersion()
 	{
@@ -78,6 +88,7 @@ class KunenaInstaller
 	 * @param   bool   $reload Reload all tables.
 	 *
 	 * @return boolean  True if the table exists in the database.
+	 * @since Kunena
 	 */
 	public static function detectTable($table, $prefix = '#__', $reload = false)
 	{
@@ -114,6 +125,7 @@ class KunenaInstaller
 	 * @param   boolean $reload Reload all tables.
 	 *
 	 * @return string|null  Column type or NULL if either table or column does not exist.
+	 * @since Kunena
 	 */
 	public static function getTableColumn($table, $column, $prefix = '#__', $reload = false)
 	{

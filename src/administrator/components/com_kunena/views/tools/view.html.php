@@ -5,19 +5,21 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena cpanel
+ * @since Kunena
  */
 class KunenaAdminViewTools extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
@@ -30,6 +32,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayPrune()
 	{
@@ -44,6 +47,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySubscriptions()
 	{
@@ -65,6 +69,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySyncUsers()
 	{
@@ -74,6 +79,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayRecount()
 	{
@@ -83,6 +89,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayMenu()
 	{
@@ -96,6 +103,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayPurgeReStatements()
 	{
@@ -105,6 +113,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayCleanupIP()
 	{
@@ -114,6 +123,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDiagnostics()
 	{
@@ -123,6 +133,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayUninstall()
 	{
@@ -136,6 +147,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
@@ -146,6 +158,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarPrune()
 	{
@@ -161,6 +174,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarSyncUsers()
 	{
@@ -176,6 +190,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarRecount()
 	{
@@ -191,6 +206,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarMenu()
 	{
@@ -212,6 +228,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarPurgeReStatements()
 	{
@@ -227,6 +244,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolCleanupIP()
 	{
@@ -242,6 +260,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarUninstall()
 	{
@@ -255,6 +274,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDiagnostics()
 	{

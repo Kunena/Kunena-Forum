@@ -4,8 +4,8 @@
  *
  * @package        Kunena.Site
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 
@@ -86,9 +86,11 @@ class KunenaApplication extends JApplicationWeb
 	protected $userstate = array();
 
 	/**
-	 * @param   JInput                $input
-	 * @param   JRegistry             $config
-	 * @param   JApplicationWebClient $client
+	 * @param   JInput                $input  input
+	 * @param   JRegistry             $config config
+	 * @param   JApplicationWebClient $client client
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
 	{
@@ -123,9 +125,10 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param   JSession $session
+	 * @param   JSession $session session
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function loadSession(JSession $session = null)
 	{
@@ -171,6 +174,8 @@ class KunenaApplication extends JApplicationWeb
 
 	/**
 	 *
+	 * @return void
+	 * @since Kunena
 	 */
 	protected function doExecute()
 	{
@@ -195,6 +200,7 @@ class KunenaApplication extends JApplicationWeb
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isSite()
 	{
@@ -203,6 +209,7 @@ class KunenaApplication extends JApplicationWeb
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isAdmin()
 	{
@@ -210,9 +217,10 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param   bool $params
+	 * @param   bool $params params
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getTemplate($params = false)
 	{
@@ -220,8 +228,11 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param $name
-	 * @param $value
+	 * @param   string    $name   name
+	 * @param   boolean   $value  value
+	 *
+	 * @return void
+	 * @since Kunena
 	 */
 	public function setUserState($name, $value)
 	{
@@ -229,10 +240,11 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param        $name
-	 * @param   null $default
+	 * @param   string  $name     name
+	 * @param   null    $default  default
 	 *
 	 * @return null
+	 * @since Kunena
 	 */
 	public function getUserState($name, $default = null)
 	{

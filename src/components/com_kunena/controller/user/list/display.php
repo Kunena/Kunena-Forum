@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,22 +17,47 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $state;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $users;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pagination;
 
 	/**
 	 * Load user list.
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -40,7 +65,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$config = KunenaConfig::getInstance();
 
-		if ($config->userlist_allowed && JFactory::getUser()->guest)
+		if (!$config->userlist_allowed && JFactory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -93,6 +118,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

@@ -5,8 +5,8 @@
  * @package         Kunena.Framework
  * @subpackage      Forum.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,22 +18,52 @@ defined('_JEXEC') or die();
  */
 class KunenaForumTopicRate extends JObject
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
 	protected $_db = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $topic_id = 0;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $stars = 0;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $time = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $users = array();
 
 	/**
 	 * @param   int $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -50,7 +80,8 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int  $identifier The message to load - Can be only an integer.
 	 * @param   bool $reload
 	 *
-	 * @return    KunenaForumMessage        The message object.
+	 * @return KunenaForumMessage|KunenaForumTopicRate
+	 * @since     Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -72,6 +103,8 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * @param $userid
 	 * @param $time
+	 *
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -85,6 +118,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -94,9 +128,15 @@ class KunenaForumTopicRate extends JObject
 		$query = $this->_db->getQuery(true);
 		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
-		$users = (array) $this->_db->loadObjectList();
 
-		KunenaError::checkDatabaseError();
+		try
+		{
+			$users = (array) $this->_db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($users as $user)
 		{
@@ -113,7 +153,7 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @param $user
 	 *
-	 * @return bool true if success
+	 * @return boolean|JResponseJson
 	 * @internal param int $userid
 	 *
 	 * @since    2.0
@@ -175,6 +215,7 @@ class KunenaForumTopicRate extends JObject
 
 	/**
 	 * Get rate for the specified topic and user
+	 * @since Kunena
 	 */
 	public function getTopicUserRate()
 	{
@@ -194,7 +235,8 @@ class KunenaForumTopicRate extends JObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaRate
+	 * @return boolean|JTable|KunenaTable|TableKunenaRate
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
 	{
@@ -217,6 +259,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id)
 	{

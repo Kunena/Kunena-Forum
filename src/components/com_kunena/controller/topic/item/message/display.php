@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,20 +17,52 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Item/Message';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $message;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $topic;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $profile;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $reportMessageLink;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $ipLink;
 
 	/**
@@ -39,6 +71,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -60,7 +93,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		if ($this->topic->unread)
 		{
 			$doc = JFactory::getDocument();
-			$doc->setMetaData('robots', 'noindex, nofollow');
+			$doc->setMetaData('robots', 'noindex, follow');
 		}
 
 		$this->captchaEnabled = false;
@@ -78,7 +111,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
-					$dispatcher           = JDispatcher::getInstance();
+					$dispatcher           = JEventDispatcher::getInstance();
 					$result               = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
 					$this->captchaEnabled = $result[0];
 				}
@@ -157,8 +190,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if (!empty($this->message->ip))
 			{
-				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip
-					. '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
+				$this->ipLink = '<a href="https://whois.domaintools.com/' . $this->message->ip
+					. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 			}
 			else
 			{

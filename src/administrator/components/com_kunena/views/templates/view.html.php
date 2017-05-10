@@ -5,19 +5,21 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Templates view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewTemplates extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
@@ -29,6 +31,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayAdd()
 	{
@@ -38,6 +41,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayEdit()
 	{
@@ -68,6 +72,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayChooseless()
 	{
@@ -92,6 +97,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayEditless()
 	{
@@ -107,6 +113,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayChoosecss()
 	{
@@ -130,6 +137,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayEditcss()
 	{
@@ -144,6 +152,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
@@ -166,6 +175,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarAdd()
 	{
@@ -179,6 +189,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarEdit()
 	{
@@ -196,6 +207,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarChoosecss()
 	{
@@ -211,6 +223,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarEditcss()
 	{
@@ -227,6 +240,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarChooseless()
 	{
@@ -242,6 +256,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarEditless()
 	{

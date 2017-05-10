@@ -3,8 +3,8 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -13,6 +13,7 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaDate
+ * @since Kunena
  */
 class KunenaDate extends JDate
 {
@@ -21,6 +22,7 @@ class KunenaDate extends JDate
 	 * @param   null   $tz
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public static function getInstance($date = 'now', $tz = null)
 	{
@@ -29,6 +31,7 @@ class KunenaDate extends JDate
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function toTimeAgo()
 	{
@@ -94,6 +97,7 @@ class KunenaDate extends JDate
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function toTimezone()
 	{
@@ -109,6 +113,7 @@ class KunenaDate extends JDate
 	 * @param   string $class
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')
 	{
@@ -121,6 +126,7 @@ class KunenaDate extends JDate
 	 *
 	 * @return string
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{
@@ -195,8 +201,8 @@ class KunenaDate extends JDate
 				$now->setTimezone($offset);
 			}
 
-			$now  = @getdate($now->toUnix(true));
-			$then = @getdate($this->toUnix(true));
+			$now  = @getdate($now->toUnix());
+			$then = @getdate($this->toUnix());
 
 			// Same day of the year, same year.... Today!
 			if ($then ['yday'] == $now ['yday']

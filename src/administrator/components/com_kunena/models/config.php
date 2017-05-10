@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -22,6 +22,7 @@ class KunenaAdminModelConfig extends KunenaModel
 {
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	function getConfiglists()
 	{
@@ -230,6 +231,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));
 		$listUserDeleteMessage[]     = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
+		$listUserDeleteMessage[]     = JHtml::_('select.option', '3', JText::_('COM_KUNENA_CONFIG_DELETEMESSAGE_NOT_FIRST_MESSAGE'));
 		$lists['userdeletetmessage'] = JHtml::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $this->config->userdeletetmessage);
 
 		$latestCategoryIn           = array();
@@ -288,8 +290,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['show_session_type'] = JHtml::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $this->config->show_session_type);
 
 		$userlist_allowed           = array();
-		$userlist_allowed []        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_NO'));
-		$userlist_allowed []        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_YES'));
+		$userlist_allowed []        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
+		$userlist_allowed []        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
 		$lists ['userlist_allowed'] = JHtml::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_allowed);
 		$lists ['pubprofile']       = JHtml::_('select.genericlist', $yesno, 'cfg_pubprofile', 'class="inputbox" size="1"', 'value', 'text', $this->config->pubprofile);
 
@@ -475,11 +477,15 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['autoembedsoundcloud'] = JHtml::_('select.genericlist', $yesno, 'cfg_autoembedsoundcloud', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedsoundcloud);
 
+		$lists ['user_status'] = JHtml::_('select.genericlist', $yesno, 'cfg_user_status', 'class="inputbox" size="1"', 'value', 'text', $this->config->user_status);
+
 		// K5.1
 		$lists ['signature'] = JHtml::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox" size="1"', 'value', 'text', $this->config->signature);
-		$lists ['personal'] = JHtml::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);
-		$lists ['social'] = JHtml::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox" size="1"', 'value', 'text', $this->config->social);
-		$lists ['lazyload'] = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
+		$lists ['personal']  = JHtml::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);
+		$lists ['social']    = JHtml::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox" size="1"', 'value', 'text', $this->config->social);
+		$lists ['lazyload']  = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
+
+		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
 
 		return $lists;
 	}

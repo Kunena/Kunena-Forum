@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -23,6 +23,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to get tabs for user profile
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getTabs()
 	{
@@ -250,6 +251,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display unapproved posts
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayUnapprovedPosts()
 	{
@@ -271,6 +273,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display user posts
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayUserPosts()
 	{
@@ -292,6 +295,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display who got thankyou
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayGotThankyou()
 	{
@@ -313,6 +317,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display who said thankyou
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displaySaidThankyou()
 	{
@@ -334,6 +339,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display favorites topics
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayFavorites()
 	{
@@ -355,6 +361,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display subscriptions
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displaySubscriptions()
 	{
@@ -381,6 +388,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display categories subscriptions
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayCategoriesSubscriptions()
 	{

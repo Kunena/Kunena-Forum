@@ -5,20 +5,26 @@
  * @subpackage    Upload
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Upload Backend Helper Class
+ * @since Kunena
  */
 class KunenaUploadHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	private function __construct()
 	{
@@ -30,6 +36,7 @@ class KunenaUploadHelper
 	 * @param $format
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function upload($file, $uploadfolder, $format)
 	{

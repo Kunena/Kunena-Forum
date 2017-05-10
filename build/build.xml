@@ -5,9 +5,9 @@
 
   @package		Kunena
   @subpackage	com_kunena
-  @copyright	Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+  @copyright	Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
-  @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
+  @license		GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
   @link			https://www.kunena.org
 
   The following parameters can be defined inside the Eclipse build task as Arguments. They
@@ -204,13 +204,6 @@
 			<exclude name="**/*.min.css" />
 			<include name="**/*.js" />
 			<include name="**/*.css" />
-		</yui-compressor>
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
-			<exclude name="**/*-min.js" />
-			<exclude name="**/*.min.js" />
-			<exclude name="**/*-min.css" />
-			<exclude name="**/*.min.css" />
-			<include name="**/*.js" />
 		</yui-compressor>
 	</target>
 

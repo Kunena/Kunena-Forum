@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Search
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -26,6 +26,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayModeList($id, $attributes = 'class="form-control"')
 	{
@@ -42,6 +43,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayDateList($id, $attributes = 'class="form-control"')
 	{
@@ -65,6 +67,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
 	{
@@ -81,6 +84,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displaySortByList($id, $attributes = 'class="form-control"')
 	{
@@ -105,6 +109,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayOrderList($id, $attributes = 'class="form-control"')
 	{
@@ -121,11 +126,16 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayLimitList($id, $attributes = 'class="form-control"')
 	{
 		// Limit value list
 		$options   = array();
+		$options[] = JHtml::_('select.option', $this->config->messages_per_page_search, JText::sprintf('COM_KUNENA_SEARCH_LIMIT',
+            $this->config->messages_per_page_search
+            )
+        );
 		$options[] = JHtml::_('select.option', '5', JText::_('COM_KUNENA_SEARCH_LIMIT5'));
 		$options[] = JHtml::_('select.option', '10', JText::_('COM_KUNENA_SEARCH_LIMIT10'));
 		$options[] = JHtml::_('select.option', '15', JText::_('COM_KUNENA_SEARCH_LIMIT15'));
@@ -140,6 +150,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string $attributes Extras attributes to apply to the list
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayCategoryList($id, $attributes = 'class="form-control"')
 	{

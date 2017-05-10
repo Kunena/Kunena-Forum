@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -20,18 +20,39 @@ require_once KPATH_ADMIN . '/models/categories.php';
  */
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topics = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pending = array();
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $items = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topicActions = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $actionMove = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -83,6 +104,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getLastestCategories()
 	{
@@ -99,6 +121,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|boolean|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public function getCategories()
 	{
@@ -208,8 +231,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid"
 				);
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				foreach ($pending as $item)
 				{
@@ -245,6 +275,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getUnapprovedCount()
 	{
@@ -253,6 +284,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getCategory()
 	{
@@ -261,6 +293,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getTopics()
 	{
@@ -335,6 +368,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
@@ -348,6 +382,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getTopicActions()
 	{
@@ -423,6 +458,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getActionMove()
 	{
@@ -431,6 +467,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getModerators()
 	{
@@ -441,6 +478,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getCategoryActions()
 	{

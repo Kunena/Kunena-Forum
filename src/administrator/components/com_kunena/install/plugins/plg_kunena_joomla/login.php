@@ -5,18 +5,28 @@
  * @package         Kunena.Plugins
  * @subpackage      Joomla
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginJoomla
+ * @since Kunena
+ */
 class KunenaLoginJoomla
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -33,6 +43,7 @@ class KunenaLoginJoomla
 	 * @param   string  $secretkey  The secretkey given by user when TFA is enabled
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)
 	{
@@ -52,6 +63,7 @@ class KunenaLoginJoomla
 	/**
 	 * @return boolean|string
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function logoutUser()
 	{
@@ -62,6 +74,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getRememberMe()
 	{
@@ -70,6 +83,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -80,6 +94,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -90,6 +105,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{
@@ -107,6 +123,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getResetURL()
 	{
@@ -117,6 +134,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRemindURL()
 	{

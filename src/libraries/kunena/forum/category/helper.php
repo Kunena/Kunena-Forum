@@ -4,28 +4,39 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Category
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryHelper
+ * @since Kunena
  */
 abstract class KunenaForumCategoryHelper
 {
 	/**
 	 * @var KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public static $_instances;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected static $_tree;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected static $allowed;
 
 	/**
 	 * Initialize class.
+	 * @since Kunena
 	 */
 	static public function initialize()
 	{
@@ -105,6 +116,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   KunenaForumCategory $instance
 	 *
 	 * @internal
+	 * @since Kunena
 	 */
 	static public function register($instance)
 	{
@@ -130,6 +142,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getSubscriptions($user = null)
 	{
@@ -137,10 +150,15 @@ abstract class KunenaForumCategoryHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
 		$db->setQuery($query);
-		$subscribed = (array) $db->loadColumn();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$subscribed = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return array();
 		}
 
@@ -213,9 +231,19 @@ abstract class KunenaForumCategoryHelper
 		// Get total count
 		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return array(0, array());
+		}
+
+		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -230,10 +258,15 @@ abstract class KunenaForumCategoryHelper
 
 		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery($query, $limitstart, $limit);
-		$subscribed = (array) $db->loadColumn();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$subscribed = (array) $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return array(0, array());
 		}
 
@@ -251,6 +284,8 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @param   int|array $catids
+	 *
+	 * @since Kunena
 	 */
 	static public function getNewTopics($catids)
 	{
@@ -287,10 +322,15 @@ abstract class KunenaForumCategoryHelper
 				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery($query);
-		$newlist = (array) $db->loadObjectList('category_id');
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$newlist = (array) $db->loadObjectList('category_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return;
 		}
 
@@ -319,6 +359,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool|array $groupids
 	 *
 	 * @return KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
 	{
@@ -354,6 +395,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string     $authorise
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $reverse = false, $authorise = 'read')
 	{
@@ -427,6 +469,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getParents($id = 0, $levels = 100, $params = array())
 	{
@@ -477,6 +520,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getChildren($parents = 0, $levels = 0, $params = array())
 	{
@@ -518,6 +562,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool  $optimize
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static protected function _getChildren(array $parents, $levels, array $params, $optimize)
 	{
@@ -637,6 +682,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	static public function getOrphaned($levels = 0, $params = array())
 	{
@@ -665,6 +711,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int $parent
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function getCategoryTree($parent = 0)
 	{
@@ -680,6 +727,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $categories
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function &getIndentation($categories)
 	{
@@ -692,6 +740,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string|array $categories
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	static public function recount($categories = '')
 	{
@@ -731,10 +780,15 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -750,10 +804,15 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_time=0
 			WHERE tt.id IS NULL";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -770,6 +829,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	static public function fixAliases()
 	{
@@ -790,10 +850,15 @@ abstract class KunenaForumCategoryHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				return false;
 			}
 
@@ -809,7 +874,8 @@ abstract class KunenaForumCategoryHelper
 	 * @param $category_id
 	 * @param $alias
 	 *
-	 * @return boolean
+	 * @return boolean|void
+	 * @since Kunena
 	 */
 	static public function getAlias($category_id, $alias)
 	{
@@ -840,7 +906,8 @@ abstract class KunenaForumCategoryHelper
 	// Internal functions:
 
 	/**
-	 * @return array
+	 * @return array|boolean
+	 * @since Kunena
 	 */
 	static public function &loadCategories()
 	{
@@ -849,8 +916,17 @@ abstract class KunenaForumCategoryHelper
 		$db    = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery($query);
-		$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
 
 		// TODO: remove this by adding level into table
 		self::buildTree($instances);
@@ -876,6 +952,8 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @param   array $instances
+	 *
+	 * @since Kunena
 	 */
 	static protected function buildTree(array &$instances)
 	{
@@ -900,6 +978,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $b
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	static public function compareByNameAsc($a, $b)
 	{
@@ -916,6 +995,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $b
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	static public function compareByNameDesc($a, $b)
 	{
@@ -932,6 +1012,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $strip
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	static public function stripName($original, $strip)
 	{

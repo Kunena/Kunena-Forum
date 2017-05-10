@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Category
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -46,38 +46,92 @@ defined('_JEXEC') or die();
  * @property int    $last_post_id
  * @property int    $last_post_time
  * @property string $params
+ * @since Kunena
  */
 class KunenaForumCategory extends KunenaDatabaseObject
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $level = 0;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $authorised = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_aliases = null;
 
+	/**
+	 * @var mixed|null
+	 * @since Kunena
+	 */
 	protected $_alias = null;
 
 	/**
 	 * @var KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	protected $_channels = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_topics = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_posts = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_lastcat = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authcache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_authfcache = array();
 
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	protected $_new = 0;
 
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $_table = 'KunenaCategories';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $actions = array(
 		'none'                              => array(),
 		'read'                              => array('Read'),
@@ -121,6 +175,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @param   mixed|array $properties
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($properties = null)
 	{
@@ -157,6 +213,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $reload     Force reload from the database.
 	 *
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
@@ -169,6 +226,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int $levels How many levels to search.
 	 *
 	 * @return array    List of KunenaForumCategory objects.
+	 * @since Kunena
 	 */
 	public function getChildren($levels = 0)
 	{
@@ -181,6 +239,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumCategoryUser
+	 * @since Kunena
 	 */
 	public function getUserInfo($user = null)
 	{
@@ -194,6 +253,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed   $user
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function subscribe($value = true, $user = null)
 	{
@@ -211,11 +271,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * Returns new topics count from this category for current user.
 	 *
-	 * @todo Currently new topics needs to be calculated manually, make it automatic.
+	 * @todo  Currently new topics needs to be calculated manually, make it automatic.
 	 *
 	 * @param   mixed $count Internal parameter to set new count.
 	 *
 	 * @return int    New topics count.
+	 * @since Kunena
 	 */
 	public function getNewCount($count = null)
 	{
@@ -229,6 +290,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function isSection()
 	{
@@ -239,6 +301,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getIcon()
 	{
@@ -251,6 +314,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int|null $action   Limitstart.
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -268,6 +332,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function getNewTopicUrl($xhtml = true)
 	{
@@ -286,6 +351,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true)
 	{
@@ -308,7 +374,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean|null
 	 * @result string
-	 *
+	 * @since  Kunena
 	 */
 	public function getRSSUrl($xhtml = true)
 	{
@@ -327,6 +393,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int|null $action   Limitstart.
 	 *
 	 * @return JUri
+	 * @since Kunena
 	 */
 	public function getUri($category = null, $action = null)
 	{
@@ -353,6 +420,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $field Field to be displayed.
 	 *
 	 * @return integer|string
+	 * @since Kunena
 	 */
 	public function displayField($field)
 	{
@@ -373,6 +441,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function getCategory()
 	{
@@ -381,6 +450,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return array    Array of Kunena aliases.
+	 * @since Kunena
 	 */
 	public function getAliases()
 	{
@@ -399,6 +469,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $alias
 	 *
 	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function checkAlias($alias)
 	{
@@ -435,6 +506,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $alias
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function addAlias($alias)
 	{
@@ -467,15 +539,24 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
 		$db->setQuery($query);
-		$db->execute();
 
-		return KunenaError::checkDatabaseError();
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
 	}
 
 	/**
 	 * @param   string $alias
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function deleteAlias($alias)
 	{
@@ -488,8 +569,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDbo();
 		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
 		$db->setQuery($query);
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return (bool) $db->getAffectedRows();
 	}
@@ -519,6 +607,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getTopics()
 	{
@@ -529,6 +618,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getPosts()
 	{
@@ -539,6 +629,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getReplies()
 	{
@@ -548,7 +639,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return KunenaForumCategory
+	 * @return boolean|KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getLastCategory()
 	{
@@ -559,6 +651,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaForumTopic
+	 * @since Kunena
 	 */
 	public function getLastTopic()
 	{
@@ -568,7 +661,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @param   string $action
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return KunenaForumCategory|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public function getChannels($action = 'read')
 	{
@@ -636,6 +730,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getNewTopicCategory($user = null)
 	{
@@ -669,6 +764,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $safefields
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function newTopic(array $fields = null, $user = null, array $safefields = null)
 	{
@@ -712,6 +808,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getParent()
 	{
@@ -852,7 +949,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool   $silent
 	 *
 	 * @return boolean
-	 *
+	 * @since Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -890,6 +987,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $includeGlobal
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAdmins($includeGlobal = true)
 	{
@@ -916,6 +1014,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $objects
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getModerators($includeGlobal = true, $objects = true)
 	{
@@ -951,6 +1050,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return boolean
 	 *
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 * @since   Kunena
 	 */
 	public function setModerator($user = null, $value = false)
 	{
@@ -965,6 +1065,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return boolean
 	 *
 	 * @example if ($category->authorise('admin')) $category->addModerator($user);
+	 * @since   Kunena
 	 */
 	public function addModerator($user = null)
 	{
@@ -977,6 +1078,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $users
 	 *
 	 * @example if ($category->authorise('admin')) $category->addModerators(array($user1, $user2, $user3));
+	 * @since   Kunena
 	 */
 	public function addModerators($users = array())
 	{
@@ -1000,6 +1102,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return boolean
 	 *
 	 * @example if ($category->authorise('admin')) $category->removeModerator($user);
+	 * @since   Kunena
 	 */
 	public function removeModerator($user = null)
 	{
@@ -1007,13 +1110,14 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @see KunenaDatabaseObject::bind()
+	 * @see   KunenaDatabaseObject::bind()
 	 *
 	 * @param   array $src
 	 * @param   array $fields
 	 * @param   bool  $include
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
 	{
@@ -1044,11 +1148,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @see KunenaDatabaseObject::load()
+	 * @see   KunenaDatabaseObject::load()
 	 *
 	 * @param   null $id
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id = null)
 	{
@@ -1078,7 +1183,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @see KunenaDatabaseObject::check()
+	 * @see   KunenaDatabaseObject::check()
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -1105,7 +1211,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @see KunenaDatabaseObject::saveInternal()
+	 * @see   KunenaDatabaseObject::saveInternal()
+	 * @since Kunena
 	 */
 	protected function saveInternal()
 	{
@@ -1147,6 +1254,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int   $limit
 	 *
 	 * @return int    Number of purged topics.
+	 * @since Kunena
 	 */
 	public function purge($time, $params = array(), $limit = 1000)
 	{
@@ -1161,8 +1269,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadColumn();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$ids = $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if (empty($ids))
 		{
@@ -1186,6 +1301,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int   $limit
 	 *
 	 * @return int    Number of trashed topics.
+	 * @since Kunena
 	 */
 	public function trash($time, $params = array(), $limit = 1000)
 	{
@@ -1200,8 +1316,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db    = JFactory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadColumn();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$ids = $db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if (empty($ids))
 		{
@@ -1220,6 +1343,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * Delete this category and all related information from the database.
 	 *
 	 * @return bool    True on success
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -1270,8 +1394,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->execute();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		KunenaUserHelper::recount();
@@ -1377,6 +1508,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int              $postdelta
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function update($topic, $topicdelta = 0, $postdelta = 0)
 	{
@@ -1411,8 +1543,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$db    = JFactory::getDBO();
 			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC, last_post_id DESC";
 			$db->setQuery($query, 0, 1);
-			$topic = $db->loadObject();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$topic = $db->loadObject();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 
 			if ($topic)
 			{
@@ -1508,6 +1647,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -1543,6 +1683,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
 	{
@@ -1569,6 +1710,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
 	{
@@ -1585,6 +1727,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseSubscribe(KunenaUser $user)
 	{
@@ -1608,6 +1751,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseCatSubscribe(KunenaUser $user)
 	{
@@ -1631,6 +1775,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseFavorite(KunenaUser $user)
 	{
@@ -1652,6 +1797,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseNotSection(KunenaUser $user)
 	{
@@ -1668,6 +1814,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseChannel(KunenaUser $user)
 	{
@@ -1686,6 +1833,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
 	{
@@ -1702,6 +1850,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseModerate(KunenaUser $user)
 	{
@@ -1723,6 +1872,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseGlobalModerate(KunenaUser $user)
 	{
@@ -1744,6 +1894,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseAdmin(KunenaUser $user)
 	{
@@ -1765,6 +1916,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authorisePoll(KunenaUser $user)
 	{
@@ -1787,6 +1939,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseVote(KunenaUser $user)
 	{
@@ -1803,6 +1956,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @since Kunena
 	 */
 	protected function authoriseUpload(KunenaUser $user)
 	{

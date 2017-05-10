@@ -2,8 +2,8 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+* @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link https://www.kunena.org
 **/
 
@@ -78,8 +78,8 @@ h3 {
   }
 }
 
-.knewchar {
-  padding-left: 3px;
+sup.knewchar {
+	padding-left : 3px;
 }
 
 .kfrontend {
@@ -295,12 +295,6 @@ a:focus,
   padding-left: 10px;
 }
 
-.horizontal-message-bottom .kmsg {
-  margin-top: 50px;
-  min-height: 140px;
-  padding-left: 10px;
-}
-
 .horizontal-message .kmessage {
   padding: 10px;
 }
@@ -401,7 +395,7 @@ form {
   height: 100%;
   margin: 20px 0;
   word-wrap: break-word;
-  font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Helvetica , Arial, sans-serif;
 }
 
 .input-xxlarge {
@@ -532,7 +526,6 @@ table .well {
 }
 
 .nav .dropdown-menu a {
-  display: inline-block;
   text-decoration: none;
   .btn-link {
     margin-left: -120px;
@@ -815,7 +808,8 @@ ul.inline span.kicon {
   margin-bottom: -7px;
 }
 
-ul.inline i {
+ul.list-inline .glyphicon,
+ul.list-inline i {
   padding-top: 2px;
   padding-right: 5px;
 }
@@ -877,13 +871,13 @@ div.pagination a.disabled:hover {
 #search .btn.b3:before {
   content: "\e260";
   font-size: 14px;
-  font-family: "Glyphicons Halflings";
+  font-family: "Glyphicons Halflings", serif;
 }
 
 .btn-toolbar .btn.b3.collapsed:before,
 #search .btn.b3.collapsed:before {
   content: "\e259";
-  font-family: "Glyphicons Halflings";
+  font-family: "Glyphicons Halflings", serif;
   font-size: 14px;
 }
 
@@ -1251,6 +1245,28 @@ div.moderators {
 
 #ann-date .date,
 #ann-date2 .date,
-#ann-date3 .date {
+#ann-date3 .date,
+#searchatdate .date {
   display: inline-block !important;
+}
+
+.dropdown-submenu > a::after {
+  display: none !important;
+}
+
+.inputbox#catid {
+  max-width: 250px;
+}
+
+#whoisonlinelist .img-circle {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.search-query {
+  width: auto;
+}
+
+#nav-menu img {
+	width: 80%;
 }

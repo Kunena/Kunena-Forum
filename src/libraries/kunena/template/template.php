@@ -5,8 +5,8 @@
  * @package         Kunena.Framework
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
@@ -16,18 +16,39 @@ jimport('joomla.html.parameter');
 /**
  * Kunena Users Table Class
  * Provides access to the #__kunena_users table
+ * @since Kunena
  */
 class KunenaTemplate extends JObject
 {
 	// Global for every instance
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	public $name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
+	/**
+	 * @var bool|int
+	 * @since Kunena
+	 */
 	public $paramstime = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
@@ -38,6 +59,10 @@ class KunenaTemplate extends JObject
 		'css'           => 'media/css'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypeDefaults = array(
 		'avatars'       => 'media/avatars',
 		'emoticons'     => 'media/emoticons',
@@ -49,6 +74,10 @@ class KunenaTemplate extends JObject
 		'js'            => 'media/js',
 		'css'           => 'media/css'
 	);
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $pathTypeOld = array(
 		'avatars'    => 'images/avatars',
 		'emoticons'  => 'images/emoticons',
@@ -60,18 +89,46 @@ class KunenaTemplate extends JObject
 		'css'        => 'css'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $default = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $paths = array();
 
+	/**
+	 * @var bool
+	 * @since Kunena
+	 */
 	protected $css_compile = true;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $filecache = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $smileyPath = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $rankPath = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $userClasses = array(
 		'kwho-',
 		'admin'     => 'kwho-admin',
@@ -83,26 +140,63 @@ class KunenaTemplate extends JObject
 		'blocked'   => 'kwho-blocked'
 	);
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $topicIcons = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categoryIcons = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $stylesheets = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $style_variables = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $compiled_style_variables = null;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $scripts = array();
 
+	/**
+	 * @var null|SimpleXMLElement
+	 * @since Kunena
+	 */
 	protected $xml = null;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $map;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	protected $hmvc;
 
 	/**
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $category_iconset = '';
 
@@ -112,6 +206,8 @@ class KunenaTemplate extends JObject
 	 * @access    protected
 	 *
 	 * @param   null $name
+	 *
+	 * @since     Kunena
 	 */
 	public function __construct($name = null)
 	{
@@ -134,15 +230,14 @@ class KunenaTemplate extends JObject
 		$this->default = array_unique($this->default);
 
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$name}/config/config.xml";
+		$xml_path = KPATH_SITE . "/template/{$name}/config/config.xml";
 
-		if (!is_file($this->xml_path))
+		if (!is_file($xml_path))
 		{
 			// Configuration file was not found - legacy template support.
-			$this->xml_path = KPATH_SITE . "/template/{$name}/config/template.xml";
+			$xml_path = KPATH_SITE . "/template/{$name}/config/template.xml";
 		}
 
-		// TODO: move configuration out of filesystem (keep on legacy).
 		$ini     = KPATH_SITE . "/template/{$name}/config/params.ini";
 		$content = '';
 		$format  = 'INI';
@@ -166,7 +261,7 @@ class KunenaTemplate extends JObject
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
-		$this->xml = simplexml_load_file($this->xml_path);
+		$this->xml = simplexml_load_file($xml_path);
 
 		if ($this->xml)
 		{
@@ -195,20 +290,21 @@ class KunenaTemplate extends JObject
 	 * getconfigxml
 	 *
 	 * @return bool|mixed|string
+	 * @since Kunena
 	 */
 	public function getConfigXml()
 	{
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
+		$xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
 
-		if (!is_file($this->xml_path))
+		if (!is_file($xml_path))
 		{
 			$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
 
 			return false;
 		}
 
-		$xml = file_get_contents($this->xml_path);
+		$xml = file_get_contents($xml_path);
 
 		if (!strstr($xml, '<config>'))
 		{
@@ -223,6 +319,7 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function loadLanguage()
 	{
@@ -240,6 +337,7 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function initialize()
 	{
@@ -272,6 +370,7 @@ class KunenaTemplate extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function initializeBackend()
 	{
@@ -280,6 +379,7 @@ class KunenaTemplate extends JObject
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getUserClasses()
 	{
@@ -294,6 +394,7 @@ class KunenaTemplate extends JObject
 	 * @param null $id
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -330,7 +431,7 @@ class KunenaTemplate extends JObject
 		}
 
 		return <<<HTML
-<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
 	<span class="{$name}"><span>{$text}</span></span>
 </a>
 HTML;
@@ -341,6 +442,7 @@ HTML;
 	 * @param string $title
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -352,6 +454,7 @@ HTML;
 	 * @param string $alt
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getImage($image, $alt = '')
 	{
@@ -362,6 +465,7 @@ HTML;
 	 * @param $list
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getPaginationListFooter($list)
 	{
@@ -379,6 +483,7 @@ HTML;
 	 * @param $list
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getPaginationListRender($list)
 	{
@@ -406,6 +511,7 @@ HTML;
 	 * @param $item
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getPaginationItemActive($item)
 	{
@@ -416,6 +522,7 @@ HTML;
 	 * @param $item
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getPaginationItemInactive($item)
 	{
@@ -427,6 +534,7 @@ HTML;
 	 * @param string $class_sfx
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getClass($class, $class_sfx = '')
 	{
@@ -435,6 +543,7 @@ HTML;
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getStyleVariables()
 	{
@@ -446,6 +555,7 @@ HTML;
 	 * @param string $default
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getStyleVariable($name, $default = '')
 	{
@@ -457,6 +567,7 @@ HTML;
 	 * @param $value
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function setStyleVariable($name, $value)
 	{
@@ -470,6 +581,7 @@ HTML;
 	 * @param string $group
 	 *
 	 * @return JDocument
+	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
@@ -498,6 +610,8 @@ HTML;
 	/**
 	 * @param        $filename
 	 * @param string $condition
+	 *
+	 * @since Kunena
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{
@@ -511,6 +625,7 @@ HTML;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function clearCache()
 	{
@@ -526,6 +641,7 @@ HTML;
 	 * @param string $filename
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getCachePath($filename = '')
 	{
@@ -550,6 +666,7 @@ HTML;
 	 * @param $matches
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	function findUrl($matches)
 	{
@@ -570,6 +687,7 @@ HTML;
 	 * @param string $type
 	 *
 	 * @return JDocument
+	 * @since Kunena
 	 */
 	function addScriptDeclaration($content, $type = 'text/javascript')
 	{
@@ -582,6 +700,7 @@ HTML;
 	 * @param $filename
 	 *
 	 * @return JDocument
+	 * @since Kunena
 	 */
 	function addScript($filename)
 	{
@@ -604,6 +723,8 @@ HTML;
 
 	/**
 	 * @param $path
+	 *
+	 * @since Kunena
 	 */
 	public function addPath($path)
 	{
@@ -616,6 +737,7 @@ HTML;
 	 *
 	 * @return array
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
@@ -649,6 +771,7 @@ HTML;
 	 * @param null   $ignore
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
 	{
@@ -687,6 +810,7 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getAvatarPath($filename = '', $url = false)
 	{
@@ -698,6 +822,7 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getSmileyPath($filename = '', $url = false)
 	{
@@ -709,6 +834,7 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRankPath($filename = '', $url = false)
 	{
@@ -720,6 +846,7 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getTopicIconPath($filename = '', $url = true)
 	{
@@ -727,7 +854,7 @@ HTML;
 
 		if ($config->topicicons)
 		{
-			$category_iconset = 'images/topic_icons/';
+			$category_iconset = 'images/topic_icons';
 			if (!file_exists($category_iconset))
 			{
 				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
@@ -751,6 +878,7 @@ HTML;
 	 * @param        $category_iconset
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)
 	{
@@ -768,6 +896,7 @@ HTML;
 	 * @param bool   $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getImagePath($filename = '', $url = true)
 	{
@@ -779,6 +908,7 @@ HTML;
 	 * @param int  $checked
 	 *
 	 * @return array|SimpleXMLElement
+	 * @since Kunena
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
@@ -821,7 +951,7 @@ HTML;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
-							$icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+							$icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
 							$this->topicIcons[$icon->id] = $icon;
 						}
 					}
@@ -840,7 +970,7 @@ HTML;
 				$icon->filename      = 'default.png';
 				$icon->width         = 48;
 				$icon->height        = 48;
-				$icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false, $category_iconset);
+				$icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false);
 				$this->topicIcons[0] = $icon;
 			}
 		}
@@ -870,6 +1000,7 @@ HTML;
 	 * @param int  $checked
 	 *
 	 * @return array|SimpleXMLElement
+	 * @since Kunena
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
@@ -952,12 +1083,13 @@ HTML;
 	 * @param bool $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getTopicIconIndexPath($index, $url = false)
 	{
 		if (empty($this->topicIcons))
 		{
-			$this->getTopicIcons(false, 0, $this->category_iconset);
+			$this->getTopicIcons(false, 0);
 		}
 
 		if (empty($this->topicIcons[$index]->published))
@@ -975,6 +1107,7 @@ HTML;
 	 * @param bool $url
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
 	{
@@ -998,7 +1131,7 @@ HTML;
 	 *
 	 * @return string
 	 * @internal param string $category_iconset
-	 *
+	 * @since    Kunena
 	 */
 	public function getTopicIcon($topic)
 	{
@@ -1019,6 +1152,36 @@ HTML;
 			$xml  = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
+			if ($topic->ordering)
+			{
+				$topic->icon_id = 504;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->locked)
+			{
+				$topic->icon_id = 505;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->ordering && $topic->locked)
+			{
+				$topic->icon_id = 503;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 2)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
+			if ($topic->hold == 3)
+			{
+				$topic->icon_id = 501;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
 			if ($topicicontype == 'B2')
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
@@ -1030,6 +1193,10 @@ HTML;
 			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
+			}
+			elseif ($topicicontype == 'image')
+			{
+				return '<img src="'. JUri::root() .'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
@@ -1113,13 +1280,31 @@ HTML;
 					$category_iconset = 'default';
 				}
 
+				if (!empty($topic->unread))
+				{
+					$icon->src = $icon->new;
+				}
+
+				if (empty($icon->name))
+				{
+					$icon->name = "";
+				}
+
 				$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon->src}", true);
 
-				return '<img src="' . $iconurl . '" alt="" />';
+				return '<img src="' . $iconurl . '" alt="' . $icon->name .'" />';
 			}
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 * @since Kunena
+	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->icons))
@@ -1134,15 +1319,25 @@ HTML;
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
+			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
+			$icon->new = (string) $attributes->new;
 
 			return $icon;
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 * @since Kunena
+	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->icons))
@@ -1151,16 +1346,23 @@ HTML;
 
 			if (!$icon)
 			{
-				$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+				if (!$icon)
+				{
+					$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+				}
 			}
 
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
+			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
+			$icon->new  = (string) $attributes->new;
 
 			return $icon;
 		}
@@ -1170,20 +1372,19 @@ HTML;
 	 * @param KunenaForumCategory $category
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getCategoryIcon($category)
 	{
 		$config = KunenaFactory::getConfig();
 		if ($config->categoryicons)
 		{
-			// TODO: use xml file instead
 			$icon    = $category->icon_id;
 			$iconurl = $this->getCategoryIconIndexPath($icon, true);
 		}
 		else
 		{
 			$icon = 'folder';
-			// FIXME: hardcoded to system type...
 			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
 		$html = '<img src="' . $iconurl . '" alt="emo" />';
@@ -1196,6 +1397,7 @@ HTML;
 	 *
 	 * @return string
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function getTopicsIconPath($filename)
 	{
@@ -1209,6 +1411,7 @@ HTML;
 
 	/**
 	 * @return SimpleXMLElement
+	 * @since Kunena
 	 */
 	public function getTemplateDetails()
 	{
@@ -1220,6 +1423,8 @@ HTML;
 	/**
 	 * @param $inputFile
 	 * @param $outputFile
+	 *
+	 * @since Kunena
 	 */
 	function compileLess($inputFile, $outputFile)
 	{
@@ -1280,6 +1485,7 @@ HTML;
 	 *
 	 * @return array
 	 * @deprecated K4.0
+	 * @since      Kunena
 	 */
 	public function mapLegacyView($search)
 	{
@@ -1304,6 +1510,7 @@ HTML;
 	/**
 	 * @return bool
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function isHmvc()
 	{
@@ -1327,6 +1534,8 @@ HTML;
 	 * Set the category iconset value
 	 *
 	 * @param string $iconset
+	 *
+	 * @since Kunena
 	 */
 	public function setCategoryIconset($iconset = '/default')
 	{
@@ -1400,12 +1609,18 @@ HTML;
 		return self::$_instances [$name];
 	}
 
+	/**
+	 * @param $topic
+	 *
+	 * @return stdClass
+	 * @since Kunena
+	 */
 	public function getTopicLabel($topic)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$ktemplate = KunenaFactory::getTemplate();
 
-		$topicicontype = $this->ktemplate->params->get('topicicontype');
-		$topiclabels   = $this->ktemplate->params->get('labels');
+		$topicicontype = $ktemplate->params->get('topicicontype');
+		$topiclabels   = $ktemplate->params->get('labels');
 
 		if ($topiclabels != 0)
 		{
@@ -1433,6 +1648,14 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param        $src
+	 * @param int    $id
+	 * @param string $style
+	 *
+	 * @return stdClass
+	 * @since Kunena
+	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->labels))
@@ -1444,24 +1667,29 @@ HTML;
 				$label = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
 			}
 
-			$attributes       = $label[0]->attributes();
-			$label            = new stdClass;
-			$label->id        = (int) $attributes->id;
-			$label->b2        = (string) $attributes->b2;
-			$label->b3        = (string) $attributes->b3;
-			$label->fa        = (string) $attributes->fa;
-			$label->src       = (string) $attributes->src;
-			$label->name      = (string) $attributes->name;
+			$attributes = $label[0]->attributes();
+			$label       = new stdClass;
+			$label->id   = (int) $attributes->id;
+			$label->b2   = (string) $attributes->b2;
+			$label->b3   = (string) $attributes->b3;
+			$label->fa   = (string) $attributes->fa;
+			$label->src  = (string) $attributes->src;
+			$label->name = (string) $attributes->name;
+			$label->new  = (string) $attributes->new;
 			$label->labeltype = (string) $attributes->labeltype;
 
 			return $label;
 		}
 	}
 
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
 	public function borderless()
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$borderless      = $this->ktemplate->params->get('borderless');
+		$ktemplate = KunenaFactory::getTemplate();
+		$borderless      = $ktemplate->params->get('borderless');
 
 		if ($borderless)
 		{
@@ -1470,6 +1698,24 @@ HTML;
 		else
 		{
 			return ' table-bordered';
+		}
+	}
+
+	public function tooltips($class = false)
+	{
+		$ktemplate = KunenaFactory::getTemplate();
+		$tooltips   = $ktemplate->params->get('tooltips');
+
+		if ($tooltips)
+		{
+			if ($class)
+			{
+				return 'class="hasTooltip"';
+			}
+			else
+			{
+				return 'hasTooltip';
+			}
 		}
 	}
 }

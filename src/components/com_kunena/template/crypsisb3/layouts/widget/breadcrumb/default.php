@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -14,19 +14,18 @@ $pathway = $this->breadcrumb->getPathway();
 $item    = array_shift($pathway);
 
 if ($item) : ?>
-	<div>
-		<ul class="breadcrumb">
-			<li class="active">
-				<span class="divider glyphicon glyphicon-home"></span>
-				<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
-			</li>
+<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+	<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<?php echo KunenaIcons::home(); ?>
+		<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
+	</li>
 
-			<?php foreach ($pathway as $item) : ?>
-				<li>
-					<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
-				</li>
-			<?php endforeach; ?>
+	<?php foreach($pathway as $item) : ?>
+		<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
+		<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
+		</li>
+	<?php endforeach; ?>
 
-		</ul>
-	</div>
+</ol>
 <?php endif; ?>

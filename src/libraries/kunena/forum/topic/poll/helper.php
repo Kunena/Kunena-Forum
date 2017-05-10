@@ -4,17 +4,22 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.Poll
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicPollHelper
+ * @since Kunena
  */
 abstract class KunenaForumTopicPollHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -24,6 +29,7 @@ abstract class KunenaForumTopicPollHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -49,6 +55,7 @@ abstract class KunenaForumTopicPollHelper
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	static public function recount()
 	{

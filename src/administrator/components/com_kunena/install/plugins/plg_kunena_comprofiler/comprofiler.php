@@ -5,14 +5,22 @@
  * @package         Kunena.Plugins
  * @subpackage      Comprofiler
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaComprofiler
+ * @since Kunena
+ */
 class plgKunenaComprofiler extends JPlugin
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $minCBVersion = '2.0.0';
 
 	/**
@@ -20,6 +28,8 @@ class plgKunenaComprofiler extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -60,6 +70,8 @@ class plgKunenaComprofiler extends JPlugin
 	 * @param        $type
 	 * @param   null $view
 	 * @param   null $params
+	 *
+	 * @since Kunena
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
 	{
@@ -85,6 +97,8 @@ class plgKunenaComprofiler extends JPlugin
 	 * @param       $item
 	 * @param       $params
 	 * @param   int $page
+	 *
+	 * @since Kunena
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
 	{
@@ -103,7 +117,8 @@ class plgKunenaComprofiler extends JPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess
+	 * @return KunenaAccess|KunenaAccessComprofiler
+	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -120,7 +135,8 @@ class plgKunenaComprofiler extends JPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin
+	 * @return KunenaLogin|KunenaLoginComprofiler
+	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -138,6 +154,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -155,6 +172,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -172,6 +190,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena private message integration object.
 	 *
 	 * @return KunenaPrivate
+	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -189,6 +208,7 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerTrash extends KunenaController
 {
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $baseurl = null;
 
 	/**
@@ -84,7 +88,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					if ($success)
+					{
+						KunenaForumTopicHelper::recount($ids);
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					}
 				}
 				elseif ($type == 'messages')
 				{
@@ -108,7 +117,12 @@ class KunenaAdminControllerTrash extends KunenaController
 						}
 					}
 
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					if ($success)
+					{
+						KunenaForumTopicHelper::recount($ids);
+						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					}
 				}
 			}
 			else

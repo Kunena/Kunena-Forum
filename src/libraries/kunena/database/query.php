@@ -3,8 +3,8 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright      Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  *
  * Derived from Joomla 1.6
@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 /**
  * Query Element Class.
+ * @since Kunena
  */
 class KunenaDatabaseQueryElement
 {
@@ -89,6 +90,7 @@ class KunenaDatabaseQueryElement
 
 /**
  * Query Building Class.
+ * @since Kunena
  */
 class KunenaDatabaseQuery
 {
@@ -169,7 +171,7 @@ class KunenaDatabaseQuery
 	 *
 	 * @param   string $clause Optionally, the name of the clause to clear, or nothing to clear the whole query.
 	 *
-	 * @return    void
+	 * @return KunenaDatabaseQuery|void
 	 * @since    1.6
 	 */
 	public function clear($clause = null)

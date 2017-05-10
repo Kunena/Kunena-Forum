@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -20,7 +20,7 @@ class KunenaAdminViewUsers extends KunenaView
 {
 	/**
 	 * DisplayDefault
-	 *
+	 * @since Kunena
 	 */
 	public function displayDefault()
 	{
@@ -52,6 +52,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * setToolbar
 	 *
 	 * @return    string
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{
@@ -89,6 +90,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of locked filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function signatureOptions()
 	{
@@ -104,6 +106,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function blockOptions()
 	{
@@ -119,6 +122,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function bannedOptions()
 	{
@@ -134,6 +138,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function moderatorOptions()
 	{
@@ -149,6 +154,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -170,6 +176,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{
@@ -184,6 +191,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array ranks filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function ranksOptions()
 	{

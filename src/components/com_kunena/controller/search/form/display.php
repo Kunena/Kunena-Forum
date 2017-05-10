@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Search
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,10 +17,15 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Search/Form';
 
 	/**
 	 * @var KunenaModelSearch
+	 * @since Kunena
 	 */
 	public $model;
 
@@ -28,6 +33,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare search form display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -48,16 +54,16 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = JFactory::getDocument();
-		$config          = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots          = $componentParams->get('robots');
+		$doc = JFactory::getDocument();
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{

@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -27,20 +27,7 @@ if ($config->lightbox == 1)
 	}
 
 	$this->addScript('assets/js/fancybox.js');
-	JFactory::getDocument()->addScriptDeclaration('
-				jQuery(document).ready(function() {
-					jQuery(".fancybox-button").fancybox({
-						type: \'image\',
-						prevEffect		: \'none\',
-						nextEffect		: \'none\',
-						closeBtn		:  true,
-						helpers		: {
-							title	: { type : \'inside\' },
-							buttons	: {}
-						}
-					});
-				});
-			');
+	$this->addScript('assets/js/fancybox.settings.js');
 }
 
 ?>

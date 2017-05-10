@@ -25,6 +25,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -66,14 +67,17 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::checkin('checkin');
 		JToolbarHelper::spacer();
+		JToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+		JToolbarHelper::spacer();
 		$help_url = 'https://www.kunena.org/docs/';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function publishedOptions()
 	{

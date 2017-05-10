@@ -5,8 +5,8 @@
  * @package         Kunena.Framework
  * @subpackage      Forum.Topic
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForumTopicRateHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -61,6 +65,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param $id
 	 *
 	 * @return float
+	 * @since Kunena
 	 */
 	static public function getSelected($id)
 	{

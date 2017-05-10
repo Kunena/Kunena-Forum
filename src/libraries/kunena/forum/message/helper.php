@@ -4,22 +4,28 @@
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Forum Message Helper Class
+ * @since Kunena
  */
 abstract class KunenaForumMessageHelper
 {
 	/**
 	 * @var KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_location = array();
 
 	/**
@@ -29,6 +35,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessage    The message object.
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -66,6 +73,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	static public function getMessages($ids = false, $authorise = 'read')
 	{
@@ -107,6 +115,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool   $orderbyid
 	 *
 	 * @return KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	static public function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -152,6 +161,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   array          $params
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static public function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -261,9 +271,19 @@ abstract class KunenaForumMessageHelper
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
 
-		if (KunenaError::checkDatabaseError() || !$total)
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return array(0, array());
+		}
+
+		if (!$total)
 		{
 			return array(0, array());
 		}
@@ -275,10 +295,15 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$db->setQuery($query, $limitstart, $limit);
-		$results = $db->loadAssocList();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$results = $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return array(0, array());
 		}
 
@@ -303,6 +328,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   null|array  $hold
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
 	{
@@ -344,6 +370,8 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param   array|string $mesids
+	 *
+	 * @since Kunena
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -388,9 +416,17 @@ abstract class KunenaForumMessageHelper
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})
-			GROUP BY m.id, mm.hold");
-		$results = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+			GROUP BY m.id, mm.hold"
+		);
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($results as $result)
 		{
@@ -410,6 +446,7 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -421,6 +458,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int $topicids
 	 *
 	 * @return boolean|integer
+	 * @since Kunena
 	 */
 	public static function recount($topicids = false)
 	{
@@ -444,10 +482,15 @@ abstract class KunenaForumMessageHelper
 			INNER JOIN #__kunena_topics AS tt ON tt.id=m.thread
 			SET m.catid=tt.category_id {$where}";
 		$db->setQuery($query);
-		$db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			return false;
 		}
 
@@ -458,6 +501,8 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param   array $ids
+	 *
+	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
 	{
@@ -480,8 +525,15 @@ abstract class KunenaForumMessageHelper
 		$db     = JFactory::getDBO();
 		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
 		$db->setQuery($query);
-		$results = (array) $db->loadAssocList('id');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		foreach ($ids as $id)
 		{
@@ -501,6 +553,40 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
+	 * @param   array $ids
+	 *
+	 * @return array|void
+	 * @since 5.0.3
+	 */
+	static public function getMessagesByTopics(array $ids)
+	{
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$db = JFactory::getDBO();
+
+		$idlist = implode(',', $ids);
+		$query  = "SELECT m.*, t.message
+		FROM #__kunena_messages AS m
+		INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+		WHERE m.thread IN ({$idlist}) AND m.hold=0";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $results;
+	}
+
+	/**
 	 * @param   int    $topic_id
 	 * @param   int    $start
 	 * @param   int    $limit
@@ -509,6 +595,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool   $orderbyid
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -518,8 +605,15 @@ abstract class KunenaForumMessageHelper
 			INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 			WHERE m.thread={$db->quote($topic_id)} AND m.hold IN ({$hold}) ORDER BY m.time {$ordering}";
 		$db->setQuery($query, $start, $limit);
-		$results = (array) $db->loadAssocList('id');
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order    = ($ordering == 'ASC') ? 1 : -1;

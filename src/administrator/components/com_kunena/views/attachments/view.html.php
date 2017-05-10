@@ -5,14 +5,15 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Attachments view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewAttachments extends KunenaView
 {
@@ -21,6 +22,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function display($tpl = null)
 	{
@@ -49,6 +51,7 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{
@@ -65,6 +68,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -81,6 +85,7 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 * Returns an array of review filter options.
+	 * @since Kunena
 	 *
 	 * @return    array
 	 */

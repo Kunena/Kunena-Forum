@@ -3,31 +3,64 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Tree Class
+ * @since Kunena
  */
 class KunenaTree implements Iterator
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_tree = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_parents = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_levels = array();
 
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $_id = null;
 
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $_parent = null;
 
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $_level = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $heap = null;
 
 	//	protected $_count = null;
@@ -37,6 +70,8 @@ class KunenaTree implements Iterator
 	 * @param   string $id
 	 * @param   string $parent
 	 * @param   string $level
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level')
 	{
@@ -50,6 +85,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function rewind()
 	{
@@ -63,6 +99,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function current()
 	{
@@ -73,6 +110,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function key()
 	{
@@ -81,6 +119,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function next()
 	{
@@ -105,6 +144,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function valid()
 	{
@@ -113,6 +153,8 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @param $items
+	 *
+	 * @since Kunena
 	 */
 	public function add(&$items)
 	{
@@ -177,6 +219,7 @@ class KunenaTree implements Iterator
 	 * @param $id
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getLevel($id)
 	{
@@ -187,6 +230,7 @@ class KunenaTree implements Iterator
 	 * @param   int $parent
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getTree($parent = 0)
 	{
@@ -204,6 +248,7 @@ class KunenaTree implements Iterator
 	 * @param   bool  $gap
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function &getIndentation($parent_id = 0, $itemIndent = array(), $gap = false)
 	{

@@ -4,20 +4,29 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license        http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaMigratorJoomlaboard
+ * @since Kunena
+ */
 class KunenaMigratorJoomlaboard
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $versions = array(
 		array('version' => '1.0', 'date' => '0000-00-00', 'table' => 'sb_messages', 'column' => 'id'),
 	);
 
 	/**
 	 * @return KunenaMigratorJoomlaboard|null
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -35,6 +44,7 @@ class KunenaMigratorJoomlaboard
 	 * Detect JoomlaBoard version.
 	 *
 	 * @return  string  JoomlaBoard version or null.
+	 * @since Kunena
 	 */
 	public function detect()
 	{

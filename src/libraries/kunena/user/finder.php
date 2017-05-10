@@ -4,23 +4,33 @@
  * @package         Kunena.Framework
  * @subpackage      User
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaUserFinder
+ * @since Kunena
  */
 class KunenaUserFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__users';
 
+	/**
+	 * @var KunenaConfig|mixed
+	 * @since Kunena
+	 */
 	protected $config;
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -29,7 +39,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		$this->config = KunenaConfig::getInstance();
 		$this->limit  = $this->config->userlist_rows;
 
-		$this->query->leftJoin('#__kunena_users AS ku ON ku.userid=a.id');
+		$this->query->leftJoin($this->db->quoteName('#__kunena_users') . ' AS ku ON ku.userid=a.id');
 	}
 
 	/**
@@ -40,6 +50,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null, $register = true)
 	{
@@ -65,6 +76,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $ignore
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByConfiguration(array $ignore = array())
 	{
@@ -94,6 +106,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param $search
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByName($search)
 	{
@@ -116,6 +129,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return array|KunenaUser[]
+	 * @since Kunena
 	 */
 	public function find()
 	{

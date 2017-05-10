@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -25,6 +25,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @param   array $config
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -36,6 +37,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * Method to auto-populate the model state.
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -67,12 +69,13 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see JModelForm::getForm()
+	 * @see   JModelForm::getForm()
 	 *
 	 * @param   array $data
 	 * @param   bool  $loadData
 	 *
 	 * @return boolean|mixed
+	 * @since Kunena
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -92,7 +95,8 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see JModelForm::loadFormData()
+	 * @see   JModelForm::loadFormData()
+	 * @since Kunena
 	 */
 	protected function loadFormData()
 	{
@@ -111,6 +115,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @return array
 	 *
+	 * @since Kunena
 	 */
 	function getTemplates()
 	{
@@ -135,7 +140,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	function getTotal()
 	{
@@ -144,7 +149,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
-	 *
+	 * @since Kunena
 	 */
 	function getStart()
 	{
@@ -153,7 +158,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return boolean|stdClass
-	 *
+	 * @since Kunena
 	 */
 	function getTemplatedetails()
 	{
@@ -171,7 +176,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
-	 *
+	 * @since Kunena
 	 */
 	function getFileLessParsed()
 	{
@@ -191,7 +196,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
-	 *
+	 * @since Kunena
 	 */
 	function getFileContentParsed()
 	{
@@ -212,6 +217,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	function getFTPcredentials()
 	{
@@ -231,6 +237,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @return mixed|null
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -261,6 +268,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	public function getPagination()
 	{
@@ -287,6 +295,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @param   string $id
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{

@@ -4,8 +4,8 @@
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright     Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -15,57 +15,152 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Topics
  * Provides access to the #__kunena_topics table
+ * @since Kunena
  */
 class TableKunenaTopics extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $category_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $subject = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $icon_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $locked = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hold = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ordering = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $posts = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hits = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $attachments = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $poll_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $moved_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $first_post_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $first_post_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $first_post_userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $first_post_message = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $first_post_guest_name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_id = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_time = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_userid = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_message = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $last_post_guest_name = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -77,6 +172,7 @@ class TableKunenaTopics extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -106,18 +202,18 @@ class TableKunenaTopics extends KunenaTable
 		// Load the user data.
 		$query = "SELECT * FROM #__kunena_topics WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$data = $this->_db->loadAssoc();
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
-		
+
 		if (!$data)
 		{
 			$this->$k = 0;
@@ -135,6 +231,7 @@ class TableKunenaTopics extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{

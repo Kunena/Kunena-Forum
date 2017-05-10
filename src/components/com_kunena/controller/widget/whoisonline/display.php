@@ -4,8 +4,8 @@
  * @package         Kunena.Site
  * @subpackage      Controller.Statistics
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -17,8 +17,16 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/WhoIsOnline';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $usersUrl;
 
 	/**
@@ -27,6 +35,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -103,6 +112,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

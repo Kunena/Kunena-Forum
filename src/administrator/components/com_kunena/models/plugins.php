@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
+/**
+ * Class KunenaAdminModelPlugins
+ * @since Kunena
+ */
 class KunenaAdminModelPlugins extends JModelList
 {
 	/**
@@ -93,6 +97,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return  string    A store id.
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -114,6 +119,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * @param   int            $limit      The number of records
 	 *
 	 * @return  array
+	 * @since Kunena
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
@@ -188,6 +194,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * @param   array $items The array of objects
 	 *
 	 * @return  array The array of translated objects
+	 * @since Kunena
 	 */
 	protected function translate(&$items)
 	{
@@ -209,6 +216,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  JDatabaseQuery
+	 * @since Kunena
 	 */
 	protected function getListQuery()
 	{

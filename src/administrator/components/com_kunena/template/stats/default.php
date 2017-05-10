@@ -4,8 +4,8 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Stats
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -104,7 +104,7 @@ if (JFactory::getLanguage()->isRTL())
 								<?php echo $item->link ?>
 							</td>
 							<td>
-								<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="" height="15"
+								<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15"
 								     width="<?php echo $item->percent ?>%"/>
 							</td>
 							<td>

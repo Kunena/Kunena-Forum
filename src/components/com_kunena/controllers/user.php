@@ -5,8 +5,8 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -23,6 +23,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -66,7 +67,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
+			if (!KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
 				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
@@ -77,6 +78,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function search()
 	{
@@ -103,6 +105,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function change()
 	{
@@ -121,6 +124,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function karmaup()
 	{
@@ -129,6 +133,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function karmadown()
 	{
@@ -137,7 +142,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws KunenaExceptionAuthorise
-	 *
+	 * @since Kunena
 	 */
 	public function save()
 	{
@@ -173,9 +178,6 @@ class KunenaControllerUser extends KunenaController
 			$errors++;
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
 		}
-
-		// Save avatar.
-		$success = $this->saveAvatar();
 
 		if ($success)
 		{
@@ -232,6 +234,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function ban()
 	{
@@ -343,6 +346,8 @@ class KunenaControllerUser extends KunenaController
 					null,
 					$user
 				);
+
+				KunenaUserHelper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);
@@ -432,6 +437,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function cancel()
 	{
@@ -441,6 +447,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function login()
 	{
@@ -480,6 +487,7 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function logout()
 	{
@@ -516,6 +524,7 @@ class KunenaControllerUser extends KunenaController
 	 * Save online status for user
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function status()
 	{
@@ -547,6 +556,7 @@ class KunenaControllerUser extends KunenaController
 	 * Set online status text for user
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function statusText()
 	{
@@ -580,6 +590,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param $karmaDelta
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -671,6 +682,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function saveUser()
 	{
@@ -707,6 +719,138 @@ class KunenaControllerUser extends KunenaController
 
 				return false;
 			}
+
+			$value            = $post_password;
+			$meter            = isset($element['strengthmeter']) ? ' meter="0"' : '1';
+			$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
+			$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : 4;
+			$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
+			$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
+			$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
+
+			// If we have parameters from com_users, use those instead.
+			// Some of these may be empty for legacy reasons.
+			$params = JComponentHelper::getParams('com_users');
+
+			if (!empty($params))
+			{
+				$minimumLengthp    = $params->get('minimum_length');
+				$minimumIntegersp  = $params->get('minimum_integers');
+				$minimumSymbolsp   = $params->get('minimum_symbols');
+				$minimumUppercasep = $params->get('minimum_uppercase');
+				$meterp            = $params->get('meter');
+				$thresholdp        = $params->get('threshold');
+
+				empty($minimumLengthp) ? : $minimumLength = (int) $minimumLengthp;
+				empty($minimumIntegersp) ? : $minimumIntegers = (int) $minimumIntegersp;
+				empty($minimumSymbolsp) ? : $minimumSymbols = (int) $minimumSymbolsp;
+				empty($minimumUppercasep) ? : $minimumUppercase = (int) $minimumUppercasep;
+				empty($meterp) ? : $meter = $meterp;
+				empty($thresholdp) ? : $threshold = $thresholdp;
+			}
+
+			// If the field is empty and not required, the field is valid.
+			$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
+
+			if (!$required && empty($value))
+			{
+				return true;
+			}
+
+			$valueLength = strlen($value);
+
+			// Load language file of com_users component
+			JFactory::getLanguage()->load('com_users');
+
+			// We set a maximum length to prevent abuse since it is unfiltered.
+			if ($valueLength > 4096)
+			{
+				JFactory::getApplication()->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+			}
+
+			// We don't allow white space inside passwords
+			$valueTrim = trim($value);
+
+			// Set a variable to check if any errors are made in password
+			$validPassword = true;
+
+			if (strlen($valueTrim) != $valueLength)
+			{
+				JFactory::getApplication()->enqueueMessage(
+					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+					'warning'
+				);
+
+				$validPassword = false;
+			}
+
+			// Minimum number of integers required
+			if (!empty($minimumIntegers))
+			{
+				$nInts = preg_match_all('/[0-9]/', $value, $imatch);
+
+				if ($nInts < $minimumIntegers)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
+			}
+
+			// Minimum number of symbols required
+			if (!empty($minimumSymbols))
+			{
+				$nsymbols = preg_match_all('[\W]', $value, $smatch);
+
+				if ($nsymbols < $minimumSymbols)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
+			}
+
+			// Minimum number of upper case ASCII characters required
+			if (!empty($minimumUppercase))
+			{
+				$nUppercase = preg_match_all('/[A-Z]/', $value, $umatch);
+
+				if ($nUppercase < $minimumUppercase)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
+			}
+
+			// Minimum length option
+			if (!empty($minimumLength))
+			{
+				if (strlen((string) $value) < $minimumLength)
+				{
+					JFactory::getApplication()->enqueueMessage(
+						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+						'warning'
+					);
+
+					$validPassword = false;
+				}
+			}
+
+			// If valid has violated any rules above return false.
+			if (!$validPassword)
+			{
+				return false;
+			}
 		}
 
 		$post = array_intersect_key($post, array_flip($allow));
@@ -737,6 +881,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$table = JTable::getInstance('session', 'JTable');
 			$table->load($session->getId());
+
 			$table->username = $this->user->username;
 			$table->store();
 		}
@@ -799,6 +944,7 @@ class KunenaControllerUser extends KunenaController
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -826,9 +972,173 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * Upload avatar with AJAX.
+	 *
+	 * @throws RuntimeException
+	 * @since 5.1
+     */
+	public function upload()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		$upload = KunenaUpload::getInstance();
+
+		// We are converting all exceptions into JSON.
+		try
+		{
+			$me    = KunenaUserHelper::getMyself();
+
+			$caption = $this->input->getString('caption');
+			$options = array(
+				'filename'   => $this->input->getString('filename'),
+				'size'       => $this->input->getInt('size'),
+				'mime'       => $this->input->getString('mime'),
+				'hash'       => $this->input->getString('hash'),
+				'chunkStart' => $this->input->getInt('chunkStart', 0),
+				'chunkEnd'   => $this->input->getInt('chunkEnd', 0),
+				'image_type' => 'avatar',
+			);
+
+			// Upload!
+			$this->config->avatartypes = strtolower($this->config->avatartypes);
+			$upload->addExtensions(explode(',', $this->config->avatartypes));
+			$response = (object) $upload->ajaxUpload($options);
+
+			if (!empty($response->completed))
+			{
+				// We have it all, lets update the avatar in user table
+				$uploadFile = $upload->getProtectedFile();
+				list($basename, $extension) = $upload->splitFilename();
+
+				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+
+				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+
+				// Save in the table KunenaUser
+				$kuser = KunenaFactory::getUser();
+				$kuser->avatar = 'users/avatar' . $this->me->userid . '.' . $extension;
+				$kuser->save();
+			}
+		}
+		catch (Exception $response)
+		{
+			$upload->cleanup();
+
+			// Use the exception as the response.
+		}
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while (@ob_end_clean())
+		{
+		}
+
+		echo $upload->ajaxResponse($response);
+
+		jexit();
+	}
+
+	/**
+	 * Remove avatar with AJAX
+	 *
+	 * @since 5.1
+	 */
+	public function removeAvatar()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$success           = array();
+
+		// Save in the table KunenaUser
+		$kuser = KunenaFactory::getUser();
+		$kuser->avatar = '';
+		$success = $kuser->save();
+
+		$this->deleteOldAvatars();
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while (@ob_end_clean())
+		{
+		}
+
+		echo json_encode($success);
+
+		jexit();
+	}
+
+	/**
+	 * Get avatar attached to a profile with AJAX.
+	 *
+	 * @throws RuntimeException
+	 *
+	 * @return string
+	 * @since 5.1
+	 */
+	public function loadAvatar()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$userid      = $this->input->getInt('userid', 0);
+		$kuser = KunenaFactory::getUser($userid);
+
+		$avatar          = new stdClass;
+		$avatar->name    = $kuser->avatar;
+		$avatar->path = JURI::root() . 'media/kunena/avatars/' . $kuser->avatar;
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while (@ob_end_clean())
+		{
+		}
+
+		echo json_encode($avatar);
+
+		jexit();
+	}
+
+	/**
 	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function saveAvatar()
 	{
@@ -844,7 +1154,7 @@ class KunenaControllerUser extends KunenaController
 				$this->deleteOldAvatars();
 			}
 
-			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
+			$upload = KunenaUpload::getInstance();
 
 			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
 
@@ -971,5 +1281,65 @@ class KunenaControllerUser extends KunenaController
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'));
 		$this->setRedirectBack();
+	}
+
+	/**
+	 * Reports a user to stopforumspam.com
+	 *
+	 * @return boolean
+	 */
+	protected function report($userid)
+	{
+		if (!$this->config->stopforumspam_key || !$userid)
+		{
+			return false;
+		}
+
+		$spammer = JFactory::getUser($userid);
+
+		$db = JFactory::getDBO();
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$ip = $db->loadResult();
+
+		// TODO: replace this code by using JHttpTransport class
+		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
+		$fp   = fsockopen("www.stopforumspam.com", 80);
+		fputs($fp, "POST /add.php HTTP/1.1\n");
+		fputs($fp, "Host: www.stopforumspam.com\n");
+		fputs($fp, "Content-type: application/x-www-form-urlencoded\n");
+		fputs($fp, "Content-length: " . strlen($data) . "\n");
+		fputs($fp, "Connection: close\n\n");
+		fputs($fp, $data);
+
+		// Create a buffer which holds the response
+		$response = '';
+
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+
+		// The file pointer is no longer needed. Close it
+		fclose($fp);
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+
+			// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+
+			return false;
+		}
 	}
 }

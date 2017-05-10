@@ -5,8 +5,8 @@
  * @package         Kunena.Administrator
  * @subpackage      Views
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -20,6 +20,7 @@ class KunenaAdminViewTrash extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
@@ -48,6 +49,7 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayPurge()
 	{
@@ -60,6 +62,7 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
@@ -77,6 +80,7 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarPurge()
 	{
@@ -95,6 +99,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -125,6 +130,7 @@ class KunenaAdminViewTrash extends KunenaView
 	/**
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{

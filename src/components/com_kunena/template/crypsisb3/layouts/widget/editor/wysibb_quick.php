@@ -4,8 +4,8 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
@@ -225,7 +225,7 @@ if (!empty($codeTypes)) : ?>
 								<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
 								       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 								<span class="input-group-addon">
-								<i class="glyphicon glyphicon-th"></i>
+								<?php echo KunenaIcons::grid(); ?>
 							</span>
 							</div>
 						</div>

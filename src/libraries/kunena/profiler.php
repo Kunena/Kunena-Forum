@@ -36,7 +36,7 @@ class KunenaProfiler extends JProfiler
 	protected $_heap = array();
 
 	/**
-	 * @param   string $prefix
+	 * @param   string $prefix string
 	 *
 	 * @return KunenaProfiler
 	 *
@@ -55,9 +55,10 @@ class KunenaProfiler extends JProfiler
 	}
 
 	/**
-	 * @param $name
+	 * @param   string $name  name
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function start($name)
 	{
@@ -67,7 +68,7 @@ class KunenaProfiler extends JProfiler
 	}
 
 	/**
-	 * @param $name
+	 * @param   string $name name
 	 *
 	 * @return float
 	 * @since Kunena
@@ -80,7 +81,7 @@ class KunenaProfiler extends JProfiler
 	}
 
 	/**
-	 * @param $name
+	 * @param   string $name name
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -117,8 +118,8 @@ class KunenaProfiler extends JProfiler
 	}
 
 	/**
-	 * @param          $array
-	 * @param   string $property
+	 * @param   array  $array    array
+	 * @param   string $property properrty
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -156,7 +157,7 @@ class KunenaProfilerItem
 	public $start = array();
 
 	/**
-	 * @param $name
+	 * @param   string $name name
 	 *
 	 * @since Kunena
 	 */
@@ -169,7 +170,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   string $name
+	 * @param   string $name name
 	 *
 	 * @return KunenaProfilerItem
 	 * @since Kunena
@@ -221,9 +222,10 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param $starttime
+	 * @param   boolean $starttime start time
 	 *
 	 * @since Kunena
+	 * @return mixed
 	 */
 	public function start($starttime)
 	{
@@ -232,7 +234,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param $stoptime
+	 * @param   boolean $stoptime stop time
 	 *
 	 * @return float
 	 * @since Kunena
@@ -253,9 +255,10 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param $delta
+	 * @param   void $delta delta
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function external($delta)
 	{

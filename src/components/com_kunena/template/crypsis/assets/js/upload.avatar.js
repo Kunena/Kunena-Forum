@@ -8,13 +8,19 @@ jQuery(function ($) {
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
-		.html('<i class="icon-trash"></i> ' + 'COM_KUNENA_GEN_REMOVE_AVATAR')
+		.html('<i class="icon-trash"></i> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_AVATAR'))
 		.on('click', function () {
 			var $this = $(this),
 			data = $this.data();
 			
-			var userid = data['files'].userid;
-			var avatar = data['files'].filename;
+			if (data['files']!=undefined)
+			{
+				var userid = data['files'].userid;
+				var avatar = data['files'].filename;
+			} else {
+				var userid = data.userid;
+				var avatar = data.filename;
+			}
 
 			fileCount = fileCount - 1;
 
@@ -54,32 +60,14 @@ jQuery(function ($) {
 			data.formData = params;
 		})
 		.bind('fileuploaddrop', function (e, data) {
-			$('#form_submit_button').prop('disabled', true);
-			
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
-			if (filecoutntmp > max_avatar) {
-				$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR') + '</div>').insertBefore($('#files'));
-
-				return false;
-			}
-			else {
-				fileCount = Object.keys(data['files']).length + fileCount;
-			}
+			fileCount = Object.keys(data['files']).length + fileCount;
 		})
 		.bind('fileuploadchange', function (e, data) {
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
-			if (filecoutntmp > max_avatar) {
-				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR') + '</div>').insertBefore($('#files'));
-				
-				$('#form_submit_button').prop('disabled', false);
-				
-				return false;
-			}
-			else {
-				fileCount = Object.keys(data['files']).length + fileCount;
-			}
+			fileCount = Object.keys(data['files']).length + fileCount;
 		})
 		.on('fileuploadadd', function (e, data) {
 			$('#progress .bar').css(
@@ -87,6 +75,8 @@ jQuery(function ($) {
 				'0%'
 			);
 
+			$('#files').empty();
+			
 			data.context = $('<div/>').appendTo('#files');
 
 			$.each(data.files, function (index, file) {
@@ -179,6 +169,9 @@ jQuery(function ($) {
 					var object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + data.name + '</span><br /></p></div>');
 					data.uploaded = true;
 					data.result = false;
+					
+					data.userid = $('#kunena_userid').val();
+					data.filename = data.name;
 					
 					object.append(removeButton.clone(true).data(data));
 

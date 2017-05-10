@@ -1010,6 +1010,8 @@ class KunenaControllerUser extends KunenaController
 
 			if (!empty($response->completed))
 			{
+				$this->deleteOldAvatars();
+				
 				// We have it all, lets update the avatar in user table
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
@@ -1067,12 +1069,12 @@ class KunenaControllerUser extends KunenaController
 
 		$success           = array();
 
+		$this->deleteOldAvatars();
+		
 		// Save in the table KunenaUser
 		$kuser = KunenaFactory::getUser();
 		$kuser->avatar = '';
 		$success = $kuser->save();
-
-		$this->deleteOldAvatars();
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -1116,7 +1118,15 @@ class KunenaControllerUser extends KunenaController
 
 		$avatar          = new stdClass;
 		$avatar->name    = $kuser->avatar;
-		$avatar->path = JURI::root() . 'media/kunena/avatars/' . $kuser->avatar;
+		
+		if (!empty($kuser->avatar))
+		{
+			$avatar->path = JURI::root() . 'media/kunena/avatars/' . $kuser->avatar;
+		}
+		else
+		{
+			$avatar->path = JURI::root() . 'media/kunena/avatars/nophoto.png';
+		}
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

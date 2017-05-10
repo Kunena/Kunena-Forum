@@ -1,37 +1,94 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Attachments Table
  * Provides access to the #__kunena_attachments table
+ * @since Kunena
  */
 class TableKunenaAttachments extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $mesid = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $protected = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $hash = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $size = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $folder = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filetype = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filename = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $filename_real = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $comment = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -40,10 +97,11 @@ class TableKunenaAttachments extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
-		$user = KunenaUserHelper::get($this->userid);
+		$user    = KunenaUserHelper::get($this->userid);
 		$message = KunenaForumMessageHelper::get($this->mesid);
 
 		if ($this->userid != 0 && !$user->exists())
@@ -57,6 +115,7 @@ class TableKunenaAttachments extends KunenaTable
 		}
 
 		$this->folder = trim($this->folder, '/');
+
 		if (!$this->folder)
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FOLDER'));
@@ -73,6 +132,7 @@ class TableKunenaAttachments extends KunenaTable
 		}
 
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
+
 		if (!is_file($file))
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING', "{$this->folder}/{$this->filename}"));

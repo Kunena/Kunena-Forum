@@ -2,8 +2,8 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla25
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
@@ -15,9 +15,11 @@
 table.thisform tr.row0 {
 	background-color: #F7F8F9;
 }
+
 table.thisform tr.row1 {
 	background-color: #eeeeee;
 }
+
 table.thisform th {
 	font-size: 15px;
 	font-weight: normal;
@@ -28,13 +30,16 @@ table.thisform th {
 	color: #666666;
 	background: url(../images/background.gif) repeat;
 }
+
 table.thisform td {
 	padding: 3px;
 	text-align: left;
 }
+
 div.icon a {
 	text-decoration: none;
 }
+
 div.icon-container {
 	float: left;
 }

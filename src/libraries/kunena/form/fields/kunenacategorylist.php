@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Form
+ * @package       Kunena.Framework
+ * @subpackage    Form
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -14,25 +14,32 @@ jimport('joomla.form.formfield');
 
 /**
  * Class JFormFieldKunenaCategoryList
+ * @since Kunena
  */
 class JFormFieldKunenaCategoryList extends JFormField
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $type = 'KunenaCategoryList';
 
 	/**
-	* @return string
-  */
+	 * @return string
+	 * @since Kunena
+	 */
 	protected function getInput()
 	{
 		if (!class_exists('KunenaForum') || !KunenaForum::installed())
 		{
 			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
+
 			return '';
 		}
 
 		KunenaFactory::loadLanguage('com_kunena');
 
-		$size = $this->element['size'];
+		$size  = $this->element['size'];
 		$class = $this->element['class'];
 
 		$attribs = ' ';
@@ -51,7 +58,8 @@ class JFormFieldKunenaCategoryList extends JFormField
 			$attribs .= 'class="inputbox"';
 		}
 
-		if (!empty($this->element['multiple'])) {
+		if (!empty($this->element['multiple']))
+		{
 			$attribs .= ' multiple="multiple"';
 		}
 

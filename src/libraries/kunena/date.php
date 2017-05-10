@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -13,6 +13,7 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaDate
+ * @since Kunena
  */
 class KunenaDate extends JDate
 {
@@ -21,6 +22,7 @@ class KunenaDate extends JDate
 	 * @param   null   $tz
 	 *
 	 * @return KunenaDate
+	 * @since Kunena
 	 */
 	public static function getInstance($date = 'now', $tz = null)
 	{
@@ -29,22 +31,23 @@ class KunenaDate extends JDate
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function toTimeAgo()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$chunks = array (
-			'y' => array (JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS') ),
-			'm' => array (JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS') ),
-			'w' => array (JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS') ),
-			'd' => array (JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS') ),
-			'h' => array (JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS') ),
-			'i' => array (JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES') ) );
+		$chunks = array(
+			'y' => array(JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS')),
+			'm' => array(JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS')),
+			'w' => array(JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS')),
+			'd' => array(JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS')),
+			'h' => array(JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS')),
+			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')));
 
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
-		$tick = 0;
+		$tick   = 0;
 		$output = '';
-		$diff = $this->diff(new JDate);
+		$diff   = $this->diff(new JDate);
 
 		foreach ($diff as $name => $count)
 		{
@@ -94,6 +97,7 @@ class KunenaDate extends JDate
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function toTimezone()
 	{
@@ -109,8 +113,9 @@ class KunenaDate extends JDate
 	 * @param   string $class
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
-	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class='')
+	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')
 	{
 		return '<span class="kdate ' . $class . '" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
 	}
@@ -121,6 +126,7 @@ class KunenaDate extends JDate
 	 *
 	 * @return string
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{
@@ -132,12 +138,12 @@ class KunenaDate extends JDate
 		if (preg_match('/^config_/', $mode) == 1)
 		{
 			$option = substr($mode, 7);
-			$mode = KunenaFactory::getConfig()->$option;
+			$mode   = KunenaFactory::getConfig()->$option;
 		}
 
-		$modearr = explode('_', $mode);
+		$modearr    = explode('_', $mode);
 		$dateformat = strtolower($modearr[0]);
-		$time = false;
+		$time       = false;
 
 		switch ($dateformat)
 		{
@@ -146,14 +152,14 @@ class KunenaDate extends JDate
 			case 'ago' :
 				return $this->toTimeAgo();
 			case 'time' :
-				$time = true;
+				$time            = true;
 				$usertime_format = JText::_('COM_KUNENA_LIB_TIME_FMT');
 				break;
 			case 'date' :
 				$usertime_format = JText::_('COM_KUNENA_LIB_DATE_FMT');
 				break;
 			case 'datetime':
-				$time = true;
+				$time            = true;
 				$usertime_format = JText::_('COM_KUNENA_LIB_DATETIME_FMT');
 				break;
 			default:
@@ -163,7 +169,7 @@ class KunenaDate extends JDate
 		if (!$offset)
 		{
 			$app = JFactory::getApplication();
-			$my = JFactory::getUser();
+			$my  = JFactory::getUser();
 
 			if ($my->id)
 			{
@@ -195,13 +201,13 @@ class KunenaDate extends JDate
 				$now->setTimezone($offset);
 			}
 
-			$now = @getdate($now->toUnix(true));
-			$then = @getdate($this->toUnix(true));
+			$now  = @getdate($now->toUnix());
+			$then = @getdate($this->toUnix());
 
 			// Same day of the year, same year.... Today!
 			if ($then ['yday'] == $now ['yday']
 				&& $then ['year'] == $now ['year']
-)
+			)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}
@@ -209,7 +215,7 @@ class KunenaDate extends JDate
 			// Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
 			if (($then ['yday'] == $now ['yday'] - 1 && $then ['year'] == $now ['year'])
 				|| ($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31
-)
+			)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}

@@ -2,25 +2,35 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 require_once dirname(__FILE__) . '/integration.php';
 
+/**
+ * Class KunenaProfileComprofiler
+ * @since Kunena
+ */
 class KunenaProfileComprofiler extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileComprofiler constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -29,6 +39,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function open()
 	{
@@ -37,6 +48,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function close()
 	{
@@ -44,10 +56,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -56,7 +69,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -65,11 +78,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param          $user
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool|string
+	 * @return boolean|string
+	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -98,6 +112,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param $params
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -107,13 +122,17 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-			'forumSideProfile', array('kunena', $view, $view->profile->userid,
-			array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))));
+				'forumSideProfile', array('kunena', $view, $view->profile->userid,
+				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))
+			)
+		);
 	}
 
 	/**
 	 * @param $event
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public static function trigger($event, &$params)
 	{
@@ -121,9 +140,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -134,7 +154,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			WHERE cu.hits>0
 			ORDER BY cu.hits DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();
@@ -148,10 +168,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param        $userid
+	 * @param   bool $xhtml
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

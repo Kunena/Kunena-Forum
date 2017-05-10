@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -18,12 +18,16 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerSmilies extends KunenaController
 {
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $baseurl = null;
 
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0
 	 */
@@ -60,6 +64,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function edit()
 	{
@@ -116,19 +121,20 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if (!$smileyid)
 		{
 			$db->setQuery(
-					"INSERT INTO #__kunena_smileys SET
+				"INSERT INTO #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
-					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			
-			try 
+					emoticonbar={$db->quote($smiley_emoticonbar)}"
+			);
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -139,16 +145,17 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
-				WHERE id = '$smileyid'");
-			
-			try 
+				WHERE id = '$smileyid'"
+			);
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -176,7 +183,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$file   = $this->app->input->files->get('Filedata');
+		$file = $this->app->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than KunenaUploadHelper::upload()
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
@@ -223,15 +230,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}

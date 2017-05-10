@@ -1,37 +1,84 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic.Poll
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicPoll
  *
- * @property int $id
+ * @property int    $id
  * @property string $title
- * @property int $threadid
+ * @property int    $threadid
  * @property string $polltimetolive
+ * @since Kunena
  */
 class KunenaForumTopicPoll extends JObject
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
+
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
 	protected $_db = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $_total = null;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $options = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $newOptions = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $usercount = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $users = false;
+
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $myvotes = array();
+
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $mytime = array();
 
 	/**
 	 * @param   int $identifier
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -43,10 +90,11 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Returns KunenaForumTopicPoll object.
 	 *
-	 * @param   mixed $identifier	Poll to load - Can be only an integer.
+	 * @param   mixed $identifier Poll to load - Can be only an integer.
 	 * @param   bool  $reset
 	 *
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reset = false)
 	{
@@ -57,6 +105,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   null|bool $exists
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists($exists = null)
 	{
@@ -73,7 +122,9 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Filters and sets poll options.
 	 *
-	 * @param   array $options	array(id=>name, id=>name)
+	 * @param   array $options array(id=>name, id=>name)
+	 *
+	 * @since Kunena
 	 */
 	public function setOptions($options)
 	{
@@ -82,7 +133,7 @@ class KunenaForumTopicPoll extends JObject
 			return;
 		}
 
-		$filter = JFilterInput::getInstance();
+		$filter     = JFilterInput::getInstance();
 		$newOptions = array();
 
 		foreach ($options as $key => &$value)
@@ -100,6 +151,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getOptions()
 	{
@@ -110,8 +162,15 @@ class KunenaForumTopicPoll extends JObject
 				WHERE pollid={$this->_db->Quote($this->id)}
 				ORDER BY id";
 			$this->_db->setQuery($query);
-			$this->options = (array) $this->_db->loadObjectList('id');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->options = (array) $this->_db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $this->options;
@@ -119,13 +178,14 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
 		if (is_null($this->_total))
 		{
 			$this->_total = 0;
-			$options = $this->getOptions();
+			$options      = $this->getOptions();
 
 			foreach ($options as $option)
 			{
@@ -138,6 +198,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getUserCount()
 	{
@@ -147,8 +208,15 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)}";
 			$this->_db->setQuery($query);
-			$this->usercount = (int) $this->_db->loadResult();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->usercount = (int) $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $this->usercount;
@@ -159,6 +227,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -168,8 +237,15 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} ORDER BY lasttime DESC";
 			$this->_db->setQuery($query, $start, $limit);
-			$this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $this->users;
@@ -179,6 +255,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getMyVotes($user = null)
 	{
@@ -190,8 +267,15 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			$this->myvotes[$user->userid] = $this->_db->loadResult();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->myvotes[$user->userid] = $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return $this->myvotes[$user->userid];
@@ -201,16 +285,24 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getLastVoteId($user = null)
 	{
-		$user = KunenaFactory::getUser($user);
+		$user  = KunenaFactory::getUser($user);
 		$query = "SELECT lastvote
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 		$this->_db->setQuery($query);
-		$this->mylastvoteId = $this->_db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$this->mylastvoteId = $this->_db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $this->mylastvoteId;
 	}
@@ -219,6 +311,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getMyTime($user = null)
 	{
@@ -230,8 +323,15 @@ class KunenaForumTopicPoll extends JObject
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			$this->mytime[$user->userid] = $this->_db->loadResult();
-			KunenaError::checkDatabaseError();
+
+			try
+			{
+				$this->mytime[$user->userid] = $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return (int) $this->mytime[$user->userid];
@@ -243,12 +343,14 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function vote($option, $change = false, $user = null)
 	{
 		if (!$this->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
+
 			return false;
 		}
 
@@ -257,6 +359,7 @@ class KunenaForumTopicPoll extends JObject
 		if (!isset($options[$option]))
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
+
 			return false;
 		}
 
@@ -265,27 +368,28 @@ class KunenaForumTopicPoll extends JObject
 		if (!$user->exists())
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
+
 			return false;
 		}
 
 		$lastVoteId = $this->getLastVoteId($user->userid);
-		$myvotes = $this->getMyVotes($user);
+		$myvotes    = $this->getMyVotes($user);
 
 		if (!$myvotes)
 		{
 			// First vote
-			$votes = new StdClass();
-			$votes->new = true;
+			$votes         = new StdClass;
+			$votes->new    = true;
 			$votes->pollid = $this->id;
-			$votes->votes = 1;
+			$votes->votes  = 1;
 		}
 		elseif ($change && isset($lastVoteId))
 		{
-			$votes = new StdClass();
-			$votes->new = false;
+			$votes           = new StdClass;
+			$votes->new      = false;
 			$votes->lasttime = null;
 			$votes->lastvote = null;
-			$votes->votes = 1;
+			$votes->votes    = 1;
 
 			// Change vote: decrease votes in the last option
 			if (!$this->changeOptionVotes($lastVoteId, -1))
@@ -296,7 +400,7 @@ class KunenaForumTopicPoll extends JObject
 		}
 		else
 		{
-			$votes = new StdClass();
+			$votes      = new StdClass;
 			$votes->new = false;
 
 			// Add a vote to the user
@@ -305,7 +409,7 @@ class KunenaForumTopicPoll extends JObject
 
 		$votes->lasttime = JFactory::getDate()->toSql();
 		$votes->lastvote = $option;
-		$votes->userid = (int) $user->userid;
+		$votes->userid   = (int) $user->userid;
 
 		// Increase vote count from current option
 		$this->changeOptionVotes($votes->lastvote, 1);
@@ -316,11 +420,17 @@ class KunenaForumTopicPoll extends JObject
 			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote,lasttime)
 				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)},{$this->_db->Quote($votes->lasttime)});";
 			$this->_db->setQuery($query);
-			$this->_db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$this->_db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
+
 				return false;
 			}
 		}
@@ -331,11 +441,17 @@ class KunenaForumTopicPoll extends JObject
 				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)},lasttime={$this->_db->Quote($votes->lasttime)}
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($votes->userid)};";
 			$this->_db->setQuery($query);
-			$this->_db->execute();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$this->_db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+
 				return false;
 			}
 		}
@@ -344,10 +460,11 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   int  $option
-	 * @param   int  $delta
+	 * @param   int $option
+	 * @param   int $delta
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function changeOptionVotes($option, $delta)
 	{
@@ -364,11 +481,17 @@ class KunenaForumTopicPoll extends JObject
 		$query = "UPDATE #__kunena_polls_options SET votes=votes+{$delta} WHERE id={$this->_db->Quote($option)}";
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if (KunenaError::checkDatabaseError())
+		try
 		{
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
+
 			return false;
 		}
 
@@ -378,19 +501,20 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to get the polls table object.
 	 *
-	 * @param   string $type		Polls table name to be used.
-	 * @param   string $prefix	Polls table prefix to be used.
+	 * @param   string $type   Polls table name to be used.
+	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return KunenaTable|TableKunenaPolls
+	 * @return boolean|JTable|KunenaTable|TableKunenaPolls
+	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
-			$tabletype ['name'] = $type;
+			$tabletype ['name']   = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
 
@@ -401,10 +525,15 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * @param   array $data
 	 * @param   array $allow
+	 *
+	 * @since Kunena
 	 */
 	public function bind(array $data, array $allow = array())
 	{
-		if (!empty($allow)) { $data = array_intersect_key($data, array_flip($allow)); }
+		if (!empty($allow))
+		{
+			$data = array_intersect_key($data, array_flip($allow));
+		}
 
 		$this->setProperties($data);
 	}
@@ -412,9 +541,10 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to load a KunenaForumTopicPoll object by id.
 	 *
-	 * @param   int $id	The poll id to be loaded.
+	 * @param   int $id The poll id to be loaded.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($id)
 	{
@@ -433,7 +563,8 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -447,7 +578,7 @@ class KunenaForumTopicPoll extends JObject
 
 		$success = $table->delete($this->id);
 
-		if (! $success)
+		if (!$success)
 		{
 			$this->setError($table->getError());
 		}
@@ -455,17 +586,31 @@ class KunenaForumTopicPoll extends JObject
 		$this->_exists = false;
 
 		// Delete options
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Delete votes
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Remove poll from the topic
 		$topic = KunenaForumTopicHelper::get($this->threadid);
@@ -473,7 +618,7 @@ class KunenaForumTopicPoll extends JObject
 		if ($success && $topic->exists() && $topic->poll_id)
 		{
 			$topic->poll_id = 0;
-			$success = $topic->save();
+			$success        = $topic->save();
 
 			if (!$success)
 			{
@@ -499,18 +644,20 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to save the KunenaForumTopicPoll object to the database.
 	 *
-	 * @param   bool $updateOnly	Save the object only if not a new poll.
+	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
 	{
-		//are we creating a new poll
-		$isnew = ! $this->_exists;
+		// Are we creating a new poll
+		$isnew = !$this->_exists;
 
 		if ($isnew && empty($this->newOptions))
 		{
 			$this->setError(JText::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
+
 			return false;
 		}
 
@@ -519,10 +666,11 @@ class KunenaForumTopicPoll extends JObject
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
 
-		//Store the topic data in the database
-		if (! $table->store())
+		// Store the topic data in the database
+		if (!$table->store())
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
@@ -549,8 +697,16 @@ class KunenaForumTopicPoll extends JObject
 			{
 				$query = "DELETE FROM #__kunena_polls_options WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				$this->_db->execute();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$this->_db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
+
 				// TODO: Votes in #__kunena_polls_users will be off and there's no way we can fix that
 				// Maybe we should allow option to reset votes when option gets removed
 				// Or we could prevent users from editing poll..
@@ -559,6 +715,7 @@ class KunenaForumTopicPoll extends JObject
 
 		// Go though new and changed options
 		ksort($this->newOptions);
+
 		foreach ($this->newOptions as $key => $value)
 		{
 			if (!$value)
@@ -573,8 +730,15 @@ class KunenaForumTopicPoll extends JObject
 				$query = "INSERT INTO #__kunena_polls_options (text, pollid, votes)
 					VALUES({$this->_db->quote($value)}, {$this->_db->Quote($this->id)}, 0)";
 				$this->_db->setQuery($query);
-				$this->_db->execute();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$this->_db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 			elseif ($options[$key]->text != $value)
 			{
@@ -583,8 +747,15 @@ class KunenaForumTopicPoll extends JObject
 					SET text={$this->_db->quote($value)}
 					WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				$this->_db->execute();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$this->_db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 		}
 

@@ -1,23 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage HTML
+ * @package       Kunena.Framework
+ * @subpackage    HTML
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class JHtmlKunenaForum
+ * @since Kunena
  */
 abstract class JHtmlKunenaForum
 {
 	/**
-	 * @param        $name
-	 * @param        $parent
+	 * @param          $name
+	 * @param          $parent
 	 * @param   array  $options
 	 * @param   array  $params
 	 * @param   null   $attribs
@@ -28,26 +29,27 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $translate
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
-		$preselect = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
+		$preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
-		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
-		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
-		$direction = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
-		$action = isset($params['action']) ? (string) $params['action'] : 'read';
-		$levels = isset($params['levels']) ? (int) $params['levels'] : 10;
+		$sections    = isset($params['sections']) ? (bool) $params['sections'] : 0;
+		$ordering    = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
+		$direction   = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
+		$action      = isset($params['action']) ? (string) $params['action'] : 'read';
+		$levels      = isset($params['levels']) ? (int) $params['levels'] : 10;
 		$topleveltxt = isset($params['toplevel']) ? $params['toplevel'] : false;
-		$catid = isset($params['catid']) ? (int) $params['catid'] : 0;
+		$catid       = isset($params['catid']) ? (int) $params['catid'] : 0;
 		$hide_lonely = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
 
-		$params = array ();
-		$params['ordering'] = $ordering;
-		$params['direction'] = $direction;
+		$params                = array();
+		$params['ordering']    = $ordering;
+		$params['direction']   = $direction;
 		$params['unpublished'] = $unpublished;
-		$params['action'] = $action;
-		$params['selected'] = $catid;
+		$params['action']      = $action;
+		$params['selected']    = $catid;
 
 		if ($catid)
 		{
@@ -63,28 +65,45 @@ abstract class JHtmlKunenaForum
 
 		if (!isset($categories))
 		{
-			$category = KunenaForumCategoryHelper::get($parent);
-			$children = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
-
-			if ($params['action'] == 'topic.create')
+			if (!is_array($parent))
 			{
-				$channels = $category->getChannels();
-
-				if (empty($children) && !isset($channels[$category->id]))
-				{
-					$category = KunenaForumCategoryHelper::get();
-				}
-
-				foreach ($channels as $id => $channel)
-				{
-					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
-					{
-						unset($channels[$id]);
-					}
-				}
+				$parent = array($parent);
 			}
 
-			$categories = $category->id > 0 ? array($category->id => $category) + $children : $children;
+			$categories = array();
+			$channels   = array();
+
+			foreach ($parent as $p)
+			{
+				$channels_local = array();
+				$category       = KunenaForumCategoryHelper::get($p);
+				$children       = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
+
+				if ($params['action'] == 'topic.create')
+				{
+					$channels_local = $category->getChannels();
+
+					if (empty($children) && !isset($channels_local[$category->id]))
+					{
+						$category = KunenaForumCategoryHelper::get();
+					}
+
+					foreach ($channels_local as $id => $channel)
+					{
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
+						{
+							unset($channels_local[$id]);
+						}
+					}
+				}
+
+				$categories += $category->id > 0 ? array($category->id => $category) + $children : $children;
+
+				if (!empty($channels_local))
+				{
+					$channels += $channels_local;
+				}
+			}
 
 			if ($hide_lonely && count($categories) + count($channels) <= 1)
 			{
@@ -108,8 +127,8 @@ abstract class JHtmlKunenaForum
 
 		if ($topleveltxt)
 		{
-			$me = KunenaUserHelper::getMyself();
-			$disabled = ($action == 'admin' && !$me->isAdmin());
+			$me         = KunenaUserHelper::getMyself();
+			$disabled   = ($action == 'admin' && !$me->isAdmin());
 			$options [] = JHtml::_('select.option', '0', JText::_($topleveltxt), 'value', 'text', $disabled);
 
 			if ($preselect && empty($selected) && !$disabled)
@@ -126,7 +145,7 @@ abstract class JHtmlKunenaForum
 
 		foreach ($categories as $category)
 		{
-			$disabled = !$category->authorise($action) || (! $sections && $category->isSection());
+			$disabled = !$category->authorise($action) || (!$sections && $category->isSection());
 
 			if ($preselect && empty($selected) && !$disabled)
 			{
@@ -137,6 +156,7 @@ abstract class JHtmlKunenaForum
 		}
 
 		$disabled = false;
+
 		foreach ($channels as $category)
 		{
 			if ($preselect && empty($selected))
@@ -165,6 +185,7 @@ abstract class JHtmlKunenaForum
 		$id = str_replace(']', '', $id);
 
 		$html = '';
+
 		if (!empty($options))
 		{
 			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
@@ -179,18 +200,20 @@ abstract class JHtmlKunenaForum
 	 *
 	 * Creates link pointing to a Kunena page
 	 *
-	 * @param   mixed $uri Kunena URI, either as string, JUri or array
+	 * @param   mixed  $uri        Kunena URI, either as string, JUri or array
 	 * @param   string $content
-	 * @param   string $class Link class
-	 * @param   string $title Link title
-	 * @param   string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
-	 * @param   mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
+	 * @param   string $class      Link class
+	 * @param   string $title      Link title
+	 * @param   string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
+	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
+
 		if ($title)
 		{
 			$list['title'] = htmlspecialchars($title);
@@ -213,6 +236,7 @@ abstract class JHtmlKunenaForum
 
 		// Parse attributes
 		$attr = array();
+
 		foreach ($list as $key => $value)
 		{
 			$attr[] = "{$key}=\"{$value}\"";
@@ -228,25 +252,35 @@ abstract class JHtmlKunenaForum
 		return "<a {$attributes}>{$content}</a>";
 	}
 
-	public static function checklist($name, $options, $selected = array())
+	/**
+	 * @param         $name
+	 * @param         $options
+	 * @param   array $selected
+	 *
+	 * @param   null    $class_input
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public static function checklist($name, $options, $selected = array(), $class_input = null)
 	{
 		if ($selected !== true && !is_array($selected))
 		{
 			$selected = (array) $selected;
 		}
 
-		$html = array();
+		$html   = array();
 		$html[] = '<ul class="checklist">';
 
 		foreach ($options as $item)
 		{
 			// Setup  the variable attributes.
-			$eid = "checklist_{$name}_{$item}";
+			$eid     = "checklist_{$name}_{$item}";
 			$checked = $selected === true || in_array($item, $selected) ? ' checked="checked"' : '';
 
 			// Build the HTML for the item.
 			$html[] = '	<li>';
-			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '"';
+			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="' . $class_input . '"';
 			$html[] = '			' . $checked . ' />';
 			$html[] = '		<label for="' . $eid . '">';
 			$html[] = '			' . $item;

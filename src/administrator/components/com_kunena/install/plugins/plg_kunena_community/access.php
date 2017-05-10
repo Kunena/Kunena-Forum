@@ -2,29 +2,51 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Community
+ * @package         Kunena.Plugins
+ * @subpackage      Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAccessCommunity
+ * @since Kunena
+ */
 class KunenaAccessCommunity
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $categories = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $groups = false;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $tree = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAccessCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -38,6 +60,7 @@ class KunenaAccessCommunity
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
 	 * @return array    Supported access types.
+	 * @since Kunena
 	 */
 	public function getAccessTypes()
 	{
@@ -53,6 +76,7 @@ class KunenaAccessCommunity
 	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -78,6 +102,7 @@ class KunenaAccessCommunity
 	 * @param   int    $category   Group id.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -121,6 +146,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -130,7 +156,7 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$list = (array) $db->loadObjectList();
@@ -155,6 +181,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -167,7 +194,7 @@ class KunenaAccessCommunity
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$list = (array) $db->loadColumn();
@@ -193,6 +220,7 @@ class KunenaAccessCommunity
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
@@ -209,7 +237,7 @@ class KunenaAccessCommunity
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$allow = (array) $db->loadColumn();
@@ -225,6 +253,7 @@ class KunenaAccessCommunity
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function loadCategories()
 	{
@@ -235,7 +264,7 @@ class KunenaAccessCommunity
 				FROM #__community_groups_category
 				ORDER BY parent, name";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$this->categories = (array) $db->loadObjectList('id');
@@ -244,7 +273,7 @@ class KunenaAccessCommunity
 			{
 				KunenaError::displayDatabaseError();
 			}
-			
+
 			$this->tree = new KunenaTree($this->categories);
 
 			if ($this->groups !== false)
@@ -256,6 +285,7 @@ class KunenaAccessCommunity
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function loadGroups()
 	{
@@ -266,7 +296,7 @@ class KunenaAccessCommunity
 				FROM #__community_groups
 				ORDER BY categoryid, name";
 			$db->setQuery($query);
-			
+
 			try
 			{
 				$this->groups = (array) $db->loadObjectList('id');

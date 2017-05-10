@@ -19,11 +19,13 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="avatar" type="list" default="1" label="PLG_KUNENA_KUNENA_AVATAR" description="PLG_KUNENA_KUNENA_AVATAR_DESC" class="inputbox">
+				<field name="avatar" type="list" default="1" label="PLG_KUNENA_KUNENA_AVATAR" description="PLG_KUNENA_KUNENA_AVATAR_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="profile" type="list" default="1" label="PLG_KUNENA_KUNENA_PROFILE" description="PLG_KUNENA_KUNENA_PROFILE_DESC" class="inputbox">
+				<field name="profile" type="list" default="1" label="PLG_KUNENA_KUNENA_PROFILE" description="PLG_KUNENA_KUNENA_PROFILE_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

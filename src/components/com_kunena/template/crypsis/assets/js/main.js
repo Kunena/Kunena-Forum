@@ -2,68 +2,49 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
 /* Function used to ordering the data by clicking on column title */
-function kunenatableOrdering( order, dir, task, form ) {
-	var form=document.getElementById(form);
-	form.filter_order.value=order;
-	form.filter_order_Dir.value=dir;
-	form.submit( task );
+function kunenatableOrdering(order, dir, task, form) {
+	var form = document.getElementById(form);
+	form.filter_order.value = order;
+	form.filter_order_Dir.value = dir;
+	form.submit(task);
 }
 
 jQuery(document).ready(function($) {
-	/* To hide or open collapse localStorage */
-	$('.collapse').on('hidden', function() {
-		if (this.id) {
-			if (this.id!='search')
-			{
-				localStorage[this.id] = 'true';
-			}
-		}
-		}).on('shown', function() {
-			if (this.id) {
-				localStorage.removeItem(this.id);
-		}
-		}).each(function() {
-			if (this.id && localStorage[this.id] === 'true' ) {
-				$(this).collapse('hide');
-		}
-	});
-
 	/* To check or uncheck boxes to select items */
-	$('input.kcheckall').click(function() {
-		$( '.kcheck' ).each(function( ) {
-			$(this).prop('checked',!$(this).prop('checked'));
-		});
+	$('input.kcheckall').click(function () {
+		$('.kcheck').prop('checked', $(this).prop("checked"));
 	});
 
 	/* Allow to make working drop-down choose destination */
-	$('#kchecktask').change(function() {
+	$('#kchecktask').change(function () {
 		var task = $("select#kchecktask").val();
-		if (task=='move') {
+		if (task == 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
-		} else {
+		}
+		else {
 			$("#kchecktarget").attr('disabled', true);
 		}
 	});
 
-	$("input.kcatcheckall").click(function(){
+	$("input.kcatcheckall").click(function () {
 		$("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	$("input.kcheckallcategories").click(function(){
+	$("input.kcheckallcategories").click(function () {
 		$("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 		$('[rel=popover]').popover();
 	});
 
-	$('#avatar_gallery_select').change(function() {
+	$('#avatar_gallery_select').change(function () {
 		var gallery_selected = $("select#avatar_gallery_select").val();
 
 		var gallery_list = $('#gallery_list');
@@ -74,7 +55,7 @@ jQuery(document).ready(function($) {
 		// Get the list of images from the gallery selected drop-down above
 		$.ajax({
 			 dataType: "json",
-			 url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
+			 url: $('#kunena_url_avatargallery').val(),
 			 data: 'gallery_name=' + gallery_selected
 		}).done(function(response) {
        $.each(response, function( key, value ) {
@@ -102,5 +83,10 @@ jQuery(document).ready(function($) {
 			format: "yyyy-mm-dd"
 		});
 	}
-});
 
+	$('#clearcache').on('click', function (e) {
+		e.preventDefault();
+		$('#clearcache').addClass('btn-success');
+		$('#clearcache').html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
+	});
+});

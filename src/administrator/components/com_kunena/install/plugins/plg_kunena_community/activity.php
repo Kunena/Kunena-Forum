@@ -2,26 +2,36 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Community
+ * @package          Kunena.Plugins
+ * @subpackage       Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link             https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 jimport('joomla.utilities.string');
 
+/**
+ * Class KunenaActivityCommunity
+ * @since Kunena
+ */
 class KunenaActivityCommunity extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -30,6 +40,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterPost($message)
 	{
@@ -46,7 +58,8 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->title   = JText::_(
 			'{actor} ' . JText::sprintf(
 				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
+			)
 		);
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.post';
@@ -77,6 +90,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterReply($message)
 	{
@@ -116,7 +131,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act          = new stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
-		$act->target  = 0; // no target
+		$act->target  = 0; // No target
 		$act->title   = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>'));
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.reply';
@@ -146,9 +161,11 @@ class KunenaActivityCommunity extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -207,6 +224,8 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($target)
 	{
@@ -220,7 +239,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $category
 	 *
-	 * @return int
+	 * @return integer
+	 * @since Kunena
 	 */
 	protected function getAccess($category)
 	{
@@ -235,13 +255,15 @@ class KunenaActivityCommunity extends KunenaActivity
 
 		// FIXME: Joomla 2.5 can mix up groups and access levels
 		if (($accesstype == 'joomla.level' && $category->access == 1)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1)))
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))
+		)
 		{
 			// Public
 			$access = 0;
 		}
 		elseif (($accesstype == 'joomla.level' && $category->access == 2)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2)))
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))
+		)
 		{
 			// Registered
 			$access = 20;
@@ -259,6 +281,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return mixed|string|void
+	 * @since Kunena
 	 */
 	private function buildContent($message)
 	{

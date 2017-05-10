@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Message
+ * @package         Kunena.Site
+ * @subpackage      Controller.Message
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,34 +17,45 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Index/Actions';
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $categoryButtons;
+
 	/**
 	 * Prepare message actions display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
 		parent::before();
 
 		$catid = $this->input->getInt('id');
-		$me = KunenaUserHelper::getMyself();
+		$me    = KunenaUserHelper::getMyself();
 
 		$this->category = KunenaForumCategory::getInstance($catid);
 
 		$token = JSession::getFormToken();
 
-		$task = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
+		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
 
-		$this->template = KunenaFactory::getTemplate();
+		$this->template        = KunenaFactory::getTemplate();
 		$this->categoryButtons = new JObject;
 
 		// Is user allowed to post new topic?
@@ -90,13 +101,14 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $url    Target link (do not route it).
-	 * @param   string       $name   Name of the button.
-	 * @param   string       $scope  Scope of the button.
-	 * @param   string       $type   Type of the button.
-	 * @param   bool         $id     Id of the button.
+	 * @param   string $url   Target link (do not route it).
+	 * @param   string $name  Name of the button.
+	 * @param   string $scope Scope of the button.
+	 * @param   string $type  Type of the button.
+	 * @param   bool   $id    Id of the button.
 	 *
 	 * @return  string
+	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

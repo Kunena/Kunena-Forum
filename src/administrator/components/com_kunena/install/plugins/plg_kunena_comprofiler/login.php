@@ -2,23 +2,33 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaLoginComprofiler
+ * @since Kunena
+ */
 class KunenaLoginComprofiler
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaLoginComprofiler constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -31,6 +41,7 @@ class KunenaLoginComprofiler
 	 * @param $rememberme
 	 *
 	 * @return null
+	 * @since Kunena
 	 */
 	public function loginUser($username, $password, $rememberme)
 	{
@@ -51,6 +62,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null
+	 * @since Kunena
 	 */
 	public function logoutUser()
 	{
@@ -66,10 +78,12 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getRememberMe()
 	{
 		$db = JFactory::getDbo();
+
 		// TODO: test if works (see #1079)
 		$db->setQuery("SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1);
 		$raw_params = $db->loadResult();
@@ -80,6 +94,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -90,6 +105,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -100,6 +116,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{
@@ -108,7 +125,8 @@ class KunenaLoginComprofiler
 		$usersConfig = JComponentHelper::getParams('com_comprofiler');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
-			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
+			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))
+		)
 		{
 			return $_CB_framework->viewUrl('registers');
 		}
@@ -118,6 +136,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getResetURL()
 	{
@@ -128,6 +147,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRemindURL()
 	{

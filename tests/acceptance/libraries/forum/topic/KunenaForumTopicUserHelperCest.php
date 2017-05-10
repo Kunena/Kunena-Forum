@@ -1,23 +1,25 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.UnitTest
- * @subpackage Utilities
+ * @package       Kunena.UnitTest
+ * @subpackage    Utilities
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Test class for KunenaForumTopicUserHelper.
  */
-class KunenaForumTopicUserHelperCest extends PHPUnit_Framework_TestCase {
+class KunenaForumTopicUserHelperCest extends PHPUnit_Framework_TestCase
+{
 	/**
 	 * Test get()
 	 */
-	public function testGet() {
+	public function testGet()
+	{
 		$admin = KunenaFactory::getUser('admin');
 
 		$topicuser = KunenaForumTopicUserHelper::get();
@@ -28,10 +30,12 @@ class KunenaForumTopicUserHelperCest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test getTopics()
 	 */
-	public function testGetTopics() {
+	public function testGetTopics()
+	{
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 20);
 		$topicusers = KunenaForumTopicUserHelper::getTopics($topics);
-		foreach ($topics as $topic) {
+		foreach ($topics as $topic)
+		{
 			$this->assertTrue(isset($topicusers[$topic->id]));
 			$this->assertEquals($topic->id, $topicusers[$topic->id]->topic_id);
 		}

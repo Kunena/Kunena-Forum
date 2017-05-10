@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.bestofjoomla.com
+ * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           http://www.bestofjoomla.com
  **/
 
 // Do not allow direct linking
@@ -18,10 +18,10 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaConfig
+ * @since Kunena
  */
 class KunenaConfig extends JObject
 {
-
 	/**
 	 * @var    integer  ID; input, hidden
 	 * @since  1.5.2
@@ -59,7 +59,7 @@ class KunenaConfig extends JObject
 	public $enablerss = 1;
 
 	/**
-	 * @var    integer	Threads per page; input, number
+	 * @var    integer    Threads per page; input, number
 	 * @since  1.0.0
 	 */
 	public $threads_per_page = 20;
@@ -121,7 +121,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    string  Category image path; input, text
 	 * @deprecated 4.0
-	 * @since  1.0.0
+	 * @since      1.0.0
 	 */
 	public $catimagepath = 'category_images';
 
@@ -201,7 +201,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User edit time Grace; input, number
 	 * @since  1.0.0
 	 */
-	public $useredittimegrace = 600; // input, number, time
+	public $useredittimegrace = 600; // Input, number, time
 
 	/**
 	 * @var    integer  Edit markup; select, boolean
@@ -229,7 +229,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    integer  Max subject; input, number
-	 * @since  1.0.0
+	 * @since      1.0.0
 	 * @depricated K5.0
 	 */
 	public $maxsubject = 50;
@@ -316,7 +316,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Image width; input, number
 	 * @since  1.0.0
 	 */
-	public $imagewidth = 800; // input, number
+	public $imagewidth = 800; // Input, number
 
 	/**
 	 * @var    integer  Image size
@@ -844,7 +844,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-	public $userlist_allowed = 0;
+	public $userlist_allowed = 1;
 
 	/**
 	 * @var    integer  User list count users; select, selection
@@ -970,7 +970,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Send emails; select, boolean
 	 * @since  2.0.0
 	 */
-	public $send_emails = 1; // select, boolean
+	public $send_emails = 1; // Select, boolean
 
 	/**
 	 * @var    integer  Fallback english; select, boolean
@@ -1007,7 +1007,6 @@ class KunenaConfig extends JObject
 	 * @since  2.0.3
 	 */
 	public $rss_feedburner_url = '';
-	// New for 3.0.0
 
 	/**
 	 * @var    integer  Auto link; select, boolean
@@ -1178,7 +1177,44 @@ class KunenaConfig extends JObject
 	public $emailheader = '/media/kunena/email/hero-wide.png';
 
 	/**
+	 * @var integer
+	 * @since  K5.0.3
+	 */
+	public $user_status = 1;
+
+	/**
+	 * @var integer Allow user signatures
+	 * @since  K5.1.0
+	 */
+	public $signature = 1;
+
+	/**
+	 * @var integer Allow user personal
+	 * @since  K5.1.0
+	 */
+	public $personal = 1;
+
+	/**
+	 * @var integer Allow user social
+	 * @since  K5.1.0
+	 */
+	public $social = 1;
+
+	/**
+	 * @var integer LAzy Load
+	 * @since  K5.1.0
+	 */
+	public $lazyload = 1;
+
+	/**
+	 * @var integer
+	 * @since  K5.0.4
+	 */
+	public $plain_email = 0;
+
+	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -1187,6 +1223,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @return KunenaConfig|mixed
+	 * @since Kunena
 	 */
 	public static function getInstance()
 	{
@@ -1196,7 +1233,7 @@ class KunenaConfig extends JObject
 		{
 			// @var JCache|JCacheController $cache
 
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache    = JFactory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
 			if (!$instance)
@@ -1213,6 +1250,8 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @param   mixed $properties
+	 *
+	 * @since Kunena
 	 */
 	public function bind($properties)
 	{
@@ -1221,6 +1260,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function save()
 	{
@@ -1234,8 +1274,15 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->execute();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1243,6 +1290,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -1252,14 +1300,24 @@ class KunenaConfig extends JObject
 
 	/**
 	 * Load config settings from database table.
+	 *
 	 * @param   null $userinfo Not used.
+	 *
+	 * @since Kunena
 	 */
 	public function load($userinfo = null)
 	{
 		$db = JFactory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
-		$config = $db->loadAssoc();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$config = $db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		if ($config)
 		{
@@ -1295,29 +1353,32 @@ class KunenaConfig extends JObject
 	 * @return JRegistry
 	 *
 	 * @internal
+	 * @since Kunena
 	 */
 	public function getPlugin($name)
 	{
-		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry;
 	}
 
 	/**
 	 * Messages per page
+	 * @since Kunena
 	 */
 	public function check()
 	{
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
-		$this->messages_per_page = max($this->messages_per_page, 2);
+		$this->messages_per_page        = max($this->messages_per_page, 2);
 		$this->messages_per_page_search = max($this->messages_per_page_search, 2);
-		$this->threads_per_page = max($this->threads_per_page, 2);
+		$this->threads_per_page         = max($this->threads_per_page, 2);
 	}
 
 	/**
 	 * Email set for the configuration
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getEmail()
 	{

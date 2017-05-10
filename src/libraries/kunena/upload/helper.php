@@ -1,27 +1,34 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Upload
+ * @package       Kunena.Framework
+ * @subpackage    Upload
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Upload Backend Helper Class
+ * @since Kunena
  */
 class KunenaUploadHelper
 {
-	protected static $_instances = array ();
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
+	protected static $_instances = array();
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	private function __construct()
-{}
+	{
+	}
 
 	/**
 	 * @param $file
@@ -29,11 +36,12 @@ class KunenaUploadHelper
 	 * @param $format
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function upload($file, $uploadfolder, $format)
 	{
 		jimport('joomla.filesystem.folder');
-		require_once(JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php');
+		require_once JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php';
 
 		$err = null;
 
@@ -59,7 +67,8 @@ class KunenaUploadHelper
 		{
 			$filepath = JPath::clean($uploadfolder . '/' . strtolower($file['name']));
 
-			/* This part doesn't work
+			/*
+			 This part doesn't work
 			if (!JHelperMedia::canUpload($file, $err))
 			{
 				if ($format == 'json')
@@ -80,16 +89,16 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance('upload.error.php');
-					//$log->addEntry(array('comment' => 'File already exists: '.$filepath));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance('upload.error.php');
+					// $log->addEntry(array('comment' => 'File already exists: '.$filepath));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
 				}
 				else
 				{
-					$ext = JFile::getExt($file['name']);
-					$name = JFile::stripExt($file['name']);
+					$ext         = JFile::getExt($file['name']);
+					$name        = JFile::stripExt($file['name']);
 					$newFileName = '';
 
 					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)
@@ -105,9 +114,9 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance('upload.error.php');
-					//$log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance('upload.error.php');
+					// $log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
 				}
@@ -120,9 +129,9 @@ class KunenaUploadHelper
 			{
 				if ($format == 'json')
 				{
-					//jimport('joomla.error.log');
-					//$log = JLog::getInstance();
-					//$log->addEntry(array('comment' => $uploadfolder));
+					// Jimport('joomla.error.log');
+					// $log = JLog::getInstance();
+					// $log->addEntry(array('comment' => $uploadfolder));
 					jexit('Upload complete');
 				}
 				else

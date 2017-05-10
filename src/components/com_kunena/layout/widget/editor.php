@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.widget
+ * @package         Kunena.Site
+ * @subpackage      Layout.widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -22,6 +22,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Get geshi code types.
 	 *
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public function getCodeTypes()
 	{
@@ -44,8 +45,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 				continue;
 			}
 
-			$files = KunenaFolder::files($path, ".php");
-			$options = array();
+			$files     = KunenaFolder::files($path, ".php");
+			$options   = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
@@ -65,10 +66,11 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Define javascript variables to show or disable some bbcode buttons
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function getBBcodesEnabled()
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->ktemplate  = KunenaFactory::getTemplate();
 		$templatesettings = $this->ktemplate->params;
 
 		if ($templatesettings->get('showvideotag') && $templatesettings->get('video'))
@@ -80,7 +82,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if ($templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
+		if (!$templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}
@@ -134,7 +136,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlinktag=0;");
 		}
 
-		if ($templatesettings->get('image_upload != ""') && $templatesettings->get('picture'))
+		if ($templatesettings->get('picture'))
 		{
 			$this->addScriptDeclaration("kunena_showpicturetag=1;");
 		}
@@ -204,6 +206,150 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 		else
 		{
 			$this->addScriptDeclaration("kunena_showsoundcloudtag=0;");
+		}
+
+		if ($templatesettings->get('confidential'))
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showconfidentialtag=0;");
+		}
+
+		if ($templatesettings->get('hr'))
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showhrtag=0;");
+		}
+
+		if ($templatesettings->get('listitem'))
+		{
+			$this->addScriptDeclaration("kunena_showlistitemtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showlistitemtag=0;");
+		}
+
+		if ($templatesettings->get('supscript'))
+		{
+			$this->addScriptDeclaration("kunena_showsupscripttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsupscripttag=0;");
+		}
+
+		if ($templatesettings->get('subscript'))
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsubscripttag=0;");
+		}
+
+		if ($templatesettings->get('numericlist'))
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_shownumericlisttag=0;");
+		}
+
+		if ($templatesettings->get('bulletedlist'))
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showbulletedlisttag=0;");
+		}
+
+		if ($templatesettings->get('alignright'))
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignrighttag=0;");
+		}
+
+		if ($templatesettings->get('alignleft'))
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showalignlefttag=0;");
+		}
+
+		if ($templatesettings->get('center'))
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcentertag=0;");
+		}
+
+		if ($templatesettings->get('underline'))
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
+		}
+
+		if ($templatesettings->get('italic'))
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showitalictag=0;");
+		}
+
+		if ($templatesettings->get('bold'))
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showboldtag=0;");
+		}
+
+		if ($templatesettings->get('strikethrough'))
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showstrikethroughtag=0;");
+		}
+
+		if ($templatesettings->get('colors'))
+		{
+			$this->addScriptDeclaration("kunena_showcolorstag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcolorstag=0;");
+		}
+
+		if ($templatesettings->get('size'))
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsizetag=0;");
 		}
 	}
 }

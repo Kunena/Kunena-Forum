@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Widget
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -14,102 +14,145 @@ defined('_JEXEC') or die;
 // Note. It is important to remove spaces between elements.
 ?>
 
-<ul class="nav navbar-nav">
-<?php
-foreach ($this->list as $i => $item)
-{
-	$class = 'item' . $item->id;
+<ul class="nav">
+	<?php
 
-	if (in_array($item->id, $this->path))
+	$columninx  = 0;
+	$lastlevel  = 4;
+	$extrastyle = '';
+	foreach ($this->list as $i => &$item)
 	{
-		$class .= ' active';
-	}
-	elseif ($item->type == 'alias')
-	{
-		$aliasToId = $item->params->get('aliasoptions');
+		// The next item is deeper.
+		if (($item->level == 2) and ($lastlevel == 1))
+		{
+			$columninx++;
+		}
 
-		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
+		$class = 'item-' . $item->id;
+		if ($item->id == $this->active_id)
+		{
+			$class .= ' current';
+		}
+
+		if (in_array($item->id, $this->path))
 		{
 			$class .= ' active';
 		}
-		elseif (in_array($aliasToId, $this->path))
+		elseif ($item->type == 'alias')
 		{
-			$class .= ' alias-parent-active';
+			$aliasToId = $item->params->get('aliasoptions');
+			if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
+			{
+				$class .= ' active';
+			}
+			elseif (in_array($aliasToId, $this->path))
+			{
+				$class .= ' alias-parent-active';
+			}
 		}
-	}
 
-	$class .= ($item->deeper) ? ' deeper' : '';
-	$class .= ($item->parent) ? ' parent' : '';
-	$class = !empty($class) ? ' class="' . trim($class) . '"' : '';
-	$id = ($item->id == $this->active_id) ? ' id="current"' : '';
-
-	echo '<li' . $id . $class . '>';
-
-	$flink = ' href="' . htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8') . '" ';
-	$class = $item->anchor_css ? ' class="' . $item->anchor_css . '" ' : '';
-	$title = $item->anchor_title ? ' title="' . $item->anchor_title . '" ' : '';
-
-	if ($item->menu_image)
-	{
-		$menu_text = $item->params->get('menu_text', 1);
-
-		if ($menu_text)
+		if ($item->deeper)
 		{
-			$linktype = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">'
-				. $item->title . '</span> ';
+			if ($item->level > 1)
+			{
+				$class .= ' deeper dropdown dropdown-submenu';
+			}
+			else
+			{
+				$class .= ' deeper dropdown';
+			}
+		}
+
+		if ($item->parent)
+		{
+			$class .= ' parent';
+		}
+
+		if (!empty($class))
+		{
+			$class = ' class="' . trim($class) . '"';
+		}
+
+		echo '<li' . $class . ' >';
+
+		// Render the menu item.
+		if ($item->type == 'separator')
+		{
+			if ($item->level == 2)
+			{
+				echo '</ul><ul class="unstyled">';
+			}
+			else
+			{
+				echo '<li class="divider"></li>';
+			}
+		}
+		elseif ($item->deeper)
+		{
+			if ($item->level > 1)
+			{
+				require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+			}
+			else
+			{
+				echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+				require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+				echo ' <b class="caret"></b></a>';
+			}
 		}
 		else
 		{
-			$linktype = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
+			switch ($item->type)
+			{
+				case 'separator':
+				case 'url':
+				case 'component':
+					require JModuleHelper::getLayoutPath('mod_menu', 'default_' . $item->type);
+					break;
+
+				default:
+					require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+					break;
+			}
 		}
-	}
-	else
-	{
-		$linktype = $item->title;
-	}
-
-	switch ($item->browserNav)
-	{
-		default:
-		case 0:
-			$extra = '';
-			break;
-		case 1:
-			// _blank
-			$extra = ' target="_blank"';
-			break;
-		case 2:
-			// Window.open
-			$extra = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes\');return false;"';
-			break;
-	}
-
-	// Render the menu item.
-	if ($item->type == 'separator')
-	{
-		echo "<span class=\"separator\"{$title}>{$linktype}</span>";
-	}
-	else
-	{
-		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}</a>";
-	}
-
-	if ($item->deeper)
-	{
 		// The next item is deeper.
-		echo '<ul>';
-	}
-	elseif ($item->shallower)
-	{
+		if ($item->deeper)
+		{
+			if ($item->level < 3)
+			{
+				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
+			}
+			elseif ($item->level == 3)
+			{
+				echo '<ul class="dropdown-menu" role="menu">';
+			}
+			else
+			{
+				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
+			}
+		}
 		// The next item is shallower.
-		echo '</li>';
-		echo str_repeat('</ul></li>', $item->level_diff);
-	}
-	else
-	{
+		elseif ($item->shallower)
+		{
+			echo '</li>';
+			$nlevel = $item->level;
+			for ($x = 0; $x < $item->level_diff; $x++)
+			{
+				$nlevel--;
+				if ($nlevel == 1)
+				{
+					echo '</ul></div></li>';
+				}
+				echo '</ul></li>';
+				$extrastyle = '';
+			}
+		}
 		// The next item is on the same level.
-		echo '</li>';
+		else
+		{
+			echo '</li>';
+		}
+		$lastlevel = $item->level;
 	}
-}
-?>
+	?>
 </ul>

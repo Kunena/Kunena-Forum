@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,10 +17,15 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Item/Rating';
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $topic;
 
@@ -28,6 +33,7 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 	 * Prepare topic actions display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{

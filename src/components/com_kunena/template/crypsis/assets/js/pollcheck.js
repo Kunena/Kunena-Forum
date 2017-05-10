@@ -1,24 +1,27 @@
 /**
-* Kunena Component
-* @package Kunena.Template.Crypsis
-*
-* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link https://www.kunena.org
-**/
+ * Kunena Component
+ * @package Kunena.Template.Crypsis
+ *
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
+ **/
 
-jQuery(document).ready(function($) {
-	if ( typeof pollcategoriesid != 'undefined' && $('#poll_exist_edit').length == 0 ) {
+jQuery(document).ready(function ($) {
+	if (typeof pollcategoriesid != 'undefined' && $('#poll_exist_edit').length == 0) {
 		var catid = $('#kcategory_poll').val();
 
-		if ( pollcategoriesid[catid] !== undefined ) {
+		if (pollcategoriesid[catid] !== undefined) {
 			$('.pollbutton').show();
-		} else {
+		}
+		else {
 			$('.pollbutton').hide();
 		}
-	} else if ( $('#poll_exist_edit').length > 0 ) {
+	}
+	else if ($('#poll_exist_edit').length > 0) {
 		$('.pollbutton').show();
-	} else {
+	}
+	else {
 		$('.pollbutton').hide();
 	}
 });

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -33,27 +33,27 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs hidden-xs">
+<div class="tabs">
 <br />
 <br />
 
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab) : ?>
-		<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-			<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
-		</li>
+			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
+				<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
+			</li>
 		<?php endforeach; ?>
 
 	</ul>
 	<div class="tab-content">
 
 		<?php foreach ($tabs as $name => $tab) : ?>
-		<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
-			<div>
-				<?php echo $tab->content; ?>
+			<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
+				<div>
+					<?php echo $tab->content; ?>
+				</div>
 			</div>
-		</div>
 		<?php endforeach; ?>
 
 	</div>

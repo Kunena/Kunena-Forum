@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Image
+ * @package         Kunena.Framework
+ * @subpackage      Image
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -15,17 +15,18 @@ define('MIME_PNG', 'image/png');
 
 /**
  * Helper class for image manipulation.
+ * @since Kunena
  */
 class KunenaImage extends KunenaCompatImage
 {
 	/**
 	 * Method to resize the current image.
 	 *
-	 * @param   mixed    $width        The width of the resized image in pixels or a percentage.
-	 * @param   mixed    $height       The height of the resized image in pixels or a percentage.
-	 * @param   boolean  $createNew    If true the current image will be cloned, resized and returned; else
+	 * @param   mixed   $width         The width of the resized image in pixels or a percentage.
+	 * @param   mixed   $height        The height of the resized image in pixels or a percentage.
+	 * @param   boolean $createNew     If true the current image will be cloned, resized and returned; else
 	 *                                 the current image will be resized and returned.
-	 * @param   integer  $scaleMethod  Which method to use for scaling
+	 * @param   integer $scaleMethod   Which method to use for scaling
 	 *
 	 * @return  KunenaImage
 	 *
@@ -65,7 +66,7 @@ class KunenaImage extends KunenaCompatImage
 		$dimensions = $this->prepareDimensions($width, $height, $scaleMethod);
 
 		// Instantiate offset.
-		$offset = new stdClass;
+		$offset    = new stdClass;
 		$offset->x = $offset->y = 0;
 
 		// Get truecolor handle
@@ -75,8 +76,8 @@ class KunenaImage extends KunenaCompatImage
 		if ($scaleMethod == self::SCALE_FIT)
 		{
 			// Get the offsets
-			$offset->x	= round(($width - $dimensions->width) / 2);
-			$offset->y	= round(($height - $dimensions->height) / 2);
+			$offset->x = round(($width - $dimensions->width) / 2);
+			$offset->y = round(($height - $dimensions->height) / 2);
 
 			// Make image transparent, otherwise cavas outside initial image would default to black
 			if (!$this->isTransparent())
@@ -94,8 +95,8 @@ class KunenaImage extends KunenaCompatImage
 
 			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
 			{
-				$trnprt_color   = imagecolorsforindex($this->handle, $trnprt_indx);
-				$trnprt_indx    = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+				$trnprt_color = imagecolorsforindex($this->handle, $trnprt_indx);
+				$trnprt_indx  = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
 				imagefill($handle, 0, 0, $trnprt_indx);
 				imagecolortransparent($handle, $trnprt_indx);
 			}
@@ -116,12 +117,14 @@ class KunenaImage extends KunenaCompatImage
 		{
 			$trnprt_indx = imagecolortransparent($this->handle);
 
-			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle)) {
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
+			{
 				// Get the transparent color values for the current image.
-				$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+				$rgba  = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
 				$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
 			}
-			else {
+			else
+			{
 				$color = imageColorAllocateAlpha($handle, 255, 255, 255, 127);
 			}
 
@@ -182,6 +185,7 @@ class KunenaImage extends KunenaCompatImage
 	 * @param $src_h
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
 	{
@@ -195,20 +199,25 @@ class KunenaImage extends KunenaCompatImage
 		ImagePaletteCopy($dst_img, $src_img);
 		$rX = $src_w / $dst_w;
 		$rY = $src_h / $dst_h;
-		$w = 0;
+		$w  = 0;
+
 		for ($y = 0; $y < $dst_h; $y++)
 		{
 			$ow = $w;
-$w = round(($y + 1) * $rY);
-			$t = 0;
+			$w  = round(($y + 1) * $rY);
+			$t  = 0;
+
 			for ($x = 0; $x < $dst_w; $x++)
 			{
-				$r = $g = $b = 0;
-$a = 0;
+				$r  = $g = $b = 0;
+				$a  = 0;
 				$ot = $t;
-$t = round(($x + 1) * $rX);
-				for ($u = 0; $u < ($w - $ow); $u++)  {
-					for ($p = 0; $p < ($t - $ot); $p++)  {
+				$t  = round(($x + 1) * $rX);
+
+				for ($u = 0; $u < ($w - $ow); $u++)
+				{
+					for ($p = 0; $p < ($t - $ot); $p++)
+					{
 						$c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
 						$r += $c['red'];
 						$g += $c['green'];
@@ -227,7 +236,7 @@ $t = round(($x + 1) * $rX);
 		// We should return true since ImageCopyResampled/ImageCopyResized do it
 		return true;
 	}
-	
+
 	/**
 	 * Correct Image Orientation
 	 *
@@ -238,7 +247,7 @@ $t = round(($x + 1) * $rX);
 	public static function correctImageOrientation($filename)
 	{
 		$testForJpg = @getimagesize($filename);
-	
+
 		if ($testForJpg[2] == 2)
 		{
 			if (function_exists('exif_read_data'))
@@ -247,45 +256,52 @@ $t = round(($x + 1) * $rX);
 				$exif = @exif_read_data($filename);
 				$flip = '';
 				$img  = '';
-	
+
 				if ($exif && isset($exif['Orientation']))
 				{
 					$orientation = $exif['Orientation'];
-	
+
 					if ($orientation != 1)
 					{
 						$img = @imagecreatefromjpeg($filename);
-	
+
 						switch ($orientation)
 						{
-							case 1: // nothing
+							case 1: // Nothing
 								$deg  = 0;
 								$flip = 0;
 								break;
-							case 2: // horizontal flip
+
+							case 2: // Horizontal flip
 								$deg  = 0;
 								$flip = 1;
 								break;
+
 							case 3: // 180 rotate left
 								$deg  = 180;
 								$flip = 0;
 								break;
-							case 4: // vertical flip
+
+							case 4: // Vertical flip
 								$deg  = 0;
 								$flip = 2;
 								break;
-							case 5: // vertical flip + 90 rotate
+
+							case 5: // Vertical flip + 90 rotate
 								$deg  = 90;
 								$flip = 2;
 								break;
+
 							case 6: // 270 rotate left
 								$deg  = 270;
 								$flip = 0;
 								break;
-							case 7: // horizontal flip + 90 rotate
+
+							case 7: // Horizontal flip + 90 rotate
 								$deg  = 90;
 								$flip = 1;
 								break;
+
 							case 8: // 90 rotate left
 								$deg  = 90;
 								$flip = 0;
@@ -293,12 +309,12 @@ $t = round(($x + 1) * $rX);
 						}
 					}
 				}
-	
+
 				if ($deg > 0)
 				{
 					$img = @imagerotate($img, $deg, 0);
 				}
-	
+
 				if ($flip != 0)
 				{
 					if ($flip == 1)
@@ -310,10 +326,10 @@ $t = round(($x + 1) * $rX);
 						@imageflip($img, IMG_FLIP_VERTICAL);
 					}
 				}
-	
+
 				@imagejpeg($img, $filename, 95);
 			}
 		}
 	}
-	
+
 }

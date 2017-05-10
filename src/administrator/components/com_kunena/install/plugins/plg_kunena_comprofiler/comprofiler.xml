@@ -24,27 +24,33 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="access" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACCESS" description="PLG_KUNENA_COMPROFILER_ACCESS_DESC" class="inputbox">
+				<field name="access" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACCESS" description="PLG_KUNENA_COMPROFILER_ACCESS_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="login" type="list" default="1" label="PLG_KUNENA_COMPROFILER_LOGIN" description="PLG_KUNENA_COMPROFILER_LOGIN_DESC" class="inputbox">
+				<field name="login" type="list" default="1" label="PLG_KUNENA_COMPROFILER_LOGIN" description="PLG_KUNENA_COMPROFILER_LOGIN_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="activity" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACTIVITY" description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC" class="inputbox">
+				<field name="activity" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACTIVITY"
+				       description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC" class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="avatar" type="list" default="1" label="PLG_KUNENA_COMPROFILER_AVATAR" description="PLG_KUNENA_COMPROFILER_AVATAR_DESC" class="inputbox">
+				<field name="avatar" type="list" default="1" label="PLG_KUNENA_COMPROFILER_AVATAR" description="PLG_KUNENA_COMPROFILER_AVATAR_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="profile" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PROFILE" description="PLG_KUNENA_COMPROFILER_PROFILE_DESC" class="inputbox">
+				<field name="profile" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PROFILE" description="PLG_KUNENA_COMPROFILER_PROFILE_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="private" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PRIVATE" description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC" class="inputbox">
+				<field name="private" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PRIVATE" description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

@@ -2,26 +2,43 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Views
+ * @package         Kunena.Site
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.cache.handler.output');
 jimport('joomla.document.html.html');
 
 /**
  * Common view
+ * @since Kunena
  */
 class KunenaViewCommon extends KunenaView
 {
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $catid = 0;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	public $offline = false;
 
+	/**
+	 * @param   null $layout
+	 * @param   null $tpl
+	 *
+	 * @return mixed|void
+	 * @since Kunena
+	 */
 	function display($layout = null, $tpl = null)
 	{
 		$this->state = $this->get('State');
@@ -31,9 +48,19 @@ class KunenaViewCommon extends KunenaView
 			$this->offline = true;
 		}
 
+		if (!$layout)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_PAGE'), 404);
+		}
+
 		return $this->displayLayout($layout, $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->header = $this->escape($this->header);
@@ -48,6 +75,11 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayAnnouncement($tpl = null)
 	{
 		if ($this->offline)
@@ -103,6 +135,11 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayForumJump($tpl = null)
 	{
 		if ($this->offline)
@@ -130,6 +167,11 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayBreadcrumb($tpl = null)
 	{
 		if ($this->offline)
@@ -158,6 +200,7 @@ class KunenaViewCommon extends KunenaView
 				if (!empty($active->query['catid']) && isset($parents[$active->query['catid']]))
 				{
 					$curcatid = $active->query['catid'];
+
 					while (($item = array_shift($parents)) !== null)
 					{
 						if ($item->id == $curcatid)
@@ -186,34 +229,36 @@ class KunenaViewCommon extends KunenaView
 			if ($view == 'topic')
 			{
 				$active_layout = (!empty($active->query['view']) && $active->query['view'] == 'topic' && !empty($active->query['layout'])) ? $active->query['layout'] : '';
+
 				switch ($layout)
 				{
 					case 'create':
 						if ($active_layout != 'create')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_NEW'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_NEW')));
 						}
 						break;
 					case 'reply':
 						if ($active_layout != 'reply')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY')));
 						}
 						break;
 					case 'edit':
 						if ($active_layout != 'edit')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_EDIT'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_EDIT')));
 						}
 						break;
 				}
 			}
 		}
+
 		$this->pathway = array();
 
 		foreach ($pathway->getPathway() as $pitem)
 		{
-			$item       = new StdClass();
+			$item       = new StdClass;
 			$item->name = $this->escape($pitem->name);
 			$item->link = KunenaRoute::_($pitem->link);
 
@@ -228,6 +273,11 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayWhosonline($tpl = null)
 	{
 		if ($this->offline)
@@ -306,6 +356,11 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayStatistics($tpl = null)
 	{
 		if ($this->offline)
@@ -323,7 +378,7 @@ class KunenaViewCommon extends KunenaView
 		$kunena_stats = KunenaForumStatistics::getInstance();
 		$kunena_stats->loadGeneral();
 
-		$this->assign($kunena_stats);
+		$this->kunena_stats     = $kunena_stats;
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 		$this->statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');
@@ -337,6 +392,11 @@ class KunenaViewCommon extends KunenaView
 		$cache->end();
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayFooter($tpl = null)
 	{
 		if ($this->offline)
@@ -354,7 +414,7 @@ class KunenaViewCommon extends KunenaView
 
 				if ($category->pub_access == 0 && $category->parent)
 				{
-					$rss_params = '&catid=' . ( int ) $catid;
+					$rss_params = '&catid=' . (int) $catid;
 				}
 			}
 			else
@@ -362,18 +422,24 @@ class KunenaViewCommon extends KunenaView
 				$rss_params = '';
 			}
 
-			if (isset ($rss_params))
+			if (isset($rss_params))
 			{
 				$document = JFactory::getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
 				$this->rss = $this->getRSSLink($this->getIcon('krss', JText::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
 		}
+
 		$result = $this->loadTemplateFile($tpl);
 
 		echo $result;
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayMenu($tpl = null)
 	{
 		if ($this->offline)
@@ -390,6 +456,10 @@ class KunenaViewCommon extends KunenaView
 		echo $result;
 	}
 
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
 	function getMenu()
 	{
 		$basemenu = KunenaRoute::getMenu();
@@ -399,7 +469,7 @@ class KunenaViewCommon extends KunenaView
 			return ' ';
 		}
 
-		$this->parameters = new JRegistry();
+		$this->parameters = new JRegistry;
 		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
 		$this->parameters->set('menutype', $basemenu->menutype);
 		$this->parameters->set('startLevel', $basemenu->level + 1);
@@ -416,6 +486,11 @@ class KunenaViewCommon extends KunenaView
 		return count($this->list) ? $this->loadTemplateFile('menu') : '';
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayLoginBox($tpl = null)
 	{
 		if ($this->offline)
@@ -429,7 +504,7 @@ class KunenaViewCommon extends KunenaView
 		$cachegroup = 'com_kunena.template';
 
 		// FIXME: enable caching after fixing the issues
-		$contents = false; //$cache->get($cachekey, $cachegroup);
+		$contents = false; // $cache->get($cachekey, $cachegroup);
 
 		if (!$contents)
 		{
@@ -465,31 +540,37 @@ class KunenaViewCommon extends KunenaView
 				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
-				//$this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
+				// $this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
 				// Announcements
 				if ($this->me->isModerator())
 				{
 					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list') . '">' . JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
 				}
-
 			}
+
 			$contents = $this->loadTemplateFile($tpl);
 
 			// FIXME: enable caching after fixing the issues
-			//$cache->store($contents, $cachekey, $cachegroup);
+			// $cache->store($contents, $cachekey, $cachegroup);
 		}
 
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillLoginBoxInfo'), $contents);
 		echo $contents;
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	function fillLoginBoxInfo($matches)
 	{
 		switch ($matches[1])
 		{
 			case 'RETURN_URL':
-				return base64_encode(JFactory::getURI()->toString(array('path', 'query', 'fragment')));
+				return base64_encode(JUri::getInstance()->toString(array('path', 'query', 'fragment')));
 			case 'TOKEN':
 				return JHtml::_('form.token');
 			case 'MODULE':
@@ -509,6 +590,12 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   string $action
+	 * @param   bool   $xhtml
+	 *
+	 * @since Kunena
+	 */
 	function getUserlistURL($action = '', $xhtml = true)
 	{
 		$profile = KunenaFactory::getProfile();
@@ -519,10 +606,11 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
 	 *
-	 * @param   string $params Add extras params to the URL
-	 * @param   string $xhtml  Replace & by & for XML compilance.
+	 * @param   string      $params Add extras params to the URL
+	 * @param   bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
@@ -551,11 +639,27 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @param          $name
+	 * @param   string $rel
+	 * @param   string $params
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
 	function getRSSLink($name, $rel = 'follow', $params = '')
 	{
-		return '<a href="' . $this->getRSSURL($params) .'">' . $name . '</a>';
+		return '<a href="' . $this->getRSSURL($params) . '">' . $name . '</a>';
 	}
 
+	/**
+	 * @param          $name
+	 * @param   string $class
+	 * @param   string $rel
+	 *
+	 * @return boolean|string
+	 * @since Kunena
+	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{
 		$my = KunenaFactory::getUser();
@@ -568,27 +672,41 @@ class KunenaViewCommon extends KunenaView
 		return '<a href="' . KunenaRoute::_('index.php?option=com_kunena&view=statistics') . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 	}
 
+	/**
+	 * @param          $action
+	 * @param          $name
+	 * @param   string $rel
+	 * @param   string $class
+	 *
+	 * @return boolean|string
+	 * @since Kunena
+	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
 		$my = KunenaFactory::getUser();
 
-		if ($name == $this->memberCount) {
-			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
+		if ($name == $this->memberCount)
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
 
 			if ($link)
 			{
 				return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 			}
-			else {
-				return  $name;
+			else
+			{
+				return $name;
 			}
 		}
-		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed) {
+		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlist_allowed)
+		{
 			return false;
 		}
-		else {
-			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
-			return '<a href="'. $link .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		else
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
+
+			return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 		}
 	}
 }

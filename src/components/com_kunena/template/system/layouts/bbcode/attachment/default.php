@@ -1,29 +1,37 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
+if ($attachment->isImage())
+{
+	echo $this->render('image');
+}
+elseif ($attachment->isAudio())
+{
+	echo $this->render('audio');
+}
+elseif ($attachment->isVideo())
+{
+	echo $this->render('video');
+}
+elseif ($attachment->isPdf())
+{
+	echo $this->render('pdf');
+}
+else
+{
+	echo $this->render('file');
+}
+
 ?>
-<div class="kmsgattach">
-	<h4>
-		<?php echo JText::_('COM_KUNENA_FILEATTACH'); ?>
-	</h4>
-
-	<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
-	<?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
-
-	<br />
-
-	<?php echo JText::_('COM_KUNENA_FILESIZE') . number_format($attachment->size / 1024, 0, '', ',') . ' ' .
-		JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
-</div>

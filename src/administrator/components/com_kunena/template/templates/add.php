@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Templates
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Templates
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,17 +21,20 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="install" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post"
+		      enctype="multipart/form-data" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="install"/>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
+				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?>
+					- <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
 
 				<div>
 					<label for="install_package"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>:</label>
-					<input class="input_box" name="install_package" type="file" />
-					<input class="btn" type="submit" name="submit" value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>" />
+					<input class="input_box" name="install_package" type="file"/>
+					<input class="btn" type="submit" name="submit"
+					       value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
 				</div>
 			</fieldset>
 		</form>

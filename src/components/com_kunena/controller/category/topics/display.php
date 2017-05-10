@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Category
+ * @package         Kunena.Site
+ * @subpackage      Controller.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,26 +17,45 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Item';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
 	 * @var KunenaForumCategory
+	 * @since Kunena
 	 */
 	public $category;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
+	 * @since Kunena
 	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
@@ -46,6 +65,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -56,9 +76,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->me = KunenaUserHelper::getMyself();
 
-		$catid = $this->input->getInt('catid');
+		$catid      = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
+		$limit      = $this->input->getInt('limit', 0);
 
 		if ($limit < 1 || $limit > 100)
 		{
@@ -76,10 +96,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$topic_ordering = $this->category->topic_ordering;
 
 		$access = KunenaAccess::getInstance();
-		$hold = $access->getAllowedHold($this->me, $catid);
-		$moved = 1;
+		$hold   = $access->getAllowedHold($this->me, $catid);
+		$moved  = 1;
 		$params = array(
-			'hold' => $hold,
+			'hold'  => $hold,
 			'moved' => $moved
 		);
 
@@ -101,14 +121,14 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($this->total > 0)
 		{
 			// Collect user ids for avatar prefetch when integrated.
-			$userlist = array();
+			$userlist     = array();
 			$lastpostlist = array();
 
 			foreach ($this->topics as $topic)
 			{
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
+				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
+				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations.
@@ -138,19 +158,42 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
+		$doc = JFactory::getDocument();
+		$page = $this->pagination->pagesCurrent;
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = $this->category->getUrl();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
-		$page         = $this->pagination->pagesCurrent;
-		$pages        = $this->pagination->pagesTotal;
+		$page  = $this->pagination->pagesCurrent;
+		$pages = $this->pagination->pagesTotal;
 
-		$pagesText = ($pages > 1  && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$pagesText    = ($pages > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$parentText   = $this->category->getParent()->name;
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
@@ -159,25 +202,57 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$menu_item = $app->getMenu()->getActive();
 
 		$doc = JFactory::getDocument();
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
-		if ($robots == '')
+		if ($robots == '' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, follow');
 		}
-		elseif ($robots == 'noindex, follow')
+		elseif ($robots == 'noindex, follow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'noindex, follow');
 		}
-		elseif ($robots == 'index, nofollow')
+		elseif ($robots == 'index, nofollow' && $this->topics)
 		{
 			$doc->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
 			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		if ($menu_item)

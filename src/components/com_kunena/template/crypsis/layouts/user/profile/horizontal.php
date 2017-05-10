@@ -2,20 +2,21 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user   = $this->user;
-$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
-$show   = KunenaConfig::getInstance()->showuserstats;
+$user              = $this->user;
+$avatar            = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+$show              = KunenaConfig::getInstance()->showuserstats;
+$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {
@@ -33,17 +34,25 @@ if ($show)
 <div class="span2">
 	<ul class="profilebox center">
 		<li>
-			<strong><?php echo $user->getLink(null, null, 'canonical', '', null, $this->category_id); ?></strong>
+			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
+		<?php if ($optional_username) : ?>
+			<li>
+				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+			</li>
+		<?php endif; ?>
 		<?php if ($avatar) : ?>
 			<li>
 				<?php echo $user->getLink($avatar, null, ''); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-				<?php endif;?>
-				<?php /*if (!$this->topic_starter && $user->isModerator()) : */?><!--
-					<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */?></span>
-				--><?php /*endif;*/?>
+					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
+					{
+						echo 'topic-starter-circle';
+					}; ?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<?php endif; ?>
+				<?php /*if (!$this->topic_starter && $user->isModerator()) : */ ?><!--
+					<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/ ?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */ ?></span>
+				--><?php /*endif;*/ ?>
 			</li>
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
@@ -79,7 +88,7 @@ if ($show)
 	<?php if ($user->posts >= 1) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-			<span> <?php echo JText::sprintf((int)$user->posts); ?> </span>
+			<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
 		</li>
 	<?php endif; ?>
 
@@ -93,13 +102,13 @@ if ($show)
 	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-			<span> <?php echo JText::sprintf((int)$user->thankyou); ?> </span>
+			<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
 		</li>
 	<?php endif; ?>
 	<?php if (isset($user->points)) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
-			<span> <?php echo (int)$user->points; ?> </span>
+			<span> <?php echo (int) $user->points; ?> </span>
 		</li>
 	<?php endif; ?>
 	<?php if ($show && !empty($user->medals)) : ?>
@@ -118,5 +127,5 @@ if ($show)
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
-	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal');?>
+	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>
 </div>

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -14,10 +14,10 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
 <div class="inline">
 	<?php if (!empty($this->profile->twitter)) : ?>
-	<?php echo $this->profile->socialButton('twitter', $showAll); ?>
+		<?php echo $this->profile->socialButton('twitter', $showAll); ?>
 	<?php endif; ?>
 	<?php if (!empty($this->profile->facebook)) : ?>
-	<?php echo $this->profile->socialButton('facebook', $showAll); ?>
+		<?php echo $this->profile->socialButton('facebook', $showAll); ?>
 	<?php endif; ?>
 	<?php if (!empty($this->profile->instagram)) : ?>
 		<?php echo $this->profile->socialButton('instagram', $showAll); ?>
@@ -62,12 +62,12 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 		<?php echo $this->profile->socialButton('icq', $showAll); ?>
 	<?php endif; ?>
 	<?php if (!empty($this->profile->myspace)) : ?>
-	<?php echo $this->profile->socialButton('myspace', $showAll); ?>
+		<?php echo $this->profile->socialButton('myspace', $showAll); ?>
 	<?php endif; ?>
 	<?php if (!empty($this->profile->blogspot)) : ?>
 		<?php echo $this->profile->socialButton('blogspot', $showAll); ?>
 	<?php endif; ?>
 	<?php if (!empty($this->profile->flicker)) : ?>
-	<?php echo $this->profile->socialButton('flickr', $showAll); ?>
+		<?php echo $this->profile->socialButton('flickr', $showAll); ?>
 	<?php endif; ?>
 </div>

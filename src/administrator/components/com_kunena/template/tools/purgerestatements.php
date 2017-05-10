@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  PurgeRe
+ * @package         Kunena.Administrator.Template
+ * @subpackage      PurgeRe
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,8 +21,9 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="purgeReStatements" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm"
+		      name="adminForm">
+			<input type="hidden" name="task" value="purgeReStatements"/>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -31,7 +32,7 @@ defined('_JEXEC') or die();
 					<tr>
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
-							<input type="text" name="re_string" value="" />
+							<input type="text" name="re_string" value=""/>
 						</td>
 					</tr>
 				</table>

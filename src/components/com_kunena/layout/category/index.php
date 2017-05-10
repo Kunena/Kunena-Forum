@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Layout.Category.Index
+ * @package         Kunena.Site
+ * @subpackage      Layout.Category.Index
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -25,6 +25,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int $maxpages Maximum that are allowed for pagination
 	 *
 	 * @return KunenaPagination
+	 * @since Kunena
 	 */
 	public function getPaginationObject($maxpages)
 	{
@@ -40,10 +41,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   KunenaCategory $category The KunenaCategory object
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getCategoryIcon($category)
 	{
-		$template = KunenaFactory::getTemplate();
+		$template     = KunenaFactory::getTemplate();
 		$catimagepath = $template->params->get('DefaultCategoryicon');
 
 		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
@@ -53,22 +55,22 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($category->icon))
 			{
-				return '<i class="' . $category->icon . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($category->icon, true, true);
 			}
 			else
 			{
-				return '<i class="' . $catimagepath . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($catimagepath, true, true);
 			}
 		}
 		else
 		{
 			if (!empty($category->icon))
 			{
-				return '<i class="' . $category->icon . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($category->icon, false, true);
 			}
 			else
 			{
-				return '<i class="' . $catimagepath . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($catimagepath, false, true);
 			}
 		}
 	}
@@ -79,32 +81,33 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   KunenaSubCategory $subcategory The KunenaCategory object
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->ktemplate     = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
 
 		if ($subcategory->getNewCount())
 		{
 			if (!empty($subcategory->icon))
 			{
-				return '<i class="' . $subcategory->icon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($subcategory->icon, true, false);
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($defaultcategoryicon, true, false);
 			}
 		}
 		else
 		{
 			if (!empty($subcategory->icon))
 			{
-				return '<i class="' . $subcategory->icon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($subcategory->icon, false, false);
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return KunenaIcons::caticon($defaultcategoryicon, false, false);
 			}
 		}
 	}
@@ -116,6 +119,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int $numTopics   The number of topics
 	 *
 	 * @return string|null
+	 * @since Kunena
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
@@ -135,10 +139,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int       $catid The Id of category
-	 * @param bool|string $xhtml Replace & by & for XML compliance.
+	 * @param   int         $catid The Id of category
+	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return null|string
+	 * @since Kunena
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
@@ -146,7 +151,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			$params = '&catid=' . (int) $catid;
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}", $xhtml);
 		}
 
 		return null;

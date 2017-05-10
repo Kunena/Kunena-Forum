@@ -1,13 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Forum.Menu
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Menu
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,30 +15,61 @@ KunenaMenuFix::initialize();
 
 /**
  * Class KunenaMenuFix
+ * @since Kunena
  */
 abstract class KunenaMenuFix
 {
 	/**
 	 * @var array|StdClass[]
+	 * @since Kunena
 	 */
 	public static $items = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $filtered = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $aliases = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $invalid = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $legacy = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public static $same = array();
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $structure = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public static $parent = null;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function initialize()
 	{
@@ -50,6 +81,8 @@ abstract class KunenaMenuFix
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
 	 * @return array
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected static function load()
 	{
@@ -69,11 +102,13 @@ abstract class KunenaMenuFix
 		// Set the query
 		$db->setQuery($query);
 
-		if (!(self::$items = $db->loadObjectList('id')))
+		try
 		{
-			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
-
-			return false;
+			self::$items = $db->loadObjectList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
 		foreach (self::$items as &$item)
@@ -88,7 +123,7 @@ abstract class KunenaMenuFix
 
 			// Create tree
 			$parent_tree[] = $item->id;
-			$item->tree = $parent_tree;
+			$item->tree    = $parent_tree;
 
 			// Create the query array.
 			$url = str_replace('index.php?', '', $item->link);
@@ -100,6 +135,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getLegacy()
 	{
@@ -115,6 +151,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
+	 * @since Kunena
 	 */
 	public static function fixLegacy()
 	{
@@ -126,12 +163,12 @@ abstract class KunenaMenuFix
 			KunenaRouteLegacy::convertMenuItem($item);
 			$table = JTable::getInstance('menu');
 			$table->load($item->id);
-			$data = array (
-				'link' => $item->link,
+			$data = array(
+				'link'   => $item->link,
 				'params' => $item->params,
 			);
 
-			if (! $table->bind($data) || ! $table->check() || ! $table->store())
+			if (!$table->bind($data) || !$table->check() || !$table->store())
 			{
 				$errors[] = "{$item->route} (#{$item->id}): {$table->getError()}";
 			}
@@ -146,6 +183,7 @@ abstract class KunenaMenuFix
 	 * @param $itemid
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function delete($itemid)
 	{
@@ -155,7 +193,7 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		$table = JTable::getInstance('menu');
+		$table  = JTable::getInstance('menu');
 		$result = $table->delete($itemid);
 		KunenaMenuHelper::cleanCache();
 
@@ -164,6 +202,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getAll()
 	{
@@ -182,6 +221,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getAliases()
 	{
@@ -197,6 +237,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function getInvalid()
 	{
@@ -210,6 +251,10 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array
+	 * @since  Kunena
+	 */
 	public static function getConflicts()
 	{
 		return array();
@@ -217,6 +262,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected static function build()
 	{
@@ -226,13 +272,13 @@ abstract class KunenaMenuFix
 
 			foreach (self::$items as $item)
 			{
-				if (! is_object($item))
+				if (!is_object($item))
 				{
 					continue;
 				}
 
 				$itemid = null;
-				$view = null;
+				$view   = null;
 
 				if ($item->type == 'alias' && !empty($item->query['Itemid']))
 				{
@@ -240,12 +286,12 @@ abstract class KunenaMenuFix
 
 					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
 					{
-						$itemid = $item->query['Itemid'];
+						$itemid                   = $item->query['Itemid'];
 						self::$aliases[$item->id] = $itemid;
 					}
 					elseif (!$realitem)
 					{
-						$itemid = 0;
+						$itemid                   = 0;
 						self::$invalid[$item->id] = $itemid;
 					}
 
@@ -254,15 +300,15 @@ abstract class KunenaMenuFix
 				elseif ($item->type == 'component' && $item->component == 'com_kunena')
 				{
 					$itemid = $item->id;
-					$view = empty($item->query['view']) ? 'legacy' : $item->query['view'];
+					$view   = empty($item->query['view']) ? 'legacy' : $item->query['view'];
 				}
 
 				if ($itemid !== null && $view)
 				{
-					$language = isset($item->language) ? strtolower($item->language) : '*';
-					$home = self::getHome($item);
-					self::$filtered[$item->id] = $itemid;
-					self::$same[$item->route][$item->id] = $item;
+					$language                                                            = isset($item->language) ? strtolower($item->language) : '*';
+					$home                                                                = self::getHome($item);
+					self::$filtered[$item->id]                                           = $itemid;
+					self::$same[$item->route][$item->id]                                 = $item;
 					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
 
 					if (KunenaRouteLegacy::isLegacy($view))
@@ -278,6 +324,7 @@ abstract class KunenaMenuFix
 	 * @param   StdClass $item
 	 *
 	 * @return object
+	 * @since Kunena
 	 */
 	protected static function getHome($item)
 	{
@@ -296,7 +343,7 @@ abstract class KunenaMenuFix
 			}
 			else
 			{
-				$parent = isset(self::$items[$item->parent_id]) ? self::$items[$item->parent_id] : null;
+				$parent            = isset(self::$items[$item->parent_id]) ? self::$items[$item->parent_id] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}

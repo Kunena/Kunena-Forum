@@ -52,6 +52,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 
 	/**
 	 * @param   array $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -63,9 +65,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Method to get the record form.
 	 *
 	 * @param   array   $data     Data for the form.
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   boolean $loadData True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  JForm    A JForm object on success, false on failure
+	 * @return boolean|JForm
 	 *
 	 * @since   1.6
 	 */
@@ -139,14 +141,14 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string  $context  The context identifier.
+	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
-	 * @return  void
+	 * @param   string   $group
 	 *
 	 * @since   Joomla 3.1
 	 */
-	protected function preprocessData($context, &$data)
+	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
 		// Get the dispatcher and load the users plugins.
 		$dispatcher = JEventDispatcher::getInstance();
@@ -158,16 +160,17 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			$this->setError($dispatcher->getError());
+			JFactory::getApplication()->enqueueMessage($dispatcher->getError());
 		}
 	}
 
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer  $pk  The id of the primary key.
+	 * @param   integer $pk The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
+	 * @since Kunena
 	 */
 	public function getItem($pk = null)
 	{
@@ -186,7 +189,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			// Check for a table object error.
 			if ($return === false && $table->getError())
 			{
-				$this->setError($table->getError());
+				JFactory::getApplication()->enqueueMessage($table->getError());
 
 				return $false;
 			}
@@ -224,6 +227,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   array  $config Configuration array for model. Optional.
 	 *
 	 * @return  JTable    A database object
+	 * @since Kunena
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{
@@ -389,10 +393,11 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 *
 	 * @since   1.6
 	 *
-	 * @param null $group
+	 * @param   null $group
 	 *
-	 * @param int  $client_id
+	 * @param   int  $client_id
 	 *
+	 * @since   Kunena
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

@@ -259,9 +259,9 @@
 		       type="text"
 		       null="0"/>
 		<field name="allow_ratings"
-			   type="tinyint(4)"
-			   null="0"
-			   default="0"/>
+		       type="tinyint(4)"
+		       null="0"
+		       default="0"/>
 
 		<key name="PRIMARY"
 		     unique="1"

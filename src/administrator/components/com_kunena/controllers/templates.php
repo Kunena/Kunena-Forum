@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -37,7 +37,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0
 	 */
@@ -137,16 +137,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Install
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 *
 	 * @since    2.0
 	 */
 	public function install()
 	{
-		$tmp  = JPATH_ROOT . '/tmp/';
+		$tmp        = JPATH_ROOT . '/tmp/';
 		$tmp_kunena = JPATH_ROOT . '/tmp/kinstall/';
-		$dest = KPATH_SITE . '/template/';
-		$file = $this->app->input->files->get('install_package', null, 'raw');
+		$dest       = KPATH_SITE . '/template/';
+		$file       = $this->app->input->files->get('install_package', null, 'raw');
 
 		if (!JSession::checkToken('post'))
 		{
@@ -323,7 +323,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function chooseless()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 		$this->app->setUserState('kunena.templatename', $templatename);
 
@@ -348,7 +348,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function editless()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
@@ -374,7 +374,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function choosecss()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
 		$this->app->setUserState('kunena.templatename', $templatename);
@@ -391,7 +391,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function applyless()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
@@ -413,7 +413,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -423,7 +423,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
+			);
 		}
 	}
 
@@ -436,7 +437,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function saveless()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
@@ -453,13 +454,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+				. JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.')
+			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -470,7 +472,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file)
+			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
 		}
 	}
@@ -484,7 +487,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function editcss()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
@@ -510,10 +513,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function applycss()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -531,7 +534,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -553,10 +556,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function savecss()
 	{
-		$template = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -574,7 +577,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -662,7 +665,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to save param.ini file on filesystem.
 	 *
-	 * @param   string  $template  The name of the template.
+	 * @param   string $template The name of the template.
 	 *
 	 * @return void
 	 *

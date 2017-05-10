@@ -1,124 +1,126 @@
 <?xml version="1.0" ?>
 <!DOCTYPE kunena-topicicons>
 <kunena-topicicons>
-	<name>default</name>
-	<version>@kunenaversion@</version>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<author>Kunena Team</author>
-	<authorEmail>Kunena@kunena.org</authorEmail>
-	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPL</license>
-	<description>Default topic icons for Kunena</description>
+    <name>default</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPL</license>
+    <description>Default topic icons for Kunena</description>
 
-	<icons type="user" width="48" height="48">
-		<icon id="0" name="default" published="1" b2="file" b3="file" fa="file" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png" />
-		<icon id="1" name="exclamation" published="1" b2="notification-circle" b3="exclamation-sign" fa="exclamation-circle" title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png" />
-		<icon id="2" name="question" published="1" b2="question-sign" b3="question-sign" fa="question-circle" title="COM_KUNENA_ICON_QUESTION" src="user/question.png" />
-		<icon id="3" name="idea" published="1" b2="lamp" b3="lamp" fa="lightbulb-o" title="COM_KUNENA_ICON_IDEA" src="user/idea.png" />
-		<icon id="4" name="love" published="1" b2="heart" b3="heart" fa="heart" title="COM_KUNENA_ICON_LOVE" src="user/love.png" />
-		<!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
-		<!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
-		<!-- icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" / -->
-		<icon id="9" name="merged" published="1" b2="contract" b3="resize-small" fa="compress" title="COM_KUNENA_ICON_MERGED" src="user/merged.png" />
-		<icon id="10" name="cross" published="1" b2="remove" b3="remove" fa="times" title="COM_KUNENA_ICON_CROSS" src="user/cross.png" />
-		<icon id="8" name="solved" published="1" b2="ok" b3="ok" fa="check" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png" />
-	</icons>
+    <icons type="user" width="48" height="48">
+        <icon id="0" name="default" published="1" b2="file" b3="file" fa="file" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png"/>
+        <icon id="1" name="exclamation" published="1" b2="notification-circle" b3="exclamation-sign" fa="exclamation-circle"
+              title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png"/>
+        <icon id="2" name="question" published="1" b2="question-sign" b3="question-sign" fa="question-circle" title="COM_KUNENA_ICON_QUESTION"
+              src="user/question.png"/>
+        <icon id="3" name="idea" published="1" b2="lamp" b3="lamp" fa="lightbulb-o" title="COM_KUNENA_ICON_IDEA" src="user/idea.png"/>
+        <icon id="4" name="love" published="1" b2="heart" b3="heart" fa="heart" title="COM_KUNENA_ICON_LOVE" src="user/love.png"/>
+        <!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
+        <!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
+        <!-- icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" / -->
+        <icon id="9" name="merged" published="1" b2="contract" b3="resize-small" fa="compress" title="COM_KUNENA_ICON_MERGED" src="user/merged.png"/>
+        <icon id="10" name="cross" published="1" b2="remove" b3="remove" fa="times" title="COM_KUNENA_ICON_CROSS" src="user/cross.png"/>
+        <icon id="8" name="solved" published="1" b2="ok" b3="ok" fa="check" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png"/>
+    </icons>
 
 	<icons type="system" width="48" height="48">
-		<icon name="moved" published="1" src="system/moved.png" />
-		<icon name="deleted" published="1" src="system/deleted.png" />
-		<icon name="unapproved" published="1" src="system/unapproved.png" />
-		<icon name="sticky_locked" published="1" src="system/sticky_locked.png" />
-		<icon name="sticky" published="1" src="system/sticky.png" />
-		<icon name="locked" published="1" src="system/locked.png" />
+		<icon id="500" name="moved" published="1" b2="contract" b3="contract" fa="compress" src="system/moved.png" />
+		<icon id="501" name="deleted" published="1" b2="trash" b3="trash" fa="trash-o" src="system/deleted.png" />
+		<icon id="502" name="unapproved" published="1" b2="comments" b3="comment" fa="comment-o" src="system/unapproved.png" />
+		<icon id="503" name="sticky_locked" published="1" b2="lock" b3="file" fa="lock" src="system/sticky_locked.png" />
+		<icon id="504" name="sticky" published="1" b2="pin" b3="pushpin" fa="map-pin" src="system/sticky.png" />
+		<icon id="505" name="locked" published="1" b2="lock" b3="file" fa="lock" src="system/locked.png" />
 	</icons>
 
-	<!-- icons type="system" width="16" height="16">
-		<icon name="unapproved" published="1" src="system/unapproved.png" />
-		<icon name="deleted" published="1" src="system/deleted.png" />
-		<icon name="new" published="1" src="system/new.png" />
-		<icon name="favorite" published="1" src="system/favorite.png" />
-		<icon name="own" published="1" src="system/own.png" />
-		<icon name="replied" published="1" src="system/replied.png" />
-		<icon name="noreplies" published="1" src="system/noreplies.png" />
-		<icon name="sticky" published="1" src="system/sticky.png" />
-		<icon name="locked" published="1" src="system/locked.png" />
-	</icons -->
+    <!-- icons type="system" width="16" height="16">
+        <icon name="unapproved" published="1" src="system/unapproved.png" />
+        <icon name="deleted" published="1" src="system/deleted.png" />
+        <icon name="new" published="1" src="system/new.png" />
+        <icon name="favorite" published="1" src="system/favorite.png" />
+        <icon name="own" published="1" src="system/own.png" />
+        <icon name="replied" published="1" src="system/replied.png" />
+        <icon name="noreplies" published="1" src="system/noreplies.png" />
+        <icon name="sticky" published="1" src="system/sticky.png" />
+        <icon name="locked" published="1" src="system/locked.png" />
+    </icons -->
 
-	<!-- icons type="tag" width="16" height="16">
-		<icon name="bug" published="1" src="tags/bug.png" />
-		<icon name="config" published="1" src="tags/config.png" />
-		<icon name="javascript" published="1" src="tags/javascript.png" />
-	</icons -->
+    <!-- icons type="tag" width="16" height="16">
+        <icon name="bug" published="1" src="tags/bug.png" />
+        <icon name="config" published="1" src="tags/config.png" />
+        <icon name="javascript" published="1" src="tags/javascript.png" />
+    </icons -->
 
-	<topicicon width="48" height="48">
-		<main>
-			<icon type="system" name="moved" />
-			<icon type="system" name="deleted" />
-			<icon type="system" name="unapproved" />
-			<icon type="system" name="locked" />
-			<icon type="system" name="sticky" />
-			<icon type="user" />
-		</main>
+    <topicicon width="48" height="48">
+        <main>
+            <icon type="system" name="moved"/>
+            <icon type="system" name="deleted"/>
+            <icon type="system" name="unapproved"/>
+            <icon type="system" name="locked"/>
+            <icon type="system" name="sticky"/>
+            <icon type="user"/>
+        </main>
 
-		<!-- group type="system" x="32" y="0" opacity="50" max="2" step="-16">
-			<group>
-				<icon name="unapproved" />
-				<icon name="deleted" />
-				<icon name="new" />
-			</group>
-			<group>
-				<icon name="favorite" />
-				<icon name="own" />
-				<icon name="replied" />
-				<icon name="noreplies" />
-			</group>
-		</group>
+        <!-- group type="system" x="32" y="0" opacity="50" max="2" step="-16">
+            <group>
+                <icon name="unapproved" />
+                <icon name="deleted" />
+                <icon name="new" />
+            </group>
+            <group>
+                <icon name="favorite" />
+                <icon name="own" />
+                <icon name="replied" />
+                <icon name="noreplies" />
+            </group>
+        </group>
 
-		<group type="system" x="0" y="16" opacity="50" max="2" step="-16">
-			<icon name="sticky" />
-			<icon name="locked" />
-		</group>
+        <group type="system" x="0" y="16" opacity="50" max="2" step="-16">
+            <icon name="sticky" />
+            <icon name="locked" />
+        </group>
 
-		<group type="tag" x="32" y="32" opacity="50" max="3" step="-16">
-			<icon name="bug" />
-			<icon name="configuration" />
-			<icon name="javascript" />
-		</group -->
-	</topicicon>
+        <group type="tag" x="32" y="32" opacity="50" max="3" step="-16">
+            <icon name="bug" />
+            <icon name="configuration" />
+            <icon name="javascript" />
+        </group -->
+    </topicicon>
 
-	<!-- rules>
-		<rule action="topic.create">
-			<allow>open</allow>
-			<user type="moderator">
-				<allow name="*" />
-			</user>
-		</rule>
-		<rule action="topic.reply">
-			<user type="owner">
-				<state name="open">
-					<allow name="open" />
-					<allow name="solved" />
-				</state>
-				<state name="more-user">
-					<allow name="open" />
-					<allow name="solved" />
-				</state>
-				<state name="more-dev">
-					<allow name="more-dev" />
-					<allow name="solved" />
-				</state>
-				<state name="solved">
-					<allow name="solved" />
-				</state>
-			</user>
-			<user type="moderator">
-				<allow name="*" />
-			</user>
-		</rule>
-		<rule action="topic.inactive" after="30d">
-			<state from="open,more-user,solved" default="closed" />
-		</rule>
-	</rules -->
+    <!-- rules>
+        <rule action="topic.create">
+            <allow>open</allow>
+            <user type="moderator">
+                <allow name="*" />
+            </user>
+        </rule>
+        <rule action="topic.reply">
+            <user type="owner">
+                <state name="open">
+                    <allow name="open" />
+                    <allow name="solved" />
+                </state>
+                <state name="more-user">
+                    <allow name="open" />
+                    <allow name="solved" />
+                </state>
+                <state name="more-dev">
+                    <allow name="more-dev" />
+                    <allow name="solved" />
+                </state>
+                <state name="solved">
+                    <allow name="solved" />
+                </state>
+            </user>
+            <user type="moderator">
+                <allow name="*" />
+            </user>
+        </rule>
+        <rule action="topic.inactive" after="30d">
+            <state from="open,more-user,solved" default="closed" />
+        </rule>
+    </rules -->
 </kunena-topicicons>

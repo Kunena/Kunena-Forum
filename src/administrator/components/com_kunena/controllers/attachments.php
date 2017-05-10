@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -29,7 +29,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	/**
 	 * Constructor
 	 *
-	 * @param   array  $config  Construct
+	 * @param   array $config Construct
 	 *
 	 * @since 2.0
 	 */
@@ -73,10 +73,10 @@ class KunenaAdminControllerAttachments extends KunenaController
 		{
 			$attachment = KunenaAttachmentHelper::get($id);
 
-			$message = $attachment->getMessage();
+			$message     = $attachment->getMessage();
 			$attachments = array($attachment->id, 1);
-			$attach = array();
-			$removeList = array_keys(array_diff_key($attachments, $attach));
+			$attach      = array();
+			$removeList  = array_keys(array_diff_key($attachments, $attach));
 			Joomla\Utilities\ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 			$message->save();

@@ -1,26 +1,32 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package       Kunena.Framework
+ * @subpackage    Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaProfile
+ * @since Kunena
  */
 class KunenaProfile
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $instance = false;
 
 	/**
 	 * @param   null $integration
 	 *
 	 * @return boolean|KunenaProfile
+	 * @since Kunena
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -28,7 +34,7 @@ class KunenaProfile
 		{
 			JPluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
-			$classes = $dispatcher->trigger('onKunenaGetProfile');
+			$classes    = $dispatcher->trigger('onKunenaGetProfile');
 
 			foreach ($classes as $class)
 			{
@@ -43,7 +49,7 @@ class KunenaProfile
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaProfile();
+				self::$instance = new KunenaProfile;
 			}
 		}
 
@@ -54,6 +60,7 @@ class KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getTopHits($limit = 0)
 	{
@@ -70,11 +77,12 @@ class KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my = JFactory::getUser();
+		$my     = JFactory::getUser();
 
 		if ($config->statslink_allowed == 0 && $my->id == 0)
 		{
@@ -87,18 +95,22 @@ class KunenaProfile
 	/**
 	 * @param   string $action
 	 * @param   bool   $xhtml
+	 *
+	 * @since Kunena
 	 */
-	public function getUserListURL($action='', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true)
 	{
 
 	}
 
 	/**
-	 * @param        $user
+	 * @param          $user
 	 * @param   string $task
 	 * @param   bool   $xhtml
+	 *
+	 * @since Kunena
 	 */
-	public function getProfileURL($user, $task='', $xhtml = true)
+	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 
 	}
@@ -106,6 +118,8 @@ class KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -116,15 +130,18 @@ class KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
-	protected function _getTopHits($limit=0)
+	protected function _getTopHits($limit = 0)
 	{
 		return array();
 	}
 
 	/**
-	 * @param      $userid
+	 * @param        $userid
 	 * @param   bool $xhtml
+	 *
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

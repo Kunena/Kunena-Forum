@@ -1,19 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Statistics
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Statistics
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
 <div class="statistics">
-<h1>
-	<?php echo JText::_('COM_KUNENA_STATISTICS');?>
-</h1>
+	<h1>
+		<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
+	</h1>
 	<?php foreach ($this->top as $top) : ?>
 		<h3>
 			<?php echo $top[0]->title; ?>
@@ -39,7 +39,8 @@ defined('_JEXEC') or die;
 					</td>
 					<td>
 						<div class="progress">
-							<div class="progress-bar" role="progressbar" style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
+							<div class="progress-bar" role="progressbar"
+							     style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
 						</div>
 					</td>
 				</tr>

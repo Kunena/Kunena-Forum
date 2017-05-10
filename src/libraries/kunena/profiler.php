@@ -1,42 +1,53 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-jimport ('joomla.error.profiler');
+jimport('joomla.error.profiler');
 
 /**
  * Class KunenaProfiler
+ * @since Kunena
  */
 class KunenaProfiler extends JProfiler
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $_kstart = array();
 
 	/**
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected $_heap = array();
 
 	/**
-	 * @param string $prefix
+	 * @param   string $prefix
 	 *
 	 * @return KunenaProfiler
 	 *
 	 * @fixme override getInstance() and fix the function into Joomla
+	 * @since Kunena
 	 */
 	public static function instance($prefix = 'Kunena')
 	{
 		if (empty(self::$_instances[$prefix]))
 		{
-			$c = __CLASS__;
+			$c                         = __CLASS__;
 			self::$_instances[$prefix] = new $c($prefix);
 		}
 
@@ -45,11 +56,13 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @param $name
+	 *
+	 * @since Kunena
 	 */
 	public function start($name)
 	{
 		$item = KunenaProfilerItem::getInstance($name);
-		$item->start($this->getmicrotime());
+		$item->start(microtime(true));
 		$this->_heap[] = $item;
 	}
 
@@ -57,18 +70,20 @@ class KunenaProfiler extends JProfiler
 	 * @param $name
 	 *
 	 * @return float
+	 * @since Kunena
 	 */
 	public function getTime($name)
 	{
 		$item = KunenaProfilerItem::getInstance($name);
 
-		return $this->getmicrotime() - $item->getStartTime();
+		return microtime(true) - $item->getStartTime();
 	}
 
 	/**
 	 * @param $name
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function stop($name)
 	{
@@ -76,10 +91,10 @@ class KunenaProfiler extends JProfiler
 
 		if (!$item || $item->name != $name)
 		{
-			trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
+			trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
 		}
 
-		$delta = $item->stop($this->getmicrotime());
+		$delta = $item->stop(microtime(true));
 
 		if (end($this->_heap))
 		{
@@ -91,6 +106,7 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @return array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	public function getAll()
 	{
@@ -101,14 +117,15 @@ class KunenaProfiler extends JProfiler
 	}
 
 	/**
-	 * @param        $array
-	 * @param string $property
+	 * @param          $array
+	 * @param   string $property
 	 *
-	 * @return bool
+	 * @return boolean
+	 * @since Kunena
 	 */
 	function sort(&$array, $property = 'total')
 	{
-		return usort($array, function($a, $b) use ($property)
+		return usort($array, function ($a, $b) use ($property)
 		{
 			if ($a->$property == $b->$property)
 			{
@@ -122,30 +139,40 @@ class KunenaProfiler extends JProfiler
 
 /**
  * Class KunenaProfilerItem
+ * @since Kunena
  */
 class KunenaProfilerItem
 {
 	/**
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $start = array();
 
 	/**
 	 * @param $name
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($name)
 	{
-		$this->name = $name;
-		$this->calls = 0;
-		$this->total = 0.0;
+		$this->name     = $name;
+		$this->calls    = 0;
+		$this->total    = 0.0;
 		$this->external = 0.0;
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string $name
+	 *
 	 * @return KunenaProfilerItem
+	 * @since Kunena
 	 */
 	public static function getInstance($name)
 	{
@@ -159,6 +186,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	public static function getAll()
 	{
@@ -167,6 +195,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getStartTime()
 	{
@@ -175,6 +204,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return float
+	 * @since Kunena
 	 */
 	public function getTotalTime()
 	{
@@ -183,6 +213,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return float
+	 * @since Kunena
 	 */
 	public function getInternalTime()
 	{
@@ -191,6 +222,8 @@ class KunenaProfilerItem
 
 	/**
 	 * @param $starttime
+	 *
+	 * @since Kunena
 	 */
 	public function start($starttime)
 	{
@@ -202,6 +235,7 @@ class KunenaProfilerItem
 	 * @param $stoptime
 	 *
 	 * @return float
+	 * @since Kunena
 	 */
 	public function stop($stoptime)
 	{
@@ -220,6 +254,8 @@ class KunenaProfilerItem
 
 	/**
 	 * @param $delta
+	 *
+	 * @since Kunena
 	 */
 	public function external($delta)
 	{

@@ -2,14 +2,14 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Ranks Controller
@@ -18,12 +18,16 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminControllerRanks extends KunenaController
 {
+	/**
+	 * @var null|string
+	 * @since Kunena
+	 */
 	protected $baseurl = null;
 
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0
 	 */
@@ -98,6 +102,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function save()
 	{
@@ -123,16 +128,17 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_title={$db->quote($rank_title)},
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
-					rank_min={$db->quote($rank_min)}");
-			
-			try 
+					rank_min={$db->quote($rank_min)}"
+			);
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}
@@ -143,8 +149,9 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
-				WHERE rank_id={$db->quote($rankid)}");
-			
+				WHERE rank_id={$db->quote($rankid)}"
+			);
+
 			try
 			{
 				$db->execute();
@@ -152,7 +159,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-			
+
 				return;
 			}
 		}
@@ -169,6 +176,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function rankupload()
 	{
@@ -180,7 +188,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$file   = $this->app->input->files->get('Filedata');
+		$file = $this->app->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than KunenaUploadHelper::upload()
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');
@@ -205,6 +213,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @since    2.0
 	 *
 	 * @throws Exception
+	 * @since    Kunena
 	 */
 	public function remove()
 	{
@@ -226,15 +235,15 @@ class KunenaAdminControllerRanks extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 		}

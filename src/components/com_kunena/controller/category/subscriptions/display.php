@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Category
+ * @package         Kunena.Site
+ * @subpackage      Controller.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,12 +17,28 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pagination;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categories = array();
 
 	/**
@@ -31,6 +47,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -60,8 +77,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
 
 		$topicIds = array();
-		$userIds = array();
-		$postIds = array();
+		$userIds  = array();
+		$postIds  = array();
 
 		foreach ($this->categories as $category)
 		{
@@ -79,7 +96,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		foreach ($topics as $topic)
 		{
 			$userIds[$topic->last_post_userid] = $topic->last_post_userid;
-			$postIds[$topic->id] = $topic->last_post_id;
+			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
 		KunenaUserHelper::loadUsers($userIds);
@@ -103,10 +120,11 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Get topic action option list.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getActions()
 	{
-		$options = array();
+		$options   = array();
 		$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
@@ -117,6 +135,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -124,9 +143,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$menu_item = $app->getMenu()->getActive();
 
 		$doc = JFactory::getDocument();
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{

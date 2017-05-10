@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,6 +21,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function none()
 	{
@@ -30,6 +31,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function publish()
 	{
@@ -47,13 +49,15 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today = JFactory::getDate();
+			$date_today   = JFactory::getDate();
+
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}
 
 			$announcement->published = 1;
+
 			if (!$announcement->authorise('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
@@ -74,6 +78,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unpublish()
 	{
@@ -91,7 +96,8 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today = JFactory::getDate();
+			$date_today   = JFactory::getDate();
+
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
@@ -119,6 +125,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function edit()
 	{
@@ -132,6 +139,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -170,6 +178,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function save()
 	{

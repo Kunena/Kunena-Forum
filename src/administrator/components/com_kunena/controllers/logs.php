@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -27,14 +27,14 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    5.0
 	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$this->baseurl  = 'administrator/index.php?option=com_kunena&view=logs';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=logs';
 	}
 
 	/**
@@ -43,6 +43,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * @since K5.0
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function cleanentries()
 	{
@@ -52,10 +53,11 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Clean
 	 *
-	 * @return void
+	 * @return boolean|void
 	 *
 	 * @since  K5.0
 	 *
+	 * @since  Kunena
 	 */
 	public function clean()
 	{
@@ -67,13 +69,13 @@ class KunenaAdminControllerLogs extends KunenaController
 			return;
 		}
 
-		$days = $this->app->input->getInt('clean_days', 0);
+		$days      = $this->app->input->getInt('clean_days', 0);
 		$timestamp = new JDate('now -' . $days . ' days');
 
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true)
-		->delete('#__kunena_logs')
-		->where('time < ' . $timestamp->toUnix());
+			->delete('#__kunena_logs')
+			->where('time < ' . $timestamp->toUnix());
 
 		$db->setQuery($query);
 

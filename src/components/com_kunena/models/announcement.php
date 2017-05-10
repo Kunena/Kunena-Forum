@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Models
+ * @package         Kunena.Site
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -18,10 +18,15 @@ defined('_JEXEC') or die();
  */
 class KunenaModelAnnouncement extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $total = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -49,6 +54,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	function getNewAnnouncement()
 	{
@@ -57,6 +63,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	function getAnnouncement()
 	{
@@ -65,6 +72,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return boolean|null
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
@@ -78,6 +86,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	function getAnnouncements()
 	{
@@ -104,6 +113,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getannouncementActions()
 	{

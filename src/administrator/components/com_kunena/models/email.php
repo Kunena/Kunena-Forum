@@ -5,8 +5,8 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -16,16 +16,17 @@ jimport('joomla.application.component.model');
 /**
  * Email Model for Kunena
  *
- * @since 5.0
+ * @since 5.1
  */
 class KunenaAdminModelEmail extends JModelList
 {
 	/**
 	 * Constructor.
 	 *
-	 * @param    array $config An optional associative array of configuration settings.
+	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
+	 * @since      Kunena
 	 */
 	public function __construct($config = array())
 	{

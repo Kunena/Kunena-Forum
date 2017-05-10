@@ -5,26 +5,37 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Email
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-// New post email for subscribers (HTML)
-
-$this->mail->isHtml(true);
 
 $author  = $this->message->getAuthor();
 $config  = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
+$this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
-$msg1 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
-$msg2 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+if (empty($this->message->modified_time))
+{
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+}
+else
+{
+	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD3');
+}
+
+$msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
 $more = ($this->once ?
 	JText::_(
 		$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 			'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
+
+if (!$config->plain_email) :
+
+// New post email for subscribers (HTML)
+$this->mail->isHtml(true);
+$this->mail->Encoding = 'base64';
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -34,7 +45,6 @@ $more = ($this->once ?
 		<meta name="format-detection" content="telephone=no" />
 
 		<style>
-			/* Reset styles */
 			body {
 				margin: 0;
 				padding: 0;
@@ -70,19 +80,10 @@ $more = ($this->once ?
 				padding: 0;
 			}
 
-			.ReadMsgBody {
-				width: 100%;
-			}
-
-			.ExternalClass {
-				width: 100%;
-			}
-
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+			.ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
 				line-height: 100%;
 			}
 
-			/* Rounded corners for advanced mail clients only */
 			@media all and (min-width: 560px) {
 				.container {
 					border-radius: 8px;
@@ -92,7 +93,6 @@ $more = ($this->once ?
 				}
 			}
 
-			/* Set color for auto links (addresses, dates, etc.) */
 			a, a:hover {
 				color: #127DB3;
 			}
@@ -120,8 +120,6 @@ $more = ($this->once ?
 			background-color: #F0F0F0;
 			padding: 20px 6.25%;">
 
-				<!-- LOGO -->
-				<!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2. URL format: http://domain.com/?utm_source={{Campaign-Source}}&utm_medium=email&utm_content=logo&utm_campaign={{Campaign-Name}} -->
 				<p>
 				</p>
 			</td>
@@ -142,6 +140,8 @@ $more = ($this->once ?
 							<?php echo $msg1 . " " . $config->board_title; ?>
 						</td>
 					</tr>
+
+					<?php if (!empty($config->emailheader)) :?>
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
@@ -153,6 +153,8 @@ $more = ($this->once ?
 			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a>
 						</td>
 					</tr>
+					<?php endif; ?>
+
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
@@ -161,7 +163,7 @@ $more = ($this->once ?
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+								<p>URL : <a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -180,13 +182,13 @@ $more = ($this->once ?
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
 			padding: 25px 6.25% 5px;" class="button"><a
-								href="<?php echo $this->messageUrl; ?>" target="_blank" style="text-decoration: underline;">
+								href="<?php echo $this->messageLink; ?>" target="_blank" style="text-decoration: underline;">
 								<table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
 									<tr>
 										<td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
 											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-												href="<?php echo $this->messageUrl; ?>">
+												href="<?php echo $this->messageLink; ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
@@ -216,16 +218,21 @@ $more = ($this->once ?
 
 	</body>
 </html>
+<?php else : ?>
+
 <?php
-// Email as plain text:
+$this->mail->isHTML(false);
 
-$full = !$config->mailfull ? '' : <<<EOS
-{$this->text('COM_KUNENA_MESSAGE')}
------
-{$this->message->displayField('message', false)}
------
-
-EOS;
+if ($config->mailfull)
+{
+	$full = JText::_('COM_KUNENA_MESSAGE') . ': ';
+	$full .= "\n";
+	$full .= $this->message->displayField('message', false);
+}
+else
+{
+	$full = '';
+}
 
 $alt                 = <<<EOS
 {$msg1} {$config->board_title}
@@ -234,10 +241,12 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->messageUrl}
+URL: {$this->messageLink}
+{$full}
 
-{$full}{$msg2}{$more}
+{$msg2}{$more}
 
 {$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;
-$this->mail->AltBody = $alt;
+echo $alt;
+endif; ?>

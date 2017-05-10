@@ -1,56 +1,57 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  *
  * Derived from Joomla 1.6
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright      Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 defined('_JEXEC') or die();
 
 /**
  * Query Element Class.
+ * @since Kunena
  */
 class KunenaDatabaseQueryElement
 {
 	/**
-	 * @var		string	The name of the element.
-	 * @since	1.6
+	 * @var        string    The name of the element.
+	 * @since    1.6
 	 */
 	protected $_name = null;
 
 	/**
-	 * @var		array	An array of elements.
-	 * @since	1.6
+	 * @var        array    An array of elements.
+	 * @since    1.6
 	 */
 	protected $_elements = null;
 
 	/**
-	 * @var		string	Glue piece.
-	 * @since	1.6
+	 * @var        string    Glue piece.
+	 * @since    1.6
 	 */
 	protected $_glue = null;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   string	$name		The name of the element.
-	 * @param   mixed	$elements	String or array.
-	 * @param   string	$glue		The glue for elements.
+	 * @param   string $name     The name of the element.
+	 * @param   mixed  $elements String or array.
+	 * @param   string $glue     The glue for elements.
 	 *
-	 * @return	KunenaDatabaseQueryElement
-	 * @since	1.6
+	 * @return    KunenaDatabaseQueryElement
+	 * @since    1.6
 	 */
 	public function __construct($name, $elements, $glue = ',')
 	{
-		$this->_elements	= array();
-		$this->_name		= $name;
-		$this->_glue		= $glue;
+		$this->_elements = array();
+		$this->_name     = $name;
+		$this->_glue     = $glue;
 
 		$this->append($elements);
 	}
@@ -58,8 +59,8 @@ class KunenaDatabaseQueryElement
 	/**
 	 * Magic function to convert the query element to a string.
 	 *
-	 * @return	string
-	 * @since	1.6
+	 * @return    string
+	 * @since    1.6
 	 */
 	public function __toString()
 	{
@@ -69,10 +70,10 @@ class KunenaDatabaseQueryElement
 	/**
 	 * Appends element parts to the internal list.
 	 *
-	 * @param	mixed	String or array.
+	 * @param    mixed    String or array.
 	 *
-	 * @return	void
-	 * @since	1.6
+	 * @return    void
+	 * @since    1.6
 	 */
 	public function append($elements)
 	{
@@ -89,88 +90,89 @@ class KunenaDatabaseQueryElement
 
 /**
  * Query Building Class.
+ * @since Kunena
  */
 class KunenaDatabaseQuery
 {
 	/**
-	 * @var		string	The query type.
-	 * @since	1.6
+	 * @var        string    The query type.
+	 * @since    1.6
 	 */
 	protected $_type = '';
 
 	/**
-	 * @var		object	The select element.
-	 * @since	1.6
+	 * @var        object    The select element.
+	 * @since    1.6
 	 */
 	protected $_select = null;
 
 	/**
-	 * @var		object	The delete element.
-	 * @since	1.6
+	 * @var        object    The delete element.
+	 * @since    1.6
 	 */
 	protected $_delete = null;
 
 	/**
-	 * @var		object	The update element.
-	 * @since	1.6
+	 * @var        object    The update element.
+	 * @since    1.6
 	 */
 	protected $_update = null;
 
 	/**
-	 * @var		object	The insert element.
-	 * @since	1.6
+	 * @var        object    The insert element.
+	 * @since    1.6
 	 */
 	protected $_insert = null;
 
 	/**
-	 * @var		object	The from element.
-	 * @since	1.6
+	 * @var        object    The from element.
+	 * @since    1.6
 	 */
 	protected $_from = null;
 
 	/**
-	 * @var		object	The join element.
-	 * @since	1.6
+	 * @var        object    The join element.
+	 * @since    1.6
 	 */
 	protected $_join = null;
 
 	/**
-	 * @var		object	The set element.
-	 * @since	1.6
+	 * @var        object    The set element.
+	 * @since    1.6
 	 */
 	protected $_set = null;
 
 	/**
-	 * @var		object	The where element.
-	 * @since	1.6
+	 * @var        object    The where element.
+	 * @since    1.6
 	 */
 	protected $_where = null;
 
 	/**
-	 * @var		object	The group by element.
-	 * @since	1.6
+	 * @var        object    The group by element.
+	 * @since    1.6
 	 */
 	protected $_group = null;
 
 	/**
-	 * @var		object	The having element.
-	 * @since	1.6
+	 * @var        object    The having element.
+	 * @since    1.6
 	 */
 	protected $_having = null;
 
 	/**
-	 * @var		object	The order element.
-	 * @since	1.6
+	 * @var        object    The order element.
+	 * @since    1.6
 	 */
 	protected $_order = null;
 
 	/**
 	 * Clear data from the query or a specific clause of the query.
 	 *
-	 * @param   string	$clause	Optionally, the name of the clause to clear, or nothing to clear the whole query.
+	 * @param   string $clause Optionally, the name of the clause to clear, or nothing to clear the whole query.
 	 *
-	 * @return	void
-	 * @since	1.6
+	 * @return KunenaDatabaseQuery|void
+	 * @since    1.6
 	 */
 	public function clear($clause = null)
 	{
@@ -178,22 +180,22 @@ class KunenaDatabaseQuery
 		{
 			case 'select':
 				$this->_select = null;
-				$this->_type = null;
+				$this->_type   = null;
 				break;
 
 			case 'delete':
 				$this->_delete = null;
-				$this->_type = null;
+				$this->_type   = null;
 				break;
 
 			case 'update':
 				$this->_update = null;
-				$this->_type = null;
+				$this->_type   = null;
 				break;
 
 			case 'insert':
 				$this->_insert = null;
-				$this->_type = null;
+				$this->_type   = null;
 				break;
 
 			case 'from':
@@ -225,18 +227,18 @@ class KunenaDatabaseQuery
 				break;
 
 			default:
-				$this->_type = null;
+				$this->_type   = null;
 				$this->_select = null;
 				$this->_delete = null;
 				$this->_update = null;
 				$this->_insert = null;
-				$this->_from = null;
-				$this->_join = null;
-				$this->_set = null;
-				$this->_where = null;
-				$this->_group = null;
+				$this->_from   = null;
+				$this->_join   = null;
+				$this->_set    = null;
+				$this->_where  = null;
+				$this->_group  = null;
 				$this->_having = null;
-				$this->_order = null;
+				$this->_order  = null;
 				break;
 		}
 
@@ -245,10 +247,10 @@ class KunenaDatabaseQuery
 
 
 	/**
-	 * @param   mixed	$columns	A string or an array of field names.
+	 * @param   mixed $columns A string or an array of field names.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function select($columns)
 	{
@@ -267,52 +269,52 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$tables	The name of the table to delete from.
+	 * @param   string $tables The name of the table to delete from.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function delete($tables)
 	{
-		$this->_type	= 'delete';
-		$this->_delete	= new KunenaDatabaseQueryElement('DELETE', $tables);
+		$this->_type   = 'delete';
+		$this->_delete = new KunenaDatabaseQueryElement('DELETE', $tables);
 
 		return $this;
 	}
 
 	/**
-	 * @param   mixed	$tables	A string or array of table names.
+	 * @param   mixed $tables A string or array of table names.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function insert($tables)
 	{
-		$this->_type	= 'insert';
-		$this->_insert	= new KunenaDatabaseQueryElement('INSERT INTO', $tables);
+		$this->_type   = 'insert';
+		$this->_insert = new KunenaDatabaseQueryElement('INSERT INTO', $tables);
 
 		return $this;
 	}
 
 	/**
-	 * @param   mixed	$tables	A string or array of table names.
+	 * @param   mixed $tables A string or array of table names.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function update($tables = null)
 	{
-		$this->_type = 'update';
+		$this->_type   = 'update';
 		$this->_update = new KunenaDatabaseQueryElement('UPDATE', $tables);
 
 		return $this;
 	}
 
 	/**
-	 * @param   mixed	$tables	A string or array of table names.
+	 * @param   mixed $tables A string or array of table names.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function from($tables)
 	{
@@ -329,11 +331,11 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$type
-	 * @param   string	$conditions
+	 * @param   string $type
+	 * @param   string $conditions
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function join($type, $conditions)
 	{
@@ -348,10 +350,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$conditions
+	 * @param   string $conditions
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function innerJoin($conditions)
 	{
@@ -361,10 +363,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$conditions
+	 * @param   string $conditions
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function outerJoin($conditions)
 	{
@@ -374,10 +376,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$conditions
+	 * @param   string $conditions
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function leftJoin($conditions)
 	{
@@ -387,10 +389,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string	$conditions
+	 * @param   string $conditions
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function rightJoin($conditions)
 	{
@@ -400,17 +402,17 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   mixed	$conditions	A string or array of conditions.
-	 * @param   string	$glue
+	 * @param   mixed  $conditions A string or array of conditions.
+	 * @param   string $glue
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
-	public function set($conditions, $glue=',')
+	public function set($conditions, $glue = ',')
 	{
 		if (is_null($this->_set))
 		{
-			$glue = strtoupper($glue);
+			$glue       = strtoupper($glue);
 			$this->_set = new KunenaDatabaseQueryElement('SET', $conditions, "\n\t$glue ");
 		}
 		else
@@ -422,17 +424,17 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   mixed	$conditions	A string or array of where conditions.
-	 * @param   string	$glue
+	 * @param   mixed  $conditions A string or array of where conditions.
+	 * @param   string $glue
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
-	public function where($conditions, $glue='AND')
+	public function where($conditions, $glue = 'AND')
 	{
 		if (is_null($this->_where))
 		{
-			$glue = strtoupper($glue);
+			$glue         = strtoupper($glue);
 			$this->_where = new KunenaDatabaseQueryElement('WHERE', $conditions, " $glue ");
 		}
 		else
@@ -444,10 +446,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   mixed	$columns	A string or array of ordering columns.
+	 * @param   mixed $columns A string or array of ordering columns.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function group($columns)
 	{
@@ -464,17 +466,17 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   mixed	$conditions	A string or array of columns.
-	 * @param   string	$glue
+	 * @param   mixed  $conditions A string or array of columns.
+	 * @param   string $glue
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
-	public function having($conditions, $glue='AND')
+	public function having($conditions, $glue = 'AND')
 	{
 		if (is_null($this->_having))
 		{
-			$glue = strtoupper($glue);
+			$glue          = strtoupper($glue);
 			$this->_having = new KunenaDatabaseQueryElement('HAVING', $conditions, " $glue ");
 		}
 
@@ -487,10 +489,10 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   mixed	$columns	A string or array of ordering columns.
+	 * @param   mixed $columns A string or array of ordering columns.
 	 *
-	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
-	 * @since	1.6
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
 	 */
 	public function order($columns)
 	{
@@ -509,8 +511,8 @@ class KunenaDatabaseQuery
 	/**
 	 * Legacy function to return a string representation of the query element.
 	 *
-	 * @return	string	The query element.
-	 * @since	1.0
+	 * @return    string    The query element.
+	 * @since    1.0
 	 */
 	public function toString()
 	{
@@ -520,8 +522,8 @@ class KunenaDatabaseQuery
 	/**
 	 * Magic function to convert the query to a string.
 	 *
-	 * @return	string	The completed query.
-	 * @since	1.6
+	 * @return    string    The completed query.
+	 * @since    1.6
 	 */
 	public function __toString()
 	{
@@ -532,9 +534,10 @@ class KunenaDatabaseQuery
 			case 'select':
 				$query .= (string) $this->_select;
 				$query .= (string) $this->_from;
+
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;
@@ -568,7 +571,7 @@ class KunenaDatabaseQuery
 
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;
@@ -586,7 +589,7 @@ class KunenaDatabaseQuery
 
 				if ($this->_join)
 				{
-					// special case for joins
+					// Special case for joins
 					foreach ($this->_join as $join)
 					{
 						$query .= (string) $join;

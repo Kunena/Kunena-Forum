@@ -1,18 +1,18 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Topic
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-$cols = !empty($this->actions) ? 6 : 5;
-$colspan = !empty($this->actions) ? 4 : 3;
-$view = JFactory::getApplication()->input->getWord('view');
+$cols            = !empty($this->actions) ? 6 : 5;
+$colspan         = !empty($this->actions) ? 4 : 3;
+$view            = JFactory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
 
 $this->addStyleSheet('assets/css/rating.css');
@@ -22,7 +22,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-sm">
+				<small class="hidden-phone">
 					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
@@ -31,39 +31,39 @@ $this->addStyleSheet('assets/css/rating.css');
 		</div>
 
 		<?php if ($view != 'user') : ?>
-		<div class="filter-time pull-right">
-			<h2 class="filter-sel">
-				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					method="post" target="_self" class="form-inline hidden-phone">
-					<div>
-						<?php $this->displayTimeFilter('sel'); ?>
-					</div>
-				</form>
-			</h2>
-		</div>
+			<div class="filter-time pull-right">
+				<h2 class="filter-sel">
+					<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					      method="post" target="_self" class="form-inline hidden-phone">
+						<div>
+							<?php $this->displayTimeFilter('sel'); ?>
+						</div>
+					</form>
+				</h2>
+			</div>
 		<?php endif; ?>
 	</div>
 </div>
 <?php
-if ($this->config->enableforumjump && !$this->embedded  && $this->topics)
+if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 {
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 } ?>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-	->set('catid', 'all')
-	->setLayout('topic'); ?>
+		->set('catid', 'all')
+		->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination->setDisplayedPages(4))
-	->set('display', true);	?>
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
-	<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<tr>
 			<td class="span1 center hidden-phone">
@@ -76,7 +76,7 @@ if ($this->config->enableforumjump && !$this->embedded  && $this->topics)
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="span2 hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
 			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -84,7 +84,7 @@ if ($this->config->enableforumjump && !$this->embedded  && $this->topics)
 			<?php if (!empty($this->actions)) : ?>
 				<td class="span1 center">
 					<label>
-						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+						<input class="kcheckall" type="checkbox" name="toggle" value=""/>
 					</label>
 				</td>
 			<?php endif; ?>
@@ -100,21 +100,24 @@ if ($this->config->enableforumjump && !$this->embedded  && $this->topics)
 			</td>
 			<?php if (empty($this->actions)) : ?>
 			<td colspan="<?php echo $colspan; ?>" class="hidden-phone">
-			<?php else : ?>
+				<?php else : ?>
 			<td colspan="<?php echo $colspan; ?>">
-			<?php endif; ?>
+				<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-				<div class="input-append">
-					<?php if (!empty($this->topics) && !empty($this->moreUri)) { echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); } ?>
-					<?php if (!empty($this->actions)) : ?>
-						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-						<?php if (isset($this->actions['move'])) :
-							$options = array (JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-						endif;?>
-						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-					<?php endif; ?>
-				</div>
+					<div class="input-append">
+						<?php if (!empty($this->topics) && !empty($this->moreUri))
+						{
+							echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
+						} ?>
+						<?php if (!empty($this->actions)) : ?>
+							<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php if (isset($this->actions['move'])) :
+								$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+							endif; ?>
+							<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+						<?php endif; ?>
+					</div>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -149,8 +152,8 @@ if ($this->config->enableforumjump && !$this->embedded  && $this->topics)
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination->setDisplayedPages(4))
-	->set('display', true); ?>
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
 </div>
 
 <div class="clearfix"></div>

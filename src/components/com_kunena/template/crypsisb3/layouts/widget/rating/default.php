@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Rating
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Rating
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -15,10 +15,10 @@ if ($this->config->ratingenabled && $this->category->allow_ratings) :
 		<div id="krating-top">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>
-				<li class="c-rating__item <?php echo $this->topic->rating >= 2 ? 'is-active': ''; ?>" data-index="1"></li>
-				<li class="c-rating__item <?php echo $this->topic->rating >= 3 ? 'is-active': ''; ?>" data-index="2"></li>
-				<li class="c-rating__item <?php echo $this->topic->rating >= 4 ? 'is-active': ''; ?>" data-index="3"></li>
-				<li class="c-rating__item <?php echo $this->topic->rating >= 5 ? 'is-active': ''; ?>" data-index="4"></li>
+				<li class="c-rating__item <?php echo $this->topic->rating >= 2 ? 'is-active' : ''; ?>" data-index="1"></li>
+				<li class="c-rating__item <?php echo $this->topic->rating >= 3 ? 'is-active' : ''; ?>" data-index="2"></li>
+				<li class="c-rating__item <?php echo $this->topic->rating >= 4 ? 'is-active' : ''; ?>" data-index="3"></li>
+				<li class="c-rating__item <?php echo $this->topic->rating >= 5 ? 'is-active' : ''; ?>" data-index="4"></li>
 			</ul>
 		</div>
 	<?php endif;

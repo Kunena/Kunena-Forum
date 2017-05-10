@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,35 +17,44 @@ defined('_JEXEC') or die;
  */
 abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/List';
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
 	/**
 	 * @var array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
+	 * @since Kunena
 	 */
 	public $pagination;
 
 	/**
 	 * @var string
+	 * @since Kunena
 	 */
 	public $headerText;
 
 	/**
 	 * Prepare topics by pre-loading needed information.
 	 *
-	 * @param   array  $userIds  List of additional user Ids to be loaded.
-	 * @param   array  $mesIds   List of additional message Ids to be loaded.
+	 * @param   array $userIds List of additional user Ids to be loaded.
+	 * @param   array $mesIds  List of additional message Ids to be loaded.
 	 *
 	 * @return  void
+	 * @since Kunena
 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
 	{
@@ -55,8 +64,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		foreach ($this->topics as $topic)
 		{
 			$userIds[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
-			$userIds[(int) $topic->last_post_userid] = (int) $topic->last_post_userid;
-			$lastIds[(int) $topic->last_post_id] = (int) $topic->last_post_id;
+			$userIds[(int) $topic->last_post_userid]  = (int) $topic->last_post_userid;
+			$lastIds[(int) $topic->last_post_id]      = (int) $topic->last_post_id;
 		}
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations.
@@ -86,7 +95,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		$cache   = JFactory::getCache('com_kunena', 'output');
 
-		/*if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		/*
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
 			return;
 		}*/
@@ -101,20 +111,20 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
-		$page = $this->pagination->pagesCurrent;
-		$total = $this->pagination->pagesTotal;
+		$page       = $this->pagination->pagesCurrent;
+		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
 		$doc = JFactory::getDocument();
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
@@ -185,10 +195,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
-	 * @param array $topics
-	 * @param array $actions
+	 * @param   array $topics
+	 * @param   array $actions
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
 	{
@@ -197,15 +208,15 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			return null;
 		}
 
-		$options = array();
-		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options                = array();
+		$options['none']        = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options['unsubscribe'] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
-		$options['unfavorite'] = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		$options['move'] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		$options['approve'] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete'] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['permdelete'] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete'] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['unfavorite']  = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		$options['move']        = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['approve']     = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']      = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['permdelete']  = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete']    = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));
@@ -248,10 +259,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
-	 * @param array $messages
-	 * @param array $actions
+	 * @param   array $messages
+	 * @param   array $actions
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{
@@ -260,13 +272,13 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			return null;
 		}
 
-		$options = array();
-		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options['approve'] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete'] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['move'] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		$options               = array();
+		$options['none']       = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['approve']    = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']     = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['move']       = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		$options['permdelete'] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete'] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['undelete']   = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));

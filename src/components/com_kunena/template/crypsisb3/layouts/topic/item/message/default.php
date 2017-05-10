@@ -1,28 +1,28 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Topic
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template = KunenaTemplate::getInstance();
-$direction = $template->params->get('avatarPosition');
-$sideProfile = $this->profile->getSideProfile($this);
-$quick = $template->params->get('quick');
+$template     = KunenaTemplate::getInstance();
+$direction    = $template->params->get('avatarPosition');
+$sideProfile  = $this->profile->getSideProfile($this);
+$quick        = $template->params->get('quick');
 if ($direction === "left") : ?>
 	<div class="row message">
 		<div class="col-md-2 hidden-xs">
-			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
+			<?php echo($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
 		</div>
 		<div class="col-md-10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
-			<?php if ($quick != 2) :?>
+			<?php if ($quick != 2) : ?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
@@ -32,12 +32,12 @@ if ($direction === "left") : ?>
 		<div class="col-md-10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
-			<?php if ($quick != 2) :?>
+			<?php if ($quick != 2) : ?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
 		<div class="col-md-2 hidden-xs">
-			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
+			<?php echo($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top") : ?>
@@ -45,7 +45,7 @@ if ($direction === "left") : ?>
 		<div class="col-md-12" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Top')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
-			<?php if ($quick != 2) :?>
+			<?php if ($quick != 2) : ?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
@@ -55,7 +55,7 @@ if ($direction === "left") : ?>
 		<div class="col-md-12" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Bottom')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
-			<?php if ($quick != 2) :?>
+			<?php if ($quick != 2) : ?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>

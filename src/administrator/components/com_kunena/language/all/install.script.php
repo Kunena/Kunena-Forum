@@ -1,61 +1,85 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
+ * @package       Kunena.Installer
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class pkg_kunena_languagesInstallerScript
+ * @since Kunena
+ */
 class pkg_kunena_languagesInstallerScript
 {
 
 	/**
 	 * @param   JInstallerFile $parent
+	 *
+	 * @since Kunena
 	 */
 	public function uninstall($parent)
 	{
 		// Remove languages.
 		$languages = JFactory::getLanguage()->getKnownLanguages();
-		foreach ($languages as $language) {
+
+		foreach ($languages as $language)
+		{
 			$this->uninstallLanguage($language['tag'], $language['name']);
 		}
 	}
 
 	/**
-	 * @param   string $type
+	 * @param   string         $type
 	 * @param   JInstallerFile $parent
+	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function preflight($type, $parent)
 	{
-		if (!in_array($type, array('install', 'update'))) { return true; }
+		if (!in_array($type, array('install', 'update')))
+		{
+			return true;
+		}
 
 		$app = JFactory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0')) {
+		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))
+		{
 			$app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '4.0'), 'notice');
+
 			return false;
 		}
 
-		if (KunenaForum::isDev()) {
+		if (KunenaForum::isDev())
+		{
 			$app->enqueueMessage(sprintf('You have installed Kunena from GitHub, aborting!'), 'notice');
+
 			return false;
 		}
 
 		// Get list of languages to be installed.
-		$source = $parent->getParent()->getPath('source') . '/language';
+		$source    = $parent->getParent()->getPath('source') . '/language';
 		$languages = JFactory::getLanguage()->getKnownLanguages();
+
 		// @var SimpleXMLElement $files
 
 		$files = $parent->manifest->files;
-		foreach ($languages as $language) {
-			$name = "com_kunena_{$language['tag']}";
+
+		foreach ($languages as $language)
+		{
+			$name   = "com_kunena_{$language['tag']}";
 			$search = JFolder::files($source, $name);
-			if (empty($search)) { continue; }
+
+			if (empty($search))
+			{
+				continue;
+			}
 
 			// Generate <file type="file" client="site" id="fi-FI">com_kunena_fi-FI_v2.0.0-BETA2-DEV2.zip</file>
 			$file = $files->addChild('file', array_pop($search));
@@ -65,29 +89,43 @@ class pkg_kunena_languagesInstallerScript
 			echo sprintf('Installing language %s - %s ...', $language['tag'], $language['name']) . '<br />';
 		}
 
-		if (empty($files)) {
+		if (empty($files))
+		{
 			$app->enqueueMessage(sprintf('Your site is English only. There\'s no need to install Kunena language pack.'), 'notice');
+
 			return false;
 		}
 
 		// Remove old K1.7 style language pack.
 		$table = JTable::getInstance('extension');
-		$id = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
-		if ($id) {
-			$installer = new JInstaller();
+		$id    = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
+
+		if ($id)
+		{
+			$installer = new JInstaller;
 			$installer->uninstall('file', $id);
 		}
 
 		return true;
 	}
 
+	/**
+	 * @param $tag
+	 * @param $name
+	 *
+	 * @since Kunena
+	 */
 	public function uninstallLanguage($tag, $name)
 	{
 		$table = JTable::getInstance('extension');
-		$id = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
-		if (!$id) { return; }
+		$id    = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
 
-		$installer = new JInstaller();
+		if (!$id)
+		{
+			return;
+		}
+
+		$installer = new JInstaller;
 		$installer->uninstall('file', $id);
 	}
 }

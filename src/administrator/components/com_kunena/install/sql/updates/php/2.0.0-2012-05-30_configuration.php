@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
  * @param $parent
  *
  * @return array
+ * @since Kunena
  */
 function kunena_200_2012_05_30_configuration($parent)
 {

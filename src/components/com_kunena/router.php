@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Site
+ * @package        Kunena.Site
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -29,6 +29,7 @@ jimport('joomla.error.profiler');
  * @param $query
  *
  * @return array Segments
+ * @since Kunena
  */
 function KunenaBuildRoute(&$query)
 {
@@ -275,6 +276,7 @@ function KunenaBuildRoute(&$query)
  *
  * @return array
  * @throws Exception
+ * @since Kunena
  */
 function KunenaParseRoute($segments)
 {
@@ -286,7 +288,7 @@ function KunenaParseRoute($segments)
 
 	$profiler = JProfiler::getInstance('Application');
 	KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
-	$starttime = $profiler->getmicrotime();
+	$starttime = microtime(true);
 
 	// Get current menu item and get query variables from it
 	$active = JFactory::getApplication()->getMenu()->getActive();
@@ -424,7 +426,7 @@ function KunenaParseRoute($segments)
 		$vars ['layout'] = 'default';
 	}
 
-	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
+	KunenaRoute::$time = microtime(true) - $starttime;
 
 	foreach ($vars as $var => $value)
 	{

@@ -19,11 +19,13 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="access" type="list" default="1" label="PLG_KUNENA_JOOMLA_ACCESS" description="PLG_KUNENA_JOOMLA_ACCESS_DESC" class="inputbox">
+				<field name="access" type="list" default="1" label="PLG_KUNENA_JOOMLA_ACCESS" description="PLG_KUNENA_JOOMLA_ACCESS_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="login" type="list" default="1" label="PLG_KUNENA_JOOMLA_LOGIN" description="PLG_KUNENA_JOOMLA_LOGIN_DESC" class="inputbox">
+				<field name="login" type="list" default="1" label="PLG_KUNENA_JOOMLA_LOGIN" description="PLG_KUNENA_JOOMLA_LOGIN_DESC"
+				       class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

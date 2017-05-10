@@ -1,42 +1,117 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena User Bans
  * Provides access to the #__kunena_users_banned table
+ * @since Kunena
  */
 class TableKunenaUserBans extends JTable
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $id = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $userid = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $ip = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $blocked = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $expiration = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_by = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $created_time = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $reason_private = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $reason_public = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_by = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $modified_time = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $comments = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $params = null;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ANY = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ACTIVE = 1;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -44,15 +119,16 @@ class TableKunenaUserBans extends JTable
 	}
 
 	/**
-	 * @param     $userid
+	 * @param       $userid
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
@@ -62,19 +138,22 @@ class TableKunenaUserBans extends JTable
 			return false;
 		}
 
-		$now = new JDate();
+		$now = new JDate;
+
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE userid = {$this->_db->quote($userid)}
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		$data = $this->_db->loadAssoc();
 
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -93,36 +172,41 @@ class TableKunenaUserBans extends JTable
 	}
 
 	/**
-	 * @param     $ip
+	 * @param       $ip
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($ip === null || !is_string($ip)) {
+		if ($ip === null || !is_string($ip))
+		{
 			return false;
 		}
 
-		$now = new JDate();
+		$now = new JDate;
+
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
 			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
-		$data = $this->_db->loadAssoc();
 
-		// Check for an error message.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -142,12 +226,14 @@ class TableKunenaUserBans extends JTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
 		if (!$this->ip)
 		{
 			$user = KunenaUserHelper::get($this->userid);
+
 			if (!$user->exists())
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
@@ -162,8 +248,9 @@ class TableKunenaUserBans extends JTable
 	 * @param   array $ignore
 	 *
 	 * @return boolean|void
+	 * @since Kunena
 	 */
-	public function bind($data, $ignore=array())
+	public function bind($data, $ignore = array())
 	{
 		if (isset($data['comments']))
 		{

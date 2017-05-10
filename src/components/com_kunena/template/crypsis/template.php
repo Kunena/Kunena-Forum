@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Template
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -25,6 +25,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 * The feature allows you to create one base template and only override changed files.
 	 *
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $default = array('crypsis');
 
@@ -32,6 +33,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public function initialize()
 	{
@@ -45,6 +47,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Load JavaScript.
 		$this->addScript('assets/js/main.js');
+
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage = $this->ktemplate->params->get('storage');
+
+		if ($storage)
+		{
+			$this->addScript('assets/js/localstorage.js');
+		}
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
@@ -65,27 +75,30 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
 		$doc = JFactory::getDocument();
 
 		if ($bootstrap)
 		{
 			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$doc->addStyleSheet(JUri::base(true). '/media/jui/css/bootstrap-extended.css');
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-extended.css');
 			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
-			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
+
+			if ($this->ktemplate->params->get('icomoon'))
+			{
+				$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
+			}
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 
 		if ($fontawesome)
 		{
-			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 		}
 
 		// Load template colors settings
-		$styles = <<<EOF
+		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
 		$iconcolor = $this->ktemplate->params->get('IconColor');
@@ -106,7 +119,7 @@ EOF;
 		if ($iconcolornew)
 		{
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
@@ -121,10 +134,11 @@ EOF;
 	}
 
 	/**
-	 * @param        $filename
+	 * @param          $filename
 	 * @param   string $group
 	 *
 	 * @return JDocument
+	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{

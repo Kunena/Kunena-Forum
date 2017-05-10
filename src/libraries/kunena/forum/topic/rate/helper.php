@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Framework
- * @subpackage  Forum.Topic
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -18,6 +18,10 @@ defined('_JEXEC') or die();
  */
 abstract class KunenaForumTopicRateHelper
 {
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected static $_instances = array();
 
 	/**
@@ -25,9 +29,12 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param    identifier        The rate object to load - Can be only an integer.
+	 * @param   null $identifier
+	 * @param   bool $reload
 	 *
-	 * @return    KunenaForumTopicRate        The rate object.
+	 * @return KunenaForumTopicRate The rate object.
+	 * @internal  param The $identifier rate object to load - Can be only an integer.
+	 *
 	 * @since     5.0
 	 */
 	static public function get($identifier = null, $reload = false)
@@ -41,7 +48,7 @@ abstract class KunenaForumTopicRateHelper
 
 		if ($id < 1)
 		{
-			return new KunenaForumTopicRate();
+			return new KunenaForumTopicRate;
 		}
 
 		if ($reload || empty(self::$_instances [$id]))
@@ -58,6 +65,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param $id
 	 *
 	 * @return float
+	 * @since Kunena
 	 */
 	static public function getSelected($id)
 	{

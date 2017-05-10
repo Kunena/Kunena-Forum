@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  AlphaUserPoints
+ * @package         Kunena.Plugins
+ * @subpackage      AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,9 +17,14 @@ jimport('joomla.utilities.string');
  * KunenaActivityAlphaUserPoints class to handle activity integration with AlphaUserPoints
  *
  * @deprecated  5.0
+ * @since       Kunena
  */
 class KunenaActivityAlphaUserPoints extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -28,6 +33,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $params
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function __construct($params)
 	{
@@ -38,6 +44,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @return mixed
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	protected function _getAUPversion()
 	{
@@ -45,12 +52,13 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param        $plugin_function
-	 * @param string $spc
+	 * @param          $plugin_function
+	 * @param   string $spc
 	 *
 	 * @return mixed
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
@@ -60,9 +68,10 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function onAfterPost($message)
 	{
@@ -89,6 +98,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function onAfterReply($message)
 	{
@@ -113,6 +123,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function onAfterDelete($message)
 	{
@@ -132,11 +143,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor
+	 * @param   int $target
+	 * @param   int $message
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -175,6 +187,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @return string
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	function escape($var)
 	{
@@ -184,9 +197,10 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $userid
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getUserMedals($userid)
 	{
@@ -212,11 +226,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param int $userid
+	 * @param   int $userid
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getUserPoints($userid)
 	{
@@ -228,7 +243,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		$_db = JFactory::getDBO();
 
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		
+
 		try
 		{
 			$userpoints = $_db->loadResult();
@@ -244,14 +259,16 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	private function _checkPermissions($message)
 	{
 		$category   = $message->getCategory();
 		$accesstype = $category->accesstype;
+
 		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
 		{
 			return false;
@@ -277,9 +294,10 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	/**
 	 * @param $ruleName
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	private function _checkRuleEnabled($ruleName)
 	{
@@ -294,10 +312,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @return null
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
+
 		if (!empty($ruleEnabled[0]->published))
 		{
 			return $ruleEnabled[0]->points2;

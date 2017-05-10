@@ -11,14 +11,24 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * Class KunenaProfileEasySocial
+ * @since Kunena
+ */
 class KunenaProfileEasySocial extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileEasySocial constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -26,17 +36,18 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->guest)
+		if ($config->userlist_allowed == 0 && $my->guest)
 		{
 			return false;
 		}
@@ -45,11 +56,12 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param          $userid
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -70,7 +82,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			// If it's not configured for simple urls, just set the alias
 			$alias = $user->getAlias();
-
 		}
 		else
 		{
@@ -90,9 +101,10 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array|void
+	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -101,6 +113,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -147,6 +161,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param $birthday
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getLegacyDate($birthday)
 	{
@@ -157,10 +172,11 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param        $userid
+	 * @param   bool $xhtml
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

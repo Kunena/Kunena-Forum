@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Models
+ * @package         Kunena.Administrator
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -26,6 +26,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
+	 * @since      Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -53,10 +54,11 @@ class KunenaAdminModelUsers extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param   null $ordering
+	 * @param   null $direction
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -118,6 +120,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return    string        A store id.
+	 * @since Kunena
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -139,7 +142,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return    JDatabaseQuery
-	 *
+	 * @since Kunena
 	 */
 	protected function getListQuery()
 	{
@@ -302,7 +305,7 @@ class KunenaAdminModelUsers extends JModelList
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return  KunenaUser  List of KunenaUser objects found.
+	 * @return boolean|KunenaUser
 	 *
 	 * @since   3.0
 	 */
@@ -319,12 +322,14 @@ class KunenaAdminModelUsers extends JModelList
 
 		// Load the list items.
 		$query = $this->_getListQuery();
-		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
 
-		// Check for a database error.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
 
 			return false;
 		}

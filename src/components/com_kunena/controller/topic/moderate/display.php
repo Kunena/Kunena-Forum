@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,24 +17,46 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Topic/Moderate';
 
 	/**
 	 * @var KunenaForumTopic
+	 * @since Kunena
 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaForumMessage|null
+	 * @since Kunena
 	 */
 	public $message;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $uri;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $title;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $topicIcons;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $userLink;
 
 	/**
@@ -43,13 +65,14 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
 		parent::before();
 
 		$catid = $this->input->getInt('catid');
-		$id = $this->input->getInt('id');
+		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
 		if (!$mesid)
@@ -71,7 +94,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		$this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=moderate"
+		$this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
 			. "&catid={$this->category->id}&id={$this->topic->id}"
 			. ($this->message ? "&mesid={$this->message->id}" : '');
 		$this->title = !$this->message ?
@@ -89,10 +112,11 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 			if ($user->exists())
 			{
-				$username = $user->getName();
+				$username       = $user->getName();
 				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
-					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')')
+					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')'
+				)
 					: null;
 			}
 		}
@@ -104,16 +128,21 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->me = KunenaFactory::getUser();
 
 			// Get thread and reply count from current message:
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
 				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time
 				WHERE m.id={$db->Quote($this->message->id)}";
 			$db->setQuery($query, 0, 1);
-			$this->replies = $db->loadResult();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
+				$this->replies = $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
 				return;
 			}
 		}
@@ -125,11 +154,12 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)
 		{

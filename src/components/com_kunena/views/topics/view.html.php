@@ -2,20 +2,26 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Views
+ * @package         Kunena.Site
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics View
+ * @since Kunena
  */
 class KunenaViewTopics extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
@@ -42,11 +48,16 @@ class KunenaViewTopics extends KunenaView
 
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
-		$this->_prepareDocument('default');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayUser($tpl = null)
 	{
 		$this->layout           = 'user';
@@ -70,11 +81,16 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('user');
+		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @since Kunena
+	 */
 	function displayPosts($tpl = null)
 	{
 		$this->layout           = 'posts';
@@ -99,7 +115,7 @@ class KunenaViewTopics extends KunenaView
 			}
 		}
 
-		$this->_prepareDocument('posts');
+		$this->_prepareDocument();
 
 		$this->render('Message/List', $tpl);
 	}
@@ -122,12 +138,12 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -145,7 +161,7 @@ class KunenaViewTopics extends KunenaView
 			$cachegroup  = 'com_kunena.topics';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; //$cache->get($cachekey, $cachegroup);
+			$contents = false; // $cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
@@ -180,8 +196,9 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
-				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 
 			if ($usertype != 'guest')
@@ -194,6 +211,12 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 * @since Kunena
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
@@ -217,12 +240,12 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
@@ -241,7 +264,7 @@ class KunenaViewTopics extends KunenaView
 			$cachegroup  = 'com_kunena.posts';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; //$cache->get($cachekey, $cachegroup);
+			$contents = false; // $cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
@@ -265,8 +288,9 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
-				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 
 			if ($usertype != 'guest')

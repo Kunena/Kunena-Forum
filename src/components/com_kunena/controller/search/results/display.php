@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Search
+ * @package         Kunena.Site
+ * @subpackage      Controller.Search
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,24 +17,35 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Search/Results';
 
 	/**
 	 * @var KunenaModelSearch
+	 * @since Kunena
 	 */
 	public $model;
 
 	/**
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 */
 	public $total;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $data = array();
 
 	/**
 	 * Prepare search results display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -45,18 +56,18 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me               = KunenaUserHelper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array();
-		$this->total = $this->model->getTotal();
+		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 
 		$doc = JFactory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$doc->setMetaData('robots', 'follow, noindex');
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -66,7 +77,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = 'index.php?option=com_kunena&view=search';
+						$canonicalUrl               = 'index.php?option=com_kunena&view=search';
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;
@@ -88,6 +99,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

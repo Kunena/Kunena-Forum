@@ -3,12 +3,12 @@
 <comupgrade version="1.0">
 	<upgrade>
 		<version version="1.0.0"
-				versiondate="2007-04-15"
-				versionname="">
+		         versiondate="2007-04-15"
+		         versionname="">
 		</version>
 		<version version="1.0.1"
-				versiondate="2007-05-20"
-				versionname="">
+		         versiondate="2007-05-20"
+		         versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD KEY `mesid`(`mesid`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD PRIMARY KEY(`id`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD KEY `parent`(`parent`)</query>
@@ -39,8 +39,8 @@
 			<query mode="silenterror">INSERT INTO `#__kunena_groups` VALUES ('1', 'Registered User')</query>
 		</version>
 		<version version="1.0.2"
-				versiondate="2007-08-03"
-				versionname="">
+		         versiondate="2007-08-03"
+		         versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `moderated` tinyint(4) NOT NULL default
 				'1' AFTER `alert_admin`;
 			</query>
@@ -109,8 +109,8 @@
 			<query>UPDATE `#__kunena_categories` SET `moderated` = '1';</query>
 		</version>
 		<version version="1.0.3"
-				versiondate="2007-09-04"
-				versionname="">
+		         versiondate="2007-09-04"
+		         versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER
 				`description`
 			</query>
@@ -119,15 +119,15 @@
 			</query>
 		</version>
 		<version version="1.0.4"
-				versiondate="2007-12-23"
-				versionname="">
+		         versiondate="2007-12-23"
+		         versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default
 				'0' AFTER `readtopics`
 			</query>
 		</version>
 		<version version="1.0.5"
-				versiondate="2008-12-01"
-				versionname="Redwood">
+		         versiondate="2008-12-01"
+		         versionname="Redwood">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY `title` tinytext NOT NULL AFTER
 				`id`;
 			</query>
@@ -166,15 +166,15 @@
 			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
 		</version>
 		<version version="1.0.6"
-				versiondate="2009-01-10"
-				versionname="Communicate">
+		         versiondate="2009-01-10"
+		         versionname="Communicate">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `posts` ( `posts` )</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
 		<version version="1.0.8"
-				versiondate="2009-02-17"
-				versionname="Speakup!">
+		         versiondate="2009-02-17"
+		         versionname="Speakup!">
 			<!-- query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">UPDATE `#__kunena_config` SET `latestcategory`=''</query -->
@@ -191,13 +191,13 @@
 			<query>DELETE FROM `#__kunena_subscriptions` WHERE `userid`=0;</query>
 		</version>
 		<version version="1.0.10"
-				versiondate="2009-05-21"
-				versionname="Parier!">
+		         versiondate="2009-05-21"
+		         versionname="Parier!">
 			<!-- query mode="silenterror">UPDATE `#__kunena_config` SET `jmambot`='0'</query -->
 		</version>
 		<version version="1.6.0-ALPHA"
-				versiondate="2010-05-30"
-				versionname="Gespraech">
+		         versiondate="2010-05-30"
+		         versionname="Gespraech">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users`
 				ADD `TWITTER` VARCHAR( 50 ) NULL AFTER `SKYPE` ,
 				ADD `FACEBOOK` VARCHAR( 50 ) NULL AFTER `TWITTER` ,
@@ -225,16 +225,16 @@
 			<phpfile name="1.6.0-2010-05-30_timezone"/>
 		</version>
 		<version version="1.6.0-ALPHA2"
-				versiondate="2010-06-21"
-				versionname="Gespraech">
+		         versiondate="2010-06-21"
+		         versionname="Gespraech">
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users`
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator`
 			</query>
 		</version>
 		<version version="1.6.0-RC1"
-				versiondate="2010-08-09"
-				versionname="Kujadili">
+		         versiondate="2010-08-09"
+		         versionname="Kujadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `banned` ( `banned` )</query>
 			<query>ALTER TABLE `#__kunena_polls` MODIFY `polltimetolive` DATETIME NULL DEFAULT NULL;</query>
 			<query>ALTER TABLE `#__kunena_polls_options` MODIFY `text` varchar(100) NULL;</query>
@@ -244,28 +244,28 @@
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `modified_time` DATETIME NULL;</query>
 		</version>
 		<version version="1.6.0-RC3"
-				versiondate="2010-09-20"
-				versionname="Jadili">
+		         versiondate="2010-09-20"
+		         versionname="Jadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `catid`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `parent`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `catid_parent` ( `catid`, `parent` );
 			</query>
 		</version>
 		<version version="1.6.0"
-				versiondate="2010-10-03"
-				versionname="Spika">
+		         versiondate="2010-10-03"
+		         versionname="Spika">
 		</version>
 		<version version="1.6.1"
-				versiondate="2010-11-06"
-				versionname="Timu">
+		         versiondate="2010-11-06"
+		         versionname="Timu">
 		</version>
 		<version version="1.6.2"
-				versiondate="2010-12-29"
-				versionname="Team">
+		         versiondate="2010-12-29"
+		         versionname="Team">
 		</version>
 		<version version="1.6.3"
-				versiondate="2011-01-31"
-				versionname="Parlare">
+		         versiondate="2011-01-31"
+		         versionname="Parlare">
 			<query mode="silenterror">
 				ALTER TABLE `#__kunena_categories`
 				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
@@ -283,23 +283,23 @@
 			</query>
 		</version>
 		<version version="1.6.5"
-				versiondate="2011-07-27"
-				build="5005"
-				versionname="Babel">
+		         versiondate="2011-07-27"
+		         build="5005"
+		         versionname="Babel">
 		</version>
 		<version version="1.7.0"
-				versiondate="2011-08-29"
-				build="5135"
-				versionname="Tale">
+		         versiondate="2011-08-29"
+		         build="5135"
+		         versionname="Tale">
 		</version>
 		<version version="1.7.1"
-				versiondate="2011-11-16"
-				build="5162"
-				versionname="UnderUret">
+		         versiondate="2011-11-16"
+		         build="5162"
+		         versionname="UnderUret">
 		</version>
 		<version version="2.0.0-DEV"
-				versiondate="2011-08-01"
-				versionname="Internal">
+		         versiondate="2011-08-01"
+		         versionname="Internal">
 			<!-- From Kunena 1.6.4 -->
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX `moderator` ( `moderator` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `ordering` smallint(6) NOT NULL default
@@ -406,8 +406,8 @@
 			</query>
 		</version>
 		<version version="2.0.0-DEV2"
-				versiondate="2011-10-19"
-				versionname="Internal">
+		         versiondate="2011-10-19"
+		         versionname="Internal">
 			<!-- From Kunena 1.6.5 -->
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY `avatar` varchar(255) NULL;</query>
 
@@ -432,8 +432,8 @@
 			</query>
 		</version>
 		<version version="2.0.0-DEV6"
-				versiondate="2011-12-14"
-				versionname="Internal">
+		         versiondate="2011-12-14"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_moderation`</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_config`</query>
@@ -452,45 +452,45 @@
 			<phpfile name="2.0.0-2011-12-14_aliases"/>
 		</version>
 		<version version="2.0.0-DEV8"
-				versiondate="2011-12-18"
-				versionname="Internal">
+		         versiondate="2011-12-18"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `created_by` int(10) NOT NULL AFTER
 				`title`;
 			</query>
 		</version>
 		<version version="2.0.0-DEV12"
-				versiondate="2012-02-03"
-				versionname="Internal">
+		         versiondate="2012-02-03"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT
 				NULL DEFAULT '0000-00-00 00:00:00'
 			</query>
 		</version>
 		<version version="2.0.0-DEV13"
-				versiondate="2012-03-15"
-				versionname="Internal">
+		         versiondate="2012-03-15"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT
 				NULL default '1',
 				CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1'
 			</query>
 		</version>
 		<version version="2.0.0-DEV14"
-				versiondate="2012-04-09"
-				versionname="Internal">
+		         versiondate="2012-04-09"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);
 			</query>
 		</version>
 		<version version="2.0.0-DEV15"
-				versiondate="2012-04-13"
-				versionname="Internal">
+		         versiondate="2012-04-13"
+		         versionname="Internal">
 			<phpfile name="2.0.0-2012-04-13_menu"/>
 		</version>
 		<version version="2.0.0-BETA1"
-				versiondate="2012-04-24"
-				versionname="Newspeak">
+		         versiondate="2012-04-24"
+		         versionname="Newspeak">
 		</version>
 		<version version="2.0.0-RC1"
-				versiondate="2012-05-30"
-				versionname="Orwell">
+		         versiondate="2012-05-30"
+		         versionname="Orwell">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `accesstype` varchar(20) NOT NULL
 				default 'joomla.level' AFTER `locked`;
 			</query>
@@ -498,19 +498,19 @@
 			<phpfile name="2.0.0-2012-05-30_configuration"/>
 		</version>
 		<version version="2.0.0-RC2"
-				versiondate="2012-06-10"
-				versionname="E-Prime">
+		         versiondate="2012-06-10"
+		         versionname="E-Prime">
 			<phpfile name="2.0.0-2012-06-10_pubwrite"/>
 		</version>
 		<version version="2.0.0-RC3-DEV2"
-				versiondate="2012-06-10"
-				versionname="Internal">
+		         versiondate="2012-06-10"
+		         versionname="Internal">
 			<query>UPDATE `#__kunena_sessions` SET `allowed` = 'na';</query>
 			<phpfile name="2.0.0-2012-06-10_newindication"/>
 		</version>
 		<version version="2.0.0-RC3-DEV3"
-				versiondate="2012-06-17"
-				versionname="Internal">
+		         versiondate="2012-06-17"
+		         versionname="Internal">
 			<query>REPLACE INTO #__kunena_topics
 				(id, category_id, subject, locked, hold, ordering, posts, hits, moved_id,
 				first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name,
@@ -535,8 +535,8 @@
 			<query>DELETE FROM #__kunena_messages WHERE moved>0</query>
 		</version>
 		<version version="2.0.1"
-				versiondate="2012-07-07"
-				versionname="Balozi">
+		         versiondate="2012-07-07"
+		         versionname="Balozi">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement`
 				MODIFY `created_by` int(11) NOT NULL default '0' AFTER `title`;
 			</query>
@@ -561,19 +561,19 @@
 			</query>
 		</version>
 		<version version="2.0.2"
-				versiondate="2012-09-02"
-				versionname="Botschafter">
+		         versiondate="2012-09-02"
+		         versionname="Botschafter">
 			<query>ALTER TABLE `#__kunena_users` MODIFY `view` varchar(8) NOT NULL default '' AFTER `userid`</query>
 			<query>UPDATE `#__kunena_users` SET view=''</query>
 		</version>
 		<version version="2.0.3"
-				versiondate="2012-11-24"
-				versionname="Reconciliation">
+		         versiondate="2012-11-24"
+		         versionname="Reconciliation">
 			<query>UPDATE `#__kunena_topics` SET hold='4' WHERE first_post_id='0'</query>
 		</version>
 		<version version="3.0.3"
-				versiondate="2013-10-20"
-				versionname="Bifrost">
+		         versiondate="2013-10-20"
+		         versionname="Bifrost">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `hold_time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `time_hold` ( `time` , `hold` );
@@ -581,8 +581,8 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `hold` ( `hold` );</query>
 		</version>
 		<version version="3.0.92"
-				versiondate="2013-10-17"
-				versionname="Internal">
+		         versiondate="2013-10-17"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD KEY `last_post_id` (`last_post_id`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `protected` TINYINT( 4 ) NOT NULL DEFAULT
 				'0' AFTER `userid`;
@@ -601,8 +601,8 @@
 
 		</version>
 		<version version="3.0.94"
-				versiondate="2013-11-20"
-				versionname="Internal">
+		         versiondate="2013-11-20"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_categories` ADD `allreadtime_new` INT NOT NULL DEFAULT
 				'0' AFTER `allreadtime`;
 			</query>
@@ -618,22 +618,22 @@
 			</query>
 		</version>
 		<version version="3.0.96"
-				versiondate="2015-02-15"
-				versionname="Internal">
+		         versiondate="2015-02-15"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `canSubscribe` tinyint(1) NOT NULL DEFAULT '1'
 				AFTER `showOnline`;
 			</query>
 		</version>
 		<version version="3.0.97"
-				versiondate="2015-02-15"
-				versionname="Internal">
+		         versiondate="2015-02-15"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `userListtime` int(11) NOT NULL DEFAULT '-2'
 				AFTER `canSubscribe`;
 			</query>
 		</version>
 		<version version="3.0.98"
-				versiondate="2015-02-15"
-				versionname="Internal">
+		         versiondate="2015-02-15"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `status_text` varchar(255) NOT NULL
 				DEFAULT '' AFTER `userid`
 			</query>
@@ -642,44 +642,47 @@
 			</query>
 		</version>
 		<version version="4.0.0-ALPHA2"
-				versiondate="2015-03-26"
-				versionname="Internal">
+		         versiondate="2015-03-26"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `icon` varchar(20) NOT NULL
 				DEFAULT '' AFTER `alias`
 			</query>
 		</version>
 		<version version="4.0.0-ALPHA3"
-				versiondate="2015-03-30"
-				versionname="Internal">
+		         versiondate="2015-03-30"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `iconset` varchar(255) NOT NULL
 				DEFAULT '' AFTER `topic_ordering`
 			</query>
 		</version>
 		<version version="4.0.2-DEV2"
-				versiondate="2015-06-18"
-				versionname="Internal">
+		         versiondate="2015-06-18"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories`
-				CHANGE COLUMN `icon` `icon` VARCHAR(60)</query>
+				CHANGE COLUMN `icon` `icon` VARCHAR(60)
+			</query>
 		</version>
 		<version version="4.0.4-DEV2"
-				versiondate="2015-07-19"
-				versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `canSubscribe` `canSubscribe` tinyint(1) NOT NULL default '-1'</query>
+		         versiondate="2015-07-19"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `canSubscribe` `canSubscribe` tinyint(1) NOT NULL default '-1'
+			</query>
 		</version>
 		<version version="4.0.7-DEV2"
-				versiondate="2015-10-16"
-				versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE COLUMN `iconset` `iconset` varchar(255) NOT NULL default 'default'</query>
+		         versiondate="2015-10-16"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE COLUMN `iconset` `iconset` varchar(255) NOT NULL default 'default'
+			</query>
 			<query mode="silenterror">UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset=''</query>
 		</version>
 		<version version="4.0.10-DEV2"
-				versiondate="2016-02-15"
-				versionname="Internal">
+		         versiondate="2016-02-15"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages_text` CHANGE COLUMN `message` `message` mediumtext NOT NULL</query>
 		</version>
 		<version version="5.0.0-ALPHA2"
-				versiondate="2015-12-02"
-				versionname="Internal">
+		         versiondate="2015-12-02"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `msn` `microsoft` varchar(50) NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `gtalk` `google` varchar(50) NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users`
@@ -694,25 +697,31 @@
 			</query>
 		</version>
 		<version version="5.0.0-ALPHA3"
-				versiondate="2015-12-09"
-				versionname="Internal">
+		         versiondate="2015-12-09"
+		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ip` VARCHAR( 13 ) NOT NULL AFTER `thankyou`;</query>
 		</version>
 		<version version="5.0.0-ALPHA4"
-				versiondate="2016-03-09"
-				versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_up` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `published`</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_down` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `publish_up`</query>
+		         versiondate="2016-03-09"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_up` datetime NOT NULL default '0000-00-00 00:00:00' AFTER
+				`published`
+			</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_down` datetime NOT NULL default '0000-00-00 00:00:00' AFTER
+				`publish_up`
+			</query>
 		</version>
 		<version version="5.0.0-ALPHA5"
-				versiondate="2016-03-18"
-				versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_ratings` tinyint(4) NOT NULL default '0' AFTER `last_post_time`;</query>
+		         versiondate="2016-03-18"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_ratings` tinyint(4) NOT NULL default '0' AFTER `last_post_time`;
+			</query>
 		</version>
 		<version version="5.0.0-ALPHA6"
-				versiondate="2016-03-29"
-				versionname="Internal">
-			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `rating` tinyint(6) NOT NULL default '0' AFTER `last_post_guest_name`;</query>
+		         versiondate="2016-03-29"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `rating` tinyint(6) NOT NULL default '0' AFTER `last_post_guest_name`;
+			</query>
 		</version>
 		<version version="5.0.0-BETA3-DEV2"
 		         versiondate="2016-05-06"
@@ -725,9 +734,14 @@
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords`;</query>
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords_map`;</query>
 		</version>
+		<version version="5.0.5"
+		         versiondate="2016-12-20"
+		         versionname="Internal">
+			<phpfile name="5.0.5-2016-12-20_userlist"/>
+		</version>
 		<version version="@kunenaversion@"
-				versiondate="@kunenaversiondate@"
-				versionname="@kunenaversionname@">
+		         versiondate="@kunenaversiondate@"
+		         versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

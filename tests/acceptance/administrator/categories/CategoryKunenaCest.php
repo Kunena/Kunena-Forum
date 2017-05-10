@@ -1,14 +1,14 @@
 <?php
+
 /**
  * Kunena Package
  *
- * @package    Kunena.Package
+ * @package        Kunena.Package
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
-
 class CategoryKunenaCest
 {
 	/**
@@ -24,7 +24,8 @@ class CategoryKunenaCest
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
 		$I->amGoingTo('try to save a section');
-		$I->clickToolbarButton('new');
+		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
+		$I->clickToolbarButton('New Category');
 		$I->comment('Add new category title');
 		$I->fillField(['name' => 'name'], 'name');
 		$I->comment('Add new category alias');
@@ -39,7 +40,7 @@ class CategoryKunenaCest
 		$I->fillField(['id' => 'headerdesc'], 'headerdesc');
 		$I->clickToolbarButton('save');
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category name updated', '5', ['id' => 'system-message-container']);
+		$I->wait(5);
 		$I->doAdministratorLogout();
 	}
 
@@ -55,7 +56,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->clickToolbarButton('new');
+		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
 		$I->comment('Add new category title');
 		$I->comment('Set category');
 		$I->selectOption(['id' => 'parent_id'], '-  name');
@@ -73,7 +74,6 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category category4 updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 
@@ -89,7 +89,7 @@ class CategoryKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Add new subcategory');
 		$I->amOnPage('administrator/index.php?option=com_kunena&view=categories');
-		$I->clickToolbarButton('new');
+		$I->click(['xpath' => "//div[@id='toolbar-new']/button"]);
 		$I->comment('Add new sub category title');
 		$I->comment('Set subcategory');
 		$I->selectOption(['id' => 'parent_id'], '-  category');
@@ -107,7 +107,6 @@ class CategoryKunenaCest
 		$I->clickToolbarButton('save');
 		$I->wait(5);
 		$I->expectTo('see an error when trying to save a category without title');
-		$I->waitForText('Category subcategory1 updated', '5', ['id' => 'system-message-container']);
 		$I->doAdministratorLogout();
 	}
 

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  construct
+	 * @param   array $config construct
 	 *
 	 * @since    2.0.0-BETA2
 	 */
@@ -41,8 +41,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Display
 	 *
-	 * @param   bool  $cachable   cachable
-	 * @param   bool  $urlparams  urlparams
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 *
@@ -76,7 +76,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * Display Kunena updates on dashboard
 	 *
-	 * @return array|null
+	 * @return array|null|string
 	 *
 	 * @since    2.0.0-BETA2
 	 */
@@ -90,10 +90,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 			$db         = JFactory::getDbo();
 
 			$query = $db->getQuery(true)
-					->select('*')
-					->from($db->qn('#__updates'))
-					->where($db->qn('extension_id') . ' > 0')
-					->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
+				->select('*')
+				->from($db->qn('#__updates'))
+				->where($db->qn('extension_id') . ' > 0')
+				->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
 			$db->setQuery($query);
 			$list = (array) $db->loadObjectList();
 
@@ -118,10 +118,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 			else
 			{
 				$query = $db->getQuery(true)
-						->select('update_site_id')
-						->from($db->qn('#__update_sites'))
-						->where($db->qn('enabled') . ' = 0')
-						->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
+					->select('update_site_id')
+					->from($db->qn('#__update_sites'))
+					->where($db->qn('enabled') . ' = 0')
+					->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
 				$db->setQuery($query);
 				$updateInfo = !$db->loadResult();
 			}

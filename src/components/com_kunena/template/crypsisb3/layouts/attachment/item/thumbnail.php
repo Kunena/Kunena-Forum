@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,7 +21,7 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
-$name = preg_replace('/.html/', '', $attachment->getUrl());
+$name           = preg_replace('/.html/', '', $attachment->getUrl());
 
 if (JApplicationCms::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
 {
@@ -29,22 +29,38 @@ if (JApplicationCms::getInstance('site')->get('sef_suffix') && $config->attachme
 }
 else
 {
-	$name = $attachment->getUrl();
+	$name = JURI::root(true) . '/' . $attachment->getUrl();
 }
 
 if ($attachment->isImage())
 {
-	?>
-	<a href="<?php echo $name; ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight ;?>" height="<?php echo $config->thumbheight ;?>" alt=""  />
-	</a>
-<?php
+	if ($config->lazyload)
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+	else
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
 }
 else
 {
 	?>
-	<a href="<?php echo $name; ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+	<a href="<?php echo $name; ?>"
+	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<i class="large-kicon icon-file"></i>
 	</a>
-<?php
+	<?php
 }

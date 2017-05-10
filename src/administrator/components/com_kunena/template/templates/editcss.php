@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Templates
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Templates
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,11 +20,12 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
-			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
-			<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
+		      name="adminForm">
+			<input type="hidden" name="task" value=""/>
+			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
+			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
+			<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>"/>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<?php // TODO: redo FTP protection fields ?>

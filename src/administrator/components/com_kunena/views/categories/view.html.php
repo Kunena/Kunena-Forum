@@ -2,27 +2,30 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewCategories extends KunenaView
 {
 	/**
 	 * @var array|KunenaForumCategory[]
+	 * @since Kunena
 	 */
 	public $categories = array();
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayCreate()
 	{
@@ -31,6 +34,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayEdit()
 	{
@@ -51,14 +55,15 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
-		
+
 		$this->batch_categories = $this->get('BatchCategories');
-		
+
 		// Preprocess the list of items to find ordering divisions.
 		$this->ordering = array();
 
@@ -94,6 +99,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarEdit()
 	{
@@ -111,12 +117,13 @@ class KunenaAdminViewCategories extends KunenaView
 
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
@@ -127,7 +134,6 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
 
-
 		JToolBarHelper::editList();
 		JToolBarHelper::divider();
 		JToolBarHelper::publish();
@@ -135,9 +141,9 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-		
+
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 		JHtml::_('bootstrap.modal', 'collapseModal');
@@ -152,6 +158,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function publishedOptions()
 	{
@@ -167,6 +174,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of locked filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function lockOptions()
 	{
@@ -182,6 +190,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function reviewOptions()
 	{
@@ -197,6 +206,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	public function allowpollsOptions()
 	{
@@ -212,6 +222,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function anonymousOptions()
 	{
@@ -227,6 +238,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -248,6 +260,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{

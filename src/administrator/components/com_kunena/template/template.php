@@ -2,18 +2,23 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Template
+ * @package         Kunena.Template
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaAdminTemplate
+ * @since Kunena
+ */
 class KunenaAdminTemplate
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function initialize()
 	{
@@ -30,6 +35,7 @@ class KunenaAdminTemplate
 	 * @param   bool|false $fullpath
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
@@ -47,7 +53,7 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   JPaginationObject  $item  The current pagination object
+	 * @param   JPaginationObject $item The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *

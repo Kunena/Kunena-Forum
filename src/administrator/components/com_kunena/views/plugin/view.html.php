@@ -18,20 +18,33 @@ defined('_JEXEC') or die;
  */
 class KunenaAdminViewPlugin extends KunenaView
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $item = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $form = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $state = null;
 
 	/**
 	 * Display the view
 	 *
-	 * @param   null  $tpl
+	 * @param   null $tpl
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function displayEdit($tpl = null)
 	{
@@ -43,8 +56,6 @@ class KunenaAdminViewPlugin extends KunenaView
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode("\n", $errors), 500);
-
-			return true;
 		}
 
 		$this->addToolbar();
@@ -54,7 +65,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   1.6
 	 */
@@ -68,7 +79,7 @@ class KunenaAdminViewPlugin extends KunenaView
 		JToolbarHelper::cancel('cancel', 'JTOOLBAR_CLOSE');
 		JToolbarHelper::spacer();
 
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

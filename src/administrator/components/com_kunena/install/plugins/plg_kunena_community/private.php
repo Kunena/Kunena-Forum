@@ -2,25 +2,39 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Community
+ * @package         Kunena.Plugins
+ * @subpackage      Community
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaPrivateCommunity
+ * @since Kunena
+ */
 class KunenaPrivateCommunity extends KunenaPrivate
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $loaded = false;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaPrivateCommunity constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -32,16 +46,17 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getOnClick($userid)
 	{
 		if (!$this->loaded)
 		{
 			// PM popup requires JomSocial css to be loaded from selected template
-			$config  = CFactory::getConfig();
+			$config   = CFactory::getConfig();
 			$document = JFactory::getDocument();
 			$document->addStyleSheet('components/com_community/assets/window.css');
-			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/css/style.css');
+			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/assets/css/style.css');
 			$this->loaded = true;
 		}
 
@@ -52,6 +67,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	protected function getURL($userid)
 	{
@@ -62,6 +78,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getInboxLink($text)
 	{
@@ -75,6 +92,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getInboxURL()
 	{

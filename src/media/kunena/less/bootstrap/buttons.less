@@ -2,7 +2,6 @@
 // Buttons
 // --------------------------------------------------
 
-
 // Base styles
 // --------------------------------------------------
 
@@ -18,11 +17,11 @@
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  .buttonBackground(@btnBackground, @btnBackgroundHighlight, @grayDark, 0 1px 1px rgba(255,255,255,.75));
+  .buttonBackground(@btnBackground, @btnBackgroundHighlight, @grayDark, 0 1px 1px rgba(255, 255, 255, .75));
   border: 1px solid @btnBorder;
   *border: 0; // Remove the border to prevent IE7's black border on input:focus
   border-bottom-color: darken(@btnBorder, 10%);
-  border-radius:4px;
+  border-radius: 4px;
   .ie7-restore-left-whitespace(); // Give IE7 some love
   .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
 
@@ -64,8 +63,6 @@
 
 }
 
-
-
 // Button Sizes
 // --------------------------------------------------
 
@@ -74,8 +71,9 @@
   padding: 9px 14px;
   font-size: @baseFontSize + 2px;
   line-height: normal;
-  border-radius:5px;
+  border-radius: 5px;
 }
+
 .btn-large [class^="icon-"] {
   margin-top: 2px;
 }
@@ -86,6 +84,7 @@
   font-size: @baseFontSize - 2px;
   line-height: @baseLineHeight - 2px;
 }
+
 .btn-small [class^="icon-"] {
   margin-top: 0;
 }
@@ -105,10 +104,10 @@
   padding-right: 0;
   .box-sizing(border-box);
 }
+
 .btn-block + .btn-block {
   margin-top: 5px;
 }
-
 
 // Alternate buttons
 // --------------------------------------------------
@@ -120,7 +119,7 @@
 .btn-success.active,
 .btn-info.active,
 .btn-inverse.active {
-  color: rgba(255,255,255,.75);
+  color: rgba(255, 255, 255, .75);
 }
 
 // Set the backgrounds
@@ -128,32 +127,37 @@
 .btn {
   // reset here as of 2.0.3 due to Recess property order
   border-color: #c5c5c5;
-  border-color: rgba(0,0,0,.15) rgba(0,0,0,.15) rgba(0,0,0,.25);
+  border-color: rgba(0, 0, 0, .15) rgba(0, 0, 0, .15) rgba(0, 0, 0, .25);
 }
+
 .btn-primary {
   .buttonBackground(@btnPrimaryBackground, @btnPrimaryBackgroundHighlight);
 }
+
 // Warning appears are orange
 .btn-warning {
   .buttonBackground(@btnWarningBackground, @btnWarningBackgroundHighlight);
 }
+
 // Danger and error appear as red
 .btn-danger {
   .buttonBackground(@btnDangerBackground, @btnDangerBackgroundHighlight);
 }
+
 // Success appears as green
 .btn-success {
   .buttonBackground(@btnSuccessBackground, @btnSuccessBackgroundHighlight);
 }
+
 // Info appears as a neutral blue
 .btn-info {
   .buttonBackground(@btnInfoBackground, @btnInfoBackgroundHighlight);
 }
+
 // Inverse appears as dark gray
 .btn-inverse {
   .buttonBackground(@btnInverseBackground, @btnInverseBackgroundHighlight);
 }
-
 
 // Cross-browser Jank
 // --------------------------------------------------
@@ -185,7 +189,6 @@ input[type="submit"].btn {
   }
 }
 
-
 // Link buttons
 // --------------------------------------------------
 
@@ -195,12 +198,14 @@ input[type="submit"].btn {
   background: transparent none;
   .box-shadow(none);
 }
+
 .btn-link {
   border-color: transparent;
   cursor: pointer;
   color: @linkColor;
   .border-radius(0);
 }
+
 .btn-link:hover {
   color: @linkColorHover;
   text-decoration: underline;

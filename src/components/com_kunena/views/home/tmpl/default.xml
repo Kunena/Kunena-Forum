@@ -14,7 +14,7 @@
 			       description="COM_KUNENA_MENU_DEFAULTITEM_DESC"
 			       required="true"
 			       state="1"
-					/>
+			/>
 		</fieldset>
 	</fields>
 </metadata>

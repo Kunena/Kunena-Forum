@@ -2,21 +2,30 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Comprofiler
+ * @package         Kunena.Plugins
+ * @subpackage      Comprofiler
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaIntegrationComprofiler
+ * @since Kunena
+ */
 class KunenaIntegrationComprofiler
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $open = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function open()
 	{
@@ -32,6 +41,7 @@ class KunenaIntegrationComprofiler
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function close()
 	{
@@ -52,6 +62,8 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @param $event
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public static function trigger($event, &$params)
 	{

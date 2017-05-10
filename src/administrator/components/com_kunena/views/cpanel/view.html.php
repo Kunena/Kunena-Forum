@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,10 +20,11 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
-		$help_url  = 'https://www.kunena.org/docs/Category:Installation';
+		$help_url = 'https://www.kunena.org/docs/Category:Installation';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
 		JToolBarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));

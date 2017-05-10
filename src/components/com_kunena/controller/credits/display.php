@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Credits
+ * @package         Kunena.Site
+ * @subpackage      Controller.Credits
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,24 +17,51 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Credits';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $logo;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $intro;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $memberList;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $thanks;
 
 	/**
 	 * Prepare credits display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
 		parent::before();
+
+		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		{
+			$this->baseurl  = 'index.php?option=com_kunena';
+			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+		}
 
 		$this->logo = KunenaFactory::getTemplate()->getImagePath('icons/kunena-logo-48-white.png');
 
@@ -65,13 +92,15 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 		$this->thanks     = JText::sprintf(
 			'COM_KUNENA_CREDITS_THANKS', 'https://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'https://www.kunena.org',
-			'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
+			'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
+		);
 	}
 
 	/**
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

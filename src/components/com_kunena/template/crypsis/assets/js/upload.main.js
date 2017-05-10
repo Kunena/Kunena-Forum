@@ -1,6 +1,15 @@
 jQuery(function ($) {
 	'use strict';
 
+	$.widget('blueimp.fileupload', $.blueimp.fileupload, {
+		options: {
+			// The maximum width of resized images:
+			imageMaxWidth: imageheight,
+			// The maximum height of resized images:
+			imageMaxHeight: imagewidth
+		}
+	});
+
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
 		var value = $('#kbbcode-message').val();
@@ -15,8 +24,8 @@ jQuery(function ($) {
 	}
 
 	jQuery.fn.extend({
-		insertAtCaret: function(myValue){
-			return this.each(function(i) {
+		insertAtCaret: function (myValue) {
+			return this.each(function (i) {
 				if (document.selection) {
 					//For browsers like Internet Explorer
 					this.focus();
@@ -30,12 +39,13 @@ jQuery(function ($) {
 					var startPos = this.selectionStart;
 					var endPos = this.selectionEnd;
 					var scrollTop = this.scrollTop;
-					this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+					this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
 					this.focus();
 					this.selectionStart = startPos + myValue.length;
 					this.selectionEnd = startPos + myValue.length;
 					this.scrollTop = scrollTop;
-				} else {
+				}
+				else {
 					this.value += myValue;
 					this.focus();
 				}
@@ -49,6 +59,13 @@ jQuery(function ($) {
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
+		$('#insert-all').removeClass('btn-success');
+		$('#insert-all').addClass('btn-primary');
+		$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
+
+		$('#remove-all').hide();
+		$('#insert-all').hide();
+
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) == false) {
 			$(filesedit).each(function (index, file) {
@@ -61,8 +78,8 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url    : kunena_upload_files_rem + '&fil_id=' + file.id,
-					type   : 'POST',
+					url: kunena_upload_files_rem + '&fil_id=' + file.id,
+					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}
@@ -89,15 +106,17 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url    : kunena_upload_files_rem + '&fil_id=' + fileid,
-					type   : 'POST',
+					url: kunena_upload_files_rem + '&fil_id=' + fileid,
+					type: 'POST',
 					success: function (result) {
 						$('#files').empty();
 					}
 				});
 			}
 		});
-
+		
+		$('#alert_max_file').remove();
+		
 		fileCount = 0;
 	});
 
@@ -110,6 +129,7 @@ jQuery(function ($) {
 				insertInMessage(file.id, file.name);
 			});
 		}
+
 		filesedit = null;
 
 		var child = $('#kattach-list').find('input');
@@ -127,6 +147,12 @@ jQuery(function ($) {
 				$('#insert-all').addClass('btn-success');
 				$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
+		});
+
+		$('#files .btn.btn-primary').each(function () {
+			$('#files .btn.btn-primary').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-primary');
+			$('#files .btn.btn-success').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		});
 	});
 
@@ -146,7 +172,8 @@ jQuery(function ($) {
 			if (data.result != undefined) {
 				file_id = data.result.data.id;
 				filename = data.result.data.filename;
-			} else {
+			}
+			else {
 				file_id = data.id;
 				filename = data.name;
 			}
@@ -168,7 +195,8 @@ jQuery(function ($) {
 			if (data.uploaded == true) {
 				if (data.result != false) {
 					file_id = data.result.data.id;
-				} else {
+				}
+				else {
 					file_id = data.file_id;
 				}
 			}
@@ -183,9 +211,11 @@ jQuery(function ($) {
 
 			fileCount = fileCount - 1;
 
+			$('#alert_max_file').remove();
+			
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
-				url    : kunena_upload_files_rem + '&fil_id=' + file_id,
+				url: kunena_upload_files_rem + '&fil_id=' + file_id,
 				type: 'POST',
 				success: function (result) {
 					$this.parent().remove();
@@ -194,36 +224,45 @@ jQuery(function ($) {
 		});
 
 	$('#fileupload').fileupload({
-		url               : $('#kunena_upload_files_url').val(),
-		dataType          : 'json',
-		autoUpload        : true,
+		url: $('#kunena_upload_files_url').val(),
+		dataType: 'json',
+		autoUpload: true,
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
-		disableImageResize: /Android(?!.*Chrome)|Opera/
+		disableImageResize: / Android( ?!.*Chrome) |Opera /
 			.test(window.navigator.userAgent),
-		previewMaxWidth   : 100,
-		previewMaxHeight  : 100,
-		previewCrop       : true
+		previewMaxWidth: 100,
+		previewMaxHeight: 100,
+		previewCrop: true
 	}).bind('fileuploadsubmit', function (e, data) {
-			var params = {};
-			$.each(data.files, function (index, file) {
-				params = {
-					'catid'   : $('#kunena_upload').val(),
-					'filename': file.name,
-					'size'    : file.size,
-					'mime'    : file.type
-				};
-			});
+		var params = {};
+		$.each(data.files, function (index, file) {
+			params = {
+				'catid': $('#kunena_upload').val(),
+				'filename': file.name,
+				'size': file.size,
+				'mime': file.type
+			};
+		});
 
-			data.formData = params;
-		})
+		data.formData = params;
+	})
 		.bind('fileuploaddrop', function (e, data) {
+			$('#form_submit_button').prop('disabled', true);
+
+			$('#remove-all').show();
+			$('#insert-all').show();
+
+			$('#kattach_form').show();
+			
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
-				$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
-
+				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
+				
+				$('#form_submit_button').prop('disabled', false);
+				
 				return false;
 			}
 			else {
@@ -231,11 +270,18 @@ jQuery(function ($) {
 			}
 		})
 		.bind('fileuploadchange', function (e, data) {
+			$('#form_submit_button').prop('disabled', true);
+
+			$('#remove-all').show();
+			$('#insert-all').show();
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
-				$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
-
+				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
+				
+				$('#form_submit_button').prop('disabled', false);
+				
 				return false;
 			}
 			else {
@@ -257,6 +303,7 @@ jQuery(function ($) {
 					node
 						.append('<br>');
 				}
+
 				node.appendTo(data.context);
 			});
 		}).on('fileuploadprocessalways', function (e, data) {
@@ -268,11 +315,13 @@ jQuery(function ($) {
 				.prepend('<br>')
 				.prepend(file.preview);
 		}
+
 		if (file.error) {
 			node
 				.append('<br>')
 				.append($('<span class="text-danger"/>').text(file.error));
 		}
+
 		if (index + 1 === data.files.length) {
 			data.context.find('button.btn-primary')
 				.text(Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON'))
@@ -289,6 +338,8 @@ jQuery(function ($) {
 			.wrap(link);
 
 		if (data.result.success == true) {
+			$('#form_submit_button').prop('disabled', false);
+
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
 			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
@@ -299,8 +350,12 @@ jQuery(function ($) {
 			if (data.context.find('button').hasClass('btn-danger')) {
 				data.context.find('button.btn-danger').remove();
 			}
+
 			data.context.append(removeButton.clone(true).data(data));
-		} else if (data.result.message) {
+		}
+		else if (data.result.message) {
+			$('#form_submit_button').prop('disabled', false);
+
 			data.uploaded = false;
 			data.context.append(removeButton.clone(true).data(data));
 
@@ -326,12 +381,12 @@ jQuery(function ($) {
 	// Load attachments when the message is edited
 	if ($('#kmessageid').val() > 0) {
 		$.ajax({
-			type    : 'POST',
-			url     : kunena_upload_files_preload,
-			async   : false,
+			type: 'POST',
+			url: kunena_upload_files_preload,
+			async: false,
 			dataType: 'json',
-			data    : {mes_id: $('#kmessageid').val()},
-			success : function (data) {
+			data: {mes_id: $('#kmessageid').val()},
+			success: function (data) {
 				if ($.isEmptyObject(data.files) == false) {
 					fileCount = Object.keys(data.files).length;
 
@@ -341,7 +396,8 @@ jQuery(function ($) {
 						var image = '';
 						if (file.image === true) {
 							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
-						} else {
+						}
+						else {
 							image = '<i class="icon-flag-2 icon-big"></i><br />';
 						}
 

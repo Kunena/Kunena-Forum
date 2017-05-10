@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Models
+ * @package         Kunena.Site
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -18,16 +18,33 @@ defined('_JEXEC') or die();
  */
 class KunenaModelTopic extends KunenaModel
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topics = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $messages = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $items = false;
 
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $topic = false;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function populateState()
 	{
@@ -101,6 +118,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return KunenaForumCategory
+	 * @since Kunena
 	 */
 	public function getCategory()
 	{
@@ -109,6 +127,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumTopic
+	 * @since Kunena
 	 */
 	public function getTopic()
 	{
@@ -160,6 +179,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array|boolean|KunenaForumMessage[]
+	 * @since Kunena
 	 */
 	public function getMessages()
 	{
@@ -168,7 +188,8 @@ class KunenaModelTopic extends KunenaModel
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
 			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState('item.id'),
-				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded);
+				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded
+			);
 
 			// Get thankyous for all messages in the page
 			$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);
@@ -239,6 +260,7 @@ class KunenaModelTopic extends KunenaModel
 	 * @param   array $indent
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
@@ -324,6 +346,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getTotal()
 	{
@@ -332,6 +355,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getMyVotes()
 	{
@@ -340,6 +364,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getModerators()
 	{
@@ -350,6 +375,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return KunenaForumTopicPoll
+	 * @since Kunena
 	 */
 	public function getPoll()
 	{
@@ -358,6 +384,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @since Kunena
 	 */
 	public function getPollUserCount()
 	{
@@ -366,6 +393,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	public function getPollUsers()
 	{

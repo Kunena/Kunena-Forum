@@ -2,21 +2,22 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
 jQuery(document).ready(function ($) {
 
 	/* To hide or open spoiler on click */
-	$('.kspoiler').each(function( index ) {
-		$( this ).click(function() {
-			if ( !$(this).find('.kspoiler-content').is(':visible') ) {
+	$('.kspoiler').each(function (index) {
+		$(this).click(function () {
+			if (!$(this).find('.kspoiler-content').is(':visible')) {
 				$(this).find('.kspoiler-content').show();
 				$(this).find('.kspoiler-expand').hide();
 				$(this).find('.kspoiler-hide').show();
-			} else {
+			}
+			else {
 				$(this).find('.kspoiler-content').hide();
 				$(this).find('.kspoiler-expand').show();
 				$(this).find('.kspoiler-hide').hide();
@@ -36,14 +37,15 @@ jQuery(document).ready(function ($) {
 			$(this).prev(".heading").show();
 			$(this).hide();
 			$(this).next(".content").slideToggle(500);
-		} else {
+		}
+		else {
 			var content = $(this).next(".heading").show();
 			$(this).hide();
 			content.next(".content").slideToggle(500);
 		}
 	});
 
-	$('[id^="login-link"]').click(function() {
+	$('[id^="login-link"]').click(function () {
 		$(this).ready(function () {
 			if ($('#userdropdown').is(":visible")) {
 				$(this).addClass('kdelay');
@@ -57,11 +59,11 @@ jQuery(document).ready(function ($) {
 		});
 	});
 
-	$(document).click(function() {
+	$(document).click(function () {
 		$('.kdelay').css('display', 'none').removeClass('kdelay');
 	});
 
-	$('#userdropdown').click(function(e){
+	$('#userdropdown').click(function (e) {
 		e.stopPropagation();
 	});
 
@@ -70,13 +72,15 @@ jQuery(document).ready(function ($) {
 		var id_item_selected = $(this).val();
 		if (id_item_selected != 0) {
 			$('#kmod_subject').hide();
-		} else {
+		}
+		else {
 			$('#kmod_subject').show();
 		}
 
 		if (id_item_selected == -1) {
 			$('#kmod_targetid').show();
-		} else {
+		}
+		else {
 			$('#kmod_targetid').hide();
 		}
 	});
@@ -86,37 +90,37 @@ jQuery(document).ready(function ($) {
 			showCount: true,
 			showLabel: true,
 			shares: [
-			{
-				share: "email",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
-			}, 
-			{
-				share: "twitter",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
-			}, 
-			{
-				share: "facebook",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL') 
-			}, 
-			{
-				share: "googleplus",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL') 
-			}, 
-			{
-				share: "linkedin",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL') 
-			}, {
-				share: "pinterest",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL') 
-			}, 
-			{
-				share: "stumbleupon",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL') 
-			}, 
-			{
-				share: "whatsapp",           
-				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL') 
-			}]
+				{
+					share: "email",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
+				},
+				{
+					share: "twitter",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+				},
+				{
+					share: "facebook",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
+				},
+				{
+					share: "googleplus",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
+				},
+				{
+					share: "linkedin",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
+				}, {
+					share: "pinterest",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
+				},
+				{
+					share: "stumbleupon",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
+				},
+				{
+					share: "whatsapp",
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
+				}]
 		});
 		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
 	}
@@ -139,4 +143,6 @@ jQuery(document).ready(function ($) {
 			});
 		});
 	});
+
+	$("img.lazy").lazyload();
 });

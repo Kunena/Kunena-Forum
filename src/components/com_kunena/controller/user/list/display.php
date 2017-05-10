@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,22 +17,47 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/List';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $state;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $me;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $total;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $users;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $pagination;
 
 	/**
 	 * Load user list.
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -40,7 +65,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$config = KunenaConfig::getInstance();
 
-		if ($config->userlist_allowed && JFactory::getUser()->guest)
+		if (!$config->userlist_allowed && JFactory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -50,7 +75,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();
 
 		$start = $this->state->get('list.start');
@@ -59,7 +84,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)
 		{
-			$filter = JAccess::getUsersByGroup(8);	
+			$filter = JAccess::getUsersByGroup(8);
 		}
 		else
 		{
@@ -71,10 +96,10 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
-		$this->total = $finder->count();
+		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
-		$alias = 'ku';
+		$alias     = 'ku';
 		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
 
 		if (in_array($this->state->get('list.ordering'), $aliasList))
@@ -83,7 +108,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		}
 
 		$this->users = $finder
-			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : - 1, $alias)
+			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1, $alias)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
@@ -93,6 +118,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

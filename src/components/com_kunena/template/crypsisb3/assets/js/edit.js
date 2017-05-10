@@ -2,8 +2,8 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
 
@@ -15,12 +15,12 @@ var previewActive = false;
 function kPreviewHelper(previewActive) {
 	if (jQuery('#kbbcode-message').val() != null) {
 		jQuery.ajax({
-			type    : 'POST',
-			url     : 'index.php?option=com_kunena&view=topic&layout=edit&format=raw',
-			async   : false,
+			type: 'POST',
+			async: false,
+			url     : jQuery('#kpreview_url').val(),
 			dataType: 'json',
-			data    : {body: jQuery('#kbbcode-message').val()},
-			success : function (data) {
+			data: {body: jQuery('#kbbcode-message').val()},
+			success: function (data) {
 				jQuery('#kbbcode-preview').html(data.preview);
 			}
 		});
@@ -59,25 +59,26 @@ jQuery(document).ready(function ($) {
 	});
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if ($('#kemojis_allowed').val()==1) {
+	if ($('#kemojis_allowed').val() == 1) {
 		var item = '';
 		if ($('#kbbcode-message').length > 0 && $('.qreply').length == 0) {
 			item = '#kbbcode-message';
-		} else if ($('.qreply').length > 0) {
+		}
+		else if ($('.qreply').length > 0) {
 			item = '.qreply';
 		}
 
 		if (item != undefined) {
 			$(item).atwho({
-				at              : ":",
-				displayTpl      : "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-				insertTpl       : ':${name}:',
+				at: ":",
+				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+				insertTpl: '${name}',
 				callbacks: {
 					remoteFilter: function (query, callback) {
 						if (query.length > 0) {
 							$.ajax({
-								url    : $("#kurl_emojis").val(),
-								data   : {
+								url: $("#kurl_emojis").val(),
+								data: {
 									search: query
 								},
 								success: function (data) {
@@ -95,7 +96,7 @@ jQuery(document).ready(function ($) {
 	if ($.fn.sisyphus != undefined) {
 		$("#postform").sisyphus({
 			locationBased: true,
-			timeout      : 5
+			timeout: 5
 		});
 	}
 
@@ -127,23 +128,26 @@ jQuery(document).ready(function ($) {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
 
+		$("#subject").attr('required', 'required');
+
 		if ($('#kanynomous-check').length > 0) {
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
-			} else {
+			}
+			else {
 				$('#kanynomous-check').hide();
 				$('#kanonymous').prop('checked', false);
 			}
 		}
 
 		$.ajax({
-			type    : 'POST',
-			url     : kurl_topicons_request,
-			async   : false,
+			type: 'POST',
+			url: kurl_topicons_request,
+			async: false,
 			dataType: 'json',
-			data    : {catid: catid},
-			success : function (data) {
+			data: {catid: catid},
+			success: function (data) {
 				$('#iconset_topic_list').remove();
 
 				var div_object = $('<div>', {'id': 'iconset_topic_list'});
@@ -154,45 +158,47 @@ jQuery(document).ready(function ($) {
 					if (value.type != 'system') {
 						if (value.id == 0) {
 							var input = $('<input>', {
-								type   : 'radio',
-								id     : 'radio' + value.id,
-								name   : 'topic_emoticon',
-								value  : value.id
-							}).prop('checked',true);
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
+								value: value.id
+							}).prop('checked', true);
 						}
 						else {
 							var input = $('<input>', {
-								type : 'radio',
-								id   : 'radio' + value.id,
-								name : 'topic_emoticon',
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
 								value: value.id
 							});
 						}
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (kunena_topicicontype=='B3') {
+						if (kunena_topicicontype == 'B3') {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<span>', {
 								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
 								'border': '0',
-								'al'    : ''
+								'al': ''
 							}));
-						} else if(kunena_topicicontype=='fa') {
+						}
+						else if (kunena_topicicontype == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<i>', {
-								'class' : 'fa glyphicon-topic fa-2x fa-' + value.fa,
+								'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
 								'border': '0',
-								'al'    : ''
+								'al': ''
 							}));
-						} else {
+						}
+						else {
 							var label = $('<label>', {
 								'class': 'radio inline',
-								'for'  : 'radio' + value.id
+								'for': 'radio' + value.id
 							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
 						}
 

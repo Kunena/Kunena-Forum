@@ -95,28 +95,28 @@
 	        title="COM_KUNENA_EDITOR_ULIST"
 	        alt="COM_KUNENA_EDITOR_HELPLINE_ULIST">
 		<wrap-selection
-				name="Unordered List"
-				start="[ul]\n  [li]"
-				end="[/li]\n  [li][/li]\n[/ul]"
-				repeat="line"
-				tag="li"
-				before="[ul]\n"
-				after="\n[/ul]"
-				class="bulletedlistbutton"/>
+			name="Unordered List"
+			start="[ul]\n  [li]"
+			end="[/li]\n  [li][/li]\n[/ul]"
+			repeat="line"
+			tag="li"
+			before="[ul]\n"
+			after="\n[/ul]"
+			class="bulletedlistbutton"/>
 	</button>
 	<button tag="ol"
 	        name="olist"
 	        title="COM_KUNENA_EDITOR_OLIST"
 	        alt="COM_KUNENA_EDITOR_HELPLINE_OLIST">
 		<wrap-selection
-				name="Ordered List"
-				start="[ol]\n  [li]"
-				end="[/li]\n  [li][/li]\n[/ol]"
-				repeat="line"
-				tag="li"
-				before="[ol]\n"
-				after="\n[/ol]"
-				class="numericlistbutton"/>
+			name="Ordered List"
+			start="[ol]\n  [li]"
+			end="[/li]\n  [li][/li]\n[/ol]"
+			repeat="line"
+			tag="li"
+			before="[ol]\n"
+			after="\n[/ol]"
+			class="numericlistbutton"/>
 	</button>
 	<button tag="li"
 	        name="list"

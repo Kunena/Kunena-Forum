@@ -1,31 +1,73 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Sessions
  * Provides access to the #__kunena_sessions table
+ * @since Kunena
  */
 class TableKunenaSessions extends KunenaTable
 {
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $userid = 0;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	public $allowed = 'na';
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $allowedcats = null;
+
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $lasttime = 0;
+
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $readtopics = 0;
+
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $currvisit = 0;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
+	/**
+	 * TableKunenaSessions constructor.
+	 *
+	 * @param   string $db
+	 *
+	 * @since Kunena
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_sessions', 'userid', $db);
@@ -36,6 +78,7 @@ class TableKunenaSessions extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($oid = null, $reset = true)
 	{
@@ -49,10 +92,12 @@ class TableKunenaSessions extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->userid);
+
 		if (!$user->exists())
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,6 +21,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function none()
 	{
@@ -30,6 +31,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function permdel()
 	{
@@ -54,6 +56,8 @@ class KunenaControllerTopics extends KunenaController
 		}
 		else
 		{
+			$messages = KunenaForumMessageHelper::getMessagesByTopics($ids);
+
 			foreach ($topics as $topic)
 			{
 				if ($topic->authorise('permdelete') && $topic->delete())
@@ -62,10 +66,40 @@ class KunenaControllerTopics extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
+					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
 					$this->app->enqueueMessage($topic->getError(), 'notice');
+				}
+			}
+
+			// Delete attachments in each message
+			$finder = new KunenaAttachmentFinder;
+			$finder->where('mesid', 'IN', array_keys($messages));
+			$attachments = $finder->find();
+
+			if (!empty($attachments))
+			{
+				foreach ($attachments as $instance)
+				{
+					$instance->exists(false);
+					unset($instance);
+				}
+
+				$db    = JFactory::getDBO();
+				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+
+					return false;
 				}
 			}
 		}
@@ -86,7 +120,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-				
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -95,6 +129,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete()
 	{
@@ -148,7 +183,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -157,6 +192,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function restore()
 	{
@@ -210,7 +246,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -219,6 +255,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function approve()
 	{
@@ -273,7 +310,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -282,6 +319,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function move()
 	{
@@ -331,7 +369,7 @@ class KunenaControllerTopics extends KunenaController
 							$this->app->enqueueMessage($topic->getError(), 'notice');
 						}
 					}
-				} 
+				}
 				else
 				{
 					foreach ($messages as $message)
@@ -339,14 +377,14 @@ class KunenaControllerTopics extends KunenaController
 						$topic = $message->getTopic();
 
 						if ($message->authorise('move') && $topic->move($target, $message->id))
-  						{
-  							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
-  						}
-  						else
-  						{
-  							$this->app->enqueueMessage($message->getError(), 'notice');
-  						}
-  					}
+						{
+							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+						}
+						else
+						{
+							$this->app->enqueueMessage($message->getError(), 'notice');
+						}
+					}
 				}
 			}
 		}
@@ -361,7 +399,7 @@ class KunenaControllerTopics extends KunenaController
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_MODERATE,
 						array(
-							'move' => array('id' => $topic->id, 'mode' => 'topic'),
+							'move'   => array('id' => $topic->id, 'mode' => 'topic'),
 							'target' => array('category_id' => $target->id)
 						),
 						$topic->getCategory(),
@@ -370,7 +408,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -379,6 +417,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unfavorite()
 	{
@@ -399,7 +438,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			if ($this->config->log_moderation)
 			{
-				foreach($topics as $topic)
+				foreach ($topics as $topic)
 				{
 					KunenaLog::log(
 						$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
@@ -411,7 +450,7 @@ class KunenaControllerTopics extends KunenaController
 					);
 				}
 			}
-			
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else
@@ -424,6 +463,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function unsubscribe()
 	{
@@ -454,6 +494,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function approve_posts()
 	{
@@ -501,6 +542,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function delete_posts()
 	{
@@ -547,6 +589,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function restore_posts()
 	{
@@ -593,6 +636,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function permdel_posts()
 	{

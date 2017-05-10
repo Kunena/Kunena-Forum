@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Controllers
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
 	 * @since    2.0
 	 */
@@ -189,12 +189,14 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($trashdelete)
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS')
+			);
 		}
 		else
 		{
 			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
-				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS')
+			);
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -227,20 +229,21 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($useradd)
 		{
 			$db->setQuery(
-					"INSERT INTO #__kunena_users (userid, showOnline)
+				"INSERT INTO #__kunena_users (userid, showOnline)
 					SELECT a.id AS userid, 1 AS showOnline
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
-					WHERE b.userid IS NULL");
-			
-			try 
+					WHERE b.userid IS NULL"
+			);
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 
@@ -250,19 +253,20 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdel)
 		{
 			$db->setQuery(
-					"DELETE a
+				"DELETE a
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
-					WHERE b.username IS NULL");
-			
-			try 
+					WHERE b.username IS NULL"
+			);
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 
@@ -272,17 +276,19 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdellife)
 		{
 			$db->setQuery(
-			"DELETE a
+				"DELETE a
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
-			WHERE banned='0000-00-00 00:00:00'");
+			WHERE banned='0000-00-00 00:00:00'"
+			);
 			$db->execute();
 
 			$db->setQuery(
-			"DELETE a
+				"DELETE a
 			FROM #__users AS a
-			WHERE block='1'");
-			
+			WHERE block='1'"
+			);
+
 			try
 			{
 				$db->execute();
@@ -290,7 +296,7 @@ class KunenaAdminControllerTools extends KunenaController
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-			
+
 				return;
 			}
 
@@ -306,15 +312,15 @@ class KunenaAdminControllerTools extends KunenaController
 					SET m.name = u.{$queryName}
 					WHERE m.userid = u.id";
 			$db->setQuery($query);
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 
@@ -327,15 +333,15 @@ class KunenaAdminControllerTools extends KunenaController
 			$db->execute();
 
 			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 
@@ -468,6 +474,7 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->topics)
 						{
 							// Update topic statistics
+							KunenaAttachmentHelper::cleanup();
 							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg = JText::sprintf(
@@ -501,7 +508,9 @@ class KunenaAdminControllerTools extends KunenaController
 						if ($state->users)
 						{
 							// Update user statistics
+							KunenaForumMessageThankyouHelper::recountThankyou();
 							KunenaUserHelper::recount();
+							KunenaUserHelper::recountPostsNull();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
 						break;
@@ -626,7 +635,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 */
 	public function trashmenu()
 	{
-		require_once (KPATH_ADMIN . '/install/model.php');
+		require_once KPATH_ADMIN . '/install/model.php';
 
 		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
@@ -692,15 +701,15 @@ class KunenaAdminControllerTools extends KunenaController
 			$db    = JFactory::getDbo();
 			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
 			$db->setQuery($query);
-			
-			try 
+
+			try
 			{
 				$db->execute();
 			}
 			catch (RuntimeException $e)
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 				return;
 			}
 
@@ -755,15 +764,15 @@ class KunenaAdminControllerTools extends KunenaController
 		$db    = JFactory::getDbo();
 		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
 		$db->setQuery($query);
-		
-		try 
+
+		try
 		{
 			$db->execute();
 		}
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-			
+
 			return;
 		}
 
@@ -784,7 +793,7 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Check timeout
 	 *
-	 * @param   bool  $stop  stop
+	 * @param   bool $stop stop
 	 *
 	 * @return boolean
 	 *
@@ -848,7 +857,7 @@ class KunenaAdminControllerTools extends KunenaController
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
-		$code = $this->app->input->getInt('secretkey');
+		$code     = $this->app->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 
@@ -861,7 +870,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 		}
 
-		$error = $login->loginUser($username, $password, 0, null, $code);
+		$error = $login->loginUser($username, $password, 0, null);
 
 		$user = JFactory::getUser(JUserHelper::getUserId($username));
 

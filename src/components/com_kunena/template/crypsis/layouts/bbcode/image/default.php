@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -25,7 +25,7 @@ echo $this->subLayout('Widget/Lightbox');
 $config = KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
-$width = $size ? (int) $size . "px;"  : 'auto ';
+$width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
 $attributesImg .= $alt ? ' alt="' . $alt . '"' : '';
 ?>

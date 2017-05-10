@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Forum.Announcement
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -19,16 +19,18 @@ abstract class KunenaForumAnnouncementHelper
 {
 	/**
 	 * @var KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	public static $_instances = false;
 
 	/**
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int   $identifier  Announcement to load - Can be only an integer.
-	 * @param   bool  $reload      reload
+	 * @param   int  $identifier Announcement to load - Can be only an integer.
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumAnnouncement
+	 * @since Kunena
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -60,10 +62,11 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get url
 	 *
-	 * @param   string  $layout  layout
-	 * @param   bool    $xhtml   xhtml
+	 * @param   string $layout layout
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	static public function getUrl($layout = null, $xhtml = true)
 	{
@@ -75,9 +78,10 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get uri
 	 *
-	 * @param   string  $layout  layout
+	 * @param   string $layout layout
 	 *
 	 * @return JUri
+	 * @since Kunena
 	 */
 	static public function getUri($layout = null)
 	{
@@ -94,17 +98,18 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Announcements
 	 *
-	 * @param   int   $start   start
-	 * @param   int   $limit   limit
-	 * @param   bool  $filter  filter
+	 * @param   int  $start  start
+	 * @param   int  $limit  limit
+	 * @param   bool $filter filter
 	 *
 	 * @return KunenaForumAnnouncement[]
+	 * @since Kunena
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db = JFactory::getDBO();
+		$db       = JFactory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 		if ($filter)
 		{
@@ -125,11 +130,18 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query, $start, $limit);
-		$results = (array) $db->loadAssocList();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$results = (array) $db->loadAssocList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		self::$_instances = array();
-		$list = array();
+		$list             = array();
 
 		foreach ($results as $announcement)
 		{
@@ -141,7 +153,7 @@ abstract class KunenaForumAnnouncementHelper
 			$instance = new KunenaForumAnnouncement($announcement);
 			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
-			$list[] = $instance;
+			$list[]                           = $instance;
 		}
 
 		unset($results);
@@ -152,15 +164,16 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Count
 	 *
-	 * @param   bool  $filter  filter
+	 * @param   bool $filter filter
 	 *
 	 * @return integer
+	 * @since Kunena
 	 */
 	static public function getCount($filter = true)
 	{
-		$db = JFactory::getDBO();
+		$db       = JFactory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 		if ($filter)
 		{
@@ -181,8 +194,15 @@ abstract class KunenaForumAnnouncementHelper
 		}
 
 		$db->setQuery($query);
-		$total = (int) $db->loadResult();
-		KunenaError::checkDatabaseError();
+
+		try
+		{
+			$total = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
 
 		return $total;
 	}
@@ -191,6 +211,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return array
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{

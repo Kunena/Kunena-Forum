@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator.Template
- * @subpackage    Users
+ * @package           Kunena.Administrator.Template
+ * @subpackage        Users
  *
- * @copyright     (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          https://www.kunena.org
+ * @copyright     (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license           https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link              https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -34,7 +34,8 @@ jQuery(function($) {
 		}
 	});
 });
-');
+'
+);
 ?>
 
 <div id="kunena" class="admin override">
@@ -45,281 +46,231 @@ jQuery(function($) {
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><i class="icon-user" alt="<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>"></i> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>: <?php echo $this->escape($this->user->name); ?></div>
+			<div class="module-title nav-header">
+				<i class="icon-user"></i>
+				<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>
+				: <?php echo $this->escape($this->user->name); ?></div>
 			<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm" name="adminForm">
-					<input type="hidden" name="task" value="" />
-					<input type="hidden" name="boxchecked" value="1" />
-					<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
-					<?php echo JHtml::_('form.token'); ?>
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm"
+			      name="adminForm">
+				<input type="hidden" name="task" value=""/>
+				<input type="hidden" name="boxchecked" value="1"/>
+				<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
+				<?php echo JHtml::_('form.token'); ?>
 
-					<article class="data-block">
-						<div class="data-container">
-							<div class="tabbable-panel">
-								<div class="tabbable-line">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
-										</li>
-										<?php /*
-										<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('User Info'); ?></a></li>
-										*/ ?>
-										<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
-										</li>
-										<li>
-											<a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
-										</li>
-										<li>
-											<a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
-										</li>
-										<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
-										</li>
-										<li>
-											<a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab1">
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></legend>
-												<div><?php echo $this->avatar; ?></div>
-												<?php if ($this->editavatar) : ?>
-													<div>
-														<label><input type="checkbox" value="1" name="deleteAvatar" /> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
-														</label>
-													</div>
-												<?php endif; ?>
-											</fieldset>
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
+				<article class="data-block">
+					<div class="data-container">
+						<div class="tabbable-panel">
+							<div class="tabbable-line">
+								<ul class="nav nav-tabs">
+									<li class="active">
+										<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+									</li>
+									<li>
+										<a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_INFO'); ?></a>
+									</li>
+									<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
+									</li>
+									<li>
+										<a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+									</li>
+									<li>
+										<a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+									</li>
+									<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
+									</li>
+									<li>
+										<a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab1">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></legend>
+											<div><?php echo $this->avatar; ?></div>
+											<?php
+											if ($this->editavatar)
+												:
+												?>
 												<div>
-													<textarea id="user-signature" class="input-xxlarge" name="signature" cols="4" rows="6"
-														><?php echo $this->escape($this->user->signature); ?></textarea>
-												</div>
-												<div>
-													<label><input type="checkbox" value="1" name="deleteSig" /> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
+													<label><input type="checkbox" value="1"
+													              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
 													</label>
 												</div>
-												<div>
-													<?php echo JText::sprintf(
-			'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-		'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'); ?>
-												</div>
-											</fieldset>
-										</div>
-										<?php /*
-										<div class="tab-pane" id="tab2">
-											<fieldset>
+											<?php endif; ?>
+										</fieldset>
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
+											<div>
+													<textarea id="user-signature" class="input-xxlarge" name="signature" cols="4" rows="6"
+													><?php echo $this->escape($this->user->signature); ?></textarea>
+											</div>
+											<div>
+												<label><input type="checkbox" value="1"
+												              name="deleteSig"/> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
+												</label>
+											</div>
+											<div>
+												<?php echo JText::sprintf(
+													'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
+													'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+												); ?>
+											</div>
+										</fieldset>
+									</div>
+									<div class="tab-pane" id="tab2">
+										<fieldset>
+											<table class="table table-bordered table-striped table-hover">
+												<tbody>
+												<tr>
+													<td class="span3">
+														<label for="personaltext">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
+														</label>
+													</td>
+													<td>
+														<input id="personaltext" type="text"
+														       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
+														       name="personaltext" value="<?php echo $this->escape($this->user->personalText); ?>"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="birthdate">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
+														</label>
+													</td>
+													<td>
+														<div id="birthdate">
+															<div class="input-append date">
+																<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
+																       value="<?php echo $this->user->birthdate == '0001-01-01' ? JFactory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
+																<span class="add-on"><i class="icon-grid-view-2 "></i></span>
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="location">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
+														</label>
+													</td>
+													<td>
+														<input id="location" type="text" name="location"
+														       value="<?php echo $this->escape($this->user->location); ?>"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="gender">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
+														</label>
+													</td>
+													<td>
+														<?php
+														// Make the select list for the view type
+														$gender[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+														$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+														$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+														// Build the html select list
+														echo JHtml::_(
+															'select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text',
+															$this->escape($this->user->gender), 'gender');
+														?>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="social-site">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
+														</label>
+													</td>
+													<td>
+														<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+															. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+															<input id="social-site" type="text" name="websitename"
+															       value="<?php echo $this->escape($this->user->websitename); ?>"/>
+														</span>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label for="social-url">
+															<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
+														</label>
+													</td>
+													<td>
+														<span class="hasTooltip"
+														      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+															<input id="social-url" type="text" name="websiteurl"
+															       value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
+														</span>
+													</td>
+												</tr>
+
+												<?php if ($this->config->social) : ?>
+													<?php foreach ($this->social as $social) : ?>
+														<tr>
+															<td>
+																<label for="social-<?php echo $social; ?>">
+																	<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $social); ?>
+																</label>
+															</td>
+															<td>
+																<?php if ($social != 'qq') : ?>
+																<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
+																	. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>">
+																<?php endif; ?>
+																	<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
+																	       value="<?php echo $this->escape($this->user->$social); ?>"/>
+																</span>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
+
+												</tbody>
+											</table>
+										</fieldset>
+									</div>
+
+									<div class="tab-pane" id="tab3">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_MODCHANGE'); ?></legend>
 											<table class="table table-striped">
 												<tr>
-													<td>Personal Text</td>
-													<td><input type="text" maxlength="50" name="personaltext" value="" /></td>
+													<td width="20%"><?php echo JText::_('COM_KUNENA_ISMOD'); ?></td>
+													<td><?php echo JText::_('COM_KUNENA_MODCATS'); ?></td>
 												</tr>
 												<tr>
-													<td>Birthdate</td>
-													<td>
-														<span class="editlinktip hasTip" title="Birthdate::Year (YYYY) - Month (MM) - Day (DD)" >
-															<input type="text" size="4" maxlength="4" class="input-mini" name="birthdate1" value="0001" />
-															<input type="text" size="2" maxlength="2" class="input-mini" name="birthdate2" value="01" />
-															<input type="text" size="2" maxlength="2" class="input-mini" name="birthdate3" value="01" />
-														</span>
-													</td>
+													<td><?php echo $this->selectMod; ?></td>
+													<td><?php echo $this->modCats; ?></td>
 												</tr>
-												<tr>
-													<td>Location</td>
-													<td><input type="text" name="location" value="" /></td>
-												</tr>
-												<tr>
-													<td>Gender</td>
-													<td>
-														<select id="gender" name="gender" class="inputbox" size="1">
-															<option value="0" selected="selected">Unknown</option>
-															<option value="1">Male</option>
-															<option value="2">Female</option>
-														</select>
-													</td>
-												</tr>
-												<tr>
-													<td>Web site Name</td>
-													<td>
-														<span class="editlinktip hasTip" title="Web site Name::Example: Kunena" >
-															<input type="text" name="websitename" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Web site URL</td>
-													<td>
-														<span class="editlinktip hasTip" title="Web site URL::Example: www.kunena.org" >
-															<input type="text" name="websiteurl" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Twitter</td>
-													<td>
-														<span class="editlinktip hasTip" title="Twitter::This is your Twitter username." >
-															<input type="text" name="twitter" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Facebook</td>
-													<td>
-														<span class="editlinktip hasTip" title="Facebook::This is your Facebook username." >
-															<input type="text" name="facebook" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>MySpace</td>
-													<td>
-														<span class="editlinktip hasTip" title="MySpace::This is your MySpace username." >
-															<input type="text" name="myspace" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>SKYPE</td>
-													<td>
-														<span class="editlinktip hasTip" title="SKYPE::This is your Skype handle." >
-															<input type="text" name="skype" value="jelle810" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Linkedin</td>
-													<td>
-														<span class="editlinktip hasTip" title="Linkedin::This is your LinkedIn username." >
-															<input type="text" name="linkedin" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Delicious</td>
-													<td>
-														<span class="editlinktip hasTip" title="Delicious::This is your Delicious username." >
-															<input type="text" name="delicious" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>FriendFeed</td>
-													<td>
-														<span class="editlinktip hasTip" title="FriendFeed::This is your FriendFeed username." >
-															<input type="text" name="friendfeed" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Digg</td>
-													<td>
-														<span class="editlinktip hasTip" title="Digg::This is your Digg username." >
-															<input type="text" name="digg" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>YIM</td>
-													<td>
-														<span class="editlinktip hasTip" title="YIM::This is your Yahoo! Instant Messenger nickname." >
-															<input type="text" name="yim" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>AIM</td>
-													<td>
-														<span class="editlinktip hasTip" title="AIM::This is your AOL Instant Messenger nickname." >
-															<input type="text" name="aim" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>GTALK</td>
-													<td>
-														<span class="editlinktip hasTip" title="GTALK::This is your Gtalk nickname." >
-															<input type="text" name="gtalk" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>ICQ</td>
-													<td>
-														<span class="editlinktip hasTip" title="ICQ::This is your ICQ number." >
-															<input type="text" name="icq" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>MSN</td>
-													<td>
-														<span class="editlinktip hasTip" title="MSN::Your MSN messenger e-mail address." >
-															<input type="text" name="msn" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Blogger</td>
-													<td>
-														<span class="editlinktip hasTip" title="Blogger::This is your Blogger username." >
-															<input type="text" name="blogspot" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Flickr</td>
-													<td>
-														<span class="editlinktip hasTip" title="Flickr::This is your Flickr username." >
-															<input type="text" name="flickr" value="" />
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td>Bebo</td>
-													<td>
-														<span class="editlinktip hasTip" title="Bebo::This is your Bebo member ID." >
-															<input type="text" name="bebo" value="" />
-														</span>
-													</td>
-												</tr>
-										</table>
-									</fieldset>
+											</table>
+										</fieldset>
 									</div>
-									*/ ?>
-										<div class="tab-pane" id="tab3">
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_MODCHANGE'); ?></legend>
-												<table class="table table-striped">
-													<tr>
-														<td width="20%"><?php echo JText::_('COM_KUNENA_ISMOD'); ?></td>
-														<td><?php echo JText::_('COM_KUNENA_MODCATS'); ?></td>
-													</tr>
-													<tr>
-														<td><?php echo $this->selectMod; ?></td>
-														<td><?php echo $this->modCats; ?></td>
-													</tr>
-												</table>
-											</fieldset>
-										</div>
 
-										<div class="tab-pane" id="tab4">
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
-												<table class="table table-striped">
-													<thead>
-													<tr>
-														<?php /*
+									<div class="tab-pane" id="tab4">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
+											<table class="table table-striped">
+												<thead>
+												<tr>
+													<?php /*
 														<th width="1%" class="hidden-phone">
 															<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
 														</th>
 														*/ ?>
-														<th><?php echo JText::_('JGLOBAL_TITLE'); ?></th>
-														<th width="1%"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
-													</tr>
-													</thead>
-													<?php
-													if (!empty($this->subscatslist)) : foreach ($this->subscatslist as $cat) :
+													<th><?php echo JText::_('JGLOBAL_TITLE'); ?></th>
+													<th width="1%"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
+												</tr>
+												</thead>
+												<?php
+												if (!empty($this->subscatslist))
+													:
+													foreach ($this->subscatslist as $cat)
+														:
 														?>
 														<tr>
 															<td><?php echo $this->escape($cat->name); ?>
@@ -328,101 +279,123 @@ jQuery(function($) {
 															<td><?php echo $this->escape($cat->id); ?></td>
 														</tr>
 													<?php endforeach;
-													else : ?>
-														<tr>
-															<td><?php echo JText::_('COM_KUNENA_NOCATSUBS'); ?></td>
-														</tr>
-													<?php endif; ?>
-												</table>
-											</fieldset>
-										</div>
-
-										<div class="tab-pane" id="tab5">
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
-												<table class="table table-striped">
-													<thead>
+												else:
+													?>
 													<tr>
-														<?php /*
+														<td><?php echo JText::_('COM_KUNENA_NOCATSUBS'); ?></td>
+													</tr>
+												<?php endif; ?>
+											</table>
+										</fieldset>
+									</div>
+
+									<div class="tab-pane" id="tab5">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
+											<table class="table table-striped">
+												<thead>
+												<tr>
+													<?php /*
 														<th width="1%" class="hidden-phone">
 															<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
 														</th>
 														*/ ?>
-														<th><?php echo JText::_('JGLOBAL_TITLE'); ?></th>
-														<th width="1%"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
-													</tr>
-													</thead>
+													<th><?php echo JText::_('JGLOBAL_TITLE'); ?></th>
+													<th width="1%"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
+												</tr>
+												</thead>
 
-													<?php
-													if ($this->sub) : foreach ($this->sub as $topic) :
+												<?php
+												if ($this->sub)
+													:
+													foreach ($this->sub as $topic)
+														:
 														?>
 														<tr>
 															<td><?php echo $this->escape($topic->subject); ?></td>
 															<td><?php echo $this->escape($topic->id); ?></td>
 														</tr>
 													<?php endforeach;
-													else : ?>
-														<tr>
-															<td><?php echo JText::_('COM_KUNENA_NOSUBS'); ?></td>
-														</tr>
-													<?php endif; ?>
-												</table>
-											</fieldset>
-										</div>
+												else
+													:
+													?>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_NOSUBS'); ?></td>
+													</tr>
+												<?php endif; ?>
+											</table>
+										</fieldset>
+									</div>
 
-										<div class="tab-pane" id="tab6">
-											<fieldset>
-												<legend><?php echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
-												<table class="table table-striped">
-													<?php
-													$i = 0;
-													foreach ($this->ipslist as $ip => $list) :
-														$userlist = array();
-														$mescnt = 0;
-														foreach ($list as $curuser)
+									<div class="tab-pane" id="tab6">
+										<fieldset>
+											<legend><?php echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
+											<table class="table table-striped">
+												<?php
+												$i          = 0;
+
+												foreach ($this->ipslist as $ip => $list)
+													:
+													$userlist = array();
+													$mescnt = 0;
+
+													foreach ($list as $curuser)
+													{
+														if ($curuser->userid == $this->user->userid)
 														{
-															if ($curuser->userid == $this->user->userid)
-															{
-																$mescnt += intval($curuser->mescnt);
-																continue;
-															}
-
-															$userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
+															$mescnt += intval($curuser->mescnt);
+															continue;
 														}
 
-														$userlist = implode(', ', $userlist);
-														?>
-														<tr>
-															<td width="30"><?php echo ++$i; ?></td>
-															<td width="60"><strong><?php echo $this->escape($ip); ?></strong>
-															</td>
-															<td>(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>)</td>
-														</tr>
-													<?php endforeach; ?>
-												</table>
-											</fieldset>
-										</div>
+														$userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
+													}
 
-										<div class="tab-pane" id="tab7">
-											<fieldset>
-												<table class="table table-striped">
+													$userlist = implode(', ', $userlist);
+													?>
 													<tr>
-														<td width="20%"><?php echo JText::_('COM_KUNENA_PREFOR'); ?></td>
-														<td><?php echo $this->selectOrder; ?></td>
+														<td width="30"><?php echo ++$i; ?></td>
+														<td width="60"><strong><?php echo $this->escape($ip); ?></strong>
+														</td>
+														<td>
+															(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>
+															)
+														</td>
 													</tr>
+												<?php endforeach; ?>
+											</table>
+										</fieldset>
+									</div>
+
+									<div class="tab-pane" id="tab7">
+										<fieldset>
+											<table class="table table-striped">
+												<tr>
+													<td width="20%"><?php echo JText::_('COM_KUNENA_PREFOR'); ?></td>
+													<td><?php echo $this->selectOrder; ?></td>
+												</tr>
+												<?php foreach ($this->settings as $field) : ?>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_RANKS'); ?></td>
-														<td><?php echo $this->selectRank; ?></td>
+														<td class="span3">
+															<?php echo $field->label; ?>
+														</td>
+														<td>
+															<?php echo $field->field; ?>
+														</td>
 													</tr>
-												</table>
-											</fieldset>
-										</div>
+												<?php endforeach ?>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_RANKS'); ?></td>
+													<td><?php echo $this->selectRank; ?></td>
+												</tr>
+											</table>
+										</fieldset>
 									</div>
 								</div>
 							</div>
 						</div>
-					</article>
-				</form>
+					</div>
+				</article>
+			</form>
 			<div class="clearfix"></div>
 		</div>
 	</div>

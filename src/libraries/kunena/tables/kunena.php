@@ -1,27 +1,37 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaTable
+ * @since Kunena
+ */
 abstract class KunenaTable extends JTable
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected $_exists = false;
 
 	/**
 	 * @param   null $exists
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
+
 		if ($exists !== null)
 		{
 			$this->_exists = $exists;
@@ -35,6 +45,7 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -90,7 +101,7 @@ abstract class KunenaTable extends JTable
 		}
 
 		// Initialise the query.
-		$query = $this->_db->getQuery(true)
+		$query  = $this->_db->getQuery(true)
 			->select('*')
 			->from($this->_tbl);
 		$fields = array_keys($this->getProperties());
@@ -109,11 +120,13 @@ abstract class KunenaTable extends JTable
 
 		$this->_db->setQuery($query);
 
-		$row = $this->_db->loadAssoc();
-
-		if ($this->_db->getErrorNum())
+		try
 		{
-			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+			$row = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
 		if (empty($row))
@@ -142,6 +155,7 @@ abstract class KunenaTable extends JTable
 	 * @param   bool $updateNulls
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function store($updateNulls = false)
 	{
@@ -190,6 +204,7 @@ abstract class KunenaTable extends JTable
 	 * @return  boolean    True on success.
 	 *
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	protected function insertObject()
 	{
@@ -204,7 +219,7 @@ abstract class KunenaTable extends JTable
 		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process non-null scalars.
-			if (is_array($v) or is_object($v) or $v === null)
+			if (is_array($v) || is_object($v) || $v === null)
 			{
 				continue;
 			}
@@ -239,7 +254,7 @@ abstract class KunenaTable extends JTable
 
 		if (count($tbl_keys) == 1 && $id)
 		{
-			$key = reset($tbl_keys);
+			$key        = reset($tbl_keys);
 			$this->$key = $id;
 		}
 
@@ -249,16 +264,17 @@ abstract class KunenaTable extends JTable
 	/**
 	 * Updates a row in a table based on an object's properties.
 	 *
-	 * @param   boolean  $nulls    True to update null fields or false to ignore them.
+	 * @param   boolean $nulls True to update null fields or false to ignore them.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @throws  RuntimeException
+	 * @since Kunena
 	 */
 	public function updateObject($nulls = false)
 	{
 		$fields = array();
-		$where = array();
+		$where  = array();
 
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
@@ -271,7 +287,7 @@ abstract class KunenaTable extends JTable
 		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process scalars that are not internal fields.
-			if (is_array($v) or is_object($v) or $k[0] == '_')
+			if (is_array($v) || is_object($v) || $k[0] == '_')
 			{
 				continue;
 			}
@@ -319,6 +335,12 @@ abstract class KunenaTable extends JTable
 		return $this->_db->execute();
 	}
 
+	/**
+	 * @param   null $pk
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
 	public function delete($pk = null)
 	{
 		// Workaround Joomla 3.2 change.
@@ -329,14 +351,15 @@ abstract class KunenaTable extends JTable
 		{
 			$pk = array();
 
-			foreach ($tbl_keys AS $key) {
+			foreach ($tbl_keys AS $key)
+			{
 				$pk[$key] = $this->$key;
 			}
 		}
 		elseif (!is_array($pk))
 		{
 			$key = reset($tbl_keys);
-			$pk = array($key => $pk);
+			$pk  = array($key => $pk);
 		}
 
 		foreach ($tbl_keys AS $key)
@@ -370,12 +393,13 @@ abstract class KunenaTable extends JTable
 		$this->_db->setQuery($query);
 
 		// Check for a database error.
-		$this->_db->execute();
-
-		// Check for a database error.
-		if ($this->_db->getErrorNum())
+		try
 		{
-			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
 		// Implement JObservableInterface: Post-processing by observers

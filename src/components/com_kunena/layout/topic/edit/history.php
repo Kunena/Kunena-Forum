@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,10 +21,11 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get the anker link with number
 	 *
-	 * @param   int  $mesid     The Id of the messsage
-	 * @param   int  $replycnt  The number of replies
+	 * @param   int $mesid    The Id of the messsage
+	 * @param   int $replycnt The number of replies
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getNumLink($mesid, $replycnt)
 	{
@@ -43,12 +44,13 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get anker link on the same page
 	 *
-	 * @param   int     $anker  The anker number
-	 * @param   string  $name   The name for the link
-	 * @param   string  $rel    The rel attribute for the link
-	 * @param   string  $class  The class attibute for the link
+	 * @param   int    $anker The anker number
+	 * @param   string $name  The name for the link
+	 * @param   string $rel   The rel attribute for the link
+	 * @param   string $class The class attibute for the link
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{

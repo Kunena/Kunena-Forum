@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      BBCode
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,9 +16,9 @@ defined('_JEXEC') or die();
 $attachment = $this->attachment;
 
 $location = JUri::root() . $attachment->getUrl();
-$data = getimagesize($location);
-$width = $data[0];
-$height = $data[1];
+$data     = getimagesize($location);
+$width    = $data[0];
+$height   = $data[1];
 
 if (!$attachment->isImage())
 {
@@ -33,6 +33,8 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width ;?>" height="<?php echo $height ;?>" alt="" />
+<a href="<?php echo $attachment->getUrl(); ?>"
+   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
+	     alt="<?php echo $attachment->getFilename(); ?>"/>
 </a>

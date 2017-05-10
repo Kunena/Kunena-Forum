@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Path
+ * @package       Kunena.Framework
+ * @subpackage    Path
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,18 +15,34 @@ jimport('joomla.filesystem.path');
 /**
  * Class KunenaPath
  *
- * @see JPath
+ * @see   JPath
+ * @since Kunena
  */
 class KunenaPath extends JPath
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $tmpdir = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $apache = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static public $owner = null;
 
 	/**
 	 * Returns server writable temporary directory, preferring to Joomla tmp if possible.
 	 *
 	 * @return  string  Path to temporary directory.
+	 * @since Kunena
 	 */
 	public static function tmpdir()
 	{
@@ -56,9 +72,10 @@ class KunenaPath extends JPath
 	/**
 	 * Method to determine if script owns the path.
 	 *
-	 * @param   string  $path  Path to check ownership.
+	 * @param   string $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
+	 * @since Kunena
 	 */
 	public static function isOwner($path)
 	{
@@ -92,7 +109,9 @@ class KunenaPath extends JPath
 	 * Checks if path is writeable either by the server or by FTP.
 	 *
 	 * @param $path
+	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function isWritable($path)
 	{

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Widget
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,7 +21,8 @@ if ($config->lightbox == 1)
 	{
 		$this->addStyleSheet('assets/css/fancybox.white.css');
 	}
-	else  {
+	else
+	{
 		$this->addStyleSheet('assets/css/fancybox.black.css');
 	}
 

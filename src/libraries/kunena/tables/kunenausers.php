@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Tables
+ * @package         Kunena.Framework
+ * @subpackage      Tables
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
-require_once(__DIR__ . '/kunena.php');
+require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Users Table
@@ -20,309 +20,394 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaUsers extends KunenaTable
 {
-
 	/**
 	 * User ID
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $userid = null;
 
-	// From Joomla
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $name = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $username = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $email = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $blocked = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $registerDate = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $lastvisitDate = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $view = null;
 
 	/**
 	 * Signature
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $signature = null;
 
 	/**
 	 * Is moderator?
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $moderator = null;
 
 	/**
 	 * Banned until timestamp
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $banned = null;
 
 	/**
 	 * Ordering of posts
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $ordering = null;
 
 	/**
 	 * User post count
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $posts = null;
 
 	/**
 	 * Avatar image file
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $avatar = null;
 
 	/**
 	 * User karma
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $karma = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	public $karma_time = null;
 
 	/**
 	 * Kunena Group ID
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $group_id = null;
 
 	/**
 	 * Kunena Profile hits
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $uhits = null;
 
 	/**
 	 * Personal text
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $personalText = null;
 
 	/**
 	 * Gender
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $gender = null;
 
 	/**
 	 * Birthdate
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $birthdate = null;
 
 	/**
 	 * User Location
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $location = null;
 
 	/**
 	 * Name of web site
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $websitename = null;
 
 	/**
 	 * URL to web site
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $websiteurl = null;
 
 	/**
 	 * User rank
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $rank = null;
 
 	/**
 	 * Hide Email address
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $hideEmail = null;
 
 	/**
 	 * Show online
-	 * @var int
+	 * @var integer
+	 * @since Kunena
 	 **/
 	public $showOnline = null;
 
 	/**
 	 * ICQ ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $icq = null;
 
 	/**
 	 * AIM ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $aim = null;
 
 	/**
 	 * YIM ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $yim = null;
 
 	/**
 	 * Microsoft ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $microsoft = null;
 
 	/**
 	 * SKYPE ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $skype = null;
 
 	/**
 	 * TWITTER ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $twitter = null;
 
 	/**
 	 * FACEBOOK ID
 	 * @var string
+	 * @since Kunena
 	 **/
 	public $facebook = null;
 
 	/**
 	 * Google ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $google = null;
 
 	/**
 	 * MYSPACE ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $myspace = null;
 
 	/**
 	 * LINKEDIN ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $linkedin = null;
 
 	/**
 	 * DELICIOUS ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $delicious = null;
 
 	/**
 	 * FRIENDFEED ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $friendfeed = null;
 
 	/**
 	 * $DIGG ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $digg = null;
 
 	/**
 	 * BLOGSPOT ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $blogspot = null;
 
 	/**
 	 * FLICKR ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $flickr = null;
 
 	/**
 	 * BEBO ID
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $bebo = null;
 
 	/**
 	 * Thankyou count
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $thankyou = null;
 
 	/**
 	 * canSubscribe
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $canSubscribe = null;
 
 	/**
 	 * userListtime
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $userListtime = null;
 
 	/**
 	 * Status
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $status = null;
 
 	/**
 	 * Status Text
 	 * @var string
-	 **/
+	 * @since Kunena
+	 */
 	public $status_text = null;
 
 	/**
 	 * Instagram
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $instagram = null;
 
 	/**
 	 * QQ
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $qq = null;
 
 	/**
 	 * Qzone
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $qzone = null;
 
 	/**
 	 * Weibo
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $weibo = null;
 
 	/**
 	 * Wechat
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $wechat = null;
 
 	/**
 	 * Apple
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $apple = null;
 
 	/**
 	 * Vk
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $vk = null;
 
 	/**
 	 * telegram
-	 * @var int
-	 **/
+	 * @var integer
+	 * @since Kunena
+	 */
 	public $telegram = null;
 
 	/**
 	 * @param   string $db
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($db)
 	{
@@ -334,19 +419,24 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($userid !== null) {
+		if ($userid !== null)
+		{
 			$this->$k = $userid;
 		}
 
 		// Reset the table.
-		if ($reset) { $this->reset(); }
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -362,13 +452,14 @@ class TableKunenaUsers extends KunenaTable
 			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
 			WHERE u.id = {$this->$k}";
 		$this->_db->setQuery($query);
-		$data = $this->_db->loadAssoc();
 
-		// Check for an error message.
-
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$data = $this->_db->loadAssoc();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -381,7 +472,10 @@ class TableKunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data['posts'] !== null) { $this->_exists = true; }
+		if ($data['posts'] !== null)
+		{
+			$this->_exists = true;
+		}
 
 		// Bind the data to the table.
 		$this->bind($data);
@@ -391,6 +485,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -408,6 +503,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   array $ignore
 	 *
 	 * @return boolean|void
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -416,12 +512,16 @@ class TableKunenaUsers extends KunenaTable
 
 		foreach ($fields as $field)
 		{
-			if (isset($data[$field]) && !in_array($field, $ignore)) { $this->$field = $data[$field]; }
+			if (isset($data[$field]) && !in_array($field, $ignore))
+			{
+				$this->$field = $data[$field];
+			}
 		}
 	}
 
 	/**
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public function check()
 	{

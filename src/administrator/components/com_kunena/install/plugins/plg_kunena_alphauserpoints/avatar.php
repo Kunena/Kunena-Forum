@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  AlphaUserPoints
+ * @package         Kunena.Plugins
+ * @subpackage      AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,9 +15,14 @@ defined('_JEXEC') or die();
  * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
  *
  * @deprecated  5.0
+ * @since       Kunena
  */
 class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
@@ -26,6 +31,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * @param $params
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function __construct($params)
 	{
@@ -36,6 +42,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * @return mixed
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getEditURL()
 	{
@@ -49,6 +56,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 *
 	 * @deprecated  5.0
 	 * @return string|void
+	 * @since       Kunena
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
@@ -56,14 +64,15 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	}
 
 	/**
-	 * @param        $user
-	 * @param string $class
-	 * @param int    $sizex
-	 * @param int    $sizey
+	 * @param          $user
+	 * @param   string $class
+	 * @param   int    $sizex
+	 * @param   int    $sizey
 	 *
 	 * @return string
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{

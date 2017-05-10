@@ -1,33 +1,35 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Image
+ * @package         Kunena.Framework
+ * @subpackage      Image
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 /**
  * Helper class for image manipulation.
+ * @since Kunena
  */
 class KunenaImageHelper
 {
 	/**
 	 * Create new re-sized version of the original image.
 	 *
-	 * @param   string  $file        Incoming file
-	 * @param   string  $folder      Folder for the new image.
-	 * @param   string  $filename    Filename for the new image.
-	 * @param   int     $maxWidth    Maximum width for the image.
-	 * @param   int     $maxHeight   Maximum height for the image.
-	 * @param   int     $quality     Quality for the file (1-100).
-	 * @param   int     $scale       See available KunenaImage constants.
-	 * @param   int     $crop        Define if you want crop the image.
+	 * @param   string $file      Incoming file
+	 * @param   string $folder    Folder for the new image.
+	 * @param   string $filename  Filename for the new image.
+	 * @param   int    $maxWidth  Maximum width for the image.
+	 * @param   int    $maxHeight Maximum height for the image.
+	 * @param   int    $quality   Quality for the file (1-100).
+	 * @param   int    $scale     See available KunenaImage constants.
+	 * @param   int    $crop      Define if you want crop the image.
 	 *
 	 * @return bool    True on success.
+	 * @since Kunena
 	 */
 	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
 	{

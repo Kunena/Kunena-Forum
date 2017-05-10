@@ -2,19 +2,24 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * The HTML Kunena configuration view.
+ * @since Kunena
  */
 class KunenaViewInstall extends JViewLegacy
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $model = null;
 
 	/**
@@ -57,7 +62,7 @@ class KunenaViewInstall extends JViewLegacy
 	 * @access private
 	 *
 	 * @return null
-	 *
+	 * @since  Kunena
 	 **/
 	function setToolBar()
 	{
@@ -68,6 +73,7 @@ class KunenaViewInstall extends JViewLegacy
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySchema()
 	{
@@ -93,6 +99,7 @@ class KunenaViewInstall extends JViewLegacy
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySchemaDiff()
 	{

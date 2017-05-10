@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Finder
+ * @package         Kunena.Plugins
+ * @subpackage      Finder
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die('');
 
@@ -18,6 +18,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 
 /**
  * Finder adapter for com_kunena.
+ * @since Kunena
  */
 class plgFinderKunena extends FinderIndexerAdapter
 {
@@ -88,7 +89,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		// If a category will be change, we want to see, if the accesstype and access level has changed
 		if (($row instanceof TableKunenaCategories) && !$isNew)
 		{
-			$old_table = clone($row);
+			$old_table = clone $row;
 			$old_table->load();
 			$this->old_cataccess     = $old_table->access;
 			$this->old_cataccesstype = $old_table->accesstype;
@@ -177,6 +178,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		elseif ($table instanceof TableKunenaTopics)
 		{
 			$messages = $this->getMessagesByTopic($table->id);
+
 			foreach ($messages as $message)
 			{
 				$this->remove($message->id);
@@ -278,6 +280,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @return  void
 	 *
 	 * @throws  Exception on database error.
+	 * @since Kunena
 	 */
 	protected function index(FinderIndexerResult $item)
 	{
@@ -309,7 +312,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		FinderIndexerHelper::getContentExtras($item);
 
 		// Index the item.
-		FinderIndexer::index($item);
+		$this->indexer->index($item);
 	}
 
 	/**
@@ -358,13 +361,14 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Get the total number of content items to index.
 		$this->db->setQuery($sql);
-		$return = (int) $this->db->loadResult();
 
-		// Check for a database error.
-		if ($this->db->getErrorNum())
+		try
 		{
-			// Throw database error exception.
-			throw new Exception($this->db->getErrorMsg(), 500);
+			$return = (int) $this->db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $return;
@@ -418,14 +422,14 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Get the content items to index.
 		$this->db->setQuery($sql, 0, $limit);
-		$ids = $this->db->loadColumn();
 
-		// Check for a database error.
-
-		if ($this->db->getErrorNum())
+		try
 		{
-			// Throw database error exception.
-			throw new Exception($this->db->getErrorMsg(), 500);
+			$ids = $this->db->loadColumn();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
 		}
 
 		// Convert the items to result objects.
@@ -447,6 +451,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $message
 	 *
 	 * @return FinderIndexerResult
+	 * @since Kunena
 	 */
 	protected function createIndexerResult($message)
 	{
@@ -470,8 +475,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Set other information.
 		$item->published = intval($message->hold == 0);
+
 		// TODO: add topic state
-		//$item->state = intval($message->getCategory()->published == 1);
+		// $item->state = intval($message->getCategory()->published == 1);
 		$item->state    = $item->published;
 		$item->language = '*';
 
@@ -499,6 +505,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param   string $view      View name.
 	 *
 	 * @return    string        The URL of the item.
+	 * @since Kunena
 	 */
 	protected function getUrl($id, $extension, $view)
 	{
@@ -537,6 +544,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $cat_id
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function getMessagesByCategory($cat_id)
 	{
@@ -562,6 +570,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $topic_id
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function getMessagesByTopic($topic_id)
 	{
@@ -593,7 +602,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * @param $item
 	 *
-	 * @return int
+	 * @return integer
+	 * @since Kunena
 	 */
 	protected function getAccessLevel($item)
 	{

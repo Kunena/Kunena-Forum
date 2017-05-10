@@ -2,17 +2,18 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Attachments view for Kunena backend
+ * @since Kunena
  */
 class KunenaAdminViewAttachments extends KunenaView
 {
@@ -21,6 +22,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function display($tpl = null)
 	{
@@ -49,10 +51,11 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		JToolBarHelper::spacer();
@@ -65,6 +68,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -81,12 +85,13 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 * Returns an array of review filter options.
+	 * @since Kunena
 	 *
 	 * @return    array
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection = array();
+		$sortDirection   = array();
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 

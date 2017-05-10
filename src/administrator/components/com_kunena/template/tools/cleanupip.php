@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Prune
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Prune
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,8 +22,9 @@ defined('_JEXEC') or die();
 	</div>
 	<div id="j-main-container" class="span10">
 
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="cleanupip" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm"
+		      name="adminForm">
+			<input type="hidden" name="task" value="cleanupip"/>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -33,7 +34,7 @@ defined('_JEXEC') or die();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
 						<td>
 							<div class="input-append">
-								<input class="span3" type="text" name="cleanup_ip_days" value="30" />
+								<input class="span3" type="text" name="cleanup_ip_days" value="30"/>
 								<span class="add-on"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
 							</div>
 						</td>

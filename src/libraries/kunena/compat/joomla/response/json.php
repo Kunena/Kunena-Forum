@@ -11,6 +11,7 @@ defined('JPATH_PLATFORM') or die;
 
 /**
  * Compatibility layer for JResponseJson
+ * @since Kunena
  */
 class KunenaCompatResponseJson extends JResponseJson
 {

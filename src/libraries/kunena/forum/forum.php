@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum
+ * @package       Kunena.Framework
+ * @subpackage    Forum
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,21 +17,69 @@ defined('_JEXEC') or die();
  *
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
  * is compatible with the current version.
+ * @since Kunena
  */
 abstract class KunenaForum
 {
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $version = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $version_major = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $version_date = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
 	protected static $version_name = false;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const PUBLISHED = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const UNAPPROVED = 1;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const DELETED = 2;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_DELETED = 3;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const TOPIC_CREATION = 4;
 
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const MODERATOR = 1;
+	/**
+	 *
+	 * @since Kunena
+	 */
 	const ADMINISTRATOR = 2;
 
 	/**
@@ -44,19 +92,20 @@ abstract class KunenaForum
 	 * Always detect Kunena in your code before you start using the framework:
 	 *
 	 * <code>
-	 *	// Check if Kunena Forum has been installed and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
-	 *		// Initialize the framework (new in 2.0.0)
-	 *		KunenaForum::setup();
-	 *		// Start using the framework
-	 *	}
+	 *    // Check if Kunena Forum has been installed and compatible with your code
+	 *    if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
+	 *        // Initialize the framework (new in 2.0.0)
+	 *        KunenaForum::setup();
+	 *        // Start using the framework
+	 *    }
 	 * </code>
 	 *
-	 * @see KunenaForum::enabled()
-	 * @see KunenaForum::isCompatible()
-	 * @see KunenaForum::setup()
+	 * @see   KunenaForum::enabled()
+	 * @see   KunenaForum::isCompatible()
+	 * @see   KunenaForum::setup()
 	 *
 	 * @return boolean True if Kunena has been fully installed.
+	 * @since Kunena
 	 */
 	public static function installed()
 	{
@@ -78,19 +127,21 @@ abstract class KunenaForum
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
-	 *		// Initialize the framework (new in 2.0.0)
-	 *		KunenaForum::setup();
-	 *		// It's now safe to display something or to save Kunena objects
+	 *    if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *        // Initialize the framework (new in 2.0.0)
+	 *        KunenaForum::setup();
+	 *        // It's now safe to display something or to save Kunena objects
 	 * }
 	 * </code>
 	 *
-	 * @see KunenaForum::installed()
-	 * @see KunenaForum::isCompatible()
-	 * @see KunenaForum::setup()
+	 * @see   KunenaForum::installed()
+	 * @see   KunenaForum::isCompatible()
+	 * @see   KunenaForum::setup()
 	 *
 	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
+	 *
 	 * @return boolean True if online.
+	 * @since Kunena
 	 */
 	public static function enabled($checkAdmin = true)
 	{
@@ -116,16 +167,16 @@ abstract class KunenaForum
 	 * Normally I wouldn't bother supporting deprecated unstable releases.
 	 *
 	 * <code>
-	 *	// We have already checked that Kunena 2.0+ has been installed and is online
+	 *    // We have already checked that Kunena 2.0+ has been installed and is online
 	 *
-	 *	if (KunenaForum::isCompatible('2.0.0')) {
-	 *		KunenaForum::setup();
-	 *	} else {
-	 *		KunenaFactory::loadLanguage();
-	 *	}
+	 *    if (KunenaForum::isCompatible('2.0.0')) {
+	 *        KunenaForum::setup();
+	 *    } else {
+	 *        KunenaFactory::loadLanguage();
+	 *    }
 	 * </code>
 	 *
-	 * @see KunenaForum::installed()
+	 * @see   KunenaForum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
@@ -150,9 +201,9 @@ abstract class KunenaForum
 
 		// Setup error logging.
 		jimport('joomla.error.log');
-		$options = array('logger' => 'w3c', 'text_file' => 'kunena.php');
+		$options    = array('logger' => 'w3c', 'text_file' => 'kunena.php');
 		$categories = array('kunena');
-		$levels = JDEBUG || $config->debug ? JLog::ALL :
+		$levels     = JDEBUG || $config->debug ? JLog::ALL :
 			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
 		JLog::addLogger($options, $levels, $categories);
 	}
@@ -166,29 +217,31 @@ abstract class KunenaForum
 	 * you may want to use.
 	 *
 	 * <code>
-	 *	if (KunenaForum::isCompatible('2.0.1')) {
-	 *		// We can do it in the new way
-	 *	} else {
-	 *		// Use the old code instead
-	 *	}
+	 *    if (KunenaForum::isCompatible('2.0.1')) {
+	 *        // We can do it in the new way
+	 *    } else {
+	 *        // Use the old code instead
+	 *    }
 	 * </code>
 	 *
-	 * @see KunenaForum::installed()
+	 * @see   KunenaForum::installed()
 	 *
 	 * @param   string $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
+	 * @since Kunena
 	 */
 	public static function isCompatible($version)
 	{
-		// If requested version is smaller than 2.0, it's not compatible
-		if (version_compare($version, '2.0', '<'))
+		// If requested version is smaller than 4.0, it's not compatible
+		if (version_compare($version, '3.0', '<'))
 		{
 			return false;
 		}
 
 		// Development version support.
-		if ($version == '4.0') {
+		if ($version == '5.0')
+		{
 			return true;
 		}
 
@@ -210,6 +263,7 @@ abstract class KunenaForum
 	 * by replacing files during upgrade.
 	 *
 	 * @return boolean True if Git repository is detected.
+	 * @since Kunena
 	 */
 	public static function isDev()
 	{
@@ -225,6 +279,7 @@ abstract class KunenaForum
 	 * Returns the exact version from Kunena Forum.
 	 *
 	 * @return string Version number.
+	 * @since Kunena
 	 */
 	public static function version()
 	{
@@ -240,6 +295,7 @@ abstract class KunenaForum
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return string Major version in xxx.yyy format.
+	 * @since Kunena
 	 */
 	public static function versionMajor()
 	{
@@ -255,6 +311,7 @@ abstract class KunenaForum
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
 	 * @return string Date in yyyy-mm-dd format.
+	 * @since Kunena
 	 */
 	public static function versionDate()
 	{
@@ -270,6 +327,7 @@ abstract class KunenaForum
 	 * Returns codename from Kunena release.
 	 *
 	 * @return string Codename.
+	 * @since Kunena
 	 */
 	public static function versionName()
 	{
@@ -285,14 +343,15 @@ abstract class KunenaForum
 	 * Returns all version information together.
 	 *
 	 * @return object stdClass containing (version, major, date, name).
+	 * @since Kunena
 	 */
 	public static function getVersionInfo()
 	{
-		$version = new stdClass();
+		$version          = new stdClass;
 		$version->version = self::version();
-		$version->major = self::versionMajor(); // New in K2.0.0-BETA2
-		$version->date = self::versionDate();
-		$version->name = self::versionName();
+		$version->major   = self::versionMajor(); // New in K2.0.0-BETA2
+		$version->date    = self::versionDate();
+		$version->name    = self::versionName();
 
 		return $version;
 	}
@@ -304,20 +363,22 @@ abstract class KunenaForum
 	 *
 	 * </code>
 	 *
-	 * @param   string $viewName Name of the view.
-	 * @param   string $layout Name of the layout.
-	 * @param   null|string $template Name of the template file.
-	 * @param   array|JRegistry $params Extra parameters to control the model.
+	 * @param   string          $viewName Name of the view.
+	 * @param   string          $layout   Name of the layout.
+	 * @param   null|string     $template Name of the template file.
+	 * @param   array|JRegistry $params   Extra parameters to control the model.
+	 *
+	 * @since Kunena
 	 */
-	public static function display($viewName, $layout='default', $template=null, $params = array())
+	public static function display($viewName, $layout = 'default', $template = null, $params = array())
 	{
 		// Filter input
 		$viewName = preg_replace('/[^A-Z0-9_]/i', '', $viewName);
-		$layout = preg_replace('/[^A-Z0-9_]/i', '', $layout);
+		$layout   = preg_replace('/[^A-Z0-9_]/i', '', $layout);
 		$template = preg_replace('/[^A-Z0-9_]/i', '', $template);
 		$template = $template ? $template : null;
 
-		$view = "KunenaView{$viewName}";
+		$view  = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";
 
 		// Load potentially needed language files
@@ -352,7 +413,8 @@ abstract class KunenaForum
 			require_once $mpath;
 		}
 
-		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+		$view = new $view (array('base_path' => KPATH_SITE));
+
 		// @var KunenaView $view
 
 		if ($params instanceof JRegistry)
@@ -367,7 +429,8 @@ abstract class KunenaForum
 		$params->set('layout', $layout);
 
 		// Push the model into the view (as default).
-		$model = new $model();
+		$model = new $model;
+
 		// @var KunenaModel $model
 
 		$model->initialize($params);
@@ -381,7 +444,7 @@ abstract class KunenaForum
 
 		if ($viewName != 'common')
 		{
-			$view->common = new KunenaViewCommon(array ('base_path' => KPATH_SITE ));
+			$view->common           = new KunenaViewCommon(array('base_path' => KPATH_SITE));
 			$view->common->embedded = true;
 		}
 
@@ -401,9 +464,17 @@ abstract class KunenaForum
 	{
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
-			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-			$manifest = simplexml_load_file($file);
-			self::$version = (string) $manifest->version . '-GIT';
+			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+			if (file_exists($file))
+			{
+				$manifest      = simplexml_load_file($file);
+				self::$version = (string) $manifest->version . '-GIT';
+			}
+			else
+			{
+				self::$version = strtoupper('@kunenaversion@');
+			}
 		}
 		else
 		{
@@ -411,7 +482,7 @@ abstract class KunenaForum
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
-		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
+		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

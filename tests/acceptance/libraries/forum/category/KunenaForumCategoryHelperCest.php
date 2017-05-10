@@ -1,26 +1,29 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.UnitTest
- * @subpackage Utilities
+ * @package       Kunena.UnitTest
+ * @subpackage    Utilities
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Test class for KunenaForumCategoryHelper.
  */
-class KunenaForumCategoryHelperCest extends PHPUnit_Framework_TestCase {
+class KunenaForumCategoryHelperCest extends PHPUnit_Framework_TestCase
+{
 	/**
 	 * Test getCategories()
 	 */
-	public function testGetAllCategories() {
+	public function testGetAllCategories()
+	{
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$this->assertInternalType('array', $categories);
-		foreach ($categories as $id=>$category) {
+		foreach ($categories as $id => $category)
+		{
 			$this->assertEquals($id, $category->id);
 			$this->assertTrue($category->exists());
 			$this->assertSame($category, KunenaForumCategoryHelper::get($id));

@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Announcement
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Announcement
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-$row = $this->row;
+$row          = $this->row;
 $announcement = $this->announcement;
 ?>
 
@@ -22,8 +22,8 @@ $announcement = $this->announcement;
 	<td class="nowrap">
 		<div class="overflow">
 			<?php echo JHtml::_(
-	'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-null, null, ''); ?>
+				'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
+				null, null, ''); ?>
 		</div>
 	</td>
 
@@ -41,19 +41,23 @@ null, null, ''); ?>
 	'kunenagrid.task', $row, 'publish_x.png',
 JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); } ?>
 	</td>
-	<td>
-		<?php echo $announcement->getAuthor()->username; ?>
-	</td>
 	<?php endif; ?>
+	<td>
+		<?php if (KunenaConfig::getInstance()->username) :?>
+			<?php echo $announcement->getAuthor()->username; ?>
+		<?php else :?>
+			<?php echo $announcement->getAuthor()->name; ?>
+		<?php endif; ?>
+	</td>
 
 	<td class="center hidden-phone">
 		<?php echo $announcement->displayField('id'); ?>
 	</td>
 
 	<?php if ($this->checkbox) : ?>
-	<td class="center">
-		<?php echo JHtml::_('kunenagrid.id', $row, $announcement->id); ?>
-	</td>
+		<td class="center">
+			<?php echo JHtml::_('kunenagrid.id', $row, $announcement->id); ?>
+		</td>
 	<?php endif; ?>
 
 </tr>

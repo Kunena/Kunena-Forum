@@ -1,23 +1,25 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Menu
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Menu
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaMenuHelper
+ * @since Kunena
  */
 abstract class KunenaMenuHelper
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public static function cleanCache()
 	{
@@ -31,71 +33,70 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @param   JRegistry	$params	The module options.
+	 * @param   JRegistry $params The module options.
 	 *
-	 * @return	array
-	 * @see		modules/mod_menu/helper.php
+	 * @return    array
+	 * @see        modules/mod_menu/helper.php
+	 * @since      Kunena
 	 */
 	public static function getList(&$params)
 	{
-		$app = JFactory::getApplication();
+		$app  = JFactory::getApplication();
 		$menu = $app->getMenu();
 
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
-		$items = false;
+		$user   = JFactory::getUser();
+		$levels = $user->getAuthorisedViewLevels();
+		asort($levels);
+		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
+		$cache = JFactory::getCache('mod_menu', '');
 
-		// FIXME: Experimental caching.
-		if (KunenaConfig::getInstance()->get('cache_menu'))
-		{
-			$levels = JFactory::getUser()->getAuthorisedViewLevels();
-			asort($levels);
-			$key = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
-
-			$cache = JFactory::getCache('com_kunena.menu', '');
-			$items = $cache->get($key);
-		}
-
-		if ($items === false)
+		if (!($items = $cache->get($key)))
 		{
 			// Initialise variables.
-			$path		= $active->tree;
-			$start		= (int) $params->get('startLevel');
-			$end		= (int) $params->get('endLevel');
-			$showAll	= $params->get('showAllChildren');
-			$items 		= $menu->getItems('menutype', $params->get('menutype'));
+			$list = array();
+			$db   = JFactory::getDbo();
+
+			$path    = $active->tree;
+			$start   = (int) $params->get('startLevel');
+			$end     = 0;
+			$showAll = 1;
+			$items   = $menu->getItems('menutype', $params->get('menutype'));
+
+			$lastitem = 0;
 
 			if ($items)
 			{
-				foreach($items as $i => $item)
+				foreach ($items as $i => $item)
 				{
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
 						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
 						|| ($start > 1 && !in_array($item->tree[$start - 2], $path))
-)
+					)
 					{
 						unset($items[$i]);
 						continue;
 					}
 
-					$item->deeper = false;
-					$item->shallower = false;
+					$item->deeper     = false;
+					$item->shallower  = false;
 					$item->level_diff = 0;
 
-					if (isset($lastitem))
+					if (isset($items[$lastitem]))
 					{
-						$lastitem->deeper		= ($item->level > $lastitem->level);
-						$lastitem->shallower	= ($item->level < $lastitem->level);
-						$lastitem->level_diff	= ($lastitem->level - $item->level);
+						$items[$lastitem]->deeper     = ($item->level > $items[$lastitem]->level);
+						$items[$lastitem]->shallower  = ($item->level < $items[$lastitem]->level);
+						$items[$lastitem]->level_diff = ($items[$lastitem]->level - $item->level);
 					}
 
 					$item->parent = (boolean) $menu->getItems('parent_id', (int) $item->id, true);
 
-					$lastitem			= $item;
-					$item->active		= false;
-					$item->flink		= $item->link;
+					$lastitem     = $i;
+					$item->active = false;
+					$item->flink  = $item->link;
 
 					switch ($item->type)
 					{
@@ -110,13 +111,14 @@ abstract class KunenaMenuHelper
 								$item->flink = $item->link . '&Itemid=' . $item->id;
 							}
 							break;
+
 						case 'alias':
 							// If this is an alias use the item id stored in the parameters to make the link.
 							$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
-
 							break;
+
 						default:
-							$router = $app::getRouter();
+							$router = JSite::getRouter();
 
 							if ($router->getMode() == JROUTER_MODE_SEF)
 							{
@@ -131,31 +133,29 @@ abstract class KunenaMenuHelper
 
 					if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false))
 					{
-						$item->flink = JRoute::_($item->flink, false, $item->params->get('secure'));
+						$item->flink = JRoute::_($item->flink, true, $item->params->get('secure'));
 					}
 					else
 					{
-						$item->flink = JRoute::_($item->flink, false);
+						$item->flink = JRoute::_($item->flink);
 					}
 
-					$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8');
-					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8');
-					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8');
-					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8') : '';
+					$item->title        = htmlspecialchars($item->title);
+					$item->anchor_css   = '';
+					$item->anchor_title = '';
+					$item->anchor_rel   = '';
+					$item->menu_image   = '';
 				}
 
-				if (isset($lastitem))
+				if (isset($items[$lastitem]))
 				{
-					$lastitem->deeper		= (($start ? $start : 1) > $lastitem->level);
-					$lastitem->shallower	= (($start ? $start : 1) < $lastitem->level);
-					$lastitem->level_diff	= ($lastitem->level - ($start ? $start : 1));
+					$items[$lastitem]->deeper     = (($start ? $start : 1) > $items[$lastitem]->level);
+					$items[$lastitem]->shallower  = (($start ? $start : 1) < $items[$lastitem]->level);
+					$items[$lastitem]->level_diff = ($items[$lastitem]->level - ($start ? $start : 1));
 				}
 			}
 
-			if (isset($cache))
-			{
-				$cache->store($items, $key);
-			}
+			$cache->store($items, $key);
 		}
 
 		return $items;

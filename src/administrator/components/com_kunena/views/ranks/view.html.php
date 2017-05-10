@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,6 +22,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 */
 	function display($tpl = null)
 	{
@@ -46,6 +47,7 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{
@@ -60,7 +62,7 @@ class KunenaAdminViewRanks extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/Ranks_management';
+		$help_url = 'https://www.kunena.org/docs/Ranks_management';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -68,6 +70,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public static function specialOptions()
 	{
@@ -81,6 +84,7 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -95,10 +99,11 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection = array();
+		$sortDirection   = array();
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 

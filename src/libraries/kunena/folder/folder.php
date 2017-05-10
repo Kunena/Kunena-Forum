@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Folder
+ * @package       Kunena.Framework
+ * @subpackage    Folder
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,7 +15,8 @@ jimport('joomla.filesystem.folder');
 /**
  * Class KunenaFolder
  *
- * @see JFolder
+ * @see   JFolder
+ * @since Kunena
  */
 class KunenaFolder extends JFolder
 {
@@ -23,6 +24,8 @@ class KunenaFolder extends JFolder
 	 * Create index.html file into the given folder, if it doesn't exist.
 	 *
 	 * @param $folder
+	 *
+	 * @since Kunena
 	 */
 	static function createIndex($folder)
 	{

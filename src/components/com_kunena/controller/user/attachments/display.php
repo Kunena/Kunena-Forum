@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,42 +17,54 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'User/Attachments';
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $profile;
 
 	/**
 	 * @var array|KunenaAttachments[]
+	 * @since Kunena
 	 */
 	public $attachments;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $headerText;
 
 	/**
 	 * Prepare user attachments list.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
 		parent::before();
 
 		$userid = $this->input->getInt('userid');
-		$start = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 30);
+		$start  = $this->input->getInt('limitstart', 0);
+		$limit  = $this->input->getInt('limit', 30);
 
 		$this->template = KunenaFactory::getTemplate();
-		$this->me = KunenaUserHelper::getMyself();
-		$this->profile = KunenaUserHelper::get($userid);
-		$this->moreUri = null;
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->profile  = KunenaUserHelper::get($userid);
+		$this->moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
@@ -65,7 +77,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$finder = new KunenaAttachmentFinder;
 		$finder->where('userid', '=', $userid);
 
-		$this->total = $finder->count();
+		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		if ($this->moreUri)
@@ -106,6 +118,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

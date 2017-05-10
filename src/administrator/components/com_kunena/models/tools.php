@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Models
+ * @package         Kunena.Administrator
+ * @subpackage      Models
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -24,6 +24,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	function getPruneCategories()
 	{
@@ -43,6 +44,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	function getPruneListtrashdelete()
 	{
@@ -56,6 +58,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	function getPruneControlOptions()
 	{
@@ -75,6 +78,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
+	 * @since Kunena
 	 */
 	function getPruneKeepSticky()
 	{
@@ -85,31 +89,160 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		return JHtml::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
 	}
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $jconfig_smtpuser = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $jconfig_ftp = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $jconfig_sef = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $jconfig_sef_rewrite = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $htaccess = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $register_globals = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $safe_mode = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $mbstring = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $gd_info = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $gd_support = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $maxExecTime = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $maxExecMem = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $fileuploads = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $kunenaVersionInfo = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $ktemplate = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $ktemplatedetails = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $jtemplatedetails = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $joomlamenudetails = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $collation = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $kconfigsettings = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $joomlalanguages = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $plgtext = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $modtext = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $thirdpartytext = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $seftext = null;
+
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $integration_settings = null;
 
 	/**
@@ -118,6 +251,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function getReportData()
 	{
@@ -195,7 +329,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (extension_loaded('gd'))
 		{
-			$gd_info    = gd_info();
+			$gd_info          = gd_info();
 			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
 		}
 		else
@@ -209,8 +343,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
 		// Get Kunena default template
-		$ktemplate        = KunenaFactory::getTemplate();
+		$ktemplate              = KunenaFactory::getTemplate();
 		$this->ktemplatedetails = $ktemplate->getTemplateDetails();
+		$this->ktemplateparams = $ktemplate->params;
 
 		$this->jtemplatedetails = $this->_getJoomlaTemplate();
 
@@ -274,7 +409,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$thirdparty              = array();
 		$thirdparty['aup']       = $this->getExtensionVersion('com_alphauserpoints', 'AlphaUserPoints');
-		$thirdparty['alup']       = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
+		$thirdparty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
 		$thirdparty['uddeim']    = $this->getExtensionVersion('com_uddeim', 'UddeIM');
@@ -328,6 +463,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getSystemReportAnonymous()
 	{
@@ -341,7 +477,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
 			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
-			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
+			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote][quote][b]Kunena template params[/b]:[spoiler] ' . $this->ktemplateparams . '[/spoiler][/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
@@ -366,7 +502,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
 			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
-			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
+			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote] [quote][b]Kunena template params[/b]:[spoiler] ' . $this->ktemplateparams . '[/spoiler][/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
@@ -414,9 +550,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			foreach ($params as $key => $value)
 			{
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
-					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
-					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key'
-				)
+					&& $key != 'email_visible_address' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' 
+					&& $key != 'ebay_api_key' && $key != 'twitter_consumer_key' && $key != 'twitter_consumer_secret' 
+					&& $key != 'google_map_api_key')
 				{
 					$kconfigsettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
 				}
@@ -447,7 +583,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 
 		$db->setQuery($query);
-		
+
 		try
 		{
 			$template = $db->loadResult();
@@ -455,7 +591,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		catch (RuntimeException $e)
 		{
 			JFactory::getApplication()->enqueueMessage($e->getMessage());
-				
+
 			return;
 		}
 
@@ -554,7 +690,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		{
 			if (preg_match('`_kunena_`', $table))
 			{
-				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");	
+				$kunena_db->setQuery("SHOW FULL FIELDS FROM " . $table . "");
 
 				try
 				{
@@ -563,7 +699,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 				catch (RuntimeException $e)
 				{
 					JFactory::getApplication()->enqueueMessage($e->getMessage());
-					
+
 					return;
 				}
 
@@ -639,9 +775,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param   $path  $path    Path to extension directory
+	 * @param   $path $path    Path to extension directory
 	 *
 	 * @return  string  Version number
+	 * @since Kunena
 	 */
 	public function findExtensionVersion($path)
 	{
@@ -682,10 +819,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return array
 	 *
+	 * @since Kunena
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugins_list = array('finder' => 'Kunena - Finder', 'alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
 		$plugin_final = array();
 
 		foreach ($plugins_list as $name => $desc)
@@ -696,11 +834,19 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			{
 				$pluginParams   = new JRegistry($plugin->params);
 				$params         = $pluginParams->toArray();
-				$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
-
-				foreach ($params as $param => $value)
+				
+				if (!empty($params))
 				{
-					$plugin_final[] = "{$param}={$value} ";
+					$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
+	
+					foreach ($params as $param => $value)
+					{
+						$plugin_final[] = "{$param}={$value} ";
+					}
+				}
+				else 
+				{
+					$plugin_final[] = '[b]' . $desc . '[/b] Enabled';
 				}
 
 				$plugin_final[] = "\n";

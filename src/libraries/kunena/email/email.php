@@ -1,25 +1,27 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Email
+ * @package       Kunena.Framework
+ * @subpackage    Email
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link https://www.kunena.org
+ * @copyright     Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaEmail
+ * @since Kunena
  */
 abstract class KunenaEmail
 {
 	/**
-	 * @param   JMail  $mail
-	 * @param   array  $receivers
+	 * @param   JMail $mail
+	 * @param   array $receivers
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	public static function send(JMail $mail, array $receivers)
 	{
@@ -40,7 +42,7 @@ abstract class KunenaEmail
 		if ($email_recipient_count > 1
 			&& $email_recipient_privacy == 'bcc'
 			&& JMailHelper::isEmailAddress($config->get('email_visible_address'))
-)
+		)
 		{
 			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
 
@@ -54,6 +56,7 @@ abstract class KunenaEmail
 		$chunks = array_chunk($receivers, $email_recipient_count);
 
 		$success = true;
+
 		foreach ($chunks as $emails)
 		{
 			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')

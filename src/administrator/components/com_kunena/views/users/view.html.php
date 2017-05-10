@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,7 +20,7 @@ class KunenaAdminViewUsers extends KunenaView
 {
 	/**
 	 * DisplayDefault
-	 *
+	 * @since Kunena
 	 */
 	public function displayDefault()
 	{
@@ -52,6 +52,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * setToolbar
 	 *
 	 * @return    string
+	 * @since Kunena
 	 */
 	protected function setToolbar()
 	{
@@ -75,13 +76,13 @@ class KunenaAdminViewUsers extends KunenaView
 
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolBarHelper::deleteList();
+		JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -89,6 +90,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of locked filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function signatureOptions()
 	{
@@ -104,6 +106,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function blockOptions()
 	{
@@ -119,6 +122,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function bannedOptions()
 	{
@@ -134,6 +138,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function moderatorOptions()
 	{
@@ -149,6 +154,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
+	 * @since Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -170,10 +176,11 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
+	 * @since Kunena
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection = array();
+		$sortDirection   = array();
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
@@ -184,6 +191,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array ranks filter options.
 	 *
 	 * @return    string    The HTML code for the select tag
+	 * @since Kunena
 	 */
 	public function ranksOptions()
 	{

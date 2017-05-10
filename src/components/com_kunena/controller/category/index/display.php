@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Category
+ * @package         Kunena.Site
+ * @subpackage      Controller.Category
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,25 +17,47 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Category/Index';
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me;
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $sections = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $categories = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $pending = array();
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	public $more = array();
 
 	/**
 	 * Prepare category index display.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -46,9 +68,10 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		// Get sections to display.
 		$catid = $this->input->getInt('catid', 0);
 
-
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		/*$cache   = JFactory::getCache('com_kunena', 'output');
+
+		/*
+		$cache   = JFactory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
@@ -222,8 +245,15 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 					WHERE catid IN ({$catlist}) AND hold=1
 					GROUP BY catid"
 				);
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+
+				try
+				{
+					$pending = $db->loadAssocList();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 
 				foreach ($pending as $item)
 				{
@@ -249,22 +279,42 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 			}
 		}
+
+		$doc = JFactory::getDocument();
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = KunenaRoute::_();
+						$canonicalUrl = str_replace('?limitstart=0', '', $canonicalUrl);
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$doc = JFactory::getDocument();
+		$doc       = JFactory::getDocument();
 
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{

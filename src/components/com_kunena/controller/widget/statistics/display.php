@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Widget
+ * @package         Kunena.Site
+ * @subpackage      Controller.Widget
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,18 +17,35 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $name = 'Widget/Statistics';
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $config;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $latestMemberLink;
 
+	/**
+	 * @var
+	 * @since Kunena
+	 */
 	public $statisticsUrl;
 
 	/**
 	 * Prepare statistics box display.
 	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -46,7 +63,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 		$this->setProperties($statistics);
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink(null, null, '');
-		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
+		$this->statisticsUrl    = KunenaFactory::getProfile()->getStatisticsURL();
 
 		return true;
 	}

@@ -2,18 +2,17 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator.Template
- * @subpackage  Templates
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Templates
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewTemplates $this
 
-JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 ?>
@@ -25,15 +24,17 @@ JHtml::_('dropdown.init');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>" method="post" id="adminForm"
+		      name="adminForm">
+			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 			<?php echo JHtml::_('form.token'); ?>
 
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 style="text-transform: capitalize;"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>: <?php echo $this->escape($this->templatename); ?></h1>
+						<h1 style="text-transform: capitalize;"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>
+							: <?php echo $this->escape($this->templatename); ?></h1>
 						<div class="tabbable-panel">
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs ">
@@ -59,7 +60,7 @@ JHtml::_('dropdown.init');
 									</li>
 									<li>
 										<a href="#tab_avatars" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS');?> </a>
+											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS'); ?> </a>
 									</li>
 								</ul>
 								<div class="tab-content">
@@ -80,97 +81,141 @@ JHtml::_('dropdown.init');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>:</td>
 												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
-													if (is_file($path)) : ?>
-														<div><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png" alt="" /></div>
-													<?php endif; ?>
+
+												if (is_file($path))
+:
+													?>
+													<div><img
+														src="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
+														alt="<?php echo $this->escape($this->templatename); ?>"/></div>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>
 											</tr>
 										</table>
 									</div>
 									<div class="tab-pane" id="tab_basic">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<?php if ($this->form !== false && count($this->form->getFieldset()))
+:
+											?>
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('advanced') as $field) : if (!$field->hidden) : ?>
-													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php endif;
+												<?php foreach ($this->form->getFieldset('advanced') as $field)
+	:
+													if (!$field->hidden)
+		:
+														?>
+														<tr>
+															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
 endforeach; ?>
 											</table>
-										<?php
-										else :
-											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-										endif;
+											<?php
+else
+:
+											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+endif;
 										?>
 									</div>
 									<div class="tab-pane" id="tab_features">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<?php if ($this->form !== false && count($this->form->getFieldset()))
+:
+											?>
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('features') as $field) : if (!$field->hidden) : ?>
-													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php endif;
+												<?php foreach ($this->form->getFieldset('features') as $field)
+	:
+													if (!$field->hidden)
+		:
+														?>
+														<tr>
+															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
 endforeach; ?>
 											</table>
-										<?php
-										else :
-											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-										endif;
+											<?php
+else
+
+:
+											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+endif;
 										?>
 									</div>
 									<div class="tab-pane" id="tab_bbcode">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<?php if ($this->form !== false && count($this->form->getFieldset()))
+:
+											?>
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('bbcode') as $field) : if (!$field->hidden) : ?>
-													<tr>
-														<td width="20%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php endif;
+												<?php foreach ($this->form->getFieldset('bbcode') as $field)
+	:
+													if (!$field->hidden)
+		:
+														?>
+														<tr>
+															<td width="20%" class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
 endforeach; ?>
 											</table>
-										<?php
-										else :
-											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-										endif;
+											<?php
+else
+
+:
+											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+endif;
 										?>
 									</div>
 									<div class="tab-pane" id="tab_colors">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<?php if ($this->form !== false && count($this->form->getFieldset()))
+:
+											?>
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('colors') as $field) : if (!$field->hidden) : ?>
-													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php endif;
+												<?php foreach ($this->form->getFieldset('colors') as $field)
+	:
+													if (!$field->hidden)
+		:
+														?>
+														<tr>
+															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
 endforeach; ?>
 											</table>
-										<?php
-										else :
-											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-										endif;
+											<?php
+else
+
+:
+											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+endif;
 										?>
 									</div>
 									<div class="tab-pane" id="tab_avatars">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<?php if ($this->form !== false && count($this->form->getFieldset()))
+:
+											?>
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('avatar') as $field) : if (!$field->hidden) : ?>
-													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php endif;
-												endforeach; ?>
+												<?php foreach ($this->form->getFieldset('avatar') as $field)
+	:
+													if (!$field->hidden)
+		:
+														?>
+														<tr>
+															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
+endforeach; ?>
 											</table>
 											<?php
-										else :
-											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-										endif;
+else
+
+:
+											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+endif;
 										?>
 									</div>
 								</div>

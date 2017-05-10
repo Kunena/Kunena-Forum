@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  AlphaUserPoints
+ * @package         Kunena.Plugins
+ * @subpackage      AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,15 +15,22 @@ defined('_JEXEC') or die();
  * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
  *
  * @deprecated  5.0
+ * @since       Kunena
  */
 class KunenaProfileAlphaUserPoints extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileAlphaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -31,19 +38,20 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
-		if ($config->userlist_allowed == 1 && $my->id == 0)
+		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -52,13 +60,14 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param          $user
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -82,11 +91,12 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -97,7 +107,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 			WHERE a.profileviews>0
 			ORDER BY a.profileviews DESC";
 		$db->setQuery($query, 0, $limit);
-		
+
 		try
 		{
 			$top = (array) $db->loadObjectList();
@@ -115,18 +125,20 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 * @param $params
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
 	/**
-	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param        $userid
+	 * @param   bool $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @deprecated  5.0
+	 * @since       Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

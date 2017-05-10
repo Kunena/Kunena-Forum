@@ -2,19 +2,33 @@
 <!DOCTYPE config>
 <config>
 	<fieldset name="advanced">
-		<field name="DefaultCategoryicon" type="text" default="icon-folder" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON" description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
-		<field name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+		<field name="DefaultCategoryicon" type="text" default="" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON"
+		       description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
+		<field name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET"
+		       description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
-		<field name="DefaultIconset" type="text" default="default" label="COM_KUNENA_TEMPLATE_ICON_SET" description="COM_KUNENA_TEMPLATE_ICON_SET_DESC" />
-		<field name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+		<field name="DefaultIconset" type="text" default="default" label="COM_KUNENA_TEMPLATE_ICON_SET"
+		       description="COM_KUNENA_TEMPLATE_ICON_SET_DESC"/>
+		<field name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET"
+		       description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
-		<field name="lightboxColor" type="list" default="white" label="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_COLOR" description="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_DESC">
+		<field name="lightboxColor" type="list" default="white" label="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_COLOR"
+		       description="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_DESC">
 			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
 			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
 		</field>
-		<field name="bootstrap" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP" description="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP_DESC">
+		<field name="bootstrap" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP"
+		       description="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="icomoon" type="list" default="1" label="COM_KUNENA_TEMPLATE_LOAD_ICOMOON" description="COM_KUNENA_TEMPLATE_LOAD_ICOMOON_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="tooltips" type="list" default="1" label="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS" description="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -22,7 +36,8 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH" description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC"/>
+		<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH"
+		       description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC"/>
 		<field name="fullactions" type="list" default="1" label="COM_KUNENA_TEMPLATE_FULLACTIONS" description="COM_KUNENA_TEMPLATE_FULLACTIONS_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
@@ -35,7 +50,16 @@
 	</fieldset>
 
 	<fieldset name="features">
-		<field name="displayMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MENU" description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC">
+		<field name="displayMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MENU"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="displayDropdownMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_DROPDOWNMENU" description="COM_KUNENA_TEMPLATE_DISPLAY_DROPDOWNMENU_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="displayDropdownContent" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_DROPDOWNCONTENT" description="COM_KUNENA_TEMPLATE_DISPLAY_DROPDOWNCONTENT_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -43,25 +67,30 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="displayBreadcrumb" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB" description="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB_DESC">
+		<field name="displayBreadcrumb" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_BREADCRUMB_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="displayAnnouncement" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ANNOUNCEMENT" description="COM_KUNENA_TEMPLATE_DISPLAY_ANNOUNCEMENT_DESC">
+		<field name="displayAnnouncement" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ANNOUNCEMENT"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_ANNOUNCEMENT_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="displayFooter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FOOTER" description="COM_KUNENA_TEMPLATE_DISPLAY_FOOTER_DESC">
+		<field name="displayFooter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FOOTER"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_FOOTER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+		<field name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION"
+		       description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
 			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
 			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
 			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</field>
-		<field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILE_TYPE_DESC">
+		<field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE"
+		       description="COM_KUNENA_TEMPLATE_PROFILE_TYPE_DESC">
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
 			<option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
 			<option value="img-polaroid">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
@@ -72,7 +101,8 @@
 			<option value="1">COM_KUNENA_ENABLED_TOPIC</option>
 			<option value="2">COM_KUNENA_ENABLED_LABEL</option>
 		</field>
-		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
+		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME"
+		       description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>
 			<option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
 			<option value="both">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_BOTH</option>
@@ -81,34 +111,52 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="topicicontype" type="list" default="0" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS" description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
-			<option value="0">COM_KUNENA_TEMPLATE_NORMAL</option>
+		<field name="topicicontype" type="list" default="B2" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS" description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
 			<option value="B2">COM_KUNENA_TEMPLATE_BOOTSTRAP2</option>
+			<option value="B3">COM_KUNENA_TEMPLATE_BOOTSTRAP3</option>
 			<option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
+			<option value="image">COM_KUNENA_TEMPLATE_IMAGE_LEGACY</option>
 		</field>
-		<field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME" description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
+		<field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="socialshare" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE" description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE_DESC">
+		<field name="socialshare" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
+			<option value="2">COM_KUNENA_TEMPLATE_TAG</option>
 		</field>
+		<field name="socialsharetag" type="text" default="" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARETAG" description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARETAG_DESC"/>
 		<field name="socialtheme" type="list" default="classic" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME" description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME_DESC">
 			<option value="classic">COM_KUNENA_CLASSIC</option>
 			<option value="flat">COM_KUNENA_FLAT</option>
 			<option value="minima">COM_KUNENA_MINIMA</option>
-			<option value="pain">COM_KUNENA_PLAIN</option>
+			<option value="plain">COM_KUNENA_PLAIN</option>
 		</field>
-		<field name="writeaccess" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS" description="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS_DESC">
+		<field name="optional_username" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_OPTIONAL_USERNAME"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_OPTIONAL_USERNAME_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_USERNAME</option>
+			<option value="2">COM_KUNENA_REALNAME</option>
+		</field>
+		<field name="writeaccess" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_WRITEACCESS_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="localstorage" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOCALSTORAGE" description="COM_KUNENA_TEMPLATE_LOCALSTORAGE_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
 	</fieldset>
 
 	<fieldset name="colors">
-		<field name="IconColor" type="color" default="inherit" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
-		<field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
+		<field name="IconColor" type="color" default="inherit" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS"
+		       description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
+		<field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW"
+		       description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
 	</fieldset>
 
 	<fieldset name="bbcode">
@@ -124,11 +172,13 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="emoticons" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS" description="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS_DESC">
+		<field name="emoticons" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="twitter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TWITTER" description="COM_KUNENA_TEMPLATE_DISPLAY_TWITTER_DESC">
+		<field name="twitter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TWITTER"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_TWITTER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -140,7 +190,8 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="picture" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_PICTURE" description="COM_KUNENA_TEMPLATE_DISPLAY_PICTURE_DESC">
+		<field name="picture" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_PICTURE"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_PICTURE_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -148,7 +199,8 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="spoiler" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SPOILER" description="COM_KUNENA_TEMPLATE_DISPLAY_SPOILER_DESC">
+		<field name="spoiler" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SPOILER"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_SPOILER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -164,15 +216,92 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="divider" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_DIVIDER" description="COM_KUNENA_TEMPLATE_DISPLAY_DIVIDER_DESC">
+		<field name="divider" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_DIVIDER"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_DIVIDER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="instagram" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM" description="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM_DESC">
+		<field name="instagram" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="soundcloud" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD" description="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD_DESC">
+		<field name="soundcloud" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="confidential" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="hr" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HR" description="COM_KUNENA_TEMPLATE_DISPLAY_HR_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="listitem" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LISTITEM"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_LISTITEM_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="supscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="subscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_SUBSCRIPT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="numericlist" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_NUMBERING"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_NUMBERING_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="bulletedlist" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="alignright" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="alignleft" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="center" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER" description="COM_KUNENA_TEMPLATE_DISPLAY_CENTER_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="underline" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_UNDERLINE"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_UNDERLINE_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="italic" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ITALIC" description="COM_KUNENA_TEMPLATE_DISPLAY_ITALIC_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="bold" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BOLD" description="COM_KUNENA_TEMPLATE_DISPLAY_BOLD_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="strikethrough" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH"
+		       description="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="colors" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_COLORS" description="COM_KUNENA_TEMPLATE_DISPLAY_COLORS_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="size" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SIZE" description="COM_KUNENA_TEMPLATE_DISPLAY_SIZE_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
@@ -180,23 +309,23 @@
 
 	<fieldset name="avatar">
 		<field name="avatarSizeX" default="40"/>
-		<field name="avatarSizeY"  default="90"/>
+		<field name="avatarSizeY" default="90"/>
 		<!-- Required avatar sizes -->
-		<field name="avatarSizeXThumb"  default="36"/>
-		<field name="avatarSizeYThumb"  default="36"/>
-		<field name="avatarSizeXWelcome"  default="72"/>
-		<field name="avatarSizeYWelcome"  default="72"/>
-		<field name="avatarSizeXList"  default="36"/>
-		<field name="avatarSizeYList"  default="36"/>
-		<field name="avatarSizeXPost"  default="144"/>
-		<field name="avatarSizeYPost"  default="144"/>
-		<field name="avatarSizeXProfile"  default="200"/>
-		<field name="avatarSizeYProfile"  default="200"/>
+		<field name="avatarSizeXThumb" default="36"/>
+		<field name="avatarSizeYThumb" default="36"/>
+		<field name="avatarSizeXWelcome" default="72"/>
+		<field name="avatarSizeYWelcome" default="72"/>
+		<field name="avatarSizeXList" default="36"/>
+		<field name="avatarSizeYList" default="36"/>
+		<field name="avatarSizeXPost" default="144"/>
+		<field name="avatarSizeYPost" default="144"/>
+		<field name="avatarSizeXProfile" default="200"/>
+		<field name="avatarSizeYProfile" default="200"/>
 	</fieldset>
 
 	<fieldset name="template">
 		<field name="templatebyText" default=""/>
-		<field name="templatebyName"  default=""/>
-		<field name="templatebyLink"  default=""/>
+		<field name="templatebyName" default=""/>
+		<field name="templatebyLink" default=""/>
 	</fieldset>
 </config>

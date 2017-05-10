@@ -57,6 +57,13 @@ define("BBCODE_STACK_TAG", 2);
 define("BBCODE_STACK_CLASS", 3);
 if (!function_exists('str_split'))
 {
+	/**
+	 * @param     $string
+	 * @param int $split_length
+	 *
+	 * @return array
+	 * @since BBCode
+	 */
 	function str_split($string, $split_length = 1)
 	{
 		$array = explode("\r\n", chunk_split($string, $split_length));
@@ -67,24 +74,96 @@ if (!function_exists('str_split'))
 }
 $BBCode_SourceDir = dirname(__FILE__);
 
+/**
+ * Class BBCodeLexer
+ * @since BBCode
+ */
 class BBCodeLexer
 {
+	/**
+	 * @var int
+	 * @since BBCode
+	 */
 	var $token;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $text;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $tag;
+	/**
+	 * @var int
+	 * @since BBCode
+	 */
 	var $state;
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $input;
+	/**
+	 * @var int
+	 * @since BBCode
+	 */
 	var $ptr;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $unget;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $verbatim;
+	/**
+	 * @var
+	 * @since BBCode
+	 */
 	var $debug;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $tagmarker;
+	/**
+	 * @var mixed
+	 * @since BBCode
+	 */
 	var $end_tagmarker;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $pat_main;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $pat_comment;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $pat_comment2;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $pat_wiki;
 
+	/**
+	 * BBCodeLexer constructor.
+	 *
+	 * @param        $string
+	 * @param string $tagmarker
+	 *
+	 * @since BBCode
+	 */
 	function __construct($string, $tagmarker = '[')
 	{
 		$regex_beginmarkers = Array('[' => '\[', '<' => '<', '{' => '\{', '(' => '\(');
@@ -124,6 +203,10 @@ class BBCodeLexer
 		$this->text          = "";
 	}
 
+	/**
+	 * @return int
+	 * @since BBCode
+	 */
 	function GuessTextLength()
 	{
 		$length = 0;
@@ -163,6 +246,10 @@ class BBCodeLexer
 		return $length;
 	}
 
+	/**
+	 * @return int
+	 * @since BBCode
+	 */
 	function NextToken()
 	{
 		if ($this->unget)
@@ -300,6 +387,10 @@ class BBCodeLexer
 		}
 	}
 
+	/**
+	 * @return int
+	 * @since BBCode
+	 */
 	function PeekToken()
 	{
 		$result = $this->NextToken();
@@ -311,6 +402,10 @@ class BBCodeLexer
 		return $result;
 	}
 
+	/**
+	 * @return array
+	 * @since BBCode
+	 */
 	function SaveState()
 	{
 		return Array(
@@ -325,6 +420,11 @@ class BBCodeLexer
 		);
 	}
 
+	/**
+	 * @param $state
+	 *
+	 * @since BBCode
+	 */
 	function RestoreState($state)
 	{
 		if (!is_array($state))
@@ -341,6 +441,12 @@ class BBCodeLexer
 		$this->verbatim = @$state['verbatim'];
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return mixed
+	 * @since BBCode
+	 */
 	function Internal_StripQuotes($string)
 	{
 		if (preg_match("/^\\\"(.*)\\\"$/", $string, $matches))
@@ -360,6 +466,13 @@ class BBCodeLexer
 		}
 	}
 
+	/**
+	 * @param $ptr
+	 * @param $pieces
+	 *
+	 * @return int|string
+	 * @since BBCode
+	 */
 	function Internal_ClassifyPiece($ptr, $pieces)
 	{
 		if ($ptr >= count($pieces))
@@ -391,6 +504,12 @@ class BBCodeLexer
 		}
 	}
 
+	/**
+	 * @param $tag
+	 *
+	 * @return array
+	 * @since BBCode
+	 */
 	function Internal_DecodeTag($tag)
 	{
 		$result = Array('_tag'    => $tag, '_endtag' => '', '_name' => '',
@@ -549,8 +668,16 @@ class BBCodeLexer
 	}
 }
 
+/**
+ * Class BBCodeLibrary
+ * @since BBCode
+ */
 class BBCodeLibrary
 {
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $default_smileys = Array(
 		':)'     => 'smile.gif', ':-)' => 'smile.gif',
 		'=)'     => 'smile.gif', '=-)' => 'smile.gif',
@@ -605,6 +732,10 @@ class BBCodeLibrary
 		'<3'     => 'heart.gif',
 		':star:' => 'star.gif',
 	);
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $default_tag_rules = Array(
 		'b'       => Array(
 			'simple_start' => "<b>",
@@ -648,7 +779,7 @@ class BBCodeLibrary
 		'color'   => Array(
 			'mode'     => BBCODE_MODE_ENHANCED,
 			'allow'    => Array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
-			'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
+			'template' => '<span style="color:{$_default/tw};">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => Array('listitem', 'block', 'columns', 'inline', 'link'),
 		),
@@ -755,7 +886,7 @@ class BBCodeLibrary
 			'plain_content' => Array(),
 		),
 		'left'    => Array(
-			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_left\" style=\"text-align:left;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -766,7 +897,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'right'   => Array(
-			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_right\" style=\"text-align:right;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -777,7 +908,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'center'  => Array(
-			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_center\" style=\"text-align:center;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -788,7 +919,7 @@ class BBCodeLibrary
 			'plain_end'     => "\n",
 		),
 		'indent'  => Array(
-			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
+			'simple_start'  => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em;\">\n",
 			'simple_end'    => "\n</div>\n",
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -827,7 +958,7 @@ class BBCodeLibrary
 		),
 		'code'    => Array(
 			'mode'          => BBCODE_MODE_ENHANCED,
-			'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre\">{\$_content/v}</div>\n</div>\n",
+			'template'      => "\n<div class=\"bbcode_code\">\n<div class=\"bbcode_code_head\">Code:</div>\n<div class=\"bbcode_code_body\" style=\"white-space:pre;\">{\$_content/v}</div>\n</div>\n",
 			'class'         => 'code',
 			'allow_in'      => Array('listitem', 'block', 'columns'),
 			'content'       => BBCODE_VERBATIM,
@@ -876,6 +1007,17 @@ class BBCodeLibrary
 		),
 	);
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoURL($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -913,6 +1055,17 @@ class BBCodeLibrary
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoEmail($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -930,6 +1083,17 @@ class BBCodeLibrary
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function DoSize($bbcode, $action, $name, $default, $params, $content)
 	{
 		switch ($default)
@@ -961,9 +1125,20 @@ class BBCodeLibrary
 				break;
 		}
 
-		return "<span style=\"font-size:$size\">$content</span>";
+		return "<span style=\"font-size:$size;\">$content</span>";
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function DoFont($bbcode, $action, $name, $default, $params, $content)
 	{
 		$fonts         = explode(",", $default);
@@ -1003,9 +1178,20 @@ class BBCodeLibrary
 			}
 		}
 
-		return "<span style=\"font-family:$result\">$content</span>";
+		return "<span style=\"font-family:$result;\">$content</span>";
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoWiki($bbcode, $action, $name, $default, $params, $content)
 	{
 		$name = $bbcode->Wikify($default);
@@ -1020,9 +1206,20 @@ class BBCodeLibrary
 		}
 
 		return "<a href=\"{$bbcode->wiki_url}$name\" class=\"bbcode_wiki\">"
-		. htmlspecialchars($title) . "</a>";
+			. htmlspecialchars($title) . "</a>";
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1040,10 +1237,10 @@ class BBCodeLibrary
 					if ($info[2] == IMAGETYPE_GIF || $info[2] == IMAGETYPE_JPEG || $info[2] == IMAGETYPE_PNG)
 					{
 						return "<img src=\""
-						. htmlspecialchars("{$bbcode->local_img_url}/{$content}") . "\" alt=\""
-						. htmlspecialchars(basename($content)) . "\" width=\""
-						. htmlspecialchars($info[0]) . "\" height=\""
-						. htmlspecialchars($info[1]) . "\" class=\"bbcode_img\" />";
+							. htmlspecialchars("{$bbcode->local_img_url}/{$content}") . "\" alt=\""
+							. htmlspecialchars(basename($content)) . "\" width=\""
+							. htmlspecialchars($info[0]) . "\" height=\""
+							. htmlspecialchars($info[1]) . "\" class=\"bbcode_img\" />";
 					}
 				}
 			}
@@ -1052,7 +1249,7 @@ class BBCodeLibrary
 				if ($bbcode->IsValidURL($content, false))
 				{
 					return "<img src=\"" . htmlspecialchars($content) . "\" alt=\""
-					. htmlspecialchars(basename($content)) . "\" class=\"bbcode_img\" />";
+						. htmlspecialchars(basename($content)) . "\" class=\"bbcode_img\" />";
 				}
 			}
 		}
@@ -1060,6 +1257,17 @@ class BBCodeLibrary
 		return htmlspecialchars($params['_tag']) . htmlspecialchars($content) . htmlspecialchars($params['_endtag']);
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function DoRule($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1072,6 +1280,17 @@ class BBCodeLibrary
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1108,10 +1327,21 @@ class BBCodeLibrary
 		}
 
 		return "\n<div class=\"bbcode_quote\">\n<div class=\"bbcode_quote_head\">"
-		. $title . "</div>\n<div class=\"bbcode_quote_body\">"
-		. $content . "</div>\n</div>\n";
+			. $title . "</div>\n<div class=\"bbcode_quote_body\">"
+			. $content . "</div>\n</div>\n";
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @since BBCode
+	 */
 	function DoList($bbcode, $action, $name, $default, $params, $content)
 	{
 		$list_styles    = Array(
@@ -1210,8 +1440,18 @@ class BBCodeLibrary
 	}
 }
 
+/**
+ * Class BBCodeEmailAddressValidator
+ * @since BBCode
+ */
 class BBCodeEmailAddressValidator
 {
+	/**
+	 * @param $strEmailAddress
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function check_email_address($strEmailAddress)
 	{
 		if (preg_match('/[\x00-\x1F\x7F-\xFF]/', $strEmailAddress))
@@ -1246,6 +1486,12 @@ class BBCodeEmailAddressValidator
 		return true;
 	}
 
+	/**
+	 * @param $strLocalPortion
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function check_local_portion($strLocalPortion)
 	{
 		if (!$this->check_text_length($strLocalPortion, 1, 64))
@@ -1271,6 +1517,12 @@ class BBCodeEmailAddressValidator
 		return true;
 	}
 
+	/**
+	 * @param $strDomainPortion
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function check_domain_portion($strDomainPortion)
 	{
 		if (!$this->check_text_length($strDomainPortion, 1, 255))
@@ -1312,6 +1564,14 @@ class BBCodeEmailAddressValidator
 		return true;
 	}
 
+	/**
+	 * @param $strText
+	 * @param $intMinimum
+	 * @param $intMaximum
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function check_text_length($strText, $intMinimum, $intMaximum)
 	{
 		$intTextLength = strlen($strText);
@@ -1326,40 +1586,172 @@ class BBCodeEmailAddressValidator
 	}
 }
 
+/**
+ * Class NBBC_BBCode
+ * @since BBCode
+ */
 class NBBC_BBCode
 {
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $tag_rules;
+	/**
+	 * @var BBCodeLibrary
+	 * @since BBCode
+	 */
 	var $defaults;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $current_class;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $root_class;
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $lost_start_tags;
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $start_tags;
+	/**
+	 * @var
+	 * @since BBCode
+	 */
 	var $allow_ampersand;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $tag_marker;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $ignore_newlines;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $plain_mode;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $detect_urls;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $url_pattern;
+	/**
+	 * @var int
+	 * @since BBCode
+	 */
 	var $output_limit;
+	/**
+	 * @var
+	 * @since BBCode
+	 */
 	var $text_length;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $was_limited;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $limit_tail;
+	/**
+	 * @var float
+	 * @since BBCode
+	 */
 	var $limit_precision;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $smiley_dir;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $smiley_url;
+	/**
+	 * @var array
+	 * @since BBCode
+	 */
 	var $smileys;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $smiley_regex;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $enable_smileys;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $wiki_url;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $local_img_dir;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $local_img_url;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $url_targetable;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $url_target;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $rule_html;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $pre_trim;
+	/**
+	 * @var string
+	 * @since BBCode
+	 */
 	var $post_trim;
+	/**
+	 * @var bool
+	 * @since BBCode
+	 */
 	var $debug;
 
+	/**
+	 * NBBC_BBCode constructor.
+	 * @since BBCode
+	 */
 	function __construct()
 	{
 		$this->defaults         = new BBCodeLibrary;
@@ -1394,26 +1786,49 @@ class NBBC_BBCode
 		$this->url_target       = false;
 	}
 
+	/**
+	 * @param string $trim
+	 *
+	 * @since BBCode
+	 */
 	function SetPreTrim($trim = "a")
 	{
 		$this->pre_trim = $trim;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetPreTrim()
 	{
 		return $this->pre_trim;
 	}
 
+	/**
+	 * @param string $trim
+	 *
+	 * @since BBCode
+	 */
 	function SetPostTrim($trim = "a")
 	{
 		$this->post_trim = $trim;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetPostTrim()
 	{
 		return $this->post_trim;
 	}
 
+	/**
+	 * @param string $class
+	 *
+	 * @since BBCode
+	 */
 	function SetRoot($class = 'block')
 	{
 		$this->root_class = $class;
@@ -1429,21 +1844,39 @@ class NBBC_BBCode
 		$this->root_class = 'block';
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetRoot()
 	{
 		return $this->root_class;
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetDebug($enable = true)
 	{
 		$this->debug = $enable;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetDebug()
 	{
 		return $this->debug;
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetAllowAmpersand($enable = true)
 	{
 		$this->allow_ampersand = $enable;
@@ -1454,121 +1887,232 @@ class NBBC_BBCode
 		return $this->allow_ampersand;
 	}
 
+	/**
+	 * @param string $marker
+	 *
+	 * @since BBCode
+	 */
 	function SetTagMarker($marker = '[')
 	{
 		$this->tag_marker = $marker;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetTagMarker()
 	{
 		return $this->tag_marker;
 	}
 
+	/**
+	 * @param bool $ignore
+	 *
+	 * @since BBCode
+	 */
 	function SetIgnoreNewlines($ignore = true)
 	{
 		$this->ignore_newlines = $ignore;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetIgnoreNewlines()
 	{
 		return $this->ignore_newlines;
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @since BBCode
+	 */
 	function SetLimit($limit = 0)
 	{
 		$this->output_limit = $limit;
 	}
 
+	/**
+	 * @return int
+	 * @since BBCode
+	 */
 	function GetLimit()
 	{
 		return $this->output_limit;
 	}
 
+	/**
+	 * @param string $tail
+	 *
+	 * @since BBCode
+	 */
 	function SetLimitTail($tail = "...")
 	{
 		$this->limit_tail = $tail;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetLimitTail()
 	{
 		return $this->limit_tail;
 	}
 
+	/**
+	 * @param float $prec
+	 *
+	 * @since BBCode
+	 */
 	function SetLimitPrecision($prec = 0.15)
 	{
 		$this->limit_precision = $prec;
 	}
 
+	/**
+	 * @return float
+	 * @since BBCode
+	 */
 	function GetLimitPrecision()
 	{
 		return $this->limit_precision;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function WasLimited()
 	{
 		return $this->was_limited;
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetPlainMode($enable = true)
 	{
 		$this->plain_mode = $enable;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetPlainMode()
 	{
 		return $this->plain_mode;
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetDetectURLs($enable = true)
 	{
 		$this->detect_urls = $enable;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetDetectURLs()
 	{
 		return $this->detect_urls;
 	}
 
+	/**
+	 * @param $pattern
+	 *
+	 * @since BBCode
+	 */
 	function SetURLPattern($pattern)
 	{
 		$this->url_pattern = $pattern;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetURLPattern()
 	{
 		return $this->url_pattern;
 	}
 
+	/**
+	 * @param $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetURLTargetable($enable)
 	{
 		$this->url_targetable = $enable;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetURLTargetable()
 	{
 		return $this->url_targetable;
 	}
 
+	/**
+	 * @param $target
+	 *
+	 * @since BBCode
+	 */
 	function SetURLTarget($target)
 	{
 		$this->url_target = $target;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetURLTarget()
 	{
 		return $this->url_target;
 	}
 
+	/**
+	 * @param $name
+	 * @param $rule
+	 *
+	 * @since BBCode
+	 */
 	function AddRule($name, $rule)
 	{
 		$this->tag_rules[$name] = $rule;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @since BBCode
+	 */
 	function RemoveRule($name)
 	{
 		unset($this->tag_rules[$name]);
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return bool|mixed
+	 * @since BBCode
+	 */
 	function GetRule($name)
 	{
 		return isset($this->tag_rules[$name])
@@ -1580,12 +2124,23 @@ class NBBC_BBCode
 		$this->tag_rules = Array();
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return bool|mixed
+	 * @since BBCode
+	 */
 	function GetDefaultRule($name)
 	{
 		return isset($this->defaults->default_tag_rules[$name])
 			? $this->defaults->default_tag_rules[$name] : false;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @since BBCode
+	 */
 	function SetDefaultRule($name)
 	{
 		if (isset($this->defaults->default_tag_rules[$name]))
@@ -1598,6 +2153,10 @@ class NBBC_BBCode
 		}
 	}
 
+	/**
+	 * @return array
+	 * @since BBCode
+	 */
 	function GetDefaultRules()
 	{
 		return $this->defaults->default_tag_rules;
@@ -1608,78 +2167,149 @@ class NBBC_BBCode
 		$this->tag_rules = $this->defaults->default_tag_rules;
 	}
 
+	/**
+	 * @param $url
+	 *
+	 * @since BBCode
+	 */
 	function SetWikiURL($url)
 	{
 		$this->wiki_url = $url;
 	}
 
+	/**
+	 * @param $url
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetWikiURL($url)
 	{
 		return $this->wiki_url;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultWikiURL()
 	{
 		return '/?page=';
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @since BBCode
+	 */
 	function SetLocalImgDir($path)
 	{
 		$this->local_img_dir = $path;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetLocalImgDir()
 	{
 		return $this->local_img_dir;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultLocalImgDir()
 	{
 		return "img";
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @since BBCode
+	 */
 	function SetLocalImgURL($path)
 	{
 		$this->local_img_url = $path;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetLocalImgURL()
 	{
 		return $this->local_img_url;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultLocalImgURL()
 	{
 		return "img";
 	}
 
+	/**
+	 * @param $html
+	 *
+	 * @since BBCode
+	 */
 	function SetRuleHTML($html)
 	{
 		$this->rule_html = $html;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetRuleHTML()
 	{
 		return $this->rule_html;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultRuleHTML()
 	{
 		return "\n<hr class=\"bbcode_rule\" />\n";
 	}
 
+	/**
+	 * @param $code
+	 * @param $image
+	 *
+	 * @since BBCode
+	 */
 	function AddSmiley($code, $image)
 	{
 		$this->smileys[$code] = $image;
 		$this->smiley_regex   = false;
 	}
 
+	/**
+	 * @param $code
+	 *
+	 * @since BBCode
+	 */
 	function RemoveSmiley($code)
 	{
 		unset($this->smileys[$code]);
 		$this->smiley_regex = false;
 	}
 
+	/**
+	 * @param $code
+	 *
+	 * @return bool|mixed
+	 * @since BBCode
+	 */
 	function GetSmiley($code)
 	{
 		return isset($this->smileys[$code])
@@ -1692,18 +2322,33 @@ class NBBC_BBCode
 		$this->smiley_regex = false;
 	}
 
+	/**
+	 * @param $code
+	 *
+	 * @return bool|mixed
+	 * @since BBCode
+	 */
 	function GetDefaultSmiley($code)
 	{
 		return isset($this->defaults->default_smileys[$code])
 			? $this->defaults->default_smileys[$code] : false;
 	}
 
+	/**
+	 * @param $code
+	 *
+	 * @since BBCode
+	 */
 	function SetDefaultSmiley($code)
 	{
 		$this->smileys[$code] = @$this->defaults->default_smileys[$code];
 		$this->smiley_regex   = false;
 	}
 
+	/**
+	 * @return array
+	 * @since BBCode
+	 */
 	function GetDefaultSmileys()
 	{
 		return $this->defaults->default_smileys;
@@ -1715,51 +2360,98 @@ class NBBC_BBCode
 		$this->smiley_regex = false;
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @since BBCode
+	 */
 	function SetSmileyDir($path)
 	{
 		$this->smiley_dir = $path;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetSmileyDir()
 	{
 		return $this->smiley_dir;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultSmileyDir()
 	{
 		return "smileys";
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @since BBCode
+	 */
 	function SetSmileyURL($path)
 	{
 		$this->smiley_url = $path;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetSmileyURL()
 	{
 		return $this->smiley_url;
 	}
 
+	/**
+	 * @return string
+	 * @since BBCode
+	 */
 	function GetDefaultSmileyURL()
 	{
 		return "smileys";
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @since BBCode
+	 */
 	function SetEnableSmileys($enable = true)
 	{
 		$this->enable_smileys = $enable;
 	}
 
+	/**
+	 * @return bool
+	 * @since BBCode
+	 */
 	function GetEnableSmileys()
 	{
 		return $this->enable_smileys;
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return mixed
+	 * @since BBCode
+	 */
 	function nl2br($string)
 	{
 		return preg_replace("/\\x0A|\\x0D|\\x0A\\x0D|\\x0D\\x0A/", "<br />\n", $string);
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function UnHTMLEncode($string)
 	{
 		if (function_exists("html_entity_decode"))
@@ -1774,12 +2466,25 @@ class NBBC_BBCode
 		return strtr($string, $trans_tbl);
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Wikify($string)
 	{
 		return rawurlencode(str_replace(" ", "_",
 			trim(preg_replace("/[!?;@#\$%\\^&*<>=+`~\\x00-\\x20_-]+/", " ", $string))));
 	}
 
+	/**
+	 * @param      $string
+	 * @param bool $email_too
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function IsValidURL($string, $email_too = true)
 	{
 		if (preg_match("/^
@@ -1819,6 +2524,12 @@ $/Dx", $string))
 		return false;
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function IsValidEmail($string)
 	{
 		$validator = new BBCodeEmailAddressValidator;
@@ -1852,6 +2563,12 @@ $/Dx", $string);
 */
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return mixed|string
+	 * @since BBCode
+	 */
 	function HTMLEncode($string)
 	{
 		if (!$this->allow_ampersand)
@@ -1865,6 +2582,12 @@ $/Dx", $string);
 		}
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return array|mixed|string
+	 * @since BBCode
+	 */
 	function FixupOutput($string)
 	{
 		/*HACK >*/
@@ -1896,6 +2619,12 @@ $/Dx", $string);
 		return $output;
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return mixed|string
+	 * @since BBCode
+	 */
 	function Internal_ProcessSmileys($string)
 	{
 		if (!$this->enable_smileys || $this->plain_mode)
@@ -1964,6 +2693,12 @@ $/Dx", $string);
 		$this->smiley_regex = implode("", $regex);
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return array
+	 * @since BBCode
+	 */
 	function Internal_AutoDetectURLs($string)
 	{
 		$output = preg_split("/( (?:
@@ -2060,6 +2795,14 @@ $/Dx", $string);
 		return $output;
 	}
 
+	/**
+	 * @param       $template
+	 * @param       $insert_array
+	 * @param array $default_array
+	 *
+	 * @return mixed|string
+	 * @since BBCode
+	 */
 	function FillTemplate($template, $insert_array, $default_array = Array())
 	{
 		/*HACK >*/
@@ -2100,7 +2843,7 @@ $/Dx", $string);
 					}
 					if (strlen(@$matches[2]))
 					{
-						foreach (split(".", substr($matches[2], 1)) as $index)
+						foreach (explode(".", substr($matches[2], 1)) as $index)
 						{
 							if (is_array($value))
 							{
@@ -2198,6 +2941,13 @@ $/Dx", $string);
 		return implode("", $result);
 	}
 
+	/**
+	 * @param     $array
+	 * @param int $start
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Internal_CollectText($array, $start = 0)
 	{
 		ob_start();
@@ -2209,6 +2959,14 @@ $/Dx", $string);
 		return $output;
 	}
 
+	/**
+	 * @param     $array
+	 * @param int $start
+	 * @param int $end
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Internal_CollectTextReverse($array, $start = 0, $end = 0)
 	{
 		ob_start();
@@ -2220,6 +2978,12 @@ $/Dx", $string);
 		return $output;
 	}
 
+	/**
+	 * @param $pos
+	 *
+	 * @return array
+	 * @since BBCode
+	 */
 	function Internal_GenerateOutput($pos)
 	{
 		$output = Array();
@@ -2280,6 +3044,12 @@ $/Dx", $string);
 		return $output;
 	}
 
+	/**
+	 * @param $class_list
+	 *
+	 * @return bool
+	 * @since BBCode
+	 */
 	function Internal_RewindToClass($class_list)
 	{
 		$pos = count($this->stack) - 1;
@@ -2303,6 +3073,12 @@ $/Dx", $string);
 		return true;
 	}
 
+	/**
+	 * @param $tag_name
+	 *
+	 * @return array|bool|string
+	 * @since BBCode
+	 */
 	function Internal_FinishTag($tag_name)
 	{
 		if (strlen($tag_name) <= 0)
@@ -2349,6 +3125,13 @@ $/Dx", $string);
 		}
 	}
 
+	/**
+	 * @param bool $array
+	 * @param bool $raw
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Internal_DumpStack($array = false, $raw = false)
 	{
 		if (!$raw)
@@ -2392,6 +3175,12 @@ $/Dx", $string);
 		return $string;
 	}
 
+	/**
+	 * @param $pattern
+	 * @param $array
+	 *
+	 * @since BBCode
+	 */
 	function Internal_CleanupWSByPoppingStack($pattern, &$array)
 	{
 		if (strlen($pattern) <= 0)
@@ -2427,6 +3216,11 @@ $/Dx", $string);
 		}
 	}
 
+	/**
+	 * @param $pattern
+	 *
+	 * @since BBCode
+	 */
 	function Internal_CleanupWSByEatingInput($pattern)
 	{
 		if (strlen($pattern) <= 0)
@@ -2464,6 +3258,14 @@ $/Dx", $string);
 		}
 	}
 
+	/**
+	 * @param $pattern
+	 * @param $pos
+	 * @param $array
+	 *
+	 * @return mixed
+	 * @since BBCode
+	 */
 	function Internal_CleanupWSByIteratingPointer($pattern, $pos, $array)
 	{
 		if (strlen($pattern) <= 0)
@@ -2495,6 +3297,13 @@ $/Dx", $string);
 		return $pos;
 	}
 
+	/**
+	 * @param $string
+	 * @param $limit
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Internal_LimitText($string, $limit)
 	{
 		$chunks = preg_split("/([\\x00-\\x20]+)/", $string, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -2527,6 +3336,16 @@ $/Dx", $string);
 		$this->was_limited = true;
 	}
 
+	/**
+	 * @param $action
+	 * @param $tag_name
+	 * @param $default_value
+	 * @param $params
+	 * @param $contents
+	 *
+	 * @return bool|mixed|string
+	 * @since BBCode
+	 */
 	function DoTag($action, $tag_name, $default_value, $params, $contents)
 	{
 		$tag_rule = @$this->tag_rules[$tag_name];
@@ -2691,6 +3510,14 @@ $/Dx", $string);
 		}
 	}
 
+	/**
+	 * @param $tag_rule
+	 * @param $params
+	 * @param $contents
+	 *
+	 * @return string
+	 * @since BBCode
+	 */
 	function Internal_DoEnhancedTag($tag_rule, $params, $contents)
 	{
 		$params['_content']        = $contents;
@@ -2699,6 +3526,11 @@ $/Dx", $string);
 		return $this->FillTemplate(@$tag_rule['template'], $params, @$tag_rule['default']);
 	}
 
+	/**
+	 * @param $params
+	 *
+	 * @since BBCode
+	 */
 	function Internal_UpdateParamsForMissingEndTag($params)
 	{
 		switch ($this->tag_marker)
@@ -2722,6 +3554,13 @@ $/Dx", $string);
 		$params['_endtag'] = $this->tag_marker . '/' . $params['_name'] . $tail_marker;
 	}
 
+	/**
+	 * @param $tag_name
+	 * @param $tag_params
+	 * @param $tag_rule
+	 *
+	 * @since BBCode
+	 */
 	function Internal_ProcessIsolatedTag($tag_name, $tag_params, $tag_rule)
 	{
 		if (!$this->DoTag(BBCODE_CHECK, $tag_name, @$tag_params['_default'], $tag_params, ""))
@@ -2746,6 +3585,13 @@ $/Dx", $string);
 		);
 	}
 
+	/**
+	 * @param $tag_name
+	 * @param $tag_params
+	 * @param $tag_rule
+	 *
+	 * @since BBCode
+	 */
 	function Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule)
 	{
 		$state                 = $this->lexer->SaveState();
@@ -2948,6 +3794,12 @@ $/Dx", $string);
 		);
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return array|mixed|string
+	 * @since BBCode
+	 */
 	function Parse($string)
 	{
 		$this->lexer        = new BBCodeLexer($string, $this->tag_marker);

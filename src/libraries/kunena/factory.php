@@ -1,19 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaFactory
+ * @since Kunena
  */
 abstract class KunenaFactory
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	static $session = null;
 
 	/**
@@ -22,6 +27,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaConfig
+	 * @since Kunena
 	 */
 	public static function getConfig()
 	{
@@ -33,8 +39,10 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	string	$name
+	 * @param   string $name
+	 *
 	 * @return KunenaTemplate
+	 * @since Kunena
 	 */
 	public static function getTemplate($name = null)
 	{
@@ -46,11 +54,12 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return KunenaTemplate
+	 * @return KunenaAdminTemplate|KunenaTemplate
+	 * @since Kunena
 	 */
 	public static function getAdminTemplate()
 	{
-		require_once KPATH_ADMIN.'/template/template.php';
+		require_once KPATH_ADMIN . '/template/template.php';
 		$template = new KunenaAdminTemplate;
 
 		return $template;
@@ -61,10 +70,11 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param	bool	$reload
+	 * @param   int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param   bool $reload
 	 *
 	 * @return KunenaUser
+	 * @since Kunena
 	 */
 	public static function getUser($id = null, $reload = false)
 	{
@@ -76,17 +86,19 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array|bool $update	An array containing session options
+	 * @param   array|bool $update An array containing session options
+	 *
 	 * @return KunenaSession
+	 * @since Kunena
 	 */
 	public static function getSession($update = false)
 	{
-		if (!is_object(KunenaFactory::$session))
+		if (!is_object(self::$session))
 		{
-			KunenaFactory::$session = KunenaSession::getInstance($update);
+			self::$session = KunenaSession::getInstance($update);
 		}
 
-		return KunenaFactory::$session;
+		return self::$session;
 	}
 
 	/**
@@ -95,6 +107,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaAvatar
+	 * @since Kunena
 	 */
 	public static function getAvatarIntegration()
 	{
@@ -107,6 +120,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaPrivate
+	 * @since Kunena
 	 */
 	public static function getPrivateMessaging()
 	{
@@ -119,6 +133,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaIntegrationActivity
+	 * @since Kunena
 	 */
 	public static function getActivityIntegration()
 	{
@@ -131,6 +146,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaProfile
+	 * @since Kunena
 	 */
 	public static function getProfile()
 	{
@@ -142,15 +158,16 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param string $file
-	 * @param string $client
+	 * @param   string $file
+	 * @param   string $client
 	 *
-	 * @return
+	 * @return mixed
+	 * @since Kunena
 	 */
-	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
+	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($client == 'site')
 		{
@@ -159,7 +176,7 @@ abstract class KunenaFactory
 		}
 		else
 		{
-			$client = 'admin';
+			$client  = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
 			$lookup2 = KPATH_ADMIN;
 		}
@@ -171,7 +188,8 @@ abstract class KunenaFactory
 			$english = false;
 
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english'))
+				&& !self::getConfig()->get('debug') && self::getConfig()->get('fallback_english')
+			)
 			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);
 				$english = true;
@@ -181,16 +199,17 @@ abstract class KunenaFactory
 				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $loaded[$file];
-}
+	}
 
 	/**
 	 * @param $lang
 	 * @param $filename
 	 *
-	 * @return bool
+	 * @return boolean
+	 * @since Kunena
 	 */
 	protected static function parseLanguage($lang, $filename)
 	{
@@ -206,7 +225,7 @@ abstract class KunenaFactory
 
 		$contents = file_get_contents($filename);
 		$contents = str_replace('_QQ_', '"\""', $contents);
-		$strings = @parse_ini_string($contents);
+		$strings  = @parse_ini_string($contents);
 
 		// Restore error tracking to what it was before.
 		ini_set('track_errors', $track_errors);

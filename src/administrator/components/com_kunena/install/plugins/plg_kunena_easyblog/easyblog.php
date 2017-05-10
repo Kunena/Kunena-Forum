@@ -2,16 +2,20 @@
 /**
  * Kunena Plugin
  *
- * @package     Kunena.Plugins
- * @subpackage  Easyblog
+ * @package         Kunena.Plugins
+ * @subpackage      Easyblog
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
+/**
+ * Class plgKunenaEasyblog
+ * @since Kunena
+ */
 class plgKunenaEasyblog extends JPlugin
 {
 	/**
@@ -19,6 +23,8 @@ class plgKunenaEasyblog extends JPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -36,7 +42,7 @@ class plgKunenaEasyblog extends JPlugin
 			return;
 		}
 
-		include_once($path);
+		include_once $path;
 
 		parent::__construct($subject, $config);
 
@@ -47,6 +53,7 @@ class plgKunenaEasyblog extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return \KunenaAvatarEasyblog|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -64,6 +71,7 @@ class plgKunenaEasyblog extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return \KunenaProfileEasyblog|null
+	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
 	{

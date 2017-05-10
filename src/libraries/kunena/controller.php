@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package    Kunena.Framework
+ * @package        Kunena.Framework
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -13,27 +13,41 @@ jimport('joomla.application.component.helper');
 
 /**
  * Class KunenaController
+ * @since Kunena
  */
 class KunenaController extends JControllerLegacy
 {
+	/**
+	 * @var JApplicationCms|null
+	 * @since Kunena
+	 */
 	public $app = null;
 
+	/**
+	 * @var KunenaUser|null
+	 * @since Kunena
+	 */
 	public $me = null;
 
+	/**
+	 * @var KunenaConfig|null
+	 * @since Kunena
+	 */
 	public $config = null;
 
 	/**
 	 * @param   array $config
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->app = JFactory::getApplication();
-		$this->config = KunenaFactory::getConfig();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->app      = JFactory::getApplication();
+		$this->config   = KunenaFactory::getConfig();
+		$this->me       = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
 		if ($this->me->userid && !$this->me->exists())
@@ -50,9 +64,12 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param   string	$prefix
-	 * @param   mixed	$config
-	 * @return	KunenaController
+	 * @param   string $prefix
+	 * @param   mixed  $config
+	 *
+	 * @return KunenaController
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{
@@ -70,8 +87,8 @@ class KunenaController extends JControllerLegacy
 
 		$input = JFactory::getApplication()->input;
 
-		$app = JFactory::getApplication();
-		$command  = $input->get('task', 'display');
+		$app     = JFactory::getApplication();
+		$command = $input->get('task', 'display');
 
 		// Check for a controller.task command.
 		if (strpos($command, '.') !== false)
@@ -133,14 +150,15 @@ class KunenaController extends JControllerLegacy
 	 * Execute task (slightly modified from Joomla).
 	 *
 	 * @param   string $task
+	 *
 	 * @return mixed
 	 * @throws Exception
 	 *
-	 * @todo Check if the parent function override is still needed.
+	 * @since Kunena
 	 */
 	protected function executeTask($task)
 	{
-		$dot = strpos($task, '.');
+		$dot        = strpos($task, '.');
 		$this->task = $dot ? substr($task, $dot + 1) : $task;
 
 		$task = strtolower($this->task);
@@ -183,10 +201,11 @@ class KunenaController extends JControllerLegacy
 	 * messages = [array|null]: Array of enqueue'd messages.
 	 * data = [mixed]: The response data.
 	 *
-	 * @param   string  $task  Task to be run.
+	 * @param   string $task Task to be run.
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function execute($task)
 	{
@@ -195,13 +214,13 @@ class KunenaController extends JControllerLegacy
 			$task = 'display';
 		}
 
-		$app = JFactory::getApplication();
+		$app          = JFactory::getApplication();
 		$this->format = $this->input->getWord('format', 'html');
 
 		try
 		{
 			// TODO: This would be great, but we would need to store POST before doing it in here...
-/*
+			/*
 			if ($task != 'display')
 			{
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
@@ -216,7 +235,7 @@ class KunenaController extends JControllerLegacy
 					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
 			}
-*/
+			*/
 
 			// Execute the task.
 			$content = static::executeTask($task);
@@ -278,7 +297,7 @@ class KunenaController extends JControllerLegacy
 		header('Content-type: application/json', true);
 
 		// Create JSON response and set the redirect.
-		$response = new KunenaResponseJson($content, null, false, !empty($this->redirect));
+		$response           = new KunenaResponseJson($content, null, false, !empty($this->redirect));
 		$response->location = $this->redirect;
 
 		// In case of an error we want to set HTTP error code.
@@ -298,10 +317,11 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean    $cachable   If true, the view output will be cached
-	 * @param   array|bool $urlparams  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * @param   boolean    $cachable  If true, the view output will be cached
+	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -312,8 +332,8 @@ class KunenaController extends JControllerLegacy
 		$document = JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName = JFactory::getApplication()->input->getWord('view', $this->app->isAdmin() ? 'cpanel' : 'home');
-		$lName = JFactory::getApplication()->input->getWord('layout', 'default');
+		$vName   = JFactory::getApplication()->input->getWord('view', $this->app->isAdmin() ? 'cpanel' : 'home');
+		$lName   = JFactory::getApplication()->input->getWord('layout', 'default');
 		$vFormat = $document->getType();
 
 		if ($this->app->isAdmin())
@@ -327,7 +347,7 @@ class KunenaController extends JControllerLegacy
 
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
-			$version = new KunenaVersion();
+			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
 
 			if (!empty($version_warning))
@@ -344,7 +364,7 @@ class KunenaController extends JControllerLegacy
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena');
 
-			$menu = $this->app->getMenu();
+			$menu   = $this->app->getMenu();
 			$active = $menu->getActive();
 
 			// Check if menu item was correctly routed
@@ -354,7 +374,7 @@ class KunenaController extends JControllerLegacy
 			{
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
-				$route = KunenaRoute::_(null, false);
+				$route    = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
 				JLog::add("Redirect from " . JUri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", JLog::DEBUG, 'kunena');
 				$this->app->redirect($route);
@@ -362,7 +382,7 @@ class KunenaController extends JControllerLegacy
 
 			// Joomla 2.5+ multi-language support
 			/*
-  // FIXME:
+			// FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = JFactory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
@@ -381,10 +401,10 @@ class KunenaController extends JControllerLegacy
 			if ($this->app->isSite() && $vFormat == 'html')
 			{
 				$common = $this->getView('common', $vFormat);
-				$model = $this->getModel('common');
+				$model  = $this->getModel('common');
 				$common->setModel($model, true);
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
-				$view->common = $common;
+				$view->common    = $common;
 			}
 
 			// Set the view layout.
@@ -425,6 +445,7 @@ class KunenaController extends JControllerLegacy
 	 * @param   string $var The output to escape.
 	 *
 	 * @return string The escaped value.
+	 * @since Kunena
 	 */
 	public function escape($var)
 	{
@@ -433,6 +454,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getRedirect()
 	{
@@ -441,6 +463,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getMessage()
 	{
@@ -449,6 +472,7 @@ class KunenaController extends JControllerLegacy
 
 	/**
 	 * @return string
+	 * @since Kunena
 	 */
 	public function getMessageType()
 	{
@@ -463,6 +487,8 @@ class KunenaController extends JControllerLegacy
 	 *
 	 * @param   string $default
 	 * @param   string $anchor
+	 *
+	 * @since Kunena
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

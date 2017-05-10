@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package    Kunena.Installer
+ * @package        Kunena.Installer
  *
- * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright      Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,14 +17,27 @@ defined('_JEXEC') or die();
  */
 class KunenaControllerInstall extends JControllerLegacy
 {
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $step = null;
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $steps = null;
 
+	/**
+	 * @var bool|JModelLegacy|null
+	 * @since Kunena
+	 */
 	protected $model = null;
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -42,6 +55,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @return JControllerLegacy|void
 	 *
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -66,6 +80,7 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function run()
 	{
@@ -166,6 +181,7 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	function uninstall()
 	{
@@ -216,7 +232,7 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @return mixed|null
-	 *
+	 * @since Kunena
 	 */
 	function runStep()
 	{
@@ -231,6 +247,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	/**
 	 * @param $type
 	 * @param $errstr
+	 *
+	 * @since Kunena
 	 */
 	static public function error($type, $errstr)
 	{
@@ -243,7 +261,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $exception
 	 *
 	 * @return boolean
-	 *
+	 * @since Kunena
 	 */
 	static public function exceptionHandler($exception)
 	{
@@ -259,7 +277,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $errline
 	 *
 	 * @return boolean
-	 *
+	 * @since Kunena
 	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{

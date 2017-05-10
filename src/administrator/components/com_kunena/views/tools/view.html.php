@@ -2,22 +2,24 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator
- * @subpackage  Views
+ * @package         Kunena.Administrator
+ * @subpackage      Views
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena cpanel
+ * @since Kunena
  */
 class KunenaAdminViewTools extends KunenaView
 {
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDefault()
 	{
@@ -30,6 +32,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayPrune()
 	{
@@ -44,6 +47,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySubscriptions()
 	{
@@ -65,6 +69,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displaySyncUsers()
 	{
@@ -74,6 +79,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayRecount()
 	{
@@ -83,6 +89,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayMenu()
 	{
@@ -96,6 +103,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayPurgeReStatements()
 	{
@@ -105,6 +113,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayCleanupIP()
 	{
@@ -114,6 +123,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayDiagnostics()
 	{
@@ -123,12 +133,13 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	function displayUninstall()
 	{
 		$this->setToolBarUninstall();
 
-		$login = KunenaLogin::getInstance();
+		$login              = KunenaLogin::getInstance();
 		$this->isTFAEnabled = $login->isTFAEnabled();
 
 		$this->display();
@@ -136,16 +147,18 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarPrune()
 	{
@@ -155,12 +168,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarSyncUsers()
 	{
@@ -170,12 +184,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarRecount()
 	{
@@ -185,12 +200,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarMenu()
 	{
@@ -206,12 +222,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarPurgeReStatements()
 	{
@@ -221,12 +238,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolCleanupIP()
 	{
@@ -236,12 +254,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarUninstall()
 	{
@@ -249,12 +268,13 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDiagnostics()
 	{
@@ -262,7 +282,7 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

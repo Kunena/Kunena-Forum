@@ -18,28 +18,32 @@
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="basic"  addfieldpath="/administrator/components/com_jsn/models/fields">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_jsn/models/fields">
 				<!-- Decide to use either Kunena or Easyprofile Avatar -->
-				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_AVATAR" description="PLG_KUNENA_EASYPROFILE_AVATAR_DESC" class="btn-group">
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_AVATAR" description="PLG_KUNENA_EASYPROFILE_AVATAR_DESC"
+				       class="btn-group">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
 				<!-- Decide which Avatar to use for guests -->
-				<field name="guestavatar" type="radio" default="easyprofile" label="PLG_KUNENA_EASYPROFILE_GUESTAVATAR" description="PLG_KUNENA_EASYPROFILE_GUESTAVATAR_DESC" class="btn-group">
+				<field name="guestavatar" type="radio" default="easyprofile" label="PLG_KUNENA_EASYPROFILE_GUESTAVATAR"
+				       description="PLG_KUNENA_EASYPROFILE_GUESTAVATAR_DESC" class="btn-group">
 					<option value="easyprofile">Easyprofile default</option>
 					<option value="avatar">Avatar default</option>
 				</field>
 				<!-- Decide to use either Kunena or Easyprofile Profile -->
-				<field name="profile" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_PROFILE" description="PLG_KUNENA_EASYPROFILE_PROFILE_DESC" class="btn-group">
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_PROFILE"
+				       description="PLG_KUNENA_EASYPROFILE_PROFILE_DESC" class="btn-group">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
 				<!-- Decide which userlist to use: Kunena or Easyprofile Profile -->
-				<field name="userlist" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_USERLIST" description="PLG_KUNENA_EASYPROFILE_USERLIST_DESC" class="btn-group">
+				<field name="userlist" type="radio" default="1" label="PLG_KUNENA_EASYPROFILE_USERLIST"
+				       description="PLG_KUNENA_EASYPROFILE_USERLIST_DESC" class="btn-group">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
- 				<field
+				<field
 					name="menuitem"
 					label="PLG_KUNENA_EASYPROFILE_JSN_MENUITEM"
 					description="PLG_KUNENA_EASYPROFILE_JSN_MENUITEM_DESC"
@@ -49,7 +53,7 @@
 					field="id"
 					multiple="false"
 					required="false"
-					>
+				>
 				</field>
 			</fieldset>
 		</fields>

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,6 +21,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare recent topics list.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -29,9 +30,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->state   = $this->model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
+		$holding       = $this->getOptions()->get('topics_deletedtopics');
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
@@ -54,11 +56,20 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
+		if ($holding)
+		{
+			$hold = '0,2,3';
+		}
+		else
+		{
+			$hold = '0';
+		}
+
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
-		$reverse = !$this->state->get('list.categories.in');
-		$authorise = 'read';
-		$order = 'last_post_time';
+		$reverse     = !$this->state->get('list.categories.in');
+		$authorise   = 'read';
+		$order       = 'last_post_time';
 
 		$finder = new KunenaForumTopicFinder;
 		$finder->filterByMoved(false);
@@ -68,24 +79,24 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'topics' :
 				$order = 'first_post_time';
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->filterByTime($time, null, false);
 				break;
 			case 'sticky' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.ordering', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'locked' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.locked', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'noreplies' :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->where('a.posts', '=', 1)
 					->filterByTime($time);
 				break;
@@ -104,7 +115,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'replies' :
 			default :
 				$finder
-					->filterByHold(array(0))
+					->filterByHold(array($hold))
 					->filterByTime($time);
 				break;
 		}
@@ -113,6 +124,43 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		$doc = JFactory::getDocument();
+
+		$page = $this->pagination->pagesCurrent;
+
+		$pagdata = $this->pagination->getData();
+
+		if ($pagdata->previous->link)
+		{
+			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
+		}
+
+		if ($pagdata->next->link)
+		{
+			$doc->addHeadLink($pagdata->next->link, 'next');
+		}
+
+		if ($page > 1)
+		{
+			foreach ($doc->_links as $key => $value)
+			{
+				if (is_array($value))
+				{
+					if (array_key_exists('relation', $value))
+					{
+						if ($value['relation'] == 'canonical')
+						{
+							$canonicalUrl               = KunenaRoute::_();
+							$doc->_links[$canonicalUrl] = $value;
+							unset($doc->_links[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		if ($this->moreUri)
 		{
@@ -132,8 +180,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 
-		$params = JFactory::getApplication()->getMenu()->getActive()->params;
-		$title = $params->get('page_title');
+		$params      = JFactory::getApplication()->getMenu()->getActive()->params;
+		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
 		switch ($this->state->get('list.mode'))
@@ -222,7 +270,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=replies';
-			break;
+				break;
 		}
 
 		$doc = JFactory::getDocument();
@@ -250,20 +298,19 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
-		$page = $this->pagination->pagesCurrent;
-		$total = $this->pagination->pagesTotal;
+		$page       = $this->pagination->pagesCurrent;
+		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 		$doc = JFactory::getDocument();
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
-
-		$config = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$menu_item = $app->getMenu()->getActive();
 
 		if ($robots == '')
 		{

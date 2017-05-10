@@ -1,28 +1,42 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Forum.Topic
+ * @package         Kunena.Framework
+ * @subpackage      Forum.Topic
  *
- * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumTopicFinder
+ * @since Kunena
  */
 class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 {
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
 	protected $table = '#__kunena_topics';
 
+	/**
+	 * @var array
+	 * @since Kunena
+	 */
 	protected $hold = array(0);
 
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
 	protected $moved = null;
 
 	/**
 	 * Constructor.
+	 * @since Kunena
 	 */
 	public function __construct()
 	{
@@ -40,11 +54,12 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser $user
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUserAccess(KunenaUser $user)
 	{
 		$categories = $user->getAllowedCategories();
-		$list = implode(',', $categories);
+		$list       = implode(',', $categories);
 		$this->query->where("a.category_id IN ({$list})");
 
 		return $this;
@@ -61,6 +76,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   array $categories
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByCategories(array $categories)
 	{
@@ -94,11 +110,12 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on first or last post.
 	 *
-	 * @param   JDate $starting  Starting date or null if older than ending date.
-	 * @param   JDate $ending    Ending date or null if newer than starting date.
-	 * @param   bool  $lastPost  True = last post, False = first post.
+	 * @param   JDate $starting Starting date or null if older than ending date.
+	 * @param   JDate $ending   Ending date or null if newer than starting date.
+	 * @param   bool  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null, $lastPost = true)
 	{
@@ -135,6 +152,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
@@ -203,6 +221,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool  $negate
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterAnsweredBy(array $users, $negate = false)
 	{
@@ -262,9 +281,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param   array $hold  List of hold states to display.
+	 * @param   array $hold List of hold states to display.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByHold(array $hold = array(0))
 	{
@@ -279,6 +299,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool $value True on moved, false on not moved.
 	 *
 	 * @return $this
+	 * @since Kunena
 	 */
 	public function filterByMoved($value = true)
 	{
@@ -290,8 +311,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get topics.
 	 *
-	 * @param   string  $access  Kunena action access control check.
+	 * @param   string $access Kunena action access control check.
+	 *
 	 * @return array|KunenaForumTopic[]
+	 * @since Kunena
 	 */
 	public function find($access = 'read')
 	{
@@ -301,7 +324,24 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
+	 * Access to the query select
+	 *
+	 * @param   mixed $columns A string or an array of field names.
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
+	public function select($columns)
+	{
+		$this->query->select($columns);
+
+		return $this;
+	}
+
+	/**
 	 * @param   JDatabaseQuery $query
+	 *
+	 * @since Kunena
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

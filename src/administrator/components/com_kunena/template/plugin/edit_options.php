@@ -9,14 +9,16 @@
 
 defined('_JEXEC') or die;
 
-foreach ($this->fieldsets as $name => $fieldset) :
+foreach ($this->fieldsets as $name => $fieldset)
+	:
 	echo '<div class="tab-pane" id="options-' . $name . '">';
 	$label = !empty($fieldset->label) ? $fieldset->label : 'COM_PLUGINS_' . $name . '_FIELDSET_LABEL';
 
-	if (isset($fieldset->description) && trim($fieldset->description)) :
+	if (isset($fieldset->description) && trim($fieldset->description))
+		:
 		?>
 		<p class="tip"><?php echo $this->escape(JText::_($fieldset->description)) ?></p>;
-	<?php
+		<?php
 	endif;
 	?>
 	<?php $hidden_fields = ''; ?>
@@ -28,21 +30,27 @@ foreach ($this->fieldsets as $name => $fieldset) :
 		</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($this->form->getFieldset($name) as $field) : ?>
-				<?php if (!$field->hidden) : ?>
-					<tr>
-						<td>
-							<?php echo $field->label; ?>
-						</td>
-						<td>
-							<?php echo $field->input; ?>
-						</td>
-					</tr>
-				<?php else : $hidden_fields .= $field->input; ?>
-				<?php endif; ?>
-			<?php endforeach; ?>
+		<?php foreach ($this->form->getFieldset($name) as $field)
+			:
+			?>
+			<?php if (!$field->hidden)
+			:
+			?>
+			<tr>
+				<td>
+					<?php echo $field->label; ?>
+				</td>
+				<td>
+					<?php echo $field->input; ?>
+				</td>
+			</tr>
+		<?php else:
+			$hidden_fields .= $field->input; ?>
+		<?php endif; ?>
+		<?php endforeach; ?>
 		</tbody>
 	</table>
 	<?php echo $hidden_fields; ?>
-	<?php echo '</div>'; // .tab-pane div ?>
+	<?php echo '</div>'; // .tab-pane div
+	?>
 <?php endforeach;

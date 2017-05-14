@@ -2962,7 +2962,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					$url = "http://{$content}";
 				}
 
-				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
+				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
 			}
 		}
 	}

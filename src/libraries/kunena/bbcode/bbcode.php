@@ -2953,7 +2953,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$content = strip_tags($content);
 
 			$content = trim($content);
-
+			
+			$url_parsed = parse_url($content);
+						
+			if ($url_parsed['scheme']=='https' || $url_parsed['scheme']=='http')
+			{
+				$content = $url_parsed['host']  . $url_parsed['path'];
+			}
+			else
+			{
+				$content = $url_parsed['path'];
+			}
+			
 			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
 				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))

@@ -257,17 +257,6 @@ class KunenaBbcode extends NBBC_BBCode
 					->set('url', $url)
 					->set('target', $this->url_target);
 			}
-
-			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
-
-			if (strpos($url, '/index.php') !== 0)
-			{
-				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
-			}
-			else
-			{
-				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
-			}
 		}
 
 		// Auto-linking has been disabled.
@@ -401,10 +390,30 @@ class KunenaBbcode extends NBBC_BBCode
 	{
 		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
 
-		if (empty($string)) return false;
-		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
-		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
-		if (preg_match($re, $string)) return true;
+		if (empty($string))
+		{
+			return false;
+		}
+
+		if ($local_too && $string[0] == '/')
+		{
+			return true;
+		}
+
+		if (strpos($string, 'index.php'))
+		{
+			return true;
+		}
+
+		if ($email_too && substr($string, 0, 7) == "mailto:")
+		{
+			return $this->IsValidEmail(substr($string, 7));
+		}
+
+		if (preg_match($re, $string))
+		{
+			return true;
+		}
 
 		return false;
 	}
@@ -1134,7 +1143,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
 		{
 			// Add scheme to raw domain URLs.
-			$url = "http://{$url}";
+			if (!preg_match('index.php', $url))
+			{
+				$url = JUri::root() ."{$url}";
+			}
+			else
+			{
+				$url = "http://{$url}";
+			}
 		}
 
 		if (!$bbcode->IsValidURL($url, false, true))

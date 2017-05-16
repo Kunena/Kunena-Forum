@@ -47,6 +47,14 @@ JFactory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', Kunen
 						</span>
 				
 				<div id="files" class="files"></div>
+				<div id="dropzone">
+					<div class="dropzone">
+						<div class="default message">
+							<span
+								id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+						</div>
+					</div>
+				</div>
 				<div id="kattach-list"></div>
 				<input id="kunena_userid" type="hidden" value="<?php echo $this->user->id; ?>" />
 			</td>

@@ -161,8 +161,7 @@ abstract class KunenaForumMessageHelper
 
 		$db = JFactory::getDBO();
 
-		// FIXME: use right config setting
-		if ($limit < 1 && empty($params['nolimit']))
+		if ($limit == 0 && empty($params['nolimit']))
 		{
 			$limit = KunenaFactory::getConfig()->threads_per_page;
 		}

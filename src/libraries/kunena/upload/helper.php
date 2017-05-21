@@ -91,10 +91,12 @@ class KunenaUploadHelper
 					$ext = JFile::getExt($file['name']);
 					$name = JFile::stripExt($file['name']);
 					$newFileName = '';
+					$i = 2;
 
-					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)
+					while (file_exists(file_exists("{$uploadfolder}/{$newFileName}")))
 					{
-						$newFileName = $name . "-$i." . $ext;
+						$newFileName = $name . '-' . $i . '.' . $ext;
+						$i++;
 					}
 
 					$filepath = $uploadfolder . '/' . $newFileName;

@@ -832,7 +832,12 @@ class KunenaModelInstall extends JModelLegacy
 		{
 			$version = $installed['kunena'];
 		}
-
+		
+		if ($action == 'reinstall')
+		{
+			$this->deleteFolders(KUNENA_INSTALLER_MEDIAPATH . '/topic_icons');
+		}
+		
 		$this->setVersion($version);
 
 		// Always enable the System - Kunena plugin

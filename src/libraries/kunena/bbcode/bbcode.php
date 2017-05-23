@@ -2447,7 +2447,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$fileurl  = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+		$fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+		
+		if (!$bbcode->IsValidURL($fileurl, false, true))
+		{
+			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+		}
+		
 		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..

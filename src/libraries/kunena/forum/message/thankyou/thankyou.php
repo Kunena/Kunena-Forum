@@ -98,7 +98,7 @@ class KunenaForumMessageThankyou extends JObject
 			return false;
 		}
 
-		if ($user->banned)
+		if ($user->isBanned())
 		{
 			$this->setError(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 

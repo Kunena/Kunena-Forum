@@ -111,6 +111,10 @@ class KunenaForumMessageThankyou extends JObject
 		{
 			$this->setError(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
 
+		if ($user->isBanned())
+		{
+			$this->setError(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+
 			return false;
 		}
 

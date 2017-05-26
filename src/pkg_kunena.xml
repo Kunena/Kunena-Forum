@@ -3,8 +3,8 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.0.9</version>
-	<versionname>Ibis</versionname>
+	<version>5.0.10-dev</version>
+	<versionname>Internal</versionname>
 	<creationDate>2017-05-26</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

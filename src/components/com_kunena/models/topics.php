@@ -169,10 +169,11 @@ class KunenaModelTopics extends KunenaModel
 
 		// List state information
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
+		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
 
 		if ($value < 1 || $value > 100)
 		{
-			$value = $this->config->threads_per_page;
+			$value = $defaultlimit;
 		}
 
 		$this->setState('list.limit', $value);

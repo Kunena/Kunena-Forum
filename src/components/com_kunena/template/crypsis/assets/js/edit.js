@@ -109,14 +109,15 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('#form_submit_button').click(function () {
+		$("#subject").attr('required', 'required');
+		$("#kbbcode-message").attr('required', 'required');
+	});
+
 	// Load topic icons by ajax request
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
-
-		$("#subject").attr('required', 'required');
-		$("#kbbcode-message").attr('required', 'required');
-
 
 		if ($('#kanynomous-check').length > 0) {
 			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));

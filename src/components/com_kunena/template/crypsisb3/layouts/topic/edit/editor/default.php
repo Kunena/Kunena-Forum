@@ -22,7 +22,7 @@ $this->getBBcodesEnabled();
 			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
-		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 
 	<!-- Hidden preview placeholder -->

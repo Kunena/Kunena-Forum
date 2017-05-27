@@ -2229,6 +2229,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
+
 		$layout = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
@@ -2270,6 +2276,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
 		}
 
 		// Display tag in activity streams etc..
@@ -2355,12 +2367,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
-		
+
 		if (!$bbcode->IsValidURL($fileurl, false, true))
 		{
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
-		
+
 		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..
@@ -2859,9 +2871,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$content = strip_tags($content);
 
 			$content = trim($content);
-			
+
 			$url_parsed = parse_url($content);
-						
+
 			if ($url_parsed['scheme']=='https' || $url_parsed['scheme']=='http')
 			{
 				$content = $url_parsed['host']  . $url_parsed['path'];
@@ -2870,7 +2882,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			{
 				$content = $url_parsed['path'];
 			}
-			
+
 			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
         		if (!preg_match('#^(/|https?:|ftp:)#ui', $content))

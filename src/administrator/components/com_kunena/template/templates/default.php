@@ -98,7 +98,7 @@ JHtml::_('dropdown.init');
 				</thead>
 				<tbody>
 					<tr>
-						<th width="5%">Price</th>
+						<th width="10%">Price</th>
 						<th width="10%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
 						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
 						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
@@ -108,7 +108,7 @@ JHtml::_('dropdown.init');
 					</tr>
 
 					<tr>
-						<td style="width: 5%;">€10 euro
+						<td style="width: 5%;">€10,00
 						</td>
 						<td style="width: 7%;">
 							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
@@ -127,6 +127,29 @@ JHtml::_('dropdown.init');
 						</td>
 						<td style="width: 25%;">
 							<a href="https://www.kunena.org" target="_blank" rel="noopener noreferrer">https://www.kunena.org</a>
+						</td>
+						<td style="width: 30%;">
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 5%;">$8.99 - $20.00
+						</td>
+						<td style="width: 7%;">
+							<span class="editlinktip hasTip" title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="http://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">9themestore.com</a>
+							</span>
+						</td>
+						<td style="width: 7%;">
+							<a href="mailto:info@9themestore.com">9themestore.com</a>
+						</td>
+						<td style="width: 5%;">
+							K5.0.X
+						</td>
+						<td style="width: 5%;">
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+						</td>
+						<td style="width: 25%;">
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">http://www.9themestore.com</a>
 						</td>
 						<td style="width: 30%;">
 						</td>

@@ -1716,18 +1716,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			switch ($default)
 			{
 				case 'full':
-					if (!empty($article->fulltext))
+					if (!empty($article->fulltext) && !empty($article->introtext))
 					{
-						$article->text = $article->introtext . ' ' . $article->fulltext;
-
-						if (!empty($article->fulltext))
-						{
-							$link = '<a href="' . $url . '" class="readon">' . JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ') . '</a>';
-						}
-						else
-						{
-							$link = '';
-						}
+						$article->text = $article->introtext . '<br />' . $article->fulltext;
+						break;
+					}
+					elseif (empty($article->fulltext) && !empty($article->introtext))
+					{
+						$article->text = $article->introtext;
+						break;
 					}
 					break;
 				// Continue to intro if fulltext is empty

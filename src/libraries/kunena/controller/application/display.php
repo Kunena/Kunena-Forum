@@ -144,8 +144,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			catch (KunenaExceptionAuthorise $e)
 			{
 				$banned = KunenaUserHelper::getMyself()->banned;
+				$userid =  $this->input->getInt('userid');
 
-				if (JFactory::getUser()->guest)
+				if (JFactory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
@@ -168,6 +169,14 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
                         )
                         );
 					$this->document->setMetaData('robots', 'noindex, follow');
+				}
+				elseif (!KunenaUserHelper::get($userid)->exists())
+				{
+					$this->setResponseStatus($e->getResponseCode());
+					$this->document->setTitle($e->getResponseStatus());
+				
+					$this->content = KunenaLayout::factory('Widget/Error')
+					->set('header', $e->getResponseStatus());
 				}
 				else
 				{

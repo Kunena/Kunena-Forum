@@ -261,6 +261,11 @@ class KunenaBbcode extends NBBC_BBCode
 		{
 			$layout = KunenaLayout::factory('BBCode/URL');
 
+			if ($config->smartlinking)
+			{
+				$text = $this->get_title($url);
+			}
+
 			if ($layout->getPath())
 			{
 				return (string) $layout
@@ -436,6 +441,19 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		return false;
+	}
+
+	public function get_title($url)
+	{
+		$str = file_get_contents($url);
+
+		if (strlen($str) > 0)
+		{
+			$str = trim(preg_replace('/\s+/', ' ', $str)); // supports line breaks inside <title>
+			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title); // ignore case
+
+			return $title[1];
+		}
 	}
 }
 
@@ -1204,6 +1222,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		else
 		{
 			$target = '';
+		}
+
+		$smart = KunenaConfig::getInstance()->smartlinking;
+
+		if ($smart)
+		{
+			$content = $bbcode->get_title($url);
 		}
 
 		$layout = KunenaLayout::factory('BBCode/URL');
@@ -2448,12 +2473,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 
 		$fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
-		
+
 		if (!$bbcode->IsValidURL($fileurl, false, true))
 		{
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
-		
+
 		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..
@@ -2959,9 +2984,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$content = strip_tags($content);
 
 			$content = trim($content);
-			
+
 			$url_parsed = parse_url($content);
-						
+
 			if ($url_parsed['scheme']=='https' || $url_parsed['scheme']=='http')
 			{
 				$content = $url_parsed['host']  . $url_parsed['path'];
@@ -2970,7 +2995,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			{
 				$content = $url_parsed['path'];
 			}
-			
+
 			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
 				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))

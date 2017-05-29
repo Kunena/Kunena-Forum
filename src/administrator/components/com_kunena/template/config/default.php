@@ -1075,6 +1075,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_AUTOLINK_DESC') ?></td>
 												</tr>
 												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_SMARTAUTOLINK') ?></td>
+													<td><?php echo $this->lists ['smartlinking'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_SMARTAUTOLINK_DESC') ?></td>
+												</tr>
+												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE') ?></td>
 													<td><?php echo $this->lists ['autoembedyoutube'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE_DESC') ?></td>

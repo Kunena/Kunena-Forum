@@ -486,6 +486,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['lazyload']  = JHtml::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
 
 		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
+		$lists ['smartlinking'] = JHtml::_('select.genericlist', $yesno, 'cfg_smartlinking', 'class="inputbox" size="1"', 'value', 'text', $this->config->smartlinking);
 
 		return $lists;
 	}

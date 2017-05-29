@@ -1219,6 +1219,12 @@ class KunenaConfig extends JObject
 	public $avatartypes = 'gif, jpeg, jpg, png';
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $smartlinking = 1;
+
+	/**
 	 *
 	 * @since Kunena
 	 */

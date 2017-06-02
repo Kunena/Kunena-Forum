@@ -144,7 +144,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			catch (KunenaExceptionAuthorise $e)
 			{
 				$banned = KunenaUserHelper::getMyself()->banned;
-				
+
 				if (JFactory::getUser()->guest)
 				{
 					$this->setResponseStatus($e->getResponseCode());

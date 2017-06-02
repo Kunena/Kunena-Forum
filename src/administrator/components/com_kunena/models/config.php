@@ -153,7 +153,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['allowavatargallery']     = JHtml::_('select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $this->config->allowavatargallery);
 		$lists ['showstats']              = JHtml::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showstats);
 		$lists ['showranking']            = JHtml::_('select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $this->config->showranking);
-		$lists ['rankimages']             = JHtml::_('select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages);
 		$lists ['username']               = JHtml::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $this->config->username);
 		$lists ['shownew']                = JHtml::_('select.genericlist', $yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $this->config->shownew);
 		$lists ['editmarkup']             = JHtml::_('select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $this->config->editmarkup);
@@ -487,6 +486,14 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
 		$lists ['smartlinking'] = JHtml::_('select.genericlist', $yesno, 'cfg_smartlinking', 'class="inputbox" size="1"', 'value', 'text', $this->config->smartlinking);
+
+
+		$rankimages   = array();
+		$rankimages[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_RANK_TEXT'));
+		$rankimages[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_RANK_IMAGE'));
+		$rankimages[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RANK_USERGROUP'));
+		$rankimages[] = JHtml::_('select.option', '3', JText::_('COM_KUNENA_RANK_BOTH'));
+		$lists ['rankimages'] = JHtml::_('select.genericlist', $rankimages, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages);
 
 		return $lists;
 	}

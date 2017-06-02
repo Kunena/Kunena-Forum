@@ -1037,13 +1037,18 @@ class KunenaUser extends JObject
 			$rank->rank_image = null;
 		}
 
-		if ($type == 'image')
+		/**
+		 *  Rankimages 0 = No Image
+		 *             1 = Rank Image
+		 *             2 = Usergroup
+		 *             3 = Both Rank image and Usergroup
+		 */
+		if ($config->rankimages == 0)
 		{
-			if (!$rank->rank_image)
-			{
-				return null;
-			}
-
+			return false;
+		}
+		elseif ($config->rankimages == 1)
+		{
 			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
 			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 			$data     = getimagesize($location);
@@ -1051,6 +1056,21 @@ class KunenaUser extends JObject
 			$height   = $data[1];
 
 			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
+		}
+		elseif ($config->rankimages == 2)
+		{
+			return '<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
+		}
+		elseif ($config->rankimages == 3)
+		{
+			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
+			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+			$data     = getimagesize($location);
+			$width    = $data[0];
+			$height   = $data[1];
+
+			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
+				<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
 		}
 
 		return $rank;
@@ -1774,5 +1794,28 @@ return $this->getLink('<span class="profile" title="' . JText::_('COM_KUNENA_VIE
 		{
 			return false;
 		}
+	}
+
+	public function GetUserGroup($userid)
+	{
+		jimport( 'joomla.access.access' );
+		$groups = JAccess::getGroupsByUser($userid, false);
+
+		$groupid_list      = implode(',', $groups);
+
+		foreach ($groups as $groupId => $value)
+		{
+			$db = JFactory::getDbo();
+			$query	= $db->getQuery(true)
+				->select('title')
+				->from('#__usergroups')
+				->where('id = '. (int) $groupid_list);
+
+			$db->setQuery($query);
+			$groupNames = $db->loadResult();
+			$groupNames .= '<br/>';
+		}
+
+		return $groupNames;
 	}
 }

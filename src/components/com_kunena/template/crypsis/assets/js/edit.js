@@ -115,6 +115,8 @@ jQuery(document).ready(function ($) {
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
 
 		$("#subject").attr('required', 'required');
+		$("#kbbcode-message").attr('required', 'required');
+
 
 		if ($('#kanynomous-check').length > 0) {
 			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));

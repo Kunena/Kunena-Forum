@@ -2340,7 +2340,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
-		$layout                                              = KunenaLayout::factory('BBCode/Attachment')
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
+
+		$layout = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
 		$config                                              = KunenaConfig::getInstance();
@@ -2383,6 +2389,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
 		}
 
 		// Display tag in activity streams etc..

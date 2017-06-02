@@ -394,7 +394,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 
 			$mailsender = JMailHelper::cleanAddress($config->board_title);
-			$mailsubject = JMailHelper::cleanSubject ( $config->board_title . ' ' . $topic->subject . " (" . $this->getCategory()->name . ")" );
+			$mailsubject = JMailHelper::cleanSubject ( $topic->subject . " (" . $this->getCategory()->name . ")" );
 			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.

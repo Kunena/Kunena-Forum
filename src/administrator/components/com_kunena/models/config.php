@@ -487,7 +487,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
 		$lists ['smartlinking'] = JHtml::_('select.genericlist', $yesno, 'cfg_smartlinking', 'class="inputbox" size="1"', 'value', 'text', $this->config->smartlinking);
 
-
 		$rankimages   = array();
 		$rankimages[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_RANK_TEXT'));
 		$rankimages[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_RANK_IMAGE'));

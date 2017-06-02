@@ -1038,7 +1038,7 @@ class KunenaUser extends JObject
 		}
 
 		/**
-		 *  Rankimages 0 = No Image
+		 *  Rankimages 0 = Text Rank
 		 *             1 = Rank Image
 		 *             2 = Usergroup
 		 *             3 = Both Rank image and Usergroup

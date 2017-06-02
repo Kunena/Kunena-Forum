@@ -44,80 +44,7 @@ JHtml::_('dropdown.init');
 				<table class="table table-striped">
 					<thead>
 					<tr>
-						<th width="1%"></th>
-						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
-						<th class="center"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
-					</tr>
-					</thead>
-					<tfoot>
-					<tr>
-						<td colspan="7">
-							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
-						</td>
-					</tr>
-					</tfoot>
-					<tbody>
-					<?php foreach ($this->templates as $id => $row)
-						:
-						?>
-						<tr>
-							<td>
-								<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>" name="cid[]"
-								       value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);"/>
-							</td>
-							<td>
-								<?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
-								<span class="editlinktip hasTip"
-								      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-									<a href="#edit"
-									   onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
-								</span>
-							</td>
-							<td class="center">
-								<?php if ($row->published == 1)
-									:
-									?>
-									<i class="icon-star"></i>
-								<?php else
-									:
-									?>
-									<a href="javascript: void(0);"
-									   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-										<i class="icon-star-empty"></i>
-									</a>
-								<?php endif; ?>
-							</td>
-							<td>
-								<?php echo $row->authorEmail ? '<a href="mailto:' . $this->escape($row->authorEmail) . '">' . $this->escape($row->author) . '</a>' : $this->escape($row->author); ?>
-							</td>
-							<td>
-								<?php echo $this->escape($row->version); ?>
-							</td>
-							<td>
-								<?php echo $this->escape($row->creationdate); ?>
-							</td>
-							<td>
-								<a href="<?php echo $this->escape($row->authorUrl); ?>"
-								   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
-
-				<table class="table table-striped" style="padding-top: 200px">
-					<thead>
-					<tr>
-						<td colspan="7"><strong><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PREMIUM'); ?></strong></td>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<th width="5%">Price</th>
+						<th width="10%">Price</th>
 						<th width="10%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
 						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
 						<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
@@ -127,7 +54,7 @@ JHtml::_('dropdown.init');
 					</tr>
 
 					<tr>
-						<td style="width: 5%">€10 euro
+						<td style="width: 5%;">€10,00
 						</td>
 						<td style="width: 7%">
 							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
@@ -150,11 +77,32 @@ JHtml::_('dropdown.init');
 						<td style="width: 30%">
 						</td>
 					</tr>
-					</tbody>
-				</table>
-			</form>
-			<div class="clearfix"></div>
-		</div>
+					<tr>
+						<td style="width: 5%;">$8.99 - $20.00
+						</td>
+						<td style="width: 7%;">
+							<span class="editlinktip hasTip" title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="http://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">9themestore.com</a>
+							</span>
+						</td>
+						<td style="width: 7%;">
+							<a href="mailto:info@9themestore.com">9themestore.com</a>
+						</td>
+						<td style="width: 5%;">
+							K5.0.X
+						</td>
+						<td style="width: 5%;">
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+						</td>
+						<td style="width: 25%;">
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">http://www.9themestore.com</a>
+						</td>
+						<td style="width: 30%;">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 	</div>
 	<div class="pull-right small">
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>

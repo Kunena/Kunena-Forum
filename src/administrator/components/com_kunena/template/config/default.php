@@ -755,12 +755,24 @@ JHtml::_('behavior.tabstate');
 												</tr>
 												</thead>
 												<tbody>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT') ?></td>
+													<td><input type="text" name="cfg_defaultavatar"
+													           value="<?php echo $this->escape($this->config->defaultavatar) ?>"/></td>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL') ?></td>
+													<td><input type="text" name="cfg_defaultavatarsmall"
+													           value="<?php echo $this->escape($this->config->defaultavatarsmall) ?>"/></td>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
 													<td><input type="text" name="cfg_avatarypes"
 														       value="<?php echo $this->escape($this->config->avatartypes) ?>"/></td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>
 												</tr>
-												<tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATARUPLOAD') ?></td>
 													<td><?php echo $this->lists ['allowavatarupload'] ?></td>

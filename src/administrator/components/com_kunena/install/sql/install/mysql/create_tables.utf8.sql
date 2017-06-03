@@ -87,24 +87,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_configuration` (
 	`params` text NULL,
 	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_keywords` (
-	`id` int(11) NOT NULL auto_increment,
-	`name` varchar(40) NOT NULL,
-	`public_count` int(11) NOT NULL,
-	`total_count` int(11) NOT NULL,
-	PRIMARY KEY (id),
-	UNIQUE KEY `name` (name),
-	KEY `public_count` (public_count),
-	KEY `total_count` (total_count) ) DEFAULT CHARACTER SET utf8;
-
-CREATE TABLE IF NOT EXISTS `#__kunena_keywords_map` (
-	`keyword_id` int(11) NOT NULL,
-	`user_id` int(11) NOT NULL,
-	`topic_id` int(11) NOT NULL,
-	UNIQUE KEY `keyword_user_topic` (keyword_id,user_id,topic_id),
-	KEY `user_id` (user_id),
-	KEY `topic_user` (topic_id,user_id) ) DEFAULT CHARACTER SET utf8;
-
 CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	`id` int(11) NOT NULL auto_increment,
 	`category_id` int(11) NOT NULL default '0',

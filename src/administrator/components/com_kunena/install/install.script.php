@@ -31,11 +31,16 @@ class Com_KunenaInstallerScript
 			'0'   => '7.0.17' // Preferred version
 		),
 		'MySQL'   => array(
+			'5.5' => '5.5',
 			'5.1' => '5.1',
 			'0'   => '5.5' // Preferred version
 		),
 		'Joomla!' => array(
 			'3.6' => '3.6.5',
+			'3.7' => '3.7.0',
+			'3.8' => '3.8.0',
+			'3.9' => '3.9.0',
+			'4.0' => '4.0.0',
 			'0'   => '3.7.0' // Preferred version
 		)
 	);
@@ -350,6 +355,8 @@ class Com_KunenaInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
+		$this->convertTablesToUtf8mb4();
+
 		return true;
 	}
 
@@ -636,6 +643,64 @@ class Com_KunenaInstallerScript
 	public function deleteKfolder($path)
 	{
 		JFolder::delete($path);
+	}
+
+	/**
+	 * Converts the site's database tables to support UTF-8 Multibyte.
+	 *
+	 * @return  void
+	 *
+	 * @since   3.5
+	 */
+	public function convertTablesToUtf8mb4()
+	{
+		$db = JFactory::getDbo();
+
+		// This is only required for MySQL databases
+		$serverType = $db->getServerType();
+
+		if ($serverType != 'mysql')
+		{
+			return;
+		}
+
+		// Set required conversion status
+		if (!$db->hasUTF8mb4Support())
+		{
+			return;
+		}
+
+		$db->setQuery('SELECT default_character_set_name FROM ' . $db->quoteName('#__kunena_version'));
+
+		// Nothing to do, saved conversion status from DB is equal to required
+		if ($db->getCollation() == 'utf8mb4_unicode_ci')
+		{
+			return;
+		}
+
+		// Step 1: Drop indexes later to be added again with column lengths limitations at step 2
+		$fileName1 = JPATH_ROOT . '/administrator/components/com_kunena/install/sql/migrate/mysql/utf8mb4-conversion.sql';
+
+		if (is_file($fileName1))
+		{
+			$fileContents1 = @file_get_contents($fileName1);
+			$queries1      = $db->splitSql($fileContents1);
+
+			if (!empty($queries1))
+			{
+				foreach ($queries1 as $query1)
+				{
+					try
+					{
+						$db->setQuery($query1)->execute();
+					}
+					catch (Exception $e)
+					{
+						// If the query fails we will go on. It just means the index to be dropped does not exist.
+					}
+				}
+			}
+		}
 	}
 }
 

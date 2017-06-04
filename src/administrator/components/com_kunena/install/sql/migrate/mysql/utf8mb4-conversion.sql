@@ -16,6 +16,8 @@ ALTER TABLE `#__kunena_aliases` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_un
 ALTER TABLE `#__kunena_announcement` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_attachments`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_categories`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `#__kunena_configuration`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `#__kunena_logs`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_topics`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_messages`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_messages_text`  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

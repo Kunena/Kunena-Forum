@@ -103,8 +103,8 @@ if (!empty($this->spacing)) : ?>
 		<div class="started">
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory(), null, $this->topic->getCategory()->description, KunenaTemplate::getInstance()->tooltips())) ?></span>
 			<br />
-			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
+			<?php echo JText::_('COM_KUNENA_POSTED')?>
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<?php echo JText::_('COM_KUNENA_BY') ?>
 			<?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<div class="pull-right hidden-phone">

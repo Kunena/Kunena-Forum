@@ -1121,8 +1121,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new RuntimeException($e->getMessage(), $e->getCode());
-
-				return false;
 			}
 
 			// So are we moving the whole topic?
@@ -1285,8 +1283,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
-
-			return false;
 		}
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
@@ -1300,8 +1296,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
-
-			return false;
 		}
 
 		$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
@@ -1314,8 +1308,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		catch (JDatabaseExceptionExecuting $e)
 		{
 			throw new RuntimeException($e->getMessage(), $e->getCode());
-
-			return false;
 		}
 
 		// If all messages were moved into another topic, we need to move poll as well
@@ -1336,8 +1328,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			catch (JDatabaseExceptionExecuting $e)
 			{
 				throw new RuntimeException($e->getMessage(), $e->getCode());
-
-				return false;
 			}
 		}
 

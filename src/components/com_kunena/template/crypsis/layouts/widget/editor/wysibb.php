@@ -87,7 +87,7 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 <script>
 var wbbOpt = {
 	lang : 	 "kunena"
-	}
+	};
 jQuery(function ($) {
 		$("#editor").wysibb();
 	})

@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
  * @return array|null
  * @internal param $parent
  *
+ * @since Kunena
  */
 function kunena_505_2016_12_20_userlist()
 {

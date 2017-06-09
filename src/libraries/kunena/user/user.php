@@ -431,18 +431,6 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   bool   $yes
-	 * @param   string $no
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function isOnline($yes = false, $no = 'offline')
-	{
-		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
-	}
-
-	/**
 	 * @return integer
 	 * @since Kunena
 	 */

@@ -240,7 +240,7 @@ abstract class KunenaForum
 		}
 
 		// Development version support.
-		if ($version == '5.0')
+		if ($version == '5.1')
 		{
 			return true;
 		}
@@ -349,7 +349,7 @@ abstract class KunenaForum
 	{
 		$version          = new stdClass;
 		$version->version = self::version();
-		$version->major   = self::versionMajor(); // New in K2.0.0-BETA2
+		$version->major   = self::versionMajor();
 		$version->date    = self::versionDate();
 		$version->name    = self::versionName();
 

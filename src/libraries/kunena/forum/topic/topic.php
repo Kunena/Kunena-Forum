@@ -2105,7 +2105,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Create or publish topic
 			return 1;
 		}
-		elseif ($this->hold && !$this->_hold)
+
+		if ($this->hold && !$this->_hold)
 		{
 			// Delete or unpublish topic
 			return -1;

@@ -55,7 +55,7 @@ abstract class KunenaError
 		{
 			self::$format = JFactory::getApplication()->input->getWord('format', 'html');
 			self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
-			self::$admin  = JFactory::getApplication()->isAdmin();
+			self::$admin  = JFactory::getApplication()->isClient('administrator');
 
 			// Make sure we are able to log fatal errors.
 			class_exists('KunenaLog');
@@ -138,7 +138,7 @@ abstract class KunenaError
 		$app = JFactory::getApplication();
 		$db  = JFactory::getDBO();
 
-		if (JFactory::getApplication()->isAdmin())
+		if (JFactory::getApplication()->isClient('administrator'))
 		{
 			$app->enqueueMessage($exception->getMessage(), 'error');
 		}

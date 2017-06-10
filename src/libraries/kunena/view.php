@@ -92,7 +92,7 @@ class KunenaView extends JViewLegacy
 			$config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 		}
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			$templateAdmin = KunenaFactory::getAdminTemplate();
 			$templateAdmin->initialize();

@@ -142,10 +142,9 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = JFactory::getDocument();
-		$config          = JFactory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
-		$robots          = $componentParams->get('robots');
+		$doc = JFactory::getDocument();
+		$config = JFactory::getConfig();
+		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{

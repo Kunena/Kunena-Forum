@@ -109,14 +109,18 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('#form_submit_button').click(function () {
+		$("#subject").attr('required', 'required');
+		$("#kbbcode-message").attr('required', 'required');
+	});
+
 	// Load topic icons by ajax request
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
 
-		$("#subject").attr('required', 'required');
-
 		if ($('#kanynomous-check').length > 0) {
+			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
@@ -161,7 +165,7 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (kunena_topicicontype == 'B2') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'B2') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
@@ -171,7 +175,7 @@ jQuery(document).ready(function ($) {
 								'al': ''
 							}));
 						}
-						else if (kunena_topicicontype == 'fa') {
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id

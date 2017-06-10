@@ -15,11 +15,6 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
-$this->addScriptDeclaration(
-	'// <![CDATA[
-var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
-// ]]>');
-
 JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
@@ -86,8 +81,12 @@ $quick           = $this->ktemplate->params->get('quick');
 
 <div class="clearfix"></div>
 
-<?php if ($social) : ?>
-	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+<?php if ($social == 1) : ?>
+        <div><?php echo $this->subLayout('Widget/Social'); ?></div>
+<?php endif; ?>
+
+<?php if ($social == 2) : ?>
+        <div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 <?php endif; ?>
 
 <?php

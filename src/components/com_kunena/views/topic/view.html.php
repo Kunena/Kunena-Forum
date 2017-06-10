@@ -896,7 +896,7 @@ class KunenaViewTopic extends KunenaView
 				{
 					if (!empty($this->message->ip))
 					{
-						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
+						$this->ipLink = '<a href="https://whois.domaintools.com/' . $this->message->ip . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 					}
 					else
 					{

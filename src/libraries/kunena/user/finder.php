@@ -39,7 +39,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		$this->config = KunenaConfig::getInstance();
 		$this->limit  = $this->config->userlist_rows;
 
-		$this->query->leftJoin('#__kunena_users AS ku ON ku.userid=a.id');
+		$this->query->leftJoin($this->db->quoteName('#__kunena_users') . ' AS ku ON ku.userid=a.id');
 	}
 
 	/**

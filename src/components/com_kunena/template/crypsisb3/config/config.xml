@@ -121,9 +121,10 @@
 		       description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
+			<option value="2">COM_KUNENA_TEMPLATE_TAG</option>
 		</field>
-		<field name="socialtheme" type="list" default="classic" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME"
-		       description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME_DESC">
+		<field name="socialsharetag" type="text" default="" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARETAG" description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARETAG_DESC"/>
+		<field name="socialtheme" type="list" default="classic" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME" description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALTHEME_DESC">
 			<option value="classic">COM_KUNENA_CLASSIC</option>
 			<option value="flat">COM_KUNENA_FLAT</option>
 			<option value="minima">COM_KUNENA_MINIMA</option>

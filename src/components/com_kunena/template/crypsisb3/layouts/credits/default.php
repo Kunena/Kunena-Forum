@@ -27,14 +27,14 @@ defined('_JEXEC') or die;
 	<div class="credits">
 
 		<dl class="dl-horizontal">
-			<?php foreach ($this->memberList as $member) : ?>
-				<dt>
-					<a href="<?php echo $member['url']; ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']); ?></a>
-				</dt>
-				<dd>
-					<?php echo $member['title']; ?>
-				</dd>
-				<hr class="hr-condensed">
+			<?php foreach($this->memberList as $member) : ?>
+			<dt>
+				<a href="<?php echo $member['url']; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
+			</dt>
+			<dd>
+				<?php echo $member['title']; ?>
+			</dd>
+			<hr class="hr-condensed">
 			<?php endforeach ?>
 			<dt><a><?php echo JText::_('COM_KUNENA_DONATE'); ?></a></dt>
 			<dd>

@@ -1213,6 +1213,30 @@ class KunenaConfig extends JObject
 	public $plain_email = 0;
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+     */
+	public $avatartypes = 'gif, jpeg, jpg, png';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $smartlinking = 1;
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $defaultavatar = 'nophoto.png';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $defaultavatarsmall = 's_nophoto.png';
+
+	/**
 	 *
 	 * @since Kunena
 	 */

@@ -48,10 +48,13 @@ jQuery(document).ready(function ($){
 			zoom = 'zoom='+modalzoom;
 		}
 
-		$.markItUp(
-		{ openWith:'[map '+type+' '+zoom+']'+modalcity,
-		  closeWith:'[/map]' }
-		);
+		if (modalcity.length > 0) {
+			$.markItUp(
+			{ openWith:'[map '+type+' '+zoom+']'+modalcity,
+			  closeWith:'[/map]' }
+			);
+		}
+		
 		return false;
 	});
 

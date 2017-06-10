@@ -55,14 +55,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		{
 			if (!$category->isSection() && $category->allow_anonymous)
 			{
-				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->post_anonymous;
+				$arrayanynomousbox[$category->id] = $category->post_anonymous;
 			}
 
 			if ($this->config->pollenabled)
 			{
 				if (!$category->isSection() && $category->allow_polls)
 				{
-					$arraypollcatid[] = '"' . $category->id . '":1';
+					$arraypollcatid[$category->id] = 1;
 				}
 			}
 		}
@@ -72,14 +72,11 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$arrayanynomousbox = implode(',', $arrayanynomousbox);
-		$arraypollcatid    = implode(',', $arraypollcatid);
-
 		// FIXME: We need to proxy this...
 		$this->document = JFactory::getDocument();
-		$this->document->addScriptDeclaration('var arrayanynomousbox={' . $arrayanynomousbox . '}');
-		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
-
+		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 

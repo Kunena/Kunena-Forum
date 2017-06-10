@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 abstract class KunenaFactory
 {
 	/**
-	 * @var null
+	 * @var void
 	 * @since Kunena
 	 */
 	static $session = null;
@@ -39,7 +39,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   string $name
+	 * @param   string $name name
 	 *
 	 * @return KunenaTemplate
 	 * @since Kunena
@@ -70,8 +70,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param   bool $reload
+	 * @param   int  $id     The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param   bool $reload reload
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
@@ -158,8 +158,8 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param   string $file
-	 * @param   string $client
+	 * @param   string $file   file
+	 * @param   string $client client
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -205,8 +205,19 @@ abstract class KunenaFactory
 	}
 
 	/**
-	 * @param $lang
-	 * @param $filename
+	 * @param   boolean $session null
+	 * @since Kunena
+	 *
+	 * @return void
+	 */
+	public static function setSession($session)
+	{
+		self::$session = $session;
+	}
+
+	/**
+	 * @param   string  $lang     language
+	 * @param   string  $filename filename
 	 *
 	 * @return boolean
 	 * @since Kunena

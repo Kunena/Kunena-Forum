@@ -456,9 +456,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				$sentusers[]                         = $emailTo->id;
 			}
 
-			$mailsender  = JMailHelper::cleanAddress($config->board_title);
-			$mailsubject = JMailHelper::cleanSubject($config->board_title . ' ' . $topic->subject . " (" . $this->getCategory()->name . ")");
-			$subject     = $this->subject ? $this->subject : $topic->subject;
+			$mailsender = JMailHelper::cleanAddress($config->board_title);
+			$mailsubject = JMailHelper::cleanSubject ( $topic->subject . " (" . $this->getCategory()->name . ")" );
+			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
 			$mail = JFactory::getMailer();
@@ -648,7 +648,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			case 'subject':
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
-				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode($this->message, $this->parent, $html);
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode($this->message, 0, $html);
 		}
 
 		return '';

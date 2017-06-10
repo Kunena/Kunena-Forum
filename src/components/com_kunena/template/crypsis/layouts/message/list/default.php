@@ -80,7 +80,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 				<td class="span<?php echo $cols; ?>">
 					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="span2">
+				<td class="span2 hidden-phone">
 					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="span3">

@@ -53,7 +53,7 @@ $list = array();
 <div class="badger-left badger-info">
 	<div class="kmessage">
 		<div class="mykmsg-header">
-            <?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>
+            <?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>
         </div>
 
    	    <div class="kmsg">
@@ -63,7 +63,7 @@ $list = array();
 			    echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 		    endif;?>
 	    </div>
-		
+
 	    <?php if ($signature) : ?>
 		    <div class="ksig">
 			    <hr>
@@ -74,13 +74,12 @@ $list = array();
 
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-			<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 				</div>
 			</div>
-			<?php endif; ?>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>

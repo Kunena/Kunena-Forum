@@ -35,10 +35,8 @@ JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
-JFactory::getDocument()->addScriptDeclaration('
-	var imageheight = ' . $this->config->imageheight . ';
-	var imagewidth = ' . $this->config->imagewidth . ';
-');
+JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
+JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imagewidth);
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
@@ -54,9 +52,9 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
-$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
-$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "';");
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false));
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false));
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
 $this->addScript('assets/js/pollcheck.js');
@@ -72,7 +70,9 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 
-$this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
+JFactory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+
+JFactory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
 

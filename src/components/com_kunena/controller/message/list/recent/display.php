@@ -76,7 +76,13 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 
 		$userid = $this->state->get('user');
-		$user   = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
+
+		if ($userid == '*')
+		{
+			$userid = null;
+		}
+
+		$user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
@@ -237,7 +243,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-				$actions          = array('delete', 'permdelete');
+				$actions = array('approve', 'delete', 'move', 'permdelete');
 		}
 
 		$this->actions = $this->getMessageActions($this->messages, $actions);

@@ -199,19 +199,19 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
-				break;
 
-			// Continue.
+				// Continue , do not put break here
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-				break;
+				$value *= 1024;
 
-			// Continue.
+				// Continue , do not put break here
 			case 'k':
 			case 'kb':
 				$value *= 1024;
-				break;
+
+				// Continue, do not put break here
 		}
 
 		return (int) $value;
@@ -235,7 +235,8 @@ class KunenaUpload
 			'mime'       => null,
 			'hash'       => null,
 			'chunkStart' => 0,
-			'chunkEnd'   => 0
+			'chunkEnd'   => 0,
+			'image_type' => null
 		);
 
 		$options += $defaults;
@@ -352,19 +353,29 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false)
+				if ($options['image_type'] == 'avatar')
 				{
-					if (!$this->checkFileSizeFileAttachment($size))
+					if (!$this->checkFileSizeAvatar($size))
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
-
-				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+				else
 				{
-					if (!$this->checkFileSizeImageAttachment($size))
+					if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false)
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						if (!$this->checkFileSizeFileAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
+					}
+
+					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+					{
+						if (!$this->checkFileSizeImageAttachment($size))
+						{
+							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						}
 					}
 				}
 
@@ -497,16 +508,16 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
+	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
 	 *
-	 * @param   int $filesize The size of file in bytes
+	 * @param   int $filesize The size of avatar in bytes
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
-		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
 		{
 			return false;
 		}
@@ -587,8 +598,9 @@ class KunenaUpload
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
-		$file       = new stdClass;
-		$file->ext  = JFile::getExt($fileInput['name']);
+		$file = new stdClass;
+		$file->ext = JFile::getExt($fileInput['name']);
+		$file->ext = strtolower($file->ext);
 		$file->size = $fileInput['size'];
 		$config     = KunenaFactory::getConfig();
 
@@ -607,13 +619,18 @@ class KunenaUpload
 		$file->success     = false;
 		$file->isAvatar    = false;
 
-		if ($type != 'attachment')
+		if ($type == 'avatar')
 		{
 			$file->isAvatar = true;
 		}
 
 		if ($file->isAvatar)
 		{
+			if (!$this->checkFileSizeAvatar($file->size))
+			{
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			}
+
 			$a = array('gif', 'jpeg', 'jpg', 'png');
 
 			if (!in_array($file->ext, $a, true))
@@ -665,14 +682,6 @@ class KunenaUpload
 			{
 				$info = getimagesize($file->tmp_name);
 				$type = $info['mime'];
-			}
-
-			if ($file->isAvatar)
-			{
-				if (!$this->checkFileSizeAvatar($file->size))
-				{
-					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-				}
 			}
 
 			if (!$file->isAvatar && stripos($type, 'image/') !== false)

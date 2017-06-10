@@ -46,11 +46,13 @@ defined('_JEXEC') or die();
 							</a>
 							<!--<a class="btn" href="index.php?option=com_kunena&view=labels">
 								<i class="icon-big icon-tags-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_LABELS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_LABELS_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=icons">
 								<i class="icon-big icon-grid-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_ICONS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_ICONS_MANAGER')
+?></span>
 							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
 								<i class="icon-big icon-color-palette"></i><br/>
@@ -66,15 +68,18 @@ defined('_JEXEC') or die();
 							</a>
 							<!--<a class="btn" href="index.php?option=com_kunena&view=email">
 								<i class="icon-big icon-mail"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_EMAIL_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_EMAIL_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=blockips">
 								<i class="icon-big icon-compass"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_BLOCKIP_MANAGER')
+?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=badwords">
 								<i class="icon-big icon-smiley-sad-2"></i><br/>
-								<span><?php /*echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER') */?></span>
+								<span><?php // Echo JText::_('COM_KUNENA_A_BADWORDS_MANAGER')
+?></span>
 							</a>-->
 							<a class="btn" href="index.php?option=com_kunena&view=logs">
 								<i class="icon-big icon-search"></i><br/>
@@ -99,17 +104,9 @@ defined('_JEXEC') or die();
 						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 						<hr class="hr-condensed">
 						<ul class="pull-left">
-							<li><i class="icon icon-question"></i>
-								<a href="https://www.kunena.org/docs/en/setup"
-								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
-							</li>
-							<li><i class="icon icon-question"></i>
-								<a href="https://www.kunena.org/docs/en/setup/sections-categories"
-								   target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
-							</li>
-							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum"
-							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
-							</li>
+							<li><i class="icon icon-question"></i> <a href="https://docs.kunena.org/en/setup" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://docs.kunena.org/en/setup/sections-categories" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -132,7 +129,7 @@ defined('_JEXEC') or die();
 							<dd><?php echo KunenaForum::versionDate(); ?></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_AUTHOR') ?>:</dt>
-							<dd><a href="https://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
+							<dd><a href="https://www.kunena.org/team" target="_blank" rel="noopener noreferrer">Kunena Team</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
 							<dd>&copy; 2008 - 2017 Kunena, All rights reserved.</dd>
@@ -141,7 +138,7 @@ defined('_JEXEC') or die();
 							<dd>GNU General Public License</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
-							<dd><a href="https://www.kunena.org/terms-of-use" target="_blank">https://www.kunena.org/terms-of-use</a></dd>
+							<dd><a href="https://www.kunena.org/terms-of-use" target="_blank" rel="noopener noreferrer">https://www.kunena.org/terms-of-use</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('Check Updates') ?>:</dt>
 							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons(); ?></dd>

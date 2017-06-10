@@ -1113,11 +1113,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 
 			$this->_db->setQuery($query);
-			$oldcount = (int) $this->_db->loadResult();
 
-			if ($this->_db->getErrorNum())
+			try
 			{
-				$this->setError($this->_db->getError());
+				$oldcount = (int) $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				throw new RuntimeException($e->getMessage(), $e->getCode());
 
 				return false;
 			}
@@ -1274,11 +1277,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 
 			return false;
 		}
@@ -1286,22 +1292,28 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
 		$query = "SET @ktime:=0";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 
 			return false;
 		}
 
 		$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 
 			return false;
 		}
@@ -1316,11 +1328,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
 			$this->_db->setQuery($query);
-			$this->_db->execute();
 
-			if ($this->_db->getErrorNum())
+			try
 			{
-				$this->setError($this->_db->getError());
+				$this->_db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				throw new RuntimeException($e->getMessage(), $e->getCode());
 
 				return false;
 			}

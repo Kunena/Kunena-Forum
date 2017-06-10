@@ -50,7 +50,7 @@ class KunenaLogEntry
 			'category_id' => $category ? $category->id : 0,
 			'topic_id'    => $topic ? $topic->id : 0,
 			'target_user' => $user ? $user->userid : 0,
-			'ip'          => JFactory::getApplication()->isSite() && isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
+			'ip'          => JFactory::getApplication()->isClient('site') && isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
 			'time'        => $now->toUnix(),
 			'operation'   => $operation,
 			'data'        => json_encode($data)

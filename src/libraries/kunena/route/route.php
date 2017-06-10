@@ -323,7 +323,7 @@ abstract class KunenaRoute
 		{
 			if ($default == null)
 			{
-				$default = $app->isSite() ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
+				$default = $app->isClient('site') ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
 			}
 
 			$default = self::_($default);

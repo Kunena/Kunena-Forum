@@ -398,7 +398,7 @@ class KunenaController extends JControllerLegacy
 
 		if ($view)
 		{
-			if ($this->app->isSite() && $vFormat == 'html')
+			if ($this->app->isClient('site') && $vFormat == 'html')
 			{
 				$common = $this->getView('common', $vFormat);
 				$model  = $this->getModel('common');

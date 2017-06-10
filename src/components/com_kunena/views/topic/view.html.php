@@ -1104,7 +1104,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function redirectBack($anchor = '')
 	{
-		$default  = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$default  = JUri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
 		$referrer = $this->app->input->server->getString('HTTP_REFERER');
 
 		$uri = JUri::getInstance($referrer ? $referrer : $default);

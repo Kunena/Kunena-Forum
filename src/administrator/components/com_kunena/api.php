@@ -41,7 +41,7 @@ if (is_file($libraryFile))
 	require_once $libraryFile;
 }
 
-if (JFactory::getApplication()->isSite())
+if (JFactory::getApplication()->isClient('site'))
 {
 	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE . '/controller');
 }

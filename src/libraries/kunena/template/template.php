@@ -1607,7 +1607,7 @@ HTML;
 				}
 			}
 
-			if (!class_exists($classname) && $app->isSite())
+			if (!class_exists($classname) && $app->isClient('site'))
 			{
 				$file = KPATH_SITE . "/template/{$templatename}/template.php";
 

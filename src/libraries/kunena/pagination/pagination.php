@@ -540,7 +540,7 @@ class KunenaPagination
 		$selected = $this->viewall ? 0 : $this->limit;
 
 		// Build the select list.
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			$html = JHtml::_(
 				'select.genericlist',
@@ -685,7 +685,7 @@ class KunenaPagination
 	{
 		$app = JFactory::getApplication();
 
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			if ($item->base > 0)
 			{
@@ -717,7 +717,7 @@ class KunenaPagination
 	{
 		$app = JFactory::getApplication();
 
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			return '<span>' . $item->text . '</span>';
 		}

@@ -267,9 +267,13 @@ class KunenaUser extends JObject
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
 
-				if (!$banInfo->canBan())
+				try 
 				{
-					$exception = new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
+					$banInfo->canBan();
+				}
+				catch(Exception $e)
+				{
+					$exception = new KunenaExceptionAuthorise($e->getMessage(), $user->exists() ? 403 : 401);
 				}
 				break;
 			default :

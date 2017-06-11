@@ -552,35 +552,35 @@ class KunenaUserBan extends JObject
 
 		if (!$me->isModerator())
 		{
-			$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
+			throw new Exception(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 
 			return false;
 		}
 
 		if (!$user->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
+			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
 
 			return false;
 		}
 
 		if ($userid == $me->userid)
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
+			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
 
 			return false;
 		}
 
 		if ($user->isAdmin())
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
+			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
 
 			return false;
 		}
 
 		if ($user->isModerator() && !$me->isAdmin())
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
+			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
 
 			return false;
 		}
@@ -721,11 +721,16 @@ class KunenaUserBan extends JObject
 	 */
 	public function save($updateOnly = false)
 	{
-		if (!$this->canBan())
+		try {
+			$this->canBan();
+		}
+		catch (Exception $e)
 		{
+			throw new Exception($e->getMessage());
+			
 			return false;
 		}
-
+		
 		$user = JFactory::getUser($this->userid);
 		$app  = JFactory::getApplication();
 		$app->logout((int) $this->userid);

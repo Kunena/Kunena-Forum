@@ -39,8 +39,15 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager    = $moderator && $myProfile;
-		$showBanHistory    = $banInfo->canBan();
-		$showBanUser       = $banInfo->canBan();
+				
+		try 
+		{
+			$showBanHistory = $showBanManager  = $banInfo->canBan();
+		}
+		catch (Exception $e)
+		{
+			$showBanHistory = $showBanManager = false;
+		}
 
 		// Define all tabs.
 		$tabs = array();

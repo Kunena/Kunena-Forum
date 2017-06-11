@@ -39,7 +39,6 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager    = $moderator && $myProfile;
-		$showBanUser       = $banInfo->canBan();
 
 		try
 		{
@@ -239,7 +238,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tabs['banhistory'] = $tab;
 		}
 
-		if ($showBanUser)
+		if ($showBanManager)
 		{
 			$tab             = new stdClass;
 			$tab->title      = $banInfo->exists() ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW');

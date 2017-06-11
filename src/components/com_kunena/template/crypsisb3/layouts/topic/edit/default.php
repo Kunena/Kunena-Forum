@@ -109,7 +109,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>"/>
 	<?php endif; ?>
 	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>"/>
-	<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php JUri::root(true) . '/index.php?option=com_kunena&view=topic&layout=edit&format=raw' ?>" />
+	<input type="hidden" id="kunena_upload_files_url"
+	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1',
+		       false) ?>"/>
+	<?php if ($this->me->exists()) : ?>
+		<input type="hidden" id="kurl_users" name="kurl_users"
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
 	<h1>

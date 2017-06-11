@@ -81,6 +81,9 @@ $editor   = $template->params->get('editor');
 		<?php if (!$config->allow_change_subject) : ?>
 			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
 		<?php endif; ?>
+		<?php if ($me->exists()) : ?>
+			<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+		<?php endif; ?>
 		<?php echo JHtml::_('form.token'); ?>
 
 		<div class="modal-body">

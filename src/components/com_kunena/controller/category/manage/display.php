@@ -24,6 +24,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 	/**
 	 * @var KunenaForumCategory
+	 * @since Kunena 5.1
 	 */
 	public $category;
 
@@ -33,11 +34,13 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 	/**
 	 * @var KunenaPagination
+	 * @since Kunena 5.1
 	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
+	 * @since Kunena 5.1
 	 */
 	public $me;
 
@@ -49,6 +52,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * @return void
 	 *
 	 * @throws KunenaExceptionAuthorise
+	 * @since Kunena 5.1
 	 */
 	protected function before()
 	{
@@ -75,6 +79,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @since Kunena 5.1
 	 */
 	protected function prepareDocument()
 	{

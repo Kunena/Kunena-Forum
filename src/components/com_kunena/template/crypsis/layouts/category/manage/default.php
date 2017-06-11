@@ -110,7 +110,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 									<span><?php echo $this->navigation->orderUpIcon($i, $category->up, 'orderup', 'Move Up', 1); ?></span>
 									<span><?php echo $this->navigation->orderDownIcon($i, $n, $category->down, 'orderdown', 'Move Down', 1); ?></span>
 									<?php if ($category->reorder) : ?>
-										<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo $this->escape($category->ordering); ?>" class="text_area" style="text-align: center" />
+										<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo $this->escape($category->ordering); ?>" class="text_area" style="text-align: center;" />
 									<?php endif; ?>
 								</td>
 								<td class="kcenter">

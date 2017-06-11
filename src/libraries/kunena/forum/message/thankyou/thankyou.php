@@ -96,29 +96,21 @@ class KunenaForumMessageThankyou extends JObject
 		if (!$user->exists())
 		{
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
-
-			return false;
 		}
 
 		if ($user->userid == $message->userid)
 		{
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
-
-			return false;
 		}
 
 		if ($this->exists($user->userid))
 		{
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
-
-			return false;
 		}
 
 		if ($user->isBanned())
 		{
 			throw new Exception(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
-
-			return false;
 		}
 
 		$db    = JFactory::getDBO();
@@ -196,15 +188,11 @@ class KunenaForumMessageThankyou extends JObject
 		if (!$user->exists())
 		{
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
-
-			return false;
 		}
 
 		if (!$this->exists($user->userid))
 		{
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
-
-			return false;
 		}
 
 		$db    = JFactory::getDBO();

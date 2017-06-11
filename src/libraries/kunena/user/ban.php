@@ -553,36 +553,26 @@ class KunenaUserBan extends JObject
 		if (!$me->isModerator())
 		{
 			throw new Exception(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
-
-			return false;
 		}
 
 		if (!$user->exists())
 		{
 			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
-
-			return false;
 		}
 
 		if ($userid == $me->userid)
 		{
 			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
-
-			return false;
 		}
 
 		if ($user->isAdmin())
 		{
 			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
-
-			return false;
 		}
 
 		if ($user->isModerator() && !$me->isAdmin())
 		{
 			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
-
-			return false;
 		}
 
 		return true;
@@ -727,10 +717,8 @@ class KunenaUserBan extends JObject
 		catch (Exception $e)
 		{
 			throw new Exception($e->getMessage());
-			
-			return false;
 		}
-		
+
 		$user = JFactory::getUser($this->userid);
 		$app  = JFactory::getApplication();
 		$app->logout((int) $this->userid);

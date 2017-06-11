@@ -249,9 +249,13 @@ class KunenaControllerUser extends KunenaController
 
 		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
 
-		if (!$ban->canBan())
+		try
 		{
-			$this->setRedirect($user->getUrl(false), $ban->getError(), 'error');
+			$ban->canBan();
+		}
+		catch(Exception $e)
+		{
+			$this->setRedirect($user->getUrl(false), $e->getMessage(), 'error');
 
 			return;
 		}

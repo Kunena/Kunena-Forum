@@ -95,28 +95,28 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
 
 			return false;
 		}
 
 		if ($user->userid == $message->userid)
 		{
-			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
+			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
 
 			return false;
 		}
 
 		if ($this->exists($user->userid))
 		{
-			$this->setError(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
+			throw new Exception(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
 
 			return false;
 		}
 
 		if ($user->isBanned())
 		{
-			$this->setError(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+			throw new Exception(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 
 			return false;
 		}
@@ -195,14 +195,14 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
 
 			return false;
 		}
 
 		if (!$this->exists($user->userid))
 		{
-			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 
 			return false;
 		}

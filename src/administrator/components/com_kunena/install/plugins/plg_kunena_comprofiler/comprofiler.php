@@ -60,7 +60,7 @@ class plgKunenaComprofiler extends JPlugin
 
 		require_once __DIR__ . "/integration.php";
 
-		if ($app->isAdmin() && (!isset($ueConfig ['version']) || version_compare($ueConfig ['version'], $this->minCBVersion) < 0))
+		if ($app->isClient('administrator') && (!isset($ueConfig ['version']) || version_compare($ueConfig ['version'], $this->minCBVersion) < 0))
 		{
 			$app->enqueueMessage(JText::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
 		}

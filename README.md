@@ -9,7 +9,7 @@
 
 *Kunena* 5.1 requires
 
-    Joomla: version 3.6.4 or greater (>= 3.7.0 recommended)
+    Joomla: version 3.7.0 or greater (>= 3.7.0 recommended)
     PHP: version 5.6.8 or greater (>= 7.0.17 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
@@ -22,7 +22,7 @@ In addition we recommend the following PHP settings:
     safe_mode               = off
     allow_url_fopen		   = on
     upload_max_filesize    >= 3M
-    GD, DOM, JSON support installed and OpenSSL only to embedded tweets
+    GD, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
 
 *Kunena* requires the following Joomla settings:
 

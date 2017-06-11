@@ -1,6 +1,6 @@
-/*! jssocials - v1.4.0 - 2016-10-10
+/*! jssocials - v1.5.0 - 2017-04-30
 * http://js-socials.com
-* Copyright (c) 2016 Artem Tabalin; Licensed MIT */
+* Copyright (c) 2017 Artem Tabalin; Licensed MIT */
 (function(window, $, undefined) {
 
     var JSSOCIALS = "JSSocials",
@@ -498,13 +498,13 @@
             shareUrl: "http://www.stumbleupon.com/submit?url={url}&title={title}",
             countUrl:  "https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",
             getCount: function(data) {
-                return data.result.views;
+                return data.result && data.result.views;
             }
         },
 
         telegram: {
             label: "Telegram",
-            logo: "fa fa-paper-plane",
+            logo: "fa fa-telegram",
             shareUrl: "tg://msg?text={url} {text}",
             countUrl: "",
             shareIn: "self"
@@ -546,6 +546,13 @@
             shareUrl: "fb-messenger://share?link={url}",
             countUrl: "",
             shareIn: "self"
+        },
+        rss: {
+            label: "RSS",
+            logo: "fa fa-rss",
+            shareUrl: "/feeds/",
+            countUrl: "",
+            shareIn: "blank"
         }
 
     });

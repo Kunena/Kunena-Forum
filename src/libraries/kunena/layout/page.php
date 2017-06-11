@@ -99,7 +99,7 @@ class KunenaLayoutPage extends KunenaLayout
 		$app = JFactory::getApplication();
 
 		// Add all paths for the template overrides.
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			$template = KunenaFactory::getAdminTemplate();
 		}

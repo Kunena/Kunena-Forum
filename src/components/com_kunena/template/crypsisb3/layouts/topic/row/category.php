@@ -106,7 +106,7 @@ if (!empty($this->spacing)) : ?>
 				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php endif; ?>
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-			<?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+			<?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
@@ -120,7 +120,7 @@ if (!empty($this->spacing)) : ?>
 			</div>
 		</div>
 
-		<div class="visible-sm">
+		<div id="klastpostphone" class="visible-xs">
 			<?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
 			<?php if ($config->post_dateformat != 'none') : ?>
 				<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>

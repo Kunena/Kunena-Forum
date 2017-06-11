@@ -194,6 +194,15 @@
     .jssocials-share-vkontakte .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-vkontakte .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-vkontakte .jssocials-share-link:active .jssocials-share-label {
       color: #344d6c; }
 
+.jssocials-share-rss .jssocials-share-link {
+  color: #ff9900; }
+  .jssocials-share-rss .jssocials-share-link .jssocials-share-label {
+    color: #ff9900; }
+  .jssocials-share-rss .jssocials-share-link:hover, .jssocials-share-rss .jssocials-share-link:focus, .jssocials-share-rss .jssocials-share-link:active {
+    color: #cc7a00; }
+    .jssocials-share-rss .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-rss .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-rss .jssocials-share-link:active .jssocials-share-label {
+      color: #cc7a00; }
+
 .jssocials-share-link {
 	-webkit-transition: color 200ms ease-in-out;
 	transition: color 200ms ease-in-out;

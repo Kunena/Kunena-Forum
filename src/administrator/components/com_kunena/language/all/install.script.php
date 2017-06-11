@@ -24,7 +24,7 @@ class pkg_kunena_languagesInstallerScript
 	public function uninstall($parent)
 	{
 		// Remove languages.
-		$languages = JFactory::getLanguage()->getKnownLanguages();
+		$languages = JLanguageHelper::getKnownLanguages();
 
 		foreach ($languages as $language)
 		{
@@ -65,7 +65,7 @@ class pkg_kunena_languagesInstallerScript
 
 		// Get list of languages to be installed.
 		$source    = $parent->getParent()->getPath('source') . '/language';
-		$languages = JFactory::getLanguage()->getKnownLanguages();
+		$languages = JLanguageHelper::getKnownLanguages();
 
 		// @var SimpleXMLElement $files
 

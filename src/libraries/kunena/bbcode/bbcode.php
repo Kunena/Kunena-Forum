@@ -261,6 +261,11 @@ class KunenaBbcode extends NBBC_BBCode
 		{
 			$layout = KunenaLayout::factory('BBCode/URL');
 
+			if ($config->smartlinking)
+			{
+				$text = $this->get_title($url);
+			}
+
 			if ($layout->getPath())
 			{
 				return (string) $layout
@@ -436,6 +441,19 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		return false;
+	}
+
+	public function get_title($url)
+	{
+		$str = file_get_contents($url);
+
+		if (strlen($str) > 0)
+		{
+			$str = trim(preg_replace('/\s+/', ' ', $str)); // supports line breaks inside <title>
+			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title); // ignore case
+
+			return $title[1];
+		}
 	}
 }
 
@@ -1206,6 +1224,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$target = '';
 		}
 
+		$smart = KunenaConfig::getInstance()->smartlinking;
+
+		if ($smart)
+		{
+			$content = $bbcode->get_title($url);
+		}
+
 		$layout = KunenaLayout::factory('BBCode/URL');
 
 		if ($layout->getPath())
@@ -1691,18 +1716,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			switch ($default)
 			{
 				case 'full':
-					if (!empty($article->fulltext))
+					if (!empty($article->fulltext) && !empty($article->introtext))
 					{
-						$article->text = $article->introtext . ' ' . $article->fulltext;
-
-						if (!empty($article->fulltext))
-						{
-							$link = '<a href="' . $url . '" class="readon">' . JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ') . '</a>';
-						}
-						else
-						{
-							$link = '';
-						}
+						$article->text = $article->introtext . '<br />' . $article->fulltext;
+						break;
+					}
+					elseif (empty($article->fulltext) && !empty($article->introtext))
+					{
+						$article->text = $article->introtext;
+						break;
 					}
 					break;
 				// Continue to intro if fulltext is empty
@@ -2318,7 +2340,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
-		$layout                                              = KunenaLayout::factory('BBCode/Attachment')
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
+
+		$layout = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
 		$config                                              = KunenaConfig::getInstance();
@@ -2361,6 +2389,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
 		}
 
 		// Display tag in activity streams etc..
@@ -2447,7 +2481,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$fileurl  = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+		$fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+
+		if (!$bbcode->IsValidURL($fileurl, false, true))
+		{
+			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+		}
+
 		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..
@@ -2954,6 +2994,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			$content = trim($content);
 
+			$url_parsed = parse_url($content);
+
+			if ($url_parsed['scheme']=='https' || $url_parsed['scheme']=='http')
+			{
+				$content = $url_parsed['host']  . $url_parsed['path'];
+			}
+			else
+			{
+				$content = $url_parsed['path'];
+			}
+
 			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
 				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
@@ -2962,7 +3013,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					$url = "http://{$content}";
 				}
 
-				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
+				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
 			}
 		}
 	}

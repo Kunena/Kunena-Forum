@@ -157,7 +157,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    string    The HTML code for the select tag
+	 * @return    array    The HTML code for the select tag
 	 * @since Kunena
 	 */
 	public function publishedOptions()
@@ -173,7 +173,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of locked filter options.
 	 *
-	 * @return    string    The HTML code for the select tag
+	 * @return    array    The HTML code for the select tag
 	 * @since Kunena
 	 */
 	public function lockOptions()
@@ -189,7 +189,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    string    The HTML code for the select tag
+	 * @return    array   The HTML code for the select tag
 	 * @since Kunena
 	 */
 	public function reviewOptions()
@@ -221,7 +221,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return    string    The HTML code for the select tag
+	 * @return    array    The HTML code for the select tag
 	 * @since Kunena
 	 */
 	public function anonymousOptions()

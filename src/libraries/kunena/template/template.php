@@ -74,6 +74,7 @@ class KunenaTemplate extends JObject
 		'js'            => 'media/js',
 		'css'           => 'media/css'
 	);
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -343,6 +344,7 @@ class KunenaTemplate extends JObject
 	{
 		$this->loadLanguage();
 		$config = KunenaFactory::getConfig();
+
 		if ($config->sef)
 		{
 			$sef = '/forum';
@@ -352,14 +354,20 @@ class KunenaTemplate extends JObject
 			$sef = '/index.php?option=com_kunena';
 		}
 		?>
+
 		<script>
 			jQuery(document).ready(function ($) {
 				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
 				{
 					echo "true";
 				}
-				else echo "false";?>;
-				if (isForumActive) {
+				else
+				{
+					echo "false";
+				}?>;
+
+				if (isForumActive)
+				{
 					$('.current').addClass("active alias-parent-active");
 					$('.alias-parent-active').addClass("active alias-parent-active");
 				}
@@ -431,9 +439,9 @@ class KunenaTemplate extends JObject
 		}
 
 		return <<<HTML
-<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
-	<span class="{$name}"><span>{$text}</span></span>
-</a>
+					<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+						<span class="{$name}"><span>{$text}</span></span>
+					</a>
 HTML;
 	}
 
@@ -749,6 +757,7 @@ HTML;
 		}
 
 		$array = array();
+
 		foreach (array_reverse($this->default) as $template)
 		{
 			$array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE) . "/template/" . $template . $path;
@@ -785,6 +794,7 @@ HTML;
 		if (!isset($this->filecache[$filepath]))
 		{
 			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE . "/template/{$this->name}/{$file}";
+
 			foreach ($this->default as $template)
 			{
 				if ($template == $ignore)
@@ -855,6 +865,7 @@ HTML;
 		if ($config->topicicons)
 		{
 			$category_iconset = 'images/topic_icons';
+
 			if (!file_exists($category_iconset))
 			{
 				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
@@ -863,6 +874,7 @@ HTML;
 		else
 		{
 			$category_iconset = 'images/topic_icons';
+
 			if (!file_exists($category_iconset))
 			{
 				$category_iconset = 'media/kunena/topic_icons';
@@ -1011,6 +1023,7 @@ HTML;
 			if (is_file($xmlfile))
 			{
 				$xml = simplexml_load_file($xmlfile);
+
 				if (isset($xml->icons))
 				{
 					foreach ($xml->icons as $icons)
@@ -1058,6 +1071,7 @@ HTML;
 				$this->categoryIcons[0] = $icon;
 			}
 		}
+
 		if ($all)
 		{
 			$icons = $this->categoryIcons;
@@ -1065,6 +1079,7 @@ HTML;
 		else
 		{
 			$icons = array();
+
 			foreach ($this->categoryIcons as $icon)
 			{
 				if ($icon->published && is_numeric($icon->id))
@@ -1377,6 +1392,7 @@ HTML;
 	public function getCategoryIcon($category)
 	{
 		$config = KunenaFactory::getConfig();
+
 		if ($config->categoryicons)
 		{
 			$icon    = $category->icon_id;
@@ -1387,6 +1403,7 @@ HTML;
 			$icon = 'folder';
 			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
+
 		$html = '<img src="' . $iconurl . '" alt="emo" />';
 
 		return $html;
@@ -1435,12 +1452,14 @@ HTML;
 
 		// Load the cache.
 		$cacheDir = JPATH_CACHE . '/kunena';
+
 		if (!is_dir($cacheDir))
 		{
 			KunenaFolder::create($cacheDir);
 		}
 
 		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
+
 		if (is_file($cacheFile))
 		{
 			$cache = unserialize(file_get_contents($cacheFile));
@@ -1451,6 +1470,7 @@ HTML;
 		}
 
 		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
+
 		if (!is_dir($outputDir))
 		{
 			KunenaFolder::create($outputDir);
@@ -1492,6 +1512,7 @@ HTML;
 		if (!isset($this->map))
 		{
 			$file = JPATH_SITE . '/' . $this->getFile('mapping.php');
+
 			if (is_file($file))
 			{
 				include $file;
@@ -1499,6 +1520,7 @@ HTML;
 		}
 
 		$search = rtrim($search, '_');
+
 		if (isset($this->map[$search]))
 		{
 			return $this->map[$search];
@@ -1515,6 +1537,7 @@ HTML;
 	public function isHmvc()
 	{
 		$app = JFactory::getApplication();
+
 		if (is_null($this->hmvc))
 		{
 			if (is_dir(JPATH_THEMES . "/{$app->getTemplate()}/com_kunena/pages"))
@@ -1555,12 +1578,14 @@ HTML;
 	public static function getInstance($name = null)
 	{
 		$app = JFactory::getApplication();
+
 		if (!$name)
 		{
 			$name = JFactory::getApplication()->input->getString('kunena_template', KunenaFactory::getConfig()->template, 'COOKIE');
 		}
 
 		$name = KunenaPath::clean($name);
+
 		if (empty(self::$_instances[$name]))
 		{
 			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
@@ -1582,9 +1607,10 @@ HTML;
 				}
 			}
 
-			if (!class_exists($classname) && $app->isSite())
+			if (!class_exists($classname) && $app->isClient('site'))
 			{
 				$file = KPATH_SITE . "/template/{$templatename}/template.php";
+
 				if (!is_file($file))
 				{
 					$classname = "KunenaTemplateCrypsis";
@@ -1596,6 +1622,7 @@ HTML;
 					require_once $file;
 				}
 			}
+
 			if (class_exists($classname))
 			{
 				self::$_instances [$name] = new $classname ($templatename);

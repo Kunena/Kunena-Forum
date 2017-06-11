@@ -30,7 +30,7 @@ class KunenaInstaller
 	/**
 	 * Check if we are allowed to downgrade from the new to the old version.
 	 *
-	 * @param   string $version
+	 * @param   string $version version
 	 *
 	 * @return  boolean  True if version can be safely downgraded.
 	 * @since Kunena

@@ -369,7 +369,7 @@ class KunenaLog
 	 *
 	 * @param   int                 $type      Log entry type.
 	 * @param   string              $operation Performed operation.
-	 * @param   string              $data      JSON encoded string.
+	 * @param   string|array        $data      JSON encoded string.
 	 * @param   KunenaForumCategory $category  Target category.
 	 * @param   KunenaForumTopic    $topic     Target topic.
 	 * @param   KunenaUser          $user      Target user.

@@ -112,6 +112,12 @@
   .jssocials-share-vkontakte .jssocials-share-link:hover {
     background: #344d6c; }
 
+.jssocials-share-rss .jssocials-share-link {
+  background: #ff9900;
+  border: 1px solid #e68a00; }
+  .jssocials-share-rss .jssocials-share-link:hover {
+    background: #cc7a00; }
+
 .jssocials-share-link {
 	padding: .5em .6em;
 	border-radius: 0.3em;

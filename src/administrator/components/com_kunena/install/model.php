@@ -1015,7 +1015,6 @@ class KunenaModelInstall extends JModelLegacy
 	public function stepPlugins()
 	{
 		$this->installPlugin('plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
 		$this->installPlugin('plugins/plg_kunena_altauserpoints', 'kunena', 'altauserpoints', false, 2);
 		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 3);
 		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 4);

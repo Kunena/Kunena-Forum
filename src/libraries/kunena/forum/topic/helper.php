@@ -639,8 +639,8 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic[] $topics
-	 * @param   mixed              $user
+	 * @param   array $topics Topics
+	 * @param   mixed $user   User
 	 *
 	 * @return array|boolean
 	 * @since Kunena

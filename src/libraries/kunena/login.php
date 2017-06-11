@@ -55,12 +55,11 @@ class KunenaLogin
 	 */
 	public function enabled()
 	{
-		// TODO: do better
 		return !empty($this->instances);
 	}
 
 	/**
-	 * @param   null $integration
+	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaLogin
 	 * @since Kunena
@@ -100,7 +99,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param   null $return
+	 * @param   null $return logout user
 	 *
 	 * @return boolean
 	 * @since Kunena

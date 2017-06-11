@@ -205,13 +205,6 @@
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
-			<exclude name="**/*-min.js" />
-			<exclude name="**/*.min.js" />
-			<exclude name="**/*-min.css" />
-			<exclude name="**/*.min.css" />
-			<include name="**/*.js" />
-		</yui-compressor>
 	</target>
 
 	<macrodef name="language">

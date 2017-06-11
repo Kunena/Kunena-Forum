@@ -1113,13 +1113,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 
 			$this->_db->setQuery($query);
-			$oldcount = (int) $this->_db->loadResult();
 
-			if ($this->_db->getErrorNum())
+			try
 			{
-				$this->setError($this->_db->getError());
-
-				return false;
+				$oldcount = (int) $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				throw new RuntimeException($e->getMessage(), $e->getCode());
 			}
 
 			// So are we moving the whole topic?
@@ -1134,7 +1135,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Find out where we are moving the messages
 		if (!$target || !$target->exists())
 		{
-			$this->setError(JText::printf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
+			$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
 
 			return false;
 		}
@@ -1274,36 +1275,39 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
-
-			return false;
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
 		$query = "SET @ktime:=0";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
-
-			return false;
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
 		$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
 		$this->_db->setQuery($query);
-		$this->_db->execute();
 
-		if ($this->_db->getErrorNum())
+		try
 		{
-			$this->setError($this->_db->getError());
-
-			return false;
+			$this->_db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
 		// If all messages were moved into another topic, we need to move poll as well
@@ -1316,13 +1320,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
 			$this->_db->setQuery($query);
-			$this->_db->execute();
 
-			if ($this->_db->getErrorNum())
+			try
 			{
-				$this->setError($this->_db->getError());
-
-				return false;
+				$this->_db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				throw new RuntimeException($e->getMessage(), $e->getCode());
 			}
 		}
 
@@ -2090,7 +2095,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Create or publish topic
 			return 1;
 		}
-		elseif ($this->hold && !$this->_hold)
+
+		if ($this->hold && !$this->_hold)
 		{
 			// Delete or unpublish topic
 			return -1;

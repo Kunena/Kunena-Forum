@@ -13,7 +13,7 @@ $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?><?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . JText::_('COM_KUNENA_BACK'),

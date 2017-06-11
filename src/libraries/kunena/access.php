@@ -468,7 +468,7 @@ window.addEvent('domready', function(){
 		}
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaUserHelper::getMyself()->userid)
+		if (JFactory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
 		{
 			return true;
 		}
@@ -535,7 +535,7 @@ window.addEvent('domready', function(){
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @param   KunenaForumCategory $category
+	 * @param   int                 $category
 	 * @param   mixed               $user
 	 * @param   bool                $status
 	 *

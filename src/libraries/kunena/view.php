@@ -87,12 +87,12 @@ class KunenaView extends JViewLegacy
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Set the default template search path
-		if ($this->app->isSite() && !isset($config['template_path']))
+		if ($this->app->isClient('site') && !isset($config['template_path']))
 		{
 			$config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 		}
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			$templateAdmin = KunenaFactory::getAdminTemplate();
 			$templateAdmin->initialize();
@@ -102,7 +102,7 @@ class KunenaView extends JViewLegacy
 
 		parent::__construct($config);
 
-		if ($this->app->isSite())
+		if ($this->app->isClient('site'))
 		{
 			// Add another template file lookup path specific to the current template
 			$fallback = JPATH_THEMES . "/{$this->app->getTemplate()}/html/com_kunena/{$this->ktemplate->name}/{$this->getName()}";
@@ -654,7 +654,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Method to display title in page
 	 *
-	 * @param   unknown $title
+	 * @param   string   $title Show the title on the browser
 	 *
 	 * @throws LogicException
 	 * @since Kunena

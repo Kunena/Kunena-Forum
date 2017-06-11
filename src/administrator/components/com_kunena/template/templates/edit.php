@@ -42,26 +42,13 @@ JHtml::_('dropdown.init');
 										<a href="#tab_info" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 									</li>
-									<li>
-										<a href="#tab_basic" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_BASIC'); ?> </a>
-									</li>
-									<li>
-										<a href="#tab_features" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FEATURES'); ?> </a>
-									</li>
-									<li>
-										<a href="#tab_bbcode" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_BBCODE'); ?> </a>
-									</li>
-									<li>
-										<a href="#tab_colors" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COLORS'); ?> </a>
-									</li>
-									<li>
-										<a href="#tab_avatars" data-toggle="tab">
-											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS'); ?> </a>
-									</li>
+									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
+										<?php if ($fieldset->name != 'template') : ;?>
+											<li>
+												<a href="#tab_<?php echo $fieldset->name;?>" data-toggle="tab"><?php echo ucfirst($fieldset->name);?></a>
+											</li>
+										<?php endif;?>
+									<?php endforeach;?>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_info">
@@ -94,134 +81,27 @@ JHtml::_('dropdown.init');
 											</tr>
 										</table>
 									</div>
-									<div class="tab-pane" id="tab_basic">
-										<?php if ($this->form !== false && count($this->form->getFieldset()))
-:
-											?>
-											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset('advanced') as $field)
-	:
-													if (!$field->hidden)
-		:
-														?>
-														<tr>
-															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
-														</tr>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-endforeach; ?>
-											</table>
-											<?php
-else
-:
-											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-endif;
-										?>
-									</div>
-									<div class="tab-pane" id="tab_features">
-										<?php if ($this->form !== false && count($this->form->getFieldset()))
-:
-											?>
-											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset('features') as $field)
-	:
-													if (!$field->hidden)
-		:
-														?>
-														<tr>
-															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
-														</tr>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-endforeach; ?>
-											</table>
-											<?php
-else
 
-:
-											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-endif;
-										?>
+									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
+									<div class="tab-pane" id="tab_<?php echo $fieldset->name;?>">
+										<table class="table table-bordered table-striped">
+											<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
+												:
+												if (!$field->hidden)
+													:
+													?>
+													<tr>
+														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+														<td class="paramlist_value"><?php echo $field->input; ?></td>
+													</tr>
+												<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
+											endforeach; ?>
+										</table>
 									</div>
-									<div class="tab-pane" id="tab_bbcode">
-										<?php if ($this->form !== false && count($this->form->getFieldset()))
-:
-											?>
-											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset('bbcode') as $field)
-	:
-													if (!$field->hidden)
-		:
-														?>
-														<tr>
-															<td width="20%" class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
-														</tr>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-endforeach; ?>
-											</table>
-											<?php
-else
-
-:
-											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-endif;
-										?>
-									</div>
-									<div class="tab-pane" id="tab_colors">
-										<?php if ($this->form !== false && count($this->form->getFieldset()))
-:
-											?>
-											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset('colors') as $field)
-	:
-													if (!$field->hidden)
-		:
-														?>
-														<tr>
-															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
-														</tr>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-endforeach; ?>
-											</table>
-											<?php
-else
-
-:
-											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-endif;
-										?>
-									</div>
-									<div class="tab-pane" id="tab_avatars">
-										<?php if ($this->form !== false && count($this->form->getFieldset()))
-:
-											?>
-											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset('avatar') as $field)
-	:
-													if (!$field->hidden)
-		:
-														?>
-														<tr>
-															<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
-														</tr>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-endforeach; ?>
-											</table>
-											<?php
-else
-
-:
-											echo '<em>' . JText:: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
-endif;
-										?>
-									</div>
+									<?php endforeach; ?>
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</form>

@@ -255,7 +255,7 @@ class KunenaUser extends JObject
 			case 'read' :
 				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubprofile))
 				{
-					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 404);
 				}
 				break;
 			case 'edit' :
@@ -428,18 +428,6 @@ class KunenaUser extends JObject
 
 		return $result;
 
-	}
-
-	/**
-	 * @param   bool   $yes
-	 * @param   string $no
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function isOnline($yes = false, $no = 'offline')
-	{
-		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
 	}
 
 	/**
@@ -652,19 +640,15 @@ class KunenaUser extends JObject
 			{
 				if ($class == 'btn')
 				{
-					$class = $class;
 				}
 				elseif ($class == 'btn btn-default')
 				{
-					$class = $class;
 				}
 				elseif ($class == 'btn pull-right')
 				{
-					$class = $class;
 				}
 				elseif ($class == 'btn btn-default pull-right')
 				{
-					$class = $class;
 				}
 				else
 				{
@@ -1037,13 +1021,18 @@ class KunenaUser extends JObject
 			$rank->rank_image = null;
 		}
 
-		if ($type == 'image')
+		/**
+		 *  Rankimages 0 = Text Rank
+		 *             1 = Rank Image
+		 *             2 = Usergroup
+		 *             3 = Both Rank image and Usergroup
+		 */
+		if ($config->rankimages == 0)
 		{
-			if (!$rank->rank_image)
-			{
-				return null;
-			}
-
+			return false;
+		}
+		elseif ($config->rankimages == 1)
+		{
 			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
 			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 			$data     = getimagesize($location);
@@ -1051,6 +1040,21 @@ class KunenaUser extends JObject
 			$height   = $data[1];
 
 			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
+		}
+		elseif ($config->rankimages == 2)
+		{
+			return '<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
+		}
+		elseif ($config->rankimages == 3)
+		{
+			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
+			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+			$data     = getimagesize($location);
+			$width    = $data[0];
+			$height   = $data[1];
+
+			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
+				<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
 		}
 
 		return $rank;
@@ -1774,5 +1778,28 @@ return $this->getLink('<span class="profile" title="' . JText::_('COM_KUNENA_VIE
 		{
 			return false;
 		}
+	}
+
+	public function GetUserGroup($userid)
+	{
+		jimport( 'joomla.access.access' );
+		$groups = JAccess::getGroupsByUser($userid, false);
+
+		$groupid_list      = implode(',', $groups);
+
+		foreach ($groups as $groupId => $value)
+		{
+			$db = JFactory::getDbo();
+			$query	= $db->getQuery(true)
+				->select('title')
+				->from('#__usergroups')
+				->where('id = '. (int) $groupid_list);
+
+			$db->setQuery($query);
+			$groupNames = $db->loadResult();
+			$groupNames .= '<br/>';
+		}
+
+		return $groupNames;
 	}
 }

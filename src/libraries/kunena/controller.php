@@ -102,7 +102,7 @@ class KunenaController extends JControllerLegacy
 		else
 		{
 			// Base controller.
-			$view = strtolower(JFactory::getApplication()->input->getWord('view', $app->isAdmin() ? 'cpanel' : 'home'));
+			$view = strtolower(JFactory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
@@ -118,7 +118,7 @@ class KunenaController extends JControllerLegacy
 		}
 
 		// Set the name for the controller and instantiate it.
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			$class = $prefix . 'AdminController' . ucfirst($view);
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
@@ -332,11 +332,11 @@ class KunenaController extends JControllerLegacy
 		$document = JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName   = JFactory::getApplication()->input->getWord('view', $this->app->isAdmin() ? 'cpanel' : 'home');
+		$vName   = JFactory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
 		$lName   = JFactory::getApplication()->input->getWord('layout', 'default');
 		$vFormat = $document->getType();
 
-		if ($this->app->isAdmin())
+		if ($this->app->isClient('administrator'))
 		{
 			// Load admin language files
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
@@ -398,7 +398,7 @@ class KunenaController extends JControllerLegacy
 
 		if ($view)
 		{
-			if ($this->app->isSite() && $vFormat == 'html')
+			if ($this->app->isClient('site') && $vFormat == 'html')
 			{
 				$common = $this->getView('common', $vFormat);
 				$model  = $this->getModel('common');

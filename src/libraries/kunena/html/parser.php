@@ -171,26 +171,24 @@ abstract class KunenaHtmlParser
 		{
 			return;
 		}
-		else
-		{
-			$txt = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $txt);
-			$txt = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $txt);
-			$txt = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $txt);
-			$txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
-			$txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);
-			$txt = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $txt);
-			$txt = preg_replace('/\[attachment]/s', '', $txt);
-			$txt = preg_replace('/\[article\](.*?)\[\/article]/s', '', $txt);
-			$txt = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $txt);
-			$txt = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $txt);
-			$txt = preg_replace('/\[image]/s', '', $txt);
-			$txt = preg_replace('/\[url(.*?)\](.*?)\[\/url]/s', '', $txt);
-			$txt = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $txt);
-			$txt = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $txt);
-			$txt = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $txt);
-			$txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
-			$txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
-		}
+
+		$txt = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $txt);
+		$txt = preg_replace('/\[color(.*?)\](.*?)\[\/color\]/s', '', $txt);
+		$txt = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $txt);
+		$txt = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $txt);
+		$txt = preg_replace('/\[code(.*?)\](.*?)\[\/code]/s', '', $txt);
+		$txt = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $txt);
+		$txt = preg_replace('/\[attachment]/s', '', $txt);
+		$txt = preg_replace('/\[article\](.*?)\[\/article]/s', '', $txt);
+		$txt = preg_replace('/\[video(.*?)\](.*?)\[\/video]/s', '', $txt);
+		$txt = preg_replace('/\[img(.*?)\](.*?)\[\/img]/s', '', $txt);
+		$txt = preg_replace('/\[image]/s', '', $txt);
+		$txt = preg_replace('/\[url(.*?)\](.*?)\[\/url]/s', '', $txt);
+		$txt = preg_replace('/\[quote(.*?)\](.*?)\[\/quote]/s', '', $txt);
+		$txt = preg_replace('/\[spoiler(.*?)\](.*?)\[\/spoiler]/s', '', $txt);
+		$txt = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $txt);
+		$txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
+		$txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
 
 		if (JPluginHelper::isEnabled('content', 'emailcloak'))
 		{

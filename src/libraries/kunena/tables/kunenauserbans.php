@@ -109,7 +109,7 @@ class TableKunenaUserBans extends JTable
 	const ACTIVE = 1;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

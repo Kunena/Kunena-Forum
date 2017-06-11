@@ -76,7 +76,13 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 
 		$userid = $this->state->get('user');
-		$user   = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
+
+		if ($userid == '*')
+		{
+			$userid = null;
+		}
+
+		$user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
@@ -247,6 +253,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 * Prepare document.
 	 *
 	 * @return void
+	 *
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{

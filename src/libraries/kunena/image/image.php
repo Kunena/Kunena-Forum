@@ -69,17 +69,17 @@ class KunenaImage extends KunenaCompatImage
 		$offset    = new stdClass;
 		$offset->x = $offset->y = 0;
 
-		// Get truecolor handle
+		// Get true color handle
 		$handle = imagecreatetruecolor($dimensions->width, $dimensions->height);
 
-		// Center image if needed and create the new truecolor image handle.
+		// Center image if needed and create the new true color image handle.
 		if ($scaleMethod == self::SCALE_FIT)
 		{
 			// Get the offsets
 			$offset->x = round(($width - $dimensions->width) / 2);
 			$offset->y = round(($height - $dimensions->height) / 2);
 
-			// Make image transparent, otherwise cavas outside initial image would default to black
+			// Make image transparent, otherwise canvas outside initial image would default to black
 			if (!$this->isTransparent())
 			{
 				$transparency = imagecolorAllocateAlpha($this->handle, 0, 0, 0, 127);
@@ -147,7 +147,8 @@ class KunenaImage extends KunenaCompatImage
 		}
 		else
 		{
-			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
+				$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
 		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.

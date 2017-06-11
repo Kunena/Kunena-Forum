@@ -405,7 +405,7 @@ class TableKunenaUsers extends KunenaTable
 	public $telegram = null;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

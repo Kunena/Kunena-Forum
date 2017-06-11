@@ -73,11 +73,13 @@ abstract class JHtmlKunenaGrid
 			{
 				$class = 'ok';
 			}
-			elseif ($class == 'unpublish')
+
+			if ($class == 'unpublish')
 			{
 				$class = 'remove';
 			}
-			elseif ($class == 'delete')
+
+			if ($class == 'delete')
 			{
 				$class = 'trash';
 			}
@@ -95,15 +97,18 @@ abstract class JHtmlKunenaGrid
 			{
 				$class = 'check';
 			}
-			elseif ($class == 'unpublish')
+
+			if ($class == 'unpublish')
 			{
 				$class = 'times';
 			}
-			elseif ($class == 'edit')
+
+			if ($class == 'edit')
 			{
 				$class = 'pencil';
 			}
-			elseif ($class == 'delete')
+
+			if ($class == 'delete')
 			{
 				$class = 'trash';
 			}
@@ -121,15 +126,18 @@ abstract class JHtmlKunenaGrid
 			{
 				$img = '<img src="media/kunena/images/unpublish.png"/>';
 			}
-			elseif ($task == 'unpublish')
+
+			if ($task == 'unpublish')
 			{
 				$img = '<img src="media/kunena/images/tick.png"/>';
 			}
-			elseif ($task == 'edit')
+
+			if ($task == 'edit')
 			{
 				$img = '<img src="media/kunena/images/edit.png"/>';
 			}
-			elseif ($task == 'delete')
+
+			if ($task == 'delete')
 			{
 				$img = '<img src="media/kunena/images/delete.png"/>';
 			}
@@ -171,14 +179,10 @@ abstract class JHtmlKunenaGrid
 
 		if ($toggle)
 		{
-			$html = '<a class="grid_' . $bool . ' hasTip" title="' . $title . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" href="#toggle"></a>';
-		}
-		else
-		{
-			$html = '<a class="grid_' . $bool . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}"></a>';
+			return '<a class="grid_' . $bool . ' hasTip" title="' . $title . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" href="#toggle"></a>';
 		}
 
-		return $html;
+		return '<a class="grid_' . $bool . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}"></a>';
 	}
 
 	/**
@@ -234,10 +238,8 @@ abstract class JHtmlKunenaGrid
 		{
 			return '';
 		}
-		else
-		{
-			return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" title="' . JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
-		}
+
+		return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" title="' . JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
 	}
 
 	/**
@@ -263,25 +265,17 @@ abstract class JHtmlKunenaGrid
 			$result = JTable::isCheckedOut($userid, $row->checked_out);
 		}
 
-		$checked = '';
-
 		if ($result)
 		{
-			$checked = self::_checkedOut($row);
-		}
-		else
-		{
-			if ($identifier == 'id')
-			{
-				$checked = self::id($i, $row->$identifier);
-			}
-			else
-			{
-				$checked = self::id($i, $row->$identifier, $result, $identifier);
-			}
+			return self::_checkedOut($row);
 		}
 
-		return $checked;
+		if ($identifier == 'id')
+		{
+			return self::id($i, $row->$identifier);
+		}
+
+		return self::id($i, $row->$identifier, $result, $identifier);
 	}
 
 	/**
@@ -327,40 +321,6 @@ abstract class JHtmlKunenaGrid
 	{
 		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
 	}
-	/*
-	public static function state(
-		$filter_state = '*',
-		$published = 'Published',
-		$unpublished = 'Unpublished',
-		$archived = null,
-		$trashed = null
-	) {
-		$state = array(
-			'' => '- ' . JText::_('JLIB_HTML_SELECT_STATE') . ' -',
-			'P' => JText::_($published),
-			'U' => JText::_($unpublished)
-		);
-
-		if ($archived) {
-			$state['A'] = JText::_($archived);
-		}
-
-		if ($trashed) {
-			$state['T'] = JText::_($trashed);
-		}
-
-		return JHtml::_(
-			'select.genericlist',
-			$state,
-			'filter_state',
-			array(
-				'list.attr' => 'class="inputbox" size="1" onchange="Joomla.submitform();"',
-				'list.select' => $filter_state,
-				'option.key' => null
-			)
-		);
-	}
-	*/
 
 	/**
 	 * @param          $rows
@@ -392,14 +352,10 @@ abstract class JHtmlKunenaGrid
 
 		if ($enabled)
 		{
-			$html = '<a class="move_up" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
-		}
-		else
-		{
-			$html = '<span class="move_up"></span>';
+			return'<a class="move_up" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
 		}
 
-		return $html;
+		return '<span class="move_up"></span>';
 	}
 
 	/**
@@ -417,14 +373,10 @@ abstract class JHtmlKunenaGrid
 
 		if ($enabled)
 		{
-			$html = '<a class="move_down" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
-		}
-		else
-		{
-			$html = '<span class="move_down"></span>';
+			return '<a class="move_down" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
 		}
 
-		return $html;
+		return '<span class="move_down"></span>';
 	}
 
 	/**

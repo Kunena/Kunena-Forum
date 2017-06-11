@@ -10,10 +10,6 @@
  * @link            https://www.kunena.org
  **/
 
-/** @var KunenaForumCategory $section */
-/** @var KunenaForumCategory $category */
-/** @var KunenaForumCategory $subcategory */
-
 defined('_JEXEC') or die;
 
 if ($this->config->enableforumjump)
@@ -39,6 +35,10 @@ foreach ($this->sections as $section) :
 	?>
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
+			<?php if ($this->me->isAdmin()) :?>
+				<a class="btn btn-small" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage'); ?>"><?php echo JText::_('COM_KUNENA_MENU_CATEGORY_MANAGE'); ?></a>
+			<?php endif; ?>
+
 			<?php if (count($this->sections) > 1) : ?>
 				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
 			<?php endif; ?>

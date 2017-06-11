@@ -654,7 +654,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Method to display title in page
 	 *
-	 * @param   unknown $title
+	 * @param   string   $title Show the title on the browser
 	 *
 	 * @throws LogicException
 	 * @since Kunena

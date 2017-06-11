@@ -50,7 +50,7 @@ class TableKunenaUserRead extends KunenaTable
 	public $time = null;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

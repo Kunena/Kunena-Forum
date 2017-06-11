@@ -68,7 +68,7 @@ class KunenaIntegrationActivity
 	 * Method magical to call the right method in plugin integration
 	 *
 	 * @param   string $method    Name of method to call
-	 * @param   string $arguments Arguments need to be passed to the method
+	 * @param   array  $arguments Arguments need to be passed to the method
 	 *
 	 * @return mixed
 	 * @since Kunena

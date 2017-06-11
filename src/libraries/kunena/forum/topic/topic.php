@@ -1135,7 +1135,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Find out where we are moving the messages
 		if (!$target || !$target->exists())
 		{
-			$this->setError(JText::printf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
+			$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
 
 			return false;
 		}

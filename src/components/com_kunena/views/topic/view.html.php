@@ -1389,7 +1389,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   unknown $title
+	 * @param   string $title Title name on the browser
 	 *
 	 * @since Kunena
 	 */

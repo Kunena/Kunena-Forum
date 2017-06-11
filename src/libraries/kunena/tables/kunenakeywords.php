@@ -44,7 +44,7 @@ class TableKunenaKeywords extends KunenaTable
 	public $total_count = null;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

@@ -535,7 +535,7 @@ window.addEvent('domready', function(){
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @param   KunenaForumCategory $category
+	 * @param   int                 $category
 	 * @param   mixed               $user
 	 * @param   bool                $status
 	 *

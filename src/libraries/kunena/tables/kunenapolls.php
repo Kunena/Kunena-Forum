@@ -44,7 +44,7 @@ class TableKunenaPolls extends KunenaTable
 	public $polltimetolive = null;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

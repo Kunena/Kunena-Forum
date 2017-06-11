@@ -224,7 +224,7 @@ class TableKunenaCategories extends KunenaTable
 	public $params = null;
 
 	/**
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

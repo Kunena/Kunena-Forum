@@ -64,7 +64,7 @@ class TableKunenaSessions extends KunenaTable
 	/**
 	 * TableKunenaSessions constructor.
 	 *
-	 * @param   string $db
+	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
 	 */

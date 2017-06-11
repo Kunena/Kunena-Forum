@@ -424,9 +424,9 @@ class KunenaAccessJoomla
 	/**
 	 * Method to return a list of user Ids contained in a Group (derived from Joomla 1.6)
 	 *
-	 * @param   int     $groupId   The group Id
-	 * @param   boolean $recursive Recursively include all child groups (optional)
-	 * @param   array   $inUsers   Only list selected users.
+	 * @param   int|array $groupId   The group Id
+	 * @param   boolean   $recursive Recursively include all child groups (optional)
+	 * @param   array     $inUsers   Only list selected users.
 	 *
 	 * @return    array
 	 * @since Kunena

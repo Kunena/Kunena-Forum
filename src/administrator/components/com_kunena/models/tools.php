@@ -516,8 +516,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getJoomlaLanguagesInstalled()
 	{
-		$lang       = JFactory::getLanguage();
-		$languages  = $lang->getKnownLanguages();
+		$languages  = JLanguageHelper::getKnownLanguages();
 		$table_lang = '[table]';
 		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
 

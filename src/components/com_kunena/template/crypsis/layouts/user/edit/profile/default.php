@@ -98,7 +98,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>" >
-					<input id="social-url" type="text" name="websiteurl"
+					<input id="social-url" type="url" name="websiteurl"
 					       value="<?php echo $this->escape($this->profile->websiteurl); ?>" />
 				</span>
 			</td>

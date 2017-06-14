@@ -20,9 +20,10 @@ class KunenaActivity
 	/**
 	 * Triggered before posting a new topic.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onBeforePost($message)
 	{
@@ -31,9 +32,10 @@ class KunenaActivity
 	/**
 	 * Triggered after posting a new topic.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterPost($message)
 	{
@@ -42,9 +44,10 @@ class KunenaActivity
 	/**
 	 * Triggered before replying to a topic.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onBeforeReply($message)
 	{
@@ -53,9 +56,10 @@ class KunenaActivity
 	/**
 	 * Triggered after replying to a topic.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterReply($message)
 	{
@@ -64,9 +68,10 @@ class KunenaActivity
 	/**
 	 * Triggered before editing a post.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onBeforeEdit($message)
 	{
@@ -75,9 +80,10 @@ class KunenaActivity
 	/**
 	 * Triggered after editing a post.
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterEdit($message)
 	{
@@ -85,27 +91,30 @@ class KunenaActivity
 
 	/**
 	 *
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterDelete($message)
 	{
 	}
 
 	/**
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterUndelete($message)
 	{
 	}
 
 	/**
-	 * @param $message
+	 * @param   string $message Message
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterDeleteTopic($message)
 	{
@@ -118,6 +127,7 @@ class KunenaActivity
 	 * @param   int $action  1 = subscribe, 0 = unsuscribe.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterSubscribe($topicid, $action)
 	{
@@ -130,6 +140,7 @@ class KunenaActivity
 	 * @param   int $action  1 = favorite, 0 = unfavorite.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterFavorite($topicid, $action)
 	{
@@ -142,6 +153,7 @@ class KunenaActivity
 	 * @param   int $action  1 = sticky, 0 = unsticky.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterSticky($topicid, $action)
 	{
@@ -154,6 +166,7 @@ class KunenaActivity
 	 * @param   int $action  1 = lock, 0 = unlock.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterLock($topicid, $action)
 	{
@@ -167,6 +180,7 @@ class KunenaActivity
 	 * @param   int $message Message Id.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -180,6 +194,7 @@ class KunenaActivity
 	 * @param   int $message Message Id.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterUnThankyou($actor, $target, $message)
 	{
@@ -193,6 +208,7 @@ class KunenaActivity
 	 * @param   int $delta  Points added / removed.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{
@@ -201,7 +217,7 @@ class KunenaActivity
 	/**
 	 * Get list of medals.
 	 *
-	 * @param $userid
+	 * @param   int  $userid Users id
 	 *
 	 * @return void
 	 * @since Kunena
@@ -213,9 +229,9 @@ class KunenaActivity
 	/**
 	 * Get user points.
 	 *
-	 * @param   int $userid
+	 * @param   int $userid Users id
 	 *
-	 * @return  integer|void  Number of points.
+	 * @return  void
 	 * @since Kunena
 	 */
 	public function getUserPoints($userid)

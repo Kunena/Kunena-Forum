@@ -1224,7 +1224,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 
 			// Did user want to change the topic icon?
-			if (!is_null($topic_iconid))
+			if ($topic_iconid !== null)
 			{
 				$target->icon_id = $topic_iconid;
 			}

@@ -151,7 +151,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			$birthday = FD::date($data['date']);
 		}
 
-		if (!is_null($birthday))
+		if ($birthday !== null)
 		{
 			$view->profile->birthdate = $birthday->format('Y-m-d');
 		}

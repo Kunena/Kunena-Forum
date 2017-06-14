@@ -267,7 +267,7 @@ class KunenaUser extends JObject
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
 
-				try 
+				try
 				{
 					$banInfo->canBan();
 				}
@@ -638,7 +638,7 @@ class KunenaUser extends JObject
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
 
-			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
+			$class = ($class !== null) ? $class : $this->getType($catid, 'class');
 
 			if (!empty($class))
 			{

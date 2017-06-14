@@ -81,7 +81,7 @@ class KunenaAdminTemplate
 		}
 
 		// Check if the item can be clicked.
-		if (!is_null($item->base))
+		if ($item->base !== null)
 		{
 			$limit = 'limitstart.value=' . (int) $item->base;
 

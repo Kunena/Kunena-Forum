@@ -244,7 +244,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		$app       = JFactory::getApplication();
 		$input     = $app->input;
 		$old_state = $app->getUserState($key);
-		$cur_state = (!is_null($old_state)) ? $old_state : $default;
+		$cur_state = ($old_state !== null) ? $old_state : $default;
 		$new_state = $input->get($request, null, $type);
 
 		if (($cur_state != $new_state) && ($resetPage))

@@ -105,7 +105,7 @@ abstract class KunenaDatabaseObjectFinder
 	 */
 	public function limit($limit = null)
 	{
-		if (!is_null($limit))
+		if ($limit !== null)
 		{
 			$this->limit = $limit;
 		}

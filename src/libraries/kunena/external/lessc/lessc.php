@@ -406,7 +406,8 @@ class lessc
 		if (count($this->scope->lines) > 0)
 		{
 			$orphanSelelectors = $this->findClosestSelectors();
-			if (!is_null($orphanSelelectors))
+
+			if ($orphanSelelectors !== null)
 			{
 				$orphan        = $this->makeOutputBlock(null, $orphanSelelectors);
 				$orphan->lines = $this->scope->lines;
@@ -952,7 +953,7 @@ class lessc
 					$subMatches = $this->findBlocks($subBlock,
 						array_slice($path, 1), $orderedArgs, $keywordArgs, $seen);
 
-					if (!is_null($subMatches))
+					if ($subMatches !== null)
 					{
 						foreach ($subMatches as $sm)
 						{
@@ -1881,7 +1882,7 @@ class lessc
 	 */
 	protected function lib_alpha($value)
 	{
-		if (!is_null($color = $this->coerceColor($value)))
+		if ($color = $this->coerceColor($value) !== null)
 		{
 			return isset($color[4]) ? $color[4] : 1;
 		}
@@ -2604,7 +2605,7 @@ class lessc
 	/**
 	 * @param $exp
 	 *
-	 * @return array|null
+	 * @return array|string
 	 * @since LESSC
 	 */
 	protected function evaluate($exp)
@@ -2638,7 +2639,7 @@ class lessc
 			return $this->toBool($this->eq($left, $right));
 		}
 
-		if ($op == "+" && !is_null($str = $this->stringConcatenate($left, $right)))
+		if ($op == "+" && ($str = $this->stringConcatenate($left, $right)!== null))
 		{
 			return $str;
 		}
@@ -2649,7 +2650,11 @@ class lessc
 		if (is_callable(array($this, $fname)))
 		{
 			$out = $this->$fname($op, $left, $right);
-			if (!is_null($out)) return $out;
+
+			if ($out !== null)
+			{
+				return $out;
+			}
 		}
 
 		// make the expression look it did before being parsed
@@ -3779,7 +3784,7 @@ class lessc_parser
 			$this->throwError();
 
 		// TODO report where the block was opened
-		if (!is_null($this->env->parent))
+		if ($this->env->parent !== null)
 			throw new exception('parse error: unclosed block');
 
 		return $this->env;
@@ -4470,7 +4475,7 @@ class lessc_parser
 		$stop = array_map(array("lessc", "preg_quote"), $stop);
 		// $stop[] = self::$commentMulti;
 
-		if (!is_null($rejectStrs))
+		if ($rejectStrs !== null)
 		{
 			$stop = array_merge($stop, $rejectStrs);
 		}

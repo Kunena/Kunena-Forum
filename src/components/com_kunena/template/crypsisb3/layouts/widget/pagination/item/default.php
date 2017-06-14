@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $item = $this->item;
 
-if (!is_null($item->base))
+if ($item->base !== null)
 {
 	// Check if the item can be clicked.
 	$limit = 'limitstart.value=' . (int) $item->base;

@@ -502,7 +502,7 @@ class KunenaTableMap
 		{
 			// Load currently mapped variables from database.
 			$this->load();
-			$filtered = !is_null($filter) ? array_intersect($this->{$m}, $filter) : $this->{$m};
+			$filtered = ($filter !== null) ? array_intersect($this->{$m}, $filter) : $this->{$m};
 
 			// Calculate difference (added and deleted items).
 			$added   = array_diff($items, $filtered);
@@ -566,7 +566,7 @@ class KunenaTableMap
 	 */
 	public function save(array $map = null, array $filter = null)
 	{
-		if (!is_null($map))
+		if ($map !== null)
 		{
 			$this->setMapped($map);
 		}

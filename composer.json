@@ -2,8 +2,11 @@
   "name": "kunena/kunena-forum",
   "description": "Kunena forum for joomla",
   "license": "GPL-3.0",
-  "require": {
-	"php": ">=5.5.13"
+  "config": {
+	"platform": {
+	  "php": "7.0.0"
+	},
+	"vendor-dir": "tests/codeception/vendor"
   },
   "require-dev": {
 	"codeception/codeception": "~2.3",

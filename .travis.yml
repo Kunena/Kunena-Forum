@@ -48,6 +48,6 @@ before_script:
 
 script:
 # Build
-- vendor/bin/phing -f build/phing/build.xml
+- tests/codeception/vendor/bin/phing -f build/phing/build.xml
 - mv tests/codeception/acceptance.suite.dist.yml tests/codeception/acceptance.suite.yml
-- vendor/bin/robo run:tests --use-htaccess
+- tests/codeception/vendor/bin/robo run:tests --use-htaccess

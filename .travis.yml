@@ -37,7 +37,7 @@ before_script:
 - sudo a2enmod rewrite actions fastcgi alias
 - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-- sudo cp -f tests/travis-ci-apache.conf /etc/apache2/sites-available/default
+- sudo cp -f tests/codeception/travis-ci-apache.conf /etc/apache2/sites-available/default
 - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
 - git submodule update --init --recursive
 - sudo service apache2 restart
@@ -57,5 +57,5 @@ before_script:
 script:
 # Build
 - vendor/bin/phing -f build/phing/build.xml
-- mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
+- mv tests/codeception/acceptance.suite.dist.yml tests/codeception/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess

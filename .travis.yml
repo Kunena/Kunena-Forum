@@ -2,8 +2,6 @@ language: php
 php:
 - 7.0
 - 7.1
-addons:
-  firefox: "47.0.1"
 before_script:
 - sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts
 - sudo apt-get update -qq
@@ -41,9 +39,16 @@ before_script:
 - sudo apt-get install fluxbox -y --force-yes
 - fluxbox &
 - sleep 1 # give fluxbox some time to start
+
+# Install Chrome
+- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome*.deb
+- export CHROME_BIN=/usr/bin/google-chrome
+
 # Composer
 - composer install
-- git clone -b master https://github.com/joomla/coding-standards.git Joomla
+- git clone -b master --single-branch --depth 1 https://github.com/Kunena/Codestyle.git tests/codeception/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Kunena
+- git clone -b master https://github.com/joomla/coding-standards.git tests/codeception/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Joomla
 # vendor/bin/robo run:checker phpcs
 
 script:

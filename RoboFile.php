@@ -296,7 +296,7 @@ class RoboFile extends \Robo\Tasks
 			$pathToCodeception = $this->testsPath . 'vendor/bin/codecept';
 		}
 
-		$this->taskCodecept($pathToCodeception)
+		$this->taskCodecept()
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
@@ -305,7 +305,7 @@ class RoboFile extends \Robo\Tasks
 			->run()
 			->stopOnFail();
 
-		$this->taskCodecept($pathToCodeception)
+		$this->taskCodecept()
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
@@ -314,7 +314,7 @@ class RoboFile extends \Robo\Tasks
 			->run()
 			->stopOnFail();
 
-		$this->taskCodecept($pathToCodeception)
+		$this->taskCodecept()
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')

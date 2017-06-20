@@ -13,7 +13,7 @@ modules:
     config:
         JoomlaBrowser:
             url: 'http://localhost/tests/codeception/kunena'     # the url that points to the joomla installation at /tests/system/joomla-cms
-            browser: 'chrome'
+            browser: 'firefox'
             window_size: 1024x768
             capabilities:
               unexpectedAlertBehaviour: 'accept'

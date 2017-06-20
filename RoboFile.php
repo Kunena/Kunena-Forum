@@ -284,31 +284,41 @@ class RoboFile extends \Robo\Tasks
 		$this->runSelenium();
 
 		// Make sure to run the build command to generate AcceptanceTester
-		$this->_exec($this->isWindows() ? 'vendor\bin\codecept.bat build' : 'php vendor/bin/codecept build');
+		if ($this->isWindows())
+		{
+			$this->_exec('php ' . $this->getWindowsPath($this->testsPath . 'vendor/bin/codecept') . ' build');
+			$pathToCodeception = $this->getWindowsPath($this->testsPath . 'vendor/bin/codecept');
+		}
+		else
+		{
+			$this->_exec('php ' . $this->testsPath . 'vendor/bin/codecept build');
 
-		$this->taskCodecept()
+			$pathToCodeception = $this->testsPath . 'vendor/bin/codecept';
+		}
+
+		$this->taskCodecept($pathToCodeception)
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
+			->env($opts['env'])
 			->arg($this->testsPath . 'acceptance/install/')
 			->run()
 			->stopOnFail();
 
-		$this->taskCodecept()
+		$this->taskCodecept($pathToCodeception)
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
+			->env($opts['env'])
 			->arg($this->testsPath . 'acceptance/administrator/')
 			->run()
 			->stopOnFail();
 
-		$this->taskCodecept()
+		$this->taskCodecept($pathToCodeception)
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
+			->env($opts['env'])
 			->arg($this->testsPath . 'acceptance/frontend/')
 			->run()
 			->stopOnFail();

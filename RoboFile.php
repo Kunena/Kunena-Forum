@@ -65,17 +65,41 @@ class RoboFile extends \Robo\Tasks
 	protected $cmsPath = null;
 
 	/**
+	 * File extension for executables
+	 *
+	 * @var string
+	 */
+	private $executableExtension = '';
+
+
+	/**
 	 * RoboFile constructor.
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
 	public function __construct()
 	{
-		$this->configuration = $this->getConfiguration();
-		$this->cmsPath       = $this->getTestingPath();
+		$this->configuration       = $this->getConfiguration();
+		$this->cmsPath             = $this->getTestingPath();
+		$this->executableExtension = $this->getExecutableExtension();
 
 		// Set default timezone (so no warnings are generated if it is not set)
 		date_default_timezone_set('UTC');
+	}
+
+	/**
+	 * Get the executable extension according to Operating System
+	 *
+	 * @return void
+	 */
+	private function getExecutableExtension()
+	{
+		if ($this->isWindows())
+		{
+			return '.exe';
+		}
+
+		return '';
 	}
 
 	/**
@@ -143,6 +167,24 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function createTestingSite($useHtaccess = false)
 	{
+		if (!empty($this->configuration->skipClone))
+		{
+			$this->say('Reusing Joomla CMS site already present at ' . $this->cmsPath);
+
+			return;
+		}
+
+		// Caching cloned installations locally
+		if (!is_dir('tests/codeception/cache') || (time() - filemtime('tests/codeception/cache') > 60 * 60 * 24))
+		{
+			if (file_exists('tests/codeception/cache'))
+			{
+				$this->taskDeleteDir('tests/codeception/cache')->run();
+			}
+
+			$this->_exec($this->buildGitCloneCommand());
+		}
+
 		// Clean old testing site
 		if (is_dir($this->cmsPath))
 		{
@@ -159,14 +201,18 @@ class RoboFile extends \Robo\Tasks
 			}
 		}
 
-		$exclude = ['tests', 'tests-phpunit', '.run', '.github', '.git'];
-
-		$this->copyJoomla($this->cmsPath, $exclude);
+		$this->_copyDir('tests/codeception/cache', $this->cmsPath);
 
 		// Optionally change owner to fix permissions issues
 		if (!empty($this->configuration->localUser))
 		{
 			$this->_exec('chown -R ' . $this->configuration->localUser . ' ' . $this->cmsPath);
+		}
+
+		// Copy current package
+		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
+		{
+			$this->build(true);
 		}
 
 		// Optionally uses Joomla default htaccess file. Used by TravisCI
@@ -176,58 +222,6 @@ class RoboFile extends \Robo\Tasks
 			$this->_copy($this->cmsPath . '/htaccess.txt', $this->cmsPath . '/.htaccess');
 			$this->_exec('sed -e "s,# RewriteBase /,RewriteBase /tests/codeception/kunena,g" -in-place tests/codeception/kunena/.htaccess');
 		}
-	}
-
-	/**
-	 * Copy the Joomla installation excluding folders
-	 *
-	 * @param   string  $dst      Target folder
-	 * @param   array   $exclude  Exclude list of folders
-	 *
-	 * @throws  Exception
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 *
-	 * @return  void
-	 */
-	protected function copyJoomla($dst, $exclude = array())
-	{
-		$dir = @opendir(".");
-
-		if (false === $dir)
-		{
-			throw new Exception($this, "Cannot open source directory");
-		}
-
-		if (!is_dir($dst))
-		{
-			mkdir($dst, 0755, true);
-		}
-
-		while (false !== ($file = readdir($dir)))
-		{
-			if (in_array($file, $exclude))
-			{
-				continue;
-			}
-
-			if (($file !== '.') && ($file !== '..'))
-			{
-				$srcFile  = "." . '/' . $file;
-				$destFile = $dst . '/' . $file;
-
-				if (is_dir($srcFile))
-				{
-					$this->_copyDir($srcFile, $destFile);
-				}
-				else
-				{
-					copy($srcFile, $destFile);
-				}
-			}
-		}
-
-		closedir($dir);
 	}
 
 	/**
@@ -311,12 +305,21 @@ class RoboFile extends \Robo\Tasks
 			->run()
 			->stopOnFail();
 
-		$this->taskCodecept()
+		$this->taskCodecept($pathToCodeception)
 			->arg('--steps')
 			->arg('--debug')
 			->arg('--fail-fast')
 			->env($opts['env'])
-			->arg($this->testsPath . '/acceptance/administrator/components/com_users')
+			->arg($this->testsPath . 'acceptance/administrator/')
+			->run()
+			->stopOnFail();
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/frontend/')
 			->run()
 			->stopOnFail();
 	}
@@ -324,8 +327,8 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Executes a specific Selenium System Tests in your machine
 	 *
-	 * @param   string  $pathToTestFile  Optional name of the test to be run
-	 * @param   string  $suite           Optional name of the suite containing the tests, Acceptance by default.
+	 * @param   string $pathToTestFile Optional name of the test to be run
+	 * @param   string $suite          Optional name of the suite containing the tests, Acceptance by default.
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 *
@@ -448,7 +451,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Return the correct path for Windows (needed by CMD)
 	 *
-	 * @param   string  $path  Linux path
+	 * @param   string $path Linux path
 	 *
 	 * @return  string
 	 *
@@ -526,7 +529,7 @@ class RoboFile extends \Robo\Tasks
 
 		if (strpos(strtolower($os), 'windows') !== false)
 		{
-			return  'windows';
+			return 'windows';
 		}
 
 		if (strpos(strtolower($os), 'darwin') !== false)
@@ -540,7 +543,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Get the suite configuration
 	 *
-	 * @param   string  $suite  Name of the test suite
+	 * @param   string $suite Name of the test suite
 	 *
 	 * @return  array
 	 *
@@ -554,5 +557,17 @@ class RoboFile extends \Robo\Tasks
 		}
 
 		return $this->suiteConfig;
+	}
+
+	/**
+	 * Build correct git clone command according to local configuration and OS
+	 *
+	 * @return string
+	 */
+	private function buildGitCloneCommand()
+	{
+		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
+
+		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git tests/codeception/cache";
 	}
 }

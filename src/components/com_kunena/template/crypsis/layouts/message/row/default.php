@@ -140,7 +140,7 @@ if ($topic->moved_id > 0)
 			<div class="row-fluid">
 			<?php if ($config->avataroncat) : ?>
 				<div class="span3">
-					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, 1); ?>
 				</div>
 			<?php endif; ?>
 				<div class="span9">

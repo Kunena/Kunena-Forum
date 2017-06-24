@@ -203,7 +203,7 @@ foreach ($this->sections as $section) :
 										<div class="row-fluid">
 											<?php if ($avatar) : ?>
 												<div class="span3">
-													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, 1); ?>
 												</div>
 												<div class="span9">
 											<?php else : ?>

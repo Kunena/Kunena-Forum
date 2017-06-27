@@ -1478,7 +1478,7 @@ class KunenaUser extends JObject
 			'blogspot' => array ('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
 			'flickr' => array ('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
 			'bebo' => array ('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' ),
-			'istagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
+			'instagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
 			'qq' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QQ' ), 'nourl' => '1' ),
 			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
 			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),

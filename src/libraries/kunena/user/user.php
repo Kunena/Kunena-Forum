@@ -622,7 +622,7 @@ class KunenaUser extends JObject
 	 * @return string
 	 * @since Kunena
 	 */
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0)
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
 	{
 		if (!$name)
 		{
@@ -665,7 +665,14 @@ class KunenaUser extends JObject
 				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
 			}
 
-			$link = $this->getURL(true, $task);
+		 	if ($this->userid == JFactory::getUser()->id && $avatarLink)
+			{
+				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
+			}
+			else
+			{
+				$link = $this->getURL(true, $task);
+			}
 
 			if (!empty($rel))
 			{

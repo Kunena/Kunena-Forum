@@ -425,7 +425,7 @@ class KunenaControllerTopic extends KunenaController
 
 			if ($count)
 			{
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection));
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection), 'error');
 				$this->setRedirectBack();
 
 				return;

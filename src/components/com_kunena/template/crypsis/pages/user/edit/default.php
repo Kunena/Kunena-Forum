@@ -12,6 +12,12 @@ defined('_JEXEC') or die;
 
 $content = $this->execute('User/Edit');
 
+$avatartab =  $this->input->getInt('avatartab');
+
+$document = JFactory::getDocument();
+
+$document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
+
 $this->addBreadcrumb(
 	JText::_('COM_KUNENA_EDIT'),
 	'index.php?option=com_kunena&view=user&layout=edit'

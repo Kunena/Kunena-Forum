@@ -57,11 +57,12 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param          $user
 	 * @param   string $task
 	 * @param   bool   $xhtml
+	 * @param   bool   $avatarTab
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true)
+	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
 	{
 		if ($user == 0)
 		{
@@ -93,7 +94,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 			if ($layout)
 			{
-				return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}", $xhtml);
+				return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}{$avatarTab}", $xhtml);
 			}
 			else
 			{
@@ -157,6 +158,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
-		return $this->getProfileURL($userid, 'edit', $xhtml = true);
+		$avatartab = '&avatartab=1';
+		
+		return $this->getProfileURL($userid, 'edit', $xhtml = true, $avatartab);
 	}
 }

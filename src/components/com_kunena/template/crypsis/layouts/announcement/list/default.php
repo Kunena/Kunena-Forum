@@ -23,31 +23,24 @@ JHtml::_('behavior.core');
 		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 
 		<?php if (!empty($options)) : ?>
-			<div class="input-append pull-right">
+		<div class="input-group pull-right">
+			<div class="input-append">
 				<?php echo JHtml::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
-				<a class="btn btn-primary"
-				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
-					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
-				</a>
+				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 			</div>
+			<a class="btn btn-primary" id="announcement-add-button"
+			        href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
+					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
+			</a>
+		</div>
 		<?php endif; ?>
-
 	</h2>
 
 	<table class="table table-striped table-bordered">
 		<thead>
-		<tr>
-			<th class="span1">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
-			</th>
-			<th class="span5">
-				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
-			</th>
-
-			<?php if ($options) : ?>
-				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+			<tr>
+				<th class="span1 hidden-phone">
+					<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 				</th>
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
@@ -58,15 +51,8 @@ JHtml::_('behavior.core');
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
-			<?php endif; ?>
-
-			<th class="span1 center">
-				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
-			</th>
-
-			<?php if (!empty($this->announcements)) : ?>
-				<th class="span1 center">
-					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
+				<th class="span1 center hidden-phone">
+					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>
 			<?php endif; ?>
 

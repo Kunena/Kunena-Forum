@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $content = $this->execute('User/Edit');
 
-$avatartab =  $this->input->getInt('avatartab');
+$avatartab = $this->input->getInt('avatartab');
 
 $document = JFactory::getDocument();
 

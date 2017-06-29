@@ -144,7 +144,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			catch (KunenaExceptionAuthorise $e)
 			{
 				$banned = KunenaUserHelper::getMyself()->banned;
-				$userid =  $this->input->getInt('userid');
+				$userid = $this->input->getInt('userid');
 
 				if (JFactory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
 				{
@@ -166,7 +166,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
 						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
                             KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
-                        )
+                            )
                         );
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}
@@ -174,9 +174,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->document->setTitle($e->getResponseStatus());
-				
+
 					$this->content = KunenaLayout::factory('Widget/Error')
-					->set('header', $e->getResponseStatus());
+                        ->set('header', $e->getResponseStatus());
 				}
 				else
 				{

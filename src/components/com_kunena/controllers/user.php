@@ -253,7 +253,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$ban->canBan();
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			$this->setRedirect($user->getUrl(false), $e->getMessage(), 'error');
 
@@ -1302,7 +1302,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @param $userid
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
 	 */
 	protected function report($userid)

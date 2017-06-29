@@ -9,7 +9,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.html.parameter');
 
@@ -20,7 +20,6 @@ jimport('joomla.html.parameter');
  */
 class KunenaTemplate extends JObject
 {
-	// Global for every instance
 	/**
 	 * @var array
 	 * @since Kunena
@@ -103,7 +102,7 @@ class KunenaTemplate extends JObject
 	protected $paths = array();
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $css_compile = true;
@@ -273,6 +272,7 @@ class KunenaTemplate extends JObject
 					$this->params->def($node['name'], (string) $node['default']);
 				}
 			}
+
 			// Generate CSS variables for less compiler.
 			foreach ($this->params->toArray() as $key => $value)
 			{
@@ -290,7 +290,7 @@ class KunenaTemplate extends JObject
 	/**
 	 * getconfigxml
 	 *
-	 * @return bool|mixed|string
+	 * @return boolean|mixed|string
 	 * @since Kunena
 	 */
 	public function getConfigXml()
@@ -312,7 +312,8 @@ class KunenaTemplate extends JObject
 			// Update old template files to new format.
 			$xml = preg_replace(
 				array('|<params|', '|</params>|', '|<param\s+|', '|</param>|'),
-				array('<config', '</config>', '<field ', '</field>'), $xml);
+                array('<config', '</config>', '<field ', '</field>'), $xml
+            );
 		}
 
 		return $xml;
@@ -358,13 +359,13 @@ class KunenaTemplate extends JObject
 		<script>
 			jQuery(document).ready(function ($) {
 				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
-				{
+		{
 					echo "true";
-				}
-				else
-				{
-					echo "false";
-				}?>;
+                    }
+else
+		{
+	echo "false";
+}?>;
 
 				if (isForumActive)
 				{
@@ -399,7 +400,7 @@ class KunenaTemplate extends JObject
 	 * @param      $name
 	 * @param      $scope
 	 * @param      $type
-	 * @param null $id
+	 * @param   null $id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -447,7 +448,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string $title
 	 *
 	 * @return string
 	 * @since Kunena
@@ -459,7 +460,7 @@ HTML;
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string $alt
 	 *
 	 * @return string
 	 * @since Kunena
@@ -539,7 +540,7 @@ HTML;
 
 	/**
 	 * @param        $class
-	 * @param string $class_sfx
+	 * @param   string $class_sfx
 	 *
 	 * @return string
 	 * @since Kunena
@@ -560,7 +561,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $default
+	 * @param   string $default
 	 *
 	 * @return string
 	 * @since Kunena
@@ -586,7 +587,7 @@ HTML;
 
 	/**
 	 * @param        $filename
-	 * @param string $group
+	 * @param   string $group
 	 *
 	 * @return JDocument
 	 * @since Kunena
@@ -617,7 +618,7 @@ HTML;
 
 	/**
 	 * @param        $filename
-	 * @param string $condition
+	 * @param   string $condition
 	 *
 	 * @since Kunena
 	 */
@@ -646,7 +647,7 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
+	 * @param   string $filename
 	 *
 	 * @return string
 	 * @since Kunena
@@ -692,7 +693,7 @@ HTML;
 	 * Wrapper to addScript
 	 *
 	 * @param        $content
-	 * @param string $type
+	 * @param   string $type
 	 *
 	 * @return JDocument
 	 * @since Kunena
@@ -740,8 +741,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $path
-	 * @param bool   $fullpath
+	 * @param   string $path
+	 * @param   bool   $fullpath
 	 *
 	 * @return array
 	 * @throws Exception
@@ -774,10 +775,10 @@ HTML;
 
 	/**
 	 * @param        $file
-	 * @param bool   $url
-	 * @param string $basepath
-	 * @param null   $default
-	 * @param null   $ignore
+	 * @param   bool   $url
+	 * @param   string $basepath
+	 * @param   null   $default
+	 * @param   null   $ignore
 	 *
 	 * @return string
 	 * @since Kunena
@@ -816,8 +817,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -828,8 +829,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -840,8 +841,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -852,8 +853,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -885,8 +886,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 * @param        $category_iconset
 	 *
 	 * @return string
@@ -904,8 +905,8 @@ HTML;
 	}
 
 	/**
-	 * @param string $filename
-	 * @param bool   $url
+	 * @param   string $filename
+	 * @param   bool   $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -916,8 +917,8 @@ HTML;
 	}
 
 	/**
-	 * @param bool $all
-	 * @param int  $checked
+	 * @param   bool $all
+	 * @param   int  $checked
 	 *
 	 * @return array|SimpleXMLElement
 	 * @since Kunena
@@ -945,7 +946,7 @@ HTML;
 						foreach ($icons->icon as $icon)
 						{
 							$attributes = $icon->attributes();
-							$icon       = new stdClass();
+							$icon       = new stdClass;
 							$icon->id   = (int) $attributes->id;
 							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
 							$icon->name = (string) $attributes->name;
@@ -973,7 +974,7 @@ HTML;
 			// Make sure that default icon exists (use user/default.png in current template)
 			if (!isset($this->topicIcons[0]))
 			{
-				$icon                = new StdClass();
+				$icon                = new StdClass;
 				$icon->id            = 0;
 				$icon->type          = 'user';
 				$icon->name          = 'default';
@@ -994,6 +995,7 @@ HTML;
 		else
 		{
 			$icons = array();
+
 			foreach ($this->topicIcons as $icon)
 			{
 				if ($icon->published && is_numeric($icon->id))
@@ -1008,8 +1010,8 @@ HTML;
 	}
 
 	/**
-	 * @param bool $all
-	 * @param int  $checked
+	 * @param   bool $all
+	 * @param   int  $checked
 	 *
 	 * @return array|SimpleXMLElement
 	 * @since Kunena
@@ -1035,7 +1037,7 @@ HTML;
 						foreach ($icons->icon as $icon)
 						{
 							$attributes = $icon->attributes();
-							$icon       = new stdClass();
+							$icon       = new stdClass;
 							$icon->id   = (int) $attributes->id;
 							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
 							$icon->name = (string) $attributes->name;
@@ -1055,10 +1057,11 @@ HTML;
 					}
 				}
 			}
+
 			// Make sure that default icon exists (use user/default.png in current template)
 			if (!isset($this->categoryIcons[0]))
 			{
-				$icon                   = new StdClass();
+				$icon                   = new StdClass;
 				$icon->id               = 0;
 				$icon->type             = 'user';
 				$icon->name             = 'default';
@@ -1095,7 +1098,7 @@ HTML;
 
 	/**
 	 * @param      $index
-	 * @param bool $url
+	 * @param   bool $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1119,7 +1122,7 @@ HTML;
 
 	/**
 	 * @param      $index
-	 * @param bool $url
+	 * @param   bool $url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1142,7 +1145,7 @@ HTML;
 	}
 
 	/**
-	 * @param KunenaForumTopic $topic
+	 * @param   KunenaForumTopic $topic
 	 *
 	 * @return string
 	 * @internal param string $category_iconset
@@ -1211,7 +1214,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'image')
 			{
-				return '<img src="'. JUri::root() .'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
+				return '<img src="' . JUri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
@@ -1307,15 +1310,15 @@ HTML;
 
 				$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon->src}", true);
 
-				return '<img src="' . $iconurl . '" alt="' . $icon->name .'" />';
+				return '<img src="' . $iconurl . '" alt="' . $icon->name . '" />';
 			}
 		}
 	}
 
 	/**
 	 * @param        $src
-	 * @param int    $id
-	 * @param string $style
+	 * @param   int    $id
+	 * @param   string $style
 	 *
 	 * @return stdClass
 	 * @since Kunena
@@ -1347,8 +1350,8 @@ HTML;
 
 	/**
 	 * @param        $src
-	 * @param int    $id
-	 * @param string $style
+	 * @param   int    $id
+	 * @param   string $style
 	 *
 	 * @return stdClass
 	 * @since Kunena
@@ -1384,7 +1387,7 @@ HTML;
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1481,12 +1484,13 @@ HTML;
 		$less  = new lessc;
 		$class = $this;
 		$less->registerFunction('url', function ($arg) use ($class)
-		{
+            {
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 
 			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
-		});
+		}
+        );
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
 
@@ -1530,7 +1534,7 @@ HTML;
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1556,7 +1560,7 @@ HTML;
 	/**
 	 * Set the category iconset value
 	 *
-	 * @param string $iconset
+	 * @param   string $iconset
 	 *
 	 * @since Kunena
 	 */
@@ -1570,7 +1574,7 @@ HTML;
 	 *
 	 * @access    public
 	 *
-	 * @param    int $name Template name or null for default/selected template in your configuration
+	 * @param   int $name Template name or null for default/selected template in your configuration
 	 *
 	 * @return    KunenaTemplate    The template object.
 	 * @since     1.6
@@ -1629,7 +1633,7 @@ HTML;
 			}
 			else
 			{
-				self::$_instances [$name] = new KunenaTemplate ($templatename);
+				self::$_instances [$name] = new KunenaTemplate($templatename);
 			}
 		}
 
@@ -1677,8 +1681,8 @@ HTML;
 
 	/**
 	 * @param        $src
-	 * @param int    $id
-	 * @param string $style
+	 * @param   int    $id
+	 * @param   string $style
 	 *
 	 * @return stdClass
 	 * @since Kunena

@@ -148,7 +148,8 @@ class KunenaImage extends KunenaCompatImage
 		else
 		{
 			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
-				$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+                $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight())
+            );
 		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.

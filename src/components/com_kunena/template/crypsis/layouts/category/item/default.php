@@ -137,10 +137,10 @@ $this->addStyleSheet('assets/css/rating.css');
 								?>
 								<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
 							<?php endif; ?>
-					<?php endif; ?>
-				</div>
-			</td>
-		</tr>
+						<?php endif; ?>
+					</div>
+				</td>
+			</tr>
 		<?php else:
 			echo JText::_('COM_KUNENA_VIEW_NO_TOPICS');
 		endif; ?>

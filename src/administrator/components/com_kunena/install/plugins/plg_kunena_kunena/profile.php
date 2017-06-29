@@ -159,7 +159,7 @@ class KunenaProfileKunena extends KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		$avatartab = '&avatartab=1';
-		
+
 		return $this->getProfileURL($userid, 'edit', $xhtml = true, $avatartab);
 	}
 }

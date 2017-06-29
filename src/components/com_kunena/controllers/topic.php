@@ -1074,7 +1074,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if ($type == 'thankyou')
 		{
-			try 
+			try
 			{
 				$thankyou->save($this->me);
 			}
@@ -1082,7 +1082,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$this->app->enqueueMessage($e->getMessage());
 				$this->setRedirectBack();
-				
+
 				return;
 			}
 
@@ -1105,19 +1105,19 @@ class KunenaControllerTopic extends KunenaController
 		else
 		{
 			$userid = JFactory::getApplication()->input->getInt('userid', '0');
-			
-			try 
+
+			try
 			{
 				$thankyou->delete($userid);
 			}
-			catch(Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage());
 				$this->setRedirectBack();
-				
+
 				return;
 			}
-			
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 
 			if ($this->config->log_moderation)

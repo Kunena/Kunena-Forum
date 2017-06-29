@@ -65,11 +65,11 @@ class KunenaAvatarKunena extends KunenaAvatar
 			// If avatar does not exist use default image.
 			if ($sizex <= 90)
 			{
-				$avatar =  KunenaConfig::getInstance()->defaultavatarsmall;
+				$avatar = KunenaConfig::getInstance()->defaultavatarsmall;
 			}
 			else
 			{
-				$avatar =  KunenaConfig::getInstance()->defaultavatar;
+				$avatar = KunenaConfig::getInstance()->defaultavatar;
 			}
 
 			// Search from the template.

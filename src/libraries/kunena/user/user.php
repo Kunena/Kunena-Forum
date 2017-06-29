@@ -1054,7 +1054,7 @@ class KunenaUser extends JObject
 		}
 		elseif ($config->rankimages == 2)
 		{
-			return '<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
+			return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 		}
 		elseif ($config->rankimages == 3)
 		{
@@ -1065,7 +1065,7 @@ class KunenaUser extends JObject
 			$height   = $data[1];
 
 			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
-				<span class="ranksusergroups">' . KunenaUser::getUserGroup($this->userid) . '</span>';
+				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 		}
 
 		return $rank;
@@ -1658,30 +1658,30 @@ class KunenaUser extends JObject
 	 */
 	public function socialButton($name, $gray = false)
 	{
-		$social = array ('twitter' => array ('url' => 'https://twitter.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TWITTER' ), 'nourl' => '0' ),
-			'facebook' => array ('url' => 'https://www.facebook.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FACEBOOK' ), 'nourl' => '0' ),
-			'myspace' => array ('url' => 'https://www.myspace.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MYSPACE' ), 'nourl' => '0' ),
-			'linkedin' => array ('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_LINKEDIN' ), 'nourl' => '0' ),
-			'delicious' => array ('url' => 'https://del.icio.us/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DELICIOUS' ), 'nourl' => '0' ),
-			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FRIENDFEED' ), 'nourl' => '0' ),
-			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DIGG' ), 'nourl' => '0' ),
-			'skype' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '1' ),
-			'yim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_YIM' ), 'nourl' => '1' ),
-			'aim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_AIM' ), 'nourl' => '1' ),
-			'google' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '1' ),
-			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MICROSOFT' ), 'nourl' => '1' ),
-			'icq' => array ('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_ICQ' ), 'nourl' => '0' ),
-			'blogspot' => array ('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
-			'flickr' => array ('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
-			'bebo' => array ('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' ),
-			'instagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
-			'qq' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QQ' ), 'nourl' => '1' ),
-			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
-			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),
-			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WECHAT' ), 'nourl' => '1' ),
-			'vk' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '1' ),
-			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '1' ),
-			'apple' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_APPLE' ), 'nourl' => '1' )
+		$social = array ('twitter' => array ('url' => 'https://twitter.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0' ),
+			'facebook' => array ('url' => 'https://www.facebook.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0' ),
+			'myspace' => array ('url' => 'https://www.myspace.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0' ),
+			'linkedin' => array ('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0' ),
+			'delicious' => array ('url' => 'https://del.icio.us/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'), 'nourl' => '0' ),
+			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0' ),
+			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0' ),
+			'skype' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '1' ),
+			'yim' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1' ),
+			'aim' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_AIM'), 'nourl' => '1' ),
+			'google' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1' ),
+			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1' ),
+			'icq' => array ('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0' ),
+			'blogspot' => array ('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0' ),
+			'flickr' => array ('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0' ),
+			'bebo' => array ('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0' ),
+			'instagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0' ),
+			'qq' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QQ'), 'nourl' => '1' ),
+			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1' ),
+			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1' ),
+			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1' ),
+			'vk' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '1' ),
+			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '1' ),
+			'apple' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1' )
 		);
 
 		if (!isset($social [$name]))

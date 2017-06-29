@@ -711,7 +711,8 @@ class KunenaUserBan extends JObject
 	 */
 	public function save($updateOnly = false)
 	{
-		try {
+		try
+		{
 			$this->canBan();
 		}
 		catch (Exception $e)

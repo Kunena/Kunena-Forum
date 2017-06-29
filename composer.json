@@ -10,9 +10,9 @@
         "joomla-projects/joomla-browser": "dev-master",
         "codegyre/robo": "~0.5",
         "joomla-projects/robo": "dev-master",
-        "joomla-projects/selenium-server-standalone": "v2.53.1",
+        "joomla-projects/selenium-server-standalone": "dev-master",
         "fzaninotto/faker": "^1.5",
-        "joomla-projects/jorobo": "0.3",
+        "joomla-projects/jorobo": "0.4",
         "Behat/Gherkin": "^4.4.1",
         "phing/phing": "2.*"
     }

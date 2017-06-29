@@ -105,7 +105,7 @@ if (!empty($this->spacing)) : ?>
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory(), null, $this->topic->getCategory()->description, KunenaTemplate::getInstance()->tooltips())) ?></span>
 			<?php if ($config->post_dateformat != 'none') : ?>
 			<br />
-			<?php echo JText::_('COM_KUNENA_POSTED')?>
+			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<?php endif; ?>
 			<div class="pull-right hidden-phone">

@@ -102,7 +102,7 @@ if ($topic->moved_id > 0)
 		<div class="hidden-phone">
 		    <span class="ktopic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,KunenaTemplate::getInstance()->tooltips())); ?></span>
             <br>
-            <?php echo JText::_('COM_KUNENA_POSTED')?>
+            <?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
 			<?php if ($config->post_dateformat != 'none') : ?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> 
 			<?php echo JText::_('COM_KUNENA_BY') ?>

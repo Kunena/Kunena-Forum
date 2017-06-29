@@ -141,7 +141,9 @@ $this->addStyleSheet('assets/css/rating.css');
 				</div>
 			</td>
 		</tr>
-		<?php endif; ?>
+		<?php else: 
+			echo JText::_('COM_KUNENA_VIEW_NO_TOPICS');
+		endif; ?>
 		</tfoot>
 		<?php endif; ?>
 	</table>

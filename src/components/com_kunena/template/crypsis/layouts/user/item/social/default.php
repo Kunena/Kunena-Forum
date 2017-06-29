@@ -67,7 +67,22 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 	<?php if (!empty($this->profile->blogspot)) : ?>
 		<?php echo $this->profile->socialButton('blogspot', $showAll); ?>
 	<?php endif; ?>
-	<?php if (!empty($this->profile->flicker)) : ?>
+	<?php if (!empty($this->profile->flickr)) : ?>
 	<?php echo $this->profile->socialButton('flickr', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->friendfeed)) : ?>
+		<?php echo $this->profile->socialButton('friendfeed', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->digg)) : ?>
+		<?php echo $this->profile->socialButton('digg', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->bebo)) : ?>
+		<?php echo $this->profile->socialButton('bebo', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->aim)) : ?>
+		<?php echo $this->profile->socialButton('aim', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->yim)) : ?>
+		<?php echo $this->profile->socialButton('yim', $showAll); ?>
 	<?php endif; ?>
 </div>

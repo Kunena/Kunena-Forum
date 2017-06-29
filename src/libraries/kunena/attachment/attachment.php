@@ -237,7 +237,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 
 			$url = ($thumb ? $fileThumb : $file);
-
+			
+			if (JFactory::getApplication()->isClient('administrator'))
+			{
+				$url = $url;
+			}
+			else
+			{
+				$url = JURI::base() . $url;
+			}
+			
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;
 		}
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f383ee96d20adcde4be97ba911466cd0",
+    "content-hash": "7b129a158b656e68dd183536496c2ac6",
     "packages": [],
     "packages-dev": [
         {
@@ -918,20 +918,20 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2016-05-21T13:48:02+00:00"
+            "time": "2016-05-21 13:48:02"
         },
         {
             "name": "joomla-projects/jorobo",
-            "version": "0.4",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/jorobo.git",
-                "reference": "6f815a48d75418023c4de5cd79a8f1eb7150ee31"
+                "reference": "9d52b9f0d8b6b22f0574e40166fd6ebee479ab56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/jorobo/zipball/6f815a48d75418023c4de5cd79a8f1eb7150ee31",
-                "reference": "6f815a48d75418023c4de5cd79a8f1eb7150ee31",
+                "url": "https://api.github.com/repos/joomla-projects/jorobo/zipball/9d52b9f0d8b6b22f0574e40166fd6ebee479ab56",
+                "reference": "9d52b9f0d8b6b22f0574e40166fd6ebee479ab56",
                 "shasum": ""
             },
             "require": {
@@ -971,7 +971,7 @@
                 }
             ],
             "description": "Tools and Tasks based on Robo.li for Joomla Extension Development and Releases",
-            "time": "2016-04-14T17:32:12+00:00"
+            "time": "2016-03-14T14:51:42+00:00"
         },
         {
             "name": "joomla-projects/robo",
@@ -1013,7 +1013,7 @@
                 "task"
             ],
             "abandoned": "joomla-projects/joomla-testing-robo",
-            "time": "2015-08-07T16:24:43+00:00"
+            "time": "2015-08-07 16:24:43"
         },
         {
             "name": "joomla-projects/selenium-server-standalone",
@@ -1058,7 +1058,7 @@
                 "selenium",
                 "testing"
             ],
-            "time": "2017-06-19T14:19:03+00:00"
+            "time": "2017-06-19 14:19:03"
         },
         {
             "name": "joomla/compat",

@@ -12,7 +12,7 @@
         "joomla-projects/robo": "dev-master",
         "joomla-projects/selenium-server-standalone": "dev-master",
         "fzaninotto/faker": "^1.5",
-        "joomla-projects/jorobo": "0.4",
+        "joomla-projects/jorobo": "0.3",
         "Behat/Gherkin": "^4.4.1",
         "phing/phing": "2.*"
     }

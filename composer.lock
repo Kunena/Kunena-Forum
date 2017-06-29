@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b129a158b656e68dd183536496c2ac6",
+    "content-hash": "eef42a61acb7656adc647b03c276a57d",
     "packages": [],
     "packages-dev": [
         {
@@ -1017,36 +1017,27 @@
         },
         {
             "name": "joomla-projects/selenium-server-standalone",
-            "version": "dev-master",
+            "version": "v2.53.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/selenium-server-standalone.git",
-                "reference": "49f4a39ce2c03eb2cf809d64fbaf12ab1d623dc3"
+                "reference": "fab76103f3b2eaf95c8cf80b007fef8b3cad9da0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/49f4a39ce2c03eb2cf809d64fbaf12ab1d623dc3",
-                "reference": "49f4a39ce2c03eb2cf809d64fbaf12ab1d623dc3",
+                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/fab76103f3b2eaf95c8cf80b007fef8b3cad9da0",
+                "reference": "fab76103f3b2eaf95c8cf80b007fef8b3cad9da0",
                 "shasum": ""
             },
             "bin": [
                 "bin/selenium-server-standalone"
             ],
             "type": "library",
-            "autoload": {
-                "files": [
-                    "Selenium.php"
-                ]
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache 2.0"
             ],
             "authors": [
-                {
-                    "name": "Sven Eisenschmidt",
-                    "email": "sven.eisenschmidt@gmail.com"
-                },
                 {
                     "name": "Javier Gómez",
                     "email": "javier.gomez@community.joomla.org"
@@ -1058,7 +1049,7 @@
                 "selenium",
                 "testing"
             ],
-            "time": "2017-06-19 14:19:03"
+            "time": "2016-09-06T16:32:04+00:00"
         },
         {
             "name": "joomla/compat",
@@ -4352,8 +4343,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "joomla-projects/joomla-browser": 20,
-        "joomla-projects/robo": 20,
-        "joomla-projects/selenium-server-standalone": 20
+        "joomla-projects/robo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

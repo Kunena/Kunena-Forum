@@ -85,10 +85,10 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 ?>
 <script>
-var wbbOpt = {
-	lang : 	 "kunena"
+	var wbbOpt = {
+		lang: "kunena"
 	};
-jQuery(function ($) {
+	jQuery(function ($) {
 		$("#editor").wysibb();
 	})
 </script>
@@ -97,7 +97,15 @@ jQuery(function ($) {
 	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
 	<div class="controls">
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7"
-		          required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		          required="required"
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id)
+			{
+				echo $this->message->getCategory()->topictemplate;
+			}
+			else
+			{
+				echo $this->escape($this->message->message);
+			} ?></textarea>
 	</div>
 </div>
 

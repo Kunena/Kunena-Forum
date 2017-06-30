@@ -739,6 +739,12 @@
 		         versionname="Internal">
 			<phpfile name="5.0.5-2016-12-20_userlist"/>
 		</version>
+		<version version="5.1.0-ALPHA2"
+		         versiondate="2017-06-30"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topictemplate` MEDIUMINT NOT NULL;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY COLUMN `topictemplate` MEDIUMINT NOT NULL AFTER `headerdesc`;</query>
+		</version>
 		<version version="@kunenaversion@"
 		         versiondate="@kunenaversiondate@"
 		         versionname="@kunenaversionname@">

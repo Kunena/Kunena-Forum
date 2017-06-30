@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`hits` int(11) NOT NULL default '0',
 	`description` text NOT NULL,
 	`headerdesc` text NOT NULL,
+	`topictemplate` text NOT NULL,
 	`class_sfx` varchar(20) NOT NULL,
 	`allow_polls` tinyint(4) NOT NULL default '0',
 	`topic_ordering` varchar(16) NOT NULL default 'lastpost',

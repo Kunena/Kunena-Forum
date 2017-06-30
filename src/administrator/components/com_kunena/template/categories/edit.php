@@ -146,6 +146,13 @@ JFactory::getDocument()->addScript(JUri::root() . 'administrator\components\com_
 														          style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 													</td>
 												</tr>
+												<tr>
+													<td><?php echo JText::_('Topic Template'); ?></td>
+													<td>
+														<textarea class="inputbox" cols="50" rows="6" name="topictemplate" id="topictemplate"
+														          style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
+													</td>
+												</tr>
 											</table>
 										</fieldset>
 									</div>

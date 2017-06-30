@@ -46,6 +46,7 @@ defined('_JEXEC') or die();
  * @property int    $last_post_id
  * @property int    $last_post_time
  * @property string $params
+ * @property string $topictemplate
  * @since Kunena
  */
 class KunenaForumCategory extends KunenaDatabaseObject
@@ -432,6 +433,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			case 'icon':
 				return KunenaHtmlParser::parseText($this->name);
 			case 'description':
+			case 'topictemplate':
 			case 'headerdesc':
 				return KunenaHtmlParser::parseBBCode($this->$field);
 		}

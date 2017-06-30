@@ -39,7 +39,11 @@ $this->getBBcodesEnabled();
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->time) {
+				echo $this->message->getCategory()->topictemplate;
+			} else {
+				echo $this->escape($this->message->message);
+			} ?></textarea>
 	</div>
 
 	<!-- Hidden preview placeholder -->

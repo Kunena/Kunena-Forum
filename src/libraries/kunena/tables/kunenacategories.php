@@ -224,6 +224,12 @@ class TableKunenaCategories extends KunenaTable
 	public $params = null;
 
 	/**
+	 * @var null
+	 * @since Kunena 5.1.0
+	 */
+	public $topictemplate = null;
+
+	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena

@@ -22,7 +22,7 @@ $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
 $config = KunenaFactory::getConfig();
-$avatar = $config->avataroncat ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'rounded') : null;
+$avatar = $config->avataroncat ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'posts') : null;
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 $userTopic = $topic->getUserTopic();

@@ -278,6 +278,9 @@ class KunenaControllerUser extends KunenaController
 		{
 			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
+			
+			// Send report to stopforumspam
+			$this->report($user->userid);
 		}
 		else
 		{
@@ -1318,29 +1321,20 @@ class KunenaControllerUser extends KunenaController
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
 		$ip = $db->loadResult();
 
-		// TODO: replace this code by using JHttpTransport class
+		// Check if mail adress is valid before to send the report
+		
+		$options = new JRegistry;
+		
+		$transport = new JHttpTransportStream($options);
+		
+		// Create a 'stream' transport.
+		$http = new JHttp($options, $transport);
+		
 		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
-		$fp   = fsockopen("www.stopforumspam.com", 80);
-		fputs($fp, "POST /add.php HTTP/1.1\n");
-		fputs($fp, "Host: www.stopforumspam.com\n");
-		fputs($fp, "Content-type: application/x-www-form-urlencoded\n");
-		fputs($fp, "Content-length: " . strlen($data) . "\n");
-		fputs($fp, "Connection: close\n\n");
-		fputs($fp, $data);
-
-		// Create a buffer which holds the response
-		$response = '';
-
-		// Read the response
-		while (!feof($fp))
-		{
-			$response .= fread($fp, 1024);
-		}
-
-		// The file pointer is no longer needed. Close it
-		fclose($fp);
-
-		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		
+		$response = $http->put('http://api.stopforumspam.org/api', $data);
+		
+		if ($response->code == '200')
 		{
 			// Report accepted. There is no need to display the reason
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));

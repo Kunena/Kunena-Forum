@@ -1237,6 +1237,12 @@ class KunenaConfig extends JObject
 	public $defaultavatarsmall = 's_nophoto.png';
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $stopforumspam_key = '';
+	
+	/**
 	 *
 	 * @since Kunena
 	 */

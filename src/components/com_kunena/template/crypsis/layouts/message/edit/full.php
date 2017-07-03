@@ -125,7 +125,7 @@ $editor   = $template->params->get('editor');
 				}
 				else
 				{
-					echo '<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="span12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
 			</div>
 

@@ -13,13 +13,13 @@
 var previewActive = false;
 
 function kPreviewHelper(previewActive) {
-	if (jQuery('#kbbcode-message').val() != null) {
+	if (jQuery('#editor').val() != null) {
 		jQuery.ajax({
 			type    : 'POST',
 			url     : jQuery('#kpreview_url').val(),
 			async   : false,
 			dataType: 'json',
-			data: {body: jQuery('#kbbcode-message').val()},
+			data: {body: jQuery('#editor').val()},
 			success: function (data) {
 				jQuery('#kbbcode-preview').html(data.preview);
 			}
@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		var preview = $("#kbbcode-preview");
-		var message = $("#kbbcode-message");
+		var message = $("#editor");
 
 		preview.css('display', 'block');
 
@@ -49,20 +49,20 @@ jQuery(document).ready(function ($) {
 
 	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
 		$('#kbbcode-preview').hide();
-		$('#kbbcode-message').css('display', 'inline-block');
-		$('#markItUpKbbcode-message').css('display', 'inline-block');
+		$('#editor').css('display', 'inline-block');
+		$('#markItUpeditor').css('display', 'inline-block');
 	});
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
-		$('#kbbcode-message').hide();
-		$('#markItUpKbbcode-message').hide();
+		$('#editor').hide();
+		$('#markItUpeditor').hide();
 	});
 
 	/* To enabled emojis in kunena textera feature like on github */
 	if ($('#kemojis_allowed').val() == 1) {
 		var item = '';
-		if ($('#kbbcode-message').length > 0 && $('.qreply').length == 0) {
-			item = '#kbbcode-message';
+		if ($('#editor').length > 0 && $('.qreply').length == 0) {
+			item = '#editor';
 		}
 		else if ($('.qreply').length > 0) {
 			item = '.qreply';
@@ -125,7 +125,7 @@ jQuery(document).ready(function ($) {
 
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
-		$("#kbbcode-message").attr('required', 'required');
+		$("#editor").attr('required', 'required');
 	});
 
 	// Load topic icons by ajax request

@@ -115,7 +115,7 @@ if ($me->canDoCaptcha())
 				}
 				else
 				{
-					echo '<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="qreply form-control" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
 			</div>
 

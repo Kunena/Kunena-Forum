@@ -1469,10 +1469,10 @@ class KunenaUser extends JObject
 			'delicious' => array ('url' => 'https://del.icio.us/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DELICIOUS' ), 'nourl' => '0' ),
 			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FRIENDFEED' ), 'nourl' => '0' ),
 			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DIGG' ), 'nourl' => '0' ),
-			'skype' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '1' ),
+			'skype' => array ('url' => 'skype:##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '0' ),
 			'yim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_YIM' ), 'nourl' => '1' ),
 			'aim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_AIM' ), 'nourl' => '1' ),
-			'google' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '1' ),
+			'google' => array ('url' => 'https://plus.google.com/+##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '0' ),
 			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MICROSOFT' ), 'nourl' => '1' ),
 			'icq' => array ('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_ICQ' ), 'nourl' => '0' ),
 			'blogspot' => array ('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
@@ -1483,8 +1483,8 @@ class KunenaUser extends JObject
 			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
 			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),
 			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WECHAT' ), 'nourl' => '1' ),
-			'vk' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '1' ),
-			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '1' ),
+			'vk' => array ('url' => 'https://vk.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '0' ),
+			'telegram' => array ('url' => 'https://t.me/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '0' ),
 			'apple' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_APPLE' ), 'nourl' => '1' )
 		);
 

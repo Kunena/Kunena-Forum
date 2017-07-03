@@ -28,12 +28,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', true));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		if ($this->embedded)
 		{

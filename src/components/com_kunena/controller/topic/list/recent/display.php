@@ -28,13 +28,13 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', true));
 		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 		$holding       = $this->getOptions()->get('topics_deletedtopics');
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');

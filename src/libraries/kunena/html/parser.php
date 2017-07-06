@@ -180,17 +180,9 @@ abstract class KunenaHtmlParser
 
 		if (JPluginHelper::isEnabled('content', 'emailcloak'))
 		{
-			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
-			$params = new JRegistry($plugin->params);
-
-			if ($params->get('mode', 1))
-			{
-				$res = substr($txt, 0 ,200);
-
-				if (preg_match('/([\S]+@[\w]+(?:\.[\w]+)+)/i', $res)){
-					return $txt;
-				}
-			}
+			$pattern = "/[^@\s]*@[^@\s]*\.[^@\s]*/";
+			$replacement = ' ';
+			$txt = preg_replace($pattern, $replacement, $txt);
 		}
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);

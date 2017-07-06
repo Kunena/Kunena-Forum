@@ -21,8 +21,8 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'posts');
 $config = KunenaFactory::getConfig();
+$avatar = $config->avataroncat ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'posts') : null;
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 $userTopic = $topic->getUserTopic();
@@ -100,11 +100,14 @@ if ($topic->moved_id > 0)
 			<?php endif; ?>
 		</div>
 		<div class="hidden-phone">
-			<?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+		    <span class="ktopic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,KunenaTemplate::getInstance()->tooltips())); ?></span>
+            <br>
+            <?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
 			<?php if ($config->post_dateformat != 'none') : ?>
-				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
+			<?php echo JText::_('COM_KUNENA_BY') ?>
+            <?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<?php endif; ?>
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,KunenaTemplate::getInstance()->tooltips())); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -127,7 +130,7 @@ if ($topic->moved_id > 0)
 			<div class="row-fluid">
 			<?php if ($config->avataroncat) : ?>
 				<div class="span3">
-					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+					<?php echo $topic->getLastPostAuthor()->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 				</div>
 			<?php endif; ?>
 				<div class="span9">

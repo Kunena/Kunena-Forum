@@ -22,8 +22,8 @@ $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
 $this->ktemplate = KunenaFactory::getTemplate();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage($this->ktemplate->params->get('avatarType'), 'posts');
 $config = KunenaFactory::getConfig();
+$avatar = $config->avataroncat ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'posts') : null;
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 if ($topic->ordering)
@@ -115,7 +115,7 @@ if ($topic->moved_id > 0)
 		<div class="container-fluid">
 			<?php if ($config->avataroncat) : ?>
 				<div class="col-md-3">
-					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+					<?php echo $topic->getLastPostAuthor()->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 				</div>
 			<?php endif; ?>
 				<div class="col-md-9">

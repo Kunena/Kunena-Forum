@@ -33,7 +33,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->me = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		if ($this->embedded)
 		{

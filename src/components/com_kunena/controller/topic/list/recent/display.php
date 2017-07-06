@@ -34,7 +34,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->moreUri = null;
 		$holding       = $this->getOptions()->get('topics_deletedtopics');
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');

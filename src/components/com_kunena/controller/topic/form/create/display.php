@@ -76,7 +76,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->document = JFactory::getDocument();
 		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
-		
+
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 

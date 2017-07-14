@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// TODO: Hide KunenaHtmlParser::parseText()
 $this->addScript('assets/js/poll.js');
 ?>
 

@@ -600,8 +600,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 					}
 					catch (Exception $e)
 					{
-						// TODO: better error message.
-						echo $e->getMessage();
+						echo $e->getMessage($e);
 
 						return false;
 					}

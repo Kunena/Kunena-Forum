@@ -32,7 +32,6 @@ if (empty($this->results))
 <?php
 foreach ($this->results as $message)
 {
-	// TODO: use the default message layout...
 	echo $this->subLayout('Search/Results/Row')->set('message', $message);
 }
 ?>

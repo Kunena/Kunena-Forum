@@ -423,7 +423,6 @@ abstract class KunenaRoute
 	 */
 	public static function cacheLoad()
 	{
-		// FIXME: Experimental caching.
 		if (!KunenaConfig::getInstance()->get('cache_url'))
 		{
 			return;
@@ -450,7 +449,6 @@ abstract class KunenaRoute
 	 */
 	public static function cacheStore()
 	{
-		// FIXME: Experimental caching.
 		if (!KunenaConfig::getInstance()->get('cache_url'))
 		{
 			return;

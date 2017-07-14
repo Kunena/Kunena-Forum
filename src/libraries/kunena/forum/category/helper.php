@@ -44,9 +44,6 @@ abstract class KunenaForumCategoryHelper
 
 		if (KunenaConfig::getInstance()->get('cache_cat'))
 		{
-			// FIXME: Experimental caching.
-			// @var JCache|JCacheControllerCallback $cache
-
 			$cache = JFactory::getCache('com_kunena', 'callback');
 			$cache->setLifeTime(180);
 			self::$_instances = $cache->call(array('KunenaForumCategoryHelper', 'loadCategories'));

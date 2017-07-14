@@ -110,7 +110,6 @@ $this->addStyleSheet('assets/css/rating.css');
 						<span class="divider"></span>
 						<?php echo KunenaIcons::arrowup(); ?>
 					</a>
-					<?php // FIXME: $this->displayCategoryActions() ?>
 				</td>
 				<td colspan="6" class="hidden-xs">
 					<div class="form-group">

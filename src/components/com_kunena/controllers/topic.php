@@ -439,7 +439,6 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Remove IP address
-		// TODO: Add administrator tool to remove all tracked IP addresses (from the database)
 		if (!$this->config->iptracking)
 		{
 			$message->ip = '';

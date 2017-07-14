@@ -1627,8 +1627,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$categories[$this->id] = $this;
 
-		// TODO: support channels
-		// $categories += $this->getChannels();
+		$categories += $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 
 		foreach ($categories as $category)

@@ -103,7 +103,6 @@ $view    = JFactory::getApplication()->input->getWord('view');
 					<a href="#forumtop" rel="nofollow">
 						<?php echo KunenaIcons::arrowup(); ?>
 					</a>
-					<?php // FIXME: $this->displayCategoryActions() ?>
 				</td>
 				<td colspan="<?php echo $colspan; ?>">
 					<div class="form-group">

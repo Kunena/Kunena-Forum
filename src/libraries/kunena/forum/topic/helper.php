@@ -420,7 +420,6 @@ abstract class KunenaForumTopicHelper
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
 
 		// TODO: delete attachments
-		// TODO: delete keywords
 		// Delete topics
 		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
 

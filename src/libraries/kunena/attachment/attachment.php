@@ -238,7 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			$url = ($thumb ? $fileThumb : $file);
 			
-			if (JFactory::getApplication()->isClient('administrator'))
+			if (JFactory::getApplication()->isAdmin())
 			{
 				$url = $url;
 			}

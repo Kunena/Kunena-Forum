@@ -1650,13 +1650,12 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $name
-	 * @param   bool   $gray
+	 * Get list of social buttons
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public function socialButton($name, $gray = false)
+	public function socialButtons()
 	{
 		$social = array ('twitter' => array ('url' => 'https://twitter.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0' ),
 			'facebook' => array ('url' => 'https://www.facebook.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0' ),
@@ -1681,8 +1680,24 @@ class KunenaUser extends JObject
 			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1' ),
 			'vk' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '1' ),
 			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '1' ),
-			'apple' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1' )
+			'apple' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1' ),
+			'whatsapp' => array ('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1' )
 		);
+		
+		return $social;
+	}
+	
+	/**
+	 * Prepare social buttons for the template
+	 * 
+	 * @param   string $name
+	 * @param   bool   $gray
+	 *
+	 * @return string
+	 */
+	public function socialButtonsTemplate($name, $gray = false)
+	{
+		$social = $this->socialButtons();
 
 		if (!isset($social [$name]))
 		{
@@ -1693,6 +1708,8 @@ class KunenaUser extends JObject
 		$value = $this->escape($this->$name);
 		$url   = strtr($social [$name] ['url'], array('##VALUE##' => $value));
 
+		// TODO : move this part in a template
+		
 		if ($social [$name] ['nourl'] == '0')
 		{
 			if (!empty($this->$name))

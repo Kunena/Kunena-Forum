@@ -103,9 +103,8 @@ class KunenaAdminViewUser extends KunenaView
 		$this->selectOrder = JHtml::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');
-		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
-			'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
-			'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'telegram');
+		$this->social = $this->user->socialButtons();
+		$this->social = Joomla\Utilities\ArrayHelper::toObject($this->social);
 		$this->display();
 	}
 

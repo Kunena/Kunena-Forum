@@ -3,16 +3,28 @@
     "description": "Kunena forum for joomla",
     "license"    : "GPL-3.0",
     "require"    : {
-        "php": ">=5.5.13"
+        "php": ">=7.0.0"
     },
     "require-dev": {
+        "consolidation/robo" : "~1",
+        "squizlabs/php_codesniffer": "~2",
         "codeception/codeception": "~2.2",
-        "joomla-projects/joomla-browser": "v3.6.5.1",
+        "joomla-projects/joomla-browser": "dev-container-test",
         "joomla-projects/selenium-server-standalone": "dev-master",
-        "codegyre/robo": "~0.6",
-        "joomla-projects/robo": "dev-master",
-        "fzaninotto/faker": "^1.5",
-        "joomla-projects/jorobo": "0.6.4",
-        "phing/phing": "2.*"
-    }
+        "joomla-projects/joomla-testing-robo": "dev-container-test",
+        "Behat/Gherkin": "^4.4.5",
+        "phing/phing": "2.*",
+        "codeception/specify": "*",
+        "codeception/verify": "*",
+        "pdepend/pdepend": "*",
+        "phploc/phploc": "*",
+        "phpmd/phpmd": "*",
+        "phpseclib/phpseclib": "*",
+        "sebastian/phpcpd": "*",
+        "symfony/dependency-injection": "*",
+        "symfony/http-kernel": "*",
+        "symfony/phpunit-bridge": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

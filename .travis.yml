@@ -1,22 +1,15 @@
 language: php
+dist: trusty
 php:
-- 5.6
 - 7.0
 - 7.1
 addons:
-  firefox: "47.0.1"
+  firefox: "53.0.3"
 before_script:
 - sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts
 - sudo apt-get update -qq
 - sudo apt-get install -y --force-yes apache2 libapache2-mod-fastcgi php5-curl php5-mysql php5-intl php5-gd > /dev/null
 - sudo mkdir $(pwd)/.run
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,listen = 127.0.0.1:9000,listen = /tmp/php5-fpm.sock,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,;listen.owner = nobody,listen.owner = $USER,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,;listen.group = nobody,listen.group = $USER,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,;listen.mode = 0660,listen.mode = 0666,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,user = nobody,;user = $USER,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.*" ]]; then sudo sed -e "s,group = nobody,;group = $USER,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
 - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
 - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf; fi
 - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then sudo sed -e "s,listen = 127.0.0.1:9000,listen = /tmp/php5-fpm.sock,g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf; fi
@@ -37,25 +30,33 @@ before_script:
 - sudo a2enmod rewrite actions fastcgi alias
 - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-- sudo cp -f tests/travis-ci-apache.conf /etc/apache2/sites-available/default
+- sudo cp -f tests/codeception/travis-ci-apache.conf /etc/apache2/sites-available/default
 - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
 - git submodule update --init --recursive
 - sudo service apache2 restart
+
 # Xvfb
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 1 # give xvfb some time to start
+
 # Fluxbox
 - sudo apt-get install fluxbox -y --force-yes
 - fluxbox &
 - sleep 1 # give fluxbox some time to start
+
+# Install Chrome
+- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome*.deb
+- export CHROME_BIN=/usr/bin/google-chrome
+
 # Composer
 - composer install
-- git clone -b master https://github.com/joomla/coding-standards.git Joomla
-# vendor/bin/robo run:checker phpcs
+- git clone -b master --single-branch --depth 1 https://github.com/Kunena/Codestyle.git vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Kunena
+- vendor/bin/robo check:codestyle vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Kunena
 
 script:
 # Build
 - vendor/bin/phing -f build/phing/build.xml
-- mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
+- mv tests/codeception/acceptance.suite.dist.yml tests/codeception/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess

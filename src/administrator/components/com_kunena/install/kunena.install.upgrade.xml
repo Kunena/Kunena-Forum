@@ -744,6 +744,11 @@
 		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topictemplate` MEDIUMTEXT NOT NULL;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY COLUMN `topictemplate` MEDIUMTEXT NOT NULL AFTER `headerdesc`;</query>
+    </version>
+    <version version="5.1.0-ALPHA3"
+		         versiondate="2017-07-16"
+		         versionname="Internal">     
+      <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `whatsapp` VARCHAR(25) NULL AFTER `qzone`;</query>
 		</version>
 		<version version="@kunenaversion@"
 		         versiondate="@kunenaversiondate@"

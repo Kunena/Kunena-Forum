@@ -305,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`flickr` varchar(50) NULL,
 	`apple` varchar(50) NULL,
 	`qzone` varchar(50) NULL,
+	`whatsapp` varchar(25) NULL,
 	`weibo` varchar(50) NULL,
 	`wechat` varchar(50) NULL,
 	`yim` varchar(50) NULL,

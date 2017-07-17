@@ -18,7 +18,6 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
 
-$db       = JFactory::getDBO();
 $document = JFactory::getDocument();
 $document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxsig . '
@@ -210,20 +209,20 @@ jQuery(function($) {
 												</tr>
 
 												<?php if ($this->config->social) : ?>
-													<?php foreach ($this->social as $social) : ?>
+													<?php foreach ($this->social as $key => $social) : ?>
 														<tr>
 															<td>
-																<label for="social-<?php echo $social; ?>">
-																	<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $social); ?>
+																<label for="social-<?php echo $key; ?>">
+																	<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $key); ?>
 																</label>
 															</td>
 															<td>
-																<?php if ($social != 'qq') : ?>
-																<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
-																	. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>">
+																<?php if ($key != 'qq') : ?>
+																<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
+																. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																<?php endif; ?>
-																	<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
-																	       value="<?php echo $this->escape($this->user->$social); ?>"/>
+																	<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
+																	       value="<?php echo $this->escape($this->user->$key); ?>"/>
 																</span>
 															</td>
 														</tr>

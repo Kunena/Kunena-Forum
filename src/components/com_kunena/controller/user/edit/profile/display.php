@@ -52,7 +52,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 		{
 			$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
 				'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
-				'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'telegram');
+				'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'whatsapp', 'telegram');
 		}
 		else
 		{

@@ -112,3 +112,8 @@ selenium-server-standalone.jar
 codecept.phar
 selenium.log
 tests/cache
+
+tests/codeception/kunena*
+tests/codeception/_output*
+tests/codeception/cache
+tests/codeception/vendor*

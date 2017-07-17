@@ -401,6 +401,7 @@ class KunenaControllerUser extends KunenaController
 			$user->instagram    = '';
 			$user->qq           = '';
 			$user->qzone        = '';
+			$user->whatsapp     = '';
 			$user->weibo        = '';
 			$user->wechat       = '';
 			$user->apple        = '';

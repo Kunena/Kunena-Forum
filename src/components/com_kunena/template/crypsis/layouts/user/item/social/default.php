@@ -82,6 +82,9 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 	<?php if (!empty($this->profile->aim)) : ?>
 		<?php echo $this->profile->socialButton('aim', $showAll); ?>
 	<?php endif; ?>
+	<?php if (!empty($this->profile->whatsapp)) : ?>
+		<?php echo $this->profile->socialButton('whatsapp', $showAll); ?>
+	<?php endif; ?>
 	<?php if (!empty($this->profile->yim)) : ?>
 		<?php echo $this->profile->socialButton('yim', $showAll); ?>
 	<?php endif; ?>

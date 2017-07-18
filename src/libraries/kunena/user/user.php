@@ -1688,6 +1688,19 @@ class KunenaUser extends JObject
 	}
 	
 	/**
+	 * Legacy method to prepare social buttons for the template
+	 * 
+	 * @param   string $name
+	 * @param   bool   $gray
+	 * 
+	 * @deprecated 5.1.0
+	 */
+	public function socialButton($name, $gray = false)
+	{
+		$this->socialButtonsTemplate($name, $gray = false);
+	}
+	
+	/**
 	 * Prepare social buttons for the template
 	 * 
 	 * @param   string $name

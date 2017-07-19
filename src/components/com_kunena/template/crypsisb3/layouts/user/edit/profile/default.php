@@ -106,20 +106,20 @@ $this->addScript('assets/js/profile.js');
 	</tr>
 
 	<?php if ($this->config->social) : ?>
-		<?php foreach ($this->social as $social) : ?>
+		<?php foreach ($this->social as $key => $social) : ?>
 		<tr>
 			<td>
-				<label for="social-<?php echo $social; ?>">
-					<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $social); ?>
+				<label for="social-<?php echo $key; ?>">
+					<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $key); ?>
 				</label>
 			</td>
 			<td>
 				<?php if ($social != 'qq') :?>
-				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
-					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>" >
+				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
+				. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>" >
 				<?php endif; ?>
-					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>" class="form-control"
-					       value="<?php echo $this->escape($this->profile->$social); ?>" />
+					<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $social ?>" class="form-control"
+					       value="<?php echo $this->escape($this->profile->$key); ?>" />
 				</span>
 			</td>
 		</tr>

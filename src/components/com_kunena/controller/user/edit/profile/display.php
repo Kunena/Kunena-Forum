@@ -50,9 +50,8 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 
 		if ($config->social)
 		{
-			$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
-				'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
-				'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'whatsapp', 'telegram');
+			$this->social = $this->profile->socialButtons();
+			$this->social = Joomla\Utilities\ArrayHelper::toObject($this->social);
 		}
 		else
 		{

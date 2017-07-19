@@ -58,9 +58,8 @@ if ($attachment->isImage())
 else
 {
 	?>
-	<a href="<?php echo $name; ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<i class="large-kicon icon-file"></i>
+	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		<?php echo KunenaIcons::file(); ?>
 	</a>
 	<?php
 }

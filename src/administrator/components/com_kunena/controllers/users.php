@@ -154,6 +154,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
 			$user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
 			$user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+			$user->whatsapp    = trim(JFactory::getApplication()->input->getString('whatsapp', ''));
 			$user->websitename = JFactory::getApplication()->input->getString('websitename', '');
 			$user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
 			$user->hideEmail   = JFactory::getApplication()->input->getString('hidemail');
@@ -276,6 +277,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
 			$user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
 			$user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+			$user->whatsapp    = trim(JFactory::getApplication()->input->getString('whatsapp', ''));
 			$user->websitename = JFactory::getApplication()->input->getString('websitename', '');
 			$user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
 			$user->hideEmail   = JFactory::getApplication()->input->getString('hidemail');

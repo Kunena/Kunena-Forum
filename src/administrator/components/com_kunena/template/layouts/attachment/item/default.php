@@ -14,14 +14,25 @@ defined('_JEXEC') or die();
 $attachment = $this->attachment;
 $config     = KunenaFactory::getConfig();
 
+if ($config->attachment_protection)
+{
+	$url = $attachment->getUrl(true);
+	$src = $attachment->getUrl();
+}
+else
+{
+	$url = JUri::root() . $attachment->getUrl();
+	$src = $url;
+}
+
 if ($config->access_component)
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+	<a href="<?php echo $url; ?>" title="<?php echo $attachment->getFilename(); ?>">
 		<?php
 		if ($attachment->isImage())
 		{
-			echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';
+			echo '<img src="' . $src . ' " height="40" width="40" />';
 		}
 		else
 		{

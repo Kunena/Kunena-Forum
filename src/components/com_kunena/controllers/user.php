@@ -942,6 +942,7 @@ class KunenaControllerUser extends KunenaController
 		$this->user->wechat      = trim(JFactory::getApplication()->input->getString('wechat', ''));
 		$this->user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
 		$this->user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
+		$this->user->whatsapp    = trim(JFactory::getApplication()->input->getString('whatsapp', ''));
 		$this->user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
 		$this->user->websitename = JFactory::getApplication()->input->getString('websitename', '');
 		$this->user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');

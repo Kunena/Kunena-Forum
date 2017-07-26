@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
-$location   = JUri::root() . $attachment->getUrl();
+$location   = $attachment->getUrl();
 
 if (!$attachment->isVideo())
 {

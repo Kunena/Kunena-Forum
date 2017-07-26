@@ -13,8 +13,6 @@ defined('_JEXEC') or die();
 
 $this->addScript('assets/js/jquery.wysibb.min.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
-$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');

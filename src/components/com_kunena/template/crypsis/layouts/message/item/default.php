@@ -85,14 +85,14 @@ $list = array();
 </div>
 <?php if (!empty($attachments)) : ?>
 	<div class="kattach">
-		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<h5 style="display: none;"> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
 			<?php foreach ($attachments as $attachment) : ?>
-				<?php if ($attachment->isAudio()) :
+				<?php if ($attachment->isAudio() && !$attachment->inline) :
 					echo $attachment->getLayout()->render('audio'); ?>
-				<?php elseif ($attachment->isVideo()) :
+				<?php elseif ($attachment->isVideo() && !$attachment->inline) :
 					echo $attachment->getLayout()->render('video'); ?>
-				<?php else : ?>
+				<?php elseif (!$attachment->inline) : ?>
 				<li class="span3 center">
 					<div
 						class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>

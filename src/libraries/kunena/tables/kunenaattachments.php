@@ -86,6 +86,12 @@ class TableKunenaAttachments extends KunenaTable
 	public $comment = null;
 
 	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $inline = null;
+
+	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena

@@ -214,6 +214,7 @@ class KunenaControllerTopic extends KunenaController
 						'filename'      => null,
 						'filename_real' => $response->filename,
 						'caption'       => $caption,
+						'inline'        => null,
 					)
 				);
 
@@ -259,6 +260,7 @@ class KunenaControllerTopic extends KunenaController
 				$response->size     = $attachment->size;
 				$response->mime     = $attachment->filetype;
 				$response->filename = $attachment->filename_real;
+				$response->inline   = $attachment->inline;
 			}
 		}
 

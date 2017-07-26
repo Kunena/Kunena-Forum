@@ -24,6 +24,7 @@ defined('_JEXEC') or die();
  * @property string $filename
  * @property string $filename_real
  * @property string $caption
+ * @property int    $inline
  *
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
@@ -616,6 +617,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			$this->filename      = $fileInput['name'];
 			$this->filename_real = $uploadBasePath . $fileNameWithExt;
 			$this->caption       = '';
+			$this->inline        = 0;
 
 			return true;
 		}

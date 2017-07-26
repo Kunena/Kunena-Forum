@@ -114,6 +114,10 @@
 		       type="varchar(255)"
 		       null="0"
 		       default=""/>
+		<field name="inline"
+		       type="tinyint(4)"
+		       null="0"
+		       default="0"/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="id"/>

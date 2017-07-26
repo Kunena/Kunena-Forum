@@ -311,7 +311,7 @@ a:focus,
 	position      : absolute;
 	top           : 0;
 	font-weight   : bold;
-	padding       : 8px 12px;
+	padding       : 8px 12px !important;
 	border-right  : 1px solid #ddd;
 	border-bottom : 1px solid #ddd;
 }
@@ -545,6 +545,11 @@ table .well {
 	background-color : rgba(229, 229, 229, 0.4);
 	box-shadow       : 0 1px 3px rgba(0, 0, 0, 0.1);
 	min-height       : 110px;
+}
+
+.profile-horizontal-top .topic-starter,
+.profile-horizontal-bottom .topic-starter {
+	border: none;
 }
 
 .table .pagination {
@@ -1139,7 +1144,7 @@ div.krating > label:active {
 }
 
 [class*="badger"]::after {
-    padding: 0 !important;
+    padding: 0;
     border-right: none !important;
     border-bottom: none !important;
 }

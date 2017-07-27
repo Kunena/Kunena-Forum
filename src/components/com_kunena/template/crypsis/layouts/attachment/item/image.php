@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
-$location = JUri::root() . $attachment->getUrl();
+$location = $attachment->getUrl();
 $data = getimagesize($location);
 $width = $data[0];
 $height = $data[1];

@@ -1,26 +1,38 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Layouts.Attachment
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Layouts.Attachment
  *
- * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2017 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAttachment $attachment
 $attachment = $this->attachment;
-$config = KunenaFactory::getConfig();
+$config     = KunenaFactory::getConfig();
+
+if ($config->attachment_protection)
+{
+	$url = $attachment->getUrl(true);
+	$src = $attachment->getUrl();
+}
+else
+{
+	$url = JUri::root() . $attachment->getUrl();
+	$src = $url;
+}
 
 if ($config->access_component)
 {
 	?>
-	<a href="<?php echo JUri::root() . $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
-		<?php if ($attachment->isImage())
+	<a href="<?php echo $url; ?>" title="<?php echo $attachment->getFilename(); ?>">
+		<?php
+		if ($attachment->isImage())
 		{
-			echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';
+			echo '<img src="' . $src . ' " height="40" width="40" />';
 		}
 		else
 		{

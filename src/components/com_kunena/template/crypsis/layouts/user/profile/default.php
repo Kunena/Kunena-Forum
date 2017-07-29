@@ -152,7 +152,7 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->email && !$user->hideEmail) :?>
+				<?php if (KunenaUser::getInstance()->getEmail($user)) :?>
 					<li>
 						<?php echo $user->profileIcon('email'); ?>
 					</li>

@@ -57,6 +57,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options          = array();
 		$options[]        = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[]        = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$options[]        = JHtml::_('select.option', 2, JText::_('COM_KUNENA_A_ONLY_REGISTERED'));
 		$item->field      = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->hideEmail), 'khidemail'
 		);

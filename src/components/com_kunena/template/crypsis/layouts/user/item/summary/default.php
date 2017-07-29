@@ -23,7 +23,6 @@ $websiteURL          = $profile->getWebsiteURL();
 $websiteName         = $profile->getWebsiteName();
 $personalText        = $profile->getPersonalText();
 $signature           = $profile->getSignature();
-$email               = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($profile->userid);
 $medals              = $activityIntegration->getUserMedals($profile->userid);
@@ -168,7 +167,7 @@ if ($this->config->showuserstats)
 							<?php if ($private) : ?>
 								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
-							<?php if ($email) : ?>
+							<?php if (KunenaUser::getInstance()->getEmail($profile)) : ?>
 								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>

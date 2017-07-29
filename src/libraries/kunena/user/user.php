@@ -1273,6 +1273,41 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Show email address if current user has permissions to see it.
+	 *
+	 * @param $profile
+	 *
+	 * @return string Cloaked email address or empty string.
+	 *
+	 * @since  K5.1
+	 */
+	public function getEmail($profile)
+	{
+		$me     = KunenaUserHelper::getMyself();
+		$config = KunenaConfig::getInstance();
+
+		if ($me->isModerator() || $me->isAdmin())
+		{
+			return true;
+		}
+
+		if ($config->showemail && $profile->email)
+		{
+			if ($profile->hideEmail == 0)
+			{
+				return true;
+			}
+
+			if ($profile->hideEmail == 2 && $me->exists())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get email address if current user has permissions to see it.
 	 *
 	 * @return string  Cloaked email address or empty string.

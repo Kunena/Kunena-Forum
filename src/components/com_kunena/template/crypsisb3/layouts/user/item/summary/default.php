@@ -14,8 +14,7 @@ defined('_JEXEC') or die;
 
 $profile             = $this->profile;
 $me                  = KunenaUserHelper::getMyself();
-$this->ktemplate     = KunenaFactory::getTemplate();
-$avatar              = $profile->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
+$avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 $banInfo             = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
@@ -24,7 +23,6 @@ $websiteURL          = $profile->getWebsiteURL();
 $websiteName         = $profile->getWebsiteName();
 $personalText        = $profile->getPersonalText();
 $signature           = $profile->getSignature();
-$email               = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($profile->userid);
 $medals              = $activityIntegration->getUserMedals($profile->userid);
@@ -169,7 +167,7 @@ if ($this->config->showuserstats)
 							<?php if ($private) : ?>
 								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-sm', 'glyphicon glyphicon-comment'); ?>
 							<?php endif; ?>
-							<?php if ($email) : ?>
+							<?php if (KunenaUser::getInstance()->getEmail($profile)) : ?>
 								<a class="btn btn-default btn-sm" href="mailto:<?php echo $profile->email; ?>"
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>

@@ -117,7 +117,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
-		$help_url = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -141,7 +141,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url = 'https://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url  = 'https://docs.kunena.org/en/setup/sections-categories';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 
 		// Get the toolbar object instance

@@ -57,7 +57,7 @@ class KunenaAdminViewConfig extends KunenaView
 		$bar->appendButton('Custom', $dhtml, 'restore');
 
 		JToolbarHelper::spacer();
-		$help_url = 'https://www.kunena.org/docs/Configuration';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/configuration';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

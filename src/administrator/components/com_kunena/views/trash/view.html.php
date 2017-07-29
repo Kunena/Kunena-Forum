@@ -74,7 +74,7 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
 
-		$help_url = 'https://www.kunena.org/docs/';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/trashbin';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -92,7 +92,7 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 
-		$help_url = 'https://www.kunena.org/docs/';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/trashbin';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

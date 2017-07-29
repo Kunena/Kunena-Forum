@@ -61,7 +61,7 @@ class KunenaAdminViewSmilies extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url = 'https://www.kunena.org/docs/Smiley_management';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

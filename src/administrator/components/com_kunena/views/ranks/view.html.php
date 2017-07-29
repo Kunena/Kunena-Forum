@@ -62,7 +62,7 @@ class KunenaAdminViewRanks extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url = 'https://www.kunena.org/docs/Ranks_management';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

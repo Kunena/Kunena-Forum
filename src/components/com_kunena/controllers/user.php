@@ -278,7 +278,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
-			
+
 			// Send report to stopforumspam
 			$this->report($user->userid);
 		}
@@ -402,6 +402,8 @@ class KunenaControllerUser extends KunenaController
 			$user->qq           = '';
 			$user->qzone        = '';
 			$user->whatsapp     = '';
+			$user->youtube      = '';
+			$user->ok           = '';
 			$user->weibo        = '';
 			$user->wechat       = '';
 			$user->apple        = '';
@@ -944,6 +946,8 @@ class KunenaControllerUser extends KunenaController
 		$this->user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
 		$this->user->whatsapp    = trim(JFactory::getApplication()->input->getString('whatsapp', ''));
 		$this->user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+		$this->user->youtube     = trim(JFactory::getApplication()->input->getString('youtube', ''));
+		$this->user->ok          = trim(JFactory::getApplication()->input->getString('ok', ''));
 		$this->user->websitename = JFactory::getApplication()->input->getString('websitename', '');
 		$this->user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
 		$this->user->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw');
@@ -1324,18 +1328,18 @@ class KunenaControllerUser extends KunenaController
 		$ip = $db->loadResult();
 
 		// Check if mail adress is valid before to send the report
-		
+
 		$options = new JRegistry;
-		
+
 		$transport = new JHttpTransportStream($options);
-		
+
 		// Create a 'stream' transport.
 		$http = new JHttp($options, $transport);
-		
+
 		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
-		
+
 		$response = $http->put('http://api.stopforumspam.org/api', $data);
-		
+
 		if ($response->code == '200')
 		{
 			// Report accepted. There is no need to display the reason

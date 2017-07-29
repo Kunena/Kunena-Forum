@@ -952,6 +952,15 @@
 		<field name="yim"
 		       type="varchar(50)"
 		       null="1"/>
+		<field name="whatsapp"
+		       type="varchar(50)"
+		       null="1"/>
+		<field name="youtube"
+		       type="varchar(50)"
+		       null="1"/>
+		<field name="ok"
+		       type="varchar(50)"
+		       null="1"/>
 		<field name="websitename"
 		       type="varchar(50)"
 		       null="1"/>

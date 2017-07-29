@@ -88,4 +88,10 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 	<?php if (!empty($this->profile->yim)) : ?>
 		<?php echo $this->profile->socialButtonsTemplate('yim', $showAll); ?>
 	<?php endif; ?>
+	<?php if (!empty($this->profile->youtube)) : ?>
+		<?php echo $this->profile->socialButtonsTemplate('youtube', $showAll); ?>
+	<?php endif; ?>
+	<?php if (!empty($this->profile->ok)) : ?>
+		<?php echo $this->profile->socialButtonsTemplate('ok', $showAll); ?>
+	<?php endif; ?>
 </div>

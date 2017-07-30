@@ -35,7 +35,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
 		$showFavorites     = $this->config->allowfavorites && $myProfile;
 		$showThankYou      = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$showUnapproved    = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
 		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager    = $moderator && $myProfile;
 		$showBanHistory    = $banInfo->canBan();

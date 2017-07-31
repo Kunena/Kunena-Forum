@@ -461,13 +461,15 @@ class KunenaAdminControllerCategories extends KunenaController
 			}
 
 			$success = $category->save();
-			$aliases = explode(',', $app->input->getString('aliases_all'));
+			$aliases_all = explode(',', $app->input->getString('aliases_all'));
+			
+			$aliases = $app->input->post->getArray(array('aliases' => '')); 
 
-			if ($aliases)
+			if ($aliases_all)
 			{
-				$aliases = array_diff($aliases, $app->input->post->getArray(array('aliases' => '')));
+				$aliases = array_diff($aliases_all, $aliases['aliases']);
 
-				foreach ($aliases as $alias)
+				foreach ($aliases_all as $alias)
 				{
 					$category->deleteAlias($alias);
 				}

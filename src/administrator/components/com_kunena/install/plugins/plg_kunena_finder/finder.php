@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  * @subpackage     Kunena.finder
  * @since          2.5
  */
-class plgKunenaFinder extends JPlugin
+class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * Finder after save message method
@@ -29,14 +29,14 @@ class plgKunenaFinder extends JPlugin
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
-		JLog::add('onKunenaAfterSave context: ' . $context, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaAfterSave context: ' . $context, \Joomla\CMS\Log\Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaAfterSave table: ' . $table_content, JLog::INFO);
-		JLog::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaAfterSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
 		$dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
@@ -55,15 +55,15 @@ class plgKunenaFinder extends JPlugin
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
-		JLog::add('onKunenaBeforeSave context: ' . $context, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave context: ' . $context, \Joomla\CMS\Log\Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaBeforeSave table: ' . $table_content, JLog::INFO);
-		JLog::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
 		$dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
@@ -80,14 +80,14 @@ class plgKunenaFinder extends JPlugin
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
-		JLog::add('onKunenaAfterDelete context: ' . $context, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete context: ' . $context, \Joomla\CMS\Log\Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaAfterDelete table: ' . $table_content, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		$dispatcher->trigger('onFinderAfterDelete', array($context, $table));
@@ -103,14 +103,14 @@ class plgKunenaFinder extends JPlugin
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{
-		JLog::add('onKunenaBeforeDelete context: ' . $context, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete context: ' . $context, \Joomla\CMS\Log\Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaBeforeDelete table: ' . $table_content, JLog::INFO);
+		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		$dispatcher->trigger('onFinderBeforeDelete', array($context, $table));

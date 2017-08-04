@@ -32,7 +32,7 @@ class KunenaPrivate
 	{
 		if (self::$instance === false)
 		{
-			JPluginHelper::importPlugin('kunena');
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
 			$classes    = $dispatcher->trigger('onKunenaGetPrivate');
 
@@ -86,7 +86,7 @@ class KunenaPrivate
 	 */
 	public function showIcon($userid)
 	{
-		$my = JFactory::getUser();
+		$my = \Joomla\CMS\Factory::getUser();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
@@ -139,7 +139,7 @@ class KunenaPrivate
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
 	{
-		$my      = JFactory::getUser();
+		$my      = \Joomla\CMS\Factory::getUser();
 		$url     = $this->getURL($userid);
 		$onclick = $this->getOnClick($userid);
 

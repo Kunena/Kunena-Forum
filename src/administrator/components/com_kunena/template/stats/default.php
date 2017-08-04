@@ -12,12 +12,12 @@ defined('_JEXEC') or die();
 
 // @var KunenaAdminViewStats $this
 
-$document = JFactory::getDocument();
-$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
+$document = \Joomla\CMS\Factory::getDocument();
+$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
-if (JFactory::getLanguage()->isRTL())
+if (\Joomla\CMS\Factory::getLanguage()->isRTL())
 {
-	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+	$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }
 ?>
 <div id="j-sidebar-container" class="span2">
@@ -104,7 +104,7 @@ if (JFactory::getLanguage()->isRTL())
 								<?php echo $item->link ?>
 							</td>
 							<td>
-								<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15"
+								<img class="kstats-bar" src="<?php echo \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15"
 								     width="<?php echo $item->percent ?>%"/>
 							</td>
 							<td>

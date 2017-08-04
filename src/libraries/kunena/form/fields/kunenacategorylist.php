@@ -13,10 +13,10 @@ defined('_JEXEC') or die();
 jimport('joomla.form.formfield');
 
 /**
- * Class JFormFieldKunenaCategoryList
+ * Class \Joomla\CMS\Form\FormField|KunenaCategoryList
  * @since Kunena
  */
-class JFormFieldKunenaCategoryList extends JFormField
+class JFormFieldKunenaCategoryList extends \Joomla\CMS\Form\FormField
 {
 	/**
 	 * @var string

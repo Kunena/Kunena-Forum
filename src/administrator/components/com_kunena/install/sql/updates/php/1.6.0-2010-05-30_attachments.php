@@ -20,7 +20,7 @@ defined('_JEXEC') or die();
  */
 function kunena_160_2010_05_30_attachments($parent)
 {
-	$db = JFactory::getDbo();
+	$db = \Joomla\CMS\Factory::getDbo();
 
 	// First check if attachments table has legacy field
 	$fields = $db->getTableColumns('#__kunena_attachments');

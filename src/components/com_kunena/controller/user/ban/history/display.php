@@ -78,7 +78,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

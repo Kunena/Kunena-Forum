@@ -57,7 +57,7 @@ class KunenaAdminViewUsers extends KunenaView
 	protected function setToolbar()
 	{
 		// Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_USER_MANAGER'), 'users');

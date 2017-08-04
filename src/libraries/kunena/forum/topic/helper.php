@@ -192,7 +192,7 @@ abstract class KunenaForumTopicHelper
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db     = JFactory::getDBO();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		$config = KunenaFactory::getConfig();
 
 		if ($limit < 1 && empty($params['nolimit']))
@@ -423,7 +423,7 @@ abstract class KunenaForumTopicHelper
 		// Delete topics
 		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
 
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		foreach ($queries as $query)
 		{
@@ -468,7 +468,7 @@ abstract class KunenaForumTopicHelper
 			$idlist = (int) $ids;
 		}
 
-		$db        = JFactory::getDBO();
+		$db        = \Joomla\CMS\Factory::getDBO();
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread IN ({$idlist})";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id IN ({$idlist})";
 
@@ -510,7 +510,7 @@ abstract class KunenaForumTopicHelper
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		if (is_array($ids))
 		{
@@ -678,7 +678,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$idstr = implode(",", $ids);
 
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 			$db->setQuery("SELECT m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
@@ -744,7 +744,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = JFactory::getDBO();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery($query);
 

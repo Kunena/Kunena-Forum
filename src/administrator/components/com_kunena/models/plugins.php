@@ -15,7 +15,7 @@ jimport('joomla.application.component.modellist');
  * Class KunenaAdminModelPlugins
  * @since Kunena
  */
-class KunenaAdminModelPlugins extends JModelList
+class KunenaAdminModelPlugins extends \Joomla\CMS\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -80,7 +80,7 @@ class KunenaAdminModelPlugins extends JModelList
 		$this->setState('filter.active', !empty($filter_active));
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_plugins');
+		$params = \Joomla\CMS\Component\ComponentHelper::getParams('com_plugins');
 		$this->setState('params', $params);
 
 		// List state information.
@@ -143,7 +143,7 @@ class KunenaAdminModelPlugins extends JModelList
 				}
 			}
 
-			$lang      = JFactory::getLanguage();
+			$lang      = \Joomla\CMS\Factory::getLanguage();
 			$direction = ($this->getState('list.direction') == 'desc') ? -1 : 1;
 			Joomla\Utilities\ArrayHelper::sortObjects($result, $ordering, $direction, true, $lang->getLocale());
 
@@ -198,7 +198,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 */
 	protected function translate(&$items)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = \Joomla\CMS\Factory::getLanguage();
 
 		foreach ($items as &$item)
 		{

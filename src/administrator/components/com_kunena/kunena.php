@@ -11,7 +11,7 @@
 defined('_JEXEC') or die();
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_kunena'))
+if (!\Joomla\CMS\Factory::getUser()->authorise('core.manage', 'com_kunena'))
 {
 	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 }
@@ -27,7 +27,7 @@ if (is_file(__DIR__ . '/install.php'))
 	}
 }
 
-$app = JFactory::getApplication();
+$app = \Joomla\CMS\Factory::getApplication();
 
 // Safety check to prevent fatal error if 'System - Kunena Forum' plug-in has been disabled.
 if ($app->input->getCmd('view') == 'install' || !class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))

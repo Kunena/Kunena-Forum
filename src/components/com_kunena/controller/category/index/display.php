@@ -71,7 +71,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		/*
-		$cache   = JFactory::getCache('com_kunena', 'output');
+		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
@@ -238,7 +238,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			{
 				// Get pending messages.
 				$catlist = implode(',', array_keys($moderate));
-				$db      = JFactory::getDbo();
+				$db      = \Joomla\CMS\Factory::getDbo();
 				$db->setQuery(
 					"SELECT catid, COUNT(*) AS count
 					FROM #__kunena_messages
@@ -280,7 +280,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -309,11 +309,11 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$doc       = JFactory::getDocument();
+		$doc       = \Joomla\CMS\Factory::getDocument();
 
-		$config = JFactory::getConfig();
+		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')

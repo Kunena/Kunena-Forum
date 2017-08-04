@@ -49,7 +49,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		$catimagepath = $template->params->get('DefaultCategoryicon');
 
 		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
-		$uri  = JUri::root(true) . '/media/kunena/' . $catimagepath . '/';
+		$uri  = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/' . $catimagepath . '/';
 
 		if ($category->getNewCount())
 		{
@@ -126,7 +126,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		// Is user allowed to mark forums as read?
 		if (KunenaUserHelper::getMyself()->exists() && $numTopics)
 		{
-			$token = '&' . JSession::getFormToken() . '=1';
+			$token = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 
 			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
 

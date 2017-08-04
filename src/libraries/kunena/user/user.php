@@ -160,8 +160,8 @@ class KunenaUser extends JObject
 			$this->userid = 0;
 		}
 
-		$this->_db     = JFactory::getDBO();
-		$this->_app    = JFactory::getApplication();
+		$this->_db     = \Joomla\CMS\Factory::getDBO();
+		$this->_app    = \Joomla\CMS\Factory::getApplication();
 		$this->_config = KunenaFactory::getConfig();
 	}
 
@@ -298,7 +298,7 @@ class KunenaUser extends JObject
 	 * @param   string $type   The user table name to be used.
 	 * @param   string $prefix The user table prefix to be used.
 	 *
-	 * @return    JTable|TableKunenaUsers    The user table object.
+	 * @return    \Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
@@ -313,7 +313,7 @@ class KunenaUser extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -538,8 +538,8 @@ class KunenaUser extends JObject
 			return true;
 		}
 
-		$ban = new JDate($this->banned);
-		$now = new JDate;
+		$ban = new \Joomla\CMS\Date\Date($this->banned);
+		$now = new \Joomla\CMS\Date\Date;
 
 		return ($ban->toUnix() > $now->toUnix());
 	}
@@ -668,7 +668,7 @@ class KunenaUser extends JObject
 				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
 			}
 
-			if ($this->userid == JFactory::getUser()->id && $avatarLink)
+			if ($this->userid == \Joomla\CMS\Factory::getUser()->id && $avatarLink)
 			{
 				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
 			}
@@ -688,7 +688,7 @@ class KunenaUser extends JObject
 
 			if ($rels == 'rel="canonical"')
 			{
-				$config          = JFactory::getApplication('site');
+				$config          = \Joomla\CMS\Factory::getApplication('site');
 				$componentParams = $config->getParams('com_config');
 				$robots          = $componentParams->get('robots');
 
@@ -1084,11 +1084,11 @@ class KunenaUser extends JObject
 	{
 		if (!isset($this->_time))
 		{
-			$timezone = JFactory::getApplication()->get('offset', null);
+			$timezone = \Joomla\CMS\Factory::getApplication()->get('offset', null);
 
 			if ($this->userid)
 			{
-				$user     = JUser::getInstance($this->userid);
+				$user     = \Joomla\CMS\User\User::getInstance($this->userid);
 				$timezone = $user->getParam('timezone', $timezone);
 			}
 
@@ -1505,8 +1505,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaPlusIcon);
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 
@@ -1559,8 +1559,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
-				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaPlusIcon);
+				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 
@@ -1593,7 +1593,7 @@ class KunenaUser extends JObject
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', $layout->getLayout());
 
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaSidebar');
 
@@ -1857,13 +1857,13 @@ class KunenaUser extends JObject
 	public function GetUserGroup($userid)
 	{
 		jimport('joomla.access.access');
-		$groups = JAccess::getGroupsByUser($userid, false);
+		$groups = \Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
 
 		$groupid_list = implode(',', $groups);
 
 		foreach ($groups as $groupId => $value)
 		{
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$query = $db->getQuery(true)
 				->select('title')
 				->from('#__usergroups')

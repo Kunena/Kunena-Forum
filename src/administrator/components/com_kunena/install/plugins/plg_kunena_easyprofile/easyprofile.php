@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
  * Class plgKunenaEasyprofile
  * @since Kunena
  */
-class plgKunenaEasyprofile extends JPlugin
+class plgKunenaEasyprofile extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaEasyprofile constructor.

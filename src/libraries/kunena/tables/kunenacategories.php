@@ -255,18 +255,18 @@ class TableKunenaCategories extends KunenaTable
 
 		if (isset($array['params']) && !is_string($array['params']))
 		{
-			if ($array['params'] instanceof JRegistry)
+			if ($array['params'] instanceof \Joomla\Registry\Registry)
 			{
 				$registry = $array['params'];
 			}
 			elseif (is_array($array['params']))
 			{
-				$registry = new JRegistry;
+				$registry = new \Joomla\Registry\Registry;
 				$registry->loadArray($array['params']);
 			}
 			else
 			{
-				$registry = new JRegistry;
+				$registry = new \Joomla\Registry\Registry;
 			}
 
 			// TODO: convert to J!2.5: (string) $registry
@@ -364,7 +364,7 @@ class TableKunenaCategories extends KunenaTable
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
-		if ($this->params instanceof JRegistry)
+		if ($this->params instanceof \Joomla\Registry\Registry)
 		{
 			$this->params = $this->params->toString();
 		}
@@ -440,7 +440,7 @@ class TableKunenaCategories extends KunenaTable
 	{
 		if (!$where)
 		{
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
 			$db->setQuery($query);
 			$parents = $db->loadColumn();

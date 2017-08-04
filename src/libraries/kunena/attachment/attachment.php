@@ -304,13 +304,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			$url = ($thumb ? $fileThumb : $file);
 
-			if (JFactory::getApplication()->isClient('administrator'))
+			if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
 			{
 				$url = $url;
 			}
 			else
 			{
-				$url = JURI::base() . $url;
+				$url = \Joomla\CMS\Uri\Uri::base() . $url;
 			}
 
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;
@@ -323,7 +323,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
 
-		if (JApplicationCms::getInstance('site')->get('sef_suffix'))
+		if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 		{
 			$url = preg_replace('/.html/', '', $url);
 		}
@@ -518,7 +518,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	{
 		jimport('joomla.filesystem.folder');
 		$config    = KunenaFactory::getConfig();
-		$input     = JFactory::getApplication()->input;
+		$input     = \Joomla\CMS\Factory::getApplication()->input;
 		$fileInput = $input->files->get($key, null, 'raw');
 
 		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));

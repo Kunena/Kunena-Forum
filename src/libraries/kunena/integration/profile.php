@@ -32,7 +32,7 @@ class KunenaProfile
 	{
 		if (self::$instance === false)
 		{
-			JPluginHelper::importPlugin('kunena');
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
 			$classes    = $dispatcher->trigger('onKunenaGetProfile');
 
@@ -82,7 +82,7 @@ class KunenaProfile
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->statslink_allowed == 0 && $my->id == 0)
 		{

@@ -59,7 +59,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		foreach ($doc->_links as $key => $value)
@@ -80,13 +80,13 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		}
 
 		// Run onKunenaPrepare event.
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
@@ -129,10 +129,10 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

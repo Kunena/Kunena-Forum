@@ -31,7 +31,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return JLayoutBase|KunenaLayout
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 *
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
@@ -112,14 +112,14 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Get default menu item to be shown up.
 	 *
-	 * @param   JMenuSite $menu    Joomla menu.
-	 * @param   object    $active  Active menu item.
-	 * @param   array     $visited Already visited menu items.
+	 * @param   \Joomla\CMS\Menu\SiteMenu  $menu    Joomla menu.
+	 * @param   object                     $active  Active menu item.
+	 * @param   array                      $visited Already visited menu items.
 	 *
 	 * @return object|null
 	 * @since Kunena
 	 */
-	protected function getDefaultMenuItem(JMenuSite $menu, $active, $visited = array())
+	protected function getDefaultMenuItem(\Joomla\CMS\Menu\SiteMenu $menu, $active, $visited = array())
 	{
 		if (empty($active->query['defaultmenu']) || $active->id == $active->query['defaultmenu'])
 		{

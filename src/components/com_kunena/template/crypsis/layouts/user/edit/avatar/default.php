@@ -23,8 +23,8 @@ $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/upload.avatar.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
-JFactory::getDocument()->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . JSession::getFormToken() . '=1', false));
-JFactory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . JSession::getFormToken() . '=1', false));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -38,14 +38,14 @@ JFactory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', Kunen
 				<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 			</td>
 			<td>
-				
+
 					<span class="btn btn-primary fileinput-button">
 						<?php echo KunenaIcons::plus();?>
 						<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
 						<!-- The file input field used as target for the file upload widget -->
 						<input id="fileupload" type="file" name="file" multiple>
 						</span>
-				
+
 				<div id="files" class="files"></div>
 				<div id="dropzone">
 					<div class="dropzone">

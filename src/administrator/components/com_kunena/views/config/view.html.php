@@ -41,7 +41,7 @@ class KunenaAdminViewConfig extends KunenaView
 	 */
 	protected function setToolBarDefault()
 	{
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply();

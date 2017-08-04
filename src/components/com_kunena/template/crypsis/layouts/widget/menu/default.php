@@ -91,12 +91,12 @@ defined('_JEXEC') or die;
 		{
 			if ($item->level > 1)
 			{
-				require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+				require \Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 			}
 			else
 			{
 				echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
-				require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+				require \Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 				echo ' <b class="caret"></b></a>';
 			}
 		}
@@ -107,11 +107,11 @@ defined('_JEXEC') or die;
 				case 'separator':
 				case 'url':
 				case 'component':
-					require JModuleHelper::getLayoutPath('mod_menu', 'default_' . $item->type);
+					require \Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_' . $item->type);
 					break;
 
 				default:
-					require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+					require \Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 					break;
 			}
 		}

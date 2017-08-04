@@ -217,7 +217,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		jimport('joomla.environment.uri');
 
 		// Get component object
-		$component = JTable::getInstance('extension', 'JTable', array('dbo' => $this->db_new));
+		$component = \Joomla\CMS\Table\Table::getInstance('extension', '\Joomla\CMS\Table\Table', array('dbo' => $this->db_new));
 		$component->load(array('type' => 'component', 'element' => $this->name));
 
 		// First fix all broken menu items
@@ -292,7 +292,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 				$menuitem->link = 'index.php?' . implode('&', $query_string);
 
 				// Save menu object
-				$menu = JTable::getInstance('menu', 'JTable', array('dbo' => $this->db_new));
+				$menu = \Joomla\CMS\Table\Table::getInstance('menu', '\Joomla\CMS\Table\Table', array('dbo' => $this->db_new));
 				$menu->bind(get_object_vars($menuitem), array('tree', 'query'));
 				$success = $menu->check();
 

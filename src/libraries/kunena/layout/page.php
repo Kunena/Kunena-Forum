@@ -28,7 +28,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @return  KunenaControllerDisplay
 	 * @since Kunena
 	 */
-	public function request($path, Jinput $input = null, $options = null)
+	public function request($path, \Joomla\CMS\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
 			->setPrimary()->set('layout', $this->getLayout());
@@ -44,7 +44,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @return  KunenaLayout
 	 * @since Kunena
 	 */
-	public function execute($path, Jinput $input = null, $options = null)
+	public function execute($path, \Joomla\CMS\Input\Input $input = null, $options = null)
 	{
 		return $this->request($path, $input, $options)->execute();
 	}
@@ -96,7 +96,7 @@ class KunenaLayoutPage extends KunenaLayout
 	{
 		$paths = (array) $paths;
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Add all paths for the template overrides.
 		if ($app->isClient('administrator'))

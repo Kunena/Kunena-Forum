@@ -76,7 +76,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

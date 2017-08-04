@@ -62,7 +62,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 		}
 		else
 		{
-			$avatar = JUri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';
+			$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';
 		}
 
 		return $avatar;

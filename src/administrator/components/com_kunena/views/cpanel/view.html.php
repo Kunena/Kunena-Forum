@@ -30,7 +30,7 @@ class KunenaAdminViewCpanel extends KunenaView
 		JToolBarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));
 		JToolBarHelper::link('https://www.kunena.org/forum', JText::_('Get Support'));
 
-		if (JFactory::getUser()->authorise('core.admin', 'com_kunena'))
+		if (\Joomla\CMS\Factory::getUser()->authorise('core.admin', 'com_kunena'))
 		{
 			JToolBarHelper::spacer();
 			JToolBarHelper::preferences('com_kunena');

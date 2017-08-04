@@ -37,14 +37,14 @@ class KText
  */
 function installSampleData()
 {
-	$lang  = JFactory::getLanguage();
+	$lang  = \Joomla\CMS\Factory::getLanguage();
 	$debug = $lang->setDebug(false);
 
 	jimport('joomla.utilities.date');
 
-	$db       = JFactory::getDBO();
-	$posttime = new JDate;
-	$my       = JFactory::getUser();
+	$db       = \Joomla\CMS\Factory::getDBO();
+	$posttime = new \Joomla\CMS\Date\Date;
+	$my       = \Joomla\CMS\Factory::getUser();
 	$queries  = array();
 
 	$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES

@@ -65,7 +65,7 @@ require_once JPATH_BASE . '/includes/framework.php';
  *
  * @since    K2.0
  */
-class KunenaApplication extends JApplicationWeb
+class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 {
 	/**
 	 * @var string
@@ -86,21 +86,21 @@ class KunenaApplication extends JApplicationWeb
 	protected $userstate = array();
 
 	/**
-	 * @param   JInput                $input  input
-	 * @param   JRegistry             $config config
-	 * @param   JApplicationWebClient $client client
+	 * @param   Jinput                             $input  input
+	 * @param   \Joomla\Registry\Registry          $config config
+	 * @param   \Joomla\Application\Web\WebClient  $client client
 	 *
 	 * @since Kunena
 	 */
-	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
+	public function __construct(JInput $input = null, \Joomla\Registry\Registry $config = null, \Joomla\Application\Web\WebClient $client = null)
 	{
 		parent::__construct($input, $config, $client);
 
 		// Load and set the dispatcher
 		$this->loadDispatcher();
 
-		// Register the application to JFactory
-		JFactory::$application = $this;
+		// Register the application to \Joomla\CMS\FactoryF
+		\Joomla\CMS\Factory::$application = $this;
 
 		// Enable sessions by default.
 		if (is_null($this->config->get('session')))
@@ -119,18 +119,18 @@ class KunenaApplication extends JApplicationWeb
 		{
 			$this->loadSession();
 
-			// Register the session with JFactory
-			JFactory::$session = $this->getSession();
+			// Register the session with \Joomla\CMS\Factory
+			\Joomla\CMS\Factory::$session = $this->getSession();
 		}
 	}
 
 	/**
-	 * @param   JSession $session session
+	 * @param   \JSession $session session
 	 *
 	 * @return $this
 	 * @since Kunena
 	 */
-	public function loadSession(JSession $session = null)
+	public function loadSession(\JSession $session = null)
 	{
 		if ($session !== null)
 		{
@@ -148,13 +148,13 @@ class KunenaApplication extends JApplicationWeb
 		// Get the session handler from the configuration.
 		$handler = $this->get('session_handler', 'none');
 
-		// Initialize the options for JSession.
+		// Initialize the options for \Joomla\CMS\Session\Session.
 		$options = array(
 			'name'   => $name,
 			'expire' => $lifetime
 		);
 
-		$session = JSession::getInstance($handler, $options);
+		$session = \Joomla\CMS\Session\Session::getInstance($handler, $options);
 		$session->initialise($this->input, $this->dispatcher);
 
 		if ($session->getState() == 'expired')

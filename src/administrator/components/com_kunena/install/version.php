@@ -103,7 +103,7 @@ class KunenaVersion
 	 */
 	public function getDBVersion($prefix = 'kunena_')
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix().$prefix.'version')}";
 		$db->setQuery($query);
 

@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $cols            = !empty($this->actions) ? 6 : 5;
 $colspan         = !empty($this->actions) ? 4 : 3;
-$view            = JFactory::getApplication()->input->getWord('view');
+$view            = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
 
 $this->addStyleSheet('assets/css/rating.css');
@@ -33,7 +33,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		<?php if ($view != 'user') : ?>
 			<div class="filter-time pull-right">
 				<h2 class="filter-sel">
-					<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-phone">
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>

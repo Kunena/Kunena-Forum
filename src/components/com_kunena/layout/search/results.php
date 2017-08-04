@@ -28,13 +28,13 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	public function displayRows()
 	{
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->results, &$params, 0));
 

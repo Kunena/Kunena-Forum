@@ -38,7 +38,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{

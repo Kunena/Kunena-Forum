@@ -259,7 +259,7 @@ class KunenaGravatar
 	 */
 	public function usingSecureURL()
 	{
-		$uri = JURI::getInstance();
+		$uri = \Joomla\CMS\Uri\Uri::getInstance();
 
 		if ($uri->isSSL())
 		{

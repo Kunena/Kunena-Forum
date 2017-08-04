@@ -66,7 +66,7 @@ JHtml::_('dropdown.init');
 								<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
 							</td>
 							<td>
-								<?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
+								<?php $img_path = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
 								<span class="editlinktip hasTip" title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 							<a href="#edit" onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name);?></a>
 						</span>
@@ -117,7 +117,7 @@ JHtml::_('dropdown.init');
 						<td style="width: 5%;">€10,00
 						</td>
 						<td style="width: 7%;">
-							<?php $img_path = JUri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
+							<?php $img_path = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
 							<span class="editlinktip hasTip" title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank" rel="noopener noreferrer">Blue Eagle 5</a>
 							</span>

@@ -128,7 +128,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->me = KunenaFactory::getUser();
 
 			// Get thread and reply count from current message:
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
 				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time
@@ -147,7 +147,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$this->banInfo = KunenaUserBan::getInstanceByUserid(JFactory::getUser()->id, true);
+		$this->banInfo = KunenaUserBan::getInstanceByUserid(\Joomla\CMS\Factory::getUser()->id, true);
 	}
 
 	/**
@@ -158,7 +158,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

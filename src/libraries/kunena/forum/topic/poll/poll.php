@@ -83,7 +83,7 @@ class KunenaForumTopicPoll extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if poll does not exist: fill empty data
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 		$this->load($identifier);
 	}
 
@@ -133,7 +133,7 @@ class KunenaForumTopicPoll extends JObject
 			return;
 		}
 
-		$filter     = JFilterInput::getInstance();
+		$filter     = \Joomla\CMS\Filter\InputFilter::getInstance();
 		$newOptions = array();
 
 		foreach ($options as $key => &$value)
@@ -407,7 +407,7 @@ class KunenaForumTopicPoll extends JObject
 			$votes->votes = ++$myvotes;
 		}
 
-		$votes->lasttime = JFactory::getDate()->toSql();
+		$votes->lasttime = \Joomla\CMS\Factory::getDate()->toSql();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 
@@ -504,7 +504,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return boolean|JTable|KunenaTable|TableKunenaPolls
+	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
@@ -519,7 +519,7 @@ class KunenaForumTopicPoll extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -586,7 +586,7 @@ class KunenaForumTopicPoll extends JObject
 		$this->_exists = false;
 
 		// Delete options
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
 
@@ -638,7 +638,7 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function getTimeToLive()
 	{
-		return JFactory::getDate($this->polltimetolive)->toUnix();
+		return \Joomla\CMS\Factory::getDate($this->polltimetolive)->toUnix();
 	}
 
 	/**

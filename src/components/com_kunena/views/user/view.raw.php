@@ -46,7 +46,7 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -81,7 +81,7 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -105,12 +105,12 @@ class KunenaViewUser extends KunenaView
 		foreach ($list_files as $key => $file)
 		{
 			$response[$key]['filename'] = $file;
-			$response[$key]['url']      = JUri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
+			$response[$key]['url']      = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
 		}
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}

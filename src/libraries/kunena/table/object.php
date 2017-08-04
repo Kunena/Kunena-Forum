@@ -185,7 +185,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/setDbo
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/setDbo
 	 * @since   K4.0
 	 */
 	public static function setDbo(JDatabaseDriver $db)
@@ -231,7 +231,7 @@ abstract class KunenaTableObject
 	/**
 	 * Override this function if you need to initialise object right after creating it.
 	 *
-	 * Can be used for example if the database fields need to be converted to array or JRegistry.
+	 * Can be used for example if the database fields need to be converted to array or \Joomla\Registry\Registry.
 	 *
 	 * @param   bool $sqlFetch True only if properties were assigned before constructor was called.
 	 *
@@ -409,11 +409,11 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to bind an associative array or object to the JTable instance.This
+	 * Method to bind an associative array or object to the \Joomla\CMS\Table\Table instance.This
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed $src    An associative array or object to bind to the JTable instance.
+	 * @param   mixed $src    An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
 	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
 	 *
 	 * @return  KunenaTableObject
@@ -499,7 +499,7 @@ abstract class KunenaTableObject
 		foreach ($keys as $field => $value)
 		{
 			// Make sure the object contains the search fields.
-			// This is incompatible to JTable, but needed by this class.
+			// This is incompatible to \Joomla\CMS\Table\Table, but needed by this class.
 			$this->$field = $value;
 
 			// Add the search tuple to the query.
@@ -522,7 +522,7 @@ abstract class KunenaTableObject
 
 
 	/**
-	 * Method to perform sanity checks on the JTableObject instance properties to ensure
+	 * Method to perform sanity checks on the \Joomla\CMS\Table\TableObject instance properties to ensure
 	 * they are safe to store in the database.  Child classes should override this
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
@@ -571,14 +571,14 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a JTable
+	 * Method to provide a shortcut to binding, checking and storing a \Joomla\CMS\Table\Table
 	 * instance to the database table.  The method will check a row in once the
 	 * data has been stored and if an ordering filter is present will attempt to
 	 * reorder the table rows based on the filter.  The ordering filter is an instance
 	 * property name.  The rows that will be reordered are those whose value matches
-	 * the JTable instance for the property specified.
+	 * the \Joomla\CMS\Table\Table instance for the property specified.
 	 *
-	 * @param   mixed  $src              An associative array or object to bind to the JTable instance.
+	 * @param   mixed  $src              An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
 	 * @param   string $orderingFilter   Filter for the order updating
 	 * @param   mixed  $ignore           An optional array or space separated list of properties
 	 *                                   to ignore while binding.
@@ -700,7 +700,7 @@ abstract class KunenaTableObject
 		}
 
 		// Get the current time in MySQL format.
-		$time = JFactory::getDate()->toSql();
+		$time = \Joomla\CMS\Factory::getDate()->toSql();
 
 		// Check the row out by primary key.
 		$query = static::$db->getQuery(true);
@@ -822,7 +822,7 @@ abstract class KunenaTableObject
 	public function isCheckedOut($with = 0, $against = null)
 	{
 		// Handle the non-static case.
-		if (isset($this) && ($this instanceof JTable) && is_null($against))
+		if (isset($this) && ($this instanceof \Joomla\CMS\Table\Table) && is_null($against))
 		{
 			$against = $this->get('checked_out');
 		}
@@ -833,7 +833,7 @@ abstract class KunenaTableObject
 			return false;
 		}
 
-		static::$db = JFactory::getDBO();
+		static::$db = \Joomla\CMS\Factory::getDBO();
 		static::$db->setQuery('SELECT COUNT(userid)' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . (int) $against);
 		$checkedOut = (boolean) static::$db->loadResult();
 
@@ -894,7 +894,7 @@ abstract class KunenaTableObject
 	 */
 	static public function &loadInstances(JDatabaseQuery $query)
 	{
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 		$db->setQuery($query);
 		$items = (array) $db->loadObjectList('id', get_called_class());
 
@@ -1042,4 +1042,4 @@ abstract class KunenaTableObject
 	}
 }
 
-KunenaTableObject::setDbo(JFactory::getDbo());
+KunenaTableObject::setDbo(\Joomla\CMS\Factory::getDbo());

@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Kunena JSON Response, extends JResponseJson.
+ * Kunena JSON Response, extends \Joomla\CMS\Response\JsonResponse.
  * @since Kunena
  */
 class KunenaResponseJson extends KunenaCompatResponseJson

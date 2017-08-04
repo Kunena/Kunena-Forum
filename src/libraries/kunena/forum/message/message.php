@@ -134,7 +134,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function __construct($properties = null)
 	{
-		$this->_db = JFactory::getDbo();
+		$this->_db = \Joomla\CMS\Factory::getDbo();
 		parent::__construct($properties);
 	}
 
@@ -235,7 +235,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
 	 *
-	 * @return JUri
+	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getUri($category = null)
@@ -247,7 +247,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *  Get permament topic URL without domain.
 	 *
 	 * If you want to add domain (for email etc), you can prepend the output with this:
-	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 * \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
 	 * @param   bool                     $xhtml
@@ -265,7 +265,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory $category
 	 *
-	 * @return JUri
+	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getPermaUri($category = null)
@@ -277,7 +277,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return null;
 		}
 
-		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
+		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
 
 		return $uri;
 	}
@@ -411,7 +411,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$url)
 		{
-			$url = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
+			$url = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
 		}
 
 		// Get all subscribers, moderators and admins who should get the email.
@@ -432,7 +432,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 				return false;
 			}
-			elseif (!JMailHelper::isEmailAddress($config->getEmail()))
+			elseif (!\Joomla\CMS\Mail\MailHelper::isEmailAddress($config->getEmail()))
 			{
 				KunenaError::warning(JText::_('COM_KUNENA_EMAIL_INVALID'));
 
@@ -447,7 +447,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 			foreach ($emailToList as $emailTo)
 			{
-				if (!$emailTo->email || !JMailHelper::isEmailAddress($emailTo->email))
+				if (!$emailTo->email || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
 				{
 					continue;
 				}
@@ -456,12 +456,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				$sentusers[]                         = $emailTo->id;
 			}
 
-			$mailsender = JMailHelper::cleanAddress($config->board_title);
-			$mailsubject = JMailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+			$mailsender = \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
+			$mailsubject = \Joomla\CMS\Mail\MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
-			$mail = JFactory::getMailer();
+			$mail = \Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 
@@ -483,7 +483,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			if ($once && $sentusers)
 			{
 				$sentusers = implode(',', $sentusers);
-				$db        = JFactory::getDbo();
+				$db        = \Joomla\CMS\Factory::getDbo();
 				$query     = $db->getQuery(true)
 					->update('#__kunena_user_topics')
 					->set('subscribed=2')
@@ -808,7 +808,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$category            = $this->getCategory();
 		$this->hold          = $category->review && !$category->authorise('moderate', $user, true) ? 1 : $this->hold;
 		$this->modified_by   = $user->userid;
-		$this->modified_time = JFactory::getDate()->toUnix();
+		$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
 	}
 
 	/**
@@ -1182,7 +1182,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		foreach ($attachments as $attachment)
 		{
-			$file = JUri::root() . $attachment->filename;
+			$file = \Joomla\CMS\Uri\Uri::root() . $attachment->filename;
 			KunenaFile::delete($file);
 
 			if (!$attachment->delete())
@@ -1191,7 +1191,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Delete thank yous
 		$queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)}";
@@ -1236,7 +1236,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$this->name = trim($this->name);
 
 			// Unregistered or anonymous users: Do not allow existing username
-			$nicktaken = JUserHelper::getUserId($this->name);
+			$nicktaken = \Joomla\CMS\User\UserHelper::getUserId($this->name);
 
 			if (empty($this->name) || $nicktaken)
 			{
@@ -1254,7 +1254,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if ($this->email)
 		{
 			// Email address must be valid
-			if (!JMailHelper::isEmailAddress($this->email))
+			if (!\Joomla\CMS\Mail\MailHelper::isEmailAddress($this->email))
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID'));
 
@@ -1269,7 +1269,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Do not allow no posting date or dates from the future
-		$now = JFactory::getDate()->toUnix();
+		$now = \Joomla\CMS\Factory::getDate()->toUnix();
 
 		if (!$this->time || $this->time > $now)
 		{
@@ -1310,7 +1310,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 			elseif (!$this->modified_time)
 			{
-				$this->modified_time = JFactory::getDate()->toUnix();
+				$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
 			}
 		}
 
@@ -1332,7 +1332,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return false;
 			}
 
-			if ($lastPostTime + $config->floodprotection > JFactory::getDate()->toUnix())
+			if ($lastPostTime + $config->floodprotection > \Joomla\CMS\Factory::getDate()->toUnix())
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodprotection));
 
@@ -1343,7 +1343,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if (!$this->exists() && !$this->getCategory()->authorise('moderate'))
 		{
 			// Ignore identical messages (posted within 5 minutes)
-			$duplicatetimewindow = JFactory::getDate()->toUnix() - 5 * 60;
+			$duplicatetimewindow = \Joomla\CMS\Factory::getDate()->toUnix() - 5 * 60;
 			$this->_db->setQuery("SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 				WHERE m.userid={$this->_db->quote($this->userid)}
 				AND m.ip={$this->_db->quote($this->ip)}
@@ -1416,7 +1416,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		// Activity integration
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 
 		if ($postDelta < 0)
@@ -1571,7 +1571,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Check whether edit is in time
 			$modtime = $this->modified_time ? $this->modified_time : $this->time;
 
-			if ($modtime + intval($config->useredittime) < JFactory::getDate()->toUnix())
+			if ($modtime + intval($config->useredittime) < \Joomla\CMS\Factory::getDate()->toUnix())
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
@@ -1710,16 +1710,16 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   JMail  $mail
-	 * @param   int    $subscription
-	 * @param   string $subject
-	 * @param   string $url
-	 * @param   bool   $once
+	 * @param   \Joomla\CMS\Mail\Mail  $mail
+	 * @param   int                    $subscription
+	 * @param   string                 $subject
+	 * @param   string                 $url
+	 * @param   bool                   $once
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $once)
+	protected function attachEmailBody(\Joomla\CMS\Mail\Mail $mail, $subscription, $subject, $url, $once)
 	{
 		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
 			->set('mail', $mail)

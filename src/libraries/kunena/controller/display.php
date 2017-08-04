@@ -93,7 +93,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Initialize and display the layout.
 	 *
-	 * @return JLayoutBase|KunenaLayout
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @since Kunena
 	 */
 	protected function display()
@@ -128,7 +128,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		if ($this->primary)
 		{
-			$this->document = JFactory::getDocument();
+			$this->document = \Joomla\CMS\Factory::getDocument();
 		}
 	}
 
@@ -172,9 +172,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 				return (string) KunenaLayout::factory('Empty');
 			}
 
-			$document = JFactory::getDocument();
+			$document = \Joomla\CMS\Factory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JFactory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
+			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
@@ -187,9 +187,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 
 			$title    = '500 Internal Server Error';
-			$document = JFactory::getDocument();
+			$document = \Joomla\CMS\Factory::getDocument();
 			$document->setTitle($title);
-			JFactory::getApplication()->setHeader('Status', $title, true);
+			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());

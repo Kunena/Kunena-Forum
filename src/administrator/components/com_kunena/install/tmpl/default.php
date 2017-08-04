@@ -50,7 +50,7 @@ defined('_JEXEC') or die();
 			dataType: 'json',
 			timeout: '180000', // 3 minutes
 			url: '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
-			data: '<?php echo JSession::getFormToken(); ?>=1',
+			data: '<?php echo \Joomla\CMS\Session\Session::getFormToken(); ?>=1',
 			cache: false,
 			error: function (xhr, ajaxOptions, thrownError) {
 				kunenaInstall.html('<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');

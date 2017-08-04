@@ -38,7 +38,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function jump()
 	{
-		$catid = JFactory::getApplication()->input->getInt('catid', 0);
+		$catid = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
 
 		if (!$catid)
 		{
@@ -56,7 +56,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function markread()
 	{
-		if (!JSession::checkToken('request'))
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -64,8 +64,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid    = JFactory::getApplication()->input->getInt('catid', 0);
-		$children = JFactory::getApplication()->input->getBool('children', 0);
+		$catid    = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+		$children = \Joomla\CMS\Factory::getApplication()->input->getBool('children', 0);
 
 		if (!$catid)
 		{
@@ -130,7 +130,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function subscribe()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -138,7 +138,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get(JFactory::getApplication()->input->getInt('catid', 0));
+		$category = KunenaForumCategoryHelper::get(\Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0));
 
 		if (!$category->authorise('read'))
 		{
@@ -167,7 +167,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function unsubscribe()
 	{
-		if (!JSession::checkToken('request'))
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -175,10 +175,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid  = JFactory::getApplication()->input->getInt('catid', 0);
+		$catid  = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(JFactory::getApplication()->input->get('categories', array(), 'post', 'array'));
+			: array_keys(\Joomla\CMS\Factory::getApplication()->input->get('categories', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);

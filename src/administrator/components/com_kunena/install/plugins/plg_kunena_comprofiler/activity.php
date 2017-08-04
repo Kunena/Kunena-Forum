@@ -125,7 +125,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterDelete($message)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'message' => $message);
 		KunenaIntegrationComprofiler::trigger('onAfterDelete', $params);
 	}
@@ -137,7 +137,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterUndelete($message)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'message' => $message);
 		KunenaIntegrationComprofiler::trigger('onAfterUndelete', $params);
 	}
@@ -163,7 +163,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterSubscribe($topic, $action)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
 		KunenaIntegrationComprofiler::trigger('onAfterSubscribe', $params);
 	}
@@ -176,7 +176,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterFavorite($topic, $action)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
 		KunenaIntegrationComprofiler::trigger('onAfterFavorite', $params);
 	}
@@ -189,7 +189,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterSticky($topic, $action)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
 		KunenaIntegrationComprofiler::trigger('onAfterSticky', $params);
 	}
@@ -202,7 +202,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterLock($topic, $action)
 	{
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
 		KunenaIntegrationComprofiler::trigger('onAfterLock', $params);
 	}

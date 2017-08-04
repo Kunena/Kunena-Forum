@@ -138,7 +138,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	protected function _getMessages()
 	{
-		$db   = JFactory::getDBO();
+		$db   = \Joomla\CMS\Factory::getDBO();
 		$join = array();
 
 		$query = $db->getQuery(true)->select('a.id')->from('#__kunena_messages AS a');
@@ -255,7 +255,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return array();
 		}
@@ -286,7 +286,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	protected function _getTopics()
 	{
-		$db   = JFactory::getDBO();
+		$db   = \Joomla\CMS\Factory::getDBO();
 		$join = array();
 
 		$query = $db->getQuery(true)->select('a.id')->from('#__kunena_topics AS a');
@@ -382,7 +382,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return array();
 		}
@@ -461,13 +461,13 @@ class KunenaAdminModelTrash extends KunenaModel
 	}
 
 	/**
-	 * @return JPagination
+	 * @return \Joomla\CMS\Pagination\Pagination
 	 * @since Kunena
 	 */
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');
-		$navigation = new JPagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}

@@ -99,7 +99,7 @@ class KunenaViewCommon extends KunenaView
 				return;
 			}
 
-			$cache    = JFactory::getCache('com_kunena', 'output');
+			$cache    = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$annCache = $cache->get('announcement', 'global');
 
 			if (!$annCache)
@@ -148,7 +148,7 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = JFactory::getCache('com_kunena', 'output');
+		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
@@ -286,7 +286,7 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$moderator = intval($this->me->isModerator()) + intval($this->me->isAdmin());
-		$cache     = JFactory::getCache('com_kunena', 'output');
+		$cache     = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template"))
 		{
@@ -368,7 +368,7 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template'))
 		{
@@ -424,7 +424,7 @@ class KunenaViewCommon extends KunenaView
 
 			if (isset($rss_params))
 			{
-				$document = JFactory::getDocument();
+				$document = \Joomla\CMS\Factory::getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
 				$this->rss = $this->getRSSLink($this->getIcon('krss', JText::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
@@ -469,7 +469,7 @@ class KunenaViewCommon extends KunenaView
 			return ' ';
 		}
 
-		$this->parameters = new JRegistry;
+		$this->parameters = new \Joomla\Registry\Registry;
 		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
 		$this->parameters->set('menutype', $basemenu->menutype);
 		$this->parameters->set('startLevel', $basemenu->level + 1);
@@ -498,8 +498,8 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$my         = JFactory::getUser();
-		$cache      = JFactory::getCache('com_kunena', 'output');
+		$my         = \Joomla\CMS\Factory::getUser();
+		$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 		$cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
 
@@ -570,7 +570,7 @@ class KunenaViewCommon extends KunenaView
 		switch ($matches[1])
 		{
 			case 'RETURN_URL':
-				return base64_encode(JUri::getInstance()->toString(array('path', 'query', 'fragment')));
+				return base64_encode(\Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query', 'fragment')));
 			case 'TOKEN':
 				return JHtml::_('form.token');
 			case 'MODULE':

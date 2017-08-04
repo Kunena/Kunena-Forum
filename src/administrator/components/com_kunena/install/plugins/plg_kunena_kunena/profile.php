@@ -43,7 +43,7 @@ class KunenaProfileKunena extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -111,7 +111,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('u.id', 'ku.uhits'), array(null, 'count')));
 		$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
@@ -121,7 +121,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
-			$filter = JAccess::getUsersByGroup(8);
+			$filter = \Joomla\CMS\Access\Access::getUsersByGroup(8);
 			$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 		}
 

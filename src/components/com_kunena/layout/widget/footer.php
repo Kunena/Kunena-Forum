@@ -68,7 +68,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 			}
 
 			$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}", true);
-			$doc = JFactory::getDocument();
+			$doc = \Joomla\CMS\Factory::getDocument();
 			$doc->addHeadLink($url, 'alternate', 'rel', array('type' => 'application/rss+xml'));
 
 			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';

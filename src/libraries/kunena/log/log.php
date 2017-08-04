@@ -328,7 +328,7 @@ class KunenaLog
 	{
 		if (!empty(static::$entries))
 		{
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$query = $db->getQuery(true)
 				->insert('#__kunena_logs')
 				->columns('type, user_id, category_id, topic_id, target_user, ip, time, operation, data');

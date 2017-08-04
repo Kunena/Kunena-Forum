@@ -69,7 +69,7 @@ abstract class KunenaForumTopicRateHelper
 	 */
 	static public function getSelected($id)
 	{
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select("(SUM(rate)/COUNT(rate)) as selected")
 			->from('#__kunena_rate')

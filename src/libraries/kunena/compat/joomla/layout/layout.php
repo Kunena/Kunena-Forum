@@ -10,10 +10,10 @@
 defined('JPATH_BASE') or die;
 
 /**
- * Compatibility layer for JLayout
+ * Compatibility layer for \Joomla\CMS\Layout\LayoutInterface
  * @since Kunena
  */
-interface KunenaCompatLayout extends JLayout
+interface KunenaCompatLayout extends \Joomla\CMS\Layout\LayoutInterface
 {
 
 }

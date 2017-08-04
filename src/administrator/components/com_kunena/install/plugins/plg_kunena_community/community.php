@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
  * Class plgKunenaCommunity
  * @since Kunena
  */
-class plgKunenaCommunity extends JPlugin
+class plgKunenaCommunity extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaCommunity constructor.

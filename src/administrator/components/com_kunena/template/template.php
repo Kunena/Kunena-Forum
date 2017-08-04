@@ -22,9 +22,9 @@ class KunenaAdminTemplate
 	 */
 	public function initialize()
 	{
-		$document = JFactory::getDocument();
-		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/layout.css');
-		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/styles.css');
+		$document = \Joomla\CMS\Factory::getDocument();
+		$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/layout.css');
+		$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}
 
 	/**
@@ -53,13 +53,13 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   JPaginationObject $item The current pagination object
+	 * @param   \Joomla\CMS\Pagination\PaginationObject $item The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *
 	 * @since   3.0
 	 */
-	public function paginationItem(JPaginationObject $item)
+	public function paginationItem(\Joomla\CMS\Pagination\PaginationObject $item)
 	{
 		// Special cases for "Start", "Prev", "Next", "End".
 		switch ($item->text)

@@ -35,7 +35,7 @@ class KunenaIntegrationActivity
 	 */
 	public function __construct()
 	{
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$classes    = $dispatcher->trigger('onKunenaGetActivity');
 

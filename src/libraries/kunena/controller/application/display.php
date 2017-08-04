@@ -29,7 +29,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $content;
 
 	/**
-	 * @var JPathway
+	 * @var \Joomla\CMS\Pathway\Pathway
 	 * @since Kunena
 	 */
 	protected $breadcrumb;
@@ -53,7 +53,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $template;
 
 	/**
-	 * @var JDocument
+	 * @var \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	protected $document;
@@ -91,7 +91,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return JLayoutBase
+	 * @return \Joomla\CMS\Layout\BaseLayout
 	 * @since Kunena
 	 */
 	public function execute()
@@ -146,7 +146,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$banned = KunenaUserHelper::getMyself()->banned;
 				$userid = $this->input->getInt('userid');
 
-				if (JFactory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
+				if (\Joomla\CMS\Factory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
@@ -247,7 +247,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = JFactory::getDocument();
+		$this->document = \Joomla\CMS\Factory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 
@@ -292,8 +292,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$jinput = JFactory::getApplication()->input;
-		$limitstart = $jinput->getInt('limitstart', 'limitstart', 0);
+		$kinput = \Joomla\CMS\Factory::getApplication()->input;
+		$limitstart = $kinput->getInt('limitstart', 'limitstart', 0);
 
 		if (!$limitstart)
 		{
@@ -315,10 +315,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Use our own browser side cache settings.
-		JFactory::getApplication()->allowCache(false);
-		JFactory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-		JFactory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-		JFactory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		\Joomla\CMS\Factory::getApplication()->allowCache(false);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 
 		if ($this->config->get('credits', 1))
 		{
@@ -339,26 +339,26 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		switch ((int) $code)
 		{
 			case 400:
-				JFactory::getApplication()->setHeader('Status', '400 Bad Request', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JFactory::getApplication()->setHeader('Status', '401 Unauthorized', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JFactory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JFactory::getApplication()->setHeader('Status', '404 Not Found', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JFactory::getApplication()->setHeader('Status', '410 Gone', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '410 Gone', true);
 				break;
 			case 503:
-				JFactory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			case 500:
 			default:
-				JFactory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
 		}
 	}
 
@@ -389,7 +389,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$credits .= '</div>';
 
-		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$credits = '';
 		}

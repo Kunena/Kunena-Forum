@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 // @var KunenaAdminViewReport $this
 
-$document = JFactory::getDocument();
+$document = \Joomla\CMS\Factory::getDocument();
 $document->addScriptDeclaration(
 	"
 window.addEvent('domready', function(){

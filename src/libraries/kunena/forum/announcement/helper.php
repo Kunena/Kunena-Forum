@@ -80,12 +80,12 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @param   string $layout layout
 	 *
-	 * @return JUri
+	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	static public function getUri($layout = null)
 	{
-		$uri = new JUri('index.php?option=com_kunena&view=announcement');
+		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{
@@ -107,9 +107,9 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db       = JFactory::getDBO();
+		$db       = \Joomla\CMS\Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(\Joomla\CMS\Factory::getDate()->toSql());
 
 		if ($filter)
 		{
@@ -171,9 +171,9 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	static public function getCount($filter = true)
 	{
-		$db       = JFactory::getDBO();
+		$db       = \Joomla\CMS\Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(JFactory::getDate()->toSql());
+		$nowDate  = $db->quote(\Joomla\CMS\Factory::getDate()->toSql());
 
 		if ($filter)
 		{

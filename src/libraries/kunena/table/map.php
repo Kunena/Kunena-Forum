@@ -75,7 +75,7 @@ class KunenaTableMap
 		$this->_tbl_key    = $key;
 		$this->_tbl_mapped = $mapped;
 		$this->{$mapped}   = array();
-		$this->_db         = $db ? $db : JFactory::getDbo();
+		$this->_db         = $db ? $db : \Joomla\CMS\Factory::getDbo();
 
 		// Initialise the table properties.
 		$fields = $this->getFields();
@@ -166,7 +166,7 @@ class KunenaTableMap
 	 *
 	 * @return  string  The name of the database table being modeled.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getTableName
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/getTableName
 	 * @since   Kunena
 	 */
 	public function getTableName()
@@ -179,7 +179,7 @@ class KunenaTableMap
 	 *
 	 * @return  string  The name of the primary key for the table.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getKeyName
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/getKeyName
 	 * @since   Kunena
 	 */
 	public function getKeyName()
@@ -203,7 +203,7 @@ class KunenaTableMap
 	 *
 	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
-	 * @link    http://docs.joomla.org/JTable/getDBO
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/getDBO
 	 * @since   Kunena
 	 */
 	public function getDbo()
@@ -306,7 +306,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/setDbo
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/setDbo
 	 * @since   Kunena
 	 */
 	public function setDbo(JDatabaseDriver $db)
@@ -323,7 +323,7 @@ class KunenaTableMap
 	 *
 	 * @return  void
 	 *
-	 * @link    http://docs.joomla.org/JTable/reset
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/reset
 	 * @since   Kunena
 	 */
 	public function reset()
@@ -340,16 +340,16 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to bind an associative array or object to the JTable instance. This
+	 * Method to bind an associative array or object to the \Joomla\CMS\Table\Table instance. This
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed $src    An associative array or object to bind to the JTable instance.
+	 * @param   mixed $src    An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
 	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/bind
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/bind
 	 * @throws  InvalidArgumentException
 	 * @since   Kunena
 	 */
@@ -391,7 +391,7 @@ class KunenaTableMap
 
 	/**
 	 * Method to load all mapped values from the database by primary key and bind the fields
-	 * to the JTable instance properties.
+	 * to the \Joomla\CMS\Table\Table instance properties.
 	 *
 	 * @param   mixed   $keys    An optional primary key value to load the row by, or an array of fields to match.  If not
 	 *                           set the instance property value is used.
@@ -399,7 +399,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True if successful. False if no rows were found.
 	 *
-	 * @link    http://docs.joomla.org/JTable/load
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/load
 	 * @throws  RuntimeException
 	 * @throws  UnexpectedValueException
 	 * @since   Kunena
@@ -459,14 +459,14 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to perform sanity checks on the JTable instance properties to ensure
+	 * Method to perform sanity checks on the \Joomla\CMS\Table\Table instance properties to ensure
 	 * they are safe to store in the database.  Child classes should override this
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
-	 * @link    http://docs.joomla.org/JTable/check
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/check
 	 * @since   Kunena
 	 */
 	public function check()
@@ -475,13 +475,13 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to store mapped rows in the database from the JTable instance properties.
+	 * Method to store mapped rows in the database from the \Joomla\CMS\Table\Table instance properties.
 	 *
 	 * @param   array $filter Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/store
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/store
 	 * @throws  UnexpectedValueException
 	 * @since   Kunena
 	 */
@@ -553,7 +553,7 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a JTable
+	 * Method to provide a shortcut to binding, checking and storing a \Joomla\CMS\Table\Table
 	 * instance to the database table.
 	 *
 	 * @param   array $map    An array of mapped Ids.
@@ -593,7 +593,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/JTable/delete
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/delete
 	 * @throws  UnexpectedValueException
 	 * @since   Kunena
 	 */

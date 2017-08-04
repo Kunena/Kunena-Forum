@@ -69,7 +69,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function getTotal($starttime = null, $endtime = null)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$where = array();
 
 		if (!empty($starttime))
@@ -122,7 +122,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
 				FROM #__kunena_thankyou AS s
 				INNER JOIN #__users AS u
@@ -154,7 +154,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function getTopMessages($limitstart = 0, $limit = 10)
 	{
-		$db         = JFactory::getDBO();
+		$db         = \Joomla\CMS\Factory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
@@ -192,7 +192,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$field = 'targetuserid';
 
 		if (!$target)
@@ -247,7 +247,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$idlist = implode(',', $ids);
 
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT *
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
@@ -284,7 +284,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function recountThankyou()
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Users who have no thank yous, set thankyou count to 0
 		$query = "UPDATE #__kunena_users AS u
@@ -317,7 +317,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	static public function recount()
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Update user thankyou count
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)

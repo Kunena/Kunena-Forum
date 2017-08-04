@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
  *
  * @since  5.0
  */
-class plgKunenaAltaUserPoints extends JPlugin
+class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * Constructor of plgKunenaAltaUserPoints class

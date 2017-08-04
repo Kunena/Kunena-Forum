@@ -18,7 +18,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
 
-$document = JFactory::getDocument();
+$document = \Joomla\CMS\Factory::getDocument();
 $document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxsig . '
 jQuery(function($) {
@@ -143,7 +143,7 @@ jQuery(function($) {
 														<div id="birthdate">
 															<div class="input-append date">
 																<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-																       value="<?php echo $this->user->birthdate == '0001-01-01' ? JFactory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
+																       value="<?php echo $this->user->birthdate == '0001-01-01' ? \Joomla\CMS\Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
 																<span class="add-on"><i class="icon-grid-view-2 "></i></span>
 															</div>
 														</div>

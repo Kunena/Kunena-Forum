@@ -153,13 +153,13 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
@@ -394,13 +394,13 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
@@ -456,13 +456,13 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		$this->_prepareDocument('edit');
@@ -512,14 +512,14 @@ class KunenaViewTopic extends KunenaView
 		if (!isset($profiles [$key]))
 		{
 			// Run events
-			$params = new JRegistry;
+			$params = new \Joomla\Registry\Registry;
 
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
 			$params->set('kunena_layout', $this->state->get('layout'));
 
-			JPluginHelper::importPlugin('kunena');
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
@@ -532,8 +532,8 @@ class KunenaViewTopic extends KunenaView
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$this->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$this->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$this->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$this->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 
@@ -547,7 +547,7 @@ class KunenaViewTopic extends KunenaView
 			}
 
 			// TODO: add context (options) to caching
-			$cache      = JFactory::getCache('com_kunena', 'output');
+			$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
 			$cachegroup = 'com_kunena.messages';
 
@@ -619,7 +619,7 @@ class KunenaViewTopic extends KunenaView
 		$catid = $this->state->get('item.catid');
 		$id    = $this->state->get('item.id');
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JSession::getFormToken() . '=1';
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
 		$this->topicButtons = new JObject;
@@ -677,7 +677,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->enable_threaded_layouts)
 		{
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
+			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
 			{
@@ -695,7 +695,7 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
@@ -718,7 +718,7 @@ class KunenaViewTopic extends KunenaView
 		$mesid        = $this->message->id;
 		$targetuserid = $this->me->userid;
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new JObject;
@@ -774,7 +774,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
@@ -818,7 +818,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			if ($this->config->showthankyou && $this->profile->userid)
 			{
-				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
+				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 
 				// For normal users, show only limited number of thankyou (config->thankyou_max)
 				if (!$this->me->isAdmin() && !$this->me->isModerator())
@@ -866,7 +866,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// TODO: add context (options, template) to caching
-		$cache      = JFactory::getCache('com_kunena', 'output');
+		$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
@@ -1079,13 +1079,13 @@ class KunenaViewTopic extends KunenaView
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
@@ -1104,25 +1104,25 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function redirectBack($anchor = '')
 	{
-		$default  = JUri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$default  = \Joomla\CMS\Uri\Uri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
 		$referrer = $this->app->input->server->getString('HTTP_REFERER');
 
-		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		$uri = \Joomla\CMS\Uri\Uri::getInstance($referrer ? $referrer : $default);
 
-		if (JUri::isInternal($uri->toString()))
+		if (\Joomla\CMS\Uri\Uri::isInternal($uri->toString()))
 		{
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
-			$uri  = new JUri('index.php');
+			$uri  = new \Joomla\CMS\Uri\Uri('index.php');
 			$uri->setQuery($vars);
 
 			// Make sure we do not return into a task.
 			$uri->delVar('task');
-			$uri->delVar(JSession::getFormToken());
+			$uri->delVar(\Joomla\CMS\Session\Session::getFormToken());
 		}
 		else
 		{
-			$uri = JUri::getInstance($default);
+			$uri = \Joomla\CMS\Uri\Uri::getInstance($default);
 		}
 
 		if ($anchor)
@@ -1208,7 +1208,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function _prepareDocument($type)
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive(); // Get the active item
 
 		if ($menu_item)
@@ -1458,7 +1458,7 @@ class KunenaViewTopic extends KunenaView
 		if (!$this->state->get('embedded'))
 		{
 			// TODO: allow translations/overrides
-			$lang   = JFactory::getLanguage();
+			$lang   = \Joomla\CMS\Factory::getLanguage();
 			$length = StringHelper::strlen($lang->getName());
 			$length = 137 - $length;
 
@@ -1501,7 +1501,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return  KunenaControllerDisplay
 	 * @since K4.0
 	 */
-	public function subRequest($path, Jinput $input = null, $options = null)
+	public function subRequest($path, JInput $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

@@ -145,7 +145,7 @@ abstract class KunenaForum
 	 */
 	public static function enabled($checkAdmin = true)
 	{
-		if (!JComponentHelper::isEnabled('com_kunena', true))
+		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena', true))
 		{
 			return false;
 		}
@@ -190,7 +190,7 @@ abstract class KunenaForum
 		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
 
 		// Setup output caching.
-		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		if (!$config->get('cache'))
 		{
@@ -203,9 +203,9 @@ abstract class KunenaForum
 		jimport('joomla.error.log');
 		$options    = array('logger' => 'w3c', 'text_file' => 'kunena.php');
 		$categories = array('kunena');
-		$levels     = JDEBUG || $config->debug ? JLog::ALL :
-			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
-		JLog::addLogger($options, $levels, $categories);
+		$levels     = JDEBUG || $config->debug ? \Joomla\CMS\Log\Log::ALL :
+			\Joomla\CMS\Log\Log::EMERGENCY | \Joomla\CMS\Log\Log::ALERT | \Joomla\CMS\Log\Log::CRITICAL | \Joomla\CMS\Log\Log::ERROR;
+		\Joomla\CMS\Log\Log::addLogger($options, $levels, $categories);
 	}
 
 	/**
@@ -417,13 +417,13 @@ abstract class KunenaForum
 
 		// @var KunenaView $view
 
-		if ($params instanceof JRegistry)
+		if ($params instanceof \Joomla\Registry\Registry)
 		{
 			// Do nothing
 		}
 		else
 		{
-			$params = new JRegistry($params);
+			$params = new \Joomla\Registry\Registry($params);
 		}
 
 		$params->set('layout', $layout);
@@ -482,7 +482,7 @@ abstract class KunenaForum
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
+		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? \Joomla\CMS\Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

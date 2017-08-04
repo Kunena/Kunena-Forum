@@ -24,7 +24,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Edit';
 
 	/**
-	 * @var jUser
+	 * @var \Joomla\CMS\User\User
 	 * @since Kunena
 	 */
 	public $user;
@@ -57,7 +57,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->user    = JFactory::getUser($userid);
+		$this->user    = \Joomla\CMS\Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
@@ -72,7 +72,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

@@ -33,7 +33,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	 */
 	public function renderPosition()
 	{
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 
 		if ($this->position && $document->countModules($this->position))
 		{

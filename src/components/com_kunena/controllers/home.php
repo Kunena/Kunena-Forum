@@ -28,7 +28,7 @@ class KunenaControllerHome extends KunenaController
 	 * @param   bool $cachable
 	 * @param   bool $urlparams
 	 *
-	 * @return JControllerLegacy|void
+	 * @return \Joomla\CMS\Controller\Controller|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -39,8 +39,8 @@ class KunenaControllerHome extends KunenaController
 
 		if (!$home)
 		{
-			JFactory::getApplication()->input->get('view', 'category');
-			JFactory::getApplication()->input->get('layout', 'list');
+			\Joomla\CMS\Factory::getApplication()->input->get('view', 'category');
+			\Joomla\CMS\Factory::getApplication()->input->get('layout', 'list');
 		}
 		else
 		{
@@ -75,11 +75,11 @@ class KunenaControllerHome extends KunenaController
 			// Add query variables from shown menu item
 			foreach ($default->query as $var => $value)
 			{
-				JFactory::getApplication()->input->get($var, $value);
+				\Joomla\CMS\Factory::getApplication()->input->get($var, $value);
 			}
 
 			// Remove query variables coming from the home menu item
-			JFactory::getApplication()->input->get('defaultmenu', null);
+			\Joomla\CMS\Factory::getApplication()->input->get('defaultmenu', null);
 
 			// Set active menu item to point the real page
 			$menu->setActive($default->id);

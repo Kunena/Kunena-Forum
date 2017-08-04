@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-$app    = JFactory::getApplication();
+$app    = \Joomla\CMS\Factory::getApplication();
 $limits = array();
 
 // Make the option list.

@@ -23,9 +23,9 @@ abstract class KunenaMenuHelper
 	 */
 	public static function cleanCache()
 	{
-		// @var JCache|JCacheController $cache
+		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = JFactory::getCache();
+		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->clean('mod_menu');
 	}
 
@@ -33,7 +33,7 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @param   JRegistry $params The module options.
+	 * @param   \Joomla\Registry\Registry $params The module options.
 	 *
 	 * @return    array
 	 * @see        modules/mod_menu/helper.php
@@ -41,23 +41,23 @@ abstract class KunenaMenuHelper
 	 */
 	public static function getList(&$params)
 	{
-		$app  = JFactory::getApplication();
+		$app  = \Joomla\CMS\Factory::getApplication();
 		$menu = $app->getMenu();
 
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
-		$user   = JFactory::getUser();
+		$user   = \Joomla\CMS\Factory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
 		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
-		$cache = JFactory::getCache('mod_menu', '');
+		$cache = \Joomla\CMS\Factory::getCache('mod_menu', '');
 
 		if (!($items = $cache->get($key)))
 		{
 			// Initialise variables.
 			$list = array();
-			$db   = JFactory::getDbo();
+			$db   = \Joomla\CMS\Factory::getDbo();
 
 			$path    = $active->tree;
 			$start   = (int) $params->get('startLevel');

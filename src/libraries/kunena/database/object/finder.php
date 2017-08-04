@@ -73,7 +73,7 @@ abstract class KunenaDatabaseObjectFinder
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
-		$this->db    = JFactory::getDbo();
+		$this->db    = \Joomla\CMS\Factory::getDbo();
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->table . ' AS a');
 	}

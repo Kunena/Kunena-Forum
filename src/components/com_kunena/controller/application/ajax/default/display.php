@@ -55,7 +55,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		{
 			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
-		elseif (!JSession::checkToken())
+		elseif (!\Joomla\CMS\Session\Session::checkToken())
 		{
 			// Invalid access token.
 			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
@@ -104,7 +104,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = JFactory::getDocument();
+		$this->document = \Joomla\CMS\Factory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 	}
@@ -156,6 +156,6 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		echo json_encode($response);
 
 		// It's much faster and safer to exit now than let Joomla to send the response.
-		JFactory::getApplication()->close();
+		\Joomla\CMS\Factory::getApplication()->close();
 	}
 }

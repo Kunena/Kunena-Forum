@@ -142,7 +142,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return;
 		}
 
-		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
+		$permalink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
 		$options = array(
 			'uid'      => $message->id,

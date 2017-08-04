@@ -114,7 +114,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 		else
 		{
-			if (JFactory::getDocument()->getType() != 'feed')
+			if (\Joomla\CMS\Factory::getDocument()->getType() != 'feed')
 			{
 				// Get configuration from menu item.
 				$latestcategory    = $params->get('topics_categories', '');
@@ -167,7 +167,7 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.categories.in', $latestcategory_in);
 
 		// Selection time.
-		if (JFactory::getDocument()->getType() != 'feed')
+		if (\Joomla\CMS\Factory::getDocument()->getType() != 'feed')
 		{
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)
@@ -238,7 +238,7 @@ class KunenaModelTopics extends KunenaModel
 					$total  = 0;
 					$topics = false;
 
-					JPluginHelper::importPlugin('kunena');
+					\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 					$dispatcher = JEventDispatcher::getInstance();
 					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
 
@@ -288,7 +288,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 		else
 		{
-			$time = JFactory::getDate()->toUnix() - ($time * 3600);
+			$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600);
 		}
 
 		$latestcategory    = $this->getState('list.categories');

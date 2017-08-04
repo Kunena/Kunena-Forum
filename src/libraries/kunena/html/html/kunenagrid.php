@@ -252,17 +252,17 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
-		$userid = JFactory::getUser()->get('id');
+		$userid = \Joomla\CMS\Factory::getUser()->get('id');
 
 		$result = false;
 
-		if ($row instanceof JTable)
+		if ($row instanceof \Joomla\CMS\Table\Table)
 		{
 			$result = $row->isCheckedOut($userid);
 		}
 		else
 		{
-			$result = JTable::isCheckedOut($userid, $row->checked_out);
+			$result = \Joomla\CMS\Table\Table::isCheckedOut($userid, $row->checked_out);
 		}
 
 		if ($result)
@@ -449,7 +449,7 @@ abstract class JHtmlKunenaGrid
 		});';
 
 			// Add the behavior to the document head.
-			$document = JFactory::getDocument();
+			$document = \Joomla\CMS\Factory::getDocument();
 			$document->addScriptDeclaration($js);
 
 			$loaded = true;

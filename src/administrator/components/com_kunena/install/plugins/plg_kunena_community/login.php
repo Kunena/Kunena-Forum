@@ -59,7 +59,7 @@ class KunenaLoginCommunity
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = JComponentHelper::getParams('com_users');
+		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{

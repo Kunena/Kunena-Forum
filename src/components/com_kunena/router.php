@@ -53,7 +53,7 @@ function KunenaBuildRoute(&$query)
 
 		if (!isset($menuitems[$Itemid]))
 		{
-			$menuitems[$Itemid] = JFactory::getApplication()->getMenu()->getItem($Itemid);
+			$menuitems[$Itemid] = \Joomla\CMS\Factory::getApplication()->getMenu()->getItem($Itemid);
 
 			if (!$menuitems[$Itemid])
 			{
@@ -286,12 +286,12 @@ function KunenaParseRoute($segments)
 		return array();
 	}
 
-	$profiler = JProfiler::getInstance('Application');
+	$profiler = \Joomla\CMS\Profiler\Profiler::getInstance('Application');
 	KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
 	$starttime = microtime(true);
 
 	// Get current menu item and get query variables from it
-	$active = JFactory::getApplication()->getMenu()->getActive();
+	$active = \Joomla\CMS\Factory::getApplication()->getMenu()->getActive();
 	$vars   = isset($active->query) ? $active->query : array('view' => 'home');
 
 	if (empty($vars['view']) || $vars['view'] == 'home' || $vars['view'] == 'entrypage')

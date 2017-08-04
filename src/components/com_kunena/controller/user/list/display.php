@@ -65,7 +65,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$config = KunenaConfig::getInstance();
 
-		if (!$config->userlist_allowed && JFactory::getUser()->guest)
+		if (!$config->userlist_allowed && \Joomla\CMS\Factory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -84,7 +84,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)
 		{
-			$filter = JAccess::getUsersByGroup(8);
+			$filter = \Joomla\CMS\Access\Access::getUsersByGroup(8);
 		}
 		else
 		{
@@ -126,7 +126,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$pages     = $this->pagination->pagesTotal;
 		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
 
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

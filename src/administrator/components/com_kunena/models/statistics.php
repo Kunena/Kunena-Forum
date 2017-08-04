@@ -17,7 +17,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.0
  */
-class KunenaAdminModelStatistics extends JModelList
+class KunenaAdminModelStatistics extends \Joomla\CMS\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -53,7 +53,7 @@ class KunenaAdminModelStatistics extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -63,8 +63,8 @@ class KunenaAdminModelStatistics extends JModelList
 			$this->context .= '.' . $layout;
 		}
 
-		$now   = new JDate;
-		$month = new JDate('-1 month');
+		$now   = new \Joomla\CMS\Date\Date;
+		$month = new \Joomla\CMS\Date\Date('-1 month');
 
 		$filter_active = '';
 
@@ -173,8 +173,8 @@ class KunenaAdminModelStatistics extends JModelList
 
 		if ($start || $stop)
 		{
-			$start = $start ? new JDate($start) : null;
-			$stop  = $stop ? new JDate($stop . ' +1 day') : null;
+			$start = $start ? new \Joomla\CMS\Date\Date($start) : null;
+			$stop  = $stop ? new \Joomla\CMS\Date\Date($stop . ' +1 day') : null;
 			$finder->filterByTime($start, $stop);
 		}
 

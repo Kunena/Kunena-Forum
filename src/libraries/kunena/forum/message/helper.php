@@ -173,7 +173,7 @@ abstract class KunenaForumMessageHelper
 		$where       = isset($params['where']) ? (string) $params['where'] : '';
 		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
 
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// FIXME: use right config setting
 		if ($limit < 1 && empty($params['nolimit']))
@@ -255,7 +255,7 @@ abstract class KunenaForumMessageHelper
 		}
 		elseif ($starttime > 0)
 		{
-			$starttime = JFactory::getDate()->toUnix() - ($starttime * 3600);
+			$starttime = \Joomla\CMS\Factory::getDate()->toUnix() - ($starttime * 3600);
 		}
 
 		if ($starttime > 0)
@@ -408,7 +408,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = JFactory::getDBO();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		$db->setQuery(
 			"SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
@@ -462,7 +462,7 @@ abstract class KunenaForumMessageHelper
 	 */
 	public static function recount($topicids = false)
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		if (is_array($topicids))
 		{
@@ -522,7 +522,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = JFactory::getDBO();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -565,7 +565,7 @@ abstract class KunenaForumMessageHelper
 			return;
 		}
 
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		$idlist = implode(',', $ids);
 		$query  = "SELECT m.*, t.message
@@ -599,7 +599,7 @@ abstract class KunenaForumMessageHelper
 	 */
 	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT m.*, t.message
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid

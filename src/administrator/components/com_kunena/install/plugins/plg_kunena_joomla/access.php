@@ -110,7 +110,7 @@ class KunenaAccessJoomla
 		if (!isset($groups[$accesstype]))
 		{
 			// Cache all group names.
-			$db    = JFactory::getDBO();
+			$db    = \Joomla\CMS\Factory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id, title');
 
@@ -278,7 +278,7 @@ class KunenaAccessJoomla
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
-		$groups = (array) JAccess::getGroupsByUser($userid, true);
+		$groups = (array) \Joomla\CMS\Access\Access::getGroupsByUser($userid, true);
 		$post   = array_intersect($groups, (array) $category->params->get('access_post', array(2, 6, 8)));
 		$reply  = array_intersect($groups, (array) $category->params->get('access_reply', array(2, 6, 8)));
 
@@ -301,17 +301,17 @@ class KunenaAccessJoomla
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
-		$user = JFactory::getUser($userid);
+		$user = \Joomla\CMS\Factory::getUser($userid);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof JUser))
+		if (!($user instanceof \Joomla\CMS\User\User))
 		{
-			$user = JUser::getInstance();
+			$user = \Joomla\CMS\User\User::getInstance();
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) JAccess::getGroupsByUser($user->id, true);
-		$groups       = (array) JAccess::getGroupsByUser($user->id, false);
+		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
+		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
 
 		$catlist = array();
 
@@ -401,7 +401,7 @@ class KunenaAccessJoomla
 		if (empty(self::$viewLevels))
 		{
 			// Get a database object.
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 
 			// Build the base query.
 			$query = $db->getQuery(true);
@@ -434,7 +434,7 @@ class KunenaAccessJoomla
 	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
 	{
 		// Get a database object.
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
 		$test = $recursive ? '>=' : '=';
 
@@ -492,7 +492,7 @@ class KunenaAccessJoomla
 		}
 
 		// Get all asset rules
-		$rules = JAccess::getAssetRules($asset, true);
+		$rules = \Joomla\CMS\Access\Access::getAssetRules($asset, true);
 		$data  = $rules->getData();
 
 		// Get all action rules for the asset

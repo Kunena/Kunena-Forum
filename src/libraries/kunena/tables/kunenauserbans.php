@@ -17,7 +17,7 @@ require_once __DIR__ . '/kunena.php';
  * Provides access to the #__kunena_users_banned table
  * @since Kunena
  */
-class TableKunenaUserBans extends JTable
+class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 {
 	/**
 	 * @var null
@@ -138,7 +138,7 @@ class TableKunenaUserBans extends JTable
 			return false;
 		}
 
-		$now = new JDate;
+		$now = new \Joomla\CMS\Date\Date;
 
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
@@ -191,7 +191,7 @@ class TableKunenaUserBans extends JTable
 			return false;
 		}
 
-		$now = new JDate;
+		$now = new \Joomla\CMS\Date\Date;
 
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}

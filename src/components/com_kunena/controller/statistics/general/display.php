@@ -42,7 +42,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		if (!$this->config->statslink_allowed && JFactory::getUser()->guest)
+		if (!$this->config->statslink_allowed && \Joomla\CMS\Factory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -63,7 +63,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

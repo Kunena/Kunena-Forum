@@ -18,7 +18,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since  2.0
  */
-class KunenaAdminModelUsers extends JModelList
+class KunenaAdminModelUsers extends \Joomla\CMS\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -64,7 +64,7 @@ class KunenaAdminModelUsers extends JModelList
 	{
 		$this->context = 'com_kunena.admin.users';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout        = $app->input->get('layout');
@@ -242,7 +242,7 @@ class KunenaAdminModelUsers extends JModelList
 
 		if ($filter !== '')
 		{
-			$now = new JDate;
+			$now = new \Joomla\CMS\Date\Date;
 
 			if ($filter)
 			{
@@ -329,7 +329,7 @@ class KunenaAdminModelUsers extends JModelList
 		}
 		catch (RuntimeException $e)
 		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return false;
 		}

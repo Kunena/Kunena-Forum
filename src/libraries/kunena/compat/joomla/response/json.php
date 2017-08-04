@@ -10,10 +10,10 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Compatibility layer for JResponseJson
+ * Compatibility layer for \Joomla\CMS\Response\JsonResponse
  * @since Kunena
  */
-class KunenaCompatResponseJson extends JResponseJson
+class KunenaCompatResponseJson extends \Joomla\CMS\Response\JsonResponse
 {
 
 }

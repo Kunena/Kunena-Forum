@@ -46,7 +46,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -72,7 +72,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		}
 
 		$user = KunenaFactory::getUser($user);
-		$my   = JFactory::getUser();
+		$my   = \Joomla\CMS\Factory::getUser();
 
 		if ($user === false)
 		{
@@ -93,7 +93,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('u.*', 'ju.username', 'ju.email', 'ju.lastvisitDate'), array(null, null, 'last_login')))
 			->from('#__alpha_userpoints AS a')

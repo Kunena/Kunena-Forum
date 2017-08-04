@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 // @var KunenaAdminViewSmiley $this
 
-$iconPath = json_encode(JUri::root(true) . '/');
+$iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
 	"function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;

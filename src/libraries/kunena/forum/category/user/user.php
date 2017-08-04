@@ -46,7 +46,7 @@ class KunenaForumCategoryUser extends JObject
 	public function __construct($category = 0, $user = null)
 	{
 		// Always fill empty data
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 
 		// Create the table object
 		$table = $this->getTable();
@@ -108,7 +108,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   string $type   The categories table name to be used
 	 * @param   string $prefix The categories table prefix to be used
 	 *
-	 * @return JTable|TableKunenaUserCategories        The categories table object
+	 * @return \Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
@@ -123,7 +123,7 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**

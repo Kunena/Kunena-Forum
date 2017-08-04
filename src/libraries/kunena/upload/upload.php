@@ -142,9 +142,9 @@ class KunenaUpload
 	{
 		$filename = $filename ? $filename : $this->filename;
 
-		$user    = JFactory::getUser();
-		$session = JFactory::getSession();
-		$token   = JFactory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
+		$user    = \Joomla\CMS\Factory::getUser();
+		$session = \Joomla\CMS\Factory::getSession();
+		$token   = \Joomla\CMS\Factory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
 		list($name, $ext) = $this->splitFilename($filename);
 
 		return md5("{$name}.{$token}.{$ext}");
@@ -460,7 +460,7 @@ class KunenaUpload
 	 */
 	public function ajaxResponse($content)
 	{
-		// TODO: Joomla 3.1+ uses JResponseJson (we just emulate it for now).
+		// TODO: Joomla 3.1+ uses \Joomla\CMS\Response\JsonResponse (we just emulate it for now).
 		$response           = new StdClass;
 		$response->success  = true;
 		$response->message  = null;
@@ -589,7 +589,7 @@ class KunenaUpload
 	/**
 	 * Upload file by passing it by HTML input
 	 *
-	 * @param   array  $fileInput   The file object returned by JInput
+	 * @param   array  $fileInput   The file object returned by \Joomla\CMS\Input\Input
 	 * @param   string $destination The path of destination of file uploaded
 	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *

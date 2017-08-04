@@ -68,7 +68,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topic = $parent->getTopic();
 		}
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -93,17 +93,17 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
-			if (JPluginHelper::isEnabled('captcha'))
+			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 			{
-				$plugin = JPluginHelper::getPlugin('captcha');
-				$params = new JRegistry($plugin[0]->params);
+				$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
+				$params = new \Joomla\Registry\Registry($plugin[0]->params);
 
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
 
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
-					JPluginHelper::importPlugin('captcha');
+					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$dispatcher           = JEventDispatcher::getInstance();
 					$result               = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 					$output               = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
@@ -122,13 +122,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$parent->tryAuthorise('reply');
 
 		// Run event.
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
@@ -159,10 +159,10 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

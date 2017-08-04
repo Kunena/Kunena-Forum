@@ -67,7 +67,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		global $_CB_framework;
-		$app  = JFactory::getApplication();
+		$app  = \Joomla\CMS\Factory::getApplication();
 		$user = KunenaFactory::getUser($user);
 
 		$cbclient_id = $app->getClientId() == 0 ? $cbclient_id = 1 : $cbclient_id = 2;

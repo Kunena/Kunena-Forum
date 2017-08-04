@@ -158,7 +158,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$page = $this->pagination->pagesCurrent;
 
 		if ($page > 1)
@@ -198,11 +198,11 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
 
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
-		$config = JFactory::getConfig();
+		$doc = \Joomla\CMS\Factory::getDocument();
+		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '' && $this->topics)

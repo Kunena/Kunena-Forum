@@ -76,7 +76,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->user              = JFactory::getUser();
+		$this->user              = \Joomla\CMS\Factory::getUser();
 		$this->me                = KunenaUserHelper::getMyself();
 		$this->userId            = $this->user->get('id');
 		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
@@ -145,7 +145,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 
 		// Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 		JHtml::_('bootstrap.modal', 'collapseModal');
 		$title = JText::_('JTOOLBAR_BATCH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">

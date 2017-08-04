@@ -35,7 +35,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function permdel()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -44,7 +44,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$message = '';
-		$ids     = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids     = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -87,7 +87,7 @@ class KunenaControllerTopics extends KunenaController
 					unset($instance);
 				}
 
-				$db    = JFactory::getDBO();
+				$db    = \Joomla\CMS\Factory::getDBO();
 				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
 
@@ -133,7 +133,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -141,7 +141,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -196,7 +196,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function restore()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -204,7 +204,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -259,7 +259,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function approve()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -267,7 +267,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -323,7 +323,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function move()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -421,7 +421,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function unfavorite()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -429,7 +429,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -467,7 +467,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function unsubscribe()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -475,7 +475,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -498,7 +498,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function approve_posts()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -506,7 +506,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -546,7 +546,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function delete_posts()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -554,7 +554,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -593,7 +593,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function restore_posts()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -601,7 +601,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -640,7 +640,7 @@ class KunenaControllerTopics extends KunenaController
 	 */
 	public function permdel_posts()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -648,7 +648,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;

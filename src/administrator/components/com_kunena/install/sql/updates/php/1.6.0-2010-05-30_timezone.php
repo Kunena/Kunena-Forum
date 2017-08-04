@@ -22,7 +22,7 @@ function kunena_160_2010_05_30_timezone($parent)
 {
 	$result = null;
 	$config = KunenaFactory::getConfig();
-	$db     = JFactory::getDbo();
+	$db     = \Joomla\CMS\Factory::getDbo();
 
 	// We need to fix all timestamps to UTC (if not already done)
 	if ($config->get('board_ofset', '0.00') != '0.00')

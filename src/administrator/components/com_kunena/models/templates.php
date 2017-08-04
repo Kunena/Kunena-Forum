@@ -19,7 +19,7 @@ jimport('joomla.html.pagination');
  *
  * @since  2.0
  */
-class KunenaAdminModelTemplates extends JModelAdmin
+class KunenaAdminModelTemplates extends \Joomla\CMS\Model\Admin
 {
 	/**
 	 * @param   array $config
@@ -30,7 +30,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$this->app    = JFactory::getApplication();
+		$this->app    = \Joomla\CMS\Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 	}
@@ -43,7 +43,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	{
 		$this->context = 'com_kunena.admin.templates';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -69,7 +69,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see   JModelForm::getForm()
+	 * @see   \Joomla\CMS\Model\Form::getForm()
 	 *
 	 * @param   array $data
 	 * @param   bool  $loadData
@@ -95,13 +95,13 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @see   JModelForm::loadFormData()
+	 * @see   \Joomla\CMS\Model\Form::loadFormData()
 	 * @since Kunena
 	 */
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
 
 		if (empty($data))
 		{
@@ -222,7 +222,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
-		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = \Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;
 	}
@@ -241,7 +241,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$input     = $app->input;
 		$old_state = $app->getUserState($key);
 		$cur_state = ($old_state !== null) ? $old_state : $default;
@@ -283,7 +283,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 		// Create the pagination object.
 		$limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
-		$page  = new JPagination($this->getTotal(), $this->getStart(), $limit);
+		$page  = new \Joomla\CMS\Pagination\Pagination($this->getTotal(), $this->getStart(), $limit);
 
 		// Add the object to the internal cache.
 		$this->cache[$store] = $page;

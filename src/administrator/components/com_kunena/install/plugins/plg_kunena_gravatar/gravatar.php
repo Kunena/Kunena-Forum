@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
  * Class plgKunenaGravatar
  * @since Kunena
  */
-class plgKunenaGravatar extends JPlugin
+class plgKunenaGravatar extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaGravatar constructor.

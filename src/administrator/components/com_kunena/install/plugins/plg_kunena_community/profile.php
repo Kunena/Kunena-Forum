@@ -46,7 +46,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -83,7 +83,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT cu.userid AS id, cu.view AS count
 			FROM #__community_users AS cu
 			INNER JOIN #__users AS u ON u.id=cu.userid

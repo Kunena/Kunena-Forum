@@ -22,7 +22,7 @@ function kunena_160_2010_05_30_polls($parent)
 {
 	// Import filesystem libraries.
 	jimport('joomla.filesystem.folder');
-	$db = JFactory::getDbo();
+	$db = \Joomla\CMS\Factory::getDbo();
 
 	$upgraded = false;
 

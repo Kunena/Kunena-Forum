@@ -45,7 +45,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->guest)
 		{
@@ -75,7 +75,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
 			{
-				$url = rtrim(JURI::root(), '/') . '/' . $user->getAlias(false);
+				$url = rtrim(\Joomla\CMS\Uri\Uri::root(), '/') . '/' . $user->getAlias(false);
 
 				return $url;
 			}

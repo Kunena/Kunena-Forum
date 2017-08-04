@@ -36,7 +36,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
-		$this->input  = JFactory::getApplication()->input;
+		$this->input  = \Joomla\CMS\Factory::getApplication()->input;
 
 		parent::__construct($config);
 		$this->baseurl     = 'administrator/index.php?option=com_kunena&view=plugins';
@@ -58,7 +58,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		$this->registerTask('orderup', 'reorder');
 		$this->registerTask('orderdown', 'reorder');
 
-		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
+		\Joomla\CMS\Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
 	/**
@@ -92,17 +92,17 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function publish()
 	{
 		// Check for request forgeries
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid   = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid   = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'array');
 		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task  = $this->getTask();
 		$value = Joomla\Utilities\ArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid))
 		{
-			JLog::add(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), JLog::WARNING, 'jerror');
+			\Joomla\CMS\Log\Log::add(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), \Joomla\CMS\Log\Log::WARNING, 'jerror');
 		}
 		else
 		{
@@ -115,7 +115,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 			// Publish the items.
 			if (!$model->publish($cid, $value))
 			{
-				JLog::add($model->getError(), JLog::WARNING, 'jerror');
+				\Joomla\CMS\Log\Log::add($model->getError(), \Joomla\CMS\Log\Log::WARNING, 'jerror');
 			}
 			else
 			{
@@ -158,9 +158,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function reorder()
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
+		$ids = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
 		$model  = $this->getModel();
@@ -194,7 +194,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function saveorder()
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Get the input
 		$pks   = $this->input->post->get('cid', array(), 'array');
@@ -238,9 +238,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function checkin()
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
+		$ids = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
 
 		$model  = $this->getModel();
 		$return = $model->checkin($ids);

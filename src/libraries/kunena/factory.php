@@ -183,7 +183,7 @@ abstract class KunenaFactory
 
 		if (empty($loaded["{$client}/{$file}"]))
 		{
-			$lang = JFactory::getLanguage();
+			$lang = \Joomla\CMS\Factory::getLanguage();
 
 			$english = false;
 

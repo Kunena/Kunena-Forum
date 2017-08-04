@@ -119,16 +119,16 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Return JUri object pointing to the Announcement layout.
+	 * Return \Joomla\CMS\Uri\Uri object pointing to the Announcement layout.
 	 *
 	 * @param   string $layout
 	 *
-	 * @return JUri
+	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getUri($layout = 'default')
 	{
-		$uri = new JUri('index.php?option=com_kunena&view=announcement');
+		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{
@@ -160,16 +160,16 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Return JUri object pointing to the Announcement task.
+	 * Return \Joomla\CMS\Uri\Uri object pointing to the Announcement task.
 	 *
 	 * @param   string $task
 	 *
-	 * @return JUri
+	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getTaskUri($task = null)
 	{
-		$uri = new JUri('index.php?option=com_kunena&view=announcement');
+		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($task)
 		{
@@ -183,7 +183,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 		if ($task)
 		{
-			$uri->setVar(JSession::getFormToken(), 1);
+			$uri->setVar(\Joomla\CMS\Session\Session::getFormToken(), 1);
 		}
 
 		return $uri;
@@ -403,9 +403,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 */
 	protected function saveInternal()
 	{
-		// @var JCache|JCacheController $cache
+		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 		$cache->remove('announcement', 'global');
 	}
 

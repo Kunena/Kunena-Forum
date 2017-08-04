@@ -23,7 +23,7 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybo
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 $name           = preg_replace('/.html/', '', $attachment->getUrl());
 
-if (JApplicationCms::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
+if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
 {
 	$name = preg_replace('/.html/', '', $attachment->getUrl());
 }

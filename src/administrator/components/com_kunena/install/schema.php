@@ -22,7 +22,7 @@ jimport('joomla.application.component.model');
  *
  * @since  K1.6
  */
-class KunenaModelSchema extends JModelLegacy
+class KunenaModelSchema extends \Joomla\CMS\Model\Model
 {
 	/**
 	 * Flag to indicate model state initialization.
@@ -81,7 +81,7 @@ class KunenaModelSchema extends JModelLegacy
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db = JFactory::getDBO();
+		$this->db = \Joomla\CMS\Factory::getDBO();
 	}
 
 	/**

@@ -57,7 +57,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	public function getCategoryActions()
 	{
 		$category = $this->category;
-		$token    = '&' . JSession::getFormToken() . '=1';
+		$token    = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
 		$actions  = array();
 
 		// Is user allowed to post new topic?

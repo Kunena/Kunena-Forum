@@ -57,7 +57,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		if (JPluginHelper::isEnabled('kunena', 'powered'))
+		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$this->baseurl  = 'index.php?option=com_kunena';
 			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
@@ -104,7 +104,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

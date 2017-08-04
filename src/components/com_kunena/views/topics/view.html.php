@@ -138,13 +138,13 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
 
@@ -156,7 +156,7 @@ class KunenaViewTopics extends KunenaView
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
-			$cache       = JFactory::getCache('com_kunena', 'output');
+			$cache       = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup  = 'com_kunena.topics';
 
@@ -240,13 +240,13 @@ class KunenaViewTopics extends KunenaView
 		$this->position = 0;
 
 		// Run events
-		$params = new JRegistry;
+		$params = new \Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 
@@ -259,7 +259,7 @@ class KunenaViewTopics extends KunenaView
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
-			$cache       = JFactory::getCache('com_kunena', 'output');
+			$cache       = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
 			$cachegroup  = 'com_kunena.posts';
 

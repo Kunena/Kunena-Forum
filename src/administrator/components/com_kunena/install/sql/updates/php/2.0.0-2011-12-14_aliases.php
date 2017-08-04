@@ -50,7 +50,7 @@ function kunena_200_2011_12_14_aliases($parent)
 
 		// Create SEF names
 		$aliasUtf[$category->id] = kStringURLSafe($category->name);
-		$aliasLit[$category->id] = JFilterOutput::stringURLSafe($category->name);
+		$aliasLit[$category->id] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($category->name);
 	}
 
 	// Sort aliases by category id (oldest ID accepts also sefcat format..
@@ -122,7 +122,7 @@ function kunena_200_2011_12_14_aliases($parent)
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = JFactory::getDbo();
+	$db    = \Joomla\CMS\Factory::getDbo();
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();
@@ -149,7 +149,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = JFactory::getDbo();
+	$db    = \Joomla\CMS\Factory::getDbo();
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();

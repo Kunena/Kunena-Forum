@@ -327,7 +327,7 @@ class Com_KunenaInstallerScript
 				JFile::copy($file, $filenew);
 			}
 
-			$db    = JFactory::getDBO();
+			$db    = \Joomla\CMS\Factory::getDBO();
 			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
 			$db->setQuery($query);
 			$db->execute();
@@ -368,7 +368,7 @@ class Com_KunenaInstallerScript
 	 */
 	public function checkRequirements($version)
 	{
-		$db   = JFactory::getDbo();
+		$db   = \Joomla\CMS\Factory::getDbo();
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
@@ -405,7 +405,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkVersion($name, $version)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		$major = $minor = 0;
 
@@ -446,7 +446,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkDbo($name, $types)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		if (in_array($name, $types))
 		{
@@ -468,7 +468,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkExtensions($extensions)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		$pass = 1;
 
@@ -494,7 +494,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkKunena($version)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -514,7 +514,7 @@ class Com_KunenaInstallerScript
 			return false;
 		}
 
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Check if Kunena can be found from the database
 		$table = $db->getPrefix() . 'kunena_version';
@@ -654,7 +654,7 @@ class Com_KunenaInstallerScript
 	 */
 	public function convertTablesToUtf8mb4()
 	{
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
 		// This is only required for MySQL databases
 		$serverType = $db->getServerType();

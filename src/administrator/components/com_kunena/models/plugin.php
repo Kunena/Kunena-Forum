@@ -18,7 +18,7 @@ jimport('joomla.application.component.modeladmin');
  * @subpackage  com_plugins
  * @since       1.6
  */
-class KunenaAdminModelPlugin extends JModelAdmin
+class KunenaAdminModelPlugin extends \Joomla\CMS\Model\Admin
 {
 	/**
 	 * @var        string    The help screen key for the module.
@@ -126,7 +126,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
+		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
 
 		if (empty($data))
 		{
@@ -152,7 +152,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	{
 		// Get the dispatcher and load the users plugins.
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('content');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
 		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
@@ -160,7 +160,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			JFactory::getApplication()->enqueueMessage($dispatcher->getError());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($dispatcher->getError());
 		}
 	}
 
@@ -189,7 +189,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			// Check for a table object error.
 			if ($return === false && $table->getError())
 			{
-				JFactory::getApplication()->enqueueMessage($table->getError());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError());
 
 				return $false;
 			}
@@ -199,7 +199,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			$this->_cache[$pk] = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
 
 			// Convert the params field to an array.
-			$registry = new JRegistry;
+			$registry = new \Joomla\Registry\Registry;
 			$registry->loadString($table->params);
 			$this->_cache[$pk]->params = $registry->toArray();
 
@@ -226,12 +226,12 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   string $prefix A prefix for the table class name. Optional.
 	 * @param   array  $config Configuration array for model. Optional.
 	 *
-	 * @return  JTable    A database object
+	 * @return  \Joomla\CMS\Table\Table    A database object
 	 * @since Kunena
 	 */
-	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
+	public function getTable($type = 'Extension', $prefix = '\Joomla\CMS\Table\Table', $config = array())
 	{
-		return JTable::getInstance($type, $prefix, $config);
+		return \Joomla\CMS\Table\Table::getInstance($type, $prefix, $config);
 	}
 
 	/**
@@ -250,7 +250,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		// Execute the parent method.
 		parent::populateState();
 
-		$app = JFactory::getApplication('administrator');
+		$app = \Joomla\CMS\Factory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = $app->input->getInt('extension_id');
@@ -258,7 +258,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	}
 
 	/**
-	 * @param   JForm  $form  A form object.
+	 * @param   \JForm  $form  A form object.
 	 * @param   mixed  $data  The data expected for the form.
 	 * @param   string $group Form group.
 	 *
@@ -266,14 +266,14 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @throws    Exception if there is an error in the form event.
 	 * @since   1.6
 	 */
-	protected function preprocessForm(JForm $form, $data, $group = 'content')
+	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
 		$folder  = $this->getState('item.folder');
 		$element = $this->getState('item.element');
-		$lang    = JFactory::getLanguage();
+		$lang    = \Joomla\CMS\Factory::getLanguage();
 
 		// Load the core and/or local language sys file(s) for the ordering field.
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = 'SELECT element' .
 			' FROM #__extensions' .
 			' WHERE (type =' . $db->Quote('plugin') . 'AND folder=' . $db->Quote($folder) . ')';
@@ -290,7 +290,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 
 		if (empty($folder) || empty($element))
 		{
-			$app = JFactory::getApplication();
+			$app = \Joomla\CMS\Factory::getApplication();
 			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
 		}
 
@@ -368,7 +368,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	public function save($data)
 	{
 		// Load the extension plugin group.
-		JPluginHelper::importPlugin('extension');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('extension');
 
 		// Setup type
 		$data['type'] = 'plugin';

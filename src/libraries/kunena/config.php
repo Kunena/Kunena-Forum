@@ -1241,7 +1241,7 @@ class KunenaConfig extends JObject
 	 * @since  K5.1.0
 	 */
 	public $stopforumspam_key = '';
-	
+
 	/**
 	 *
 	 * @since Kunena
@@ -1261,9 +1261,9 @@ class KunenaConfig extends JObject
 
 		if (!$instance)
 		{
-			// @var JCache|JCacheController $cache
+			// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-			$cache    = JFactory::getCache('com_kunena', 'output');
+			$cache    = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
 			if (!$instance)
@@ -1294,7 +1294,7 @@ class KunenaConfig extends JObject
 	 */
 	public function save()
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Perform custom validation of config data before we write it.
 		$this->check();
@@ -1337,7 +1337,7 @@ class KunenaConfig extends JObject
 	 */
 	public function load($userinfo = null)
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
 
 		try
@@ -1359,7 +1359,7 @@ class KunenaConfig extends JObject
 		$this->check();
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$plugins = array();
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
@@ -1370,7 +1370,7 @@ class KunenaConfig extends JObject
 			{
 				$this->bind($registry->toArray());
 			}
-			elseif ($name && $registry instanceof JRegistry)
+			elseif ($name && $registry instanceof \Joomla\Registry\Registry)
 			{
 				$this->plugins[$name] = $registry;
 			}
@@ -1380,14 +1380,14 @@ class KunenaConfig extends JObject
 	/**
 	 * @param   string $name
 	 *
-	 * @return JRegistry
+	 * @return \Joomla\Registry\Registry
 	 *
 	 * @internal
 	 * @since Kunena
 	 */
 	public function getPlugin($name)
 	{
-		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry;
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new \Joomla\Registry\Registry;
 	}
 
 	/**
@@ -1414,6 +1414,6 @@ class KunenaConfig extends JObject
 	{
 		$email = $this->get('email');
 
-		return !empty($email) ? $email : JFactory::getApplication()->get('mailfrom', '');
+		return !empty($email) ? $email : \Joomla\CMS\Factory::getApplication()->get('mailfrom', '');
 	}
 }

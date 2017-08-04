@@ -59,13 +59,13 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		$this->SetSmileyDir(JPATH_ROOT);
-		$this->SetSmileyURL($relative ? JUri::root(true) : rtrim(JUri::root(), '/'));
+		$this->SetSmileyURL($relative ? \Joomla\CMS\Uri\Uri::root(true) : rtrim(\Joomla\CMS\Uri\Uri::root(), '/'));
 		$this->SetDetectURLs(true);
 		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher->trigger('onKunenaBbcodeConstruct', array($this));
 	}
 
@@ -182,7 +182,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 			if (isset($video))
 			{
-				$uri = JURI::getInstance();
+				$uri = \Joomla\CMS\Uri\Uri::getInstance();
 
 				if ($uri->isSSL())
 				{
@@ -391,10 +391,10 @@ class KunenaBbcode extends NBBC_BBCode
 	public function canCloakEmail(&$params)
 	{
 
-		if (JPluginHelper::isEnabled('content', 'emailcloak'))
+		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
-			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
-			$params = new JRegistry($plugin->params);
+			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
+			$params = new \Joomla\Registry\Registry($plugin->params);
 
 			if ($params->get('mode', 1))
 			{
@@ -1086,7 +1086,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	{
 		if (!KunenaFactory::getConfig()->disemoticons)
 		{
-			$db    = JFactory::getDBO();
+			$db    = \Joomla\CMS\Factory::getDBO();
 			$query = "SELECT code, location FROM #__kunena_smileys";
 			$db->setQuery($query);
 			$smileys = $db->loadObjectList();
@@ -1406,9 +1406,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return '[' . ($default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
 		}
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 		$title    = $default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER');
-		$hidden   = ($document instanceof JDocumentHTML);
+		$hidden   = ($document instanceof \Joomla\CMS\Document\HtmlDocument);
 
 		$layout = KunenaLayout::factory('BBCode/Spoiler');
 
@@ -1453,7 +1453,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$me = KunenaUserHelper::getMyself();
 
-		if (!JFactory::getUser()->guest)
+		if (!\Joomla\CMS\Factory::getUser()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hidden');
 
@@ -1566,10 +1566,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof \Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
@@ -1647,16 +1647,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$lang = JFactory::getLanguage();
+		$lang = \Joomla\CMS\Factory::getLanguage();
 		$lang->load('com_content');
 
 		$articleid = intval($content);
 
 		$config = KunenaFactory::getConfig();
-		$user   = JFactory::getUser();
-		$db     = JFactory::getDBO();
+		$user   = \Joomla\CMS\Factory::getUser();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		/** @var JSite $site */
-		$site = JFactory::getApplication('site');
+		$site = \Joomla\CMS\Factory::getApplication('site');
 
 		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
 			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
@@ -1671,7 +1671,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			// Get credentials to check if the user has right to see the article
 			$params   = $site->getParams('com_content');
-			$registry = new JRegistry;
+			$registry = new \Joomla\Registry\Registry;
 			$registry->loadString($article->attribs);
 			$article->params = clone $params;
 			$article->params->merge($registry);
@@ -1755,7 +1755,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				// Identify the source of the event to be Kunena itself
 				// this is important to avoid recursive event behaviour with our own plugins
 				$params->set('ksource', 'kunena');
-				JPluginHelper::importPlugin('content');
+				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onContentPrepare', array('text', &$article, &$params, 0));
 				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
@@ -2071,7 +2071,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 		}
 
-		$uri = JURI::getInstance();
+		$uri = \Joomla\CMS\Uri\Uri::getInstance();
 
 		if ($uri->isSSL() && $vid ["type"] == 'youtube')
 		{
@@ -2279,7 +2279,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			if ($attachment->isImage())
 			{
-				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && JFactory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2288,7 +2288,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 			elseif ($attachment->isVideo())
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2297,7 +2297,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 			else
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2430,7 +2430,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			->set('size', 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (JFactory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
+		if (\Joomla\CMS\Factory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
 		{
 			// Hide between content from non registered users
 			return (string) $layout
@@ -2519,7 +2519,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0)
+		if (\Joomla\CMS\Factory::getUser()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
 			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
@@ -2671,7 +2671,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// FIXME: use AJAX instead...
 		jimport('joomla.filesystem.folder');
 		$config          = KunenaFactory::getConfig();
-		$uri             = JURI::getInstance();
+		$uri             = \Joomla\CMS\Uri\Uri::getInstance();
 		$consumer_key    = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
@@ -2692,12 +2692,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			$url = 'https://api.twitter.com/oauth2/token';
 
-			$options = new JRegistry;
+			$options = new \Joomla\Registry\Registry;
 
-			$transport = new JHttpTransportStream($options);
+			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new JHttp($options, $transport);
+			$http = new \Joomla\CMS\Http\Http($options, $transport);
 
 			$headers = array(
 				'Authorization' => "Basic " . $b64_bearer_token_credentials,
@@ -2730,12 +2730,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			$url = 'https://api.twitter.com/1.1/statuses/show.json?id=' . $tweetid;
 
-			$options = new JRegistry;
+			$options = new \Joomla\Registry\Registry;
 
-			$transport = new JHttpTransportStream($options);
+			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new JHttp($options, $transport);
+			$http = new \Joomla\CMS\Http\Http($options, $transport);
 
 			$headers = array(
 				'Authorization' => "Bearer " . $this->token,
@@ -2876,12 +2876,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (is_numeric($ItemID) && $config->ebay_api_key && ini_get('allow_url_fopen'))
 		{
-			$options = new JRegistry;
+			$options = new \Joomla\Registry\Registry;
 
-			$transport = new JHttpTransportStream($options);
+			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new JHttp($options, $transport);
+			$http = new \Joomla\CMS\Http\Http($options, $transport);
 
 			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
 
@@ -2907,7 +2907,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 */
 	public static function getEbayItemFromCache($ItemID)
 	{
-		$cache = JFactory::getCache('Kunena_ebay_request');
+		$cache = \Joomla\CMS\Factory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
 		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
 		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);

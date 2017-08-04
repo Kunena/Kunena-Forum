@@ -15,7 +15,7 @@ jimport('joomla.utilities.date');
  * Class KunenaDate
  * @since Kunena
  */
-class KunenaDate extends JDate
+class KunenaDate extends \Joomla\CMS\Date\Date
 {
 	/**
 	 * @param   string $date
@@ -47,7 +47,7 @@ class KunenaDate extends JDate
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;
 		$output = '';
-		$diff   = $this->diff(new JDate);
+		$diff   = $this->diff(new \Joomla\CMS\Date\Date);
 
 		foreach ($diff as $name => $count)
 		{
@@ -168,8 +168,8 @@ class KunenaDate extends JDate
 
 		if (!$offset)
 		{
-			$app = JFactory::getApplication();
-			$my  = JFactory::getUser();
+			$app = \Joomla\CMS\Factory::getApplication();
+			$my  = \Joomla\CMS\Factory::getUser();
 
 			if ($my->id)
 			{
@@ -194,7 +194,7 @@ class KunenaDate extends JDate
 		// Today and Yesterday?
 		if (end($modearr) == 'today')
 		{
-			$now = JFactory::getDate('now');
+			$now = \Joomla\CMS\Factory::getDate('now');
 
 			if ($offset)
 			{

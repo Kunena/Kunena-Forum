@@ -21,7 +21,7 @@ if ($config->attachment_protection)
 }
 else
 {
-	$url = JUri::root() . $attachment->getUrl();
+	$url = \Joomla\CMS\Uri\Uri::root() . $attachment->getUrl();
 	$src = $url;
 }
 

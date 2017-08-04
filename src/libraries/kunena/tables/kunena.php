@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
  * Class KunenaTable
  * @since Kunena
  */
-abstract class KunenaTable extends JTable
+abstract class KunenaTable extends \Joomla\CMS\Table\Table
 {
 	/**
 	 * @var boolean

@@ -82,7 +82,7 @@ class KunenaLoginComprofiler
 	 */
 	public function getRememberMe()
 	{
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
 		// TODO: test if works (see #1079)
 		$db->setQuery("SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1);
@@ -122,7 +122,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework, $ueConfig;
 
-		$usersConfig = JComponentHelper::getParams('com_comprofiler');
+		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_comprofiler');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
 			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))

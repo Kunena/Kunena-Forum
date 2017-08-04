@@ -525,7 +525,7 @@ class TableKunenaUsers extends KunenaTable
 	 */
 	public function check()
 	{
-		if (!$this->userid || !JFactory::getUser($this->userid))
+		if (!$this->userid || !\Joomla\CMS\Factory::getUser($this->userid))
 		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
 		}

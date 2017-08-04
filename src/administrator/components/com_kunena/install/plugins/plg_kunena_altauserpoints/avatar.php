@@ -83,14 +83,14 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 		{
 			$profile = AltaUserPointsHelper::getUserInfo('', $user->userid);
 
-			$avatar = ($profile->avatar != '') ? JURI::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar : JURI::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
+			$avatar = ($profile->avatar != '') ? \Joomla\CMS\Uri\Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar : \Joomla\CMS\Uri\Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
 
 			$avatar = '<img src="' . $avatar . '" border="0" alt="" width="' . $size->x . '" height="' . $size->y . '" />';
 		}
 
 		if (!$avatar)
 		{
-			$avatar = '<img border="0" width="100" height="100" alt="" src="' . JUri::root() . 'components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png">';
+			$avatar = '<img border="0" width="100" height="100" alt="" src="' . \Joomla\CMS\Uri\Uri::root() . 'components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png">';
 		}
 
 		return $avatar;

@@ -28,7 +28,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 	{
 		$this->context = 'com_kunena.admin.smiley';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -38,7 +38,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$this->context .= '.' . $layout;
 		}
 
-		$value = JFactory::getApplication()->input->getInt('id');
+		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
 		$this->setState($this->getName() . '.id', $value);
 		$this->setState('item.id', $value);
 	}
@@ -51,7 +51,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 	 */
 	public function getSmiley()
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		$id = $this->getState($this->getName() . '.id');
 
@@ -65,7 +65,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			}
 			catch (RuntimeException $e)
 			{
-				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}

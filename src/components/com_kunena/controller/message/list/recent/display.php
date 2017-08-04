@@ -50,7 +50,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+			$this->moreUri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
 				. '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
@@ -68,11 +68,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 		elseif ($time == 0)
 		{
-			$time = new JDate(KunenaFactory::getSession()->lasttime);
+			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
 		}
 		else
 		{
-			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		$userid = $this->state->get('user');
@@ -129,7 +129,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		if (!$start)
 		{
@@ -263,10 +263,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$user = KunenaUserHelper::get($this->state->get('user'));
 
 		$headerText = $this->headerText . ' ' . JText::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
-		$doc = JFactory::getDocument();
-		$app = JFactory::getApplication();
+		$doc = \Joomla\CMS\Factory::getDocument();
+		$app = \Joomla\CMS\Factory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
-		$config = JFactory::getApplication('site');
+		$config = \Joomla\CMS\Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
 		$robots = $componentParams->get('robots');
 
@@ -327,7 +327,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
 		{
-			$doc = JFactory::getDocument();
+			$doc = \Joomla\CMS\Factory::getDocument();
 			$doc->setMetaData('robots', 'follow, noindex');
 		}
 		else

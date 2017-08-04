@@ -27,10 +27,10 @@ class KunenaControllerTopic extends KunenaController
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$this->catid  = JFactory::getApplication()->input->getInt('catid', 0);
-		$this->return = JFactory::getApplication()->input->getInt('return', $this->catid);
-		$this->id     = JFactory::getApplication()->input->getInt('id', 0);
-		$this->mesid  = JFactory::getApplication()->input->getInt('mesid', 0);
+		$this->catid  = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+		$this->return = \Joomla\CMS\Factory::getApplication()->input->getInt('return', $this->catid);
+		$this->id     = \Joomla\CMS\Factory::getApplication()->input->getInt('id', 0);
+		$this->mesid  = \Joomla\CMS\Factory::getApplication()->input->getInt('mesid', 0);
 	}
 
 	/**
@@ -49,7 +49,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(JText::_('Bad Request'), 400);
 		}
 
-		if (!JSession::checkToken('request'))
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
@@ -104,7 +104,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(JText::_('Bad Request'), 400);
 		}
 
-		if (!JSession::checkToken('request'))
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
@@ -149,7 +149,7 @@ class KunenaControllerTopic extends KunenaController
 		// We are converting all exceptions into JSON.
 		try
 		{
-			if (!JSession::checkToken('request'))
+			if (!\Joomla\CMS\Session\Session::checkToken('request'))
 			{
 				throw new RuntimeException(JText::_('Forbidden'), 403);
 			}
@@ -293,24 +293,24 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function post()
 	{
-		$this->id = JFactory::getApplication()->input->getInt('parentid', 0);
+		$this->id = \Joomla\CMS\Factory::getApplication()->input->getInt('parentid', 0);
 		$fields   = array(
 			'catid'             => $this->catid,
-			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
-			'email'             => JFactory::getApplication()->input->getString('email', null),
-			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
-			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
-			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
-			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
-			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
-			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'subscribe'         => JFactory::getApplication()->input->getInt('subscribeMe', 0)
+			'name'              => \Joomla\CMS\Factory::getApplication()->input->getString('authorname', $this->me->getName()),
+			'email'             => \Joomla\CMS\Factory::getApplication()->input->getString('email', null),
+			'subject'           => \Joomla\CMS\Factory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => \Joomla\CMS\Factory::getApplication()->input->post->get('message', '', 'raw'),
+			'icon_id'           => \Joomla\CMS\Factory::getApplication()->input->getInt('topic_emoticon', null),
+			'anonymous'         => \Joomla\CMS\Factory::getApplication()->input->getInt('anonymous', 0),
+			'poll_title'        => \Joomla\CMS\Factory::getApplication()->input->getString('poll_title', ''),
+			'poll_options'      => \Joomla\CMS\Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
+			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0),
+			'subscribe'         => \Joomla\CMS\Factory::getApplication()->input->getInt('subscribeMe', 0)
 		);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -352,17 +352,17 @@ class KunenaControllerTopic extends KunenaController
 
 		if ($this->me->canDoCaptcha())
 		{
-			if (JPluginHelper::isEnabled('captcha'))
+			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 			{
-				$plugin = JPluginHelper::getPlugin('captcha');
-				$params = new JRegistry($plugin[0]->params);
+				$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
+				$params = new \Joomla\Registry\Registry($plugin[0]->params);
 
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
 
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
-					JPluginHelper::importPlugin('captcha');
+					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$dispatcher = JEventDispatcher::getInstance();
 
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
@@ -391,7 +391,7 @@ class KunenaControllerTopic extends KunenaController
 		$isNew = !$topic->exists();
 
 		// Redirect to full reply instead.
-		if (JFactory::getApplication()->input->getString('fullreply'))
+		if (\Joomla\CMS\Factory::getApplication()->input->getString('fullreply'))
 		{
 			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
 
@@ -401,10 +401,10 @@ class KunenaControllerTopic extends KunenaController
 		// Flood protection
 		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
-			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
+			$timelimit = \Joomla\CMS\Factory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip        = $_SERVER ["REMOTE_ADDR"];
 
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
 
 			try
@@ -459,8 +459,8 @@ class KunenaControllerTopic extends KunenaController
 		@ignore_user_abort(true);
 
 		// Mark attachments to be added or deleted.
-		$attachments = JFactory::getApplication()->input->get('attachments', array(), 'post', 'array');
-		$attachment  = JFactory::getApplication()->input->get('attachment', array(), 'post', 'array');
+		$attachments = \Joomla\CMS\Factory::getApplication()->input->get('attachments', array(), 'post', 'array');
+		$attachment  = \Joomla\CMS\Factory::getApplication()->input->get('attachment', array(), 'post', 'array');
 		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
@@ -495,7 +495,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
-			$text = trim(JFilterOutput::cleanText($text));
+			$text = trim(\Joomla\CMS\Filter\OutputFilter::cleanText($text));
 		}
 
 		if (!$text)
@@ -575,7 +575,7 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive       = new JDate($fields['poll_time_to_live']);
+					$polltimetolive       = new \Joomla\CMS\Date\Date($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -651,24 +651,24 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function edit()
 	{
-		$this->id = JFactory::getApplication()->input->getInt('mesid', 0);
+		$this->id = \Joomla\CMS\Factory::getApplication()->input->getInt('mesid', 0);
 
 		$message = KunenaForumMessageHelper::get($this->id);
 		$topic   = $message->getTopic();
 		$fields  = array(
-			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
-			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
-			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
-			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
-			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
-			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
-			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
-			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
-			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0)
+			'name'              => \Joomla\CMS\Factory::getApplication()->input->getString('authorname', $message->name),
+			'email'             => \Joomla\CMS\Factory::getApplication()->input->getString('email', $message->email),
+			'subject'           => \Joomla\CMS\Factory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => \Joomla\CMS\Factory::getApplication()->input->post->get('message', '', 'raw'),
+			'modified_reason'   => \Joomla\CMS\Factory::getApplication()->input->getString('modified_reason', $message->modified_reason),
+			'icon_id'           => \Joomla\CMS\Factory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
+			'anonymous'         => \Joomla\CMS\Factory::getApplication()->input->getInt('anonymous', 0),
+			'poll_title'        => \Joomla\CMS\Factory::getApplication()->input->getString('poll_title', null),
+			'poll_options'      => \Joomla\CMS\Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
+			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0)
 		);
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -702,8 +702,8 @@ class KunenaControllerTopic extends KunenaController
 		@ignore_user_abort(true);
 
 		// Mark attachments to be added or deleted.
-		$attachments = JFactory::getApplication()->input->get('attachments', array(), 'post', 'array');
-		$attachment  = JFactory::getApplication()->input->get('attachment', array(), 'post', 'array');
+		$attachments = \Joomla\CMS\Factory::getApplication()->input->get('attachments', array(), 'post', 'array');
+		$attachment  = \Joomla\CMS\Factory::getApplication()->input->get('attachment', array(), 'post', 'array');
 
 		$addList = array_keys(array_intersect_key($attachments, $attachment));
 		Joomla\Utilities\ArrayHelper::toInteger($addList);
@@ -756,7 +756,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
-			$text = trim(JFilterOutput::cleanText($text));
+			$text = trim(\Joomla\CMS\Filter\OutputFilter::cleanText($text));
 		}
 
 		if (!$text && $this->config->userdeletetmessage == 1)
@@ -844,7 +844,7 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive       = new JDate($fields['poll_time_to_live']);
+					$polltimetolive       = new \Joomla\CMS\Date\Date($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -1020,7 +1020,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function thankyou()
 	{
-		$type = JFactory::getApplication()->input->getString('task');
+		$type = \Joomla\CMS\Factory::getApplication()->input->getString('task');
 		$this->setThankyou($type);
 	}
 
@@ -1030,7 +1030,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unthankyou()
 	{
-		$type = JFactory::getApplication()->input->getString('task');
+		$type = \Joomla\CMS\Factory::getApplication()->input->getString('task');
 		$this->setThankyou($type);
 	}
 
@@ -1042,7 +1042,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	protected function setThankyou($type)
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1096,7 +1096,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$userid = JFactory::getApplication()->input->getInt('userid', '0');
+			$userid = \Joomla\CMS\Factory::getApplication()->input->getInt('userid', '0');
 
 			try
 			{
@@ -1136,7 +1136,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function subscribe()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1168,7 +1168,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unsubscribe()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1200,7 +1200,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function favorite()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1232,7 +1232,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unfavorite()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1264,7 +1264,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function sticky()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1311,7 +1311,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unsticky()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1358,7 +1358,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function lock()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1405,7 +1405,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unlock()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1452,7 +1452,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1522,7 +1522,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function undelete()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1577,7 +1577,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function permdelete()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1649,7 +1649,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function approve()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1718,7 +1718,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function move()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1726,14 +1726,14 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		$topicId        = JFactory::getApplication()->input->getInt('id', 0);
-		$messageId      = JFactory::getApplication()->input->getInt('mesid', 0);
-		$targetCategory = JFactory::getApplication()->input->getInt('targetcategory', 0);
-		$targetTopic    = JFactory::getApplication()->input->getInt('targettopic', 0);
+		$topicId        = \Joomla\CMS\Factory::getApplication()->input->getInt('id', 0);
+		$messageId      = \Joomla\CMS\Factory::getApplication()->input->getInt('mesid', 0);
+		$targetCategory = \Joomla\CMS\Factory::getApplication()->input->getInt('targetcategory', 0);
+		$targetTopic    = \Joomla\CMS\Factory::getApplication()->input->getInt('targettopic', 0);
 
 		if ($targetTopic < 0)
 		{
-			$targetTopic = JFactory::getApplication()->input->getInt('targetid', 0);
+			$targetTopic = \Joomla\CMS\Factory::getApplication()->input->getInt('targetid', 0);
 		}
 
 		if ($messageId)
@@ -1769,19 +1769,19 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$changesubject  = JFactory::getApplication()->input->getBool('changesubject', false);
-			$subject        = JFactory::getApplication()->input->getString('subject', '');
-			$shadow         = JFactory::getApplication()->input->getBool('shadow', false);
-			$topic_emoticon = JFactory::getApplication()->input->getInt('topic_emoticon', null);
+			$changesubject  = \Joomla\CMS\Factory::getApplication()->input->getBool('changesubject', false);
+			$subject        = \Joomla\CMS\Factory::getApplication()->input->getString('subject', '');
+			$shadow         = \Joomla\CMS\Factory::getApplication()->input->getBool('shadow', false);
+			$topic_emoticon = \Joomla\CMS\Factory::getApplication()->input->getInt('topic_emoticon', null);
 
 			if ($object instanceof KunenaForumMessage)
 			{
-				$mode = JFactory::getApplication()->input->getWord('mode', 'selected');
+				$mode = \Joomla\CMS\Factory::getApplication()->input->getWord('mode', 'selected');
 
 				switch ($mode)
 				{
 					case 'newer':
-						$ids = new JDate($object->time);
+						$ids = new \Joomla\CMS\Date\Date($object->time);
 						break;
 					case 'selected':
 					default:
@@ -1843,7 +1843,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	function report()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1869,7 +1869,7 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		if (!$this->config->getEmail() || !JMailHelper::isEmailAddress($this->config->getEmail()))
+		if (!$this->config->getEmail() || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($this->config->getEmail()))
 		{
 			// Error: email address is invalid
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_EMAIL_INVALID'), 'error');
@@ -1904,8 +1904,8 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		$reason = JFactory::getApplication()->input->getString('reason');
-		$text   = JFactory::getApplication()->input->getString('text');
+		$reason = \Joomla\CMS\Factory::getApplication()->input->getString('reason');
+		$text   = \Joomla\CMS\Factory::getApplication()->input->getString('text');
 
 		$template = KunenaTemplate::getInstance();
 
@@ -1948,7 +1948,7 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($emailToList))
 			{
-				$mailsender  = JMailHelper::cleanAddress($this->config->board_title . ' ' . JText::_('COM_KUNENA_FORUM') . ': ' . $this->me->getName());
+				$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ' ' . JText::_('COM_KUNENA_FORUM') . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->board_title . " " . JText::_('COM_KUNENA_FORUM') . "] " . JText::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
@@ -1961,9 +1961,9 @@ class KunenaControllerTopic extends KunenaController
 				}
 
 				jimport('joomla.environment.uri');
-				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
+				$msglink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
-				$mail = JFactory::getMailer();
+				$mail = \Joomla\CMS\Factory::getMailer();
 				$mail->setSender(array($this->me->username, $this->me->email));
 				$mail->setSubject($mailsubject);
 
@@ -1989,7 +1989,7 @@ class KunenaControllerTopic extends KunenaController
 
 				foreach ($emailToList as $emailTo)
 				{
-					if (!$emailTo->email || !JMailHelper::isEmailAddress($emailTo->email))
+					if (!$emailTo->email || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
 					{
 						continue;
 					}
@@ -2016,7 +2016,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function vote()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -2024,9 +2024,9 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		$vote  = JFactory::getApplication()->input->getInt('kpollradio', '');
-		$id    = JFactory::getApplication()->input->getInt('id', 0);
-		$catid = JFactory::getApplication()->input->getInt('catid', 0);
+		$vote  = \Joomla\CMS\Factory::getApplication()->input->getInt('kpollradio', '');
+		$id    = \Joomla\CMS\Factory::getApplication()->input->getInt('id', 0);
+		$catid = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
 
 		$topic = KunenaForumTopicHelper::get($id);
 		$poll  = $topic->getPoll();
@@ -2073,7 +2073,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function resetvotes()
 	{
-		if (!JSession::checkToken('get'))
+		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();

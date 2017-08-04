@@ -166,7 +166,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			parent::__construct($properties);
 		}
 
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 	}
 
 	/**
@@ -392,7 +392,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public function hit()
 	{
-		$app     = JFactory::getApplication();
+		$app     = \Joomla\CMS\Factory::getApplication();
 		$lasthit = $app->getUserState('com_kunena.topic.lasthit');
 
 		if ($lasthit == $this->id)
@@ -417,7 +417,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int      $display
 	 * @param   string   $prefix
 	 *
-	 * @return JPagination|KunenaPagination
+	 * @return \Joomla\CMS\Pagination\Pagination|KunenaPagination
 	 * @since Kunena
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = '')
@@ -591,7 +591,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Get permament topic URL without domain.
 	 *
 	 * If you want to add domain (for email etc), you can prepend the output with this:
-	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 * \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   KunenaForumCategory $category
 	 * @param   bool                $xhtml
@@ -632,7 +632,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed  $category
 	 * @param   string $action
 	 *
-	 * @return JUri|null
+	 * @return \Joomla\CMS\Uri\Uri|null
 	 * @since Kunena
 	 */
 	public function getUri($category = null, $action = null)
@@ -651,7 +651,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$action  = 'post' . $message->id;
 		}
 
-		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}&Itemid={$Itemid}");
+		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}&Itemid={$Itemid}");
 
 		if ($uri->getVar('action') !== null)
 		{
@@ -879,7 +879,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$read             = KunenaForumTopicUserReadHelper::get($this, $user);
-		$read->time       = JFactory::getDate()->toUnix();
+		$read->time       = \Joomla\CMS\Factory::getDate()->toUnix();
 		$read->message_id = $this->last_post_id;
 		$read->save();
 
@@ -1058,7 +1058,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Move topic or parts of it into another category or topic.
 	 *
 	 * @param   object $target       Target KunenaForumCategory or KunenaForumTopic
-	 * @param   mixed  $ids          false, array of message Ids or JDate
+	 * @param   mixed  $ids          false, array of message Ids or \Joomla\CMS\Date\Date
 	 * @param   bool   $shadow       Leave visible shadow topic.
 	 * @param   string $subject      New subject
 	 * @param   bool   $subjectall   Change subject from every message
@@ -1075,7 +1075,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
 		// Cleanup input
-		if (!($ids instanceof JDate))
+		if (!($ids instanceof \Joomla\CMS\Date\Date))
 		{
 			if (!is_array($ids))
 			{
@@ -1101,7 +1101,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query = new KunenaDatabaseQuery;
 			$query->select('COUNT(*)')->from('#__kunena_messages')->where("thread={$this->id}");
 
-			if ($ids instanceof JDate)
+			if ($ids instanceof \Joomla\CMS\Date\Date)
 			{
 				// All older messages will remain (including unapproved, deleted)
 				$query->where("time<{$ids->toUnix()}");
@@ -1263,7 +1263,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query->set("subject={$this->_db->quote($subject)}");
 		}
 
-		if ($ids instanceof JDate)
+		if ($ids instanceof \Joomla\CMS\Date\Date)
 		{
 			// Move all newer messages (includes unapproved, deleted messages)
 			$query->where("time>={$ids->toUnix()}");
@@ -1476,7 +1476,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Clear authentication cache
 		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
-		$db        = JFactory::getDBO();
+		$db        = \Joomla\CMS\Factory::getDBO();
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id={$db->quote($this->id)}";
 
@@ -1525,7 +1525,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
 		if ($this->moved_id == 0)
 		{
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 
 			// Delete user topics
 			$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
@@ -1668,7 +1668,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			if (!$exists || $this->first_post_id == $message->id)
 			{
 				// If message got deleted and was cached, we need to find new first post
-				$db    = JFactory::getDBO();
+				$db    = \Joomla\CMS\Factory::getDBO();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
 				$db->setQuery($query, 0, 1);
@@ -1696,7 +1696,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			if (!$exists || $this->last_post_id == $message->id)
 			{
 				// If topic got deleted and was cached, we need to find new last post
-				$db    = JFactory::getDBO();
+				$db    = \Joomla\CMS\Factory::getDBO();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
 				$db->setQuery($query, 0, 1);
@@ -2048,7 +2048,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
 
-		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > JFactory::getDate()->toUnix())
+		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > \Joomla\CMS\Factory::getDate()->toUnix())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
 		}
@@ -2058,7 +2058,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED'), 403);
 		}
 
-		if ($poll->polltimetolive != '0000-00-00 00:00:00' && $poll->getTimeToLive() < JFactory::getDate()->toUnix())
+		if ($poll->polltimetolive != '0000-00-00 00:00:00' && $poll->getTimeToLive() < \Joomla\CMS\Factory::getDate()->toUnix())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
 		}

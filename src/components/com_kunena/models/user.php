@@ -85,7 +85,7 @@ class KunenaModelUser extends KunenaModel
 		// Hide super admins from the list
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
-			$db    = JFactory::getDBO();
+			$db    = \Joomla\CMS\Factory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName('user_id'))->from($db->quoteName('#__user_usergroup_map'))->where($db->quoteName('group_id') . ' = 8');
 			$db->setQuery($query);
@@ -133,7 +133,7 @@ class KunenaModelUser extends KunenaModel
 
 		if ($search)
 		{
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 
 			if ($this->config->username)
 			{
@@ -164,7 +164,7 @@ class KunenaModelUser extends KunenaModel
 
 		if ($total === false)
 		{
-			$db    = JFactory::getDBO();
+			$db    = \Joomla\CMS\Factory::getDBO();
 			$where = $this->getQueryWhere();
 			$query = $db->getQuery(true);
 			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
@@ -192,7 +192,7 @@ class KunenaModelUser extends KunenaModel
 
 		if ($total === false)
 		{
-			$db     = JFactory::getDBO();
+			$db     = \Joomla\CMS\Factory::getDBO();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 
@@ -261,7 +261,7 @@ class KunenaModelUser extends KunenaModel
 					$orderby = 'u.username ';
 			}
 
-			$db     = JFactory::getDBO();
+			$db     = \Joomla\CMS\Factory::getDBO();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 			$query  = $db->getQuery(true);

@@ -158,7 +158,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   bool $object
 	 *
-	 * @return boolean|JUri|null|string
+	 * @return boolean|\Joomla\CMS\Uri\Uri|null|string
 	 * @since Kunena
 	 */
 	public static function current($object = false)
@@ -226,7 +226,7 @@ abstract class KunenaRoute
 	{
 		if (self::$adminApp)
 		{
-			if ($uri instanceof JUri)
+			if ($uri instanceof \Joomla\CMS\Uri\Uri)
 			{
 				$uri = $uri->toString();
 			}
@@ -238,13 +238,13 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				return JUri::root(true) . "/{$uri}";
+				return \Joomla\CMS\Uri\Uri::root(true) . "/{$uri}";
 			}
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof JUri ? $uri->toString() : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof \Joomla\CMS\Uri\Uri ? $uri->toString() : (string) $uri);
 
 		if (!$uri || (is_string($uri) && $uri[0] == '&'))
 		{
@@ -296,24 +296,24 @@ abstract class KunenaRoute
 	 */
 	public static function getReferrer($default = null, $anchor = null)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		$referrer = $app->input->server->getString('HTTP_REFERER');
 
 		if ($referrer)
 		{
-			$uri = new JUri($referrer);
+			$uri = new \Joomla\CMS\Uri\Uri($referrer);
 
 			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
 			$uri->delVar('task');
-			$uri->delVar(JSession::getFormToken());
+			$uri->delVar(\Joomla\CMS\Session\Session::getFormToken());
 
 			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
 			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));
 			$host = $uri->toString(array('scheme', 'host', 'port'));
 
 			// Referrer should always have host set and it should come from the same base address.
-			if (empty($host) || stripos($base, JUri::base()) !== 0)
+			if (empty($host) || stripos($base, \Joomla\CMS\Uri\Uri::base()) !== 0)
 			{
 				$uri = null;
 			}
@@ -327,7 +327,7 @@ abstract class KunenaRoute
 			}
 
 			$default = self::_($default);
-			$uri     = new JUri($default);
+			$uri     = new \Joomla\CMS\Uri\Uri($default);
 		}
 
 		if ($anchor)
@@ -339,10 +339,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   JUri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 * @param   bool $object
 	 *
-	 * @return JUri|string
+	 * @return \Joomla\CMS\Uri\Uri|string
 	 * @since Kunena
 	 */
 	public static function normalize($uri = null, $object = false)
@@ -470,12 +470,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @return JCacheController
+	 * @return \Joomla\CMS\Cache\CacheController
 	 * @since Kunena
 	 */
 	protected static function getCache()
 	{
-		return JFactory::getCache('mod_menu', 'output');
+		return \Joomla\CMS\Factory::getCache('mod_menu', 'output');
 	}
 
 	/**
@@ -491,7 +491,7 @@ abstract class KunenaRoute
 
 		if (!isset(self::$filtered[$string]))
 		{
-			self::$filtered[$string] = JApplicationHelper::stringURLSafe($string);
+			self::$filtered[$string] = \Joomla\CMS\Application\ApplicationHelper::stringURLSafe($string);
 
 			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
 			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
@@ -550,7 +550,7 @@ abstract class KunenaRoute
 	public static function resolveAlias($alias)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
 		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
@@ -587,7 +587,7 @@ abstract class KunenaRoute
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		self::$config = KunenaFactory::getConfig();
 
-		if (JFactory::getApplication()->isClient('administrator'))
+		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
 		{
 			self::$adminApp = true;
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -595,16 +595,16 @@ abstract class KunenaRoute
 			return;
 		}
 
-		self::$menus   = JFactory::getApplication()->getMenu();
+		self::$menus   = \Joomla\CMS\Factory::getApplication()->getMenu();
 		self::$menu    = self::$menus->getMenu();
 		self::$default = self::$menus->getDefault();
 		$active        = self::$menus->getActive();
 
 		// Get the full request URI.
-		$uri = clone JUri::getInstance();
+		$uri = clone \Joomla\CMS\Uri\Uri::getInstance();
 
 		// Get current route.
-		self::$current = new JUri('index.php');
+		self::$current = new \Joomla\CMS\Uri\Uri('index.php');
 
 		if ($active)
 		{
@@ -622,7 +622,7 @@ abstract class KunenaRoute
 		}
 
 		// If values are both in GET and POST, they are only stored in POST
-		$post = JFactory::getApplication()->input->post->getArray(array());
+		$post = \Joomla\CMS\Factory::getApplication()->input->post->getArray(array());
 
 		foreach ($post as $key => $value)
 		{
@@ -633,7 +633,7 @@ abstract class KunenaRoute
 		}
 
 		// Make sure that request URI is not broken
-		$get = JFactory::getApplication()->input->get->getArray(array());
+		$get = \Joomla\CMS\Factory::getApplication()->input->get->getArray(array());
 
 		foreach ($get as $key => $value)
 		{
@@ -683,7 +683,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   null $uri
 	 *
-	 * @return boolean|JUri|null
+	 * @return boolean|\Joomla\CMS\Uri\Uri|null
 	 * @since Kunena
 	 */
 	protected static function prepare($uri = null)
@@ -696,7 +696,7 @@ abstract class KunenaRoute
 			if (!isset($current[$uri]))
 			{
 				$get = self::$current->getQuery(true);
-				$uri = $current[$uri] = JUri::getInstance('index.php?' . http_build_query($get) . $uri);
+				$uri = $current[$uri] = \Joomla\CMS\Uri\Uri::getInstance('index.php?' . http_build_query($get) . $uri);
 				self::setItemID($uri);
 				$uri->delVar('defaultmenu');
 				$uri->delVar('language');
@@ -716,15 +716,15 @@ abstract class KunenaRoute
 			}
 
 			$item = self::$menu[intval($uri)];
-			$uri  = JUri::getInstance("{$item->link}&Itemid={$item->id}");
+			$uri  = \Joomla\CMS\Uri\Uri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
-		elseif ($uri instanceof JUri)
+		elseif ($uri instanceof \Joomla\CMS\Uri\Uri)
 		{
 			// Nothing to do
 		}
 		else
 		{
-			$uri = new JUri((string) $uri);
+			$uri = new \Joomla\CMS\Uri\Uri((string) $uri);
 		}
 
 		$option = $uri->getVar('option');
@@ -814,7 +814,7 @@ abstract class KunenaRoute
 		if (self::$search === false)
 		{
 			$user         = KunenaUserHelper::getMyself();
-			$language     = strtolower(JFactory::getDocument()->getLanguage());
+			$language     = strtolower(\Joomla\CMS\Factory::getDocument()->getLanguage());
 			self::$search = false;
 
 			if (KunenaConfig::getInstance()->get('cache_mid'))
@@ -955,12 +955,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   JUri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
 	 * @since Kunena
 	 */
-	protected static function setItemID(JUri $uri)
+	protected static function setItemID(\Joomla\CMS\Uri\Uri $uri)
 	{
 		static $candidates = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -1049,12 +1049,12 @@ abstract class KunenaRoute
 
 	/**
 	 * @param        $item
-	 * @param   JUri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
 	 * @since Kunena
 	 */
-	protected static function checkItem($item, JUri $uri)
+	protected static function checkItem($item, \Joomla\CMS\Uri\Uri $uri)
 	{
 		$authorise = self::$menus->authorise($item->id);
 
@@ -1128,12 +1128,12 @@ abstract class KunenaRoute
 
 	/**
 	 * @param        $item
-	 * @param   JUri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
 	 * @since Kunena
 	 */
-	protected static function checkCategory($item, JUri $uri)
+	protected static function checkCategory($item, \Joomla\CMS\Uri\Uri $uri)
 	{
 		static $cache = array();
 		$catid = (int) $uri->getVar('catid');
@@ -1160,12 +1160,12 @@ abstract class KunenaRoute
 
 	/**
 	 * @param        $item
-	 * @param   JUri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
 	 * @since Kunena
 	 */
-	protected static function check($item, JUri $uri)
+	protected static function check($item, \Joomla\CMS\Uri\Uri $uri)
 	{
 		$hits = 0;
 

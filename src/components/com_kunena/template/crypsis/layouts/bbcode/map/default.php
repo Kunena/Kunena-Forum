@@ -28,7 +28,7 @@ if (!empty($this->config->google_map_api_key))
 // Load JavaScript API.
 if (!isset($id))
 {
-	$uri = JURI::getInstance();
+	$uri = \Joomla\CMS\Uri\Uri::getInstance();
 
 	if ($uri->isSSL())
 	{

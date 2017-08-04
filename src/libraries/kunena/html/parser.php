@@ -37,7 +37,7 @@ abstract class KunenaHtmlParser
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
 
@@ -190,7 +190,7 @@ abstract class KunenaHtmlParser
 		$txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
 		$txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
 
-		if (JPluginHelper::isEnabled('content', 'emailcloak'))
+		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
 			$pattern = "/[^@\s]*@[^@\s]*\.[^@\s]*/";
 			$replacement = ' ';
@@ -232,11 +232,11 @@ abstract class KunenaHtmlParser
 			$row->text =& $content;
 
 			// Run events
-			$params = new JRegistry;
+			$params = new \Joomla\Registry\Registry;
 			$params->set('ksource', 'kunena');
 
 			$dispatcher = JEventDispatcher::getInstance();
-			JPluginHelper::importPlugin('content');
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
 			$content = $row->text;
 		}

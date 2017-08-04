@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
  * Class plgSystemKunena
  * @since Kunena
  */
-class plgSystemKunena extends JPlugin
+class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * @param   object $subject  Subject
@@ -36,7 +36,7 @@ class plgSystemKunena extends JPlugin
 		jimport('joomla.application.component.helper');
 
 		// Check if Kunena component is installed/enabled
-		if (!JComponentHelper::isEnabled('com_kunena', true))
+		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena', true))
 		{
 			return;
 		}
@@ -52,20 +52,20 @@ class plgSystemKunena extends JPlugin
 
 		parent::__construct($subject, $config);
 
-		if (!JPluginHelper::isEnabled('kunena', 'powered'))
+		if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
 		#kunena + div { display: block !important;}
 EOF;
 
-			$document = JFactory::getDocument();
+			$document = \Joomla\CMS\Factory::getDocument();
 			$document->addStyleDeclaration($styles);
 		}
 
 		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
 		{
-			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
 				'notice');
 		}
 
@@ -98,7 +98,7 @@ EOF;
 	 * @since  Kunena 2.0
 	 *
 	 * @param   string $text   String to run events on
-	 * @param   object $params JRegistry object holding eventual parameters
+	 * @param   object $params \Joomla\Registry\Registry object holding eventual parameters
 	 * @param   int    $page   An integer holding page number
 	 *
 	 * @return object KunenaForumMessage
@@ -106,7 +106,7 @@ EOF;
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{
 		$dispatcher = JEventDispatcher::getInstance();
-		JPluginHelper::importPlugin('content');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		$row       = new stdClass;
 		$row->text = &$text;
@@ -182,7 +182,7 @@ EOF;
 		}
 
 		// Generate component name
-		$name    = strtolower(JFilterInput::getInstance()->clean((string) $manifest->name, 'cmd'));
+		$name    = strtolower(\Joomla\CMS\Filter\InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
 		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
 
 		if ($element != 'com_kunena')
@@ -203,7 +203,7 @@ EOF;
 		}
 
 		// Old version detected: emulate failed installation
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.',
 			KunenaForum::version(), $manifest->version), 'warning');
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');

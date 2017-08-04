@@ -59,7 +59,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$id     = $this->message->thread;
 		$catid  = $this->message->catid;
-		$token  = JSession::getFormToken();
+		$token  = \Joomla\CMS\Session\Session::getFormToken();
 		$config = KunenaConfig::getInstance();
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
@@ -201,7 +201,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$me->userid && !$this->message->hold && !$config->read_only
 		)
 		{
-			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) JUri::getInstance()));
+			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance()));
 			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())
@@ -578,7 +578,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			}
 		}
 
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}

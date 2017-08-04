@@ -117,7 +117,7 @@ class TableKunenaAnnouncements extends KunenaTable
 
 		if (!$this->created)
 		{
-			$this->created = JFactory::getDate()->toSql();
+			$this->created = \Joomla\CMS\Factory::getDate()->toSql();
 		}
 
 		if (!$this->publish_up)

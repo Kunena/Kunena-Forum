@@ -76,17 +76,17 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		}
 
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		if ($bootstrap)
 		{
-			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-extended.css');
-			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
+			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
 			if ($this->ktemplate->params->get('icomoon'))
 			{
-				$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
+				$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
 
@@ -127,7 +127,7 @@ EOF;
 EOF;
 		}
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
@@ -137,13 +137,13 @@ EOF;
 	 * @param          $filename
 	 * @param   string $group
 	 *
-	 * @return JDocument
+	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
-		return JFactory::getDocument()->addStyleSheet(JUri::root(true) . "/{$filename}");
+		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 }

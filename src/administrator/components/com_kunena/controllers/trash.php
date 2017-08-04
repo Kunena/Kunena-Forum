@@ -48,7 +48,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 */
 	public function purge()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -56,11 +56,11 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
-		$md5  = JFactory::getApplication()->input->getString('md5', null);
+		$type = \Joomla\CMS\Factory::getApplication()->input->getCmd('type', 'topics', 'post');
+		$md5  = \Joomla\CMS\Factory::getApplication()->input->getString('md5', null);
 
 		if (!empty($cid))
 		{
@@ -166,7 +166,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 */
 	public function restore()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -174,10 +174,10 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
+		$type = \Joomla\CMS\Factory::getApplication()->input->getCmd('type', 'topics', 'post');
 
 		if (empty($cid))
 		{

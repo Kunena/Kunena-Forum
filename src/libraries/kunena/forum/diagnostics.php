@@ -71,7 +71,7 @@ abstract class KunenaForumDiagnostics
 			// @var KunenaDatabaseQuery $query
 
 			$query->select("COUNT(*)");
-			$db = JFactory::getDbo();
+			$db = \Joomla\CMS\Factory::getDbo();
 			$db->setQuery($query);
 
 			return (int) $db->loadResult();
@@ -101,7 +101,7 @@ abstract class KunenaForumDiagnostics
 			}
 
 			self::$fieldsFunction($query);
-			$db = JFactory::getDbo();
+			$db = \Joomla\CMS\Factory::getDbo();
 			$db->setQuery($query);
 
 			return (array) $db->loadAssocList();
@@ -123,7 +123,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();
@@ -163,7 +163,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db    = JFactory::getDbo();
+			$db    = \Joomla\CMS\Factory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();

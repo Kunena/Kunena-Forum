@@ -37,11 +37,11 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 */
 	protected function display()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = JFactory::getDocument();
-		$config          = JFactory::getApplication('site');
+		$doc             = \Joomla\CMS\Factory::getDocument();
+		$config          = \Joomla\CMS\Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
@@ -153,9 +153,9 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			$this->body = function () use ($body)
 			{
 
-				// @var JCache|JCacheControllerCallback $cache
+				// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheControllerCallback $cache
 
-				$cache = JFactory::getCache('com_kunena', 'callback');
+				$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
 				return $cache->call(array('KunenaHtmlParser', 'parseBBCode'), $body);

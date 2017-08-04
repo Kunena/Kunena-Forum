@@ -278,7 +278,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$error .= " called from {$caller['file']} on line {$caller['line']}";
 		}
 
-		JLog::add($error, JLog::CRITICAL, 'kunena');
+		\Joomla\CMS\Log\Log::add($error, \Joomla\CMS\Log\Log::CRITICAL, 'kunena');
 
 		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
 
@@ -607,7 +607,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   $path
 	 *
-	 * @return JLayoutBase|KunenaLayout
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @since Kunena
 	 */
 	public function subLayout($path)
@@ -630,7 +630,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena
 	 */
-	public function subRequest($path, Jinput $input = null, $options = null)
+	public function subRequest($path, \Joomla\CMS\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());
@@ -654,7 +654,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	{
 		$paths = (array) $paths;
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Add all paths for the template overrides.
 		if ($app->isClient('administrator'))

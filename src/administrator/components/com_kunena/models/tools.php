@@ -466,12 +466,12 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getSystemReportAnonymous()
 	{
-		$kunena_db = JFactory::getDBO();
+		$kunena_db = \Joomla\CMS\Factory::getDBO();
 
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
@@ -490,13 +490,13 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getSystemReport()
 	{
-		$kunena_db = JFactory::getDBO();
+		$kunena_db = \Joomla\CMS\Factory::getDBO();
 
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
 			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
@@ -516,7 +516,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getJoomlaLanguagesInstalled()
 	{
-		$languages  = JLanguageHelper::getKnownLanguages();
+		$languages  = \Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
 		$table_lang = '[table]';
 		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
 
@@ -575,7 +575,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getJoomlaTemplate()
 	{
-		$db = JFactory::getDBO();
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		// Get Joomla! frontend assigned template
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
@@ -588,7 +588,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		catch (RuntimeException $e)
 		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
@@ -678,7 +678,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getTablesCollation()
 	{
-		$kunena_db = JFactory::getDBO();
+		$kunena_db = \Joomla\CMS\Factory::getDBO();
 
 		// Check each table in the database if the collation is on utf8
 		$tableslist = $kunena_db->getTableList();
@@ -696,7 +696,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 				}
 				catch (RuntimeException $e)
 				{
-					JFactory::getApplication()->enqueueMessage($e->getMessage());
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 					return;
 				}
@@ -795,7 +795,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (!empty($xmlfiles))
 		{
-			$installer = JInstaller::getInstance();
+			$installer = \Joomla\CMS\Installer\Installer::getInstance();
 
 			foreach ($xmlfiles as $file)
 			{
@@ -826,11 +826,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		foreach ($plugins_list as $name => $desc)
 		{
-			$plugin = JPluginHelper::getPlugin('kunena', $name);
+			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('kunena', $name);
 
 			if ($plugin)
 			{
-				$pluginParams   = new JRegistry($plugin->params);
+				$pluginParams   = new \Joomla\Registry\Registry($plugin->params);
 				$params         = $pluginParams->toArray();
 
 				if (!empty($params))

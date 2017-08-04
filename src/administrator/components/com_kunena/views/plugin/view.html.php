@@ -71,7 +71,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
+		\Joomla\CMS\Factory::getApplication()->input->set('hidemainmenu', true);
 		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
 		JToolbarHelper::spacer();
 		JToolbarHelper::apply('apply');

@@ -34,7 +34,7 @@ class KunenaLogin
 	 */
 	public function __construct()
 	{
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$classes    = $dispatcher->trigger('onKunenaGetLogin');
 
@@ -246,7 +246,7 @@ class KunenaLogin
 		// Do we need to get the User ID?
 		if (empty($userId))
 		{
-			$userId = JFactory::getUser()->id;
+			$userId = \Joomla\CMS\Factory::getUser()->id;
 		}
 
 		// Has this user turned on TFA on their account?

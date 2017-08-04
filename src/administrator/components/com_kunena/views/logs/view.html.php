@@ -52,7 +52,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 		$document->setTitle(JText::_('Forum Logs'));
 
 		$this->setToolbar();
@@ -66,7 +66,7 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function setToolbar()
 	{
 		// Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');

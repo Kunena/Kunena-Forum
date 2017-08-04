@@ -115,7 +115,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 		$this->me   = KunenaUserHelper::getMyself();
 		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
-		$this->my = JFactory::getUser();
+		$this->my = \Joomla\CMS\Factory::getUser();
 
 		if ($this->my->guest)
 		{

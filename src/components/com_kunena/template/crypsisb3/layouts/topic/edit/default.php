@@ -35,8 +35,8 @@ JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
-JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
-JFactory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imagewidth);
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imagewidth);
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
@@ -52,9 +52,9 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false));
-JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false));
-JFactory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
 $this->addScript('assets/js/pollcheck.js');
@@ -70,9 +70,9 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 
-JFactory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 
-JFactory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
 
@@ -110,7 +110,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<?php endif; ?>
 	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>"/>
 	<input type="hidden" id="kunena_upload_files_url"
-	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1',
+	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1',
 		       false) ?>"/>
 	<?php if ($this->me->exists()) : ?>
 		<input type="hidden" id="kurl_users" name="kurl_users"
@@ -155,7 +155,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							<!-- Encourage guest user to login or register -->
 						<?php
-			            $login =  '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
+			            $login =  '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)\Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
 			            $register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
 						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ;
 			            ?>
@@ -359,6 +359,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 <?php
 if ($this->config->showhistory && $this->topic->exists())
 {
-	echo $this->subRequest('Topic/Form/History', new JInput(array('id' => $this->topic->id)));
+	echo $this->subRequest('Topic/Form/History', new \Joomla\CMS\Input\Input(array('id' => $this->topic->id)));
 }
 ?>

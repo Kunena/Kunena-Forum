@@ -38,7 +38,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
+			$this->moreUri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
 				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
@@ -56,11 +56,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		}
 		elseif ($time == 0)
 		{
-			$time = new JDate(KunenaFactory::getSession()->lasttime);
+			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
 		}
 		else
 		{
-			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		$holding = $this->getOptions()->get('topics_deletedtopics');
@@ -176,7 +176,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
 		}
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		if (!$start)
 		{

@@ -113,8 +113,8 @@ class KunenaForumMessageThankyou extends JObject
 			throw new Exception(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 		}
 
-		$db    = JFactory::getDBO();
-		$time  = JFactory::getDate();
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$time  = \Joomla\CMS\Factory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery($query);
@@ -143,7 +143,7 @@ class KunenaForumMessageThankyou extends JObject
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery($query);
@@ -195,7 +195,7 @@ class KunenaForumMessageThankyou extends JObject
 			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 		}
 
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
 		$db->setQuery($query);
 		$db->execute();

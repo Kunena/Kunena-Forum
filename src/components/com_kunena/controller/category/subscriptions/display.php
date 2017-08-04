@@ -111,7 +111,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		$this->actions = $this->getActions();
 
-		$this->pagination = new JPagination($total, $limitstart, $limit);
+		$this->pagination = new \Joomla\CMS\Pagination\Pagination($total, $limitstart, $limit);
 
 		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}
@@ -139,11 +139,11 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
-		$config = JFactory::getConfig();
+		$doc = \Joomla\CMS\Factory::getDocument();
+		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')

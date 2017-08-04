@@ -25,7 +25,7 @@ class KunenaTemplateLegacy
 	}
 }
 
-$app = JFactory::getApplication('Site');
+$app = \Joomla\CMS\Factory::getApplication('Site');
 
 if (!defined('DS'))
 {
@@ -66,7 +66,7 @@ define('KUNENA_VERSION_NAME', KunenaForum::versionName());
 define('KUNENA_VERSION_BUILD', 0);
 
 // Joomla URL
-define('KUNENA_JLIVEURL', JUri::base(true) . '/');
+define('KUNENA_JLIVEURL', \Joomla\CMS\Uri\Uri::base(true) . '/');
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . "/templates/{$app->getTemplate()}");

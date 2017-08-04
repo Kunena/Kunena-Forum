@@ -87,7 +87,7 @@ abstract class KunenaMenuFix
 	protected static function load()
 	{
 		// Initialise variables.
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
 		$query = $db->getQuery(true);
 		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
@@ -161,7 +161,7 @@ abstract class KunenaMenuFix
 		{
 			$item = self::$items[$itemid];
 			KunenaRouteLegacy::convertMenuItem($item);
-			$table = JTable::getInstance('menu');
+			$table = \Joomla\CMS\Table\Table::getInstance('menu');
 			$table->load($item->id);
 			$data = array(
 				'link'   => $item->link,
@@ -193,7 +193,7 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		$table  = JTable::getInstance('menu');
+		$table  = \Joomla\CMS\Table\Table::getInstance('menu');
 		$result = $table->delete($itemid);
 		KunenaMenuHelper::cleanCache();
 

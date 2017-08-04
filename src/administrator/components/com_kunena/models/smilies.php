@@ -18,7 +18,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since  3.0
  */
-class KunenaAdminModelSmilies extends JModelList
+class KunenaAdminModelSmilies extends \Joomla\CMS\Model\ListModel
 {
 	/**
 	 *
@@ -55,7 +55,7 @@ class KunenaAdminModelSmilies extends JModelList
 	{
 		$this->context = 'com_kunena.admin.smilies';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout        = $app->input->get('layout');

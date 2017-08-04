@@ -47,7 +47,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	{
 		$this->context = 'com_kunena.admin.categories';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -235,12 +235,12 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return JPagination
+	 * @return \Joomla\CMS\Pagination\Pagination
 	 * @since Kunena
 	 */
 	public function getAdminNavigation()
 	{
-		$navigation = new JPagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}
@@ -270,7 +270,7 @@ class KunenaAdminModelCategories extends KunenaModel
 			else
 			{
 				// New category is by default child of the first section -- this will help new users to do it right
-				$db = JFactory::getDBO();
+				$db = \Joomla\CMS\Factory::getDBO();
 				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
 
 				try
@@ -279,7 +279,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				}
 				catch (RuntimeException $e)
 				{
-					JFactory::getApplication()->enqueueMessage($e->getMessage());
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 					return;
 				}
@@ -448,7 +448,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 */
 	public function saveorder($pks = null, $order = null)
 	{
-		$table      = JTable::getInstance('KunenaCategories', 'Table');
+		$table      = \Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
 		$conditions = array();
 
 		if (empty($pks))
@@ -467,7 +467,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 				if (!$table->store())
 				{
-					JFactory::getApplication()->enqueueMessage($table->getError());
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError());
 
 					return false;
 				}

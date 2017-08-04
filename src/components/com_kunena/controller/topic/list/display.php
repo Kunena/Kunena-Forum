@@ -93,7 +93,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = JFactory::getCache('com_kunena', 'output');
+		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 		/*
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -119,11 +119,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
-		$config = JFactory::getConfig();
+		$doc = \Joomla\CMS\Factory::getDocument();
+		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')

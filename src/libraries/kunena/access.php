@@ -77,7 +77,7 @@ class KunenaAccess
 	public function __construct()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$classes    = $dispatcher->trigger('onKunenaGetAccessControl');
 
@@ -101,7 +101,7 @@ class KunenaAccess
 		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Load administrators and moderators from cache
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$data  = $cache->get(self::$cacheKey, 'com_kunena');
 
 			if ($data)
@@ -154,7 +154,7 @@ class KunenaAccess
 
 		// Reset read access for the current session
 		$me = KunenaUserHelper::getMyself();
-		JFactory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
+		\Joomla\CMS\Factory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
 
 		// @var KunenaAccess $access
 
@@ -167,7 +167,7 @@ class KunenaAccess
 		}
 
 		// Load native category moderators and administrators
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
 
@@ -184,7 +184,7 @@ class KunenaAccess
 		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Store new data into cache
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$cache->store(
 				serialize(
 					array(
@@ -246,7 +246,7 @@ class KunenaAccess
 		if (!$enabled)
 		{
 			$enabled = true;
-			JFactory::getDocument()->addScriptDeclaration(
+			\Joomla\CMS\Factory::getDocument()->addScriptDeclaration(
 				"function kShowAccessType(htmlclass, el) {
 	var selected = el.getChildren().filter(function(option){ return option.selected; });
 	var name = selected[0].value;
@@ -468,7 +468,7 @@ window.addEvent('domready', function(){
 		}
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
+		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
 		{
 			return true;
 		}
@@ -610,7 +610,7 @@ window.addEvent('domready', function(){
 		if (!isset($read[$user->userid]))
 		{
 			$id  = $user->userid;
-			$app = JFactory::getApplication();
+			$app = \Joomla\CMS\Factory::getApplication();
 
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
@@ -905,7 +905,7 @@ window.addEvent('domready', function(){
 		{
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 			$db->setQuery($query);
 
 			try
@@ -966,7 +966,7 @@ window.addEvent('domready', function(){
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{
 		$category = $topic->getCategory();
-		$db       = JFactory::getDBO();
+		$db       = \Joomla\CMS\Factory::getDBO();
 		$query    = array();
 
 		if ($type & self::TOPIC_SUBSCRIPTION)

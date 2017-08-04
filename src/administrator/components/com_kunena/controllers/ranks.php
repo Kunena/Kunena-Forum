@@ -46,7 +46,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function add()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -68,7 +68,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function edit()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -76,7 +76,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -106,9 +106,9 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function save()
 	{
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -116,11 +116,11 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$rank_title   = JFactory::getApplication()->input->getString('rank_title');
-		$rank_image   = basename(JFactory::getApplication()->input->getString('rank_image'));
-		$rank_special = JFactory::getApplication()->input->getInt('rank_special');
-		$rank_min     = JFactory::getApplication()->input->getInt('rank_min');
-		$rankid       = JFactory::getApplication()->input->getInt('rankid', 0);
+		$rank_title   = \Joomla\CMS\Factory::getApplication()->input->getString('rank_title');
+		$rank_image   = basename(\Joomla\CMS\Factory::getApplication()->input->getString('rank_image'));
+		$rank_special = \Joomla\CMS\Factory::getApplication()->input->getInt('rank_special');
+		$rank_min     = \Joomla\CMS\Factory::getApplication()->input->getInt('rank_min');
+		$rankid       = \Joomla\CMS\Factory::getApplication()->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
@@ -137,7 +137,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -158,7 +158,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -180,7 +180,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function rankupload()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -217,9 +217,9 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function remove()
 	{
-		$db = JFactory::getDbo();
+		$db = \Joomla\CMS\Factory::getDbo();
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -227,7 +227,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
@@ -242,7 +242,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}

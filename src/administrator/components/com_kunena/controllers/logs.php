@@ -61,7 +61,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 */
 	public function clean()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -70,9 +70,9 @@ class KunenaAdminControllerLogs extends KunenaController
 		}
 
 		$days      = $this->app->input->getInt('clean_days', 0);
-		$timestamp = new JDate('now -' . $days . ' days');
+		$timestamp = new \Joomla\CMS\Date\Date('now -' . $days . ' days');
 
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true)
 			->delete('#__kunena_logs')
 			->where('time < ' . $timestamp->toUnix());

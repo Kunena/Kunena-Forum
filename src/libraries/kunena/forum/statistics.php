@@ -166,7 +166,7 @@ class KunenaForumStatistics
 	 */
 	public function __construct()
 	{
-		$this->_db     = JFactory::getDBO();
+		$this->_db     = \Joomla\CMS\Factory::getDBO();
 		$this->_config = KunenaFactory::getConfig();
 
 		$show = $this->_config->showstats;
@@ -560,7 +560,7 @@ class KunenaForumStatistics
 
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
-				$filter = JAccess::getUsersByGroup(8);
+				$filter = \Joomla\CMS\Access\Access::getUsersByGroup(8);
 				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 			}
 

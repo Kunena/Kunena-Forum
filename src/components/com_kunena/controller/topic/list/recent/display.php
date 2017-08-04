@@ -48,11 +48,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		}
 		elseif ($time == 0)
 		{
-			$time = new JDate(KunenaFactory::getSession()->lasttime);
+			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
 		}
 		else
 		{
-			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		if ($holding)
@@ -124,7 +124,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		$page = $this->pagination->pagesCurrent;
 
@@ -179,7 +179,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 
-		$params      = JFactory::getApplication()->getMenu()->getActive()->params;
+		$params      = \Joomla\CMS\Factory::getApplication()->getMenu()->getActive()->params;
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
@@ -272,7 +272,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				break;
 		}
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -305,10 +305,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$config = JFactory::getConfig();
+		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
-		$doc = JFactory::getDocument();
-		$app = JFactory::getApplication();
+		$doc = \Joomla\CMS\Factory::getDocument();
+		$app = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($robots == '')

@@ -51,9 +51,9 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearKunena()
 	{
-		// @var JCache|JCacheController $cache
+		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = JFactory::getCache();
+		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->clean('com_kunena');
 	}
 
@@ -63,9 +63,9 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearCategories()
 	{
-		// @var JCache|JCacheController $cache
+		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = JFactory::getCache();
+		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->remove('categories', 'com_kunena');
 	}
 
@@ -75,9 +75,9 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearSystem()
 	{
-		// @var JCache|JCacheController $cache
+		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = JFactory::getCache();
+		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->clean('_system');
 	}
 

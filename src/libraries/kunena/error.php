@@ -53,9 +53,9 @@ abstract class KunenaError
 	{
 		if (!self::$enabled)
 		{
-			self::$format = JFactory::getApplication()->input->getWord('format', 'html');
+			self::$format = \Joomla\CMS\Factory::getApplication()->input->getWord('format', 'html');
 			self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
-			self::$admin  = JFactory::getApplication()->isClient('administrator');
+			self::$admin  = \Joomla\CMS\Factory::getApplication()->isClient('administrator');
 
 			// Make sure we are able to log fatal errors.
 			class_exists('KunenaLog');
@@ -70,7 +70,7 @@ abstract class KunenaError
 			@ini_set('display_errors', 1);
 			self::$handler = true;
 			@error_reporting(E_ALL | E_STRICT);
-			JFactory::getDbo()->setDebug(true);
+			\Joomla\CMS\Factory::getDbo()->setDebug(true);
 			set_error_handler(array('KunenaError', 'errorHandler'));
 
 			self::$enabled++;
@@ -104,7 +104,7 @@ abstract class KunenaError
 	{
 		if (self::$debug)
 		{
-			$app = JFactory::getApplication();
+			$app = \Joomla\CMS\Factory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
 		}
 	}
@@ -120,7 +120,7 @@ abstract class KunenaError
 	{
 		if (self::$debug)
 		{
-			$app = JFactory::getApplication();
+			$app = \Joomla\CMS\Factory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
@@ -135,10 +135,10 @@ abstract class KunenaError
 	 */
 	public static function displayDatabaseError($exception)
 	{
-		$app = JFactory::getApplication();
-		$db  = JFactory::getDBO();
+		$app = \Joomla\CMS\Factory::getApplication();
+		$db  = \Joomla\CMS\Factory::getDBO();
 
-		if (JFactory::getApplication()->isClient('administrator'))
+		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
 		{
 			$app->enqueueMessage($exception->getMessage(), 'error');
 		}
@@ -284,7 +284,7 @@ abstract class KunenaError
 			{
 				header('Content-type: application/json');
 
-				// Emulate JResponseJson.
+				// Emulate \Joomla\CMS\Response\JsonResponse.
 				$response           = new StdClass;
 				$response->success  = false;
 				$response->message  = '500 ' . $errorMsg;

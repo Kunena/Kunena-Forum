@@ -13,16 +13,16 @@ defined('_JEXEC') or die();
  * Kunena View Class
  * @since Kunena
  */
-class KunenaView extends JViewLegacy
+class KunenaView extends \Joomla\CMS\View\HtmlView
 {
 	/**
-	 * @var JDocument|null
+	 * @var \Joomla\CMS\Document\Document|null
 	 * @since Kunena
 	 */
 	public $document = null;
 
 	/**
-	 * @var JApplicationCms|null
+	 * @var \Joomla\CMS\Application\CMSApplication|null
 	 * @since Kunena
 	 */
 	public $app = null;
@@ -78,10 +78,10 @@ class KunenaView extends JViewLegacy
 	public function __construct($config = array())
 	{
 		$name           = isset($config['name']) ? $config['name'] : $this->getName();
-		$this->document = JFactory::getDocument();
+		$this->document = \Joomla\CMS\Factory::getDocument();
 		$this->document->setBase('');
 		$this->profiler  = KunenaProfiler::instance('Kunena');
-		$this->app       = JFactory::getApplication();
+		$this->app       = \Joomla\CMS\Factory::getApplication();
 		$this->me        = KunenaUserHelper::getMyself();
 		$this->config    = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
@@ -110,10 +110,10 @@ class KunenaView extends JViewLegacy
 		}
 
 		// Use our own browser side cache settings.
-		JFactory::getApplication()->allowCache(false);
-		JFactory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-		JFactory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-		JFactory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		\Joomla\CMS\Factory::getApplication()->allowCache(false);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 	}
 
 	/**
@@ -163,7 +163,7 @@ class KunenaView extends JViewLegacy
 			if ($this->config->board_offline && !$this->me->isAdmin())
 			{
 				// Forum is offline
-				JFactory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body   = $this->config->offline_message;
 				$this->common->html   = true;
@@ -175,7 +175,7 @@ class KunenaView extends JViewLegacy
 			elseif ($this->config->regonly && !$this->me->exists() && !$this->teaser)
 			{
 				// Forum is for registered users only
-				JFactory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body   = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
@@ -229,7 +229,7 @@ class KunenaView extends JViewLegacy
 		}
 
 		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
-		$app   = JFactory::getApplication();
+		$app   = \Joomla\CMS\Factory::getApplication();
 
 		switch ((int) $code)
 		{
@@ -307,7 +307,7 @@ class KunenaView extends JViewLegacy
 	 */
 	public function isModulePosition($position)
 	{
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 
 		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
@@ -321,7 +321,7 @@ class KunenaView extends JViewLegacy
 	public function getModulePosition($position)
 	{
 		$html     = '';
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 
 		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{

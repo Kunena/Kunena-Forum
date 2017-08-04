@@ -74,7 +74,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 */
 	public function loadLanguage()
 	{
-		$lang = JFactory::getLanguage();
+		$lang = \Joomla\CMS\Factory::getLanguage();
 		KunenaFactory::loadLanguage('kunena_tmpl_crypsis');
 
 		foreach (array_reverse($this->default) as $template)
@@ -126,7 +126,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 
 		if ($fontawesome)
 		{
@@ -169,7 +169,7 @@ EOF;
 EOF;
 		}
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
@@ -179,14 +179,14 @@ EOF;
 	 * @param          $filename
 	 * @param   string $group
 	 *
-	 * @return JDocument
+	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
-		return JFactory::getDocument()->addStyleSheet(JUri::root(true) . "/{$filename}");
+		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

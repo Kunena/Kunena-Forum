@@ -17,14 +17,14 @@ class pkg_kunena_languagesInstallerScript
 {
 
 	/**
-	 * @param   JInstallerFile $parent
+	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent
 	 *
 	 * @since Kunena
 	 */
 	public function uninstall($parent)
 	{
 		// Remove languages.
-		$languages = JLanguageHelper::getKnownLanguages();
+		$languages = \Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
 
 		foreach ($languages as $language)
 		{
@@ -34,7 +34,7 @@ class pkg_kunena_languagesInstallerScript
 
 	/**
 	 * @param   string         $type
-	 * @param   JInstallerFile $parent
+	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -46,7 +46,7 @@ class pkg_kunena_languagesInstallerScript
 			return true;
 		}
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
 		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))
@@ -65,7 +65,7 @@ class pkg_kunena_languagesInstallerScript
 
 		// Get list of languages to be installed.
 		$source    = $parent->getParent()->getPath('source') . '/language';
-		$languages = JLanguageHelper::getKnownLanguages();
+		$languages = \Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
 
 		// @var SimpleXMLElement $files
 
@@ -97,12 +97,12 @@ class pkg_kunena_languagesInstallerScript
 		}
 
 		// Remove old K1.7 style language pack.
-		$table = JTable::getInstance('extension');
+		$table = \Joomla\CMS\Table\Table::getInstance('extension');
 		$id    = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
 
 		if ($id)
 		{
-			$installer = new JInstaller;
+			$installer = new \Joomla\CMS\Installer\Installer;
 			$installer->uninstall('file', $id);
 		}
 
@@ -117,7 +117,7 @@ class pkg_kunena_languagesInstallerScript
 	 */
 	public function uninstallLanguage($tag, $name)
 	{
-		$table = JTable::getInstance('extension');
+		$table = \Joomla\CMS\Table\Table::getInstance('extension');
 		$id    = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
 
 		if (!$id)
@@ -125,7 +125,7 @@ class pkg_kunena_languagesInstallerScript
 			return;
 		}
 
-		$installer = new JInstaller;
+		$installer = new \Joomla\CMS\Installer\Installer;
 		$installer->uninstall('file', $id);
 	}
 }

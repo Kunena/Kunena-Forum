@@ -36,11 +36,11 @@ class KunenaAdminControllerPlugin extends KunenaController
 		$this->view_item   = 'plugin';
 		$this->context     = 'plugin';
 		$this->text_prefix = 'COM_PLUGINS';
-		$this->input       = JFactory::getApplication()->input;
+		$this->input       = \Joomla\CMS\Factory::getApplication()->input;
 
 		parent::__construct($config);
 
-		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
+		\Joomla\CMS\Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 
 		// Apply, Save & New, and Save As copy should be standard on forms.
 		$this->registerTask('apply', 'save');
@@ -80,7 +80,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	protected function allowAdd()
 	{
-		$user = JFactory::getUser();
+		$user = \Joomla\CMS\Factory::getUser();
 
 		return ($user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create')));
 	}
@@ -99,7 +99,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{
-		return JFactory::getUser()->authorise('core.edit', $this->option);
+		return \Joomla\CMS\Factory::getUser()->authorise('core.edit', $this->option);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$app     = JFactory::getApplication();
+		$app     = \Joomla\CMS\Factory::getApplication();
 		$model   = $this->getModel();
 		$table   = $model->getTable();
 		$cid     = $this->input->post->get('cid', array(), 'array');
@@ -221,9 +221,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	public function cancel($key = null)
 	{
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app     = JFactory::getApplication();
+		$app     = \Joomla\CMS\Factory::getApplication();
 		$model   = $this->getModel();
 		$table   = $model->getTable();
 		$checkin = property_exists($table, 'checked_out');
@@ -332,7 +332,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	protected function getRedirectToListAppend()
 	{
-		$tmpl   = JFactory::getApplication()->input->get('tmpl');
+		$tmpl   = \Joomla\CMS\Factory::getApplication()->input->get('tmpl');
 		$append = '';
 
 		// Setup redirect info.
@@ -372,10 +372,10 @@ class KunenaAdminControllerPlugin extends KunenaController
 	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries.
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app     = JFactory::getApplication();
-		$lang    = JFactory::getLanguage();
+		$app     = \Joomla\CMS\Factory::getApplication();
+		$lang    = \Joomla\CMS\Factory::getLanguage();
 		$model   = $this->getModel();
 		$table   = $model->getTable();
 		$data    = $this->input->post->get('jform', array(), 'array');

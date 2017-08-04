@@ -257,7 +257,7 @@ class KunenaTemplate extends JObject
 
 		$this->name = $name;
 
-		$this->params = new JRegistry;
+		$this->params = new \Joomla\Registry\Registry;
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
@@ -326,7 +326,7 @@ class KunenaTemplate extends JObject
 	public function loadLanguage()
 	{
 		// Loading language strings for the template
-		$lang = JFactory::getLanguage();
+		$lang = \Joomla\CMS\Factory::getLanguage();
 		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 
 		foreach (array_reverse($this->default) as $template)
@@ -589,7 +589,7 @@ HTML;
 	 * @param        $filename
 	 * @param   string $group
 	 *
-	 * @return JDocument
+	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
@@ -610,10 +610,10 @@ HTML;
 				$filename = $filemin;
 			}
 
-			$filename = JUri::root(true) . "/{$filename}";
+			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
 		}
 
-		return JFactory::getDocument()->addStyleSheet($filename);
+		return \Joomla\CMS\Factory::getDocument()->addStyleSheet($filename);
 	}
 
 	/**
@@ -629,7 +629,7 @@ HTML;
 		$stylelink = "<!--[if {$condition}]>\n";
 		$stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
 		$stylelink .= "<![endif]-->\n";
-		JFactory::getDocument()->addCustomTag($stylelink);
+		\Joomla\CMS\Factory::getDocument()->addCustomTag($stylelink);
 	}
 
 	/**
@@ -695,12 +695,12 @@ HTML;
 	 * @param        $content
 	 * @param   string $type
 	 *
-	 * @return JDocument
+	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	function addScriptDeclaration($content, $type = 'text/javascript')
 	{
-		return JFactory::getDocument()->addScriptDeclaration($content, $type);
+		return \Joomla\CMS\Factory::getDocument()->addScriptDeclaration($content, $type);
 	}
 
 	/**
@@ -708,7 +708,7 @@ HTML;
 	 *
 	 * @param $filename
 	 *
-	 * @return JDocument
+	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	function addScript($filename)
@@ -727,7 +727,7 @@ HTML;
 			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
 		}
 
-		return JFactory::getDocument()->addScript($filename);
+		return \Joomla\CMS\Factory::getDocument()->addScript($filename);
 	}
 
 	/**
@@ -750,7 +750,7 @@ HTML;
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		if ($path)
 		{
@@ -813,7 +813,7 @@ HTML;
 			}
 		}
 
-		return ($url ? JUri::root(true) . '/' : '') . $this->filecache[$filepath];
+		return ($url ? \Joomla\CMS\Uri\Uri::root(true) . '/' : '') . $this->filecache[$filepath];
 	}
 
 	/**
@@ -1214,7 +1214,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'image')
 			{
-				return '<img src="' . JUri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
+				return '<img src="' . \Joomla\CMS\Uri\Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
@@ -1540,7 +1540,7 @@ HTML;
 	 */
 	public function isHmvc()
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		if (is_null($this->hmvc))
 		{
@@ -1581,11 +1581,11 @@ HTML;
 	 */
 	public static function getInstance($name = null)
 	{
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		if (!$name)
 		{
-			$name = JFactory::getApplication()->input->getString('kunena_template', KunenaFactory::getConfig()->template, 'COOKIE');
+			$name = \Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', KunenaFactory::getConfig()->template, 'COOKIE');
 		}
 
 		$name = KunenaPath::clean($name);

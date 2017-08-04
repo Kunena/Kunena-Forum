@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 $config  = KunenaConfig::getInstance();
 $author  = $this->message->getAuthor();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
-$this->messageLink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
 $msg1 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
 $msg2 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
@@ -142,7 +142,7 @@ $this->mail->Encoding = 'base64';
 							<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
 							    class="hero"><a target="_blank" style="text-decoration: none;"
 							                    href="#"><img border="0" vspace="0" hspace="0"
-							                                  src="<?php echo JUri::base() . KunenaConfig::getInstance()->emailheader; ?>"
+							                                  src="<?php echo \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
 							                                  alt="Please enable images to view this content" title="Forum"
 							                                  width="560" style="
 			width: 100%;
@@ -179,7 +179,7 @@ $this->mail->Encoding = 'base64';
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
 			padding: 25px 6.25% 5px;" class="button"><a
-								href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"
+								href="<?php echo \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"
 								target="_blank" style="text-decoration: underline;">
 								<table border="0" cellpadding="0" cellspacing="0" align="center"
 								       style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">

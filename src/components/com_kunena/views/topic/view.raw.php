@@ -25,7 +25,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function displayEdit($tpl = null)
 	{
-		$body     = JFactory::getApplication()->input->post->get('body', '', 'raw');
+		$body     = \Joomla\CMS\Factory::getApplication()->input->post->get('body', '', 'raw');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->pubwrite)
@@ -36,7 +36,7 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -59,7 +59,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$search = $this->app->input->get('search');
 
-			$db     = JFactory::getDBO();
+			$db     = \Joomla\CMS\Factory::getDBO();
 			$kquery = new KunenaDatabaseQuery;
 			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
@@ -77,7 +77,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				$emojis['key']  = $smiley->code;
 				$emojis['name'] = $smiley->code;
-				$emojis['url']  = JUri::root() . 'media/kunena/emoticons/' . $smiley->location;
+				$emojis['url']  = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/emoticons/' . $smiley->location;
 
 				$response['emojis'][] = $emojis;
 			}
@@ -85,7 +85,7 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -104,7 +104,7 @@ class KunenaViewTopic extends KunenaView
 
 		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
-		$app              = JFactory::getApplication();
+		$app              = \Joomla\CMS\Factory::getApplication();
 
 		if (empty($category_iconset))
 		{
@@ -155,7 +155,7 @@ class KunenaViewTopic extends KunenaView
 					$icon->filename  = (string) $attributes->src;
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
 					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->path      = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
 					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false);
 					$topicIcons[]    = $icon;
 				}
@@ -175,11 +175,11 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayGetrate()
 	{
-		$user = JFactory::getUser();
+		$user = \Joomla\CMS\Factory::getUser();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app      = JFactory::getApplication();
+		$app      = \Joomla\CMS\Factory::getApplication();
 
 		if ($user->id == 0)
 		{
@@ -211,7 +211,7 @@ class KunenaViewTopic extends KunenaView
 		$starid   = $this->app->input->get('starid', 0, 'int');
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app      = JFactory::getApplication();
+		$app      = \Joomla\CMS\Factory::getApplication();
 
 		if ($this->me->exists() || $this->config->ratingenabled)
 		{

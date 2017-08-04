@@ -61,7 +61,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function lock()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
@@ -79,7 +79,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unlock()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
@@ -98,7 +98,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function review()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
@@ -117,7 +117,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unreview()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
@@ -136,7 +136,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_anonymous()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 1);
@@ -155,7 +155,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_anonymous()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 0);
@@ -174,7 +174,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_polls()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 1);
@@ -193,7 +193,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_polls()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 0);
@@ -212,7 +212,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function publish()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
@@ -231,7 +231,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unpublish()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
@@ -252,7 +252,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -260,7 +260,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -281,7 +281,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -289,7 +289,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -388,7 +388,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -396,7 +396,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$app        = JFactory::getApplication();
+		$app        = \Joomla\CMS\Factory::getApplication();
 		$input      = $app->input;
 		$post       = $app->input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
@@ -462,8 +462,8 @@ class KunenaAdminControllerCategories extends KunenaController
 
 			$success = $category->save();
 			$aliases_all = explode(',', $app->input->getString('aliases_all'));
-			
-			$aliases = $app->input->post->getArray(array('aliases' => '')); 
+
+			$aliases = $app->input->post->getArray(array('aliases' => ''));
 
 			if ($aliases_all)
 			{
@@ -527,7 +527,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -535,7 +535,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -601,7 +601,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -609,7 +609,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$id = JFactory::getApplication()->input->getInt('catid', 0);
+		$id = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
 
 		$category = KunenaForumCategoryHelper::get($id);
 
@@ -642,7 +642,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -650,9 +650,9 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
-		$order = JFactory::getApplication()->input->get('order', array(), 'post', 'array');
+		$order = \Joomla\CMS\Factory::getApplication()->input->get('order', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($order);
 
 		if (empty($cid))
@@ -711,7 +711,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function saveOrderAjax()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -735,7 +735,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		// Close the application
-		JFactory::getApplication()->close();
+		\Joomla\CMS\Factory::getApplication()->close();
 	}
 
 	/**
@@ -749,7 +749,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderup()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
@@ -767,7 +767,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderdown()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);
@@ -795,7 +795,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
@@ -818,7 +818,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$db  = JFactory::getDbo();
+		$db  = \Joomla\CMS\Factory::getDbo();
 		$row = new TableKunenaCategories($db);
 		$row->load($id);
 
@@ -843,7 +843,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
@@ -975,7 +975,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function batch_categories()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
@@ -996,7 +996,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		if ($task == 'move')
 		{
-			$db = JFactory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 
 			foreach ($cid as $cat)
 			{
@@ -1014,7 +1014,7 @@ class KunenaAdminControllerCategories extends KunenaController
 					}
 					catch (RuntimeException $e)
 					{
-						JFactory::getApplication()->enqueueMessage($e->getMessage());
+						\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
 						return;
 					}

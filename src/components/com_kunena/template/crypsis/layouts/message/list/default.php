@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
-$view    = JFactory::getApplication()->input->getWord('view');
+$view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 
 ?>
 
@@ -33,7 +33,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 		<?php if ($view != 'user') : ?>
 			<h2 class="filter-time pull-right">
 				<div class="filter-sel">
-					<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-phone">
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
@@ -145,7 +145,7 @@ $view    = JFactory::getApplication()->input->getWord('view');
 </div>
 
 <?php if ($view != 'user') : ?>
-	<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+	<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 	      method="post" target="_self" class="timefilter pull-right">
 		<?php $this->displayTimeFilter('sel'); ?>
 	</form>

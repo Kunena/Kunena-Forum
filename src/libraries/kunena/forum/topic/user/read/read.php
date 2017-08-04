@@ -46,7 +46,7 @@ class KunenaForumTopicUserRead extends JObject
 		$topic = KunenaForumTopicHelper::get($topic);
 
 		// Always fill empty data
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 
 		// Create the table object
 		$table = $this->getTable();
@@ -105,7 +105,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   string $type   Topics table name to be used.
 	 * @param   string $prefix Topics table prefix to be used.
 	 *
-	 * @return boolean|JTable|KunenaTable|TableKunenaUserRead
+	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserRead
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table')
@@ -120,7 +120,7 @@ class KunenaForumTopicUserRead extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**

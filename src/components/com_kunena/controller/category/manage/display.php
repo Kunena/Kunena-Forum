@@ -72,7 +72,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$header           = JText::_('COM_KUNENA_ADMIN');
 		$this->header     = $header;
 		$this->ktemplate  = KunenaFactory::getTemplate();
-		$this->document   = JFactory::getDocument();
+		$this->document   = \Joomla\CMS\Factory::getDocument();
 	}
 
 	/**
@@ -83,10 +83,10 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app       = JFactory::getApplication();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = JFactory::getDocument();
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

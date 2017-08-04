@@ -118,8 +118,8 @@ abstract class KunenaForumCategoryUserHelper
 		$updateList = array();
 		$insertList = array();
 
-		$db   = JFactory::getDbo();
-		$time = JFactory::getDate()->toUnix();
+		$db   = \Joomla\CMS\Factory::getDbo();
+		$time = \Joomla\CMS\Factory::getDate()->toUnix();
 
 		foreach ($items as $item)
 		{
@@ -186,7 +186,7 @@ abstract class KunenaForumCategoryUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = JFactory::getDBO();
+		$db     = \Joomla\CMS\Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
 

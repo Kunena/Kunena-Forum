@@ -59,7 +59,7 @@ abstract class KunenaForumTopicPollHelper
 	 */
 	static public function recount()
 	{
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query
 			->update('#__kunena_topics AS a')

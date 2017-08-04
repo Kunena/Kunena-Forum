@@ -48,17 +48,17 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 // Fixme: can't get the controller working on this
 if ($me->canDoCaptcha())
 {
-	if (JPluginHelper::isEnabled('captcha'))
+	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 	{
-		$plugin = JPluginHelper::getPlugin('captcha');
-		$params = new JRegistry($plugin[0]->params);
+		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
+		$params = new \Joomla\Registry\Registry($plugin[0]->params);
 
 		$captcha_pubkey = $params->get('public_key');
 		$catcha_privkey = $params->get('private_key');
 
 		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 		{
-			JPluginHelper::importPlugin('captcha');
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 			$dispatcher                = JEventDispatcher::getInstance();
 			$result                    = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
 			$output                    = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,

@@ -43,13 +43,13 @@ class KunenaUserBan extends JObject
 	protected static $_useridcache = array();
 
 	/**
-	 * @var JDate|null
+	 * @var \Joomla\CMS\Date\Date|null
 	 * @since Kunena
 	 */
 	protected static $_now = null;
 
 	/**
-	 * @var JUser|null
+	 * @var \Joomla\CMS\User\User|null
 	 * @since Kunena
 	 */
 	protected static $_my = null;
@@ -90,17 +90,17 @@ class KunenaUserBan extends JObject
 	{
 		if (self::$_now === null)
 		{
-			self::$_now = new JDate;
+			self::$_now = new \Joomla\CMS\Date\Date;
 		}
 
 		if (self::$_my === null)
 		{
-			self::$_my = JFactory::getUser();
+			self::$_my = \Joomla\CMS\Factory::getUser();
 		}
 
 		// Always load the data -- if item does not exist: fill empty data
 		$this->load($identifier);
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 	}
 
 	/**
@@ -308,8 +308,8 @@ class KunenaUserBan extends JObject
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
 		$c     = __CLASS__;
-		$db    = JFactory::getDBO();
-		$now   = new JDate;
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$now   = new \Joomla\CMS\Date\Date;
 
 		$query  = $db->getQuery(true);
 		$query->select('b.*')
@@ -356,7 +356,7 @@ class KunenaUserBan extends JObject
 		}
 
 		$c     = __CLASS__;
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 
 		$query  = $db->getQuery(true);
 		$query->select('*')
@@ -424,7 +424,7 @@ class KunenaUserBan extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
 	/**
@@ -589,7 +589,7 @@ class KunenaUserBan extends JObject
 			return true;
 		}
 
-		$expiration = new JDate($this->expiration);
+		$expiration = new \Joomla\CMS\Date\Date($this->expiration);
 
 		if ($expiration->toUnix() > self::$_now->toUnix())
 		{
@@ -645,7 +645,7 @@ class KunenaUserBan extends JObject
 		}
 		else
 		{
-			$date             = new JDate($expiration);
+			$date             = new \Joomla\CMS\Date\Date($expiration);
 			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
 		}
 
@@ -720,8 +720,8 @@ class KunenaUserBan extends JObject
 			throw new Exception($e->getMessage());
 		}
 
-		$user = JFactory::getUser($this->userid);
-		$app  = JFactory::getApplication();
+		$user = \Joomla\CMS\Factory::getUser($this->userid);
+		$app  = \Joomla\CMS\Factory::getApplication();
 		$app->logout((int) $this->userid);
 
 		if (!$this->id)
@@ -729,13 +729,13 @@ class KunenaUserBan extends JObject
 			// If we have new ban, add creation date and user if they do not exist
 			if (!$this->created_time)
 			{
-				$now                = new JDate;
+				$now                = new \Joomla\CMS\Date\Date;
 				$this->created_time = $now->toSql();
 			}
 
 			if (!$this->created_by)
 			{
-				$my               = JFactory::getUser();
+				$my               = \Joomla\CMS\Factory::getUser();
 				$this->created_by = $my->id;
 			}
 		}

@@ -17,13 +17,13 @@ defined('_JEXEC') or die();
 abstract class KunenaEmail
 {
 	/**
-	 * @param   JMail $mail
-	 * @param   array $receivers
+	 * @param   \Joomla\CMS\Mail\Mail $mail
+	 * @param   array                 $receivers
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	public static function send(JMail $mail, array $receivers)
+	public static function send(\Joomla\CMS\Mail\Mail $mail, array $receivers)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -41,10 +41,10 @@ abstract class KunenaEmail
 		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
 		if ($email_recipient_count > 1
 			&& $email_recipient_privacy == 'bcc'
-			&& JMailHelper::isEmailAddress($config->get('email_visible_address'))
+			&& \Joomla\CMS\Mail\MailHelper::isEmailAddress($config->get('email_visible_address'))
 		)
 		{
-			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
+			$mail->AddAddress($config->email_visible_address, \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title));
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
 			if ($email_recipient_count > 9)
@@ -85,7 +85,7 @@ abstract class KunenaEmail
 			catch (Exception $e)
 			{
 				$success = false;
-				JLog::add($e->getMessage(), JLog::ERROR, 'kunena');
+				\Joomla\CMS\Log\Log::add($e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'kunena');
 			}
 		}
 

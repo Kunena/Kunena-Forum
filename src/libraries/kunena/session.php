@@ -51,7 +51,7 @@ class KunenaSession extends JObject
 		if (!$this->currvisit)
 		{
 			// For new users new indication displays 14 days
-			$now               = JFactory::getDate()->toUnix();
+			$now               = \Joomla\CMS\Factory::getDate()->toUnix();
 			$this->lasttime    = $now - 14 * 24 * 60 * 60; // 14 days ago
 			$this->allreadtime = $this->lasttime;
 			$this->currvisit   = $now;
@@ -76,7 +76,7 @@ class KunenaSession extends JObject
 	{
 		if (!self::$_instance)
 		{
-			$my              = JFactory::getUser();
+			$my              = \Joomla\CMS\Factory::getUser();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 
 			if ($update)
@@ -115,7 +115,7 @@ class KunenaSession extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
 	/**
@@ -192,7 +192,7 @@ class KunenaSession extends JObject
 			$this->setError($table->getError());
 		}
 
-		// Set the id for the JUser object in case we created a new user.
+		// Set the id for the \Joomla\CMS\User\User object in case we created a new user.
 		if (empty($this->userid))
 		{
 			$this->userid = $table->get('userid');
@@ -248,8 +248,8 @@ class KunenaSession extends JObject
 	public function isNewSession()
 	{
 		// Perform session timeout check
-		$lifetime              = max(intval(JFactory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
-		$this->_sessiontimeout = ($this->currvisit + $lifetime < JFactory::getDate()->toUnix());
+		$lifetime              = max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
+		$this->_sessiontimeout = ($this->currvisit + $lifetime < \Joomla\CMS\Factory::getDate()->toUnix());
 
 		return $this->_sessiontimeout;
 	}
@@ -261,7 +261,7 @@ class KunenaSession extends JObject
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months
-		$monthsAgo   = JFactory::getDate()->toUnix() - 91 * 24 * 60 * 60;
+		$monthsAgo   = \Joomla\CMS\Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
 		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
 
 		return $allreadtime;
@@ -273,7 +273,7 @@ class KunenaSession extends JObject
 	 */
 	public function markAllCategoriesRead()
 	{
-		$this->allreadtime = JFactory::getDate()->toUnix();
+		$this->allreadtime = \Joomla\CMS\Factory::getDate()->toUnix();
 		$this->readtopics  = 0;
 	}
 
@@ -291,6 +291,6 @@ class KunenaSession extends JObject
 			$this->readtopics = 0;
 		}
 
-		$this->currvisit = JFactory::getDate()->toUnix();
+		$this->currvisit = \Joomla\CMS\Factory::getDate()->toUnix();
 	}
 }

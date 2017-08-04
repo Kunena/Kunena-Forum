@@ -18,7 +18,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.1
  */
-class KunenaAdminModelEmail extends JModelList
+class KunenaAdminModelEmail extends \Joomla\CMS\Model\ListModel
 {
 	/**
 	 * Constructor.

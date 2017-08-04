@@ -13,7 +13,7 @@ JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
-$user = JFactory::getUser();
+$user = \Joomla\CMS\Factory::getUser();
 
 ?>
 

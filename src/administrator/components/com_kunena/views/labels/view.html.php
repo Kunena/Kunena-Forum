@@ -29,7 +29,7 @@ class KunenaAdminViewLabels extends KunenaView
 		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 		$document->setTitle(JText::_('Forum Labels'));
 
 		$this->setToolbar();
@@ -43,7 +43,7 @@ class KunenaAdminViewLabels extends KunenaView
 	protected function setToolbar()
 	{
 		// Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_A_LABELS_MANAGER'));

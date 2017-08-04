@@ -30,14 +30,14 @@ abstract class KunenaModule
 	protected $module = null;
 
 	/**
-	 * @var JRegistry
+	 * @var \Joomla\Registry\Registry
 	 * @since Kunena
 	 */
 	protected $params = null;
 
 	/**
 	 * @param   stdClass  $module
-	 * @param   JRegistry $params
+	 * @param   \Joomla\Registry\Registry $params
 	 *
 	 * @since Kunena
 	 */
@@ -45,7 +45,7 @@ abstract class KunenaModule
 	{
 		$this->module   = $module;
 		$this->params   = $params;
-		$this->document = JFactory::getDocument();
+		$this->document = \Joomla\CMS\Factory::getDocument();
 	}
 
 	/**
@@ -63,16 +63,16 @@ abstract class KunenaModule
 		// Load CSS only once
 		if (static::$css)
 		{
-			$this->document->addStyleSheet(JURI::root(true) . static::$css);
+			$this->document->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . static::$css);
 			static::$css = null;
 		}
 
 		// Use caching also for registered users if enabled.
 		if ($this->params->get('owncache', 0))
 		{
-			// @var $cache JCacheControllerOutput
+			// @var $cache \Joomla\CMS\Cache\CacheControllerOutput
 
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 
 			$me = KunenaFactory::getUser();
 			$cache->setLifeTime($this->params->get('cache_time', 180));

@@ -847,7 +847,7 @@ JHtml::_('behavior.tabstate');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_PROTECTION') ?></td>
 													<td><?php echo $this->lists ['attachment_protection'] ?></td>
-													<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', JUri::root(false) . 'media/kunena/attachments/image.png') ?></td>
+													<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', \Joomla\CMS\Uri\Uri::root(false) . 'media/kunena/attachments/image.png') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8') ?></td>

@@ -193,7 +193,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 		if (!defined("_AUP_MEDALS_LIVE_PATH"))
 		{
-			define('_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
+			define('_AUP_MEDALS_LIVE_PATH', \Joomla\CMS\Uri\Uri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
 		}
 
 		$aupmedals = AltaUserPointsHelper::getUserMedals('', $userid);
@@ -220,7 +220,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 			return false;
 		}
 
-		$_db = JFactory::getDBO();
+		$_db = \Joomla\CMS\Factory::getDBO();
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
 
 		try

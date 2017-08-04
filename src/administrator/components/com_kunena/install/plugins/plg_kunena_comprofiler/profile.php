@@ -67,7 +67,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		global $_CB_framework;
 
 		$config = KunenaFactory::getConfig();
-		$my     = JFactory::getUser();
+		$my     = \Joomla\CMS\Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -147,7 +147,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = JFactory::getDBO();
+		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT cu.user_id AS id, cu.hits AS count
 			FROM #__comprofiler AS cu
 			INNER JOIN #__users AS u ON u.id=cu.user_id

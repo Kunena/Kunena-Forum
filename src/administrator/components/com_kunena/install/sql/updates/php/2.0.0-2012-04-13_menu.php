@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
  */
 function kunena_200_2012_04_13_menu($parent)
 {
-	$app    = JFactory::getApplication();
+	$app    = \Joomla\CMS\Factory::getApplication();
 	$legacy = KunenaMenuFix::getLegacy();
 	$errors = KunenaMenuFix::fixLegacy();
 

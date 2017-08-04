@@ -50,7 +50,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 
 		$this->category = KunenaForumCategory::getInstance($catid);
 
-		$token = JSession::getFormToken();
+		$token = \Joomla\CMS\Session\Session::getFormToken();
 
 		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
@@ -93,7 +93,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 			}
 		}
 
-		JPluginHelper::importPlugin('kunena');
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
 	}

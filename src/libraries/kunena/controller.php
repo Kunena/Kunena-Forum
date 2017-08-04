@@ -15,10 +15,10 @@ jimport('joomla.application.component.helper');
  * Class KunenaController
  * @since Kunena
  */
-class KunenaController extends JControllerLegacy
+class KunenaController extends \Joomla\CMS\Controller\Controller
 {
 	/**
-	 * @var JApplicationCms|null
+	 * @var \Joomla\CMS\Application\CMSApplication|null
 	 * @since Kunena
 	 */
 	public $app = null;
@@ -45,7 +45,7 @@ class KunenaController extends JControllerLegacy
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->app      = JFactory::getApplication();
+		$this->app      = \Joomla\CMS\Factory::getApplication();
 		$this->config   = KunenaFactory::getConfig();
 		$this->me       = KunenaUserHelper::getMyself();
 
@@ -85,9 +85,9 @@ class KunenaController extends JControllerLegacy
 			return $instance;
 		}
 
-		$input = JFactory::getApplication()->input;
+		$input = \Joomla\CMS\Factory::getApplication()->input;
 
-		$app     = JFactory::getApplication();
+		$app     = \Joomla\CMS\Factory::getApplication();
 		$command = $input->get('task', 'display');
 
 		// Check for a controller.task command.
@@ -102,7 +102,7 @@ class KunenaController extends JControllerLegacy
 		else
 		{
 			// Base controller.
-			$view = strtolower(JFactory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
+			$view = strtolower(\Joomla\CMS\Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
@@ -188,7 +188,7 @@ class KunenaController extends JControllerLegacy
 	 * If response is in HTML, we just redirect and enqueue message if there's an exception.
 	 * NOTE: legacy display task is a special case and reverts to original Joomla behavior.
 	 *
-	 * If response is in JSON, we return JSON response, which follows JResponseJson with some extra data:
+	 * If response is in JSON, we return JSON response, which follows \Joomla\CMS\Response\JsonResponse with some extra data:
 	 *
 	 * Default:   {code, location=null, success, message, messages, data={step, location, html}}
 	 * Redirect:  {code, location=[string], success, message, messages=null, data}
@@ -214,7 +214,7 @@ class KunenaController extends JControllerLegacy
 			$task = 'display';
 		}
 
-		$app          = JFactory::getApplication();
+		$app          = \Joomla\CMS\Factory::getApplication();
 		$this->format = $this->input->getWord('format', 'html');
 
 		try
@@ -277,7 +277,7 @@ class KunenaController extends JControllerLegacy
 				$return = base64_decode($app->input->get('return', '', 'BASE64'));
 
 				// Only allow internal urls to be used.
-				if ($return && JUri::isInternal($return))
+				if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
 				{
 					$redirect = JRoute::_($return, false);
 				}
@@ -311,16 +311,16 @@ class KunenaController extends JControllerLegacy
 		echo json_encode($response);
 
 		// It's much faster and safer to exit now than let Joomla to send the response.
-		JFactory::getApplication()->close();
+		\Joomla\CMS\Factory::getApplication()->close();
 	}
 
 	/**
 	 * Method to display a view.
 	 *
 	 * @param   boolean    $cachable  If true, the view output will be cached
-	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link \Joomla\CMS\Filter\InputFilter::clean()}.
 	 *
-	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
+	 * @return  \Joomla\CMS\Controller\Controller  A \Joomla\CMS\Controller\Controller object to support chaining.
 	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -329,11 +329,11 @@ class KunenaController extends JControllerLegacy
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Get the document object.
-		$document = JFactory::getDocument();
+		$document = \Joomla\CMS\Factory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName   = JFactory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
-		$lName   = JFactory::getApplication()->input->getWord('layout', 'default');
+		$vName   = \Joomla\CMS\Factory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
+		$lName   = \Joomla\CMS\Factory::getApplication()->input->getWord('layout', 'default');
 		$vFormat = $document->getType();
 
 		if ($this->app->isClient('administrator'))
@@ -376,7 +376,7 @@ class KunenaController extends JControllerLegacy
 				// FIXME: check possible redirect loops!
 				$route    = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
-				JLog::add("Redirect from " . JUri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", JLog::DEBUG, 'kunena');
+				\Joomla\CMS\Log\Log::add("Redirect from " . \Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
 				$this->app->redirect($route);
 			}
 
@@ -384,10 +384,10 @@ class KunenaController extends JControllerLegacy
 			/*
 			// FIXME:
 			if (isset($active->language) && $active->language != '*') {
-				$language = JFactory::getDocument()->getLanguage();
+				$language = \Joomla\CMS\Factory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
 					$route = KunenaRoute::_(null, false);
-					JLog::add("Language redirect from ".JUri::getInstance()->toString(array('path', 'query'))." to {$route}", JLog::DEBUG, 'kunena');
+					\Joomla\CMS\Log\Log::add("Language redirect from ".\Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query'))." to {$route}", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
 					$this->redirect ($route);
 				}
 			}
@@ -422,7 +422,7 @@ class KunenaController extends JControllerLegacy
 			// Render the view.
 			if ($vFormat == 'html')
 			{
-				JPluginHelper::importPlugin('kunena');
+				\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll();

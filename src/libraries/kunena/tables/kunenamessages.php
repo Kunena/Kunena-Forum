@@ -261,7 +261,7 @@ class TableKunenaMessages extends KunenaTable
 
 		if (!$this->time)
 		{
-			$this->time = JFactory::getDate()->toUnix();
+			$this->time = \Joomla\CMS\Factory::getDate()->toUnix();
 		}
 
 		$this->modified_reason = trim($this->modified_reason);

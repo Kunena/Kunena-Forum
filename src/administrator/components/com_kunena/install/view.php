@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
  * The HTML Kunena configuration view.
  * @since Kunena
  */
-class KunenaViewInstall extends JViewLegacy
+class KunenaViewInstall extends \Joomla\CMS\View\HtmlView
 {
 	/**
 	 * @var null
@@ -51,7 +51,7 @@ class KunenaViewInstall extends JViewLegacy
 		$this->model->setAction(strtolower($version->action));
 		$this->model->setStep(0);
 
-		JFactory::getApplication()->input->post->get('hidemainmenu', 1);
+		\Joomla\CMS\Factory::getApplication()->input->post->get('hidemainmenu', 1);
 
 		parent::display($tpl);
 	}

@@ -18,9 +18,8 @@ jimport('joomla.application.component.modellist');
  *
  * @since 2.0
  */
-class KunenaAdminModelAttachments extends JModelList
+class KunenaAdminModelAttachments extends \Joomla\CMS\Model\ListModel
 {
-
 	/**
 	 * @param   array $config
 	 *
@@ -57,7 +56,7 @@ class KunenaAdminModelAttachments extends JModelList
 	{
 		$this->context = 'com_kunena.admin.attachments';
 
-		$app = JFactory::getApplication();
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');

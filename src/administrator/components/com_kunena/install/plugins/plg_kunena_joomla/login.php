@@ -55,7 +55,7 @@ class KunenaLoginJoomla
 		}
 
 		$options = array('remember' => $rememberme);
-		$error   = JFactory::getApplication()->login($credentials, $options);
+		$error   = \Joomla\CMS\Factory::getApplication()->login($credentials, $options);
 
 		return is_bool($error) ? '' : $error;
 	}
@@ -67,7 +67,7 @@ class KunenaLoginJoomla
 	 */
 	public function logoutUser()
 	{
-		$error = JFactory::getApplication()->logout();
+		$error = \Joomla\CMS\Factory::getApplication()->logout();
 
 		return is_bool($error) ? '' : $error;
 	}
@@ -78,7 +78,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRememberMe()
 	{
-		return (bool) JPluginHelper::isEnabled('system', 'remember');
+		return (bool) \Joomla\CMS\Plugin\PluginHelper::isEnabled('system', 'remember');
 	}
 
 	/**
@@ -109,7 +109,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = JComponentHelper::getParams('com_users');
+		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{

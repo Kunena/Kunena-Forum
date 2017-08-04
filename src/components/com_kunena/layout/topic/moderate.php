@@ -42,7 +42,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$options[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_MODERATION_ENTER_TOPIC'));
 
 		// Then list a few topics.
-		$db     = JFactory::getDbo();
+		$db     = \Joomla\CMS\Factory::getDbo();
 		$params = array(
 			'orderby' => 'tt.last_post_time DESC',
 			'where'   => " AND tt.id != {$db->Quote($this->topic->id)} ");

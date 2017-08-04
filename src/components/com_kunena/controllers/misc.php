@@ -34,7 +34,7 @@ class KunenaControllerMisc extends KunenaController
 	 */
 	public function template()
 	{
-		$name = JFactory::getApplication()->input->getString('name', JFactory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));
+		$name = \Joomla\CMS\Factory::getApplication()->input->getString('name', \Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));
 
 		if ($name)
 		{
@@ -45,11 +45,11 @@ class KunenaControllerMisc extends KunenaController
 				$name = 'crypsis';
 			}
 
-			setcookie('kunena_template', $name, 0, JUri::root(true) . '/');
+			setcookie('kunena_template', $name, 0, \Joomla\CMS\Uri\Uri::root(true) . '/');
 		}
 		else
 		{
-			setcookie('kunena_template', null, time() - 3600, JUri::root(true) . '/');
+			setcookie('kunena_template', null, time() - 3600, \Joomla\CMS\Uri\Uri::root(true) . '/');
 		}
 
 		$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));

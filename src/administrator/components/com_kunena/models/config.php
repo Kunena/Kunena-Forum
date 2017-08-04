@@ -389,10 +389,10 @@ class KunenaAdminModelConfig extends KunenaModel
 		// Added new options into Kunena 3.0.0
 		$lists ['autolink']         = JHtml::_('select.genericlist', $yesno, 'cfg_autolink', 'class="inputbox" size="1"', 'value', 'text', $this->config->autolink);
 		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
-		$lists ['componentUrl']     = preg_replace('|/+|', '/', JUri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php') . ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+		$lists ['componentUrl']     = preg_replace('|/+|', '/', \Joomla\CMS\Uri\Uri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php') . ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
 		// Added new options into Kunena 4.0.0
-		$db    = JFactory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('version')->from('#__kunena_version')->order('id');
 		$db->setQuery($query, 0, 1);

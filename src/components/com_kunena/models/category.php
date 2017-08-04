@@ -224,7 +224,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			if ($this->me->userid && count($modcats))
 			{
 				$catlist = implode(',', $modcats);
-				$db      = JFactory::getDBO();
+				$db      = \Joomla\CMS\Factory::getDBO();
 				$db->setQuery(
 					"SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages

@@ -35,7 +35,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function publish()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -43,13 +43,13 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->post->get('cid', array(), 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today   = JFactory::getDate();
+			$date_today   = \Joomla\CMS\Factory::getDate();
 
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
 			{
@@ -82,7 +82,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function unpublish()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -90,13 +90,13 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today   = JFactory::getDate();
+			$date_today   = \Joomla\CMS\Factory::getDate();
 
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
 			{
@@ -129,7 +129,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid = JFactory::getApplication()->input->post->get('cid', array(), 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
@@ -143,7 +143,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!JSession::checkToken('request'))
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -151,7 +151,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', (array) JFactory::getApplication()->input->getInt('id'), 'post', 'array');
+		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', (array) \Joomla\CMS\Factory::getApplication()->input->getInt('id'), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
@@ -182,7 +182,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function save()
 	{
-		if (!JSession::checkToken('post'))
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -190,18 +190,18 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$now                    = new JDate;
+		$now                    = new \Joomla\CMS\Date\Date;
 		$fields                 = array();
-		$fields['title']        = JFactory::getApplication()->input->getString('title', '', 'post', 'raw');
-		$fields['description']  = JFactory::getApplication()->input->getString('description', '', 'post', 'raw');
-		$fields['sdescription'] = JFactory::getApplication()->input->getString('sdescription', '', 'post', 'raw');
-		$fields['created']      = JFactory::getApplication()->input->getString('created', $now->toSql());
-		$fields['publish_up']   = JFactory::getApplication()->input->getString('publish_up', $now->toSql());
-		$fields['publish_down'] = JFactory::getApplication()->input->getString('publish_down', $now->toSql());
-		$fields['published']    = JFactory::getApplication()->input->getInt('published', 1);
-		$fields['showdate']     = JFactory::getApplication()->input->getInt('showdate', 1);
+		$fields['title']        = \Joomla\CMS\Factory::getApplication()->input->getString('title', '', 'post', 'raw');
+		$fields['description']  = \Joomla\CMS\Factory::getApplication()->input->getString('description', '', 'post', 'raw');
+		$fields['sdescription'] = \Joomla\CMS\Factory::getApplication()->input->getString('sdescription', '', 'post', 'raw');
+		$fields['created']      = \Joomla\CMS\Factory::getApplication()->input->getString('created', $now->toSql());
+		$fields['publish_up']   = \Joomla\CMS\Factory::getApplication()->input->getString('publish_up', $now->toSql());
+		$fields['publish_down'] = \Joomla\CMS\Factory::getApplication()->input->getString('publish_down', $now->toSql());
+		$fields['published']    = \Joomla\CMS\Factory::getApplication()->input->getInt('published', 1);
+		$fields['showdate']     = \Joomla\CMS\Factory::getApplication()->input->getInt('showdate', 1);
 
-		$id           = JFactory::getApplication()->input->getInt('id');
+		$id           = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 		$announcement->bind($fields);
 

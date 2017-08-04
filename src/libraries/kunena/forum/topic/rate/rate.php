@@ -68,7 +68,7 @@ class KunenaForumTopicRate extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if rate does not exist: fill empty data
-		$this->_db = JFactory::getDBO();
+		$this->_db = \Joomla\CMS\Factory::getDBO();
 		$this->load($identifier);
 	}
 
@@ -153,7 +153,7 @@ class KunenaForumTopicRate extends JObject
 	 *
 	 * @param $user
 	 *
-	 * @return boolean|JResponseJson
+	 * @return boolean|\Joomla\CMS\Response\JsonResponse
 	 * @internal param int $userid
 	 *
 	 * @since    2.0
@@ -169,24 +169,24 @@ class KunenaForumTopicRate extends JObject
 		{
 			$exception = new RuntimeException('COM_KUNENA_RATE_LOGIN', 500);
 
-			return new JResponseJson($exception);
+			return new \Joomla\CMS\Response\JsonResponse($exception);
 		}
 
 		if ($user->userid == $topic->first_post_userid)
 		{
 			$exception = new RuntimeException('COM_KUNENA_RATE_NOT_YOURSELF', 500);
 
-			return new JResponseJson($exception);
+			return new \Joomla\CMS\Response\JsonResponse($exception);
 		}
 
 		if ($this->exists($user->userid))
 		{
 			$exception = new RuntimeException('COM_KUNENA_RATE_ALLREADY', 500);
 
-			return new JResponseJson($exception);
+			return new \Joomla\CMS\Response\JsonResponse($exception);
 		}
 
-		$time  = JFactory::getDate();
+		$time  = \Joomla\CMS\Factory::getDate();
 		$query = $this->_db->getQuery(true);
 		$query->insert('#__kunena_rate')
 			->set('topic_id=' . $this->_db->quote($this->topic_id))
@@ -203,11 +203,11 @@ class KunenaForumTopicRate extends JObject
 			$topic = KunenaForumTopicHelper::get($this->topic_id);
 			$activityIntegration->onAfterRate($user->userid, $topic);
 
-			$response = new JResponseJson(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+			$response = new \Joomla\CMS\Response\JsonResponse(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 		}
 		catch (Exception $e)
 		{
-			$response = new JResponseJson($e);
+			$response = new \Joomla\CMS\Response\JsonResponse($e);
 		}
 
 		return $response;
@@ -235,7 +235,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return boolean|JTable|KunenaTable|TableKunenaRate
+	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
@@ -250,7 +250,7 @@ class KunenaForumTopicRate extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**

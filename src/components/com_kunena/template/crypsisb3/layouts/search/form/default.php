@@ -68,7 +68,7 @@ $this->addScript('assets/js/search.js');
 					</div>
 				</fieldset>
 
-				<?php if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile) : ?>
+				<?php if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile) : ?>
 					<fieldset class="col-md-6">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>

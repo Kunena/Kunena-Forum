@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
  *
  * @since  2.0
  */
-class KunenaModel extends JModelLegacy
+class KunenaModel extends \Joomla\CMS\Model\Model
 {
 	/**
 	 * @var  string JSite|JAdministrator
@@ -35,19 +35,19 @@ class KunenaModel extends JModelLegacy
 	public $config = null;
 
 	/**
-	 * @var string JRegistry
+	 * @var string \Joomla\Registry\Registry
 	 * @since Kunena
 	 */
 	public $params = null;
 
 	/**
-	 * @var JInput
+	 * @var \Joomla\CMS\Input\Input
 	 * @since Kunena
 	 */
 	protected $input = null;
 
 	/**
-	 * @var JFilterInput
+	 * @var \Joomla\CMS\Filter\InputFilter
 	 * @since Kunena
 	 */
 	protected $filter = null;
@@ -66,7 +66,7 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param   array  $config config
-	 * @param   JInput $input
+	 * @param   Jinput $input
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -76,7 +76,7 @@ class KunenaModel extends JModelLegacy
 		$this->option = 'com_kunena';
 		parent::__construct($config);
 
-		$this->app    = JFactory::getApplication();
+		$this->app    = \Joomla\CMS\Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->input  = $input ? $input : $this->app->input;
@@ -95,16 +95,16 @@ class KunenaModel extends JModelLegacy
 		{
 			$this->embedded = true;
 			$this->setState('embedded', true);
-			$this->filter = JFilterInput::getInstance();
+			$this->filter = \Joomla\CMS\Filter\InputFilter::getInstance();
 		}
 
-		if ($params instanceof JRegistry)
+		if ($params instanceof \Joomla\Registry\Registry)
 		{
 			$this->params = $params;
 		}
 		else
 		{
-			$this->params = new JRegistry($params);
+			$this->params = new \Joomla\Registry\Registry($params);
 		}
 	}
 
@@ -139,7 +139,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @return JRegistry
+	 * @return \Joomla\Registry\Registry
 	 * @since Kunena
 	 */
 	protected function getParameters()

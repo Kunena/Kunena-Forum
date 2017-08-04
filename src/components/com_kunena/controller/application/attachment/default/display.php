@@ -204,6 +204,6 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = JFactory::getDocument();
+		$this->document = \Joomla\CMS\Factory::getDocument();
 	}
 }

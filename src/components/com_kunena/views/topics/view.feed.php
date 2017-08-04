@@ -33,7 +33,7 @@ class KunenaViewTopics extends KunenaView
 
 		KunenaHtmlParser::$relative = false;
 		$config                     = KunenaFactory::getConfig();
-		$cache                      = JFactory::getCache('com_kunena_rss', 'output');
+		$cache                      = \Joomla\CMS\Factory::getCache('com_kunena_rss', 'output');
 
 		if (!$config->get('cache'))
 		{
@@ -197,7 +197,7 @@ class KunenaViewTopics extends KunenaView
 				$id          = $topic->first_post_id;
 				$page        = 'first';
 				$description = $topic->first_post_message;
-				$date        = new JDate($topic->first_post_time);
+				$date        = new \Joomla\CMS\Date\Date($topic->first_post_time);
 				$userid      = $topic->first_post_userid;
 				$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 			}
@@ -215,7 +215,7 @@ class KunenaViewTopics extends KunenaView
 					$description = $topic->last_post_message;
 				}
 
-				$date     = new JDate($topic->last_post_time);
+				$date     = new \Joomla\CMS\Date\Date($topic->last_post_time);
 				$userid   = $topic->last_post_userid;
 				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
@@ -256,7 +256,7 @@ class KunenaViewTopics extends KunenaView
 				$description = $message->message;
 			}
 
-			$date     = new JDate($message->time);
+			$date     = new \Joomla\CMS\Date\Date($message->time);
 			$userid   = $message->userid;
 			$username = KunenaFactory::getUser($userid)->getName($message->name);
 
@@ -298,7 +298,7 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		// Assign values to feed item
-		$item              = new JFeedItem;
+		$item              = new \Joomla\CMS\Document\Feed\FeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;
@@ -308,7 +308,7 @@ class KunenaViewTopics extends KunenaView
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name')
 		{
-			$item->authorEmail = JFactory::getUser($userid)->email;
+			$item->authorEmail = \Joomla\CMS\Factory::getUser($userid)->email;
 		}
 
 		$item->category = $category;

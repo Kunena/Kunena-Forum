@@ -4,8 +4,7 @@ This document is directed to extension developers who want to integrate their Jo
 Kunena. This document describes how to detect different versions of Kunena and how to make sure that you're safe to use
 our API.
 
-This document will only consider Kunena 2.0 or later versions. To detect older versions, please see
-[our wiki article](https://www.kunena.org/docs/Detecting_Kunena_Version).
+This document will only consider Kunena 2.0 or later versions. 
 
 ## Use Standard Methods
 

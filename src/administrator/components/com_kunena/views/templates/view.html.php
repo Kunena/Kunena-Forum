@@ -160,7 +160,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		JToolBarHelper::divider();
-		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -173,7 +173,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -190,7 +190,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

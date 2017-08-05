@@ -541,7 +541,8 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function canBan()
@@ -706,7 +707,8 @@ class KunenaUserBan extends JObject
 	 *
 	 * @param   boolean $updateOnly Save the object only if not a new ban
 	 *
-	 * @return    boolean True on success
+	 * @return bool True on success
+	 * @throws Exception
 	 * @since     1.6
 	 */
 	public function save($updateOnly = false)

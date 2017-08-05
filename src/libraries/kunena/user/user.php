@@ -43,6 +43,8 @@ jimport('joomla.utilities.date');
  * @property    int    $view
  * @property    int    $hideEmail
  * @property    int    $showOnline
+ * @property    int    $canSubscribe
+ * @property    int    $userListtime
  * @property    string $icq
  * @property    string $aim
  * @property    string $yim
@@ -621,6 +623,8 @@ class KunenaUser extends JObject
 	 * @param   string      $class
 	 *
 	 * @param   int         $catid
+	 *
+	 * @param int           $avatarLink
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1734,6 +1738,7 @@ class KunenaUser extends JObject
 	 * @param   bool   $gray
 	 *
 	 * @deprecated 5.1.0
+	 * @since K2.0
 	 */
 	public function socialButton($name, $gray = false)
 	{
@@ -1747,6 +1752,7 @@ class KunenaUser extends JObject
 	 * @param   bool   $gray
 	 *
 	 * @return string
+	 * @since K5.0
 	 */
 	public function socialButtonsTemplate($name, $gray = false)
 	{

@@ -901,15 +901,18 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
-		$this->user = KunenaFactory::getUser(\Joomla\CMS\Factory::getApplication()->input->getInt('userid', 0));
+		$app = \Joomla\CMS\Factory::getApplication();
+		$input = $app->input;
+		$method = $input->getMethod();
+		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
-		if (\Joomla\CMS\Factory::getApplication()->input->get('signature', null) === null)
+		if ($app->input->get('signature', null) === null)
 		{
 			return;
 		}
 
-		$this->user->personalText = \Joomla\CMS\Factory::getApplication()->input->getString('personaltext', '');
-		$birthdate                = \Joomla\CMS\Factory::getApplication()->input->getString('birthdate');
+		$user->personalText = $input->$method->get('personaltext', '', 'string');
+		$birthdate          = $input->$method->get('birthdate', '', 'string');
 
 		if ($birthdate)
 		{
@@ -918,39 +921,39 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $date->format('Y-m-d');
 		}
 
-		$this->user->birthdate   = $birthdate;
-		$this->user->location    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('location', ''));
-		$this->user->gender      = \Joomla\CMS\Factory::getApplication()->input->getInt('gender', '');
-		$this->user->icq         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('icq', ''));
-		$this->user->aim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('aim', ''));
-		$this->user->yim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('yim', ''));
-		$this->user->microsoft   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('microsoft', ''));
-		$this->user->skype       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('skype', ''));
-		$this->user->google      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('google', ''));
-		$this->user->twitter     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('twitter', ''));
-		$this->user->facebook    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('facebook', ''));
-		$this->user->myspace     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('myspace', ''));
-		$this->user->linkedin    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('linkedin', ''));
-		$this->user->delicious   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('delicious', ''));
-		$this->user->friendfeed  = trim(\Joomla\CMS\Factory::getApplication()->input->getString('friendfeed', ''));
-		$this->user->digg        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('digg', ''));
-		$this->user->blogspot    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('blogspot', ''));
-		$this->user->flickr      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('flickr', ''));
-		$this->user->bebo        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('bebo', ''));
-		$this->user->instagram   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('instagram', ''));
-		$this->user->qq          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qq', ''));
-		$this->user->qzone       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qzone', ''));
-		$this->user->weibo       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('weibo', ''));
-		$this->user->wechat      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('wechat', ''));
-		$this->user->apple       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('apple', ''));
-		$this->user->vk          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('vk', ''));
-		$this->user->whatsapp    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('whatsapp', ''));
-		$this->user->telegram    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('telegram', ''));
-		$this->user->youtube     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('youtube', ''));
-		$this->user->ok          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('ok', ''));
-		$this->user->websitename = \Joomla\CMS\Factory::getApplication()->input->getString('websitename', '');
-		$this->user->websiteurl  = \Joomla\CMS\Factory::getApplication()->input->getString('websiteurl', '');
-		$this->user->signature   = \Joomla\CMS\Factory::getApplication()->input->get('signature', '', 'post', 'string', 'raw');
+		$user->birthdate   = $birthdate;
+		$user->location    = trim($input->$method->get('location', '', 'string'));
+		$user->gender      = $input->$method->get('gender', 0, 'int');
+		$user->icq         = trim($input->$method->get('icq', '', 'string'));
+		$user->aim         = trim($input->$method->get('aim', '', 'string'));
+		$user->yim         = trim($input->$method->get('yim', '', 'string'));
+		$user->microsoft   = trim($input->$method->get('microsoft', '', 'string'));
+		$user->skype       = trim($input->$method->get('skype', '', 'string'));
+		$user->google      = trim($input->$method->get('google', '', 'string'));
+		$user->twitter     = trim($input->$method->get('twitter', '', 'string'));
+		$user->facebook    = trim($input->$method->get('facebook', '', 'string'));
+		$user->myspace     = trim($input->$method->get('myspace', '', 'string'));
+		$user->linkedin    = trim($input->$method->get('linkedin', '', 'string'));
+		$user->delicious   = trim($input->$method->get('delicious', '', 'string'));
+		$user->friendfeed  = trim($input->$method->get('friendfeed', '', 'string'));
+		$user->digg        = trim($input->$method->get('digg', '', 'string'));
+		$user->blogspot    = trim($input->$method->get('blogspot', '', 'string'));
+		$user->flickr      = trim($input->$method->get('flickr', '', 'string'));
+		$user->bebo        = trim($input->$method->get('bebo', '', 'string'));
+		$user->instagram   = trim($input->$method->get('instagram', '', 'string'));
+		$user->qq          = trim($input->$method->get('qq', '', 'string'));
+		$user->qzone       = trim($input->$method->get('qzone', '', 'string'));
+		$user->weibo       = trim($input->$method->get('weibo', '', 'string'));
+		$user->wechat      = trim($input->$method->get('wechat', '', 'string'));
+		$user->apple       = trim($input->$method->get('apple', '', 'string'));
+		$user->vk          = trim($input->$method->get('vk', '', 'string'));
+		$user->whatsapp    = trim($input->$method->get('whatsapp', '', 'string'));
+		$user->telegram    = trim($input->$method->get('telegram', '', 'string'));
+		$user->youtube     = trim($input->$method->get('youtube', '', 'string'));
+		$user->ok          = trim($input->$method->get('ok', '', 'string'));
+		$user->websitename = $input->$method->get('websitename', '', 'string');
+		$user->websiteurl  = $input->$method->get('websiteurl', '', 'string');
+		$user->signature   = $input->$method->get('signature', '', 'raw');
 	}
 
 	/**
@@ -1098,6 +1101,7 @@ class KunenaControllerUser extends KunenaController
 
 		while (@ob_end_clean())
 		{
+			// Do nothing
 		}
 
 		echo json_encode($success);

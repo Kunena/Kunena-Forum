@@ -359,9 +359,9 @@ class KunenaTemplate extends JObject
 		<script>
 			jQuery(document).ready(function ($) {
 				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
-		{
+				{
 					echo "true";
-                    }
+}
 else
 		{
 	echo "false";

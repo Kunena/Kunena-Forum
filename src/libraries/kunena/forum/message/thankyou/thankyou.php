@@ -85,7 +85,8 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @param   mixed $user
 	 *
-	 * @return boolean
+	 * @return bool
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($user)
@@ -177,7 +178,8 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @param   mixed $user
 	 *
-	 * @return boolean
+	 * @return bool
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete($user)

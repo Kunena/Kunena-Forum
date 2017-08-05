@@ -54,12 +54,12 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $task
-	 * @param   bool   $xhtml
-	 * @param   bool   $avatarTab
+	 * @param             $user
+	 * @param   string    $task
+	 * @param   bool      $xhtml
+	 * @param bool|string $avatarTab
 	 *
-	 * @return boolean
+	 * @return bool
 	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')

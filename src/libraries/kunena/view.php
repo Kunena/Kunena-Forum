@@ -234,25 +234,25 @@ class KunenaView extends \Joomla\CMS\View\HtmlView
 		switch ((int) $code)
 		{
 			case 400:
-				$app->sendHeaders('Status', '400 Bad Request', true);
+				$app->sendHeaders();
 				break;
 			case 401:
-				$app->sendHeaders('Status', '401 Unauthorized', true);
+				$app->sendHeaders();
 				break;
 			case 403:
-				$app->sendHeaders('Status', '403 Forbidden', true);
+				$app->sendHeaders();
 				break;
 			case 404:
-				$app->sendHeaders('Status', '404 Not Found', true);
+				$app->sendHeaders();
 				break;
 			case 410:
-				$app->sendHeaders('Status', '410 Gone', true);
+				$app->sendHeaders();
 				break;
 			case 500:
-				$app->sendHeaders('Status', '500 Internal Server Error', true);
+				$app->sendHeaders();
 				break;
 			case 503:
-				$app->sendHeaders('Status', '503 Service Temporarily Unavailable', true);
+				$app->sendHeaders();
 				break;
 			default:
 		}

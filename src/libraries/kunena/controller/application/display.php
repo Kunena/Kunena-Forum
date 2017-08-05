@@ -166,7 +166,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
 						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
                             KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
-                            )
+                        )
                         );
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}

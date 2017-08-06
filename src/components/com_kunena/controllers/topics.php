@@ -507,7 +507,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		\Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -555,7 +555,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		\Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -602,7 +602,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		\Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -649,7 +649,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys(\Joomla\CMS\Factory::getApplication()->input->get('posts', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		\Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);

@@ -20,6 +20,8 @@ defined('_JEXEC') or die();
  * @property string $description
  * @property string $created
  * @property int    $published
+ * @property int    $publish_up
+ * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
  * @since Kunena

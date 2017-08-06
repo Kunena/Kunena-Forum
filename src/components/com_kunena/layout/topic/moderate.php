@@ -68,7 +68,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$params  = array('sections' => 0, 'catid' => 0);
 
 		return JHtml::_(
-			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"', 'value', 'text', $this->category->id, 'kmod_categories'
+			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
+			'value', 'text', $this->category->id, 'kmod_categories'
 		);
 	}
 }

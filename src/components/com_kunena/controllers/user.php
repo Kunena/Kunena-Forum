@@ -1006,7 +1006,7 @@ class KunenaControllerUser extends KunenaController
 		// We are converting all exceptions into JSON.
 		try
 		{
-			$me    = KunenaUserHelper::getMyself();
+			$me = KunenaUserHelper::getMyself();
 
 			$caption = $this->input->getString('caption');
 			$options = array(
@@ -1083,7 +1083,7 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
 
-		$success           = array();
+		$success = array();
 
 		$this->deleteOldAvatars();
 
@@ -1130,11 +1130,11 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(JText::_('Forbidden'), 403);
 		}
 
-		$userid      = $this->input->getInt('userid', 0);
-		$kuser = KunenaFactory::getUser($userid);
+		$userid = $this->input->getInt('userid', 0);
+		$kuser  = KunenaFactory::getUser($userid);
 
-		$avatar          = new stdClass;
-		$avatar->name    = $kuser->avatar;
+		$avatar       = new stdClass;
+		$avatar->name = $kuser->avatar;
 
 		if (!empty($kuser->avatar))
 		{

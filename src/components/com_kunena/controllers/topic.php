@@ -168,7 +168,6 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$category = KunenaForumCategoryHelper::get($catid);
 
-				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
 					if (stripos($this->input->getString('mime'), 'image/') !== false)
@@ -358,9 +357,9 @@ class KunenaControllerTopic extends KunenaController
 				$params = new \Joomla\Registry\Registry($plugin[0]->params);
 
 				$captcha_pubkey = $params->get('public_key');
-				$catcha_privkey = $params->get('private_key');
+				$captcha_privkey = $params->get('private_key');
 
-				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				if (!empty($captcha_pubkey) && !empty($captcha_privkey))
 				{
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$dispatcher = JEventDispatcher::getInstance();

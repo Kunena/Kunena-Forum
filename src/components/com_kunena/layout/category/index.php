@@ -38,7 +38,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve category icon
 	 *
-	 * @param   KunenaCategory $category The KunenaCategory object
+	 * @param   string $category The KunenaCategory object
 	 *
 	 * @return string
 	 * @since Kunena
@@ -78,7 +78,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve small category icon
 	 *
-	 * @param   KunenaSubCategory $subcategory The KunenaCategory object
+	 * @param   string $subcategory The KunenaCategory object
 	 *
 	 * @return string
 	 * @since Kunena

@@ -19,9 +19,9 @@ defined('_JEXEC') or die;
 class KunenaLayoutTopicEditHistory extends KunenaLayout
 {
 	/**
-	 * Method to get the anker link with number
+	 * Method to get the anchor link with number
 	 *
-	 * @param   int $mesid    The Id of the messsage
+	 * @param   int $mesid    The Id of the message
 	 * @param   int $replycnt The number of replies
 	 *
 	 * @return string
@@ -31,29 +31,29 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	{
 		if ($this->config->ordering_system == 'replyid')
 		{
-			$this->numLink = $this->getSamePageAnkerLink($mesid, '#' . $replycnt);
+			$this->numLink = $this->getSamePageAnchorLink($mesid, '#' . $replycnt);
 		}
 		else
 		{
-			$this->numLink = $this->getSamePageAnkerLink($mesid, '#' . $mesid);
+			$this->numLink = $this->getSamePageAnchorLink($mesid, '#' . $mesid);
 		}
 
 		return $this->numLink;
 	}
 
 	/**
-	 * Method to get anker link on the same page
+	 * Method to get anchor link on the same page
 	 *
-	 * @param   int    $anker The anker number
+	 * @param   int    $anchor The anchor number
 	 * @param   string $name  The name for the link
 	 * @param   string $rel   The rel attribute for the link
-	 * @param   string $class The class attibute for the link
+	 * @param   string $class The class attribute for the link
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
+	public function getSamePageAnchorLink($anchor, $name, $rel = 'nofollow', $class = '')
 	{
-		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
+		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anchor . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 }

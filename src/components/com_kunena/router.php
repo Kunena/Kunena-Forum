@@ -36,7 +36,7 @@ function KunenaBuildRoute(&$query)
 	$segments = array();
 
 	// If Kunena Forum isn't installed or SEF is not enabled, do nothing
-	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed() || !KunenaRoute::$config->sef)
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed() || !KunenaConfig::getInstance()->sef)
 	{
 		return $segments;
 	}

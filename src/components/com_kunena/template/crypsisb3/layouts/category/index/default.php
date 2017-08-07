@@ -213,11 +213,11 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="col-md-12">
 											<?php endif; ?>
-												<span><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+												<span class="lastpostlink"><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
-												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+												<span class="lastpostby"><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>
-												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
+												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
 										</div>
 									</div>

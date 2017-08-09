@@ -68,18 +68,6 @@ JHtml::_('behavior.core');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($options) : ?>
-				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
-				</th>
-				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
-				</th>
-				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
-				</th>
-			<?php endif; ?>
-
 			<th class="col-md-1 center">
 				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 			</th>

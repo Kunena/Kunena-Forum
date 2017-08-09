@@ -42,21 +42,34 @@ JHtml::_('behavior.core');
 				<th class="span1 hidden-phone">
 					<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 				</th>
-				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
+				<th class="span5">
+					<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 				</th>
-				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
-				</th>
-				<th class="span1 center">
+
+				<?php if ($options) : ?>
+					<th class="span1 center">
+						<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+					</th>
+					<th class="span1 center">
+						<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
+					</th>
+					<th class="span1 center">
+						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
+					</th>
+				<?php endif; ?>
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 				<th class="span1 center hidden-phone">
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>
-			<?php endif; ?>
 
-		</tr>
+				<?php if ($options) : ?>
+					<th class="span1 center">
+						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+					</th>
+				<?php endif; ?>
+			</tr>
 		</thead>
 
 		<?php if ($this->pagination->pagesTotal > 1) : ?>

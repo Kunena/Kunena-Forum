@@ -229,7 +229,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\Model\Admin
 	 * @return  \Joomla\CMS\Table\Table    A database object
 	 * @since Kunena
 	 */
-	public function getTable($type = 'Extension', $prefix = '\Joomla\CMS\Table\Table', $config = array())
+	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{
 		return \Joomla\CMS\Table\Table::getInstance($type, $prefix, $config);
 	}

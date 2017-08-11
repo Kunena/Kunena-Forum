@@ -247,9 +247,11 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tabs['banuser'] = $tab;
 		}
 
-		$dispatcher = JEventDispatcher::getInstance();
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher->trigger('onKunenaUserTabs');
+		$dispatcher = JEventDispatcher::getInstance();
+		$plugins = $dispatcher->trigger('onKunenaUserTabs', array($tabs));
+
+		$tabs = $tabs + $plugins;
 
 		return $tabs;
 	}

@@ -143,7 +143,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			catch (KunenaExceptionAuthorise $e)
 			{
-				$banned = KunenaUserHelper::getMyself()->banned;
+				$banned = KunenaUserHelper::getMyself()->isBanned();
 				$userid = $this->input->getInt('userid');
 
 				if (\Joomla\CMS\Factory::getUser()->guest && KunenaUserHelper::get($userid)->exists())

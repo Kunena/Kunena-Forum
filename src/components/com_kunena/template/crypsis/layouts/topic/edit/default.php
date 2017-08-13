@@ -259,7 +259,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
 										<div class="clearfix"></div>
-										<div id="progress" class="progress progress-striped">
+										</br>
+										<div id="progress" class="progress progress-striped" style="display: none">
 											<div class="bar"></div>
 										</div>
 										<!-- The container for the uploaded files -->

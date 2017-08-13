@@ -73,6 +73,11 @@ jQuery(function ($) {
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
+		$('#progress').css(
+			'display',
+			'block'
+		);
+
 		$('#insert-all').removeClass('btn-success');
 		$('#insert-all').addClass('btn-primary');
 		$('#insert-all').html('<i class="glyphicon glyphicon-upload"></i>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
@@ -265,6 +270,11 @@ jQuery(function ($) {
 		.bind('fileuploaddrop', function (e, data) {
 			$('#form_submit_button').prop('disabled', true);
 
+			$('#progress').css(
+				'display',
+				'block'
+			);
+
 			$('#remove-all').show();
 			$('#insert-all').show();
 
@@ -306,6 +316,11 @@ jQuery(function ($) {
 				'0%'
 			);
 
+			$('#progress').css(
+				'display',
+				'block'
+			);
+
 			data.context = $('<div/>').appendTo('#files');
 
 			$.each(data.files, function (index, file) {
@@ -341,6 +356,12 @@ jQuery(function ($) {
 		}
 	}).on('fileuploaddone', function (e, data) {
 		// $.each(data.result.data, function (index, file)
+
+		var progress = parseInt(data.loaded / data.total * 100, 10);
+		$('#progress .bar').css(
+			'width',
+			progress + '%'
+		);
 
 		var link = $('<a>')
 			.attr('target', '_blank')

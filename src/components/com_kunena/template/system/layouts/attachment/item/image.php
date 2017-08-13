@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
@@ -14,18 +15,62 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
+$location = $attachment->getUrl();
+$data     = getimagesize($location);
+$width    = $data[0];
+$height   = $data[1];
+$name     = preg_replace('/.html/', '', $attachment->getUrl());
+
+
 if (!$attachment->isImage())
 {
 	return;
 }
 
-$config = KunenaConfig::getInstance();
+$config = KunenaFactory::getConfig();
 
-$attributesLink = $config->lightbox ? ' rel="lightbox[imagelink' . $attachment->mesid . ']"' : '';
-$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
+// Load FancyBox library if enabled in configuration
+if ($config->lightbox == 1)
+{
+	echo $this->subLayout('Widget/Lightbox');
+
+	$config = KunenaConfig::getInstance();
+
+	$attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
+
+	if ($config->lazyload)
+	{
+		?>
+		<a href="<?php echo $attachment->getUrl(); ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+	else
+	{
+		?>
+		<a href="<?php echo $attachment->getUrl(); ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+}
+else
+{
+	if ($config->lazyload)
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+}
 ?>
-
-<a href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="<?php echo $attachment->getFilename(); ?>"/>
-</a>

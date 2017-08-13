@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
@@ -14,16 +15,51 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
+echo $this->subLayout('Widget/Lightbox');
+
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[thumb' . $attachment->mesid . ']"' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
-?>
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
-	<?php
-	if ($attachment->isImage())
-		:
+$name           = preg_replace('/.html/', '', $attachment->getUrl());
+
+if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
+{
+	$name = preg_replace('/.html/', '', $attachment->getUrl());
+}
+else
+{
+	$name = $attachment->getUrl();
+}
+
+if ($attachment->isImage())
+{
+	if ($config->lazyload)
+	{
 		?>
-		<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="<?php echo $attachment->getFilename(); ?>"/>
-	<?php endif; ?>
-</a>
+		<a href="<?php echo $attachment->getUrl(); ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>" height="<?php echo $config->thumbheight; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+	else
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
+}
+else
+{
+	?>
+	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		<?php echo KunenaIcons::file(); ?>
+	</a>
+	<?php
+}

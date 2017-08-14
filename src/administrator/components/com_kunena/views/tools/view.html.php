@@ -21,9 +21,6 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	function displayDefault()
 	{
-		$this->systemreport = $this->get('SystemReport');
-
-		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
 		$this->setToolBarDefault();
 		$this->display();
 	}
@@ -131,6 +128,17 @@ class KunenaAdminViewTools extends KunenaView
 		$login = KunenaLogin::getInstance();
 		$this->isTFAEnabled = $login->isTFAEnabled();
 
+		$this->display();
+	}
+
+	/**
+	 *
+	 */
+	function displayReport()
+	{
+		$this->systemreport = $this->get('SystemReport');
+		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
+		$this->setToolBarReport();
 		$this->display();
 	}
 
@@ -263,6 +271,19 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 		$help_url  = 'https://docs.kunena.org/en/manual/backend/tools/diagnostics';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 */
+	protected function setToolBarReport()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA'), 'help');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+		$help_url  = 'https://docs.kunena.org/en/faq/configuration-report';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

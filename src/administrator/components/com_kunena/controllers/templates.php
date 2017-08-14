@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 jimport('joomla.filesystem.archive');
 
+use Joomla\Archive\Archive;
+
 /**
  * Kunena Backend Templates Controller
  *
@@ -171,7 +173,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 			{
 				try
 				{
-					JArchive::extract($tmp . $file ['name'], $tmp_kunena);
+					$archive = new Archive;
+					$archive->extract($tmp . $file ['name'], $tmp_kunena);
 				}
 				catch (Exception $e)
 				{

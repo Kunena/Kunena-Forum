@@ -20,6 +20,8 @@ define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
 define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE . '/components/' . basename(KUNENA_INSTALLER_ADMINPATH));
 define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE . '/media/kunena');
 
+use Joomla\Archive\Archive;
+
 /**
  * Install Model for Kunena
  *
@@ -461,7 +463,8 @@ class KunenaModelInstall extends \Joomla\CMS\Model\Model
 
 			if ($success)
 			{
-				$success = JArchive::extract($file, $dest);
+				$archive = new Archive;
+				$success = $archive->extract($file, $dest);
 			}
 
 			if (!$success)

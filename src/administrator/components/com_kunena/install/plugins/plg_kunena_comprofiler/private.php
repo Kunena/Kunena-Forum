@@ -77,7 +77,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			{
 				if (is_array($res))
 				{
-					$html .= '<a href="' . cbSef($res["url"]) . '" title="' . getLangDefinition($res["tooltip"]) . '">' . $linkItem . '</a> ';
+					$html .= '<a href="' . cbSef($res["url"]) . '" title="' . \CBLib\Language\CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
 				}
 			}
 		}

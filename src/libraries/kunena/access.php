@@ -351,7 +351,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return string|null
 	 *
-	 * @deprecated 3.0.1
+	 * @deprecated 6.0.0
 	 * @since      Kunena
 	 */
 	public function getGroupName($accesstype, $id)

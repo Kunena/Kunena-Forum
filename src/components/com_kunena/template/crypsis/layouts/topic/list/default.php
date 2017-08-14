@@ -15,8 +15,10 @@ $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
 
-$this->addStyleSheet('assets/css/rating.css');
-?>
+if (KunenaConfig::getInstance()->ratingenabled)
+{
+	$this->addStyleSheet('assets/css/rating.css');
+}?>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="pull-left">

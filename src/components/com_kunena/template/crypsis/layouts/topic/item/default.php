@@ -34,11 +34,20 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
-$this->addScript('assets/js/topic.js');
 
-$this->addStyleSheet('assets/css/rating.css');
-$this->addScript('assets/js/rating.js');
-$this->addScript('assets/js/krating.js');
+if (KunenaConfig::getInstance()->ratingenabled)
+{
+	$this->addStyleSheet('assets/css/rating.css');
+	$this->addScript('assets/js/rating.js');
+	$this->addScript('assets/js/krating.js');
+}
+
+if (KunenaConfig::getInstance()->lazyload)
+{
+	$this->addScript('assets/js/jquery.lazyload.min.js');
+}
+
+$this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');

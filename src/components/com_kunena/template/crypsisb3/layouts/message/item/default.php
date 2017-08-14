@@ -22,11 +22,6 @@ $config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 $str_counts           = substr_count($this->topic->subject, 'solved');
 
-if ($config->lazyload)
-{
-	$this->addScript('assets/js/jquery.lazyload.min.js');
-}
-
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;

@@ -28,8 +28,20 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
 $attributesImg .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
-?>
 
+if ($config->lazyload)
+{
+	?>
+	<a href="<?php echo $this->escape($url); ?>"
+	   <?php echo $attributesLink;?>>
+		<img class="lazy" src="<?php echo $this->escape($url); ?>" data-original="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
+		     alt="test"/>
+	</a>
+	<?php
+}
+else
+{
+?>
 <div class="kmsgimage">
 	<?php if ($canLink) : ?>
 	<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
@@ -41,3 +53,4 @@ $attributesImg .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 	</a>
 <?php endif; ?>
 </div>
+<?php } ?>

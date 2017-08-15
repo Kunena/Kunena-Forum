@@ -74,7 +74,7 @@ class KunenaAdminViewUser extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
-		$help_url  = 'https://www.kunena.org/docs/';
+		$help_url  = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

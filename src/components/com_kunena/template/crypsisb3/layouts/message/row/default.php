@@ -122,11 +122,11 @@ if ($topic->moved_id > 0)
 				</div>
 			<?php endif; ?>
 				<div class="col-md-9">
-					<span><?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
+					<span class="datepost"><?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id);?>
 					</span>
 					<br />
-					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 		</div>
 	</td>

@@ -53,15 +53,17 @@ class KunenaViewCategory extends KunenaView
 		$this->document->image = $image;
 
 		foreach ($this->topics as $topic)
-		{
-			$description = $topic->last_post_message;
-			$date        = new JDate($topic->last_post_time);
-			$userid      = $topic->last_post_userid;
-			$username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+		{ 
+		    $id          = $topic->first_post_id;
+			$page        = 'first';
+			$description = $topic->first_post_message;
+			$date        = new JDate($topic->first_post_time);
+			$userid      = $topic->first_post_userid;
+			$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 
 			$title    = $topic->subject;
 			$category = $topic->getCategory();
-			$url      = $topic->getUrl($category, true, 'last');
+			$url      = $topic->getUrl($category, true, $page);
 
 			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}

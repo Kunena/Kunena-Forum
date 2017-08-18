@@ -98,7 +98,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$this->captchaEnabled = false;
 
-		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
+		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 			{

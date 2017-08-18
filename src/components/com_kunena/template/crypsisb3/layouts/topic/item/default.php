@@ -122,7 +122,7 @@ foreach ($this->messages as $id => $message)
 	}
 }
 
-if ($quick == 2)
+if ($quick == 2 && KunenaConfig::getInstance()->quickreply)
 {
 	echo $this->subLayout('Message/Edit')
 		->set('message', $this->message)

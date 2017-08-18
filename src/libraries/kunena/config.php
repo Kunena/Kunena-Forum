@@ -1243,6 +1243,12 @@ class KunenaConfig extends JObject
 	public $stopforumspam_key = '';
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $quickreply = 1;
+
+	/**
 	 *
 	 * @since Kunena
 	 */

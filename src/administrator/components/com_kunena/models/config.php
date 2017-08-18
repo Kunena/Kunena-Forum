@@ -496,6 +496,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists['defaultavatar'] = JHtml::_('select.genericlist', $yesno, 'cfg_defaultavatar', 'class="inputbox" size="1"', 'value', 'text', $this->config->defaultavatar);
 		$lists['defaultavatarsmall'] = JHtml::_('select.genericlist', $yesno, 'cfg_defaultavatarsmall', 'class="inputbox" size="1"', 'value', 'text', $this->config->defaultavatarsmall);
+		$lists ['quickreply'] = JHtml::_('select.genericlist', $yesno, 'cfg_quickreply', 'class="inputbox" size="1"', 'value', 'text', $this->config->quickreply);
 
 		return $lists;
 	}

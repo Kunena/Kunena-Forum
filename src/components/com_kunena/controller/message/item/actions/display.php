@@ -68,9 +68,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
-		$kemplate      = KunenaFactory::getTemplate();
-		$fullactions   = $kemplate->params->get('fullactions');
-		$topicicontype = $kemplate->params->get('topicicontype');
+		$ktemplate     = KunenaFactory::getTemplate();
+		$fullactions   = $ktemplate->params->get('fullactions');
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 
@@ -81,11 +81,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		if ($this->message->isAuthorised('reply'))
 		{
-			$this->quickreply = true;
-		}
-		else
-		{
-			$this->quickreply = false;
+			$this->quickreply = KunenaConfig::getInstance()->quickreply;
 		}
 
 		// Reply / Quote
@@ -122,7 +118,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				);
 			}
 
-			if ($me->exists())
+			if ($me->exists() && KunenaConfig::getInstance()->quickreply)
 			{
 				if ($topicicontype == 'B2')
 				{

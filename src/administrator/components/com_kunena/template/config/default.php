@@ -406,6 +406,11 @@ JHtml::_('behavior.tabstate');
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
 												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_QUICK_REPLY') ?></td>
+													<td><?php echo $this->lists ['quickreply'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_QUICK_REPLY_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

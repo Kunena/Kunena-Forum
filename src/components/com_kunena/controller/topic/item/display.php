@@ -191,7 +191,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		// Get user data, captcha & quick reply.
 		$this->userTopic  = $this->topic->getUserTopic();
-		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists());
+		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && KunenaConfig::getInstance()->quickreply;
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 	}

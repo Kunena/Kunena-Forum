@@ -684,4 +684,32 @@ abstract class KunenaAttachmentHelper
 
 		unset($results);
 	}
+
+	/**
+	 *
+	 * Load the total count of attachments
+	 *
+	 * @return boolean
+	 * @since K5.1
+	 */
+	public static function getTotalAttachments()
+	{
+		$attachments = null;
+
+		$_db = \Joomla\CMS\Factory::getDBO();
+		$_db->getQuery(true)
+			->select('*')
+			->from($_db->qn('#__kunena_attachments'));
+
+		try
+		{
+			$attachments = $_db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $attachments;
+	}
 }

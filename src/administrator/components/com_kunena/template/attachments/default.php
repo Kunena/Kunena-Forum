@@ -41,7 +41,7 @@ JHtml::_('dropdown.init');
 		<div class="well well-small">
 			<div class="module-title nav-header">
 				<i class="icon-flag-2"></i>
-				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
+				<?php echo KunenaAttachmentHelper::getTotalAttachments() . ' ' . JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>" method="post" id="adminForm"

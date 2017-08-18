@@ -53,7 +53,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 }
 
 // Fixme: can't get the controller working on this
-if ($me->canDoCaptcha())
+if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 {
 	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 	{

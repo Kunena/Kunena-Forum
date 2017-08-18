@@ -38,7 +38,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('assets/js/sisyphus.js');
 }
 
-if ($me->canDoCaptcha())
+if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 {
 	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 	{

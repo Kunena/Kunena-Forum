@@ -126,7 +126,10 @@ else
 }
 
 // Prepare and display the output.
+JPluginHelper::importPlugin('content');
 $dispatcher = JEventDispatcher::getInstance();
+$params = new stdClass;
+$dispatcher->trigger('onContentPrepare', array ("com_kunena.{$view}", &$contents, &$params, 0));
 $dispatcher->trigger('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
 $dispatcher->trigger('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));

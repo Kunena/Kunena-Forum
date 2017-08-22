@@ -56,7 +56,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -92,15 +92,15 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$newview      = \Joomla\CMS\Factory::getApplication()->input->getString('newview');
-		$newrank      = \Joomla\CMS\Factory::getApplication()->input->getString('newrank');
-		$signature    = \Joomla\CMS\Factory::getApplication()->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
-		$deleteSig    = \Joomla\CMS\Factory::getApplication()->input->getInt('deleteSig');
-		$moderator    = \Joomla\CMS\Factory::getApplication()->input->getInt('moderator');
-		$uid          = \Joomla\CMS\Factory::getApplication()->input->getInt('uid');
-		$deleteAvatar = \Joomla\CMS\Factory::getApplication()->input->getInt('deleteAvatar');
-		$neworder     = \Joomla\CMS\Factory::getApplication()->input->getInt('neworder');
-		$modCatids    = $moderator ? \Joomla\CMS\Factory::getApplication()->input->get('catid', array(), 'post', 'array') : array();
+		$newview      = $this->app->input->getString('newview');
+		$newrank      = $this->app->input->getString('newrank');
+		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$deleteSig    = $this->app->input->getInt('deleteSig');
+		$moderator    = $this->app->input->getInt('moderator');
+		$uid          = $this->app->input->getInt('uid');
+		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
+		$neworder     = $this->app->input->getInt('neworder');
+		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
 		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
@@ -117,8 +117,8 @@ class KunenaAdminControllerUsers extends KunenaController
 				$user->signature = $signature;
 			}
 
-			$user->personalText = \Joomla\CMS\Factory::getApplication()->input->getString('personaltext', '');
-			$birthdate                = \Joomla\CMS\Factory::getApplication()->input->getString('birthdate');
+			$user->personalText = $this->app->input->getString('personaltext', '');
+			$birthdate                = $this->app->input->getString('birthdate');
 
 			if ($birthdate)
 			{
@@ -128,41 +128,41 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 
 			$user->birthdate   = $birthdate;
-			$user->location    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('location', ''));
-			$user->gender      = \Joomla\CMS\Factory::getApplication()->input->getInt('gender', '');
-			$user->icq         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('icq', ''));
-			$user->aim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('aim', ''));
-			$user->yim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('yim', ''));
-			$user->microsoft   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('microsoft', ''));
-			$user->skype       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('skype', ''));
-			$user->google      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('google', ''));
-			$user->twitter     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('twitter', ''));
-			$user->facebook    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('facebook', ''));
-			$user->myspace     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('myspace', ''));
-			$user->linkedin    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('linkedin', ''));
-			$user->delicious   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('delicious', ''));
-			$user->friendfeed  = trim(\Joomla\CMS\Factory::getApplication()->input->getString('friendfeed', ''));
-			$user->digg        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('digg', ''));
-			$user->blogspot    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('blogspot', ''));
-			$user->flickr      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('flickr', ''));
-			$user->bebo        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('bebo', ''));
-			$user->instagram   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('instagram', ''));
-			$user->qq          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qq', ''));
-			$user->qzone       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qzone', ''));
-			$user->weibo       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('weibo', ''));
-			$user->wechat      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('wechat', ''));
-			$user->apple       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('apple', ''));
-			$user->vk          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('vk', ''));
-			$user->telegram    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('telegram', ''));
-			$user->whatsapp    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('whatsapp', ''));
-			$user->youtube     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('youtube', ''));
-			$user->ok          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('ok', ''));
-			$user->websitename = \Joomla\CMS\Factory::getApplication()->input->getString('websitename', '');
-			$user->websiteurl  = \Joomla\CMS\Factory::getApplication()->input->getString('websiteurl', '');
-			$user->hideEmail   = \Joomla\CMS\Factory::getApplication()->input->getString('hidemail');
-			$user->showOnline  = \Joomla\CMS\Factory::getApplication()->input->getString('showonline');
-			$user->cansubscribe  = \Joomla\CMS\Factory::getApplication()->input->getString('cansubscribe');
-			$user->userlisttime  = \Joomla\CMS\Factory::getApplication()->input->getString('userlisttime');
+			$user->location    = trim($this->app->input->getString('location', ''));
+			$user->gender      = $this->app->input->getInt('gender', '');
+			$user->icq         = trim($this->app->input->getString('icq', ''));
+			$user->aim         = trim($this->app->input->getString('aim', ''));
+			$user->yim         = trim($this->app->input->getString('yim', ''));
+			$user->microsoft   = trim($this->app->input->getString('microsoft', ''));
+			$user->skype       = trim($this->app->input->getString('skype', ''));
+			$user->google      = trim($this->app->input->getString('google', ''));
+			$user->twitter     = trim($this->app->input->getString('twitter', ''));
+			$user->facebook    = trim($this->app->input->getString('facebook', ''));
+			$user->myspace     = trim($this->app->input->getString('myspace', ''));
+			$user->linkedin    = trim($this->app->input->getString('linkedin', ''));
+			$user->delicious   = trim($this->app->input->getString('delicious', ''));
+			$user->friendfeed  = trim($this->app->input->getString('friendfeed', ''));
+			$user->digg        = trim($this->app->input->getString('digg', ''));
+			$user->blogspot    = trim($this->app->input->getString('blogspot', ''));
+			$user->flickr      = trim($this->app->input->getString('flickr', ''));
+			$user->bebo        = trim($this->app->input->getString('bebo', ''));
+			$user->instagram   = trim($this->app->input->getString('instagram', ''));
+			$user->qq          = trim($this->app->input->getString('qq', ''));
+			$user->qzone       = trim($this->app->input->getString('qzone', ''));
+			$user->weibo       = trim($this->app->input->getString('weibo', ''));
+			$user->wechat      = trim($this->app->input->getString('wechat', ''));
+			$user->apple       = trim($this->app->input->getString('apple', ''));
+			$user->vk          = trim($this->app->input->getString('vk', ''));
+			$user->telegram    = trim($this->app->input->getString('telegram', ''));
+			$user->whatsapp    = trim($this->app->input->getString('whatsapp', ''));
+			$user->youtube     = trim($this->app->input->getString('youtube', ''));
+			$user->ok          = trim($this->app->input->getString('ok', ''));
+			$user->websitename = $this->app->input->getString('websitename', '');
+			$user->websiteurl  = $this->app->input->getString('websiteurl', '');
+			$user->hideEmail   = $this->app->input->getString('hidemail');
+			$user->showOnline  = $this->app->input->getString('showonline');
+			$user->cansubscribe  = $this->app->input->getString('cansubscribe');
+			$user->userlisttime  = $this->app->input->getString('userlisttime');
 			$user->view     = $newview;
 			$user->ordering = $neworder;
 			$user->rank     = $newrank;
@@ -217,15 +217,15 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$newview      = \Joomla\CMS\Factory::getApplication()->input->getString('newview');
-		$newrank      = \Joomla\CMS\Factory::getApplication()->input->getString('newrank');
-		$signature    = \Joomla\CMS\Factory::getApplication()->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
-		$deleteSig    = \Joomla\CMS\Factory::getApplication()->input->getInt('deleteSig');
-		$moderator    = \Joomla\CMS\Factory::getApplication()->input->getInt('moderator');
-		$uid          = \Joomla\CMS\Factory::getApplication()->input->getInt('uid');
-		$deleteAvatar = \Joomla\CMS\Factory::getApplication()->input->getInt('deleteAvatar');
-		$neworder     = \Joomla\CMS\Factory::getApplication()->input->getInt('neworder');
-		$modCatids    = $moderator ? \Joomla\CMS\Factory::getApplication()->input->get('catid', array(), 'post', 'array') : array();
+		$newview      = $this->app->input->getString('newview');
+		$newrank      = $this->app->input->getString('newrank');
+		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$deleteSig    = $this->app->input->getInt('deleteSig');
+		$moderator    = $this->app->input->getInt('moderator');
+		$uid          = $this->app->input->getInt('uid');
+		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
+		$neworder     = $this->app->input->getInt('neworder');
+		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
 		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
@@ -242,8 +242,8 @@ class KunenaAdminControllerUsers extends KunenaController
 				$user->signature = $signature;
 			}
 
-			$user->personalText = \Joomla\CMS\Factory::getApplication()->input->getString('personaltext', '');
-			$birthdate                = \Joomla\CMS\Factory::getApplication()->input->getString('birthdate');
+			$user->personalText = $this->app->input->getString('personaltext', '');
+			$birthdate                = $this->app->input->getString('birthdate');
 
 			if ($birthdate)
 			{
@@ -253,41 +253,41 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 
 			$user->birthdate   = $birthdate;
-			$user->location    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('location', ''));
-			$user->gender      = \Joomla\CMS\Factory::getApplication()->input->getInt('gender', '');
-			$user->icq         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('icq', ''));
-			$user->aim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('aim', ''));
-			$user->yim         = trim(\Joomla\CMS\Factory::getApplication()->input->getString('yim', ''));
-			$user->microsoft   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('microsoft', ''));
-			$user->skype       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('skype', ''));
-			$user->google      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('google', ''));
-			$user->twitter     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('twitter', ''));
-			$user->facebook    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('facebook', ''));
-			$user->myspace     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('myspace', ''));
-			$user->linkedin    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('linkedin', ''));
-			$user->delicious   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('delicious', ''));
-			$user->friendfeed  = trim(\Joomla\CMS\Factory::getApplication()->input->getString('friendfeed', ''));
-			$user->digg        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('digg', ''));
-			$user->blogspot    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('blogspot', ''));
-			$user->flickr      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('flickr', ''));
-			$user->bebo        = trim(\Joomla\CMS\Factory::getApplication()->input->getString('bebo', ''));
-			$user->instagram   = trim(\Joomla\CMS\Factory::getApplication()->input->getString('instagram', ''));
-			$user->qq          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qq', ''));
-			$user->qzone       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('qzone', ''));
-			$user->weibo       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('weibo', ''));
-			$user->wechat      = trim(\Joomla\CMS\Factory::getApplication()->input->getString('wechat', ''));
-			$user->apple       = trim(\Joomla\CMS\Factory::getApplication()->input->getString('apple', ''));
-			$user->vk          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('vk', ''));
-			$user->telegram    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('telegram', ''));
-			$user->whatsapp    = trim(\Joomla\CMS\Factory::getApplication()->input->getString('whatsapp', ''));
-			$user->youtube     = trim(\Joomla\CMS\Factory::getApplication()->input->getString('youtube', ''));
-			$user->ok          = trim(\Joomla\CMS\Factory::getApplication()->input->getString('ok', ''));
-			$user->websitename = \Joomla\CMS\Factory::getApplication()->input->getString('websitename', '');
-			$user->websiteurl  = \Joomla\CMS\Factory::getApplication()->input->getString('websiteurl', '');
-			$user->hideEmail   = \Joomla\CMS\Factory::getApplication()->input->getString('hidemail');
-			$user->showOnline  = \Joomla\CMS\Factory::getApplication()->input->getString('showonline');
-			$user->cansubscribe  = \Joomla\CMS\Factory::getApplication()->input->getString('cansubscribe');
-			$user->userlisttime  = \Joomla\CMS\Factory::getApplication()->input->getString('userlisttime');
+			$user->location    = trim($this->app->input->getString('location', ''));
+			$user->gender      = $this->app->input->getInt('gender', '');
+			$user->icq         = trim($this->app->input->getString('icq', ''));
+			$user->aim         = trim($this->app->input->getString('aim', ''));
+			$user->yim         = trim($this->app->input->getString('yim', ''));
+			$user->microsoft   = trim($this->app->input->getString('microsoft', ''));
+			$user->skype       = trim($this->app->input->getString('skype', ''));
+			$user->google      = trim($this->app->input->getString('google', ''));
+			$user->twitter     = trim($this->app->input->getString('twitter', ''));
+			$user->facebook    = trim($this->app->input->getString('facebook', ''));
+			$user->myspace     = trim($this->app->input->getString('myspace', ''));
+			$user->linkedin    = trim($this->app->input->getString('linkedin', ''));
+			$user->delicious   = trim($this->app->input->getString('delicious', ''));
+			$user->friendfeed  = trim($this->app->input->getString('friendfeed', ''));
+			$user->digg        = trim($this->app->input->getString('digg', ''));
+			$user->blogspot    = trim($this->app->input->getString('blogspot', ''));
+			$user->flickr      = trim($this->app->input->getString('flickr', ''));
+			$user->bebo        = trim($this->app->input->getString('bebo', ''));
+			$user->instagram   = trim($this->app->input->getString('instagram', ''));
+			$user->qq          = trim($this->app->input->getString('qq', ''));
+			$user->qzone       = trim($this->app->input->getString('qzone', ''));
+			$user->weibo       = trim($this->app->input->getString('weibo', ''));
+			$user->wechat      = trim($this->app->input->getString('wechat', ''));
+			$user->apple       = trim($this->app->input->getString('apple', ''));
+			$user->vk          = trim($this->app->input->getString('vk', ''));
+			$user->telegram    = trim($this->app->input->getString('telegram', ''));
+			$user->whatsapp    = trim($this->app->input->getString('whatsapp', ''));
+			$user->youtube     = trim($this->app->input->getString('youtube', ''));
+			$user->ok          = trim($this->app->input->getString('ok', ''));
+			$user->websitename = $this->app->input->getString('websitename', '');
+			$user->websiteurl  = $this->app->input->getString('websiteurl', '');
+			$user->hideEmail   = $this->app->input->getString('hidemail');
+			$user->showOnline  = $this->app->input->getString('showonline');
+			$user->cansubscribe  = $this->app->input->getString('cansubscribe');
+			$user->userlisttime  = $this->app->input->getString('userlisttime');
 
 			$user->view     = $newview;
 			$user->ordering = $neworder;
@@ -342,7 +342,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if ($cid)
@@ -388,7 +388,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -423,7 +423,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$catid = \Joomla\CMS\Factory::getApplication()->input->getInt('catid');
+		$catid = $this->app->input->getInt('catid');
 		$uids  = (array) $this->app->getUserState('kunena.usermove.userids');
 
 		$error = null;
@@ -493,7 +493,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$id = array_shift($cid);
 
@@ -531,7 +531,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -610,7 +610,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -670,7 +670,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -730,7 +730,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -790,7 +790,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -850,9 +850,9 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
-		$catids = \Joomla\CMS\Factory::getApplication()->input->get('catid', array(), 'post', 'array');
+		$catids = $this->app->input->get('catid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		if (empty($cid))

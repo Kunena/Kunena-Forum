@@ -36,11 +36,11 @@ class KunenaControllerUser extends KunenaController
 			$params   = $active->params;
 			$redirect = $params->get('integration', 1);
 		}
-
-		if ($redirect && \Joomla\CMS\Factory::getApplication()->input->getCmd('format', 'html') == 'html')
+		
+		if ($redirect && $this->app->input->getCmd('format', 'html') == 'html')
 		{
 			$profileIntegration = KunenaFactory::getProfile();
-			$layout             = \Joomla\CMS\Factory::getApplication()->input->getCmd('layout', 'default');
+			$layout             = $this->app->input->getCmd('layout', 'default');
 
 			if ($profileIntegration instanceof KunenaProfileKunena)
 			{
@@ -63,7 +63,7 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
-		$layout = \Joomla\CMS\Factory::getApplication()->input->getCmd('layout', 'default');
+		$layout = $this->app->input->getCmd('layout', 'default');
 
 		if ($layout == 'list')
 		{
@@ -117,7 +117,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$layout = \Joomla\CMS\Factory::getApplication()->input->getString('topic_layout', 'default');
+		$layout = $this->app->input->getString('topic_layout', 'default');
 		$this->me->setTopicLayout($layout);
 		$this->setRedirectBack();
 	}
@@ -160,7 +160,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$errors = 0;
-		$userid = \Joomla\CMS\Factory::getApplication()->input->getInt('userid');
+		$userid = $this->app->input->getInt('userid');
 
 		if (!$userid)
 		{
@@ -238,7 +238,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function ban()
 	{
-		$user = KunenaFactory::getUser(\Joomla\CMS\Factory::getApplication()->input->getInt('userid', 0));
+	    $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if (!$user->exists() || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -260,19 +260,19 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$ip             = \Joomla\CMS\Factory::getApplication()->input->getString('ip', '');
-		$block          = \Joomla\CMS\Factory::getApplication()->input->getInt('block', 0);
-		$expiration     = \Joomla\CMS\Factory::getApplication()->input->getString('expiration', '');
-		$reason_private = \Joomla\CMS\Factory::getApplication()->input->getString('reason_private', '');
-		$reason_public  = \Joomla\CMS\Factory::getApplication()->input->getString('reason_public', '');
-		$comment        = \Joomla\CMS\Factory::getApplication()->input->getString('comment', '');
+		$ip             = $this->app->input->getString('ip', '');
+		$block          = $this->app->input->getInt('block', 0);
+		$expiration     = $this->app->input->getString('expiration', '');
+		$reason_private = $this->app->input->getString('reason_private', '');
+		$reason_public  = $this->app->input->getString('reason_public', '');
+		$comment        = $this->app->input->getString('comment', '');
 
-		$banDelPosts    = \Joomla\CMS\Factory::getApplication()->input->getString('bandelposts', '');
-		$DelAvatar      = \Joomla\CMS\Factory::getApplication()->input->getString('delavatar', '');
-		$DelSignature   = \Joomla\CMS\Factory::getApplication()->input->getString('delsignature', '');
-		$DelProfileInfo = \Joomla\CMS\Factory::getApplication()->input->getString('delprofileinfo', '');
+		$banDelPosts    = $this->app->input->getString('bandelposts', '');
+		$DelAvatar      = $this->app->input->getString('delavatar', '');
+		$DelSignature   = $this->app->input->getString('delsignature', '');
+		$DelProfileInfo = $this->app->input->getString('delprofileinfo', '');
 
-		$delban = \Joomla\CMS\Factory::getApplication()->input->getString('delban', '');
+		$delban = $this->app->input->getString('delban', '');
 
 		if (!$ban->id)
 		{
@@ -469,8 +469,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$app    = \Joomla\CMS\Factory::getApplication();
-		$input  = $app->input;
+		$input  = $this->app->input;
 		$method = $input->getMethod();
 
 		$username  = $input->$method->get('username', '', 'USERNAME');
@@ -517,7 +516,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(\Joomla\CMS\Factory::getApplication()->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($this->app->input->get('return', '', 'method', 'base64'));
 
 		if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
 		{
@@ -615,7 +614,7 @@ class KunenaControllerUser extends KunenaController
 		// 14400 seconds = 6 hours
 		$karma_delay = '14400';
 
-		$userid = \Joomla\CMS\Factory::getApplication()->input->getInt('userid', 0);
+		$userid = $this->app->input->getInt('userid', 0);
 
 		$target = KunenaFactory::getUser($userid);
 
@@ -775,7 +774,7 @@ class KunenaControllerUser extends KunenaController
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+			    $this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
 			}
 
 			// We don't allow white space inside passwords
@@ -786,7 +785,7 @@ class KunenaControllerUser extends KunenaController
 
 			if (strlen($valueTrim) != $valueLength)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage(
+			    $this->app->enqueueMessage(
 					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
 					'warning'
 				);
@@ -801,7 +800,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nInts < $minimumIntegers)
 				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(
+				    $this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
 						'warning'
 					);
@@ -817,7 +816,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nsymbols < $minimumSymbols)
 				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(
+				    $this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
 						'warning'
 					);
@@ -833,7 +832,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nUppercase < $minimumUppercase)
 				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(
+				    $this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
 						'warning'
 					);
@@ -847,7 +846,7 @@ class KunenaControllerUser extends KunenaController
 			{
 				if (strlen((string) $value) < $minimumLength)
 				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage(
+				    $this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
 						'warning'
 					);
@@ -1169,7 +1168,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function saveAvatar()
 	{
-		$action         = \Joomla\CMS\Factory::getApplication()->input->getString('avatar', 'keep');
+	    $action         = $this->app->input->getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
 		$avatarFile = $this->app->input->files->get('avatarfile');
@@ -1233,7 +1232,7 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveSettings()
 	{
-		$this->user = KunenaFactory::getUser(\Joomla\CMS\Factory::getApplication()->input->getInt('userid', 0));
+	    $this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if ($this->app->input->get('hidemail', null) === null)
 		{
@@ -1257,7 +1256,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!empty($cid))

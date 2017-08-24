@@ -22,7 +22,7 @@ jimport('joomla.application.component.model');
  *
  * @since  K1.6
  */
-class KunenaModelSchema extends \Joomla\CMS\Model\Model
+class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 {
 	/**
 	 * Flag to indicate model state initialization.

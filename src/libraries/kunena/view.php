@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
  * Kunena View Class
  * @since Kunena
  */
-class KunenaView extends \Joomla\CMS\View\HtmlView
+class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 {
 	/**
 	 * @var \Joomla\CMS\Document\Document|null

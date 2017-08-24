@@ -18,7 +18,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since 3.0
  */
-class KunenaAdminModelRanks extends \Joomla\CMS\Model\ListModel
+class KunenaAdminModelRanks extends \Joomla\CMS\MVC\Model\ListModel
 {
 
 	/**

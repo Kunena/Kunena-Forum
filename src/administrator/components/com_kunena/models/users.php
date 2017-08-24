@@ -18,7 +18,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since  2.0
  */
-class KunenaAdminModelUsers extends \Joomla\CMS\Model\ListModel
+class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.

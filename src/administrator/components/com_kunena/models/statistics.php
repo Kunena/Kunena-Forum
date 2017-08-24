@@ -17,7 +17,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.0
  */
-class KunenaAdminModelStatistics extends \Joomla\CMS\Model\ListModel
+class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.

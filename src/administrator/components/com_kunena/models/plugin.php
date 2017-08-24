@@ -18,7 +18,7 @@ jimport('joomla.application.component.modeladmin');
  * @subpackage  com_plugins
  * @since       1.6
  */
-class KunenaAdminModelPlugin extends \Joomla\CMS\Model\Admin
+class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * @var        string    The help screen key for the module.

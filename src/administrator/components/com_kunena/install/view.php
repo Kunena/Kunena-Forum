@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
  * The HTML Kunena configuration view.
  * @since Kunena
  */
-class KunenaViewInstall extends \Joomla\CMS\View\HtmlView
+class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 {
 	/**
 	 * @var null

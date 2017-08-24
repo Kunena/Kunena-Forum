@@ -22,7 +22,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool $cachable
 	 * @param   bool $urlparams
 	 *
-	 * @return \Joomla\CMS\Controller\Controller|void
+	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -36,7 +36,7 @@ class KunenaControllerUser extends KunenaController
 			$params   = $active->params;
 			$redirect = $params->get('integration', 1);
 		}
-		
+
 		if ($redirect && $this->app->input->getCmd('format', 'html') == 'html')
 		{
 			$profileIntegration = KunenaFactory::getProfile();

@@ -19,7 +19,7 @@ jimport('joomla.html.pagination');
  *
  * @since  2.0
  */
-class KunenaAdminModelTemplates extends \Joomla\CMS\Model\Admin
+class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * @param   array $config
@@ -69,7 +69,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\Model\Admin
 	}
 
 	/**
-	 * @see   \Joomla\CMS\Model\Form::getForm()
+	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array $data
 	 * @param   bool  $loadData
@@ -95,7 +95,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\Model\Admin
 	}
 
 	/**
-	 * @see   \Joomla\CMS\Model\Form::loadFormData()
+	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 * @since Kunena
 	 */
 	protected function loadFormData()

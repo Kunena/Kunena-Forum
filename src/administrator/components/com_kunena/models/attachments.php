@@ -18,7 +18,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since 2.0
  */
-class KunenaAdminModelAttachments extends \Joomla\CMS\Model\ListModel
+class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * @param   array $config

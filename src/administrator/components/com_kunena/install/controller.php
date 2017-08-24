@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
  *
  * @since  1.6
  */
-class KunenaControllerInstall extends \Joomla\CMS\Controller\Controller
+class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
 	 * @var null
@@ -30,7 +30,7 @@ class KunenaControllerInstall extends \Joomla\CMS\Controller\Controller
 	protected $steps = null;
 
 	/**
-	 * @var bool|\Joomla\CMS\Model\Model|null
+	 * @var bool|\Joomla\CMS\MVC\Model\BaseModel|null
 	 * @since Kunena
 	 */
 	protected $model = null;
@@ -52,7 +52,7 @@ class KunenaControllerInstall extends \Joomla\CMS\Controller\Controller
 	 * @param   bool $cachable
 	 * @param   bool $urlparams
 	 *
-	 * @return \Joomla\CMS\Controller\Controller|void
+	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -252,7 +252,7 @@ class KunenaControllerInstall extends \Joomla\CMS\Controller\Controller
 	 */
 	static public function error($type, $errstr)
 	{
-		$model = \Joomla\CMS\Model\Model::getInstance('Install', 'KunenaModel');
+		$model = \Joomla\CMS\MVC\Model\BaseModel::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
 		echo json_encode(array('success' => false, 'html' => $errstr));
 	}

@@ -15,7 +15,7 @@ jimport('joomla.application.component.helper');
  * Class KunenaController
  * @since Kunena
  */
-class KunenaController extends \Joomla\CMS\Controller\Controller
+class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
 	 * @var \Joomla\CMS\Application\CMSApplication|null
@@ -320,7 +320,7 @@ class KunenaController extends \Joomla\CMS\Controller\Controller
 	 * @param   boolean    $cachable  If true, the view output will be cached
 	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link \Joomla\CMS\Filter\InputFilter::clean()}.
 	 *
-	 * @return  \Joomla\CMS\Controller\Controller  A \Joomla\CMS\Controller\Controller object to support chaining.
+	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to support chaining.
 	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)

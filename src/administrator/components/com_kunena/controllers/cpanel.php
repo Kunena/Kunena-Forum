@@ -44,7 +44,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 * @param   bool $cachable  cachable
 	 * @param   bool $urlparams urlparams
 	 *
-	 * @return \Joomla\CMS\Controller\Controller|void
+	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 *
 	 * @since    2.0.0-BETA2
 	 */

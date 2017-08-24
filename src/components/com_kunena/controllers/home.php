@@ -28,7 +28,7 @@ class KunenaControllerHome extends KunenaController
 	 * @param   bool $cachable
 	 * @param   bool $urlparams
 	 *
-	 * @return \Joomla\CMS\Controller\Controller|void
+	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @throws Exception
 	 * @since Kunena
 	 */

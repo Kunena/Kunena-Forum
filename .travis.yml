@@ -10,6 +10,13 @@ addons:
     - google-chrome
     packages:
     - google-chrome-stable
+    - xvfb
+    - fluxbox
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - fluxbox >/dev/null 2>&1 &
 
 matrix:
   fast_finish: true

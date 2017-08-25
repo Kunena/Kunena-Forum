@@ -13,16 +13,16 @@ modules:
     config:
         JoomlaBrowser:
             url: 'http://localhost/tests/joomla'     # the url that points to the joomla installation at /tests/system/joomla-cms
-            browser: 'firefox'
+            browser: 'chrome'
             window_size: 1280x1024
             username: 'admin'                      # UserName for the Administrator
             password: 'admin'                      # Password for the Administrator
             database host: 'localhost'             # place where the Application is Hosted #server Address
             database user: 'root'                  # MySQL Server user ID, usually root
             database password: ''                  # MySQL Server password, usually empty or root
-            database name: 'kunena'         # DB Name, at the Server
+            database name: 'kunena'                # DB Name, at the Server
             database type: 'mysqli'                # type in lowercase one of the options: MySQL\MySQLi\PDO
-            database prefix: 'prefix_'                # DB Prefix for tables
+            database prefix: 'prefix_'             # DB Prefix for tables
             install sample data: 'no'              # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
             sample data: 'Default English (GB) Sample Data'    # Default Sample Data
             admin email: 'admin@mydomain.com'      # email Id of the Admin

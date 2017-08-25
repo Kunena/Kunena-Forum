@@ -13,13 +13,6 @@ addons:
     - xvfb
     - fluxbox
 
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - fluxbox >/dev/null 2>&1 &
-  - fluxbox &
-  - sleep 1 # give fluxbox some time to start
-
 matrix:
   fast_finish: true
   include:
@@ -33,6 +26,10 @@ matrix:
 before_script:
   # Composer
   - composer install
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - fluxbox &
+  - sleep 3
 
 script:
   - vendor/bin/phing -f build/phing/build.xml

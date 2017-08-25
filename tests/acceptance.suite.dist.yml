@@ -1,54 +1,34 @@
-# This is the Codeception Test Suite Configuration
-
-# To use it rename this file to acceptance.suite.yml (it will be ignored by git)
-
-# To run the test modify the following parameters according to your localhost details:
-#  - url
-#  - folder
-#  - db_user and db_pass
-
-# suite for acceptance tests.
-# perform tests in browser using the WebDriver or PhpBrowser.
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 class_name: AcceptanceTester
 modules:
     enabled:
+        - Asserts
         - JoomlaBrowser
-        - AcceptanceHelper
+        - Helper\Acceptance
     config:
         JoomlaBrowser:
-            url: 'http://localhost/tests/kunena'              # the url that points to the joomla installation at /tests/system/joomla-cms
-            browser: 'firefox'
-            window_size: 1024x768
-            capabilities:
-              unexpectedAlertBehaviour: 'accept'
-            username: 'admin'                                           # UserName for the Administrator
-            password: 'admin'                                           # Password for the Administrator
-            database host: 'localhost'                                  # place where the Application is Hosted #server Address
-            database user: 'root'                                       # MySQL Server user ID, usually root
-            database password: ''                                       # MySQL Server password, usually empty or root
-            database name: 'kunena'                                     # DB Name, at the Server
-            database type: 'mysqli'                                     # type in lowercase one of the options: MySQL\MySQLi\PDO
-            database prefix: 'prefix_'                                  # DB Prefix for tables
-            install sample data: 'no'                                   # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
-            sample data: 'Default English (GB) Sample Data'             # Default Sample Data
-            admin email: 'admin@mydomain.com'                           # Email Id of the Admin
-            language: 'English (United Kingdom)'                        # Language in which you want the Application to be Installed
-        AcceptanceHelper:
-            repo_folder: '/home/travis/build/Kunena/Kunena-Forum/dist/package/distribution/' # Path to the Extension repository. To be used by tests to install via Install from folder
-            counter_test_url: 'http://localhost/tests/kunena/'          # The url for the weblink item used to test hits counter
-            url: 'http://localhost/tests/kunena/'                       # The url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
+            url: 'http://localhost/tests/joomla'     # the url that points to the joomla installation at /tests/system/joomla-cms
+            browser: 'chrome'
+            window_size: 1280x1024
+            username: 'admin'                      # UserName for the Administrator
+            password: 'admin'                      # Password for the Administrator
+            database host: 'localhost'             # place where the Application is Hosted #server Address
+            database user: 'root'                  # MySQL Server user ID, usually root
+            database password: ''                  # MySQL Server password, usually empty or root
+            database name: 'kunena'         # DB Name, at the Server
+            database type: 'mysqli'                # type in lowercase one of the options: MySQL\MySQLi\PDO
+            database prefix: 'prefix_'                # DB Prefix for tables
+            install sample data: 'no'              # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
+            sample data: 'Default English (GB) Sample Data'    # Default Sample Data
+            admin email: 'admin@mydomain.com'      # email Id of the Admin
+            language: 'English (United States)'   # Language in which you want the Application to be Installed
+        Helper\Acceptance:
+            url: 'http://localhost/tests/joomla' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
+            MicrosoftEdgeInsiders: false                  # set this to true, if you are on Windows Insiders
+
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
-env:
-    desktop: ~
-    tablet:
-        modules:
-            config:
-                JoomlaBrowser:
-                    window_size: 768x1024
-    phone:
-        modules:
-            config:
-                JoomlaBrowser:
-                    window_size: 480x640

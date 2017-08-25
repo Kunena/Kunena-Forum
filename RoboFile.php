@@ -300,7 +300,7 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (!$this->isWindows())
 		{
-			$this->_exec("vendor/bin/selenium-server-standalone " . $this->getWebDriver() . ' >> selenium.log 2>&1 &');
+			$this->_exec("vendor/bin/selenium-server-standalone >> selenium.log 2>&1 &");
 		}
 		else
 		{

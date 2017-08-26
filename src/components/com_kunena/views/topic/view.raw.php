@@ -234,4 +234,28 @@ class KunenaViewTopic extends KunenaView
 
 		echo $response;
 	}
+	
+	/**
+	 * Return the template text corresponding to the category selected
+	 *
+	 * @param   null $tpl
+	 *
+	 * @since Kunena 5.1
+	 */
+	public function displayCategorytemplatetext($tpl = null)
+	{
+		$app      = \Joomla\CMS\Factory::getApplication();
+		$catid = $this->app->input->getInt('catid', 0);
+		$response = '';
+
+		$category         = KunenaForumCategoryHelper::get($catid);
+
+		$response =  $category->topictemplate;
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
+	}
 }

@@ -79,7 +79,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
 		$this->template = KunenaTemplate::getInstance();
-		$this->template->setCategoryIconset();
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
 		$this->topicIcons = $this->template->getTopicIcons(false);
 
 		// Have a link to moderate user as well.

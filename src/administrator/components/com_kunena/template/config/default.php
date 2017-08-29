@@ -391,7 +391,7 @@ JHtml::_('behavior.tabstate');
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START') ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START') ?></td>
 													<td>
 														<input type="text" name="cfg_attach_start" class="ksm-field"
 														       value="<?php echo $this->escape($this->config->attach_start) ?>"/>

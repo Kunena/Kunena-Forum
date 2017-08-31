@@ -299,23 +299,13 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function runSelenium()
 	{
-		if (!$this->isWindows())
-		{
-			$this->taskSeleniumStandaloneServer()
-				->setBinary('vendor/bin/selenium-server-standalone')
-				->setWebdriver($this->getWebDriver())
-				->setURL($this->cmsPath . ':4444')
-				->runSelenium()
-				->waitForSelenium()
-				->run()
-				->stopOnFail();
-		}
-		else
-		{
-			$this->_exec("START java.exe -jar " . $this->getWebDriver() . ' vendor\joomla-projects\selenium-server-standalone\bin\selenium-server-standalone.jar ');
-		}
-
-		sleep(3);
+		$this->taskSeleniumStandaloneServer()
+			->setBinary('vendor/bin/selenium-server-standalone')
+			->setWebdriver($this->getWebDriver())
+			->runSelenium()
+			->waitForSelenium()
+			->run()
+			->stopOnFail();
 	}
 
 	/**
@@ -337,14 +327,7 @@ class RoboFile extends \Robo\Tasks
 
 		$this->getComposer();
 
-		if ($this->isWindows())
-		{
-			$this->taskComposerInstall('composer')->run();
-		}
-		else
-		{
-			$this->taskComposerInstall('composer.phar')->run();
-		}
+		$this->taskComposerInstall('composer')->run();
 
 		$this->runSelenium();
 

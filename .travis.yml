@@ -4,7 +4,7 @@ sudo: false
 language: php
 
 addons:
-  firefox: "55.0"
+  chrome: stable
   apt:
     sources:
     - google-chrome
@@ -12,10 +12,6 @@ addons:
     - google-chrome-stable
     - xvfb
     - fluxbox
-
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 matrix:
   fast_finish: true
@@ -28,9 +24,13 @@ matrix:
     - php: nightly
 
 before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
   # Composer
   - composer install
   - fluxbox >/dev/null 2>&1 &
+  - sleep 3
 
 script:
   - vendor/bin/phing -f build/phing/build.xml

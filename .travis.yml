@@ -35,7 +35,6 @@ before_script:
 script:
   - vendor/bin/phing -f build/phing/build.xml
   - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
-  - yes | cp -rf tests/JoomlaBrowser.php vendor/joomla-projects/joomla-browser/src/JoomlaBrowser.php
   - vendor/bin/robo run:tests --use-htaccess
 
 branches:

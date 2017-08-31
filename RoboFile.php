@@ -304,6 +304,7 @@ class RoboFile extends \Robo\Tasks
 			$this->taskSeleniumStandaloneServer()
 				->setBinary('vendor/bin/selenium-server-standalone')
 				->setWebdriver($this->getWebDriver())
+				->setURL($this->cmsPath . ':4444')
 				->runSelenium()
 				->waitForSelenium()
 				->run()

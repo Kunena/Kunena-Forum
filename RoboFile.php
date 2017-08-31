@@ -33,6 +33,7 @@ class RoboFile extends \Robo\Tasks
 {
 	// Load tasks from composer, see composer.json
 	use \Joomla\Jorobo\Tasks\loadTasks;
+	use \Joomla\Testing\Robo\Tasks\LoadTasks;
 
 	/**
 	 * File extension for executables
@@ -300,7 +301,13 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (!$this->isWindows())
 		{
-			$this->_exec("vendor/bin/selenium-server-standalone " . $this->getWebDriver() . ' >> selenium.log 2>&1 &');
+			$this->taskSeleniumStandaloneServer()
+				->setBinary('vendor/bin/selenium-server-standalone')
+				->setWebdriver($this->getWebDriver())
+				->runSelenium()
+				->waitForSelenium()
+				->run()
+				->stopOnFail();
 		}
 		else
 		{

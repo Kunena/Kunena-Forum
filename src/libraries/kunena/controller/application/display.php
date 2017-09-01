@@ -153,7 +153,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->document->setTitle($e->getResponseStatus());
-				
+
 					$this->content = KunenaLayout::factory('Widget/Error')
 					->set('header', $e->getResponseStatus());
 				}
@@ -365,7 +365,17 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		{
 			$credits = '';
 		}
+		else
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
 
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
+		}
 		return $credits;
 	}
 }

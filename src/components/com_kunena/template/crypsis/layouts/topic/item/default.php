@@ -44,7 +44,9 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addScript('assets/js/krating.js');
 }
 
-$this->addScriptDeclaration('(function () {
+if (KunenaConfig::getInstance()->lazyload)
+{
+	$this->addScriptDeclaration('(function () {
 
 		function logElementEvent(eventName, element) {
 			console.log(new Date().getTime(), eventName, element.getAttribute(\'data-original\'));
@@ -69,8 +71,9 @@ $this->addScriptDeclaration('(function () {
 		});
 
 	}());');
-$this->addScript('assets/js/jquery.lazyload.min.js');
 
+	$this->addScript('assets/js/jquery.lazyload.min.js');
+}
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');

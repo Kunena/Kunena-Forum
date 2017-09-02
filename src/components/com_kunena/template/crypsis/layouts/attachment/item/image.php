@@ -71,5 +71,15 @@ else
 		</a>
 		<?php
 	}
+	else
+	{
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img class="kmsimage" src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
+		<?php
+	}
 }
 ?>

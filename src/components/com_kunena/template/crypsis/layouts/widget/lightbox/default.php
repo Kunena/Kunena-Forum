@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-if (KunenaConfig::getInstance()->lightbox == 0)
+if (KunenaConfig::getInstance()->lightbox != 1)
 {
 	return false;
 }

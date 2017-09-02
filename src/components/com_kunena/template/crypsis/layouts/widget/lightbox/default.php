@@ -10,6 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
+if (KunenaConfig::getInstance()->lightbox == 0)
+{
+	return false;
+}
 
 $template = KunenaTemplate::getInstance();
 

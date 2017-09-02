@@ -65,10 +65,9 @@ else
 	if ($config->lazyload)
 	{
 		?>
-		<a href="<?php echo $name; ?>"
-		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
-			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		<a title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>" href="<?php echo $name; ?>">
+			<img width="<?php echo $config->thumbheight; ?>"
+			     height="<?php echo $config->thumbheight; ?>" class="lazy" data-original="<?php echo $name; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}

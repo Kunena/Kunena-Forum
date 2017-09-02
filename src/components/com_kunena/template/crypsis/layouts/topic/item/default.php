@@ -15,6 +15,8 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
+$this->addScript('assets/js/topic.js');
+
 JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
@@ -42,12 +44,32 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addScript('assets/js/krating.js');
 }
 
-if (KunenaConfig::getInstance()->lazyload)
-{
-	$this->addScript('assets/js/jquery.lazyload.min.js');
-}
+$this->addScriptDeclaration('(function () {
 
-$this->addScript('assets/js/topic.js');
+		function logElementEvent(eventName, element) {
+			console.log(new Date().getTime(), eventName, element.getAttribute(\'data-original\'));
+		}
+
+		function logEvent(eventName, elementsLeft) {
+			console.log(new Date().getTime(), eventName, elementsLeft + " images left");
+		}
+
+		new LazyLoad({
+			container: document.getElementById(\'results1\')
+			,
+			callback_load: function (element) {
+				logElementEvent("LOADED", element);
+			},
+			callback_set: function (element) {
+				logElementEvent("SET", element);
+			},
+			callback_processed: function(elementsLeft) {
+				logEvent("PROCESSED", elementsLeft);
+			}
+		});
+
+	}());');
+$this->addScript('assets/js/jquery.lazyload.min.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');

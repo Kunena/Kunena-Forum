@@ -14,6 +14,6 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 ?>
-<div class="kmsgimage">
+<div id="results1" class="kmsgimage">
 	<?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
 </div>

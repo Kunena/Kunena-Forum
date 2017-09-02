@@ -1757,8 +1757,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				$params->set('ksource', 'kunena');
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 				$dispatcher = JEventDispatcher::getInstance();
-				$dispatcher->trigger('onContentPrepare', array('text', &$article, &$params, 0));
-				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
+				$dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+				$article->text = JHtml::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
 			}

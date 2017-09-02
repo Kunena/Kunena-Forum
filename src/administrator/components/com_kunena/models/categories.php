@@ -372,7 +372,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['allow_anonymous'] = JHtml::_('select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous);
 		$lists ['post_anonymous']  = JHtml::_('select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous);
 		$lists ['topic_ordering']  = JHtml::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering);
-		$lists ['allow_ratings']   = JHTML::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox" size="1"', 'value', 'text', $category->allow_ratings);
+		$lists ['allow_ratings']   = JHtml::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox" size="1"', 'value', 'text', $category->allow_ratings);
 
 		$options                 = array();
 		$options[0]              = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));

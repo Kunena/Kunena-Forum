@@ -393,7 +393,17 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		{
 			$credits = '';
 		}
+		else
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
 
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
+		}
 		return $credits;
 	}
 }

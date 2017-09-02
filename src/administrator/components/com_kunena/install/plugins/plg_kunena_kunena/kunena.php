@@ -34,6 +34,12 @@ class PlgKunenaKunena extends \Joomla\CMS\Plugin\CMSPlugin
 
 		parent::__construct($subject, $config);
 
+		$method = method_exists(get_class(new KunenaControllerApplicationDisplay), 'poweredBy');
+		if (!$method)
+		{
+			JFactory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads', 'notice');
+		}
+
 		$this->loadLanguage('plg_kunena_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_kunena.sys', KPATH_ADMIN);
 	}
 

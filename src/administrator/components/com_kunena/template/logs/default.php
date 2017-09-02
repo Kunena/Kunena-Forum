@@ -107,7 +107,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<?php echo $this->getGroupCheckbox('user'); ?>
 			</th>
 			<th class="nowrap">
-				<?php echo JHTML::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->listDirection, $this->listOrdering); ?>
+				<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->listDirection, $this->listOrdering); ?>
 				<?php echo $this->getGroupCheckbox('category'); ?>
 			</th>
 			<th class="nowrap">

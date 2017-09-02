@@ -455,7 +455,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		//K5.0
 		$lists ['read_only'] = JHtml::_('select.genericlist', $yesno, 'cfg_read_only', 'class="inputbox" size="1"', 'value', 'text', $this->config->read_only);
 
-		$lists['ratingenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_ratingenabled', 'class="inputbox" size="1"', 'value', 'text', $this->config->ratingenabled);
+		$lists['ratingenabled'] = JHtml::_('select.genericlist', $yesno, 'cfg_ratingenabled', 'class="inputbox" size="1"', 'value', 'text', $this->config->ratingenabled);
 
 		$lists ['url_subject_topic'] = JHtml::_('select.genericlist', $yesno, 'cfg_url_subject_topic', 'class="inputbox" size="1"', 'value', 'text', $this->config->url_subject_topic);
 

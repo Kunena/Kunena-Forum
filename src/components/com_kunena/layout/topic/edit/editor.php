@@ -44,14 +44,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 			$files = KunenaFolder::files($path, ".php");
 			$options = array();
-			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
 			{
-				$options[] = JHTML::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
+				$options[] = JHtml::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
+			$list = JHtml::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 
 			return $list;
 		}

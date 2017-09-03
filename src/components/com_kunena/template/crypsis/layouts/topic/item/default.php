@@ -46,31 +46,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 
 if (KunenaConfig::getInstance()->lazyload)
 {
-	$this->addScriptDeclaration('(function () {
-
-		function logElementEvent(eventName, element) {
-			console.log(new Date().getTime(), eventName, element.getAttribute(\'data-original\'));
-		}
-
-		function logEvent(eventName, elementsLeft) {
-			console.log(new Date().getTime(), eventName, elementsLeft + " images left");
-		}
-
-		new LazyLoad({
-			container: document.getElementById(\'results1\')
-			,
-			callback_load: function (element) {
-				logElementEvent("LOADED", element);
-			},
-			callback_set: function (element) {
-				logElementEvent("SET", element);
-			},
-			callback_processed: function(elementsLeft) {
-				logEvent("PROCESSED", elementsLeft);
-			}
-		});
-
-	}());');
+	$this->addScriptDeclaration('new LazyLoad();');
 
 	$this->addScript('assets/js/jquery.lazyload.min.js');
 }

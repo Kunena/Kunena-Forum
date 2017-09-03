@@ -44,7 +44,7 @@ if ($config->lightbox == 1)
 		?>
 		<a href="<?php echo $attachment->getUrl(); ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
+			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>" data-src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
 			     alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
@@ -67,7 +67,7 @@ else
 		?>
 		<a href="<?php echo $name; ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img class="lazy" data-original="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
+			<img class="lazy" data-src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight; ?>"
 			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php

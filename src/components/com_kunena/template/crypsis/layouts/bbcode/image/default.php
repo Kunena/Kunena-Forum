@@ -34,7 +34,7 @@ if ($config->lazyload)
 	?>
 	<a href="<?php echo $this->escape($url); ?>"
 	   <?php echo $attributesLink;?>>
-		<img class="lazy" src="<?php echo $this->escape($url); ?>" data-original="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
+		<img class="lazy" src="<?php echo $this->escape($url); ?>" data-src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
 		     alt="test"/>
 	</a>
 	<?php

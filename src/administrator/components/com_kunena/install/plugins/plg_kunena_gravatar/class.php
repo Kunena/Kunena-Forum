@@ -28,21 +28,25 @@ class KunenaGravatar
 	 * @since Kunena
 	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
+
 	/**
 	 * @var integer - The size to use for avatars.
 	 * @since Kunena
 	 */
 	protected $size = 80;
+
 	/**
 	 * @var string - The maximum rating to allow for the avatar.
 	 * @since Kunena
 	 */
 	protected $max_rating = 'g';
+
 	/**
 	 * @var string - A temporary internal cache of the URL parameters to use.
 	 * @since Kunena
 	 */
 	protected $param_cache = null;
+
 	/**
 	 * @var string - The email address of the user.
 	 * @since Kunena

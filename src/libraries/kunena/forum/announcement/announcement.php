@@ -39,26 +39,31 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 		'edit'   => array('Read', 'NotBanned', 'Write'),
 		'delete' => array('Read', 'NotBanned', 'Write'),
 	);
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $_table = 'KunenaAnnouncements';
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $_date = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $_author = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $_authcache = null;
+
 	/**
 	 * @var null
 	 * @since Kunena

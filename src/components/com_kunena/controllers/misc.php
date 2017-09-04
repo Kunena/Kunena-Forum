@@ -35,7 +35,8 @@ class KunenaControllerMisc extends KunenaController
 	public function template()
 	{
 		$name = \Joomla\CMS\Factory::getApplication()->input->getString('name',
-					\Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));
+			\Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', '', 'COOKIE')
+		);
 
 		if ($name)
 		{

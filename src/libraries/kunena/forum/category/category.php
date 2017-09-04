@@ -95,66 +95,79 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		'topic.post.attachment.delete'      => array('NotBanned'),
 		// TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
 	);
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $id = null;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $level = 0;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $authorised = array();
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $_aliases = null;
+
 	/**
 	 * @var mixed|null
 	 * @since Kunena
 	 */
 	protected $_alias = null;
+
 	/**
 	 * @var KunenaForumCategory[]
 	 * @since Kunena
 	 */
 	protected $_channels = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_topics = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_posts = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_lastcat = false;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authcache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authfcache = array();
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	protected $_new = 0;
+
 	/**
 	 * @var string
 	 * @since Kunena

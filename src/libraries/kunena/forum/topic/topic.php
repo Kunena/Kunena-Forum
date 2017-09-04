@@ -80,56 +80,67 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		'post.attachment.delete'      => array(),
 		// TODO: In the future we might want to restrict this: array('Read','Unlocked'),
 	);
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $id = null;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $unread = 0;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $lastread = 0;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $_table = 'KunenaTopics';
+
 	/**
 	 * @var JDatabaseDriver|null
 	 * @since Kunena
 	 */
 	protected $_db = null;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authcache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authccache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authfcache = array();
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	protected $_hold = 1;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	protected $_posts = 0;
+
 	/**
 	 * @var null
 	 * @since Kunena

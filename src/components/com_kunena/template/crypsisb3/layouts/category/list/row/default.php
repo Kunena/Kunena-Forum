@@ -27,14 +27,21 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		</h3>
 	</td>
 
-	<?php if (!$topic->exists()) : ?>
+	<?php if (!$topic->exists())
+	:
+	?>
 		<td>
 			<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
 		</td>
 
-	<?php else : ?>
+	<?php else
 
-		<?php if ($avatar) : ?>
+:
+	?>
+
+		<?php if ($avatar)
+		:
+	?>
 			<td class="center">
 		<span class="hidden-xs">
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
@@ -45,7 +52,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<td<?php if (!$avatar)
 		{
 			echo ' colspan="2"';
-		} ?>>
+		   } ?>>
 			<div>
 				<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $this->category, true, true); ?>
 			</div>
@@ -58,7 +65,9 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		</td>
 	<?php endif; ?>
 
-	<?php if ($this->checkbox) : ?>
+	<?php if ($this->checkbox)
+	:
+	?>
 		<td class="center">
 			<label>
 				<input class="kcheckallcategory" type="checkbox" name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>

@@ -29,66 +29,79 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @since Kunena
 	 */
 	const ACTIVE = 1;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $id = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $userid = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $ip = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $blocked = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $expiration = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $created_by = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $created_time = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $reason_private = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $reason_public = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $modified_by = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $modified_time = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $comments = null;
+
 	/**
 	 * @var null
 	 * @since Kunena

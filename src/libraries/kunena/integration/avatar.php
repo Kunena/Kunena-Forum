@@ -21,11 +21,13 @@ class KunenaAvatar
 	 * @since Kunena
 	 */
 	protected static $instance = false;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $avatarSizes = null;
+
 	/**
 	 * @var boolean
 	 * @since Kunena

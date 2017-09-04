@@ -57,7 +57,8 @@ class KunenaLayoutSearchResults extends KunenaLayout
 				}
 
 				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu",
-					'<span  class="searchword" >' . $searchword . '</span>', $ressubject);
+					'<span  class="searchword" >' . $searchword . '</span>', $ressubject
+				);
 
 				// FIXME: enable highlighting, but only after we can be sure that we do not break html
 				// $resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu",

@@ -28,41 +28,49 @@ class KunenaUserBan extends JObject
 	 * @since Kunena
 	 */
 	const ACTIVE = 1;
+
 	/**
 	 * @var array|KunenaUserBan[]
 	 * @since Kunena
 	 */
 	protected static $_instances = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected static $_instancesByUserid = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected static $_instancesByIP = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected static $_useridcache = array();
+
 	/**
 	 * @var \Joomla\CMS\Date\Date|null
 	 * @since Kunena
 	 */
 	protected static $_now = null;
+
 	/**
 	 * @var \Joomla\CMS\User\User|null
 	 * @since Kunena
 	 */
 	protected static $_my = null;
+
 	/**
 	 * @var JDatabaseDriver|null
 	 * @since Kunena
 	 */
 	protected $_db = null;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
@@ -763,7 +771,7 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
 	 */

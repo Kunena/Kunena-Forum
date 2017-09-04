@@ -38,6 +38,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @since Kunena
 	 */
 	protected static $_directory = 'media/kunena/attachments';
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -48,36 +49,43 @@ class KunenaAttachment extends KunenaDatabaseObject
 		'createfile'  => array(),
 		'delete'      => array('Exists', 'Own'),
 	);
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $id = null;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	public $disabled = false;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $_table = 'KunenaAttachments';
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	protected $path;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	protected $width;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	protected $height;
+
 	/**
 	 * @var
 	 * @since Kunena

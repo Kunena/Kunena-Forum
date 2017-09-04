@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>"
-      id="kform-ban" name="kformban" method="post">
+	  id="kform-ban" name="kformban" method="post">
 	<input type="hidden" name="task" value="ban"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
@@ -47,10 +47,12 @@ defined('_JEXEC') or die;
 				// Make the select list for the view type
 				$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 				$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+
 				// Build the html select list
 				echo JHtml::_(
 					'select.genericlist', $block, 'block', '', 'value', 'text',
-					$this->escape($this->banInfo->blocked), 'ban-level');
+					$this->escape($this->banInfo->blocked), 'ban-level'
+				);
 				?>
 			</td>
 		</tr>
@@ -96,7 +98,9 @@ defined('_JEXEC') or die;
 			</td>
 		</tr>
 
-		<?php if ($this->banInfo->exists()) : ?>
+		<?php if ($this->banInfo->exists())
+		:
+	?>
 			<tr>
 				<td>
 					<label for="ban-remove"><?php echo JText::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>

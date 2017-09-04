@@ -67,26 +67,31 @@ class KunenaPagination
 	 * @since  3.0
 	 */
 	public $pagesTotal;
+
 	/**
 	 * @var    integer
 	 * @since Kunena
 	 */
 	public $stickyStart = null;
+
 	/**
 	 * @var    integer
 	 * @since Kunena
 	 */
 	public $stickyStop = null;
+
 	/**
 	 * @var    \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public $uri = null;
+
 	/**
 	 * @var    boolean  View all flag
 	 * @since  3.0
 	 */
 	protected $viewall = false;
+
 	/**
 	 * @var null
 	 * @since Kunena

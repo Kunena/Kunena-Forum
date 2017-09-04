@@ -33,31 +33,37 @@ class KunenaAccess
 	 * @since Kunena
 	 */
 	protected static $instance = null;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected static $cacheKey = 'com_kunena.access.global.v1';
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $accesstypes = array('all' => array());
+
 	/**
 	 * @var array|null
 	 * @since Kunena
 	 */
 	protected $adminsByCatid = null;
+
 	/**
 	 * @var array|null
 	 * @since Kunena
 	 */
 	protected $adminsByUserid = null;
+
 	/**
 	 * @var array|null
 	 * @since Kunena
 	 */
 	protected $moderatorsByCatid = null;
+
 	/**
 	 * @var array|null
 	 * @since Kunena
@@ -366,7 +372,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-			                                     'title' => $name);
+												 'title' => $name);
 		}
 
 		return $list;

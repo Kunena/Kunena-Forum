@@ -20,16 +20,19 @@ class KunenaSession extends JObject
 	 * @since Kunena
 	 */
 	private static $_instance;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_sessiontimeout = false;
+
 	/**
 	 * @var int|string
 	 * @since Kunena

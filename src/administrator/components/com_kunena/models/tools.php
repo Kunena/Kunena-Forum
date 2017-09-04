@@ -26,126 +26,151 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since Kunena
 	 */
 	protected $jconfig_smtpuser = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $jconfig_ftp = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $jconfig_sef = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $jconfig_sef_rewrite = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $htaccess = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $register_globals = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $safe_mode = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $mbstring = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $gd_info = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $gd_support = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $maxExecTime = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $maxExecMem = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $fileuploads = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $kunenaVersionInfo = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $ktemplate = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $ktemplatedetails = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $jtemplatedetails = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $joomlamenudetails = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $collation = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $kconfigsettings = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $joomlalanguages = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $plgtext = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $modtext = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $thirdpartytext = null;
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $seftext = null;
+
 	/**
 	 * @var null
 	 * @since Kunena

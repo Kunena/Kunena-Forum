@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 						</label>
 					</span>
 					<input id="login-username" type="text" name="username" class="input-small" tabindex="1"
-					       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>" />
+						   size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>" />
 				</div>
 			</div>
 		</div>
@@ -42,13 +42,16 @@ defined('_JEXEC') or die;
 						</label>
 					</span>
 					<input id="login-passwd" type="password" name="password" class="input-small" tabindex="2"
-					       size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" />
+						   size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" />
 				</div>
 			</div>
 		</div>
 
 		<?php $login = KunenaLogin::getInstance(); ?>
-		<?php if ($login->getTwoFactorMethods() > 1) : ?>
+		<?php
+		if ($login->getTwoFactorMethods() > 1)
+		:
+	?>
 		<div id="form-login-tfa" class="control-group center">
 			<div class="controls">
 				<div class="input-prepend input-append">
@@ -73,21 +76,27 @@ defined('_JEXEC') or die;
 			</p>
 
 			<p>
-				<?php if ($login->getResetUrl()) : ?>
+				<?php if ($login->getResetUrl())
+				:
+	?>
 					<a href="<?php echo $login->getResetUrl(); ?>" rel="nofollow">
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 					</a>
 					<br />
 				<?php endif ?>
 
-				<?php if ($login->getRemindUrl()) : ?>
+				<?php if ($login->getRemindUrl())
+				:
+	?>
 					<a href="<?php echo $login->getRemindUrl(); ?>" rel="nofollow">
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 					</a>
 					<br />
 				<?php endif ?>
 
-				<?php if ($login->getRegistrationUrl()) : ?>
+				<?php if ($login->getRegistrationUrl())
+				:
+	?>
 					<a href="<?php echo $login->getRegistrationUrl(); ?>" rel="nofollow">
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
 					</a>

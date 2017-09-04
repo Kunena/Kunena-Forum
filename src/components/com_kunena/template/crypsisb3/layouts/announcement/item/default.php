@@ -16,14 +16,18 @@ $actions      = $this->getActions();
 <h3>
 	<?php echo $announcement->displayField('title'); ?>
 
-	<?php if ($announcement->showdate) : ?>
+	<?php if ($announcement->showdate)
+	:
+	?>
 		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
 	<?php endif; ?>
 </h3>
 
-<?php if (!empty($actions)) : ?>
+<?php if (!empty($actions))
+:
+	?>
 	<div>
 		<?php echo implode(' ', $actions); ?>
 	</div>

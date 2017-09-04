@@ -16,16 +16,25 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 $quick           = $this->ktemplate->params->get('quick');
 ?>
 
-<?php if (!$fullactions) : ?>
-	<?php if (empty($this->message_closed)) : ?>
+<?php if (!$fullactions)
+:
+	?>
+	<?php if (empty($this->message_closed))
+	:
+	?>
 		<div class="kmessagepadding">
-			<?php if ($this->quickreply && $quick == 0) : ?>
+			<?php if ($this->quickreply && $quick == 0)
+		:
+	?>
 				<a id="btn_qreply" data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
 					  rel="nofollow">
 						<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
-			<?php if ($this->quickreply && $quick == 1) : ?>
+			<?php
+			if ($this->quickreply && $quick == 1)
+			:
+	?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
@@ -35,13 +44,18 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('reply'); ?>
 			<?php echo $this->messageButtons->get('quote'); ?>
 			<?php echo $this->messageButtons->get('edit'); ?>
-			<?php if ($this->message->isAuthorised('delete')) : ?>
+			<?php
+			if ($this->message->isAuthorised('delete'))
+			:
+	?>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
 			<?php echo $this->messageButtons->get('thankyou'); ?>
 			<?php echo $this->messageButtons->get('unthankyou'); ?>
 
-			<?php if ($this->messageButtons->get('moderate')) : ?>
+			<?php if ($this->messageButtons->get('moderate'))
+			:
+	?>
 				<br/>
 				<br/>
 				<?php echo $this->messageButtons->get('moderate'); ?>
@@ -52,7 +66,8 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php endif; ?>
 		</div>
 
-	<?php else : ?>
+	<?php else:
+	?>
 
 		<div class="kreplymessage">
 			<?php echo $this->message_closed; ?>
@@ -60,17 +75,26 @@ $quick           = $this->ktemplate->params->get('quick');
 	<?php endif;
 endif; ?>
 
-<?php if ($fullactions) : ?>
+<?php if ($fullactions)
+:
+	?>
 
-	<?php if (empty($this->message_closed)) : ?>
+	<?php if (empty($this->message_closed))
+	:
+	?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if ($this->quickreply && $quick == 0) : ?>
+			<?php if ($this->quickreply && $quick == 0)
+			:
+	?>
 				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
 					rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
-			<?php if ($this->quickreply && $quick == 1) : ?>
+			<?php
+			if ($this->quickreply && $quick == 1)
+			:
+	?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
@@ -85,13 +109,18 @@ endif; ?>
 					<li><?php echo $this->messageButtons->get('reply'); ?></li>
 					<li><?php echo $this->messageButtons->get('quote'); ?></li>
 					<li><?php echo $this->messageButtons->get('edit'); ?></li>
-					<?php if ($config->userdeletetmessage > 0) : ?>
+					<?php
+					if ($config->userdeletetmessage > 0)
+					:
+	?>
 						<li><?php echo $this->messageButtons->get('delete'); ?></li>
 					<?php endif; ?>
 				</ul>
 			</div>
 
-			<?php if ($this->messageButtons->get('moderate')) : ?>
+			<?php if ($this->messageButtons->get('moderate'))
+			:
+	?>
 				<div class="btn-group">
 					<a class="btn btn-default" data-toggle="dropdown">
 						<?php echo KunenaIcons::shuffle() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
@@ -113,10 +142,13 @@ endif; ?>
 			<div class="pull-right"><?php echo $this->messageButtons->get('report'); ?></div>
 		</div>
 
-	<?php else : ?>
+	<?php else
+
+	:
+	?>
 
 		<div class="kreplymessage">
 			<?php echo $this->message_closed; ?>
 		</div>
 	<?php endif;
-endif; ?>
+endif;

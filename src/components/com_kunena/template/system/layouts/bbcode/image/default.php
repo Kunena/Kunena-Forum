@@ -16,6 +16,7 @@ $url      = $this->url;
 $filename = $this->filename;
 $size     = $this->size;
 $alt      = $this->alt;
+
 // @var  bool $canLink False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url]
 
 $canLink = isset($this->canLink) ? $this->canLink : true;
@@ -33,9 +34,9 @@ if ($config->lazyload)
 {
 	?>
 	<a href="<?php echo $this->escape($url); ?>"
-	   <?php echo $attributesLink;?>>
+		<?php echo $attributesLink;?>>
 		<img class="lazy" src="<?php echo $this->escape($url); ?>" data-original="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
-		     alt="test"/>
+			 alt="test"/>
 	</a>
 	<?php
 }
@@ -43,14 +44,18 @@ else
 {
 ?>
 <div class="kmsgimage">
-	<?php if ($canLink) : ?>
+	<?php if ($canLink)
+	:
+	?>
 	<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
-		<?php endif; ?>
+	<?php endif; ?>
 
 		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> />
 
-		<?php if ($canLink) : ?>
+		<?php if ($canLink)
+	:
+	?>
 	</a>
-<?php endif; ?>
+		<?php endif; ?>
 </div>
-<?php } ?>
+<?php }

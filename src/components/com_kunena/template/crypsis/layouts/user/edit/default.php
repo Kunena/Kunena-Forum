@@ -23,7 +23,7 @@ $tabs          = $this->getTabsEdit();
 </h2>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" enctype="multipart/form-data" name="kuserform"
-      class="form-validate" id="kuserform">
+	  class="form-validate" id="kuserform">
 	<input type="hidden" name="task" value="save"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
@@ -31,7 +31,9 @@ $tabs          = $this->getTabsEdit();
 	<div class="tabs">
 		<ul id="KunenaUserEdit" class="nav nav-tabs">
 
-			<?php foreach ($tabs as $name => $tab) : ?>
+			<?php foreach ($tabs as $name => $tab)
+			:
+	?>
 				<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
 					<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 				</li>
@@ -40,7 +42,9 @@ $tabs          = $this->getTabsEdit();
 		</ul>
 		<div class="tab-content">
 
-			<?php foreach ($tabs as $name => $tab) : ?>
+			<?php foreach ($tabs as $name => $tab)
+			:
+	?>
 				<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="edit<?php echo $name; ?>">
 					<div>
 						<?php echo $tab->content; ?>
@@ -56,7 +60,7 @@ $tabs          = $this->getTabsEdit();
 				<?php echo KunenaIcons::save(); ?><?php echo JText::_('COM_KUNENA_SAVE'); ?>
 			</button>
 			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
-			        title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
+					title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo JText::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>

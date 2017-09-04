@@ -21,21 +21,25 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @since Kunena
 	 */
 	public $output = null;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	public $layout = 'default';
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $config;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $name = 'Empty';
+
 	/**
 	 * @var boolean
 	 * @since Kunena

@@ -56,21 +56,25 @@ abstract class KunenaForum
 	 * @since Kunena
 	 */
 	const ADMINISTRATOR = 2;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $version = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $version_major = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected static $version_date = false;
+
 	/**
 	 * @var boolean
 	 * @since Kunena

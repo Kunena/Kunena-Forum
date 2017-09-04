@@ -17,11 +17,15 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 	<input type="hidden" name="view" value="search"/>
 	<input type="hidden" name="task" value="results"/>
 
-	<?php if (isset($this->catid)) : ?>
+	<?php if (isset($this->catid))
+	:
+	?>
 		<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>"/>
 	<?php endif; ?>
 
-	<?php if (isset($this->id)) : ?>
+	<?php if (isset($this->id))
+	:
+	?>
 		<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>"/>
 	<?php endif; ?>
 

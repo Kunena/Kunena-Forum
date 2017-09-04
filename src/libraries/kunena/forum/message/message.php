@@ -59,56 +59,67 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'attachment.delete'      => array(),
 		// TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $id = null;
+
 	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $_table = 'KunenaMessages';
+
 	/**
 	 * @var JDatabaseDriver|null
 	 * @since Kunena
 	 */
 	protected $_db = null;
+
 	/**
 	 * @var KunenaAttachment[]
 	 * @since Kunena
 	 */
 	protected $_attachments_add = array();
+
 	/**
 	 * @var KunenaAttachment[]
 	 * @since Kunena
 	 */
 	protected $_attachments_del = array();
+
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	protected $_topic = null;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	protected $_hold = 1;
+
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
 	protected $_thread = 0;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authcache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $_authtcache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -1663,7 +1674,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$user->isModerator($this->getCategory())
 			&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id
-				|| ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id))
+			|| ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id))
 		)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);

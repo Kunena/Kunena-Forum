@@ -238,7 +238,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function ban()
 	{
-	    $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if (!$user->exists() || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -774,7 +774,7 @@ class KunenaControllerUser extends KunenaController
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
 			{
-			    $this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+				$this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
 			}
 
 			// We don't allow white space inside passwords
@@ -785,7 +785,7 @@ class KunenaControllerUser extends KunenaController
 
 			if (strlen($valueTrim) != $valueLength)
 			{
-			    $this->app->enqueueMessage(
+				$this->app->enqueueMessage(
 					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
 					'warning'
 				);
@@ -800,7 +800,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nInts < $minimumIntegers)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
 						'warning'
 					);
@@ -816,7 +816,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nsymbols < $minimumSymbols)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
 						'warning'
 					);
@@ -832,7 +832,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nUppercase < $minimumUppercase)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
 						'warning'
 					);
@@ -846,7 +846,7 @@ class KunenaControllerUser extends KunenaController
 			{
 				if (strlen((string) $value) < $minimumLength)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
 						'warning'
 					);
@@ -991,7 +991,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @throws RuntimeException
 	 * @since 5.1
-     */
+	 */
 	public function upload()
 	{
 		// Only support JSON requests.
@@ -1168,7 +1168,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function saveAvatar()
 	{
-	    $action         = $this->app->input->getString('avatar', 'keep');
+		$action         = $this->app->input->getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
 		$avatarFile = $this->app->input->files->get('avatarfile');
@@ -1232,7 +1232,7 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveSettings()
 	{
-	    $this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if ($this->app->input->get('hidemail', null) === null)
 		{

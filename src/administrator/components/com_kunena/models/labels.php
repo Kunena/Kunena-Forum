@@ -30,7 +30,6 @@ class KunenaAdminModelLabels extends \Joomla\CMS\MVC\Model\ListModel
 	 */
 	public function __construct($config = array())
 	{
-
 		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct();

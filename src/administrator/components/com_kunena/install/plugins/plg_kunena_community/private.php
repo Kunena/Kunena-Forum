@@ -43,6 +43,31 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	}
 
 	/**
+	 * @param $text
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getInboxLink($text)
+	{
+		if (!$text)
+		{
+			$text = JText::_('COM_KUNENA_PMS_INBOX');
+		}
+
+		return '<a href="' . CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';
+	}
+
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getInboxURL()
+	{
+		return CRoute::_('index.php?option=com_community&view=inbox');
+	}
+
+	/**
 	 * @param $userid
 	 *
 	 * @return string
@@ -72,30 +97,5 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	protected function getURL($userid)
 	{
 		return "javascript:void(0)";
-	}
-
-	/**
-	 * @param $text
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getInboxLink($text)
-	{
-		if (!$text)
-		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
-		}
-
-		return '<a href="' . CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';
-	}
-
-	/**
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getInboxURL()
-	{
-		return CRoute::_('index.php?option=com_community&view=inbox');
 	}
 }

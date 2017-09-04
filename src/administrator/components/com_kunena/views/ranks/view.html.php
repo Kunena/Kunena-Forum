@@ -19,6 +19,22 @@ defined('_JEXEC') or die();
 class KunenaAdminViewRanks extends KunenaView
 {
 	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return    array    The HTML code for the select tag
+	 * @since Kunena
+	 */
+	public static function specialOptions()
+	{
+		// Build the active state filter options.
+		$options   = array();
+		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+		return $options;
+	}
+
+	/**
 	 * @param   null $tpl
 	 *
 	 * @return mixed
@@ -62,24 +78,8 @@ class KunenaAdminViewRanks extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
+		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * Returns an array of standard published state filter options.
-	 *
-	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
-	 */
-	public static function specialOptions()
-	{
-		// Build the active state filter options.
-		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
-
-		return $options;
 	}
 
 	/**

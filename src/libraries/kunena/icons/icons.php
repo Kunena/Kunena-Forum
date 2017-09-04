@@ -876,7 +876,7 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-		$class = ' ' . KunenaTemplate::getInstance()->tooltips();
+		$class         = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{
@@ -1152,7 +1152,7 @@ class KunenaIcons
 	/**
 	 * Return the category icon
 	 *
-	 * @param      $categoryicon
+	 * @param        $categoryicon
 	 * @param   null $new
 	 * @param   bool $big
 	 *

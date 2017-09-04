@@ -23,24 +23,6 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	protected $_exists = false;
 
 	/**
-	 * @param   null $exists
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-	/**
 	 * @param   null $keys
 	 * @param   bool $reset
 	 *
@@ -199,66 +181,21 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * Inserts a row into a table based on an object's properties.
+	 * @param   null $exists
 	 *
-	 * @return  boolean    True on success.
-	 *
-	 * @throws  RuntimeException
+	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function insertObject()
+	public function exists($exists = null)
 	{
-		$fields = array();
-		$values = array();
+		$return = $this->_exists;
 
-		// Workaround Joomla 3.2 change.
-		// TODO: remove check when we're only supporting J!3.5+.
-		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
-
-		// Iterate over the object variables to build the query fields and values.
-		foreach (get_object_vars($this) as $k => $v)
+		if ($exists !== null)
 		{
-			// Only process non-null scalars.
-			if (is_array($v) || is_object($v) || $v === null)
-			{
-				continue;
-			}
-
-			// Ignore any internal fields.
-			if ($k[0] == '_')
-			{
-				continue;
-			}
-
-			// Prepare and sanitize the fields and values for the database query.
-			$fields[] = $this->_db->quoteName($k);
-			$values[] = $this->_db->quote($v);
+			$this->_exists = $exists;
 		}
 
-		// Create the base insert statement.
-		$query = $this->_db->getQuery(true)
-			->insert($this->_db->quoteName($this->_tbl))
-			->columns($fields)
-			->values(implode(',', $values));
-
-		// Set the query and execute the insert.
-		$this->_db->setQuery($query);
-
-		if (!$this->_db->execute())
-		{
-			return false;
-		}
-
-		// Update the primary key if it exists.
-		$id = $this->_db->insertid();
-
-		if (count($tbl_keys) == 1 && $id)
-		{
-			$key        = reset($tbl_keys);
-			$this->$key = $id;
-		}
-
-		return true;
+		return $return;
 	}
 
 	/**
@@ -333,6 +270,69 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 		$this->_db->setQuery(sprintf($statement, implode(",", $fields), implode(' AND ', $where)));
 
 		return $this->_db->execute();
+	}
+
+	/**
+	 * Inserts a row into a table based on an object's properties.
+	 *
+	 * @return  boolean    True on success.
+	 *
+	 * @throws  RuntimeException
+	 * @since Kunena
+	 */
+	protected function insertObject()
+	{
+		$fields = array();
+		$values = array();
+
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+		// Iterate over the object variables to build the query fields and values.
+		foreach (get_object_vars($this) as $k => $v)
+		{
+			// Only process non-null scalars.
+			if (is_array($v) || is_object($v) || $v === null)
+			{
+				continue;
+			}
+
+			// Ignore any internal fields.
+			if ($k[0] == '_')
+			{
+				continue;
+			}
+
+			// Prepare and sanitize the fields and values for the database query.
+			$fields[] = $this->_db->quoteName($k);
+			$values[] = $this->_db->quote($v);
+		}
+
+		// Create the base insert statement.
+		$query = $this->_db->getQuery(true)
+			->insert($this->_db->quoteName($this->_tbl))
+			->columns($fields)
+			->values(implode(',', $values));
+
+		// Set the query and execute the insert.
+		$this->_db->setQuery($query);
+
+		if (!$this->_db->execute())
+		{
+			return false;
+		}
+
+		// Update the primary key if it exists.
+		$id = $this->_db->insertid();
+
+		if (count($tbl_keys) == 1 && $id)
+		{
+			$key        = reset($tbl_keys);
+			$this->$key = $id;
+		}
+
+		return true;
 	}
 
 	/**

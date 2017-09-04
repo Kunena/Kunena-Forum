@@ -631,6 +631,39 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
+	 * Method to save param.ini file on filesystem.
+	 *
+	 * @param   string $template The name of the template.
+	 *
+	 * @return void
+	 *
+	 * @since  3.0.0
+	 */
+	protected function _saveParamFile($template)
+	{
+		$params = $this->app->input->get('jform', array(), 'post', 'array');
+
+		// Set FTP credentials, if given
+		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
+		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+		if (count($params))
+		{
+			$registry = new \Joomla\Registry\Registry;
+			$registry->loadArray($params);
+			$txt    = $registry->toString('INI');
+			$return = KunenaFile::write($file, $txt);
+
+			if (!$return)
+			{
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
+				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+			}
+		}
+	}
+
+	/**
 	 * Save
 	 *
 	 * @return void
@@ -663,39 +696,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Method to save param.ini file on filesystem.
-	 *
-	 * @param   string $template The name of the template.
-	 *
-	 * @return void
-	 *
-	 * @since  3.0.0
-	 */
-	protected function _saveParamFile($template)
-	{
-		$params = $this->app->input->get('jform', array(), 'post', 'array');
-
-		// Set FTP credentials, if given
-		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
-		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
-
-		if (count($params))
-		{
-			$registry = new \Joomla\Registry\Registry;
-			$registry->loadArray($params);
-			$txt    = $registry->toString('INI');
-			$return = KunenaFile::write($file, $txt);
-
-			if (!$return)
-			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
-				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
-			}
-		}
 	}
 
 	/**

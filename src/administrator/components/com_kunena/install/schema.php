@@ -904,7 +904,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 							case '':
 								break;
 							default:
-								echo ("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
 						}
 					}
 
@@ -920,7 +920,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 				case 'create':
 				case '':
 					$action = 'create';
-					$str .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
+					$str    .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
 
 					foreach ($table->childNodes as $field)
 					{
@@ -949,7 +949,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 					}
 					break;
 				default:
-					echo ("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}
 
 			if (!empty($str))

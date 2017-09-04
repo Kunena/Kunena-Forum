@@ -40,22 +40,6 @@ class KunenaIntegrationComprofiler
 	}
 
 	/**
-	 *
-	 * @since Kunena
-	 */
-	public static function close()
-	{
-		if (!self::$open)
-		{
-			return;
-		}
-
-		self::$open = false;
-		$params     = array();
-		self::trigger('onEnd', $params);
-	}
-
-	/**
 	 * Triggers CB events
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
@@ -72,5 +56,21 @@ class KunenaIntegrationComprofiler
 		$params ['config'] = $config;
 		$_PLUGINS->loadPluginGroup('user');
 		$_PLUGINS->trigger('kunenaIntegration', array($event, &$config, &$params));
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public static function close()
+	{
+		if (!self::$open)
+		{
+			return;
+		}
+
+		self::$open = false;
+		$params     = array();
+		self::trigger('onEnd', $params);
 	}
 }

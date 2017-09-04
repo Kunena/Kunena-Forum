@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
-	<name>plg_kunena_joomla</name>
-	<version>@kunenaversion@</version>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<author>Kunena Team</author>
-	<authorEmail>Kunena@kunena.org</authorEmail>
-	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPLv3 or later</license>
-	<description>PLG_KUNENA_JOOMLA_25_30_DESCRIPTION</description>
-	<files>
-		<filename plugin="joomla">joomla.php</filename>
-		<filename>access.php</filename>
-		<filename>login.php</filename>
-		<folder>language</folder>
-	</files>
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
-				<field name="access" type="list" default="1" label="PLG_KUNENA_JOOMLA_ACCESS" description="PLG_KUNENA_JOOMLA_ACCESS_DESC"
-				       class="inputbox">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<field name="login" type="list" default="1" label="PLG_KUNENA_JOOMLA_LOGIN" description="PLG_KUNENA_JOOMLA_LOGIN_DESC"
-				       class="inputbox">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-			</fieldset>
-		</fields>
-	</config>
+    <name>plg_kunena_joomla</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPLv3 or later</license>
+    <description>PLG_KUNENA_JOOMLA_25_30_DESCRIPTION</description>
+    <files>
+        <filename plugin="joomla">joomla.php</filename>
+        <filename>access.php</filename>
+        <filename>login.php</filename>
+        <folder>language</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="access" type="list" default="1" label="PLG_KUNENA_JOOMLA_ACCESS"
+                       description="PLG_KUNENA_JOOMLA_ACCESS_DESC"
+                       class="inputbox">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="login" type="list" default="1" label="PLG_KUNENA_JOOMLA_LOGIN"
+                       description="PLG_KUNENA_JOOMLA_LOGIN_DESC"
+                       class="inputbox">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
 </extension>

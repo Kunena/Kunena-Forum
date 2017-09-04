@@ -121,28 +121,6 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Returns an associative array of public object properties.
-	 *
-	 * @return  array
-	 * @since Kunena
-	 */
-	public function getProperties()
-	{
-		$properties = (array) $this;
-		$list       = array();
-
-		foreach ($properties as $property => $value)
-		{
-			if ($property[0] != "\0")
-			{
-				$list[$property] = $value;
-			}
-		}
-
-		return $list;
-	}
-
-	/**
 	 * @return mixed
 	 * @since Kunena
 	 */
@@ -249,19 +227,6 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to set the mapped value.
-	 *
-	 * @param   array $list Set array of mapped objects.
-	 *
-	 * @since Kunena
-	 */
-	public function setMapped(array $list)
-	{
-		Joomla\Utilities\ArrayHelper::toInteger($list);
-		$this->{$this->_tbl_mapped} = $list;
-	}
-
-	/**
 	 * Method to add relation.
 	 *
 	 * @param   int $id Add Id.
@@ -274,26 +239,6 @@ class KunenaTableMap
 		if (!in_array($id, $this->{$this->_tbl_mapped}))
 		{
 			array_push($this->{$this->_tbl_mapped}, (int) $id);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Method to remove relation.
-	 *
-	 * @param   int $id Add Id.
-	 *
-	 * @return $this
-	 * @since Kunena
-	 */
-	protected function remove($id)
-	{
-		$key = array_search((int) $id, $this->{$this->_tbl_mapped});
-
-		if ($key !== false)
-		{
-			unset($this->{$this->_tbl_mapped}[$key]);
 		}
 
 		return $this;
@@ -314,29 +259,6 @@ class KunenaTableMap
 		$this->_db = $db;
 
 		return true;
-	}
-
-	/**
-	 * Method to reset class properties to the defaults set in the class
-	 * definition. It will ignore the primary key as well as any private class
-	 * properties.
-	 *
-	 * @return  void
-	 *
-	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/reset
-	 * @since   Kunena
-	 */
-	public function reset()
-	{
-		// Get the default values for the class from the table.
-		foreach ($this->getFields() as $k => $v)
-		{
-			// If the property is not the primary key or private, reset it.
-			if ($k != $this->_tbl_key && (strpos($k, '_') !== 0))
-			{
-				$this->{$k} = $v->Default;
-			}
-		}
 	}
 
 	/**
@@ -390,72 +312,72 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to load all mapped values from the database by primary key and bind the fields
-	 * to the \Joomla\CMS\Table\Table instance properties.
+	 * Returns an associative array of public object properties.
 	 *
-	 * @param   mixed   $keys    An optional primary key value to load the row by, or an array of fields to match.  If not
-	 *                           set the instance property value is used.
-	 * @param   boolean $reset   True to reset the default values before loading the new row.
-	 *
-	 * @return  boolean  True if successful. False if no rows were found.
-	 *
-	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/load
-	 * @throws  RuntimeException
-	 * @throws  UnexpectedValueException
-	 * @since   Kunena
+	 * @return  array
+	 * @since Kunena
 	 */
-	public function load($keys = null, $reset = true)
+	public function getProperties()
 	{
-		if (empty($keys))
-		{
-			// If empty, use the value of the current key
-			$keyName  = $this->_tbl_key;
-			$keyValue = $this->{$keyName};
+		$properties = (array) $this;
+		$list       = array();
 
-			// If empty primary key there's is no need to load anything
-			if (empty($keyValue))
+		foreach ($properties as $property => $value)
+		{
+			if ($property[0] != "\0")
 			{
-				return true;
+				$list[$property] = $value;
 			}
-
-			$keys = array($keyName => $keyValue);
 		}
-		elseif (!is_array($keys))
+
+		return $list;
+	}
+
+	/**
+	 * Method to provide a shortcut to binding, checking and storing a \Joomla\CMS\Table\Table
+	 * instance to the database table.
+	 *
+	 * @param   array $map    An array of mapped Ids.
+	 * @param   array $filter Touch only these filtered items.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @throws  UnexpectedValueException
+	 * @since Kunena
+	 */
+	public function save(array $map = null, array $filter = null)
+	{
+		if ($map !== null)
 		{
-			// Load by primary key.
-			$keys = array($this->_tbl_key => $keys);
+			$this->setMapped($map);
 		}
 
-		if ($reset)
+		// Run any sanity checks on the instance and verify that it is ready for storage.
+		if (!$this->check())
 		{
-			$this->reset();
+			return false;
 		}
 
-		// Initialise the query.
-		$query = $this->_db->getQuery(true);
-		$query->select($this->_tbl_mapped);
-		$query->from($this->_tbl);
-		$fields = array_keys($this->getProperties());
-
-		foreach ($keys as $field => $value)
+		// Attempt to store the properties to the database table.
+		if (!$this->store($filter))
 		{
-			// Check that $field is in the table.
-			if (!in_array($field, $fields))
-			{
-				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
-			}
-
-			// Add the search tuple to the query.
-			$this->{$field} = $value;
-			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
+			return false;
 		}
 
-		$this->_db->setQuery($query);
+		return true;
+	}
 
-		$mapName          = $this->_tbl_mapped;
-		$this->{$mapName} = (array) $this->_db->loadColumn();
-
-		return !empty($this->{$mapName});
+	/**
+	 * Method to set the mapped value.
+	 *
+	 * @param   array $list Set array of mapped objects.
+	 *
+	 * @since Kunena
+	 */
+	public function setMapped(array $list)
+	{
+		Joomla\Utilities\ArrayHelper::toInteger($list);
+		$this->{$this->_tbl_mapped} = $list;
 	}
 
 	/**
@@ -553,43 +475,102 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a \Joomla\CMS\Table\Table
-	 * instance to the database table.
+	 * Method to load all mapped values from the database by primary key and bind the fields
+	 * to the \Joomla\CMS\Table\Table instance properties.
 	 *
-	 * @param   array $map    An array of mapped Ids.
-	 * @param   array $filter Touch only these filtered items.
+	 * @param   mixed   $keys    An optional primary key value to load the row by, or an array of fields to match.  If
+	 *                           not set the instance property value is used.
+	 * @param   boolean $reset   True to reset the default values before loading the new row.
 	 *
-	 * @return  boolean  True on success.
+	 * @return  boolean  True if successful. False if no rows were found.
 	 *
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/load
+	 * @throws  RuntimeException
 	 * @throws  UnexpectedValueException
-	 * @since Kunena
+	 * @since   Kunena
 	 */
-	public function save(array $map = null, array $filter = null)
+	public function load($keys = null, $reset = true)
 	{
-		if ($map !== null)
+		if (empty($keys))
 		{
-			$this->setMapped($map);
+			// If empty, use the value of the current key
+			$keyName  = $this->_tbl_key;
+			$keyValue = $this->{$keyName};
+
+			// If empty primary key there's is no need to load anything
+			if (empty($keyValue))
+			{
+				return true;
+			}
+
+			$keys = array($keyName => $keyValue);
+		}
+		elseif (!is_array($keys))
+		{
+			// Load by primary key.
+			$keys = array($this->_tbl_key => $keys);
 		}
 
-		// Run any sanity checks on the instance and verify that it is ready for storage.
-		if (!$this->check())
+		if ($reset)
 		{
-			return false;
+			$this->reset();
 		}
 
-		// Attempt to store the properties to the database table.
-		if (!$this->store($filter))
+		// Initialise the query.
+		$query = $this->_db->getQuery(true);
+		$query->select($this->_tbl_mapped);
+		$query->from($this->_tbl);
+		$fields = array_keys($this->getProperties());
+
+		foreach ($keys as $field => $value)
 		{
-			return false;
+			// Check that $field is in the table.
+			if (!in_array($field, $fields))
+			{
+				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
+			}
+
+			// Add the search tuple to the query.
+			$this->{$field} = $value;
+			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
-		return true;
+		$this->_db->setQuery($query);
+
+		$mapName          = $this->_tbl_mapped;
+		$this->{$mapName} = (array) $this->_db->loadColumn();
+
+		return !empty($this->{$mapName});
+	}
+
+	/**
+	 * Method to reset class properties to the defaults set in the class
+	 * definition. It will ignore the primary key as well as any private class
+	 * properties.
+	 *
+	 * @return  void
+	 *
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/reset
+	 * @since   Kunena
+	 */
+	public function reset()
+	{
+		// Get the default values for the class from the table.
+		foreach ($this->getFields() as $k => $v)
+		{
+			// If the property is not the primary key or private, reset it.
+			if ($k != $this->_tbl_key && (strpos($k, '_') !== 0))
+			{
+				$this->{$k} = $v->Default;
+			}
+		}
 	}
 
 	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
-	 * @param   int|array $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the instance property value is used.
+	 * @param   int|array $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the
+	 *                        instance property value is used.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -633,6 +614,40 @@ class KunenaTableMap
 	}
 
 	/**
+	 * Method to unlock the database table for writing.
+	 *
+	 * @return  boolean  True on success.
+	 * @since Kunena
+	 */
+	protected function _unlock()
+	{
+		$this->_db->unlockTables();
+		$this->_locked = false;
+
+		return true;
+	}
+
+	/**
+	 * Method to remove relation.
+	 *
+	 * @param   int $id Add Id.
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
+	protected function remove($id)
+	{
+		$key = array_search((int) $id, $this->{$this->_tbl_mapped});
+
+		if ($key !== false)
+		{
+			unset($this->{$this->_tbl_mapped}[$key]);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Method to lock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
@@ -644,20 +659,6 @@ class KunenaTableMap
 	{
 		$this->_db->lockTable($this->_tbl);
 		$this->_locked = true;
-
-		return true;
-	}
-
-	/**
-	 * Method to unlock the database table for writing.
-	 *
-	 * @return  boolean  True on success.
-	 * @since Kunena
-	 */
-	protected function _unlock()
-	{
-		$this->_db->unlockTables();
-		$this->_locked = false;
 
 		return true;
 	}

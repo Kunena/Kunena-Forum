@@ -57,17 +57,6 @@ class KunenaDatabaseQueryElement
 	}
 
 	/**
-	 * Magic function to convert the query element to a string.
-	 *
-	 * @return    string
-	 * @since    1.6
-	 */
-	public function __toString()
-	{
-		return PHP_EOL . $this->_name . ' ' . implode($this->_glue, $this->_elements);
-	}
-
-	/**
 	 * Appends element parts to the internal list.
 	 *
 	 * @param    mixed    String or array.
@@ -85,6 +74,17 @@ class KunenaDatabaseQueryElement
 		{
 			$this->_elements = array_unique(array_merge($this->_elements, array($elements)));
 		}
+	}
+
+	/**
+	 * Magic function to convert the query element to a string.
+	 *
+	 * @return    string
+	 * @since    1.6
+	 */
+	public function __toString()
+	{
+		return PHP_EOL . $this->_name . ' ' . implode($this->_glue, $this->_elements);
 	}
 }
 
@@ -331,6 +331,19 @@ class KunenaDatabaseQuery
 	}
 
 	/**
+	 * @param   string $conditions
+	 *
+	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
+	 * @since    1.6
+	 */
+	public function innerJoin($conditions)
+	{
+		$this->join('INNER', $conditions);
+
+		return $this;
+	}
+
+	/**
 	 * @param   string $type
 	 * @param   string $conditions
 	 *
@@ -345,19 +358,6 @@ class KunenaDatabaseQuery
 		}
 
 		$this->_join[] = new KunenaDatabaseQueryElement(strtoupper($type) . ' JOIN', $conditions);
-
-		return $this;
-	}
-
-	/**
-	 * @param   string $conditions
-	 *
-	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
-	 * @since    1.6
-	 */
-	public function innerJoin($conditions)
-	{
-		$this->join('INNER', $conditions);
 
 		return $this;
 	}

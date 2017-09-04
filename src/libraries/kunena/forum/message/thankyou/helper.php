@@ -59,6 +59,60 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
+	 * Load users who have given thank you to listed messages.
+	 *
+	 * @param   array $ids
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadMessages(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_instances [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$query = "SELECT *
+				FROM #__kunena_thankyou
+				WHERE postid IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			self::$_instances [$id] = new KunenaForumMessageThankyou($id);
+		}
+
+		foreach ($results as $result)
+		{
+			self::$_instances [$result->postid]->_add($result->userid, $result->time);
+		}
+
+		unset($results);
+	}
+
+	/**
 	 * Get total number of Thank yous.
 	 *
 	 * @param   int $starttime Starting time as unix timestamp.
@@ -219,60 +273,6 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		return $results;
-	}
-
-	/**
-	 * Load users who have given thank you to listed messages.
-	 *
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadMessages(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "SELECT *
-				FROM #__kunena_thankyou
-				WHERE postid IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadObjectList();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			self::$_instances [$id] = new KunenaForumMessageThankyou($id);
-		}
-
-		foreach ($results as $result)
-		{
-			self::$_instances [$result->postid]->_add($result->userid, $result->time);
-		}
-
-		unset($results);
 	}
 
 	/**

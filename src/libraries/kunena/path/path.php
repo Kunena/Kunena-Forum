@@ -70,6 +70,24 @@ class KunenaPath extends JPath
 	}
 
 	/**
+	 * Checks if path is writeable either by the server or by FTP.
+	 *
+	 * @param $path
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public static function isWritable($path)
+	{
+		if (is_writable($path) || self::isOwner($path))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Method to determine if script owns the path.
 	 *
 	 * @param   string $path Path to check ownership.
@@ -103,23 +121,5 @@ class KunenaPath extends JPath
 
 		// Test ownership
 		return (self::$owner == fileowner($path));
-	}
-
-	/**
-	 * Checks if path is writeable either by the server or by FTP.
-	 *
-	 * @param $path
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public static function isWritable($path)
-	{
-		if (is_writable($path) || self::isOwner($path))
-		{
-			return true;
-		}
-
-		return false;
 	}
 }

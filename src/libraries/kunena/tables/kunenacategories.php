@@ -240,43 +240,6 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   mixed  $array
-	 * @param   string $ignore
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function bind($array, $ignore = '')
-	{
-		if (is_object($array))
-		{
-			$array = get_object_vars($array);
-		}
-
-		if (isset($array['params']) && !is_string($array['params']))
-		{
-			if ($array['params'] instanceof \Joomla\Registry\Registry)
-			{
-				$registry = $array['params'];
-			}
-			elseif (is_array($array['params']))
-			{
-				$registry = new \Joomla\Registry\Registry;
-				$registry->loadArray($array['params']);
-			}
-			else
-			{
-				$registry = new \Joomla\Registry\Registry;
-			}
-
-			// TODO: convert to J!2.5: (string) $registry
-			$array['params'] = $registry->toString();
-		}
-
-		return parent::bind($array, $ignore);
-	}
-
-	/**
 	 * @param   null $id
 	 * @param   bool $reset
 	 *
@@ -338,7 +301,45 @@ class TableKunenaCategories extends KunenaTable
 		return $this->_exists;
 	}
 
+	/**
+	 * @param   mixed  $array
+	 * @param   string $ignore
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function bind($array, $ignore = '')
+	{
+		if (is_object($array))
+		{
+			$array = get_object_vars($array);
+		}
+
+		if (isset($array['params']) && !is_string($array['params']))
+		{
+			if ($array['params'] instanceof \Joomla\Registry\Registry)
+			{
+				$registry = $array['params'];
+			}
+			elseif (is_array($array['params']))
+			{
+				$registry = new \Joomla\Registry\Registry;
+				$registry->loadArray($array['params']);
+			}
+			else
+			{
+				$registry = new \Joomla\Registry\Registry;
+			}
+
+			// TODO: convert to J!2.5: (string) $registry
+			$array['params'] = $registry->toString();
+		}
+
+		return parent::bind($array, $ignore);
+	}
+
 	// Check for potential problems
+
 	/**
 	 * @return boolean
 	 * @since Kunena
@@ -373,6 +374,7 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	// Check if given forum is one of its own childs
+
 	/**
 	 * @param $id
 	 *

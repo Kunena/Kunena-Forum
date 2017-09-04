@@ -69,24 +69,8 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 		JToolbarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/plugins';
+		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * Returns an array of standard published state filter options.
-	 *
-	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
-	 */
-	public function publishedOptions()
-	{
-		// Build the active state filter options.
-		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
-
-		return $options;
 	}
 
 	/**
@@ -122,5 +106,21 @@ class KunenaAdminViewPlugins extends KunenaView
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return    array    The HTML code for the select tag
+	 * @since Kunena
+	 */
+	public function publishedOptions()
+	{
+		// Build the active state filter options.
+		$options   = array();
+		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+		return $options;
 	}
 }

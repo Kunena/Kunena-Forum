@@ -34,53 +34,10 @@ defined('_JEXEC') or die();
 class KunenaAttachment extends KunenaDatabaseObject
 {
 	/**
-	 * @var integer
-	 * @since Kunena
-	 */
-	public $id = null;
-
-	/**
-	 * @var string
-	 * @since Kunena
-	 */
-	protected $_table = 'KunenaAttachments';
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	protected $path;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	protected $width;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	protected $height;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	protected $shortname;
-
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	public $disabled = false;
-
-	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected static $_directory = 'media/kunena/attachments';
-
 	/**
 	 * @var array
 	 * @since Kunena
@@ -91,6 +48,41 @@ class KunenaAttachment extends KunenaDatabaseObject
 		'createfile'  => array(),
 		'delete'      => array('Exists', 'Own'),
 	);
+	/**
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $id = null;
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	public $disabled = false;
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	protected $_table = 'KunenaAttachments';
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	protected $path;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	protected $width;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	protected $height;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	protected $shortname;
 
 	/**
 	 * @param   mixed $identifier
@@ -115,6 +107,40 @@ class KunenaAttachment extends KunenaDatabaseObject
 		if (!$this->exists())
 		{
 			$this->deleteFile();
+		}
+	}
+
+	/**
+	 * @internal
+	 * @since  K4.0
+	 */
+	protected function deleteFile()
+	{
+		if (self::$_directory != substr($this->folder, 0, strlen(self::$_directory)))
+		{
+			return;
+		}
+
+		$path     = JPATH_ROOT . "/{$this->folder}";
+		$filename = $path . '/' . $this->filename;
+
+		if (is_file($filename))
+		{
+			KunenaFile::delete($filename);
+		}
+
+		$filename = $path . '/raw/' . $this->filename;
+
+		if (is_file($filename))
+		{
+			KunenaFile::delete($filename);
+		}
+
+		$filename = $path . '/thumb/' . $this->filename;
+
+		if (is_file($filename))
+		{
+			KunenaFile::delete($filename);
 		}
 	}
 
@@ -144,6 +170,49 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+	}
+
+	/**
+	 * @internal
+	 * @since  K4.0
+	 */
+	protected function initialize()
+	{
+		$path = $this->getPath();
+
+		if ($path && $this->isImage())
+		{
+			list($this->width, $this->height) = getimagesize($path);
+		}
+		else
+		{
+			$this->width = $this->height = 0;
+		}
+	}
+
+	/**
+	 * Get path for the file.
+	 *
+	 * @param   bool $thumb
+	 *
+	 * @return string|false  Path to the file or false if file doesn't exist.
+	 *
+	 * @since  K4.0
+	 */
+	public function getPath($thumb = false)
+	{
+		if ($thumb)
+		{
+			$path = JPATH_ROOT . "/{$this->folder}/thumb/{$this->filename}";
+			$path = is_file($path) ? $path : false;
+		}
+		else
+		{
+			$path = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
+			$path = is_file($path) ? $path : false;
+		}
+
+		return $path;
 	}
 
 	/**
@@ -195,47 +264,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Get path for the file.
-	 *
-	 * @param   bool $thumb
-	 *
-	 * @return string|false  Path to the file or false if file doesn't exist.
-	 *
-	 * @since  K4.0
-	 */
-	public function getPath($thumb = false)
-	{
-		if ($thumb)
-		{
-			$path = JPATH_ROOT . "/{$this->folder}/thumb/{$this->filename}";
-			$path = is_file($path) ? $path : false;
-		}
-		else
-		{
-			$path = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
-			$path = is_file($path) ? $path : false;
-		}
-
-		return $path;
-	}
-
-	/**
-	 * Get filename for output.
-	 *
-	 * @param   bool $escape
-	 *
-	 * @return string
-	 *
-	 * @since  K4.0
-	 */
-	public function getFilename($escape = true)
-	{
-		$filename = $this->protected ? $this->filename_real : $this->filename;
-
-		return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
-	}
-
-	/**
 	 * Get extension of file for output.
 	 *
 	 * @param   bool $escape
@@ -274,6 +302,22 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		return $escape ? htmlspecialchars($this->shortname, ENT_COMPAT, 'UTF-8') : $this->shortname;
+	}
+
+	/**
+	 * Get filename for output.
+	 *
+	 * @param   bool $escape
+	 *
+	 * @return string
+	 *
+	 * @since  K4.0
+	 */
+	public function getFilename($escape = true)
+	{
+		$filename = $this->protected ? $this->filename_real : $this->filename;
+
+		return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
 	}
 
 	/**
@@ -371,20 +415,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Get message to which attachment has been attached into.
-	 *
-	 * NOTE: Returns message object even if there isn't one. Please call $message->exists() to check if it exists.
-	 *
-	 * @return KunenaForumMessage
-	 *
-	 * @since  K4.0
-	 */
-	public function getMessage()
-	{
-		return KunenaForumMessageHelper::get($this->mesid);
-	}
-
-	/**
 	 * Get author of the attachment.
 	 *
 	 * @return KunenaUser
@@ -472,6 +502,20 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Get message to which attachment has been attached into.
+	 *
+	 * NOTE: Returns message object even if there isn't one. Please call $message->exists() to check if it exists.
+	 *
+	 * @return KunenaForumMessage
+	 *
+	 * @since  K4.0
+	 */
+	public function getMessage()
+	{
+		return KunenaForumMessageHelper::get($this->mesid);
+	}
+
+	/**
 	 * @param   string $action
 	 * @param   mixed  $user
 	 * @param   bool   $silent
@@ -505,6 +549,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		return $exception ? $exception->getMessage() : null;
 	}
+
+	// Internal functions
 
 	/**
 	 * @param   string   $key
@@ -708,60 +754,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		return $this->save();
-	}
-
-	// Internal functions
-
-	/**
-	 * @internal
-	 * @since  K4.0
-	 */
-	protected function initialize()
-	{
-		$path = $this->getPath();
-
-		if ($path && $this->isImage())
-		{
-			list($this->width, $this->height) = getimagesize($path);
-		}
-		else
-		{
-			$this->width = $this->height = 0;
-		}
-	}
-
-	/**
-	 * @internal
-	 * @since  K4.0
-	 */
-	protected function deleteFile()
-	{
-		if (self::$_directory != substr($this->folder, 0, strlen(self::$_directory)))
-		{
-			return;
-		}
-
-		$path     = JPATH_ROOT . "/{$this->folder}";
-		$filename = $path . '/' . $this->filename;
-
-		if (is_file($filename))
-		{
-			KunenaFile::delete($filename);
-		}
-
-		$filename = $path . '/raw/' . $this->filename;
-
-		if (is_file($filename))
-		{
-			KunenaFile::delete($filename);
-		}
-
-		$filename = $path . '/thumb/' . $this->filename;
-
-		if (is_file($filename))
-		{
-			KunenaFile::delete($filename);
-		}
 	}
 
 	/**

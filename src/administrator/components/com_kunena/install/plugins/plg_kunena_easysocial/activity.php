@@ -38,38 +38,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param        $command
-	 * @param        $message
-	 * @param   null $target
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function assignBadge($command, $message, $target = null)
-	{
-		$user  = FD::user($target);
-		$badge = FD::badges();
-
-		return $badge->log('com_kunena', $command, $user->id, $user->id);
-	}
-
-	/**
-	 * @param        $command
-	 * @param   null $target
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function assignPoints($command, $target = null)
-	{
-		$user = FD::user($target);
-
-		$points = FD::points();
-
-		return $points->assign($command, 'com_kunena', $user->id);
-	}
-
-	/**
 	 * @param $message
 	 *
 	 * @since Kunena
@@ -96,6 +64,38 @@ class KunenaActivityEasySocial extends KunenaActivity
 		$tmpl->setAccess('core.view');
 
 		$stream->add($tmpl);
+	}
+
+	/**
+	 * @param        $command
+	 * @param   null $target
+	 *
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function assignPoints($command, $target = null)
+	{
+		$user = FD::user($target);
+
+		$points = FD::points();
+
+		return $points->assign($command, 'com_kunena', $user->id);
+	}
+
+	/**
+	 * @param        $command
+	 * @param        $message
+	 * @param   null $target
+	 *
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function assignBadge($command, $message, $target = null)
+	{
+		$user  = FD::user($target);
+		$badge = FD::badges();
+
+		return $badge->log('com_kunena', $command, $user->id, $user->id);
 	}
 
 	/**

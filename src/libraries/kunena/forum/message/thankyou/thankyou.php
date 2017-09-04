@@ -57,19 +57,6 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * Check if the user has already said thank you.
-	 *
-	 * @param   int $userid
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function exists($userid)
-	{
-		return isset($this->users[(int) $userid]);
-	}
-
-	/**
 	 * @param   int    $userid
 	 * @param   string $time
 	 *
@@ -134,6 +121,19 @@ class KunenaForumMessageThankyou extends JObject
 		$this->_savethankyou($message);
 
 		return true;
+	}
+
+	/**
+	 * Check if the user has already said thank you.
+	 *
+	 * @param   int $userid
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function exists($userid)
+	{
+		return isset($this->users[(int) $userid]);
 	}
 
 	/**

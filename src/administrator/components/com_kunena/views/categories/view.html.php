@@ -57,6 +57,30 @@ class KunenaAdminViewCategories extends KunenaView
 	 *
 	 * @since Kunena
 	 */
+	protected function setToolBarEdit()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		JToolbarHelper::spacer();
+		JToolBarHelper::apply('apply');
+		JToolBarHelper::save('save');
+		JToolBarHelper::save2new('save2new');
+
+		// If an existing item, can save to a copy.
+		if ($this->category->exists())
+		{
+			JToolBarHelper::save2copy('save2copy');
+		}
+
+		JToolBarHelper::cancel();
+		JToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
 	function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
@@ -101,30 +125,6 @@ class KunenaAdminViewCategories extends KunenaView
 	 *
 	 * @since Kunena
 	 */
-	protected function setToolBarEdit()
-	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		JToolbarHelper::spacer();
-		JToolBarHelper::apply('apply');
-		JToolBarHelper::save('save');
-		JToolBarHelper::save2new('save2new');
-
-		// If an existing item, can save to a copy.
-		if ($this->category->exists())
-		{
-			JToolBarHelper::save2copy('save2copy');
-		}
-
-		JToolBarHelper::cancel();
-		JToolbarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
 	protected function setToolBarDefault()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
@@ -141,7 +141,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/setup/sections-categories';
+		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 
 		// Get the toolbar object instance
@@ -152,6 +152,44 @@ class KunenaAdminViewCategories extends KunenaView
 		<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 		$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
+	}
+
+	/**
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
+	 * @since Kunena
+	 */
+	protected function getSortFields()
+	{
+		$sortFields   = array();
+		$sortFields[] = JHtml::_('select.option', 'ordering', JText::_('COM_KUNENA_REORDER'));
+		$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
+		$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
+		$sortFields[] = JHtml::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
+		$sortFields[] = JHtml::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
+		$sortFields[] = JHtml::_('select.option', 'p.allow_polls', JText::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
+		$sortFields[] = JHtml::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
+		$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	/**
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
+	 * @since Kunena
+	 */
+	protected function getSortDirectionFields()
+	{
+		$sortDirection = array();
+
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
 	}
 
 	/**
@@ -232,43 +270,5 @@ class KunenaAdminViewCategories extends KunenaView
 		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
-	}
-
-	/**
-	 * Returns an array of review filter options.
-	 *
-	 * @return    array
-	 * @since Kunena
-	 */
-	protected function getSortFields()
-	{
-		$sortFields   = array();
-		$sortFields[] = JHtml::_('select.option', 'ordering', JText::_('COM_KUNENA_REORDER'));
-		$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
-		$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
-		$sortFields[] = JHtml::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
-		$sortFields[] = JHtml::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
-		$sortFields[] = JHtml::_('select.option', 'p.allow_polls', JText::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
-		$sortFields[] = JHtml::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
-		$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
-
-		return $sortFields;
-	}
-
-	/**
-	 * Returns an array of review filter options.
-	 *
-	 * @return    array
-	 * @since Kunena
-	 */
-	protected function getSortDirectionFields()
-	{
-		$sortDirection = array();
-
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-		return $sortDirection;
 	}
 }

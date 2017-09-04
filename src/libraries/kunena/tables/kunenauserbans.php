@@ -20,84 +20,6 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 {
 	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $id = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $userid = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $ip = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $blocked = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $expiration = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $created_by = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $created_time = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $reason_private = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $reason_public = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $modified_by = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $modified_time = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $comments = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	public $params = null;
-
-	/**
 	 *
 	 * @since Kunena
 	 */
@@ -107,6 +29,71 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @since Kunena
 	 */
 	const ACTIVE = 1;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $id = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $userid = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $ip = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $blocked = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $expiration = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $created_by = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $created_time = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $reason_private = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $reason_public = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $modified_by = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $modified_time = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $comments = null;
+	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $params = null;
 
 	/**
 	 * @param   JDatabaseDriver $db Database driver
@@ -169,6 +156,28 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 		$this->bind($data);
 
 		return true;
+	}
+
+	/**
+	 * @param   mixed $data
+	 * @param   array $ignore
+	 *
+	 * @return boolean|void
+	 * @since Kunena
+	 */
+	public function bind($data, $ignore = array())
+	{
+		if (isset($data['comments']))
+		{
+			$data['comments'] = !is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
+		}
+
+		if (isset($data['params']))
+		{
+			$data['params'] = !is_string($data['params']) ? json_encode($data['params']) : $data['params'];
+		}
+
+		parent::bind($data, $ignore);
 	}
 
 	/**
@@ -241,27 +250,5 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 		}
 
 		return ($this->getError() == '');
-	}
-
-	/**
-	 * @param   mixed $data
-	 * @param   array $ignore
-	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 */
-	public function bind($data, $ignore = array())
-	{
-		if (isset($data['comments']))
-		{
-			$data['comments'] = !is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
-		}
-
-		if (isset($data['params']))
-		{
-			$data['params'] = !is_string($data['params']) ? json_encode($data['params']) : $data['params'];
-		}
-
-		parent::bind($data, $ignore);
 	}
 }

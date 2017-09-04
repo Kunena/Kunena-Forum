@@ -62,27 +62,6 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
-	 * Getmodel
-	 *
-	 * @param   string $name   name
-	 * @param   string $prefix prefix
-	 * @param   array  $config config
-	 *
-	 * @return object
-	 *
-	 * @since    2.0
-	 */
-	public function getModel($name = '', $prefix = '', $config = array())
-	{
-		if (empty($name))
-		{
-			$name = 'plugin';
-		}
-
-		return parent::getModel($name, $prefix, $config);
-	}
-
-	/**
 	 * Method to publish a list of items
 	 *
 	 * @return  void
@@ -146,6 +125,27 @@ class KunenaAdminControllerPlugins extends KunenaController
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+	}
+
+	/**
+	 * Getmodel
+	 *
+	 * @param   string $name   name
+	 * @param   string $prefix prefix
+	 * @param   array  $config config
+	 *
+	 * @return object
+	 *
+	 * @since    2.0
+	 */
+	public function getModel($name = '', $prefix = '', $config = array())
+	{
+		if (empty($name))
+		{
+			$name = 'plugin';
+		}
+
+		return parent::getModel($name, $prefix, $config);
 	}
 
 	/**

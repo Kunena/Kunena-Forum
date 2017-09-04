@@ -45,30 +45,6 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getOnClick($userid)
-	{
-		$userid = (int) $userid;
-
-		return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
-	}
-
-	/**
-	 * @param $userid
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-		return "javascript:void(0)";
-	}
-
-	/**
 	 * @param $text
 	 *
 	 * @return string
@@ -93,5 +69,29 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	public function getInboxURL()
 	{
 		return FRoute::conversations();
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	protected function getOnClick($userid)
+	{
+		$userid = (int) $userid;
+
+		return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	protected function getURL($userid)
+	{
+		return "javascript:void(0)";
 	}
 }

@@ -18,8 +18,8 @@ defined('_JEXEC') or die();
 class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
-	 * @param   object $subject  Subject
-	 * @param   array  $config   Config
+	 * @param   object $subject Subject
+	 * @param   array  $config  Config
 	 *
 	 * @since Kunena
 	 */
@@ -76,8 +76,8 @@ EOF;
 	/**
 	 * @internal
 	 *
-	 * @param   string  $context  Context
-	 * @param   boolean $params   Params
+	 * @param   string  $context Context
+	 * @param   boolean $params  Params
 	 *
 	 * @since Kunena
 	 * @return void
@@ -91,38 +91,10 @@ EOF;
 	}
 
 	/**
-	 * Runs all Joomla content plugins on a single KunenaForumMessage
-	 *
-	 * @access protected
-	 * @see    self::onKunenaPrepare()
-	 * @since  Kunena 2.0
-	 *
-	 * @param   string $text   String to run events on
-	 * @param   object $params \Joomla\Registry\Registry object holding eventual parameters
-	 * @param   int    $page   An integer holding page number
-	 *
-	 * @return object KunenaForumMessage
-	 */
-	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
-	{
-		$dispatcher = JEventDispatcher::getInstance();
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-
-		$row       = new stdClass;
-		$row->text = &$text;
-
-		$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
-
-		$text = &$row->text;
-
-		return $text;
-	}
-
-	/**
-	 * @param   mixed    $user     User
-	 * @param   boolean  $isnew    Is new
-	 * @param   boolean  $success  Success
-	 * @param   string   $msg      Message
+	 * @param   mixed   $user    User
+	 * @param   boolean $isnew   Is new
+	 * @param   boolean $success Success
+	 * @param   string  $msg     Message
 	 *
 	 * @return void
 	 * @since Kunena
@@ -167,8 +139,8 @@ EOF;
 	/**
 	 * Prevent downgrades to Kunena 1.7 and older releases
 	 *
-	 * @param   boolean $type      type
-	 * @param   string  $manifest  manifest
+	 * @param   boolean $type     type
+	 * @param   string  $manifest manifest
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -211,5 +183,33 @@ EOF;
 		$app->redirect('index.php?option=com_installer');
 
 		return true;
+	}
+
+	/**
+	 * Runs all Joomla content plugins on a single KunenaForumMessage
+	 *
+	 * @access protected
+	 * @see    self::onKunenaPrepare()
+	 * @since  Kunena 2.0
+	 *
+	 * @param   string $text   String to run events on
+	 * @param   object $params \Joomla\Registry\Registry object holding eventual parameters
+	 * @param   int    $page   An integer holding page number
+	 *
+	 * @return object KunenaForumMessage
+	 */
+	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
+	{
+		$dispatcher = JEventDispatcher::getInstance();
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+
+		$row       = new stdClass;
+		$row->text = &$text;
+
+		$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
+
+		$text = &$row->text;
+
+		return $text;
 	}
 }

@@ -112,7 +112,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
 	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
-	 * @param   bool  $lastPost True = last post, False = first post.
+	 * @param   bool                  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
 	 * @since Kunena

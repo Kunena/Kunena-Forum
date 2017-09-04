@@ -29,46 +29,6 @@ abstract class KunenaForumMessageHelper
 	protected static $_location = array();
 
 	/**
-	 * Returns KunenaForumMessage object.
-	 *
-	 * @param   null $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload
-	 *
-	 * @return KunenaForumMessage    The message object.
-	 * @since Kunena
-	 */
-	static public function get($identifier = null, $reload = false)
-	{
-		if ($identifier instanceof KunenaForumMessage)
-		{
-			return $identifier;
-		}
-
-		$id = (int) $identifier;
-
-		if ($id < 1)
-		{
-			return new KunenaForumMessage;
-		}
-
-		if (empty(self::$_instances[$id]))
-		{
-			$instance = new KunenaForumMessage;
-
-			// Only load messages which haven't been preloaded before (including missing ones).
-			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
-			$instance->id          = $id;
-			self::$_instances[$id] = $instance;
-		}
-		elseif ($reload)
-		{
-			self::$_instances[$id]->load();
-		}
-
-		return self::$_instances[$id];
-	}
-
-	/**
 	 * @param   bool|array|int $ids
 	 * @param   string         $authorise
 	 *
@@ -104,6 +64,59 @@ abstract class KunenaForumMessageHelper
 		}
 
 		return $list;
+	}
+
+	/**
+	 * @param   array $ids
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadMessages(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_instances [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			if (isset($results[$id]))
+			{
+				$instance = new KunenaForumMessage($results[$id]);
+				$instance->exists(true);
+				self::$_instances [$id] = $instance;
+			}
+			else
+			{
+				self::$_instances [$id] = null;
+			}
+		}
+
+		unset($results);
 	}
 
 	/**
@@ -152,6 +165,53 @@ abstract class KunenaForumMessageHelper
 		}
 
 		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
+	}
+
+	/**
+	 * @param   int    $topic_id
+	 * @param   int    $start
+	 * @param   int    $limit
+	 * @param   string $ordering
+	 * @param   int    $hold
+	 * @param   bool   $orderbyid
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
+	{
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$query = "SELECT m.*, t.message
+			FROM #__kunena_messages AS m
+			INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+			WHERE m.thread={$db->quote($topic_id)} AND m.hold IN ({$hold}) ORDER BY m.time {$ordering}";
+		$db->setQuery($query, $start, $limit);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
+		$order    = ($ordering == 'ASC') ? 1 : -1;
+		$list     = array();
+
+		foreach ($results as $id => $result)
+		{
+			$instance = new KunenaForumMessage($result);
+			$instance->exists(true);
+			self::$_instances [$id]             = $instance;
+			$list[$orderbyid ? $id : $location] = $instance;
+			$location                           += $order;
+		}
+
+		unset($results);
+
+		return $list;
 	}
 
 	/**
@@ -269,7 +329,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$cquery = clone $query;
-		$cquery->clear('select')->clear('order')->select('COUNT(*)');
+		$cquery->clear('SELECT')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
 
 		try
@@ -369,6 +429,46 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
+	 * Returns KunenaForumMessage object.
+	 *
+	 * @param   null $identifier The message to load - Can be only an integer.
+	 * @param   bool $reload
+	 *
+	 * @return KunenaForumMessage    The message object.
+	 * @since Kunena
+	 */
+	static public function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumMessage)
+		{
+			return $identifier;
+		}
+
+		$id = (int) $identifier;
+
+		if ($id < 1)
+		{
+			return new KunenaForumMessage;
+		}
+
+		if (empty(self::$_instances[$id]))
+		{
+			$instance = new KunenaForumMessage;
+
+			// Only load messages which haven't been preloaded before (including missing ones).
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id          = $id;
+			self::$_instances[$id] = $instance;
+		}
+		elseif ($reload)
+		{
+			self::$_instances[$id]->load();
+		}
+
+		return self::$_instances[$id];
+	}
+
+	/**
 	 * @param   array|string $mesids
 	 *
 	 * @since Kunena
@@ -444,6 +544,8 @@ abstract class KunenaForumMessageHelper
 		}
 	}
 
+	// Internal functions
+
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 * @since Kunena
@@ -497,61 +599,6 @@ abstract class KunenaForumMessageHelper
 		return $db->getAffectedRows();
 	}
 
-	// Internal functions
-
-	/**
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadMessages(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$instance = new KunenaForumMessage($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
-			}
-			else
-			{
-				self::$_instances [$id] = null;
-			}
-		}
-
-		unset($results);
-	}
-
 	/**
 	 * @param   array $ids
 	 *
@@ -584,52 +631,5 @@ abstract class KunenaForumMessageHelper
 		}
 
 		return $results;
-	}
-
-	/**
-	 * @param   int    $topic_id
-	 * @param   int    $start
-	 * @param   int    $limit
-	 * @param   string $ordering
-	 * @param   int    $hold
-	 * @param   bool   $orderbyid
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
-	{
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "SELECT m.*, t.message
-			FROM #__kunena_messages AS m
-			INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-			WHERE m.thread={$db->quote($topic_id)} AND m.hold IN ({$hold}) ORDER BY m.time {$ordering}";
-		$db->setQuery($query, $start, $limit);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
-		$order    = ($ordering == 'ASC') ? 1 : -1;
-		$list     = array();
-
-		foreach ($results as $id => $result)
-		{
-			$instance = new KunenaForumMessage($result);
-			$instance->exists(true);
-			self::$_instances [$id]             = $instance;
-			$list[$orderbyid ? $id : $location] = $instance;
-			$location += $order;
-		}
-
-		unset($results);
-
-		return $list;
 	}
 }

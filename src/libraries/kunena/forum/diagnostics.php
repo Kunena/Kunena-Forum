@@ -259,11 +259,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_categoryOrphaned()
+	protected static function delete_categoryOrphaned()
 	{
-		// Query to find orphaned categories
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parent_id=c.id")->where("a.parent_id>0 AND c.id IS NULL");
+		$query = self::query_categoryOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -272,9 +270,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_categoryOrphaned()
+	protected static function query_categoryOrphaned()
 	{
-		$query = self::query_categoryOrphaned()->delete('a');
+		// Query to find orphaned categories
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parent_id=c.id")->where("a.parent_id>0 AND c.id IS NULL");
 
 		return $query;
 	}
@@ -357,11 +357,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_aliasMissingCategory()
+	protected static function delete_aliasMissingCategory()
 	{
-		// Query to find orphaned aliases
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_aliases AS a")->leftJoin("#__kunena_categories AS c ON a.item=c.id")->where("a.type='catid' AND c.id IS NULL");
+		$query = self::query_aliasMissingCategory()->delete('a');
 
 		return $query;
 	}
@@ -370,9 +368,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_aliasMissingCategory()
+	protected static function query_aliasMissingCategory()
 	{
-		$query = self::query_aliasMissingCategory()->delete('a');
+		// Query to find orphaned aliases
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_aliases AS a")->leftJoin("#__kunena_categories AS c ON a.item=c.id")->where("a.type='catid' AND c.id IS NULL");
 
 		return $query;
 	}
@@ -397,11 +397,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_messageBodyMissingMessage()
+	protected static function delete_messageBodyMissingMessage()
 	{
-		// Query to find broken messages (orphan message text)
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_messages_text AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
+		$query = self::query_messageBodyMissingMessage()->delete('a');
 
 		return $query;
 	}
@@ -410,9 +408,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_messageBodyMissingMessage()
+	protected static function query_messageBodyMissingMessage()
 	{
-		$query = self::query_messageBodyMissingMessage()->delete('a');
+		// Query to find broken messages (orphan message text)
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_messages_text AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
 		return $query;
 	}
@@ -437,11 +437,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_messageMissingMessageBody()
+	protected static function delete_messageMissingMessageBody()
 	{
-		// Query to find broken messages (message is missing body)
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_messages_text AS t ON t.mesid=a.id")->where("t.mesid IS NULL");
+		$query = self::query_messageMissingMessageBody()->delete('a');
 
 		return $query;
 	}
@@ -450,9 +448,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_messageMissingMessageBody()
+	protected static function query_messageMissingMessageBody()
 	{
-		$query = self::query_messageMissingMessageBody()->delete('a');
+		// Query to find broken messages (message is missing body)
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_messages_text AS t ON t.mesid=a.id")->where("t.mesid IS NULL");
 
 		return $query;
 	}
@@ -471,19 +471,6 @@ abstract class KunenaForumDiagnostics
 		}
 
 		return array('message' => 'invalid');
-	}
-
-	/**
-	 * @return KunenaDatabaseQuery
-	 * @since Kunena
-	 */
-	protected static function query_topicInSection()
-	{
-		// Query to find topics which are located in section, not in category
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parent_id=0");
-
-		return $query;
 	}
 
 	/**
@@ -517,11 +504,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_topicMissingCategory()
+	protected static function query_topicInSection()
 	{
-		// Query to find topics which do not have existing category
+		// Query to find topics which are located in section, not in category
 		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.id IS NULL");
+		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parent_id=0");
 
 		return $query;
 	}
@@ -557,11 +544,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_topicMissingMessages()
+	protected static function query_topicMissingCategory()
 	{
-		// Query to find topics without messages
+		// Query to find topics which do not have existing category
 		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_messages AS m ON m.thread=a.id")->where("a.moved_id=0 AND m.id IS NULL");
+		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.id IS NULL");
 
 		return $query;
 	}
@@ -573,6 +560,19 @@ abstract class KunenaForumDiagnostics
 	protected static function delete_topicMissingMessages()
 	{
 		$query = self::query_topicMissingMessages()->delete('a');
+
+		return $query;
+	}
+
+	/**
+	 * @return KunenaDatabaseQuery
+	 * @since Kunena
+	 */
+	protected static function query_topicMissingMessages()
+	{
+		// Query to find topics without messages
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_messages AS m ON m.thread=a.id")->where("a.moved_id=0 AND m.id IS NULL");
 
 		return $query;
 	}
@@ -597,11 +597,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_topicMissingPoll()
+	protected static function delete_topicMissingPoll()
 	{
-		// Query to find topics which have missing poll
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL");
+		$query = self::query_topicMissingPoll()->delete('a');
 
 		return $query;
 	}
@@ -610,9 +608,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_topicMissingPoll()
+	protected static function query_topicMissingPoll()
 	{
-		$query = self::query_topicMissingPoll()->delete('a');
+		// Query to find topics which have missing poll
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL");
 
 		return $query;
 	}
@@ -637,11 +637,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_topicPollMismatch()
+	protected static function delete_topicPollMismatch()
 	{
-		// Query to find polls which have wrong topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_polls AS p ON p.id=a.poll_id")->leftJoin("#__kunena_topics AS t ON p.threadid=t.id")->where("a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id");
+		$query = self::query_topicPollMismatch()->delete('a');
 
 		return $query;
 	}
@@ -650,9 +648,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_topicPollMismatch()
+	protected static function query_topicPollMismatch()
 	{
-		$query = self::query_topicPollMismatch()->delete('a');
+		// Query to find polls which have wrong topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_polls AS p ON p.id=a.poll_id")->leftJoin("#__kunena_topics AS t ON p.threadid=t.id")->where("a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id");
 
 		return $query;
 	}
@@ -677,11 +677,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_movedMissingTopic()
+	protected static function delete_movedMissingTopic()
 	{
-		// Query to find moved topics pointing to non-existent topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.moved_id")->where("a.moved_id>0 AND t.id IS NULL");
+		$query = self::query_movedMissingTopic()->delete('a');
 
 		return $query;
 	}
@@ -690,9 +688,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_movedMissingTopic()
+	protected static function query_movedMissingTopic()
 	{
-		$query = self::query_movedMissingTopic()->delete('a');
+		// Query to find moved topics pointing to non-existent topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.moved_id")->where("a.moved_id>0 AND t.id IS NULL");
 
 		return $query;
 	}
@@ -717,11 +717,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_movedAndMessages()
+	protected static function delete_movedAndMessages()
 	{
-		// Query to find topics without messages
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_messages AS m ON m.thread=a.id")->leftJoin("#__kunena_messages_text AS t ON m.id=t.mesid")->where("a.moved_id>0");
+		$query = self::query_movedAndMessages()->delete('a');
 
 		return $query;
 	}
@@ -730,9 +728,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_movedAndMessages()
+	protected static function query_movedAndMessages()
 	{
-		$query = self::query_movedAndMessages()->delete('a');
+		// Query to find topics without messages
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_messages AS m ON m.thread=a.id")->leftJoin("#__kunena_messages_text AS t ON m.id=t.mesid")->where("a.moved_id>0");
 
 		return $query;
 	}
@@ -757,11 +757,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_messageWrongCategory()
+	protected static function fix_messageWrongCategory()
 	{
-		// Query to find messages which have wrong category id
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.category_id!=a.catid");
+		$query = self::query_messageWrongCategory()->update('#__kunena_messages AS a')->set('a.catid=t.category_id');
 
 		return $query;
 	}
@@ -770,9 +768,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function fix_messageWrongCategory()
+	protected static function query_messageWrongCategory()
 	{
-		$query = self::query_messageWrongCategory()->update('#__kunena_messages AS a')->set('a.catid=t.category_id');
+		// Query to find messages which have wrong category id
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.category_id!=a.catid");
 
 		return $query;
 	}
@@ -797,11 +797,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_messageOrphaned()
+	protected static function delete_messageOrphaned()
 	{
-		// Query to find messages which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.id IS NULL");
+		$query = self::query_messageOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -810,9 +808,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_messageOrphaned()
+	protected static function query_messageOrphaned()
 	{
-		$query = self::query_messageOrphaned()->delete('a');
+		// Query to find messages which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.id IS NULL");
 
 		return $query;
 	}
@@ -837,11 +837,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_attachmentOrphaned()
+	protected static function delete_attachmentOrphaned()
 	{
-		// Query to find attachments which do not belong in any existing message
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
+		$query = self::query_attachmentOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -850,9 +848,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_attachmentOrphaned()
+	protected static function query_attachmentOrphaned()
 	{
-		$query = self::query_attachmentOrphaned()->delete('a');
+		// Query to find attachments which do not belong in any existing message
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
 		return $query;
 	}
@@ -877,11 +877,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_pollOrphaned()
+	protected static function delete_pollOrphaned()
 	{
-		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.threadid")->where("t.id IS NULL");
+		$query = self::query_pollOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -890,9 +888,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_pollOrphaned()
+	protected static function query_pollOrphaned()
 	{
-		$query = self::query_pollOrphaned()->delete('a');
+		// Query to find polls which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.threadid")->where("t.id IS NULL");
 
 		return $query;
 	}
@@ -917,11 +917,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_pollTopicMismatch()
+	protected static function delete_pollTopicMismatch()
 	{
-		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
+		$query = self::query_pollTopicMismatch()->delete('a');
 
 		return $query;
 	}
@@ -930,9 +928,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_pollTopicMismatch()
+	protected static function query_pollTopicMismatch()
 	{
-		$query = self::query_pollTopicMismatch()->delete('a');
+		// Query to find polls which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
 
 		return $query;
 	}
@@ -957,11 +957,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_pollOptionOrphaned()
+	protected static function delete_pollOptionOrphaned()
 	{
-		// Query to find poll options which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
+		$query = self::query_pollOptionOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -970,9 +968,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_pollOptionOrphaned()
+	protected static function query_pollOptionOrphaned()
 	{
-		$query = self::query_pollOptionOrphaned()->delete('a');
+		// Query to find poll options which do not belong in any existing poll
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
 	}
@@ -997,11 +997,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_pollUserOrphaned()
+	protected static function delete_pollUserOrphaned()
 	{
-		// Query to find poll users which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
+		$query = self::query_pollUserOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -1010,9 +1008,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_pollUserOrphaned()
+	protected static function query_pollUserOrphaned()
 	{
-		$query = self::query_pollUserOrphaned()->delete('a');
+		// Query to find poll users which do not belong in any existing poll
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
 	}
@@ -1037,11 +1037,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_thankyouOrphaned()
+	protected static function delete_thankyouOrphaned()
 	{
-		// Query to find thankyous which do not belong in any existing message
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_thankyou AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.postid")->where("m.id IS NULL");
+		$query = self::query_thankyouOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -1050,9 +1048,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_thankyouOrphaned()
+	protected static function query_thankyouOrphaned()
 	{
-		$query = self::query_thankyouOrphaned()->delete('a');
+		// Query to find thankyous which do not belong in any existing message
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_thankyou AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.postid")->where("m.id IS NULL");
 
 		return $query;
 	}
@@ -1077,11 +1077,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_userCategoryOrphaned()
+	protected static function delete_userCategoryOrphaned()
 	{
-		// Query to find user categories which do not belong in any existing category
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_user_categories AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("a.category_id>0 AND c.id IS NULL");
+		$query = self::query_userCategoryOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -1090,9 +1088,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_userCategoryOrphaned()
+	protected static function query_userCategoryOrphaned()
 	{
-		$query = self::query_userCategoryOrphaned()->delete('a');
+		// Query to find user categories which do not belong in any existing category
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_user_categories AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("a.category_id>0 AND c.id IS NULL");
 
 		return $query;
 	}
@@ -1117,11 +1117,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_userReadOrphaned()
+	protected static function delete_userReadOrphaned()
 	{
-		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_user_read AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
+		$query = self::query_userReadOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -1130,9 +1128,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_userReadOrphaned()
+	protected static function query_userReadOrphaned()
 	{
-		$query = self::query_userReadOrphaned()->delete('a');
+		// Query to find user read which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_user_read AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
 	}
@@ -1157,11 +1157,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_userReadWrongCategory()
+	protected static function fix_userReadWrongCategory()
 	{
-		// Query to find user read which wrong category information
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_user_read AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
+		$query = self::query_userReadWrongCategory()->update('#__kunena_user_read AS a')->set('a.category_id=t.category_id');
 
 		return $query;
 	}
@@ -1170,9 +1168,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function fix_userReadWrongCategory()
+	protected static function query_userReadWrongCategory()
 	{
-		$query = self::query_userReadWrongCategory()->update('#__kunena_user_read AS a')->set('a.category_id=t.category_id');
+		// Query to find user read which wrong category information
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_user_read AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
 	}
@@ -1197,11 +1197,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_userTopicOrphaned()
+	protected static function delete_userTopicOrphaned()
 	{
-		// Query to find user topics which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_user_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
+		$query = self::query_userTopicOrphaned()->delete('a');
 
 		return $query;
 	}
@@ -1210,9 +1208,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_userTopicOrphaned()
+	protected static function query_userTopicOrphaned()
 	{
-		$query = self::query_userTopicOrphaned()->delete('a');
+		// Query to find user topics which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_user_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
 	}
@@ -1237,11 +1237,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_userTopicWrongCategory()
+	protected static function fix_userTopicWrongCategory()
 	{
-		// Query to find user topic which wrong category information
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_user_topics AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
+		$query = self::query_userTopicWrongCategory()->update('#__kunena_user_topics AS a')->set('a.category_id=t.category_id');
 
 		return $query;
 	}
@@ -1250,9 +1248,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function fix_userTopicWrongCategory()
+	protected static function query_userTopicWrongCategory()
 	{
-		$query = self::query_userTopicWrongCategory()->update('#__kunena_user_topics AS a')->set('a.category_id=t.category_id');
+		// Query to find user topic which wrong category information
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_user_topics AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
 	}
@@ -1277,12 +1277,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_ratingOrphaned()
+	protected static function delete_ratingOrphaned()
 	{
-		$query = new KunenaDatabaseQuery;
-
-		// Query to find orphaned ratings
-		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
+		$query = self::query_ratingOrphaned()->delete('r');
 
 		return $query;
 	}
@@ -1291,9 +1288,12 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function delete_ratingOrphaned()
+	protected static function query_ratingOrphaned()
 	{
-		$query = self::query_ratingOrphaned()->delete('r');
+		$query = new KunenaDatabaseQuery;
+
+		// Query to find orphaned ratings
+		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
 
 		return $query;
 	}
@@ -1318,11 +1318,9 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function query_channelOrphaned()
+	protected static function fix_channelOrphaned()
 	{
-		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
-		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
+		$query = self::query_channelOrphaned()->update('#__kunena_categories')->set("channels='THIS'")->where("channels='none' OR channels=NULL");
 
 		return $query;
 	}
@@ -1331,9 +1329,11 @@ abstract class KunenaForumDiagnostics
 	 * @return KunenaDatabaseQuery
 	 * @since Kunena
 	 */
-	protected static function fix_channelOrphaned()
+	protected static function query_channelOrphaned()
 	{
-		$query = self::query_channelOrphaned()->update('#__kunena_categories')->set("channels='THIS'")->where("channels='none' OR channels=NULL");
+		// Query to find user read which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery;
+		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
 
 		return $query;
 	}

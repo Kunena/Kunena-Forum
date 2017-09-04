@@ -17,22 +17,20 @@ defined('_JEXEC') or die();
 class KunenaAvatar
 {
 	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected static $instance = false;
+	/**
 	 * @var null
 	 * @since Kunena
 	 */
 	public $avatarSizes = null;
-
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $resize = false;
-
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected static $instance = false;
 
 	/**
 	 * @param   null $integration
@@ -88,16 +86,36 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param          $user
+	 * @param   string $class
+	 * @param   int    $sizex
+	 * @param   int    $sizey
 	 *
-	 * @return string
+	 * @return string|void
 	 * @since Kunena
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
-		return '';
+		$size   = $this->getSize($sizex, $sizey);
+		$avatar = $this->getURL($user, $size->x, $size->y);
+
+		if (!$avatar)
+		{
+			return;
+		}
+
+		if ($class == 'none')
+		{
+			$class = ' class="kavatar"';
+		}
+		elseif ($class)
+		{
+			$class = ' class="' . $class . '"';
+		}
+
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+
+		return $link;
 	}
 
 	/**
@@ -149,35 +167,15 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $class
-	 * @param   int    $sizex
-	 * @param   int    $sizey
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
 	 *
-	 * @return string|void
+	 * @return string
 	 * @since Kunena
 	 */
-	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
+	protected function _getURL($user, $sizex, $sizey)
 	{
-		$size   = $this->getSize($sizex, $sizey);
-		$avatar = $this->getURL($user, $size->x, $size->y);
-
-		if (!$avatar)
-		{
-			return;
-		}
-
-		if ($class == 'none')
-		{
-			$class = ' class="kavatar"';
-		}
-		elseif ($class)
-		{
-			$class = ' class="' . $class . '"';
-		}
-
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
-
-		return $link;
+		return '';
 	}
 }

@@ -16,28 +16,25 @@ defined('_JEXEC') or die();
 class KunenaSession extends JObject
 {
 	/**
+	 * @var
+	 * @since Kunena
+	 */
+	private static $_instance;
+	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_exists = false;
-
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $_sessiontimeout = false;
-
 	/**
 	 * @var int|string
 	 * @since Kunena
 	 */
 	protected $allreadtime;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	private static $_instance;
 
 	/**
 	 * @param   mixed|null $identifier
@@ -66,26 +63,31 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @param   bool $update
-	 * @param   null $userid
+	 * Method to load a KunenaSession object by userid
 	 *
-	 * @return KunenaSession
-	 * @since Kunena
+	 * @access    public
+	 *
+	 * @param   int $userid The user id of the user to load
+	 *
+	 * @return    boolean            True on success
+	 * @since     1.5
 	 */
-	public static function getInstance($update = false, $userid = null)
+	public function load($userid)
 	{
-		if (!self::$_instance)
-		{
-			$my              = \Joomla\CMS\Factory::getUser();
-			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
+		// Create the user table object
+		$table = $this->getTable();
 
-			if ($update)
-			{
-				self::$_instance->updateSessionInfo();
-			}
+		// Load the KunenaTableUser object based on the user id
+		if ($table->load($userid))
+		{
+			$this->_exists = true;
 		}
 
-		return self::$_instance;
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+		$this->userid = $userid;
+
+		return true;
 	}
 
 	/**
@@ -119,31 +121,56 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * Method to load a KunenaSession object by userid
+	 * @param   bool $update
+	 * @param   null $userid
 	 *
-	 * @access    public
-	 *
-	 * @param   int $userid The user id of the user to load
-	 *
-	 * @return    boolean            True on success
-	 * @since     1.5
+	 * @return KunenaSession
+	 * @since Kunena
 	 */
-	public function load($userid)
+	public static function getInstance($update = false, $userid = null)
 	{
-		// Create the user table object
-		$table = $this->getTable();
-
-		// Load the KunenaTableUser object based on the user id
-		if ($table->load($userid))
+		if (!self::$_instance)
 		{
-			$this->_exists = true;
+			$my              = \Joomla\CMS\Factory::getUser();
+			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
+
+			if ($update)
+			{
+				self::$_instance->updateSessionInfo();
+			}
 		}
 
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-		$this->userid = $userid;
+		return self::$_instance;
+	}
 
-		return true;
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public function updateSessionInfo()
+	{
+		// If this is a new session, reset the lasttime colum with the timestamp
+		// of the last saved currvisit - only after that can we reset currvisit to now before the store
+		if ($this->isNewSession())
+		{
+			$this->lasttime   = $this->currvisit;
+			$this->readtopics = 0;
+		}
+
+		$this->currvisit = \Joomla\CMS\Factory::getDate()->toUnix();
+	}
+
+	/**
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isNewSession()
+	{
+		// Perform session timeout check
+		$lifetime              = max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
+		$this->_sessiontimeout = ($this->currvisit + $lifetime < \Joomla\CMS\Factory::getDate()->toUnix());
+
+		return $this->_sessiontimeout;
 	}
 
 	/**
@@ -242,19 +269,6 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isNewSession()
-	{
-		// Perform session timeout check
-		$lifetime              = max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
-		$this->_sessiontimeout = ($this->currvisit + $lifetime < \Joomla\CMS\Factory::getDate()->toUnix());
-
-		return $this->_sessiontimeout;
-	}
-
-	/**
 	 * @return integer|string
 	 * @since Kunena
 	 */
@@ -275,22 +289,5 @@ class KunenaSession extends JObject
 	{
 		$this->allreadtime = \Joomla\CMS\Factory::getDate()->toUnix();
 		$this->readtopics  = 0;
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	public function updateSessionInfo()
-	{
-		// If this is a new session, reset the lasttime colum with the timestamp
-		// of the last saved currvisit - only after that can we reset currvisit to now before the store
-		if ($this->isNewSession())
-		{
-			$this->lasttime   = $this->currvisit;
-			$this->readtopics = 0;
-		}
-
-		$this->currvisit = \Joomla\CMS\Factory::getDate()->toUnix();
 	}
 }

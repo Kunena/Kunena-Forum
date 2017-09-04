@@ -86,6 +86,54 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
+	 * @param $item
+	 *
+	 * @since Kunena
+	 */
+	public static function convertMenuItem($item)
+	{
+		$uri  = \Joomla\CMS\Uri\Uri::getInstance($item->link);
+		$view = $uri->getVar('func', $uri->getVar('view'));
+
+		$params = new \Joomla\Registry\Registry($item->params);
+
+		if (self::convert($uri, 0))
+		{
+			switch ($view)
+			{
+				case 'latest' :
+				case 'mylatest' :
+				case 'noreplies' :
+				case 'subscriptions' :
+				case 'favorites' :
+				case 'userposts' :
+				case 'unapproved' :
+				case 'deleted' :
+					$params->set('do', null);
+					$params->set('mode', $uri->getVar('mode', null));
+					break;
+				case 'post' :
+					$params->set('do', null);
+					break;
+				case 'rules' :
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('rules_cid', 1) . '[/article]');
+					$params->set('body_format', 'bbcode');
+					$params->set('do', null);
+					break;
+				case 'help' :
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('help_cid', 1) . '[/article]');
+					$params->set('body_format', 'bbcode');
+					$params->set('do', null);
+					break;
+			}
+		}
+
+		$item->link   = $uri->toString();
+		$item->query  = $uri->getQuery(true);
+		$item->params = $params->toString();
+	}
+
+	/**
 	 * @param       $uri
 	 * @param   int $showstart
 	 *
@@ -700,53 +748,5 @@ abstract class KunenaRouteLegacy
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $changed;
-	}
-
-	/**
-	 * @param $item
-	 *
-	 * @since Kunena
-	 */
-	public static function convertMenuItem($item)
-	{
-		$uri  = \Joomla\CMS\Uri\Uri::getInstance($item->link);
-		$view = $uri->getVar('func', $uri->getVar('view'));
-
-		$params = new \Joomla\Registry\Registry($item->params);
-
-		if (self::convert($uri, 0))
-		{
-			switch ($view)
-			{
-				case 'latest' :
-				case 'mylatest' :
-				case 'noreplies' :
-				case 'subscriptions' :
-				case 'favorites' :
-				case 'userposts' :
-				case 'unapproved' :
-				case 'deleted' :
-					$params->set('do', null);
-					$params->set('mode', $uri->getVar('mode', null));
-					break;
-				case 'post' :
-					$params->set('do', null);
-					break;
-				case 'rules' :
-					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('rules_cid', 1) . '[/article]');
-					$params->set('body_format', 'bbcode');
-					$params->set('do', null);
-					break;
-				case 'help' :
-					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('help_cid', 1) . '[/article]');
-					$params->set('body_format', 'bbcode');
-					$params->set('do', null);
-					break;
-			}
-		}
-
-		$item->link   = $uri->toString();
-		$item->query  = $uri->getQuery(true);
-		$item->params = $params->toString();
 	}
 }

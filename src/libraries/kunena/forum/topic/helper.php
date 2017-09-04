@@ -164,6 +164,59 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
+	 * @param   array $ids
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadTopics(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_instances [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			if (isset($results[$id]))
+			{
+				$instance = new KunenaForumTopic($results[$id]);
+				$instance->exists(true);
+				self::$_instances [$id] = $instance;
+			}
+			else
+			{
+				self::$_instances [$id] = null;
+			}
+		}
+
+		unset($results);
+	}
+
+	/**
 	 * @param   mixed $ids
 	 * @param   mixed $user
 	 *
@@ -637,6 +690,8 @@ abstract class KunenaForumTopicHelper
 		return $rows;
 	}
 
+	// Internal functions
+
 	/**
 	 * @param   array $topics Topics
 	 * @param   mixed $user   User
@@ -717,60 +772,5 @@ abstract class KunenaForumTopicHelper
 		}
 
 		return $list;
-	}
-
-	// Internal functions
-
-	/**
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadTopics(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$instance = new KunenaForumTopic($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
-			}
-			else
-			{
-				self::$_instances [$id] = null;
-			}
-		}
-
-		unset($results);
 	}
 }

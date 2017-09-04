@@ -47,6 +47,5 @@ class KunenaAdminViewEmail extends KunenaView
 
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_A_EMAIL_MANAGER'));
-
 	}
 }

@@ -31,20 +31,20 @@ class KunenaExceptionAuthorise extends RuntimeException
 	);
 
 	/**
-	 * @return integer
-	 * @since Kunena
-	 */
-	public function getResponseCode()
-	{
-		return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
-	}
-
-	/**
 	 * @return mixed
 	 * @since Kunena
 	 */
 	public function getResponseStatus()
 	{
 		return $this->responseCodes[$this->getResponseCode()];
+	}
+
+	/**
+	 * @return integer
+	 * @since Kunena
+	 */
+	public function getResponseCode()
+	{
+		return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
 	}
 }

@@ -38,16 +38,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return string|void
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-	}
-
-	/**
-	 * @param $userid
-	 *
 	 * @return string
 	 * @since Kunena
 	 */
@@ -122,19 +112,12 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param $text
-	 *
 	 * @return null|string
 	 * @since Kunena
 	 */
-	public function getInboxLink($text)
+	public function getInboxURL()
 	{
 		global $_CB_framework;
-
-		if (!$text)
-		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
-		}
 
 		$userid = $this->getCBUserid();
 
@@ -143,7 +126,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
+		return $_CB_framework->userProfileUrl($userid);
 	}
 
 	/**
@@ -178,12 +161,19 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
+	 * @param $text
+	 *
 	 * @return null|string
 	 * @since Kunena
 	 */
-	public function getInboxURL()
+	public function getInboxLink($text)
 	{
 		global $_CB_framework;
+
+		if (!$text)
+		{
+			$text = JText::_('COM_KUNENA_PMS_INBOX');
+		}
 
 		$userid = $this->getCBUserid();
 
@@ -192,6 +182,16 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		return $_CB_framework->userProfileUrl($userid);
+		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string|void
+	 * @since Kunena
+	 */
+	protected function getURL($userid)
+	{
 	}
 }

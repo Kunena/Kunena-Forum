@@ -58,13 +58,6 @@ class KunenaAdminViewStatistics extends KunenaView
 		$this->display();
 	}
 
-
-	protected function setToolbar()
-	{
-		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
-	}
-
 	/**
 	 * @return array
 	 * @since  Kunena
@@ -155,6 +148,12 @@ class KunenaAdminViewStatistics extends KunenaView
 		}
 
 		return $filterFields;
+	}
+
+	protected function setToolbar()
+	{
+		// Set the titlebar text
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
 	}
 
 	/**

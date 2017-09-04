@@ -43,9 +43,10 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   Jinput           $input   The input object.
+	 * @param   Jinput                                  $input   The input object.
 	 * @param   \Joomla\CMS\Application\BaseApplication $app     The application object.
-	 * @param   \Joomla\Registry\Registry|array  $options Array / \Joomla\Registry\Registry object with the options to load.
+	 * @param   \Joomla\Registry\Registry|array         $options Array \Joomla\Registry\Registry object with the
+	 *                                                           options to load.
 	 *
 	 * @since Kunena
 	 */
@@ -59,6 +60,46 @@ abstract class KunenaControllerBase implements Serializable
 		{
 			$this->setOptions($options);
 		}
+	}
+
+	/**
+	 * Load the application object.
+	 *
+	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
+	 * @since Kunena
+	 */
+	protected function loadApplication()
+	{
+		return \Joomla\CMS\Factory::getApplication();
+	}
+
+	/**
+	 * Load the input object.
+	 *
+	 * @return  \Joomla\CMS\Input\Input  The input object.
+	 * @since Kunena
+	 */
+	protected function loadInput()
+	{
+		return $this->app->input;
+	}
+
+	/**
+	 * Get the options.
+	 *
+	 * @return  \Joomla\Registry\Registry  Object with the options.
+	 *
+	 * @since   K4.0
+	 */
+	public function getOptions()
+	{
+		// Always return a \Joomla\Registry\Registry instance
+		if (!($this->options instanceof \Joomla\Registry\Registry))
+		{
+			$this->resetOptions();
+		}
+
+		return $this->options;
 	}
 
 	/**
@@ -88,24 +129,6 @@ abstract class KunenaControllerBase implements Serializable
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Get the options.
-	 *
-	 * @return  \Joomla\Registry\Registry  Object with the options.
-	 *
-	 * @since   K4.0
-	 */
-	public function getOptions()
-	{
-		// Always return a \Joomla\Registry\Registry instance
-		if (!($this->options instanceof \Joomla\Registry\Registry))
-		{
-			$this->resetOptions();
-		}
-
-		return $this->options;
 	}
 
 	/**
@@ -188,27 +211,5 @@ abstract class KunenaControllerBase implements Serializable
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Load the application object.
-	 *
-	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
-	 * @since Kunena
-	 */
-	protected function loadApplication()
-	{
-		return \Joomla\CMS\Factory::getApplication();
-	}
-
-	/**
-	 * Load the input object.
-	 *
-	 * @return  \Joomla\CMS\Input\Input  The input object.
-	 * @since Kunena
-	 */
-	protected function loadInput()
-	{
-		return $this->app->input;
 	}
 }

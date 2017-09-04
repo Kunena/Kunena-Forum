@@ -33,10 +33,47 @@ class KunenaAdminViewTemplates extends KunenaView
 	 *
 	 * @since Kunena
 	 */
+	protected function setToolBarDefault()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolBarHelper::spacer();
+		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
+		JToolBarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
+		JToolBarHelper::divider();
+		JToolBarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		JToolBarHelper::divider();
+		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		JToolBarHelper::divider();
+		JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		JToolBarHelper::divider();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
 	function displayAdd()
 	{
 		$this->setToolBarAdd();
 		$this->display();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function setToolBarAdd()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolBarHelper::spacer();
+		JToolBarHelper::back();
+		JToolBarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -73,6 +110,24 @@ class KunenaAdminViewTemplates extends KunenaView
 	 *
 	 * @since Kunena
 	 */
+	protected function setToolBarEdit()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply('apply');
+		JToolBarHelper::spacer();
+		JToolBarHelper::save('save');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
 	function displayChooseless()
 	{
 		$this->setToolBarChooseless();
@@ -98,6 +153,22 @@ class KunenaAdminViewTemplates extends KunenaView
 	 *
 	 * @since Kunena
 	 */
+	protected function setToolBarChooseless()
+	{
+
+		JToolBarHelper::spacer();
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolBarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
 	function displayEditless()
 	{
 		$this->setToolBarEditless();
@@ -108,6 +179,23 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
 		$this->ftp       = $this->get('FTPcredentials');
 		$this->display();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function setToolBarEditless()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply('applyless');
+		JToolBarHelper::spacer();
+		JToolBarHelper::save('saveless');
+		JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
 	}
 
 	/**
@@ -138,76 +226,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	 *
 	 * @since Kunena
 	 */
-	function displayEditcss()
-	{
-		$this->setToolBarEditcss();
-		$this->templatename = $this->app->getUserState('kunena.templatename');
-		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
-		$this->content      = $this->get('FileContentParsed');
-		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
-		$this->ftp          = $this->get('FTPcredentials');
-		$this->display();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarDefault()
-	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
-		JToolBarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
-		JToolBarHelper::divider();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarAdd()
-	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		JToolBarHelper::spacer();
-		JToolBarHelper::back();
-		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarEdit()
-	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		JToolBarHelper::spacer();
-		JToolBarHelper::apply('apply');
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
 	protected function setToolBarChoosecss()
 	{
 
@@ -224,6 +242,21 @@ class KunenaAdminViewTemplates extends KunenaView
 	 *
 	 * @since Kunena
 	 */
+	function displayEditcss()
+	{
+		$this->setToolBarEditcss();
+		$this->templatename = $this->app->getUserState('kunena.templatename');
+		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
+		$this->content      = $this->get('FileContentParsed');
+		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
+		$this->ftp          = $this->get('FTPcredentials');
+		$this->display();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
 	protected function setToolBarEditcss()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -231,39 +264,6 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::apply('applycss');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('savecss');
-		JToolBarHelper::spacer();
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarChooseless()
-	{
-
-		JToolBarHelper::spacer();
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		JToolBarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
-		JToolBarHelper::spacer();
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarEditless()
-	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		JToolBarHelper::spacer();
-		JToolBarHelper::apply('applyless');
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('saveless');
 		JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();

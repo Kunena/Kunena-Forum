@@ -59,46 +59,6 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param   null|int $id
-	 * @param   mixed    $user
-	 * @param   bool     $reload
-	 *
-	 * @return KunenaForumCategoryUser
-	 * @since Kunena
-	 */
-	static public function getInstance($id = null, $user = null, $reload = false)
-	{
-		return KunenaForumCategoryUserHelper::get($id, $user, $reload);
-	}
-
-	/**
-	 * @return KunenaForumCategory
-	 * @since Kunena
-	 */
-	public function getCategory()
-	{
-		return KunenaForumCategoryHelper::get($this->category_id);
-	}
-
-	/**
-	 * @param   null|bool $exists True/false will change the state of the object.
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-	/**
 	 * Method to get the categories table object
 	 *
 	 * This function uses a static variable to store the table name of the user table to
@@ -127,6 +87,28 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
+	 * @param   null|int $id
+	 * @param   mixed    $user
+	 * @param   bool     $reload
+	 *
+	 * @return KunenaForumCategoryUser
+	 * @since Kunena
+	 */
+	static public function getInstance($id = null, $user = null, $reload = false)
+	{
+		return KunenaForumCategoryUserHelper::get($id, $user, $reload);
+	}
+
+	/**
+	 * @return KunenaForumCategory
+	 * @since Kunena
+	 */
+	public function getCategory()
+	{
+		return KunenaForumCategoryHelper::get($this->category_id);
+	}
+
+	/**
 	 * @param   array $data
 	 * @param   array $ignore
 	 *
@@ -136,41 +118,6 @@ class KunenaForumCategoryUser extends JObject
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
-	}
-
-	/**
-	 * Method to load a KunenaForumCategoryUser object by id.
-	 *
-	 * @param   null|int $category_id The category id to be loaded.
-	 * @param   mixed    $user        The user to be loaded.
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function load($category_id = null, $user = null)
-	{
-		if ($category_id === null)
-		{
-			$category_id = $this->category_id;
-		}
-
-		if ($user === null && $this->user_id !== null)
-		{
-			$user = $this->user_id;
-		}
-
-		$user = KunenaUserHelper::get($user);
-
-		// Create the table object
-		$table = $this->getTable();
-
-		// Load the KunenaTable object based on id
-		$this->_exists = $table->load(array('user_id' => $user->userid, 'category_id' => $category_id));
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-
-		return $this->_exists;
 	}
 
 	/**
@@ -221,6 +168,41 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
+	 * Method to load a KunenaForumCategoryUser object by id.
+	 *
+	 * @param   null|int $category_id The category id to be loaded.
+	 * @param   mixed    $user        The user to be loaded.
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function load($category_id = null, $user = null)
+	{
+		if ($category_id === null)
+		{
+			$category_id = $this->category_id;
+		}
+
+		if ($user === null && $this->user_id !== null)
+		{
+			$user = $this->user_id;
+		}
+
+		$user = KunenaUserHelper::get($user);
+
+		// Create the table object
+		$table = $this->getTable();
+
+		// Load the KunenaTable object based on id
+		$this->_exists = $table->load(array('user_id' => $user->userid, 'category_id' => $category_id));
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		return $this->_exists;
+	}
+
+	/**
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
 	 * @return bool    True on success
@@ -246,5 +228,23 @@ class KunenaForumCategoryUser extends JObject
 		$this->_exists = false;
 
 		return $result;
+	}
+
+	/**
+	 * @param   null|bool $exists True/false will change the state of the object.
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	function exists($exists = null)
+	{
+		$return = $this->_exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
+		return $return;
 	}
 }

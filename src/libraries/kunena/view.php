@@ -274,6 +274,50 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
+	 * Method to display title in page
+	 *
+	 * @param   string $title Show the title on the browser
+	 *
+	 * @throws LogicException
+	 * @since Kunena
+	 */
+	public function setTitle($title)
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+
+		if (!$this->state->get('embedded'))
+		{
+			// Check for empty title and add site name if param is set
+			$title = strip_tags($title);
+
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
+			{
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+			}
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
+			{
+				if ($this->config->board_title == $this->app->get('sitename'))
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
+				}
+				else
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				}
+			}
+			else
+			{
+				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
+			}
+
+			$this->document->setTitle($title);
+		}
+	}
+
+	/**
 	 * @param   array $errors
 	 *
 	 * @since Kunena
@@ -302,19 +346,6 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * @param $position
 	 *
-	 * @return integer
-	 * @since Kunena
-	 */
-	public function isModulePosition($position)
-	{
-		$document = \Joomla\CMS\Factory::getDocument();
-
-		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
-	}
-
-	/**
-	 * @param $position
-	 *
 	 * @return string
 	 * @since Kunena
 	 */
@@ -327,12 +358,25 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			$renderer = $document->loadRenderer('modules');
 			$options  = array('style' => 'xhtml');
-			$html .= '<div class="' . $position . '">';
-			$html .= $renderer->render($position, $options, null);
-			$html .= '</div>';
+			$html     .= '<div class="' . $position . '">';
+			$html     .= $renderer->render($position, $options, null);
+			$html     .= '</div>';
 		}
 
 		return $html;
+	}
+
+	/**
+	 * @param $position
+	 *
+	 * @return integer
+	 * @since Kunena
+	 */
+	public function isModulePosition($position)
+	{
+		$document = \Joomla\CMS\Factory::getDocument();
+
+		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
 
 	/**
@@ -649,49 +693,5 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
-	}
-
-	/**
-	 * Method to display title in page
-	 *
-	 * @param   string   $title Show the title on the browser
-	 *
-	 * @throws LogicException
-	 * @since Kunena
-	 */
-	public function setTitle($title)
-	{
-		if ($this->inLayout)
-		{
-			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-		}
-
-		if (!$this->state->get('embedded'))
-		{
-			// Check for empty title and add site name if param is set
-			$title = strip_tags($title);
-
-			if ($this->app->get('sitename_pagetitles', 0) == 1)
-			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
-			}
-			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
-			{
-				if ($this->config->board_title == $this->app->get('sitename'))
-				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
-				}
-				else
-				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
-				}
-			}
-			else
-			{
-				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
-			}
-
-			$this->document->setTitle($title);
-		}
 	}
 }

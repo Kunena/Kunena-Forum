@@ -428,6 +428,43 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Set proper response for both AJAX and traditional calls.
+	 *
+	 * @param   $response
+	 * @param   $ajax
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 */
+	protected function setResponse($response, $ajax)
+	{
+		if (!$ajax)
+		{
+			if (!empty($response['error']))
+			{
+				$this->setMessage($response['error'], 'error');
+			}
+
+			if (!empty($response['href']))
+			{
+				$this->setRedirect($response['href']);
+			}
+		}
+		else
+		{
+			while (@ob_end_clean())
+			{
+			}
+
+			header('Content-type: application/json');
+			echo json_encode($response);
+			flush();
+			jexit();
+		}
+	}
+
+	/**
 	 * Perform recount on statistics in smaller chunks.
 	 *
 	 * @return void
@@ -477,7 +514,7 @@ class KunenaAdminControllerTools extends KunenaController
 							KunenaAttachmentHelper::cleanup();
 							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
-							$msg = JText::sprintf(
+							$msg          = JText::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
@@ -489,7 +526,7 @@ class KunenaAdminControllerTools extends KunenaController
 							// Update user's topic statistics
 							KunenaForumTopicUserHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
-							$msg = JText::sprintf(
+							$msg          = JText::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
@@ -590,40 +627,38 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 * Set proper response for both AJAX and traditional calls.
+	 * Check timeout
 	 *
-	 * @param   $response
-	 * @param   $ajax
+	 * @param   bool $stop stop
 	 *
-	 * @return void
+	 * @return boolean
 	 *
 	 * @since    2.0
 	 */
-	protected function setResponse($response, $ajax)
+	protected function checkTimeout($stop = false)
 	{
-		if (!$ajax)
-		{
-			if (!empty($response['error']))
-			{
-				$this->setMessage($response['error'], 'error');
-			}
+		static $start = null;
 
-			if (!empty($response['href']))
-			{
-				$this->setRedirect($response['href']);
-			}
-		}
-		else
+		if ($stop)
 		{
-			while (@ob_end_clean())
-			{
-			}
-
-			header('Content-type: application/json');
-			echo json_encode($response);
-			flush();
-			jexit();
+			$start = 0;
 		}
+
+		$time = microtime(true);
+
+		if ($start === null)
+		{
+			$start = $time;
+
+			return false;
+		}
+
+		if ($time - $start < 14)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -788,41 +823,6 @@ class KunenaAdminControllerTools extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
-	}
-
-	/**
-	 * Check timeout
-	 *
-	 * @param   bool $stop stop
-	 *
-	 * @return boolean
-	 *
-	 * @since    2.0
-	 */
-	protected function checkTimeout($stop = false)
-	{
-		static $start = null;
-
-		if ($stop)
-		{
-			$start = 0;
-		}
-
-		$time = microtime(true);
-
-		if ($start === null)
-		{
-			$start = $time;
-
-			return false;
-		}
-
-		if ($time - $start < 14)
-		{
-			return false;
-		}
-
-		return true;
 	}
 
 	/**

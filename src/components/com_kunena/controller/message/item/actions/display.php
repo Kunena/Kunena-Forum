@@ -80,7 +80,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		$this->quickreply = KunenaConfig::getInstance()->quickreply;
-		
+
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
@@ -325,7 +325,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 				echo KunenaLayout::factory('Widget/Button')
 					->setProperties(array('url' => '#report' . $mesid . '', 'name' => 'report', 'scope' => 'message',
-					                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
+										  'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
 						'modal' => 'modal', 'pullright' => 'pullright')
 					);
 			}
@@ -595,7 +595,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                      'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon)
+								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon)
 			);
 	}
 }

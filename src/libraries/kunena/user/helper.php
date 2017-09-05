@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 KunenaUserHelper::initialize();
+
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -93,9 +94,43 @@ abstract class KunenaUserHelper
 	}
 
 	/**
+	 * @param   int    $id
+	 * @param   string $name
+	 *
+	 * @return KunenaUser
+	 * @since Kunena
+	 */
+	public static function getAuthor($id, $name)
+	{
+		$id = (int) $id;
+
+		if ($id && !empty(self::$_instances [$id]))
+		{
+			return self::$_instances [$id];
+		}
+
+		if (!empty(self::$_instances_name [$name]))
+		{
+			return self::$_instances_name [$name];
+		}
+
+		$user = self::get($id);
+
+		if (!$user->exists())
+		{
+			$user->username = $user->name = $name;
+		}
+
+		self::$_instances_name [$name] = $user;
+
+		return $user;
+	}
+
+	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param   mixed $identifier The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param   mixed $identifier The user to load - Can be an integer or string - If string, it is converted to ID
+	 *                            automatically.
 	 * @param   bool  $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
@@ -157,48 +192,6 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int    $id
-	 * @param   string $name
-	 *
-	 * @return KunenaUser
-	 * @since Kunena
-	 */
-	public static function getAuthor($id, $name)
-	{
-		$id = (int) $id;
-
-		if ($id && !empty(self::$_instances [$id]))
-		{
-			return self::$_instances [$id];
-		}
-
-		if (!empty(self::$_instances_name [$name]))
-		{
-			return self::$_instances_name [$name];
-		}
-
-		$user = self::get($id);
-
-		if (!$user->exists())
-		{
-			$user->username = $user->name = $name;
-		}
-
-		self::$_instances_name [$name] = $user;
-
-		return $user;
-	}
-
-	/**
-	 * @return KunenaUser
-	 * @since Kunena
-	 */
-	public static function getMyself()
-	{
-		return self::$_me;
-	}
-
-	/**
 	 * @param   array $userids
 	 *
 	 * @return array
@@ -224,10 +217,10 @@ abstract class KunenaUserHelper
 		{
 			$userlist = implode(',', $e_userids);
 
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db = \Joomla\CMS\Factory::getDBO();
 
-			$query  = $db->getQuery(true);
-			$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
+			$query = $db->getQuery(true);
+			$query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
 				->from($db->quoteName('#__users') . 'AS u')
 				->leftJoin($db->quoteName('#__kunena_users') . ' AS ku ON u.id = ku.userid')
 				->where('u.id IN (' . $userlist . ')');
@@ -312,7 +305,7 @@ abstract class KunenaUserHelper
 				$where = '1';
 			}
 
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('COUNT(*), MAX(id)')
 				->from($db->quoteName('#__users'))
 				->where($where);
@@ -370,55 +363,6 @@ abstract class KunenaUserHelper
 		}
 
 		return self::$_topposters;
-	}
-
-	/**
-	 * Get the list of users online by giving list of userid
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	public static function getOnlineUsers()
-	{
-		if (self::$_online === null)
-		{
-			$app    = \Joomla\CMS\Factory::getApplication();
-			$config = KunenaFactory::getConfig();
-			$db     = \Joomla\CMS\Factory::getDbo();
-			$query  = $db->getQuery(true);
-			$query
-				->select('userid, MAX(time) AS time')
-				->from('#__session')
-				->where('client_id=0 AND userid>0')
-				->group('userid')
-				->order('time DESC');
-
-			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
-			{
-				// Calculate x minutes by using Kunena setting.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - $config->show_session_starttime;
-				$query->where('time > ' . $time);
-			}
-			elseif ($config->show_session_type > 0)
-			{
-				// Calculate Joomla session expiration point.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
-				$query->where('time > ' . $time);
-			}
-
-			$db->setQuery($query);
-
-			try
-			{
-				self::$_online = (array) $db->loadObjectList('userid');
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		return self::$_online;
 	}
 
 	/**
@@ -547,6 +491,55 @@ abstract class KunenaUserHelper
 	}
 
 	/**
+	 * Get the list of users online by giving list of userid
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	public static function getOnlineUsers()
+	{
+		if (self::$_online === null)
+		{
+			$app    = \Joomla\CMS\Factory::getApplication();
+			$config = KunenaFactory::getConfig();
+			$db     = \Joomla\CMS\Factory::getDbo();
+			$query  = $db->getQuery(true);
+			$query
+				->select('userid, MAX(time) AS time')
+				->from('#__session')
+				->where('client_id=0 AND userid>0')
+				->group('userid')
+				->order('time DESC');
+
+			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
+			{
+				// Calculate x minutes by using Kunena setting.
+				$time = \Joomla\CMS\Factory::getDate()->toUnix() - $config->show_session_starttime;
+				$query->where('time > ' . $time);
+			}
+			elseif ($config->show_session_type > 0)
+			{
+				// Calculate Joomla session expiration point.
+				$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
+				$query->where('time > ' . $time);
+			}
+
+			$db->setQuery($query);
+
+			try
+			{
+				self::$_online = (array) $db->loadObjectList('userid');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+		}
+
+		return self::$_online;
+	}
+
+	/**
 	 * Returns the status of a user. If as session exists, we can return the type of status the user set.
 	 *
 	 * @param   mixed $user The user object to get the status
@@ -588,6 +581,15 @@ abstract class KunenaUserHelper
 		}
 
 		return $user->status;
+	}
+
+	/**
+	 * @return KunenaUser
+	 * @since Kunena
+	 */
+	public static function getMyself()
+	{
+		return self::$_me;
 	}
 
 	/**

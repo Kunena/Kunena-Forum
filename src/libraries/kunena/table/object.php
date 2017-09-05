@@ -114,8 +114,8 @@ abstract class KunenaTableObject
 			// Build storage key for the object.
 			foreach (static::$tbl_keys as $keyName)
 			{
-				$keyValue = isset($this->$keyName) ? $this->$keyName : null;
-				$exists |= ($keyValue !== null);
+				$keyValue           = isset($this->$keyName) ? $this->$keyName : null;
+				$exists             |= ($keyValue !== null);
 				$tbl_keys[$keyName] = $keyValue;
 			}
 
@@ -167,35 +167,6 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to get the JDatabaseDriver object.
-	 *
-	 * @return  JDatabaseDriver  The internal database driver object.
-	 *
-	 * @since  K4.0
-	 */
-	public static function getDbo()
-	{
-		return static::$db;
-	}
-
-	/**
-	 * Method to set the JDatabaseDriver object.
-	 *
-	 * @param   JDatabaseDriver $db A JDatabaseDriver object to be used by the table object.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/setDbo
-	 * @since   K4.0
-	 */
-	public static function setDbo(JDatabaseDriver $db)
-	{
-		static::$db = $db;
-
-		return true;
-	}
-
-	/**
 	 * Get the database columns.
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
@@ -220,15 +191,6 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @return mixed|string
-	 * @since Kunena
-	 */
-	public function getId()
-	{
-		return $this->_key;
-	}
-
-	/**
 	 * Override this function if you need to initialise object right after creating it.
 	 *
 	 * Can be used for example if the database fields need to be converted to array or \Joomla\Registry\Registry.
@@ -240,221 +202,6 @@ abstract class KunenaTableObject
 	protected function initialise($sqlFetch = false)
 	{
 
-	}
-
-	/**
-	 * Create almost identical copy of the object, but clean up the key fields.
-	 *
-	 * New object will also return false on $new->exists() until it gets saved.
-	 * @since  K4.0
-	 */
-	public function __clone()
-	{
-		foreach (static::$tbl_keys as $keyName)
-		{
-			$this->$keyName = null;
-		}
-
-		$this->_exists = false;
-	}
-
-	/**
-	 * Returns the global instance to the object.
-	 *
-	 * Note that using array of fields will always make a query to the database, but it's very useful feature if you want to search
-	 * one item by using arbitrary set of matching fields. If there are more than one matching object, first one gets returned.
-	 *
-	 * @param   int|array $keys An optional primary key value to load the object by, or an array of fields to match.
-	 *
-	 * @return  KunenaDatabaseObject
-	 * @throw   RuntimeException
-	 * @since   K4.0
-	 */
-	static public function getInstance($keys)
-	{
-		$k = json_encode(self::resolveKeys($keys));
-
-		// FIXME:
-		$k = (int) $keys;
-
-		// If we are creating or loading a new item or we load instance by alternative keys,
-		// we need to create a new object.
-		if (!isset(static::$instances[$k]))
-		{
-			$c        = get_called_class();
-			$instance = new $c($keys);
-
-			// @var KunenaTableObject $instance
-
-			if (!$instance->exists())
-			{
-				return $instance;
-			}
-
-			// Instance exists: make sure that we return the global instance.
-			$k = $instance->_key;
-		}
-
-		// Return global instance from the identifier.
-		$instance = static::$instances[$k];
-
-		// But before that, check that we have valid item.
-		if ($k != $instance->_key)
-		{
-			throw new RuntimeException(get_called_class() . ": Identifier doesn't match ({$k} != {$instance->_key})");
-		}
-
-		return $instance;
-	}
-
-	/**
-	 * For internal use only.
-	 * @return array
-	 * @since Kunena
-	 */
-	static public function &getInstances()
-	{
-		return static::$instances;
-	}
-
-	/**
-	 * Removes all or selected instances from the object cache.
-	 *
-	 * @param   null|int|array $ids
-	 *
-	 * @since  K4.0
-	 */
-	static public function freeInstances($ids = null)
-	{
-		if (!isset(static::$instances))
-		{
-			return;
-		}
-
-		if ($ids === null)
-		{
-			$ids = array_keys(static::$instances);
-		}
-
-		$ids = (array) $ids;
-
-		foreach ($ids as $id)
-		{
-			unset(static::$instances[$id]);
-		}
-	}
-
-	/**
-	 * Returns true if the object exists in the database.
-	 *
-	 * @param   boolean $exists Internal parameter to change state.
-	 *
-	 * @return  boolean  True if object exists in database.
-	 * @since  K4.0
-	 */
-	public function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-
-	/**
-	 * Method to reset class properties to the defaults set in the class
-	 * definition. It will ignore the primary key.
-	 *
-	 * If you want to reset other properties, you need to override the function.
-	 *
-	 * @return  KunenaTableObject
-	 * @since  K4.0
-	 */
-	public function reset()
-	{
-		// Get the default values for the class from the table.
-		foreach (static::$tbl_fields as $k => $v)
-		{
-			// If the property is not the primary key.
-			if (!in_array($k, static::$tbl_keys))
-			{
-				$this->$k = $v->Default;
-			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Returns an associative array of object properties.
-	 *
-	 * @return array|Closure
-	 *
-	 * @since  K4.0
-	 */
-	public function getProperties()
-	{
-		// Use closure to return public variables only.
-		$self = $this;
-
-		return function () use ($self)
-		{
-
-			return get_object_vars($self);
-		};
-	}
-
-	/**
-	 * Method to bind an associative array or object to the \Joomla\CMS\Table\Table instance.This
-	 * method only binds properties that are publicly accessible and optionally
-	 * takes an array of properties to ignore when binding.
-	 *
-	 * @param   mixed $src    An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
-	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
-	 *
-	 * @return  KunenaTableObject
-	 *
-	 * @since  K4.0
-	 * @throws  InvalidArgumentException
-	 */
-	public function bind($src, $ignore = array())
-	{
-		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src))
-		{
-			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
-		}
-
-		// If the source value is an object, get its accessible properties.
-		if (is_object($src))
-		{
-			$src = get_object_vars($src);
-		}
-
-		// If the ignore value is a string, explode it over spaces.
-		if (!is_array($ignore))
-		{
-			$ignore = explode(' ', $ignore);
-		}
-
-		// Bind the source value, excluding the ignored fields.
-		foreach ($this->getProperties() as $k => $v)
-		{
-			// Only process fields not in the ignore array.
-			if (!in_array($k, $ignore))
-			{
-				if (isset($src[$k]))
-				{
-					$this->$k = $src[$k];
-				}
-			}
-		}
-
-		return $this;
 	}
 
 	/**
@@ -520,54 +267,389 @@ abstract class KunenaTableObject
 		return $this->_exists = $this->bind($row);
 	}
 
+	/**
+	 * Returns all keys and their values as an array.
+	 *
+	 * @param   array|string $fields
+	 * @param   bool         $throw
+	 *
+	 * @return array
+	 * @since  K4.0
+	 */
+	protected function getKeyValues($fields = null, $throw = true)
+	{
+		// FIXME: bug...
+		static $fieldNames = null;
+
+		$tableKeys = static::$tbl_keys;
+
+		$keys = array();
+
+		if (is_null($fields))
+		{
+			// No fields were given as parameter: use table instance.
+			foreach ($tableKeys as $i => $keyName)
+			{
+				$keyValue       = isset($this->$keyName) ? $this->$keyName : null;
+				$keys[$keyName] = $keyValue;
+
+				// If null primary keys aren't allowed
+				if ($throw && is_null($keyValue))
+				{
+					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', get_class($this), $keyName), 0);
+				}
+			}
+		}
+		else
+		{
+			if (is_null($fieldNames))
+			{
+				// Lazy initialize fields list.
+				$fieldNames = static::getFields();
+			}
+
+			if (!is_array($fields))
+			{
+				$fields = (array) $fields;
+			}
+
+			foreach ($fields as $keyName => $keyValue)
+			{
+				// Check if key in given numeric location exists.
+				if (is_numeric($keyName))
+				{
+					if (!isset($tableKeys[$keyName]))
+					{
+						throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', get_class($this), $keyName), 1);
+					}
+
+					// Find out key name in given numeric location and use it.
+					$keyName = $tableKeys[$keyName];
+				}
+
+				$keys[$keyName] = $keyValue;
+
+				// Verify that the used key exists in the table.
+				if (!in_array($keyName, $fieldNames))
+				{
+					throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_class($this), $keyName), 2);
+				}
+			}
+		}
+
+		// Make sure user didn't pass empty array.
+		if (empty($keys))
+		{
+			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_class($this)), 3);
+		}
+
+		return $keys;
+	}
 
 	/**
-	 * Method to perform sanity checks on the \Joomla\CMS\Table\TableObject instance properties to ensure
-	 * they are safe to store in the database.  Child classes should override this
-	 * method to make sure the data they are storing in the database is safe and
-	 * as expected before storage.
+	 * Method to reset class properties to the defaults set in the class
+	 * definition. It will ignore the primary key.
 	 *
-	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 * If you want to reset other properties, you need to override the function.
+	 *
+	 * @return  KunenaTableObject
+	 * @since  K4.0
+	 */
+	public function reset()
+	{
+		// Get the default values for the class from the table.
+		foreach (static::$tbl_fields as $k => $v)
+		{
+			// If the property is not the primary key.
+			if (!in_array($k, static::$tbl_keys))
+			{
+				$this->$k = $v->Default;
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Method to bind an associative array or object to the \Joomla\CMS\Table\Table instance.This
+	 * method only binds properties that are publicly accessible and optionally
+	 * takes an array of properties to ignore when binding.
+	 *
+	 * @param   mixed $src    An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
+	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
+	 *
+	 * @return  KunenaTableObject
+	 *
+	 * @since  K4.0
+	 * @throws  InvalidArgumentException
+	 */
+	public function bind($src, $ignore = array())
+	{
+		// If the source value is not an array or object return false.
+		if (!is_object($src) && !is_array($src))
+		{
+			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
+		}
+
+		// If the source value is an object, get its accessible properties.
+		if (is_object($src))
+		{
+			$src = get_object_vars($src);
+		}
+
+		// If the ignore value is a string, explode it over spaces.
+		if (!is_array($ignore))
+		{
+			$ignore = explode(' ', $ignore);
+		}
+
+		// Bind the source value, excluding the ignored fields.
+		foreach ($this->getProperties() as $k => $v)
+		{
+			// Only process fields not in the ignore array.
+			if (!in_array($k, $ignore))
+			{
+				if (isset($src[$k]))
+				{
+					$this->$k = $src[$k];
+				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Returns an associative array of object properties.
+	 *
+	 * @return array|Closure
 	 *
 	 * @since  K4.0
 	 */
-	public function check()
+	public function getProperties()
 	{
+		// Use closure to return public variables only.
+		$self = $this;
+
+		return function () use ($self) {
+
+			return get_object_vars($self);
+		};
+	}
+
+	/**
+	 * Method to get the JDatabaseDriver object.
+	 *
+	 * @return  JDatabaseDriver  The internal database driver object.
+	 *
+	 * @since  K4.0
+	 */
+	public static function getDbo()
+	{
+		return static::$db;
+	}
+
+	/**
+	 * Method to set the JDatabaseDriver object.
+	 *
+	 * @param   JDatabaseDriver $db A JDatabaseDriver object to be used by the table object.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @link    http://docs.joomla.org/\Joomla\CMS\Table\Table/setDbo
+	 * @since   K4.0
+	 */
+	public static function setDbo(JDatabaseDriver $db)
+	{
+		static::$db = $db;
+
 		return true;
 	}
 
 	/**
-	 * @param   bool $updateNulls
+	 * Returns the global instance to the object.
 	 *
-	 * @return boolean
+	 * Note that using array of fields will always make a query to the database, but it's very useful feature if you
+	 * want to search one item by using arbitrary set of matching fields. If there are more than one matching object,
+	 * first one gets returned.
+	 *
+	 * @param   int|array $keys An optional primary key value to load the object by, or an array of fields to match.
+	 *
+	 * @return  KunenaDatabaseObject
+	 * @throw   RuntimeException
+	 * @since   K4.0
+	 */
+	static public function getInstance($keys)
+	{
+		$k = json_encode(self::resolveKeys($keys));
+
+		// FIXME:
+		$k = (int) $keys;
+
+		// If we are creating or loading a new item or we load instance by alternative keys,
+		// we need to create a new object.
+		if (!isset(static::$instances[$k]))
+		{
+			$c        = get_called_class();
+			$instance = new $c($keys);
+
+			// @var KunenaTableObject $instance
+
+			if (!$instance->exists())
+			{
+				return $instance;
+			}
+
+			// Instance exists: make sure that we return the global instance.
+			$k = $instance->_key;
+		}
+
+		// Return global instance from the identifier.
+		$instance = static::$instances[$k];
+
+		// But before that, check that we have valid item.
+		if ($k != $instance->_key)
+		{
+			throw new RuntimeException(get_called_class() . ": Identifier doesn't match ({$k} != {$instance->_key})");
+		}
+
+		return $instance;
+	}
+
+	/**
+	 * Returns all keys and their values as an array.
+	 *
+	 * @param   array|string $fields
+	 *
+	 * @return array
+	 * @since  K4.0
+	 * @throws UnexpectedValueException
+	 */
+	static protected function resolveKeys($fields)
+	{
+		// First run: Initialise the table properties.
+		if (is_null(static::$tbl_fields))
+		{
+			static::getFields();
+		}
+
+		$keys = array();
+
+		if (!is_array($fields))
+		{
+			$fields = (array) $fields;
+		}
+
+		foreach ($fields as $keyName => $keyValue)
+		{
+			// Check if key in given numeric location exists.
+			if (is_numeric($keyName))
+			{
+				if (!isset(static::$tbl_keys[$keyName]))
+				{
+					throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', get_called_class(), $keyName), 1);
+				}
+
+				// Find out key name in given numeric location and use it.
+				$keyName = static::$tbl_keys[$keyName];
+			}
+
+			$keys[$keyName] = $keyValue;
+
+			// Verify that the used key exists in the table.
+			if (!isset(static::$tbl_fields[$keyName]))
+			{
+				throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_called_class(), $keyName), 2);
+			}
+		}
+
+		// Make sure user didn't pass empty array.
+		if (empty($keys))
+		{
+			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_called_class()), 3);
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * For internal use only.
+	 * @return array
 	 * @since Kunena
 	 */
-	public function store($updateNulls = false)
+	static public function &getInstances()
 	{
-		if ($this->exists())
-		{
-			$ret = static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
-		}
-		else
-		{
-			$ret = static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
-		}
+		return static::$instances;
+	}
 
-		if (static::$locked)
+	/**
+	 * Removes all or selected instances from the object cache.
+	 *
+	 * @param   null|int|array $ids
+	 *
+	 * @since  K4.0
+	 */
+	static public function freeInstances($ids = null)
+	{
+		if (!isset(static::$instances))
 		{
-			$this->unlock();
-		}
-
-		if (!$ret)
-		{
-			$this->setError(get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
-
-			return false;
+			return;
 		}
 
-		$this->_exists = true;
+		if ($ids === null)
+		{
+			$ids = array_keys(static::$instances);
+		}
 
-		return true;
+		$ids = (array) $ids;
+
+		foreach ($ids as $id)
+		{
+			unset(static::$instances[$id]);
+		}
+	}
+
+	/**
+	 * @internal
+	 * @since Kunena
+	 */
+	static public function getQuery()
+	{
+		$db    = static::$db;
+		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
+
+		return $query;
+	}
+
+	/**
+	 * @internal
+	 *
+	 * @param   JDatabaseQuery $query
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	static public function &loadInstances(JDatabaseQuery $query)
+	{
+		$db = \Joomla\CMS\Factory::getDbo();
+		$db->setQuery($query);
+		$items = (array) $db->loadObjectList('id', get_called_class());
+
+		if (is_array(static::$instances))
+		{
+			static::$instances += $items;
+		}
+
+		return $items;
+	}
+
+	/**
+	 * @return mixed|string
+	 * @since Kunena
+	 */
+	public function getId()
+	{
+		return $this->_key;
 	}
 
 	/**
@@ -628,6 +710,106 @@ abstract class KunenaTableObject
 		return true;
 	}
 	*/
+
+	/**
+	 * Create almost identical copy of the object, but clean up the key fields.
+	 *
+	 * New object will also return false on $new->exists() until it gets saved.
+	 * @since  K4.0
+	 */
+	public function __clone()
+	{
+		foreach (static::$tbl_keys as $keyName)
+		{
+			$this->$keyName = null;
+		}
+
+		$this->_exists = false;
+	}
+
+	/**
+	 * Method to perform sanity checks on the \Joomla\CMS\Table\TableObject instance properties to ensure
+	 * they are safe to store in the database.  Child classes should override this
+	 * method to make sure the data they are storing in the database is safe and
+	 * as expected before storage.
+	 *
+	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 *
+	 * @since  K4.0
+	 */
+	public function check()
+	{
+		return true;
+	}
+
+	/**
+	 * @param   bool $updateNulls
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function store($updateNulls = false)
+	{
+		if ($this->exists())
+		{
+			$ret = static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
+		}
+		else
+		{
+			$ret = static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
+		}
+
+		if (static::$locked)
+		{
+			$this->unlock();
+		}
+
+		if (!$ret)
+		{
+			$this->setError(get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
+
+			return false;
+		}
+
+		$this->_exists = true;
+
+		return true;
+	}
+
+	/**
+	 * Returns true if the object exists in the database.
+	 *
+	 * @param   boolean $exists Internal parameter to change state.
+	 *
+	 * @return  boolean  True if object exists in database.
+	 * @since  K4.0
+	 */
+	public function exists($exists = null)
+	{
+		$return = $this->_exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Method to unlock the database table for writing.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since  K4.0
+	 */
+	protected function unlock()
+	{
+		static::$db->unlockTables();
+		static::$_locked = false;
+
+		return true;
+	}
 
 	/**
 	 * Method to delete a row from the database table by primary key value.
@@ -768,7 +950,8 @@ abstract class KunenaTableObject
 	 *
 	 * @return bool True on success.
 	 *
-	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is used.
+	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is
+	 *           used.
 	 *
 	 * @since    K4.0
 	 */
@@ -855,190 +1038,6 @@ abstract class KunenaTableObject
 		static::$_locked = true;
 
 		return true;
-	}
-
-	/**
-	 * Method to unlock the database table for writing.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @since  K4.0
-	 */
-	protected function unlock()
-	{
-		static::$db->unlockTables();
-		static::$_locked = false;
-
-		return true;
-	}
-
-	/**
-	 * @internal
-	 * @since Kunena
-	 */
-	static public function getQuery()
-	{
-		$db    = static::$db;
-		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
-
-		return $query;
-	}
-
-	/**
-	 * @internal
-	 *
-	 * @param   JDatabaseQuery $query
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	static public function &loadInstances(JDatabaseQuery $query)
-	{
-		$db = \Joomla\CMS\Factory::getDbo();
-		$db->setQuery($query);
-		$items = (array) $db->loadObjectList('id', get_called_class());
-
-		if (is_array(static::$instances))
-		{
-			static::$instances += $items;
-		}
-
-		return $items;
-	}
-
-	/**
-	 * Returns all keys and their values as an array.
-	 *
-	 * @param   array|string $fields
-	 * @param   bool         $throw
-	 *
-	 * @return array
-	 * @since  K4.0
-	 */
-	protected function getKeyValues($fields = null, $throw = true)
-	{
-		// FIXME: bug...
-		static $fieldNames = null;
-
-		$tableKeys = static::$tbl_keys;
-
-		$keys = array();
-
-		if (is_null($fields))
-		{
-			// No fields were given as parameter: use table instance.
-			foreach ($tableKeys as $i => $keyName)
-			{
-				$keyValue       = isset($this->$keyName) ? $this->$keyName : null;
-				$keys[$keyName] = $keyValue;
-
-				// If null primary keys aren't allowed
-				if ($throw && is_null($keyValue))
-				{
-					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', get_class($this), $keyName), 0);
-				}
-			}
-		}
-		else
-		{
-			if (is_null($fieldNames))
-			{
-				// Lazy initialize fields list.
-				$fieldNames = static::getFields();
-			}
-
-			if (!is_array($fields))
-			{
-				$fields = (array) $fields;
-			}
-
-			foreach ($fields as $keyName => $keyValue)
-			{
-				// Check if key in given numeric location exists.
-				if (is_numeric($keyName))
-				{
-					if (!isset($tableKeys[$keyName]))
-					{
-						throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', get_class($this), $keyName), 1);
-					}
-
-					// Find out key name in given numeric location and use it.
-					$keyName = $tableKeys[$keyName];
-				}
-
-				$keys[$keyName] = $keyValue;
-
-				// Verify that the used key exists in the table.
-				if (!in_array($keyName, $fieldNames))
-				{
-					throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_class($this), $keyName), 2);
-				}
-			}
-		}
-
-		// Make sure user didn't pass empty array.
-		if (empty($keys))
-		{
-			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_class($this)), 3);
-		}
-
-		return $keys;
-	}
-
-	/**
-	 * Returns all keys and their values as an array.
-	 *
-	 * @param   array|string $fields
-	 *
-	 * @return array
-	 * @since  K4.0
-	 * @throws UnexpectedValueException
-	 */
-	static protected function resolveKeys($fields)
-	{
-		// First run: Initialise the table properties.
-		if (is_null(static::$tbl_fields))
-		{
-			static::getFields();
-		}
-
-		$keys = array();
-
-		if (!is_array($fields))
-		{
-			$fields = (array) $fields;
-		}
-
-		foreach ($fields as $keyName => $keyValue)
-		{
-			// Check if key in given numeric location exists.
-			if (is_numeric($keyName))
-			{
-				if (!isset(static::$tbl_keys[$keyName]))
-				{
-					throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', get_called_class(), $keyName), 1);
-				}
-
-				// Find out key name in given numeric location and use it.
-				$keyName = static::$tbl_keys[$keyName];
-			}
-
-			$keys[$keyName] = $keyValue;
-
-			// Verify that the used key exists in the table.
-			if (!isset(static::$tbl_fields[$keyName]))
-			{
-				throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_called_class(), $keyName), 2);
-			}
-		}
-
-		// Make sure user didn't pass empty array.
-		if (empty($keys))
-		{
-			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_called_class()), 3);
-		}
-
-		return $keys;
 	}
 }
 

@@ -25,7 +25,9 @@ $k = 0;
 	<p>
 		<?php echo JText::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
 	</p>
-	<?php foreach ($this->history as $this->message) : ?>
+	<?php foreach ($this->history as $this->message)
+	:
+	?>
 
 		<div class="row-fluid">
 			<div class="span2 center">
@@ -37,7 +39,9 @@ $k = 0;
 						<?php
 						$profile    = KunenaFactory::getUser(intval($this->message->userid));
 						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
-						if ($useravatar) :
+
+						if ($useravatar)
+						:
 							echo $this->message->getAuthor()->getLink($useravatar, null, '', '', null, $this->topic->getcategory()->id);
 						endif;
 						?>
@@ -57,11 +61,16 @@ $k = 0;
 					</div>
 					<?php
 					$attachments = $this->message->getAttachments();
-					if (!empty($attachments)) : ?>
+
+					if (!empty($attachments))
+					:
+	?>
 						<div class="kattach">
 							<h4><?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
 							<ul class="thumbnails">
-								<?php foreach ($attachments as $attachment) : ?>
+								<?php foreach ($attachments as $attachment)
+								:
+	?>
 									<li class="span4">
 										<div class="thumbnail">
 											<?php echo $attachment->getLayout()->render('thumbnail'); ?>

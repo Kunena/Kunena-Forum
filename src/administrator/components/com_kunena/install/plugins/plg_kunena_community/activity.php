@@ -91,6 +91,67 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @return mixed|string|void
+	 * @since Kunena
+	 */
+	private function buildContent($message)
+	{
+		$parent               = new stdClass;
+		$parent->forceSecure  = true;
+		$parent->forceMinimal = true;
+
+		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
+
+		// Add readmore permalink
+		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . JText::_('COM_KUNENA_READMORE') . '</a>';
+
+		return $content;
+	}
+
+	/**
+	 * @param $category
+	 *
+	 * @return integer
+	 * @since Kunena
+	 */
+	protected function getAccess($category)
+	{
+		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
+		$accesstype = $category->accesstype;
+
+		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
+		{
+			// Private
+			return 40;
+		}
+
+		// FIXME: Joomla 2.5 can mix up groups and access levels
+		if (($accesstype == 'joomla.level' && $category->access == 1)
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))
+		)
+		{
+			// Public
+			$access = 0;
+		}
+		elseif (($accesstype == 'joomla.level' && $category->access == 2)
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))
+		)
+		{
+			// Registered
+			$access = 20;
+		}
+		else
+		{
+			// Other groups (=private)
+			$access = 40;
+		}
+
+		return $access;
+	}
+
+	/**
+	 * @param $message
+	 *
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)
@@ -234,66 +295,5 @@ class KunenaActivityCommunity extends KunenaActivity
 
 		// TODO: Need get replied id
 		CActivityStream::remove('kunena.thread.replied', $target->id);
-	}
-
-	/**
-	 * @param $category
-	 *
-	 * @return integer
-	 * @since Kunena
-	 */
-	protected function getAccess($category)
-	{
-		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
-		$accesstype = $category->accesstype;
-
-		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
-		{
-			// Private
-			return 40;
-		}
-
-		// FIXME: Joomla 2.5 can mix up groups and access levels
-		if (($accesstype == 'joomla.level' && $category->access == 1)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))
-		)
-		{
-			// Public
-			$access = 0;
-		}
-		elseif (($accesstype == 'joomla.level' && $category->access == 2)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))
-		)
-		{
-			// Registered
-			$access = 20;
-		}
-		else
-		{
-			// Other groups (=private)
-			$access = 40;
-		}
-
-		return $access;
-	}
-
-	/**
-	 * @param $message
-	 *
-	 * @return mixed|string|void
-	 * @since Kunena
-	 */
-	private function buildContent($message)
-	{
-		$parent               = new stdClass;
-		$parent->forceSecure  = true;
-		$parent->forceMinimal = true;
-
-		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
-
-		// Add readmore permalink
-		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . JText::_('COM_KUNENA_READMORE') . '</a>';
-
-		return $content;
 	}
 }

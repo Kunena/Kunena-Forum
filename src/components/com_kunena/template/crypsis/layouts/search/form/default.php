@@ -30,9 +30,11 @@ $this->addScript('assets/js/search.js');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
 	<input type="hidden" name="task" value="results"/>
-	<?php if ($this->me->exists()) : ?>
+	<?php if ($this->me->exists())
+	:
+	?>
 		<input type="hidden" id="kurl_users" name="kurl_users"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -55,12 +57,14 @@ $this->addScript('assets/js/search.js');
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
 						<input type="text" name="query"
-						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"/>
+							   value="<?php echo $this->escape($this->state->get('searchwords')); ?>"/>
 					</label>
 					<?php $this->displayModeList('mode'); ?>
 				</fieldset>
 
-				<?php if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile) : ?>
+				<?php if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile)
+				:
+	?>
 					<fieldset class="span6">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
@@ -68,7 +72,7 @@ $this->addScript('assets/js/search.js');
 						<label>
 							<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
 							<input id="kusersearch" data-provide="typeahead" type="text" name="searchuser" autocomplete="off"
-							       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"/>
+								   value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"/>
 						</label>
 
 						<label>
@@ -115,7 +119,7 @@ $this->addScript('assets/js/search.js');
 						<div id="searchatdate">
 							<div class="input-append date">
 								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
-								       value="">
+									   value="">
 								<span class="input-group-addon"><?php echo KunenaIcons::calendar(); ?></span>
 							</div>
 						</div>
@@ -129,11 +133,13 @@ $this->addScript('assets/js/search.js');
 								<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
 							<input type="text" name="limitstart"
-							       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
+								   value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							<?php $this->displayLimitlist('limit'); ?>
 						</fieldset>
 
-						<?php if ($this->isModerator) : ?>
+						<?php if ($this->isModerator)
+						:
+	?>
 							<fieldset>
 								<legend>
 									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>

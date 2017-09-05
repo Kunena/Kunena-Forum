@@ -19,66 +19,6 @@ defined('_JEXEC') or die();
 class KunenaLayoutPage extends KunenaLayout
 {
 	/**
-	 * Get main MVC triad from current layout.
-	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
-	 *
-	 * @return  KunenaControllerDisplay
-	 * @since Kunena
-	 */
-	public function request($path, \Joomla\CMS\Input\Input $input = null, $options = null)
-	{
-		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
-			->setPrimary()->set('layout', $this->getLayout());
-	}
-
-	/**
-	 * Execute main MVC triad to get the current layout.
-	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
-	 *
-	 * @return  KunenaLayout
-	 * @since Kunena
-	 */
-	public function execute($path, \Joomla\CMS\Input\Input $input = null, $options = null)
-	{
-		return $this->request($path, $input, $options)->execute();
-	}
-
-	/**
-	 * Add path to breadcrumbs.
-	 *
-	 * @param $text
-	 * @param $uri
-	 * @param $ignore
-	 *
-	 * @return $this
-	 * @since Kunena
-	 */
-	public function addBreadcrumb($text, $uri, $ignore = true)
-	{
-		if ($ignore)
-		{
-			$active = KunenaRoute::$active;
-			$view   = isset($active->query['view']) ? $active->query['view'] : '';
-			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
-
-			if ($active && $active->component == 'com_kunena' && strtolower("{$view}/{$layout}") == strtolower($this->_name))
-			{
-				return $this;
-			}
-		}
-
-		$this->breadcrumb->addItem($text, KunenaRoute::normalize($uri));
-
-		return $this;
-	}
-
-	/**
 	 * Returns layout class.
 	 *
 	 * <code>
@@ -158,5 +98,65 @@ class KunenaLayoutPage extends KunenaLayout
 
 		// Create default layout object.
 		return new KunenaLayoutPage($path, $templatePaths);
+	}
+
+	/**
+	 * Execute main MVC triad to get the current layout.
+	 *
+	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
+	 * @return  KunenaLayout
+	 * @since Kunena
+	 */
+	public function execute($path, \Joomla\CMS\Input\Input $input = null, $options = null)
+	{
+		return $this->request($path, $input, $options)->execute();
+	}
+
+	/**
+	 * Get main MVC triad from current layout.
+	 *
+	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
+	 * @return  KunenaControllerDisplay
+	 * @since Kunena
+	 */
+	public function request($path, \Joomla\CMS\Input\Input $input = null, $options = null)
+	{
+		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
+			->setPrimary()->set('layout', $this->getLayout());
+	}
+
+	/**
+	 * Add path to breadcrumbs.
+	 *
+	 * @param $text
+	 * @param $uri
+	 * @param $ignore
+	 *
+	 * @return $this
+	 * @since Kunena
+	 */
+	public function addBreadcrumb($text, $uri, $ignore = true)
+	{
+		if ($ignore)
+		{
+			$active = KunenaRoute::$active;
+			$view   = isset($active->query['view']) ? $active->query['view'] : '';
+			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
+
+			if ($active && $active->component == 'com_kunena' && strtolower("{$view}/{$layout}") == strtolower($this->_name))
+			{
+				return $this;
+			}
+		}
+
+		$this->breadcrumb->addItem($text, KunenaRoute::normalize($uri));
+
+		return $this;
 	}
 }

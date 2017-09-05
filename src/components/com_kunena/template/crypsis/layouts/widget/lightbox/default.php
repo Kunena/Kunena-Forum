@@ -10,6 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
+if (KunenaConfig::getInstance()->lightbox != 1)
+{
+	return false;
+}
 
 $template = KunenaTemplate::getInstance();
 
@@ -25,4 +29,3 @@ else
 $this->addScript('assets/js/fancybox.js');
 $this->addScript('assets/js/fancybox.settings.js');
 
-?>

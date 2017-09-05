@@ -134,47 +134,6 @@ class KunenaBbcodeEditor
 	}
 
 	/**
-	 * Parses an XML description of the buttons into the internal object representation.
-	 *
-	 * @param   SimpleXMLElement $xml         The XML object to parse
-	 * @param   string           $parseMethod The parse method name to call
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
-	{
-		$elements = array();
-
-		foreach ($xml as $xml_item)
-		{
-			if ($xml_item['config'])
-			{
-				$cfgVariable = (string) $xml_item['config'];
-				$cfgValue    = intval($cfgVariable[0] != '!');
-
-				if (!$cfgValue)
-				{
-					$cfgVariable = substr($cfgVariable, 1);
-				}
-
-				if (KunenaFactory::getConfig()->$cfgVariable != $cfgValue)
-				{
-					continue;
-				}
-			}
-
-			$class = "KunenaBbcodeEditor" . strtoupper($xml_item->getName());
-
-			$item = call_user_func(array($class, $parseMethod), $xml_item);
-
-			$elements[$item->name] = $item;
-		}
-
-		return $elements;
-	}
-
-	/**
 	 * Initialize editor by calling HMVC version
 	 *
 	 *
@@ -223,6 +182,47 @@ class KunenaBbcodeEditor
 
 		// Write the js elements into editor.markitup.js file
 		file_put_contents(KPATH_SITE . '/template/' . $this->template->name . '/assets/js/markitup.editor.js', $js);
+	}
+
+	/**
+	 * Parses an XML description of the buttons into the internal object representation.
+	 *
+	 * @param   SimpleXMLElement $xml         The XML object to parse
+	 * @param   string           $parseMethod The parse method name to call
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
+	{
+		$elements = array();
+
+		foreach ($xml as $xml_item)
+		{
+			if ($xml_item['config'])
+			{
+				$cfgVariable = (string) $xml_item['config'];
+				$cfgValue    = intval($cfgVariable[0] != '!');
+
+				if (!$cfgValue)
+				{
+					$cfgVariable = substr($cfgVariable, 1);
+				}
+
+				if (KunenaFactory::getConfig()->$cfgVariable != $cfgValue)
+				{
+					continue;
+				}
+			}
+
+			$class = "KunenaBbcodeEditor" . strtoupper($xml_item->getName());
+
+			$item = call_user_func(array($class, $parseMethod), $xml_item);
+
+			$elements[$item->name] = $item;
+		}
+
+		return $elements;
 	}
 }
 
@@ -406,6 +406,18 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 		}
 
 		return $obj;
+	}
+
+	/**
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function generateHMVCJs()
+	{
+		$js = $this->editorActionHMVCJs();
+
+		return $js;
 	}
 
 	/**
@@ -733,18 +745,6 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function generateHMVCJs()
-	{
-		$js = $this->editorActionHMVCJs();
-
-		return $js;
-	}
-
-	/**
 	 * Add a new display action. This can be used to show a button specific action area.
 	 *
 	 * @param        $selection
@@ -823,19 +823,6 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 {
 	/**
-	 * Generate JS part for element
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function generateHMVCJs()
-	{
-		$js = "{separator:'|' }";
-
-		return $js;
-	}
-
-	/**
 	 * Parse XML for separator editor part
 	 *
 	 * @param   SimpleXMLElement $xml
@@ -846,5 +833,18 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{
 		return new KunenaBbcodeEditorSeparator((string) $xml['name']);
+	}
+
+	/**
+	 * Generate JS part for element
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function generateHMVCJs()
+	{
+		$js = "{separator:'|' }";
+
+		return $js;
 	}
 }

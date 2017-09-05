@@ -117,54 +117,6 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return  mixed  The data for the form.
-	 *
-	 * @since   1.6
-	 */
-	protected function loadFormData()
-	{
-		// Check the session for previously entered form data.
-		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
-
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
-
-		$this->preprocessData('com_plugins.plugin', $data);
-
-		return $data;
-	}
-
-	/**
-	 * Method to allow derived classes to preprocess the data.
-	 *
-	 * @param   string $context The context identifier.
-	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
-	 *
-	 * @param   string   $group
-	 *
-	 * @since   Joomla 3.1
-	 */
-	protected function preprocessData($context, &$data, $group = 'kunena')
-	{
-		// Get the dispatcher and load the users plugins.
-		$dispatcher = JEventDispatcher::getInstance();
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-
-		// Trigger the data preparation event.
-		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
-
-		// Check for errors encountered while preparing the data.
-		if (count($results) > 0 && in_array(false, $results, true))
-		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($dispatcher->getError());
-		}
-	}
-
-	/**
 	 * Method to get a single record.
 	 *
 	 * @param   integer $pk The id of the primary key.
@@ -235,6 +187,86 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
+	 * Override method to save the form data.
+	 *
+	 * @param   array $data The form data.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   1.6
+	 */
+	public function save($data)
+	{
+		// Load the extension plugin group.
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('extension');
+
+		// Setup type
+		$data['type'] = 'plugin';
+
+		return parent::save($data);
+	}
+
+	/**
+	 * Get the necessary data to load an item help screen.
+	 *
+	 * @return  object  An object with key, url, and local properties for loading the item help screen.
+	 *
+	 * @since   1.6
+	 */
+	public function getHelp()
+	{
+		return (object) array('key' => $this->helpKey, 'url' => $this->helpURL);
+	}
+
+	/**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
+	 */
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
+
+		if (empty($data))
+		{
+			$data = $this->getItem();
+		}
+
+		$this->preprocessData('com_plugins.plugin', $data);
+
+		return $data;
+	}
+
+	/**
+	 * Method to allow derived classes to preprocess the data.
+	 *
+	 * @param   string $context The context identifier.
+	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
+	 *
+	 * @param   string $group
+	 *
+	 * @since   Joomla 3.1
+	 */
+	protected function preprocessData($context, &$data, $group = 'kunena')
+	{
+		// Get the dispatcher and load the users plugins.
+		$dispatcher = JEventDispatcher::getInstance();
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+
+		// Trigger the data preparation event.
+		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
+
+		// Check for errors encountered while preparing the data.
+		if (count($results) > 0 && in_array(false, $results, true))
+		{
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($dispatcher->getError());
+		}
+	}
+
+	/**
 	 * Auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.
@@ -258,7 +290,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @param   \JForm  $form  A form object.
+	 * @param   \JForm $form  A form object.
 	 * @param   mixed  $data  The data expected for the form.
 	 * @param   string $group Form group.
 	 *
@@ -354,38 +386,6 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		$condition[] = 'folder = ' . $this->_db->Quote($table->folder);
 
 		return $condition;
-	}
-
-	/**
-	 * Override method to save the form data.
-	 *
-	 * @param   array $data The form data.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @since   1.6
-	 */
-	public function save($data)
-	{
-		// Load the extension plugin group.
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('extension');
-
-		// Setup type
-		$data['type'] = 'plugin';
-
-		return parent::save($data);
-	}
-
-	/**
-	 * Get the necessary data to load an item help screen.
-	 *
-	 * @return  object  An object with key, url, and local properties for loading the item help screen.
-	 *
-	 * @since   1.6
-	 */
-	public function getHelp()
-	{
-		return (object) array('key' => $this->helpKey, 'url' => $this->helpURL);
 	}
 
 	/**

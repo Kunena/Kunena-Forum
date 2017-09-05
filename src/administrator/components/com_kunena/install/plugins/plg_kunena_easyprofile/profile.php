@@ -62,27 +62,6 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task
-	 * @param   bool   $xhtml
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
-	{
-		// Make sure that user profile exist.
-		if (!$userid || JsnHelper::getUser($userid) === null)
-		{
-			return false;
-		}
-
-		$user = JsnHelper::getUser($userid);
-
-		return $user->getLink();
-	}
-
-	/**
 	 * @param $view
 	 * @param $params
 	 *
@@ -102,6 +81,27 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
+	}
+
+	/**
+	 * @param          $userid
+	 * @param   string $task
+	 * @param   bool   $xhtml
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function getProfileURL($userid, $task = '', $xhtml = true)
+	{
+		// Make sure that user profile exist.
+		if (!$userid || JsnHelper::getUser($userid) === null)
+		{
+			return false;
+		}
+
+		$user = JsnHelper::getUser($userid);
+
+		return $user->getLink();
 	}
 }
 

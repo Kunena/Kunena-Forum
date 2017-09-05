@@ -30,9 +30,12 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	</div>
 
 	<div class="col-md-10">
-		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <?php echo KunenaIcons::clock();?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time) :?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan(); endif;?></small>
+		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <?php echo KunenaIcons::clock();?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
+		:
+?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan();
+																					endif;?></small>
 		<div class="badger-left badger-info khistory"
-		     data-badger="<?php echo (!$isReply) ? $name . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $name . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'); ?><?php echo $message->displayField('subject'); ?>">
+			 data-badger="<?php echo (!$isReply) ? $name . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $name . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'); ?><?php echo $message->displayField('subject'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>
@@ -42,9 +45,12 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			</p>
 
 			<div class="kmessage">
-				<?php if (!$isReply) :
+				<?php if (!$isReply)
+				:
 					echo $message->displayField('message');
-				else :
+				else
+
+				:
 					echo (!$me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 				endif; ?>
 			</div>

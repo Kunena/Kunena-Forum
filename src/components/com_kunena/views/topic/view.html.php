@@ -294,11 +294,11 @@ class KunenaViewTopic extends KunenaView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$cat_params = array('ordering'    => 'ordering',
-		                    'toplevel'    => 0,
-		                    'sections'    => 0,
-		                    'direction'   => 1,
-		                    'hide_lonely' => 1,
-		                    'action'      => 'topic.create');
+							'toplevel'    => 0,
+							'sections'    => 0,
+							'direction'   => 1,
+							'hide_lonely' => 1,
+							'action'      => 'topic.create');
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
@@ -878,7 +878,7 @@ class KunenaViewTopic extends KunenaView
 			}
 			else
 			{
-				$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
+				$this->reportMessageLink = JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
 			}
 		}
 

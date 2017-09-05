@@ -29,6 +29,18 @@ defined('_JEXEC') or die();
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
 	/**
+	 * @var array
+	 * @since Kunena
+	 */
+	protected static $actions = array(
+		'none'   => array(),
+		'read'   => array('Read'),
+		'create' => array('New', 'NotBanned', 'Write'),
+		'edit'   => array('Read', 'NotBanned', 'Write'),
+		'delete' => array('Read', 'NotBanned', 'Write'),
+	);
+
+	/**
 	 * @var string
 	 * @since Kunena
 	 */
@@ -57,18 +69,6 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @since Kunena
 	 */
 	protected $_authfcache = null;
-
-	/**
-	 * @var array
-	 * @since Kunena
-	 */
-	protected static $actions = array(
-		'none'   => array(),
-		'read'   => array('Read'),
-		'create' => array('New', 'NotBanned', 'Write'),
-		'edit'   => array('Read', 'NotBanned', 'Write'),
-		'delete' => array('Read', 'NotBanned', 'Write'),
-	);
 
 	/**
 	 * @param   mixed $properties

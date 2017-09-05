@@ -76,7 +76,7 @@ JHtml::_('behavior.multiselect');
 										class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
 							</p>
 							<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
-							          rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+									  rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 						</td>
 					</tr>
 				</table>
@@ -92,7 +92,7 @@ JHtml::_('behavior.multiselect');
 										class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
 							</p>
 							<textarea id="report_final_anonymous" class="input-block-level" name="report_final_anonymous" cols="80"
-							          rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+									  rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
 						</td>
 					</tr>
 				</table>

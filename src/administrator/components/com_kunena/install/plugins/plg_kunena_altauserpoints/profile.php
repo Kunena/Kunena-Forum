@@ -57,35 +57,6 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $task
-	 * @param   bool   $xhtml
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function getProfileURL($user, $task = '', $xhtml = true)
-	{
-		if ($user == 0)
-		{
-			return false;
-		}
-
-		$user = KunenaFactory::getUser($user);
-		$my   = \Joomla\CMS\Factory::getUser();
-
-		if ($user === false)
-		{
-			return false;
-		}
-
-		$userid     = $my->id != $user->userid ? '&userid=' . AltaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
-		$AUP_itemid = AltaUserPointsHelper::getItemidAupProfil();
-
-		return JRoute::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
-	}
-
-	/**
 	 * @param   int $limit
 	 *
 	 * @return array|boolean
@@ -135,5 +106,34 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, '', $xhtml);
+	}
+
+	/**
+	 * @param          $user
+	 * @param   string $task
+	 * @param   bool   $xhtml
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function getProfileURL($user, $task = '', $xhtml = true)
+	{
+		if ($user == 0)
+		{
+			return false;
+		}
+
+		$user = KunenaFactory::getUser($user);
+		$my   = \Joomla\CMS\Factory::getUser();
+
+		if ($user === false)
+		{
+			return false;
+		}
+
+		$userid     = $my->id != $user->userid ? '&userid=' . AltaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
+		$AUP_itemid = AltaUserPointsHelper::getItemidAupProfil();
+
+		return JRoute::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
 }

@@ -21,7 +21,7 @@ defined('_JEXEC') or die();
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
-		      name="adminForm">
+			  name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
 			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>

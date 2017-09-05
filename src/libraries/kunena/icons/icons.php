@@ -80,6 +80,74 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the arrow down icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function arrowdownanchor()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-arrow-down hasTooltip" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon kforumtop"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
+	 * Return the arrow up icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function arrowupanchor()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon kforumbottom"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
+		}
+	}
+
+	/**
 	 * Return the chevron right icon
 	 *
 	 * @return string
@@ -808,7 +876,7 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-		$class = ' ' . KunenaTemplate::getInstance()->tooltips();
+		$class         = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{
@@ -1084,7 +1152,7 @@ class KunenaIcons
 	/**
 	 * Return the category icon
 	 *
-	 * @param      $categoryicon
+	 * @param        $categoryicon
 	 * @param   null $new
 	 * @param   bool $big
 	 *

@@ -10,8 +10,11 @@
  **/
 defined('_JEXEC') or die;
 
-if ($this->config->ratingenabled && $this->category->allow_ratings) :
-	if ($this->topic->rating) : ?>
+if ($this->config->ratingenabled && $this->category->allow_ratings)
+:
+	if ($this->topic->rating)
+	:
+	?>
 		<div id="krating-top">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>
@@ -22,4 +25,4 @@ if ($this->config->ratingenabled && $this->category->allow_ratings) :
 			</ul>
 		</div>
 	<?php endif;
-endif; ?>
+endif;

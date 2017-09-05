@@ -73,6 +73,17 @@ class KunenaProfile
 	}
 
 	/**
+	 * @param   int $limit
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	protected function _getTopHits($limit = 0)
+	{
+		return array();
+	}
+
+	/**
 	 * @param   string $action
 	 * @param   bool   $xhtml
 	 *
@@ -124,17 +135,6 @@ class KunenaProfile
 	public function showProfile($view, &$params)
 	{
 
-	}
-
-	/**
-	 * @param   int $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	protected function _getTopHits($limit = 0)
-	{
-		return array();
 	}
 
 	/**

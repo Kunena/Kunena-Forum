@@ -1162,3 +1162,14 @@ div.krating > label:active {
 #editor {
     resize: vertical;
 }
+
+#results1 img:not([src]) {
+  visibility: hidden;
+}
+
+/* Fixes Firefox anomaly during image load */
+@-moz-document url-prefix() {
+  #results1 img:-moz-loading {
+    visibility: hidden;
+  }
+}

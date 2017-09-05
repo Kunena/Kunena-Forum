@@ -108,6 +108,61 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
+	 * @param   array      $ids
+	 * @param   KunenaUser $user
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadTopics(array $ids, KunenaUser $user)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_instances [$user->userid][$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('topic_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			if (isset($results[$id]))
+			{
+				$instance = new KunenaForumTopicUser;
+				$instance->bind($results[$id]);
+				$instance->exists(true);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
+			}
+			else
+			{
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaForumTopicUser($id, $user->userid);
+			}
+		}
+
+		unset($results);
+	}
+
+	/**
 	 * Get all user ids who have participated to the given topics.
 	 *
 	 * @param   array|KunenaForumTopic[] $topics
@@ -264,6 +319,51 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
+	 * @param   int $id
+	 *
+	 * @since Kunena
+	 */
+	static protected function reloadTopic($id)
+	{
+		if (empty(self::$_topics [$id]))
+		{
+			return;
+		}
+
+		$idlist = implode(',', array_keys(self::$_topics [$id]));
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('user_id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		// TODO: Is there a bug?
+		foreach (self::$_topics[$id] as $instance)
+		{
+			if (isset($results[$instance->user_id]))
+			{
+				$instance->bind($results[$instance->user_id]);
+				$instance->exists(true);
+			}
+			else
+			{
+				$instance->reset();
+			}
+		}
+
+		unset($results);
+	}
+
+	// Internal functions
+
+	/**
 	 * Free up memory by cleaning up all cached items.
 	 * @since Kunena
 	 */
@@ -303,7 +403,7 @@ abstract class KunenaForumTopicUserHelper
 
 		if ($end)
 		{
-			$where .= " AND (m.thread BETWEEN {$start} AND {$end})";
+			$where  .= " AND (m.thread BETWEEN {$start} AND {$end})";
 			$where2 .= " AND (ut.topic_id BETWEEN {$start} AND {$end})";
 		}
 
@@ -367,105 +467,5 @@ abstract class KunenaForumTopicUserHelper
 		$rows += $db->getAffectedRows();
 
 		return $rows;
-	}
-
-	// Internal functions
-
-	/**
-	 * @param   array      $ids
-	 * @param   KunenaUser $user
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadTopics(array $ids, KunenaUser $user)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$user->userid][$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('topic_id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$instance = new KunenaForumTopicUser;
-				$instance->bind($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
-			}
-			else
-			{
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaForumTopicUser($id, $user->userid);
-			}
-		}
-
-		unset($results);
-	}
-
-	/**
-	 * @param   int $id
-	 *
-	 * @since Kunena
-	 */
-	static protected function reloadTopic($id)
-	{
-		if (empty(self::$_topics [$id]))
-		{
-			return;
-		}
-
-		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('user_id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		// TODO: Is there a bug?
-		foreach (self::$_topics[$id] as $instance)
-		{
-			if (isset($results[$instance->user_id]))
-			{
-				$instance->bind($results[$instance->user_id]);
-				$instance->exists(true);
-			}
-			else
-			{
-				$instance->reset();
-			}
-		}
-
-		unset($results);
 	}
 }

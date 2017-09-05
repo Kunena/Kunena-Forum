@@ -149,7 +149,7 @@ defined('_JEXEC') or die();
 									<input name="cmd" type="hidden" value="_s-xclick">
 									<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
 									<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!"
-									       src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+										   src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
 									<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
 								</form>
 							</dd>

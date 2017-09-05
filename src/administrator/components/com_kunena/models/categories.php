@@ -40,89 +40,296 @@ class KunenaAdminModelCategories extends KunenaModel
 	protected $_admincategory = false;
 
 	/**
-	 * Method to auto-populate the model state.
+	 * @return \Joomla\CMS\Pagination\Pagination
 	 * @since Kunena
 	 */
-	protected function populateState()
+	public function getAdminNavigation()
 	{
-		$this->context = 'com_kunena.admin.categories';
+		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		return $navigation;
+	}
 
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
+	/**
+	 * @return array|boolean
+	 * @since Kunena
+	 */
+	public function getAdminOptions()
+	{
+		$category = $this->getAdminCategory();
 
-		if ($layout)
+		if (!$category)
 		{
-			$this->context .= '.' . $layout;
+			return false;
 		}
 
-		// List state information.
-		$value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
-		$this->setState('list.start', $value);
+		$catList    = array();
+		$catList [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
 
-		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
-		$this->setState('list.limit', $value);
+		// Make a standard yes/no list
+		$published    = array();
+		$published [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_PUBLISHED'));
+		$published [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_UNPUBLISHED'));
 
-		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
-		$this->setState('list.ordering', $value);
+		// Make a standard yes/no list
+		$yesno    = array();
+		$yesno [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$yesno [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 
-		$value = $this->getUserStateFromRequest($this->context . '.list.direction', 'filter_order_Dir', 'asc', 'word');
+		// Anonymous posts default
+		$post_anonymous    = array();
+		$post_anonymous [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
+		$post_anonymous [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
 
-		if ($value != 'asc')
+		$cat_params                = array();
+		$cat_params['ordering']    = 'ordering';
+		$cat_params['toplevel']    = JText::_('COM_KUNENA_TOPLEVEL');
+		$cat_params['sections']    = 1;
+		$cat_params['unpublished'] = 1;
+		$cat_params['catid']       = $category->id;
+		$cat_params['action']      = 'admin';
+
+		$channels_params           = array();
+		$channels_params['catid']  = $category->id;
+		$channels_params['action'] = 'admin';
+		$channels_options          = array();
+		$channels_options []       = JHtml::_('select.option', 'THIS', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
+		$channels_options []       = JHtml::_('select.option', 'CHILDREN', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
+
+		if (empty($category->channels))
 		{
-			$value = 'desc';
+			$category->channels = 'THIS';
 		}
 
-		$this->setState('list.direction', $value);
+		$topic_ordering_options   = array();
+		$topic_ordering_options[] = JHtml::_('select.option', 'lastpost', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
+		$topic_ordering_options[] = JHtml::_('select.option', 'creation', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
+		$topic_ordering_options[] = JHtml::_('select.option', 'alpha', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
 
-		$filter_active = '';
+		$aliases = array_keys($category->getAliases());
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
-		$this->setState('filter.search', $value);
+		$lists                     = array();
+		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
+		$lists ['categories']      = JHtml::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
+		$lists ['channels']        = JHtml::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
+		$lists ['published']       = JHtml::_('select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published);
+		$lists ['forumLocked']     = JHtml::_('select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked);
+		$lists ['forumReview']     = JHtml::_('select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review);
+		$lists ['allow_polls']     = JHtml::_('select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls);
+		$lists ['allow_anonymous'] = JHtml::_('select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous);
+		$lists ['post_anonymous']  = JHtml::_('select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous);
+		$lists ['topic_ordering']  = JHtml::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering);
+		$lists ['allow_ratings']   = JHtml::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox" size="1"', 'value', 'text', $category->allow_ratings);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
-		$this->setState('filter.published', $value !== '' ? (int) $value : null);
+		$options                 = array();
+		$options[0]              = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
+		$options[1]              = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
+		$options[2]              = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
+		$options[3]              = JHtml::_('select.option', '3', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SUBCATEGORY'));
+		$lists['display_parent'] = JHtml::_('select.genericlist', $options, 'params[display][index][parent]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.parent', '3'));
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filter_title', '', 'string');
-		$this->setState('filter.title', $value !== '' ? $value : null);
+		unset($options[1]);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
-		$this->setState('filter.type', $value !== '' ? $value : null);
+		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', '', 'string');
-		$this->setState('filter.access', $value !== '' ? (int) $value : null);
+		$topicicons     = array();
+		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.locked', 'filter_locked', '', 'string');
-		$this->setState('filter.locked', $value !== '' ? (int) $value : null);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.allow_polls', 'filter_allow_polls', '', 'string');
-		$this->setState('filter.allow_polls', $value !== '' ? (int) $value : null);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.review', 'filter_review', '', 'string');
-		$this->setState('filter.review', $value !== '' ? (int) $value : null);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'filter_anonymous', '', 'string');
-		$this->setState('filter.anonymous', $value !== '' ? (int) $value : null);
-
-		$this->setState('filter.active', !empty($filter_active));
-
-		// TODO: implement
-		$value = $this->getUserStateFromRequest($this->context . ".filter.levels", 'levellimit', 10, 'int');
-		$this->setState('filter.levels', $value);
-
-		$catid     = $this->getUserStateFromRequest($this->context . '.filter.catid', 'catid', 0, 'int');
-		$layout    = $this->getWord('layout', 'edit');
-		$parent_id = 0;
-
-		if ($layout == 'create')
+		foreach ($topiciconslist as $icon)
 		{
-			$parent_id = $catid;
-			$catid     = 0;
+			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 
-		$this->setState('item.id', $catid);
-		$this->setState('item.parent_id', $parent_id);
+		if (empty($category->iconset))
+		{
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
+		}
+		else
+		{
+			$value = $category->iconset;
+		}
+
+		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $value);
+
+		return $lists;
+	}
+
+	/**
+	 * @return boolean|KunenaForumCategory|void
+	 * @since Kunena
+	 */
+	public function getAdminCategory()
+	{
+		$category = KunenaForumCategoryHelper::get($this->getState('item.id'));
+
+		if (!$this->me->isAdmin($category))
+		{
+			return false;
+		}
+
+		if ($this->_admincategory === false)
+		{
+			if ($category->exists())
+			{
+				if (!$category->isCheckedOut($this->me->userid))
+				{
+					$category->checkout($this->me->userid);
+				}
+			}
+			else
+			{
+				// New category is by default child of the first section -- this will help new users to do it right
+				$db = \Joomla\CMS\Factory::getDBO();
+				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
+
+				try
+				{
+					$sections = $db->loadObjectList();
+				}
+				catch (RuntimeException $e)
+				{
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+
+					return;
+				}
+
+				$category->parent_id     = $this->getState('item.parent_id');
+				$category->published     = 0;
+				$category->ordering      = 9999;
+				$category->pub_recurse   = 1;
+				$category->admin_recurse = 1;
+				$category->accesstype    = 'joomla.level';
+				$category->access        = 1;
+				$category->pub_access    = 1;
+				$category->admin_access  = 8;
+			}
+
+			$this->_admincategory = $category;
+		}
+
+		return $this->_admincategory;
+	}
+
+	/**
+	 * @return array|boolean
+	 * @since Kunena
+	 */
+	function getAdminModerators()
+	{
+		$category = $this->getAdminCategory();
+
+		if (!$category)
+		{
+			return false;
+		}
+
+		$moderators = $category->getModerators(false);
+
+		return $moderators;
+	}
+
+	/**
+	 * @param   null $pks
+	 * @param   null $order
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function saveorder($pks = null, $order = null)
+	{
+		$table      = \Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
+		$conditions = array();
+
+		if (empty($pks))
+		{
+			return false;
+		}
+
+		// Update ordering values
+		foreach ($pks as $i => $pk)
+		{
+			$table->load((int) $pk);
+
+			if ($table->ordering != $order[$i])
+			{
+				$table->ordering = $order[$i];
+
+				if (!$table->store())
+				{
+					\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError());
+
+					return false;
+				}
+
+				// Remember to reorder within position and client_id
+				$condition = $this->getReorderConditions($table);
+				$found     = false;
+
+				foreach ($conditions as $cond)
+				{
+					if ($cond[1] == $condition)
+					{
+						$found = true;
+						break;
+					}
+				}
+
+				if (!$found)
+				{
+					$key          = $table->getKeyName();
+					$conditions[] = array($table->$key, $condition);
+				}
+			}
+		}
+
+		// Execute reorder for each category.
+		foreach ($conditions as $cond)
+		{
+			$table->load($cond[0]);
+			$table->reorder($cond[1]);
+		}
+
+		// Clear the component's cache
+		$this->cleanCache();
+
+		return true;
+	}
+
+	/**
+	 * @param $table
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	protected function getReorderConditions($table)
+	{
+		$condition   = array();
+		$condition[] = 'parent_id = ' . (int) $table->parent_id;
+
+		return $condition;
+	}
+
+	/**
+	 * Get list of categories to be displayed in drop-down select in batch
+	 *
+	 * @since 5.1.0
+	 */
+	public function getBatchCategories()
+	{
+		$categories         = $this->getAdminCategories();
+		$batch_categories   = array();
+		$batch_categories[] = JHtml::_('select.option', 'select', JText::_('JSELECT'));
+
+		foreach ($categories as $category)
+		{
+			$batch_categories [] = JHtml::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
+		}
+
+		$list = JHtml::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox" size="1"', 'value', 'text', 'select');
+
+		return $list;
 	}
 
 	/**
@@ -235,295 +442,88 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return \Joomla\CMS\Pagination\Pagination
+	 * Method to auto-populate the model state.
 	 * @since Kunena
 	 */
-	public function getAdminNavigation()
+	protected function populateState()
 	{
-		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$this->context = 'com_kunena.admin.categories';
 
-		return $navigation;
-	}
+		$app = \Joomla\CMS\Factory::getApplication();
 
-	/**
-	 * @return boolean|KunenaForumCategory|void
-	 * @since Kunena
-	 */
-	public function getAdminCategory()
-	{
-		$category = KunenaForumCategoryHelper::get($this->getState('item.id'));
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
 
-		if (!$this->me->isAdmin($category))
+		if ($layout)
 		{
-			return false;
+			$this->context .= '.' . $layout;
 		}
 
-		if ($this->_admincategory === false)
+		// List state information.
+		$value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
+		$this->setState('list.start', $value);
+
+		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
+		$this->setState('list.limit', $value);
+
+		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
+		$this->setState('list.ordering', $value);
+
+		$value = $this->getUserStateFromRequest($this->context . '.list.direction', 'filter_order_Dir', 'asc', 'word');
+
+		if ($value != 'asc')
 		{
-			if ($category->exists())
-			{
-				if (!$category->isCheckedOut($this->me->userid))
-				{
-					$category->checkout($this->me->userid);
-				}
-			}
-			else
-			{
-				// New category is by default child of the first section -- this will help new users to do it right
-				$db = \Joomla\CMS\Factory::getDBO();
-				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
-
-				try
-				{
-					$sections = $db->loadObjectList();
-				}
-				catch (RuntimeException $e)
-				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-					return;
-				}
-
-				$category->parent_id     = $this->getState('item.parent_id');
-				$category->published     = 0;
-				$category->ordering      = 9999;
-				$category->pub_recurse   = 1;
-				$category->admin_recurse = 1;
-				$category->accesstype    = 'joomla.level';
-				$category->access        = 1;
-				$category->pub_access    = 1;
-				$category->admin_access  = 8;
-			}
-
-			$this->_admincategory = $category;
+			$value = 'desc';
 		}
 
-		return $this->_admincategory;
-	}
+		$this->setState('list.direction', $value);
 
-	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 */
-	public function getAdminOptions()
-	{
-		$category = $this->getAdminCategory();
+		$filter_active = '';
 
-		if (!$category)
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+		$this->setState('filter.search', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
+		$this->setState('filter.published', $value !== '' ? (int) $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filter_title', '', 'string');
+		$this->setState('filter.title', $value !== '' ? $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
+		$this->setState('filter.type', $value !== '' ? $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', '', 'string');
+		$this->setState('filter.access', $value !== '' ? (int) $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.locked', 'filter_locked', '', 'string');
+		$this->setState('filter.locked', $value !== '' ? (int) $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.allow_polls', 'filter_allow_polls', '', 'string');
+		$this->setState('filter.allow_polls', $value !== '' ? (int) $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.review', 'filter_review', '', 'string');
+		$this->setState('filter.review', $value !== '' ? (int) $value : null);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'filter_anonymous', '', 'string');
+		$this->setState('filter.anonymous', $value !== '' ? (int) $value : null);
+
+		$this->setState('filter.active', !empty($filter_active));
+
+		// TODO: implement
+		$value = $this->getUserStateFromRequest($this->context . ".filter.levels", 'levellimit', 10, 'int');
+		$this->setState('filter.levels', $value);
+
+		$catid     = $this->getUserStateFromRequest($this->context . '.filter.catid', 'catid', 0, 'int');
+		$layout    = $this->getWord('layout', 'edit');
+		$parent_id = 0;
+
+		if ($layout == 'create')
 		{
-			return false;
+			$parent_id = $catid;
+			$catid     = 0;
 		}
 
-		$catList    = array();
-		$catList [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
-
-		// Make a standard yes/no list
-		$published    = array();
-		$published [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_PUBLISHED'));
-		$published [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_UNPUBLISHED'));
-
-		// Make a standard yes/no list
-		$yesno    = array();
-		$yesno [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$yesno [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-
-		// Anonymous posts default
-		$post_anonymous    = array();
-		$post_anonymous [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
-		$post_anonymous [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
-
-		$cat_params                = array();
-		$cat_params['ordering']    = 'ordering';
-		$cat_params['toplevel']    = JText::_('COM_KUNENA_TOPLEVEL');
-		$cat_params['sections']    = 1;
-		$cat_params['unpublished'] = 1;
-		$cat_params['catid']       = $category->id;
-		$cat_params['action']      = 'admin';
-
-		$channels_params           = array();
-		$channels_params['catid']  = $category->id;
-		$channels_params['action'] = 'admin';
-		$channels_options          = array();
-		$channels_options []       = JHtml::_('select.option', 'THIS', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
-		$channels_options []       = JHtml::_('select.option', 'CHILDREN', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
-
-		if (empty($category->channels))
-		{
-			$category->channels = 'THIS';
-		}
-
-		$topic_ordering_options   = array();
-		$topic_ordering_options[] = JHtml::_('select.option', 'lastpost', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
-		$topic_ordering_options[] = JHtml::_('select.option', 'creation', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
-		$topic_ordering_options[] = JHtml::_('select.option', 'alpha', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
-
-		$aliases = array_keys($category->getAliases());
-
-		$lists                     = array();
-		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
-		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
-		$lists ['categories']      = JHtml::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
-		$lists ['channels']        = JHtml::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']         = $aliases ? JHtml::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
-		$lists ['published']       = JHtml::_('select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published);
-		$lists ['forumLocked']     = JHtml::_('select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked);
-		$lists ['forumReview']     = JHtml::_('select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review);
-		$lists ['allow_polls']     = JHtml::_('select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls);
-		$lists ['allow_anonymous'] = JHtml::_('select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous);
-		$lists ['post_anonymous']  = JHtml::_('select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous);
-		$lists ['topic_ordering']  = JHtml::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering);
-		$lists ['allow_ratings']   = JHTML::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox" size="1"', 'value', 'text', $category->allow_ratings);
-
-		$options                 = array();
-		$options[0]              = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
-		$options[1]              = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
-		$options[2]              = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
-		$options[3]              = JHtml::_('select.option', '3', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SUBCATEGORY'));
-		$lists['display_parent'] = JHtml::_('select.genericlist', $options, 'params[display][index][parent]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.parent', '3'));
-
-		unset($options[1]);
-
-		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
-
-		$topicicons     = array();
-		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
-
-		foreach ($topiciconslist as $icon)
-		{
-			$topicicons[] = JHtml::_('select.option', $icon, $icon);
-		}
-
-		if (empty($category->iconset))
-		{
-			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
-		}
-		else
-		{
-			$value = $category->iconset;
-		}
-
-		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $value);
-
-		return $lists;
-	}
-
-	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 */
-	function getAdminModerators()
-	{
-		$category = $this->getAdminCategory();
-
-		if (!$category)
-		{
-			return false;
-		}
-
-		$moderators = $category->getModerators(false);
-
-		return $moderators;
-	}
-
-	/**
-	 * @param $table
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	protected function getReorderConditions($table)
-	{
-		$condition   = array();
-		$condition[] = 'parent_id = ' . (int) $table->parent_id;
-
-		return $condition;
-	}
-
-	/**
-	 * @param   null $pks
-	 * @param   null $order
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function saveorder($pks = null, $order = null)
-	{
-		$table      = \Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
-		$conditions = array();
-
-		if (empty($pks))
-		{
-			return false;
-		}
-
-		// Update ordering values
-		foreach ($pks as $i => $pk)
-		{
-			$table->load((int) $pk);
-
-			if ($table->ordering != $order[$i])
-			{
-				$table->ordering = $order[$i];
-
-				if (!$table->store())
-				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError());
-
-					return false;
-				}
-
-				// Remember to reorder within position and client_id
-				$condition = $this->getReorderConditions($table);
-				$found     = false;
-
-				foreach ($conditions as $cond)
-				{
-					if ($cond[1] == $condition)
-					{
-						$found = true;
-						break;
-					}
-				}
-
-				if (!$found)
-				{
-					$key          = $table->getKeyName();
-					$conditions[] = array($table->$key, $condition);
-				}
-			}
-		}
-
-		// Execute reorder for each category.
-		foreach ($conditions as $cond)
-		{
-			$table->load($cond[0]);
-			$table->reorder($cond[1]);
-		}
-
-		// Clear the component's cache
-		$this->cleanCache();
-
-		return true;
-	}
-
-	/**
-	 * Get list of categories to be displayed in drop-down select in batch
-	 *
-	 * @since 5.1.0
-	 */
-	public function getBatchCategories()
-	{
-		$categories         = $this->getAdminCategories();
-		$batch_categories   = array();
-		$batch_categories[] = JHtml::_('select.option', 'select', JText::_('JSELECT'));
-
-		foreach ($categories as $category)
-		{
-			$batch_categories [] = JHtml::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
-		}
-
-		$list = JHtml::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox" size="1"', 'value', 'text', 'select');
-
-		return $list;
+		$this->setState('item.id', $catid);
+		$this->setState('item.parent_id', $parent_id);
 	}
 }

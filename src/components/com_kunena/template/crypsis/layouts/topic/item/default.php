@@ -15,6 +15,8 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
+$this->addScript('assets/js/topic.js');
+
 JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
@@ -44,11 +46,10 @@ if (KunenaConfig::getInstance()->ratingenabled)
 
 if (KunenaConfig::getInstance()->lazyload)
 {
+	$this->addScriptDeclaration('new LazyLoad();');
+
 	$this->addScript('assets/js/jquery.lazyload.min.js');
 }
-
-$this->addScript('assets/js/topic.js');
-
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');

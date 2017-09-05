@@ -27,13 +27,16 @@ $this->addScript('assets/js/poll.js');
 		<div class="well">
 			<ul class="unstyled">
 
-				<?php foreach ($this->poll->getOptions() as $key => $poll_option) : ?>
+				<?php foreach ($this->poll->getOptions() as $key => $poll_option)
+				:
+	?>
 					<li>
 						<label>
 							<input class="kpoll-boxvote" type="radio" name="kpollradio"
-							       id="radio_name<?php echo (int) $key; ?>"
-							       value="<?php echo (int) $poll_option->id; ?>"
-								<?php if ($this->voted && $this->voted->lastvote == $poll_option->id)
+								   id="radio_name<?php echo (int) $key; ?>"
+								   value="<?php echo (int) $poll_option->id; ?>"
+								<?php
+								if ($this->voted && $this->voted->lastvote == $poll_option->id)
 								{
 									echo 'checked="checked"';
 								} ?> />
@@ -45,13 +48,13 @@ $this->addScript('assets/js/poll.js');
 			</ul>
 
 			<input id="kpoll-button-vote" class="btn btn-success" type="submit"
-			       value="<?php echo $this->voted && $this->config->pollallowvoteone
-				       ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
-				       : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
+				   value="<?php echo $this->voted && $this->config->pollallowvoteone
+					   ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
+					   : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
 			<input id="kpoll_go_results" type="button" class="btn btn-success" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
 			<input id="kpoll_hide_results" type="button" class="btn btn-success" style="display:none;"
-			       value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
+				   value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
 		</div>
 	</form>
 </div>
-<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false); ?>
+<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false);

@@ -38,6 +38,17 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
+	 * @param $event
+	 * @param $params
+	 *
+	 * @since Kunena
+	 */
+	public static function trigger($event, &$params)
+	{
+		KunenaIntegrationComprofiler::trigger($event, $params);
+	}
+
+	/**
 	 *
 	 * @since Kunena
 	 */
@@ -126,17 +137,6 @@ class KunenaProfileComprofiler extends KunenaProfile
 				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))
 			)
 		);
-	}
-
-	/**
-	 * @param $event
-	 * @param $params
-	 *
-	 * @since Kunena
-	 */
-	public static function trigger($event, &$params)
-	{
-		KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 
 	/**

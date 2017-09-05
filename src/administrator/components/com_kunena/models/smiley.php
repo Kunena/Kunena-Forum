@@ -21,62 +21,6 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelSmiley extends KunenaModel
 {
 	/**
-	 * Method to auto-populate the model state.
-	 * @since Kunena
-	 */
-	protected function populateState()
-	{
-		$this->context = 'com_kunena.admin.smiley';
-
-		$app = \Joomla\CMS\Factory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-
-		if ($layout)
-		{
-			$this->context .= '.' . $layout;
-		}
-
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
-		$this->setState($this->getName() . '.id', $value);
-		$this->setState('item.id', $value);
-	}
-
-	/**
-	 * @return  mixed|null
-	 *
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getSmiley()
-	{
-		$db = \Joomla\CMS\Factory::getDBO();
-
-		$id = $this->getState($this->getName() . '.id');
-
-		if ($id)
-		{
-			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
-
-			try
-			{
-				$selected = $db->loadObject();
-			}
-			catch (RuntimeException $e)
-			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			return $selected;
-		}
-
-		return null;
-	}
-
-	/**
 	 * @return  mixed
 	 * @since Kunena
 	 */
@@ -117,5 +61,61 @@ class KunenaAdminModelSmiley extends KunenaModel
 		$list = JHtml::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
 
 		return $list;
+	}
+
+	/**
+	 * @return  mixed|null
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getSmiley()
+	{
+		$db = \Joomla\CMS\Factory::getDBO();
+
+		$id = $this->getState($this->getName() . '.id');
+
+		if ($id)
+		{
+			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
+
+			try
+			{
+				$selected = $db->loadObject();
+			}
+			catch (RuntimeException $e)
+			{
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			return $selected;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 * @since Kunena
+	 */
+	protected function populateState()
+	{
+		$this->context = 'com_kunena.admin.smiley';
+
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
+		$this->setState($this->getName() . '.id', $value);
+		$this->setState('item.id', $value);
 	}
 }

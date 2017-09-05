@@ -475,7 +475,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 		else
 		{
 			$success = true;
-			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
+			$text    .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
 		}
 
 		if ($success !== null && !$silent)
@@ -487,6 +487,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration (exists in 2.0)
+
 	/**
 	 * @param          $tag
 	 * @param   string $name
@@ -1168,6 +1169,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return bool
 	 * @throws Exception
@@ -1286,6 +1288,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @throws KunenaInstallerException
 	 * @since Kunena
@@ -1518,6 +1521,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @param null $stats
 	 *
@@ -1537,6 +1541,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return mixed|stdClass
 	 * @throws Exception
@@ -1553,6 +1558,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return bool
 	 *
@@ -1702,6 +1708,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return bool
 	 *
@@ -1735,6 +1742,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return bool
 	 *
@@ -1768,6 +1776,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @param null $stats
 	 *
@@ -1787,6 +1796,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return mixed|stdClass
 	 *
@@ -1804,6 +1814,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return bool
 	 *
@@ -2118,6 +2129,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @return array
 	 *
@@ -2248,6 +2260,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @param      $prefix
 	 * @param      $versionlist
@@ -2624,7 +2637,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 			$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
 		}
 		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
-		$query = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
+		$query  = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
 		$this->db->setQuery($query);
 
 		try
@@ -2655,6 +2668,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// TODO: move to migration
+
 	/**
 	 * @param $table
 	 *
@@ -2736,6 +2750,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	// also insert old version if not in the table
+
 	/**
 	 * @param        $version
 	 * @param        $versiondate

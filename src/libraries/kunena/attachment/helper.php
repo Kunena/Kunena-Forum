@@ -29,19 +29,6 @@ abstract class KunenaAttachmentHelper
 	protected static $_messages = array();
 
 	/**
-	 * Check if mime type is image.
-	 *
-	 * @param   string $mime
-	 *
-	 * @return  bool  True if mime is image.
-	 * @since Kunena
-	 */
-	public function isImageMime($mime)
-	{
-		return (stripos($mime, 'image/') !== false);
-	}
-
-	/**
 	 * Returns KunenaAttachment object.
 	 *
 	 * @param   int  $identifier The attachment to load - Can be only an integer.
@@ -124,6 +111,57 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
+	 * @param   array $ids
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadById(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			if (isset(self::$_instances [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			if (isset($results[$id]))
+			{
+				$instance                               = $results[$id];
+				self::$_instances[$id]                  = $instance;
+				self::$_messages[$instance->mesid][$id] = $instance;
+			}
+			else
+			{
+				self::$_instances[$id] = null;
+			}
+		}
+
+		unset($results);
+	}
+
+	/**
 	 * Get the number of the attachments in the message
 	 *
 	 * @param   bool|string $ids
@@ -148,6 +186,59 @@ abstract class KunenaAttachmentHelper
 		}
 
 		return $list;
+	}
+
+	/**
+	 * @param   array $ids
+	 *
+	 * @since Kunena
+	 */
+	static protected function loadByMessage(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_messages [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $mesid)
+		{
+			if (!isset(self::$_messages [$mesid]))
+			{
+				self::$_messages [$mesid] = array();
+			}
+		}
+
+		foreach ($results as $id => $instance)
+		{
+			self::$_instances [$id]                  = $instance;
+			self::$_messages [$instance->mesid][$id] = $instance;
+		}
+
+		unset($results);
 	}
 
 	/**
@@ -515,6 +606,8 @@ abstract class KunenaAttachmentHelper
 		return $output;
 	}
 
+	// Internal functions
+
 	/**
 	 * @param   mixed $user
 	 * @param   array $params
@@ -579,112 +672,6 @@ abstract class KunenaAttachmentHelper
 		return $list;
 	}
 
-	// Internal functions
-
-	/**
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadById(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			if (isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		}
-		catch (RuntimeException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$instance                               = $results[$id];
-				self::$_instances[$id]                  = $instance;
-				self::$_messages[$instance->mesid][$id] = $instance;
-			}
-			else
-			{
-				self::$_instances[$id] = null;
-			}
-		}
-
-		unset($results);
-	}
-
-	/**
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadByMessage(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_messages [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		}
-		catch (RuntimeException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $mesid)
-		{
-			if (!isset(self::$_messages [$mesid]))
-			{
-				self::$_messages [$mesid] = array();
-			}
-		}
-
-		foreach ($results as $id => $instance)
-		{
-			self::$_instances [$id]                  = $instance;
-			self::$_messages [$instance->mesid][$id] = $instance;
-		}
-
-		unset($results);
-	}
-
 	/**
 	 *
 	 * Load the total count of attachments
@@ -711,5 +698,18 @@ abstract class KunenaAttachmentHelper
 		}
 
 		return $attachments;
+	}
+
+	/**
+	 * Check if mime type is image.
+	 *
+	 * @param   string $mime
+	 *
+	 * @return  bool  True if mime is image.
+	 * @since Kunena
+	 */
+	public function isImageMime($mime)
+	{
+		return (stripos($mime, 'image/') !== false);
 	}
 }

@@ -17,12 +17,6 @@ defined('_JEXEC') or die();
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
-	 * @var string
-	 * @since Kunena
-	 */
-	protected $name = 'Empty';
-
-	/**
 	 * @var null
 	 * @since Kunena
 	 */
@@ -41,70 +35,16 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $config;
 
 	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	protected $name = 'Empty';
+
+	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $primary = false;
-
-	/**
-	 * @see   KunenaControllerBase::execute()
-	 * @since Kunena
-	 */
-	public function execute()
-	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-		try
-		{
-			// Run before executing action.
-			$result = $this->before();
-
-			if ($result === false)
-			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
-			}
-
-			// Display layout with given parameters.
-			$this->output = $this->display();
-
-			// Run after executing action.
-			$this->after();
-		}
-		catch (KunenaExceptionAuthorise $e)
-		{
-			if ($this->primary)
-			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-				throw $e;
-			}
-			else
-			{
-				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
-			}
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-		return $this->output;
-	}
-
-	/**
-	 * Initialize and display the layout.
-	 *
-	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
-	 * @since Kunena
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory($this->name)
-			->setProperties($this->getProperties())
-			->setOptions($this->getOptions());
-
-		return $content;
-	}
 
 	/**
 	 * @internal
@@ -115,42 +55,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->primary = true;
 
 		return $this;
-	}
-
-	/**
-	 * Executed before display.
-	 * @since Kunena
-	 */
-	protected function before()
-	{
-		$this->layout = $this->input->getCmd('layout', 'default');
-		$this->config = KunenaConfig::getInstance();
-
-		if ($this->primary)
-		{
-			$this->document = \Joomla\CMS\Factory::getDocument();
-		}
-	}
-
-	/**
-	 * Executed after display.
-	 * @since Kunena
-	 */
-	protected function after()
-	{
-		if ($this->primary)
-		{
-			$this->prepareDocument();
-		}
-	}
-
-	/**
-	 * Prepare title, description, keywords, breadcrumb etc.
-	 * @since Kunena
-	 */
-	protected function prepareDocument()
-	{
-
 	}
 
 	/**
@@ -199,6 +103,124 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * @see   KunenaControllerBase::execute()
+	 * @since Kunena
+	 */
+	public function execute()
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+		try
+		{
+			// Run before executing action.
+			$result = $this->before();
+
+			if ($result === false)
+			{
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+			}
+
+			// Display layout with given parameters.
+			$this->output = $this->display();
+
+			// Run after executing action.
+			$this->after();
+		}
+		catch (KunenaExceptionAuthorise $e)
+		{
+			if ($this->primary)
+			{
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+				throw $e;
+			}
+			else
+			{
+				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+			}
+		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+		return $this->output;
+	}
+
+	/**
+	 * Executed before display.
+	 * @since Kunena
+	 */
+	protected function before()
+	{
+		$this->layout = $this->input->getCmd('layout', 'default');
+		$this->config = KunenaConfig::getInstance();
+
+		if ($this->primary)
+		{
+			$this->document = \Joomla\CMS\Factory::getDocument();
+		}
+	}
+
+	/**
+	 * Initialize and display the layout.
+	 *
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @since Kunena
+	 */
+	protected function display()
+	{
+		// Display layout with given parameters.
+		$content = KunenaLayout::factory($this->name)
+			->setProperties($this->getProperties())
+			->setOptions($this->getOptions());
+
+		return $content;
+	}
+
+	/**
+	 * Returns an associative array of public object properties.
+	 *
+	 * @return  array
+	 * @since Kunena
+	 */
+	public function getProperties()
+	{
+		$properties = (array) $this;
+		$list       = array();
+
+		foreach ($properties as $property => $value)
+		{
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Executed after display.
+	 * @since Kunena
+	 */
+	protected function after()
+	{
+		if ($this->primary)
+		{
+			$this->prepareDocument();
+		}
+	}
+
+	/**
+	 * Prepare title, description, keywords, breadcrumb etc.
+	 * @since Kunena
+	 */
+	protected function prepareDocument()
+	{
+
+	}
+
+	/**
 	 * Method to get the view layout.
 	 *
 	 * @return  string  The layout name.
@@ -229,28 +251,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->layout = $layout;
 
 		return $this;
-	}
-
-	/**
-	 * Returns an associative array of public object properties.
-	 *
-	 * @return  array
-	 * @since Kunena
-	 */
-	public function getProperties()
-	{
-		$properties = (array) $this;
-		$list       = array();
-
-		foreach ($properties as $property => $value)
-		{
-			if ($property[0] != "\0")
-			{
-				$list[$property] = $value;
-			}
-		}
-
-		return $list;
 	}
 
 	/**

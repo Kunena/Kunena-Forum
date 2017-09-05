@@ -44,68 +44,6 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * @param   null $ordering
-	 * @param   null $direction
-	 *
-	 * @since Kunena
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		$app = \Joomla\CMS\Factory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-
-		if ($layout)
-		{
-			$this->context .= '.' . $layout;
-		}
-
-		$now   = new \Joomla\CMS\Date\Date;
-		$month = new \Joomla\CMS\Date\Date('-1 month');
-
-		$filter_active = '';
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
-		$this->setState('filter.user', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
-		$this->setState('filter.time_start', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
-		$this->setState('filter.time_stop', $value);
-
-		$this->setState('filter.active', !empty($filter_active));
-
-		// List state information.
-		parent::populateState('user_id', 'asc');
-	}
-
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string $id A prefix for the store id.
-	 *
-	 * @return    string        A store id.
-	 * @since Kunena
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-		$id .= ':' . $this->getState('filter.user');
-		$id .= ':' . $this->getState('filter.time_start');
-		$id .= ':' . $this->getState('filter.time_stop');
-
-		return parent::getStoreId($id);
-	}
-
-	/**
 	 * Method to get the total number of items for the data set.
 	 *
 	 * @return  integer  The total number of items available in the data set.
@@ -132,6 +70,28 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 		$this->cache[$store] = $total;
 
 		return $this->cache[$store];
+	}
+
+	/**
+	 * Method to get a store id based on model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string $id A prefix for the store id.
+	 *
+	 * @return    string        A store id.
+	 * @since Kunena
+	 */
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id .= ':' . $this->getState('filter.user');
+		$id .= ':' . $this->getState('filter.time_start');
+		$id .= ':' . $this->getState('filter.time_stop');
+
+		return parent::getStoreId($id);
 	}
 
 	/**
@@ -311,5 +271,45 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 		$this->cache[$store] = $data;
 
 		return $this->cache[$store];
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * @param   null $ordering
+	 * @param   null $direction
+	 *
+	 * @since Kunena
+	 */
+	protected function populateState($ordering = null, $direction = null)
+	{
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$now   = new \Joomla\CMS\Date\Date;
+		$month = new \Joomla\CMS\Date\Date('-1 month');
+
+		$filter_active = '';
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
+		$this->setState('filter.user', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
+		$this->setState('filter.time_start', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
+		$this->setState('filter.time_stop', $value);
+
+		$this->setState('filter.active', !empty($filter_active));
+
+		// List state information.
+		parent::populateState('user_id', 'asc');
 	}
 }

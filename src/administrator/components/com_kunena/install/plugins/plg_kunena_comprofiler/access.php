@@ -106,6 +106,25 @@ class KunenaAccessComprofiler
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function loadGroups()
+	{
+		if ($this->groups === false)
+		{
+			$this->groups = array();
+			$params       = array('groups' => &$this->groups, 'categories' => $this->categories);
+			KunenaIntegrationComprofiler::trigger('loadGroups', $params);
+
+			if ($this->categories !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
+	}
+
+	/**
 	 * Get HTML list of the available groups
 	 *
 	 * @param   string $accesstype Access type.
@@ -153,6 +172,26 @@ class KunenaAccessComprofiler
 		KunenaIntegrationComprofiler::trigger('getAccessOptions', $params);
 
 		return $html;
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function loadCategories()
+	{
+		if ($this->categories === false)
+		{
+			$this->categories = array();
+			$params           = array('categories' => &$this->categories, 'groups' => $this->groups);
+			KunenaIntegrationComprofiler::trigger('loadCategories', $params);
+			$this->tree = new KunenaTree($this->categories);
+
+			if ($this->groups !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
 	}
 
 	/**
@@ -257,44 +296,5 @@ class KunenaAccessComprofiler
 		KunenaIntegrationComprofiler::trigger('authoriseUsers', $params);
 
 		return array($allow, $deny);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadCategories()
-	{
-		if ($this->categories === false)
-		{
-			$this->categories = array();
-			$params           = array('categories' => &$this->categories, 'groups' => $this->groups);
-			KunenaIntegrationComprofiler::trigger('loadCategories', $params);
-			$this->tree = new KunenaTree($this->categories);
-
-			if ($this->groups !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadGroups()
-	{
-		if ($this->groups === false)
-		{
-			$this->groups = array();
-			$params       = array('groups' => &$this->groups, 'categories' => $this->categories);
-			KunenaIntegrationComprofiler::trigger('loadGroups', $params);
-
-			if ($this->categories !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
 	}
 }

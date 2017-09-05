@@ -36,12 +36,14 @@ defined('_JEXEC') or die;
 	</thead>
 	<tbody>
 	<?php
-	if ($this->userBans) :
+	if ($this->userBans)
+	:
 		$i = 0;
 
 		// @var KunenaUserBan $banInfo
 
-		foreach ($this->userBans as $banInfo) :
+		foreach ($this->userBans as $banInfo)
+		:
 			$bantext = $banInfo->blocked
 				? JText::_('COM_KUNENA_BAN_UNBLOCK_USER')
 				: JText::_('COM_KUNENA_BAN_UNBAN_USER');
@@ -69,7 +71,10 @@ defined('_JEXEC') or die;
 			</tr>
 		<?php endforeach; ?>
 
-	<?php else : ?>
+	<?php else
+
+:
+	?>
 		<tr>
 			<td colspan="5">
 				<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>

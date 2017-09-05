@@ -17,35 +17,30 @@ defined('_JEXEC') or die();
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var KunenaConfig
+	 * @since Kunena
+	 */
+	public $config;
+	/**
 	 * @var KunenaLayout
 	 * @since Kunena
 	 */
 	protected $page;
-
 	/**
 	 * @var KunenaLayout
 	 * @since Kunena
 	 */
 	protected $content;
-
 	/**
 	 * @var \Joomla\CMS\Pathway\Pathway
 	 * @since Kunena
 	 */
 	protected $breadcrumb;
-
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
 	 */
 	protected $me;
-
-	/**
-	 * @var KunenaConfig
-	 * @since Kunena
-	 */
-	public $config;
-
 	/**
 	 * @var KunenaTemplate
 	 * @since Kunena
@@ -57,38 +52,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 */
 	protected $document;
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function exists()
-	{
-		if ($this->input->getWord('format', 'html') != 'html')
-		{
-			return false;
-		}
-
-		$name       = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
-		$this->page = KunenaLayoutPage::factory($name);
-
-		return (bool) $this->page->getPath();
-	}
-
-	/**
-	 * @return KunenaLayout
-	 * @since Kunena
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$this->page
-			->set('input', $this->input)
-			->setLayout($this->input->getWord('layout', 'default'))
-			->setOptions($this->getOptions());
-
-		return $this->page;
-	}
 
 	/**
 	 * @return \Joomla\CMS\Layout\BaseLayout
@@ -165,9 +128,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					$this->content = KunenaLayout::factory('Widget/Custom')
 						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
 						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-                            KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
-                        )
-                        );
+							KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
+						)
+						);
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}
 				elseif (!KunenaUserHelper::get($userid)->exists())
@@ -176,7 +139,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					$this->document->setTitle($e->getResponseStatus());
 
 					$this->content = KunenaLayout::factory('Widget/Error')
-                        ->set('header', $e->getResponseStatus());
+						->set('header', $e->getResponseStatus());
 				}
 				else
 				{
@@ -292,7 +255,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$kinput = \Joomla\CMS\Factory::getApplication()->input;
+		$kinput     = \Joomla\CMS\Factory::getApplication()->input;
 		$limitstart = $kinput->getInt('limitstart', 'limitstart', 0);
 
 		if (!$limitstart)
@@ -307,25 +270,20 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 *
+	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function after()
+	public function exists()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-
-		// Use our own browser side cache settings.
-		\Joomla\CMS\Factory::getApplication()->allowCache(false);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
-
-		if ($this->config->get('credits', 1))
+		if ($this->input->getWord('format', 'html') != 'html')
 		{
-			$this->output->appendAfter($this->poweredBy());
+			return false;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		$name       = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
+		$this->page = KunenaLayoutPage::factory($name);
+
+		return (bool) $this->page->getPath();
 	}
 
 	/**
@@ -363,6 +321,43 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * @return KunenaLayout
+	 * @since Kunena
+	 */
+	protected function display()
+	{
+		// Display layout with given parameters.
+		$this->page
+			->set('input', $this->input)
+			->setLayout($this->input->getWord('layout', 'default'))
+			->setOptions($this->getOptions());
+
+		return $this->page;
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function after()
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+
+		// Use our own browser side cache settings.
+		\Joomla\CMS\Factory::getApplication()->allowCache(false);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+
+		if ($this->config->get('credits', 1))
+		{
+			$this->output->appendAfter($this->poweredBy());
+		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+	}
+
+	/**
 	 * @return string
 	 * @since Kunena
 	 */
@@ -372,12 +367,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
 		$credits      = '<div style="text-align:center;">';
-		$credits .= JHtml::_(
+		$credits      .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			array('style' => 'display: inline; visibility: visible; text-decoration: none;')
 		);
-		$credits .= ' <a href="https://www.kunena.org"
+		$credits      .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
 
@@ -392,6 +387,17 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$credits = '';
+		}
+		else
+		{
+			$styles = <<<EOF
+		.layout#kunena + div { display: block !important;}
+		#kunena + div { display: block !important;}
+EOF;
+
+
+			$document = JFactory::getDocument();
+			$document->addStyleDeclaration($styles);
 		}
 
 		return $credits;

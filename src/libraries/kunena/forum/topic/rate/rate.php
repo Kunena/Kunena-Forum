@@ -19,18 +19,6 @@ defined('_JEXEC') or die();
 class KunenaForumTopicRate extends JObject
 {
 	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected $_exists = false;
-
-	/**
-	 * @var JDatabaseDriver|null
-	 * @since Kunena
-	 */
-	protected $_db = null;
-
-	/**
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -55,6 +43,18 @@ class KunenaForumTopicRate extends JObject
 	public $time = null;
 
 	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected $_exists = false;
+
+	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
+	protected $_db = null;
+
+	/**
 	 * @var array
 	 * @since Kunena
 	 */
@@ -73,6 +73,52 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
+	 * Method to load a KunenaForumTopicPoll object by id.
+	 *
+	 * @param   int $id The poll id to be loaded.
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function load($id)
+	{
+		// Create the table object
+		$table = $this->getTable();
+
+		// Load the KunenaTable object based on id
+		$this->_exists = $table->load($id);
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		return $this->_exists;
+	}
+
+	/**
+	 * Method to get the rate table object.
+	 *
+	 * @param   string $type   Polls table name to be used.
+	 * @param   string $prefix Polls table prefix to be used.
+	 *
+	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
+	 * @since Kunena
+	 */
+	public function getTable($type = 'KunenaRate', $prefix = 'Table')
+	{
+		static $tabletype = null;
+
+		// Set a custom table type is defined
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
+			$tabletype ['name']   = $type;
+			$tabletype ['prefix'] = $prefix;
+		}
+
+		// Create the user table object
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+	}
+
+	/**
 	 * Returns KunenaForumMessage object
 	 *
 	 * @access    public
@@ -86,66 +132,6 @@ class KunenaForumTopicRate extends JObject
 	static public function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumTopicRateHelper::get($identifier, $reload);
-	}
-
-	/**
-	 * @param   int $userid
-	 *
-	 * @return int userid if hes in table else empty
-	 * @internal param int $pid
-	 * @since    2.0
-	 */
-	public function exists($userid)
-	{
-		return isset($this->users[$userid]);
-	}
-
-	/**
-	 * @param $userid
-	 * @param $time
-	 *
-	 * @since Kunena
-	 */
-	public function _add($userid, $time)
-	{
-		$this->users[$userid] = $time;
-	}
-
-	/**
-	 * Get the users to check which one are already rated the topic
-	 *
-	 * @param   int $start
-	 * @param   int $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	public function getUsers($start = 0, $limit = 0)
-	{
-		/*
-		if ($this->users === false)
-			{  */
-		$query = $this->_db->getQuery(true);
-		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
-		$this->_db->setQuery($query, $start, $limit);
-
-		try
-		{
-			$users = (array) $this->_db->loadObjectList();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($users as $user)
-		{
-			$this->_add($user->userid, $user->time);
-		}
-
-		// }
-
-		// Return $this->users;
 	}
 
 	/**
@@ -214,6 +200,66 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
+	 * Get the users to check which one are already rated the topic
+	 *
+	 * @param   int $start
+	 * @param   int $limit
+	 *
+	 * @return array
+	 * @since Kunena
+	 */
+	public function getUsers($start = 0, $limit = 0)
+	{
+		/*
+		if ($this->users === false)
+			{  */
+		$query = $this->_db->getQuery(true);
+		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
+		$this->_db->setQuery($query, $start, $limit);
+
+		try
+		{
+			$users = (array) $this->_db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($users as $user)
+		{
+			$this->_add($user->userid, $user->time);
+		}
+
+		// }
+
+		// Return $this->users;
+	}
+
+	/**
+	 * @param $userid
+	 * @param $time
+	 *
+	 * @since Kunena
+	 */
+	public function _add($userid, $time)
+	{
+		$this->users[$userid] = $time;
+	}
+
+	/**
+	 * @param   int $userid
+	 *
+	 * @return int userid if hes in table else empty
+	 * @internal param int $pid
+	 * @since    2.0
+	 */
+	public function exists($userid)
+	{
+		return isset($this->users[$userid]);
+	}
+
+	/**
 	 * Get rate for the specified topic and user
 	 * @since Kunena
 	 */
@@ -227,51 +273,5 @@ class KunenaForumTopicRate extends JObject
 		}
 
 		return 0;
-	}
-
-	/**
-	 * Method to get the rate table object.
-	 *
-	 * @param   string $type   Polls table name to be used.
-	 * @param   string $prefix Polls table prefix to be used.
-	 *
-	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
-	 * @since Kunena
-	 */
-	public function getTable($type = 'KunenaRate', $prefix = 'Table')
-	{
-		static $tabletype = null;
-
-		// Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
-		{
-			$tabletype ['name']   = $type;
-			$tabletype ['prefix'] = $prefix;
-		}
-
-		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
-	}
-
-	/**
-	 * Method to load a KunenaForumTopicPoll object by id.
-	 *
-	 * @param   int $id The poll id to be loaded.
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function load($id)
-	{
-		// Create the table object
-		$table = $this->getTable();
-
-		// Load the KunenaTable object based on id
-		$this->_exists = $table->load($id);
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-
-		return $this->_exists;
 	}
 }

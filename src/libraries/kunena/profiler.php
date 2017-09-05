@@ -55,7 +55,7 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 	}
 
 	/**
-	 * @param   string $name  name
+	 * @param   string $name name
 	 *
 	 * @since Kunena
 	 * @return void
@@ -126,8 +126,7 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 	 */
 	function sort(&$array, $property = 'total')
 	{
-		return usort($array, function ($a, $b) use ($property)
-		{
+		return usort($array, function ($a, $b) use ($property) {
 			if ($a->$property == $b->$property)
 			{
 				return 0;
@@ -248,7 +247,7 @@ class KunenaProfilerItem
 			return 0.0;
 		}
 
-		$delta = $stoptime - $starttime;
+		$delta       = $stoptime - $starttime;
 		$this->total += $delta;
 
 		return $delta;

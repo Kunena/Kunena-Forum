@@ -76,148 +76,6 @@ class KunenaUpload
 	}
 
 	/**
-	 * Split filename by valid extension.
-	 *
-	 * @param   string $filename Name of the file.
-	 *
-	 * @return array  File parts: list($name, $extension).
-	 * @throws RuntimeException
-	 * @since Kunena
-	 */
-	public function splitFilename($filename = null)
-	{
-		$filename = $filename ? $filename : $this->filename;
-
-		if (!$filename)
-		{
-			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
-		}
-
-		// Check if file extension matches any allowed extensions (case insensitive)
-		foreach ($this->validExtensions as $ext)
-		{
-			$extension = Joomla\String\StringHelper::substr($filename, -Joomla\String\StringHelper::strlen($ext));
-
-			if (Joomla\String\StringHelper::strtolower($extension) == Joomla\String\StringHelper::strtolower($ext))
-			{
-				// File must contain one letter before extension
-				$name      = Joomla\String\StringHelper::substr($filename, 0, -Joomla\String\StringHelper::strlen($ext));
-				$extension = Joomla\String\StringHelper::substr($extension, 1);
-
-				if (!$name)
-				{
-					break;
-				}
-
-				return array($name, $extension);
-			}
-		}
-
-		throw new RuntimeException(
-			JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
-			400
-		);
-	}
-
-	/**
-	 * @param   string $filename Original filename.
-	 *
-	 * @return string  Path pointing to the protected file.
-	 * @since Kunena
-	 */
-	public function getProtectedFile($filename = null)
-	{
-		$filename = $filename ? $filename : $this->filename;
-
-		return $this->getFolder() . '/' . $this->getProtectedFilename($filename);
-	}
-
-	/**
-	 * @param   string $filename Original filename.
-	 *
-	 * @return string     Protected filename.
-	 * @since Kunena
-	 */
-	public function getProtectedFilename($filename = null)
-	{
-		$filename = $filename ? $filename : $this->filename;
-
-		$user    = \Joomla\CMS\Factory::getUser();
-		$session = \Joomla\CMS\Factory::getSession();
-		$token   = \Joomla\CMS\Factory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
-		list($name, $ext) = $this->splitFilename($filename);
-
-		return md5("{$name}.{$token}.{$ext}");
-	}
-
-	/**
-	 * Get upload folder.
-	 *
-	 * @return string  Absolute path.
-	 * @since Kunena
-	 */
-	public function getFolder()
-	{
-		$dir = KunenaPath::tmpdir();
-
-		return "{$dir}/uploads";
-	}
-
-	/**
-	 * Convert value into bytes.
-	 *
-	 * @param   string $value Value, for example: 1G, 10M, 120k...
-	 *
-	 * @return int  Value in bytes.
-	 * @since Kunena
-	 */
-	public static function toBytes($value)
-	{
-		$value = trim($value);
-
-		if (empty($value))
-		{
-			return 0;
-		}
-
-		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $value, $matches);
-
-		$last = '';
-
-		if (isset($matches[2]))
-		{
-			$last = $matches[2];
-		}
-
-		if (isset($matches[1]))
-		{
-			$value = (int) $matches[1];
-		}
-
-		switch (strtolower($last))
-		{
-			case 'g':
-			case 'gb':
-				$value *= 1024;
-
-				// Continue , do not put break here
-			case 'm':
-			case 'mb':
-				$value *= 1024;
-				$value *= 1024;
-
-				// Continue , do not put break here
-			case 'k':
-			case 'kb':
-				$value *= 1024;
-
-				// Continue, do not put break here
-		}
-
-		return (int) $value;
-	}
-
-	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
 	 * @param   array $options Upload options.
@@ -435,6 +293,284 @@ class KunenaUpload
 	}
 
 	/**
+	 * Get upload folder.
+	 *
+	 * @return string  Absolute path.
+	 * @since Kunena
+	 */
+	public function getFolder()
+	{
+		$dir = KunenaPath::tmpdir();
+
+		return "{$dir}/uploads";
+	}
+
+	/**
+	 * @param   string $filename Original filename.
+	 *
+	 * @return string  Path pointing to the protected file.
+	 * @since Kunena
+	 */
+	public function getProtectedFile($filename = null)
+	{
+		$filename = $filename ? $filename : $this->filename;
+
+		return $this->getFolder() . '/' . $this->getProtectedFilename($filename);
+	}
+
+	/**
+	 * @param   string $filename Original filename.
+	 *
+	 * @return string     Protected filename.
+	 * @since Kunena
+	 */
+	public function getProtectedFilename($filename = null)
+	{
+		$filename = $filename ? $filename : $this->filename;
+
+		$user    = \Joomla\CMS\Factory::getUser();
+		$session = \Joomla\CMS\Factory::getSession();
+		$token   = \Joomla\CMS\Factory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
+		list($name, $ext) = $this->splitFilename($filename);
+
+		return md5("{$name}.{$token}.{$ext}");
+	}
+
+	/**
+	 * Split filename by valid extension.
+	 *
+	 * @param   string $filename Name of the file.
+	 *
+	 * @return array  File parts: list($name, $extension).
+	 * @throws RuntimeException
+	 * @since Kunena
+	 */
+	public function splitFilename($filename = null)
+	{
+		$filename = $filename ? $filename : $this->filename;
+
+		if (!$filename)
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
+		}
+
+		// Check if file extension matches any allowed extensions (case insensitive)
+		foreach ($this->validExtensions as $ext)
+		{
+			$extension = Joomla\String\StringHelper::substr($filename, -Joomla\String\StringHelper::strlen($ext));
+
+			if (Joomla\String\StringHelper::strtolower($extension) == Joomla\String\StringHelper::strtolower($ext))
+			{
+				// File must contain one letter before extension
+				$name      = Joomla\String\StringHelper::substr($filename, 0, -Joomla\String\StringHelper::strlen($ext));
+				$extension = Joomla\String\StringHelper::substr($extension, 1);
+
+				if (!$name)
+				{
+					break;
+				}
+
+				return array($name, $extension);
+			}
+		}
+
+		throw new RuntimeException(
+			JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+			400
+		);
+	}
+
+	/**
+	 * Check for upload errors.
+	 *
+	 * @param   array $file Entry from $_FILES array.
+	 *
+	 * @return RuntimeException
+	 * @since Kunena
+	 */
+	protected function checkUpload($file)
+	{
+		$exception = null;
+
+		switch ($file['error'])
+		{
+			case UPLOAD_ERR_OK :
+				break;
+
+			case UPLOAD_ERR_INI_SIZE :
+			case UPLOAD_ERR_FORM_SIZE :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
+				break;
+
+			case UPLOAD_ERR_PARTIAL :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
+				break;
+
+			case UPLOAD_ERR_NO_FILE :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
+				break;
+
+			case UPLOAD_ERR_NO_TMP_DIR :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
+				break;
+
+			case UPLOAD_ERR_CANT_WRITE :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
+				break;
+
+			case UPLOAD_ERR_EXTENSION :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
+				break;
+
+			default :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
+		}
+
+		if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])))
+		{
+			$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
+		}
+
+		return $exception;
+	}
+
+	/**
+	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
+	 * and Php configuration
+	 *
+	 * @param   int $filesize The size of avatar in bytes
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	protected function checkFileSizeAvatar($filesize)
+	{
+		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
+		{
+			return false;
+		}
+
+		return (int) max(
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
+		);
+	}
+
+	/**
+	 * Convert value into bytes.
+	 *
+	 * @param   string $value Value, for example: 1G, 10M, 120k...
+	 *
+	 * @return int  Value in bytes.
+	 * @since Kunena
+	 */
+	public static function toBytes($value)
+	{
+		$value = trim($value);
+
+		if (empty($value))
+		{
+			return 0;
+		}
+
+		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $value, $matches);
+
+		$last = '';
+
+		if (isset($matches[2]))
+		{
+			$last = $matches[2];
+		}
+
+		if (isset($matches[1]))
+		{
+			$value = (int) $matches[1];
+		}
+
+		switch (strtolower($last))
+		{
+			case 'g':
+			case 'gb':
+				$value *= 1024;
+
+				// Continue , do not put break here
+			case 'm':
+			case 'mb':
+				$value *= 1024;
+				$value *= 1024;
+
+				// Continue , do not put break here
+			case 'k':
+			case 'kb':
+				$value *= 1024;
+
+				// Continue, do not put break here
+		}
+
+		return (int) $value;
+	}
+
+	/**
+	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration
+	 * and PHP configuration
+	 *
+	 * @param   int $filesize The size of file in bytes
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	protected function checkFileSizeFileAttachment($filesize)
+	{
+		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
+
+		if ($file)
+		{
+			return false;
+		}
+
+		return (int) max(
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
+		);
+	}
+
+	/**
+	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+	 * configuration and PHP configuration
+	 *
+	 * @param   int $filesize The size of file in bytes
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	protected function checkFileSizeImageAttachment($filesize)
+	{
+		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
+
+		if ($image)
+		{
+			return false;
+		}
+
+		return (int) max(
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
+				$this->toBytes(ini_get('post_max_size')) - 1024,
+				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+			)
+		);
+	}
+
+	/**
 	 * Clean up temporary file if it exists.
 	 *
 	 * @return void
@@ -508,85 +644,6 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
-	 *
-	 * @param   int $filesize The size of avatar in bytes
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	protected function checkFileSizeAvatar($filesize)
-	{
-		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
-		{
-			return false;
-		}
-
-		return (int) max(
-			0,
-			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-			)
-		);
-	}
-
-	/**
-	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and PHP configuration
-	 *
-	 * @param   int $filesize The size of file in bytes
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	protected function checkFileSizeFileAttachment($filesize)
-	{
-		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
-
-		if ($file)
-		{
-			return false;
-		}
-
-		return (int) max(
-			0,
-			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-			)
-		);
-	}
-
-	/**
-	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and PHP configuration
-	 *
-	 * @param   int $filesize The size of file in bytes
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	protected function checkFileSizeImageAttachment($filesize)
-	{
-		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
-
-		if ($image)
-		{
-			return false;
-		}
-
-		return (int) max(
-			0,
-			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
-			)
-		);
-	}
-
-	/**
 	 * Upload file by passing it by HTML input
 	 *
 	 * @param   array  $fileInput   The file object returned by \Joomla\CMS\Input\Input
@@ -598,9 +655,9 @@ class KunenaUpload
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
-		$file = new stdClass;
-		$file->ext = JFile::getExt($fileInput['name']);
-		$file->ext = strtolower($file->ext);
+		$file       = new stdClass;
+		$file->ext  = JFile::getExt($fileInput['name']);
+		$file->ext  = strtolower($file->ext);
 		$file->size = $fileInput['size'];
 		$config     = KunenaFactory::getConfig();
 
@@ -715,60 +772,6 @@ class KunenaUpload
 		$file->success = true;
 
 		return $file;
-	}
-
-	/**
-	 * Check for upload errors.
-	 *
-	 * @param   array $file Entry from $_FILES array.
-	 *
-	 * @return RuntimeException
-	 * @since Kunena
-	 */
-	protected function checkUpload($file)
-	{
-		$exception = null;
-
-		switch ($file['error'])
-		{
-			case UPLOAD_ERR_OK :
-				break;
-
-			case UPLOAD_ERR_INI_SIZE :
-			case UPLOAD_ERR_FORM_SIZE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
-				break;
-
-			case UPLOAD_ERR_PARTIAL :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
-				break;
-
-			case UPLOAD_ERR_NO_FILE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
-				break;
-
-			case UPLOAD_ERR_NO_TMP_DIR :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
-				break;
-
-			case UPLOAD_ERR_CANT_WRITE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
-				break;
-
-			case UPLOAD_ERR_EXTENSION :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
-				break;
-
-			default :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
-		}
-
-		if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])))
-		{
-			$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
-		}
-
-		return $exception;
 	}
 
 	/**

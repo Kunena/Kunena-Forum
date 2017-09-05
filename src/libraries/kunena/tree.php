@@ -84,74 +84,6 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 *
-	 * @since Kunena
-	 */
-	public function rewind()
-	{
-		$this->heap = array(0);
-
-		if (!isset($this->_instances[0]))
-		{
-			$this->next();
-		}
-	}
-
-	/**
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function current()
-	{
-		$id = reset($this->heap);
-
-		return $this->_instances[$id];
-	}
-
-	/**
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function key()
-	{
-		return reset($this->heap);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	public function next()
-	{
-		$id = array_shift($this->heap);
-
-		if ($id === false)
-		{
-			return;
-		}
-
-		// Add children into the beginning of the array
-		$this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
-
-		// Skip missing items
-		$id = reset($this->heap);
-
-		if ($id !== false && !isset($this->_instances[$id]))
-		{
-			$this->next();
-		}
-	}
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function valid()
-	{
-		return !empty($this->heap);
-	}
-
-	/**
 	 * @param $items
 	 *
 	 * @since Kunena
@@ -216,6 +148,74 @@ class KunenaTree implements Iterator
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 */
+	public function rewind()
+	{
+		$this->heap = array(0);
+
+		if (!isset($this->_instances[0]))
+		{
+			$this->next();
+		}
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public function next()
+	{
+		$id = array_shift($this->heap);
+
+		if ($id === false)
+		{
+			return;
+		}
+
+		// Add children into the beginning of the array
+		$this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
+
+		// Skip missing items
+		$id = reset($this->heap);
+
+		if ($id !== false && !isset($this->_instances[$id]))
+		{
+			$this->next();
+		}
+	}
+
+	/**
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function current()
+	{
+		$id = reset($this->heap);
+
+		return $this->_instances[$id];
+	}
+
+	/**
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function key()
+	{
+		return reset($this->heap);
+	}
+
+	/**
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function valid()
+	{
+		return !empty($this->heap);
+	}
+
+	/**
 	 * @param $id
 	 *
 	 * @return boolean
@@ -266,7 +266,7 @@ class KunenaTree implements Iterator
 			{
 				// Item isn't available (but there's at least one child)
 				$indent[] = 'gap';
-				$list += $this->getIndentation($id, $indent, true);
+				$list     += $this->getIndentation($id, $indent, true);
 
 				continue;
 			}
@@ -304,7 +304,7 @@ class KunenaTree implements Iterator
 			{
 				// Has child nodes
 				$list[$id]->indent[] = $parent_id ? 'node' : 'root';
-				$list += $this->getIndentation($id, $indent);
+				$list                += $this->getIndentation($id, $indent);
 			}
 		}
 

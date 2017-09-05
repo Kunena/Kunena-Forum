@@ -50,15 +50,6 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function enabled()
-	{
-		return !empty($this->instances);
-	}
-
-	/**
 	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaLogin
@@ -72,6 +63,28 @@ class KunenaLogin
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Method to check if TFA is enabled when user ins't logged
+	 *
+	 * @return integer
+	 * @since Kunena
+	 */
+	public static function getTwoFactorMethods()
+	{
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
+
+		return count(UsersHelper::getTwoFactorMethods());
+	}
+
+	/**
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function enabled()
+	{
+		return !empty($this->instances);
 	}
 
 	/**
@@ -254,18 +267,5 @@ class KunenaLogin
 		$otpConfig = $model->getOtpConfig($userId);
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
-	}
-
-	/**
-	 * Method to check if TFA is enabled when user ins't logged
-	 *
-	 * @return integer
-	 * @since Kunena
-	 */
-	public static function getTwoFactorMethods()
-	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
-
-		return count(UsersHelper::getTwoFactorMethods());
 	}
 }

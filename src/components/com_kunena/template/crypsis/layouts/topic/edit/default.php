@@ -97,37 +97,56 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 	</div>
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
-	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
+		  id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic"/>
 		<input id="kurl_topicons_request" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
 		<input id="kurl_category_template_text" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
-		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo \Joomla\CMS\Uri\Uri::root(true) . '/index.php?option=com_kunena&view=topic&layout=edit&format=raw' ?>" />
-		<?php if (!$this->config->allow_change_subject) : ?>
+		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+		<?php if (!$this->config->allow_change_subject)
+:
+	?>
 			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->exists()) : ?>
+		<?php
+		if ($this->message->exists())
+:
+	?>
 			<input type="hidden" name="task" value="edit"/>
 			<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
-		<?php else: ?>
+		<?php else
+
+:
+	?>
 			<input type="hidden" name="task" value="post"/>
 			<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>"/>
 		<?php endif; ?>
-		<?php if (!isset($this->selectcatlist)) : ?>
+		<?php
+		if (!isset($this->selectcatlist))
+:
+	?>
 			<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
 		<?php endif; ?>
-		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
+		<?php
+		if ($this->category->id && $this->category->id != $this->message->catid)
+:
+	?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>"/>
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) : ?>
+		<?php
+		if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id)
+:
+	?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>"/>
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>"/>
 		<input type="hidden" id="kunena_upload_files_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false) ?>"/>
-		<?php if ($this->me->exists()) : ?>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false) ?>"/>
+		<?php if ($this->me->exists())
+:
+	?>
 			<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -140,7 +159,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<div class="row-fluid column-row">
 				<div class="span12 column-item">
 					<fieldset>
-						<?php if (isset($this->selectcatlist)) : ?>
+						<?php if (isset($this->selectcatlist))
+:
+	?>
 							<div class="control-group">
 								<!-- Username -->
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
@@ -148,22 +169,31 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
 							</div>
 						<?php endif; ?>
-						<?php if ($this->message->userid) : ?>
+						<?php
+						if ($this->message->userid)
+:
+	?>
 							<div class="control-group" id="kanynomous-check"
-							     <?php if (!$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+									<?php if (!$this->category->allow_anonymous)
+	:
+	?>style="display:none;"<?php
+									endif; ?>>
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls">
 									<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
-									{
+	{
 										echo 'checked="checked"';
-									} ?> />
-									<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
-								</div>
-							</div>
+} ?> />
+															<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
+														</div>
+													</div>
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
-						     <?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+								<?php if ($this->me->userid && !$this->category->allow_anonymous)
+:
+	?>style="display:none;"<?php
+								endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
@@ -171,21 +201,23 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>"/>
 						<!-- Encourage guest user to login or register -->
 						<?php
-			            $login =  '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)\Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
-			            $register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
-						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ;
-			            ?>
+						$login = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
+						$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
+						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
+						?>
 							</div>
 						</div>
-						<?php if ($this->config->askemail && !$this->me->userid) : ?>
+						<?php if ($this->config->askemail && !$this->me->userid)
+:
+	?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
 
 								<div class="controls">
 									<input type="text" id="email" name="email" size="35"
-									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xxlarge"
-									       maxlength="45" tabindex="5"
-									       value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required/>
+										   placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xxlarge"
+										   maxlength="45" tabindex="5"
+										   value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required/>
 									<br/>
 									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>
@@ -195,63 +227,84 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
-								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
+								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory()))
+:
+	?>
 									<input class="span12" type="text"  id="subject" value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
-								<?php else : ?>
+								<?php else
+
+:
+	?>
 									<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"  />
 								<?php endif; ?>
 							</div>
 						</div>
-						<?php if (!empty($this->topicIcons)) : ?>
+						<?php if (!empty($this->topicIcons))
+:
+	?>
 							<div class="control-group" id="kpost-topicicons">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
 									<div class="span12" id="iconset_topic_list">
-										<?php foreach ($this->topicIcons as $id => $icon): ?>
+										<?php foreach ($this->topicIcons as $id => $icon)
+	:
+	?>
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
-										       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-										<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
+											   value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+										<?php if ($this->config->topicicons && $topicicontype == 'B2')
+		:
+	?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 												class="icon icon-<?php echo $icon->b2; ?> icon-topic" aria-hidden="true"></span>
-											<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
+										<?php elseif ($this->config->topicicons && $topicicontype == 'fa')
+		:
+	?>
 											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 													class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-												<?php else : ?>
+										<?php else
+
+		:
+	?>
 												<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
 														src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" border="0"/>
-													<?php endif; ?>
+										<?php endif; ?>
 												</label>
-												<?php endforeach; ?>
+										<?php endforeach; ?>
 									</div>
 								</div>
 							</div>
 						<?php endif; ?>
 
 						<?php if ($editor == 1)
-						{
+{
 							echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
-						}
-						else
-						{
-							echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config);
-						} ?>
+}
+else
+{
+	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config);
+} ?>
 
-						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
+						<?php if ($this->message->exists() && $this->config->editmarkup)
+:
+	?>
 							<div class="control-group" id="modified_reason">
-								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+								<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
 								<div class="controls">
 									<input class="input-xxlarge" name="modified_reason" maxlength="200" type="text"
-									       value="<?php echo $this->message->modified_reason; ?>" title="reason" placeholder="<?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
+										   value="<?php echo $this->message->modified_reason; ?>" title="reason" placeholder="<?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if ($this->allowedExtensions) : ?>
+						<?php
+						if ($this->allowedExtensions)
+:
+	?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
 								<div class="controls">
 									<button class="btn" id="kshow_attach_form"
-									        type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+											type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
 											: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br/><br/>
@@ -292,21 +345,27 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if ($this->canSubscribe) : ?>
+						<?php
+						if ($this->canSubscribe)
+:
+	?>
 							<div class="control-group" id="kpost-subscribe">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe"
-									       value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
-									{
-										echo 'checked="checked"';
-									} ?> />
+										   value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
+	{
+												echo 'checked="checked"';
+} ?> />
 									<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if (!empty($this->captchaEnabled)) : ?>
+						<?php
+						if (!empty($this->captchaEnabled))
+:
+	?>
 							<div class="control-group">
 								<?php echo $this->captchaDisplay; ?>
 							</div>
@@ -317,35 +376,40 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<?php if ($editor == 1): ?>
+			<?php if ($editor == 1)
+:
+	?>
 				<input type="submit" class="btn btn-success" name="submit"
-				       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
-				       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
-			<?php else : ?>
+					   value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
+					   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
+			<?php else
+
+:
+	?>
 				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
 					<?php echo KunenaIcons::save(); ?>
-					<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+					<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 				</button>
-			<?php endif ;?>
+			<?php endif;?>
 
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<?php echo KunenaIcons::cancel(); ?>
-				<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 		<?php
 		if (!$this->message->name)
-		{
+{
 			echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
 		}
 		else
-		{
+{
 			if (!$this->topic->subject)
-			{
+	{
 				echo '<script type="text/javascript">document.postform.subject.focus();</script>';
 			}
 			else
-			{
+	{
 				echo '<script type="text/javascript">document.postform.message.focus();</script>';
 			}
 		}

@@ -14,4 +14,4 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag = $this->ktemplate->params->get('socialsharetag');
 ?>
 
-<?php echo JHtml::_('content.prepare', $socialsharetag); ?>
+<?php echo JHtml::_('content.prepare', $socialsharetag);

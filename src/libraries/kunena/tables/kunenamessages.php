@@ -156,16 +156,6 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 *
-	 * @since Kunena
-	 */
-	public function reset()
-	{
-		parent::reset();
-		$this->message = null;
-	}
-
-	/**
 	 * @param   null $id
 	 * @param   bool $reset
 	 *
@@ -225,6 +215,16 @@ class TableKunenaMessages extends KunenaTable
 		$this->bind($data);
 
 		return $this->_exists;
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public function reset()
+	{
+		parent::reset();
+		$this->message = null;
 	}
 
 	/**

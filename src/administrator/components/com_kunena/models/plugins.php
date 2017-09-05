@@ -88,30 +88,6 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string $id A prefix for the store id.
-	 *
-	 * @return  string    A store id.
-	 * @since Kunena
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.enabled');
-		$id .= ':' . $this->getState('filter.name');
-		$id .= ':' . $this->getState('filter.element');
-		$id .= ':' . $this->getState('filter.access');
-
-		return parent::getStoreId($id);
-	}
-
-	/**
 	 * Returns an object list
 	 *
 	 * @param   JDatabaseQuery $query      The query
@@ -210,6 +186,30 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
 			$item->name = JText::_($item->name);
 		}
+	}
+
+	/**
+	 * Method to get a store id based on model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string $id A prefix for the store id.
+	 *
+	 * @return  string    A store id.
+	 * @since Kunena
+	 */
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.enabled');
+		$id .= ':' . $this->getState('filter.name');
+		$id .= ':' . $this->getState('filter.element');
+		$id .= ':' . $this->getState('filter.access');
+
+		return parent::getStoreId($id);
 	}
 
 	/**

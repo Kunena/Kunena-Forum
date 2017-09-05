@@ -15,7 +15,7 @@ JHtml::_('behavior.core');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-      id="adminForm" name="adminForm">
+	  id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0"/>
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -26,7 +26,9 @@ JHtml::_('behavior.core');
 			</h2>
 		</div>
 		<div class="col-md-5">
-			<?php if (!empty($options)) : ?>
+			<?php if (!empty($options))
+			:
+	?>
 				<div class="form-group">
 					<div class="input-group pull-right" role="group">
 						<div class="input-group-btn">
@@ -53,7 +55,9 @@ JHtml::_('behavior.core');
 				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 			</th>
 
-			<?php if ($options) : ?>
+			<?php if ($options)
+			:
+	?>
 				<th class="col-md-1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
@@ -72,7 +76,9 @@ JHtml::_('behavior.core');
 				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
-			<?php if ($options) : ?>
+			<?php if ($options)
+			:
+	?>
 				<th class="col-md-1 center">
 					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 				</th>
@@ -81,7 +87,9 @@ JHtml::_('behavior.core');
 		</tr>
 		</thead>
 
-		<?php if ($this->pagination->pagesTotal > 1) : ?>
+		<?php if ($this->pagination->pagesTotal > 1)
+		:
+	?>
 			<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">

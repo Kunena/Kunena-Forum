@@ -22,62 +22,6 @@ class KunenaAdminModelRank extends KunenaModel
 {
 
 	/**
-	 * Method to auto-populate the model state.
-	 * @since Kunena
-	 */
-	protected function populateState()
-	{
-		$this->context = 'com_kunena.admin.rank';
-
-		$app = \Joomla\CMS\Factory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-
-		if ($layout)
-		{
-			$this->context .= '.' . $layout;
-		}
-
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
-		$this->setState($this->getName() . '.id', $value);
-		$this->setState('item.id', $value);
-	}
-
-	/**
-	 * @return mixed|null
-	 *
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getRank()
-	{
-		$db = \Joomla\CMS\Factory::getDBO();
-
-		$id = $this->getState($this->getName() . '.id');
-
-		if ($id)
-		{
-			$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_id={$db->quote($id)}");
-
-			try
-			{
-				$selected = $db->loadObject();
-			}
-			catch (RuntimeException $e)
-			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			return $selected;
-		}
-
-		return null;
-	}
-
-	/**
 	 * @return mixed
 	 *
 	 * @since Kunena
@@ -119,5 +63,61 @@ class KunenaAdminModelRank extends KunenaModel
 		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rank_image) ? $rank_images[$selected->rank_image] : '');
 
 		return $list;
+	}
+
+	/**
+	 * @return mixed|null
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getRank()
+	{
+		$db = \Joomla\CMS\Factory::getDBO();
+
+		$id = $this->getState($this->getName() . '.id');
+
+		if ($id)
+		{
+			$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_id={$db->quote($id)}");
+
+			try
+			{
+				$selected = $db->loadObject();
+			}
+			catch (RuntimeException $e)
+			{
+				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			return $selected;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 * @since Kunena
+	 */
+	protected function populateState()
+	{
+		$this->context = 'com_kunena.admin.rank';
+
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
+		$this->setState($this->getName() . '.id', $value);
+		$this->setState('item.id', $value);
 	}
 }

@@ -33,72 +33,6 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	 * @return string
 	 * @since Kunena
 	 */
-	public function toTimeAgo()
-	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$chunks = array(
-			'y' => array(JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS')),
-			'm' => array(JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS')),
-			'w' => array(JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS')),
-			'd' => array(JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS')),
-			'h' => array(JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS')),
-			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')));
-
-		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
-		$tick   = 0;
-		$output = '';
-		$diff   = $this->diff(new \Joomla\CMS\Date\Date);
-
-		foreach ($diff as $name => $count)
-		{
-			if ($name == 'd')
-			{
-				// Days are special case as we want to break it into weeks and days.
-				$weeks = (int) ($count / 7);
-
-				if ($weeks)
-				{
-					$count %= 7;
-					$output .= ($weeks == 1) ? " 1 {$chunks['w'][0]}" : " {$weeks} {$chunks['w'][1]}";
-
-					if (2 == ++$tick)
-					{
-						break;
-					}
-				}
-			}
-
-			if (!$count || !isset($chunks[$name]))
-			{
-				continue;
-			}
-
-			$output .= ($count == 1) ? " 1 {$chunks[$name][0]}" : " {$count} {$chunks[$name][1]}";
-
-			if (2 == ++$tick)
-			{
-				break;
-			}
-		}
-
-		if (!$output)
-		{
-			$output .= JText::_('COM_KUNENA_LIB_TIME_NOW');
-		}
-		else
-		{
-			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		return $output;
-	}
-
-	/**
-	 * @return string
-	 * @since Kunena
-	 */
 	public function toTimezone()
 	{
 		$timezone = $this->getOffsetFromGMT(true);
@@ -222,5 +156,71 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 		}
 
 		return $this->format($usertime_format, true);
+	}
+
+	/**
+	 * @return string
+	 * @since Kunena
+	 */
+	public function toTimeAgo()
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		$chunks = array(
+			'y' => array(JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS')),
+			'm' => array(JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS')),
+			'w' => array(JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS')),
+			'd' => array(JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS')),
+			'h' => array(JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS')),
+			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')));
+
+		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
+		$tick   = 0;
+		$output = '';
+		$diff   = $this->diff(new \Joomla\CMS\Date\Date);
+
+		foreach ($diff as $name => $count)
+		{
+			if ($name == 'd')
+			{
+				// Days are special case as we want to break it into weeks and days.
+				$weeks = (int) ($count / 7);
+
+				if ($weeks)
+				{
+					$count  %= 7;
+					$output .= ($weeks == 1) ? " 1 {$chunks['w'][0]}" : " {$weeks} {$chunks['w'][1]}";
+
+					if (2 == ++$tick)
+					{
+						break;
+					}
+				}
+			}
+
+			if (!$count || !isset($chunks[$name]))
+			{
+				continue;
+			}
+
+			$output .= ($count == 1) ? " 1 {$chunks[$name][0]}" : " {$count} {$chunks[$name][1]}";
+
+			if (2 == ++$tick)
+			{
+				break;
+			}
+		}
+
+		if (!$output)
+		{
+			$output .= JText::_('COM_KUNENA_LIB_TIME_NOW');
+		}
+		else
+		{
+			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
+		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+		return $output;
 	}
 }

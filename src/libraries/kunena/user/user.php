@@ -168,9 +168,65 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Method to load a KunenaUser object by userid.
+	 *
+	 * @param   mixed $id The user id of the user to load.
+	 *
+	 * @return    boolean            True on success
+	 * @since Kunena
+	 */
+	public function load($id)
+	{
+		// Create the user table object
+		$table = $this->getTable();
+
+		// Load the KunenaTableUser object based on the user id
+		if ($id > 0)
+		{
+			$this->_exists = $table->load($id);
+		}
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		// Set showOnline if user doesn't exists (if we will save the user)
+		if (!$this->_exists)
+		{
+			$this->showOnline = 1;
+		}
+
+		return $this->_exists;
+	}
+
+	/**
+	 * Method to get the user table object.
+	 *
+	 * @param   string $type   The user table name to be used.
+	 * @param   string $prefix The user table prefix to be used.
+	 *
+	 * @return    \Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
+	 * @since Kunena
+	 */
+	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
+	{
+		static $tabletype = null;
+
+		// Set a custom table type is defined
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
+			$tabletype ['name']   = $type;
+			$tabletype ['prefix'] = $prefix;
+		}
+
+		// Create the user table object
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+	}
+
+	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param   null|int $identifier The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param   null|int $identifier The user to load - Can be an integer or string - If string, it is converted to ID
+	 *                               automatically.
 	 * @param   bool     $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
@@ -179,37 +235,6 @@ class KunenaUser extends JObject
 	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaUserHelper::get($identifier, $reload);
-	}
-
-	/**
-	 * @param   null|bool $exists
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-	/**
-	 * Is the user me?
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isMyself()
-	{
-		$result = KunenaUserHelper::getMyself()->userid == $this->userid;
-
-		return $result;
 	}
 
 	/**
@@ -295,27 +320,90 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Method to get the user table object.
+	 * @param   null|bool $exists
 	 *
-	 * @param   string $type   The user table name to be used.
-	 * @param   string $prefix The user table prefix to be used.
-	 *
-	 * @return    \Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
+	 * @return boolean
 	 * @since Kunena
 	 */
-	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
+	public function exists($exists = null)
 	{
-		static $tabletype = null;
+		$return = $this->_exists;
 
-		// Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		if ($exists !== null)
 		{
-			$tabletype ['name']   = $type;
-			$tabletype ['prefix'] = $prefix;
+			$this->_exists = $exists;
 		}
 
-		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return $return;
+	}
+
+	/**
+	 * Is the user me?
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isMyself()
+	{
+		$result = KunenaUserHelper::getMyself()->userid == $this->userid;
+
+		return $result;
+	}
+
+	/**
+	 * Checks if user has administrator permissions in the category.
+	 *
+	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
+	 *
+	 * @param   KunenaForumCategory $category
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isAdmin(KunenaForumCategory $category = null)
+	{
+		return KunenaAccess::getInstance()->isAdmin($this, $category && $category->exists() ? $category->id : null);
+	}
+
+	/**
+	 * Checks if user has moderator permissions in the category.
+	 *
+	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
+	 *
+	 * @param   KunenaForumCategory $category
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isModerator(KunenaForumCategory $category = null)
+	{
+		return KunenaAccess::getInstance()->isModerator($this, $category && $category->exists() ? $category->id : null);
+	}
+
+	/**
+	 * @param   string $visitorname
+	 * @param   bool   $escape
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getName($visitorname = '', $escape = true)
+	{
+		if (!$this->userid && !$this->name)
+		{
+			$name = $visitorname;
+		}
+		else
+		{
+			$name = $this->_config->username ? $this->username : $this->name;
+		}
+
+		if ($escape)
+		{
+			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+		}
+
+		return $name;
 	}
 
 	/**
@@ -328,90 +416,6 @@ class KunenaUser extends JObject
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
-	}
-
-	/**
-	 * Method to load a KunenaUser object by userid.
-	 *
-	 * @param   mixed $id The user id of the user to load.
-	 *
-	 * @return    boolean            True on success
-	 * @since Kunena
-	 */
-	public function load($id)
-	{
-		// Create the user table object
-		$table = $this->getTable();
-
-		// Load the KunenaTableUser object based on the user id
-		if ($id > 0)
-		{
-			$this->_exists = $table->load($id);
-		}
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-
-		// Set showOnline if user doesn't exists (if we will save the user)
-		if (!$this->_exists)
-		{
-			$this->showOnline = 1;
-		}
-
-		return $this->_exists;
-	}
-
-	/**
-	 * Method to save the KunenaUser object to the database.
-	 *
-	 * @param   boolean $updateOnly Save the object only if not a new user.
-	 *
-	 * @return    boolean True on success.
-	 * @since Kunena
-	 */
-	public function save($updateOnly = false)
-	{
-		// Create the user table object
-		$table  = $this->getTable();
-		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
-		$table->bind($this->getProperties(), $ignore);
-		$table->exists($this->_exists);
-
-		// Check and store the object.
-		if (!$table->check())
-		{
-			$this->setError($table->getError());
-
-			return false;
-		}
-
-		// Are we creating a new user
-		$isnew = !$this->_exists;
-
-		// If we aren't allowed to create new users return
-		if (!$this->userid || ($isnew && $updateOnly))
-		{
-			return true;
-		}
-
-		// Store the user data in the database
-		if (!$result = $table->store())
-		{
-			$this->setError($table->getError());
-		}
-
-		$access = KunenaAccess::getInstance();
-		$access->clearCache();
-
-		// Set the id for the KunenaUser object in case we created a new user.
-		if ($result && $isnew)
-		{
-			$this->load($table->get('userid'));
-
-			// Self::$_instances [$table->get ( 'id' )] = $this;
-		}
-
-		return $result;
 	}
 
 	/**
@@ -495,98 +499,6 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Checks if user has administrator permissions in the category.
-	 *
-	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
-	 *
-	 * @param   KunenaForumCategory $category
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isAdmin(KunenaForumCategory $category = null)
-	{
-		return KunenaAccess::getInstance()->isAdmin($this, $category && $category->exists() ? $category->id : null);
-	}
-
-	/**
-	 * Checks if user has moderator permissions in the category.
-	 *
-	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
-	 *
-	 * @param   KunenaForumCategory $category
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isModerator(KunenaForumCategory $category = null)
-	{
-		return KunenaAccess::getInstance()->isModerator($this, $category && $category->exists() ? $category->id : null);
-	}
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isBanned()
-	{
-		if (!$this->banned)
-		{
-			return false;
-		}
-
-		if ($this->blocked || $this->banned == $this->_db->getNullDate())
-		{
-			return true;
-		}
-
-		$ban = new \Joomla\CMS\Date\Date($this->banned);
-		$now = new \Joomla\CMS\Date\Date;
-
-		return ($ban->toUnix() > $now->toUnix());
-	}
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isBlocked()
-	{
-		if ($this->blocked)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param   string $visitorname
-	 * @param   bool   $escape
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getName($visitorname = '', $escape = true)
-	{
-		if (!$this->userid && !$this->name)
-		{
-			$name = $visitorname;
-		}
-		else
-		{
-			$name = $this->_config->username ? $this->username : $this->name;
-		}
-
-		if ($escape)
-		{
-			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
-		}
-
-		return $name;
-	}
-
-	/**
 	 * @param   string     $class
 	 * @param   string|int $sizex
 	 * @param   int        $sizey
@@ -613,110 +525,6 @@ class KunenaUser extends JObject
 		$avatars = KunenaFactory::getAvatarIntegration();
 
 		return $avatars->getURL($this, $sizex, $sizey);
-	}
-
-	/**
-	 * @param   null|string $name
-	 * @param   null|string $title
-	 * @param   string      $rel
-	 * @param   string      $task
-	 * @param   string      $class
-	 *
-	 * @param   int         $catid
-	 *
-	 * @param int           $avatarLink
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
-	{
-		if (!$name)
-		{
-			$name = $this->getName();
-		}
-
-		$key = "{$name}.{$title}.{$rel}.{$catid}";
-
-		if (empty($this->_link[$key]))
-		{
-			if (!$title)
-			{
-				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
-			}
-
-			$class = ($class !== null) ? $class : $this->getType($catid, 'class');
-
-			if (!empty($class))
-			{
-				if ($class == 'btn')
-				{
-				}
-				elseif ($class == 'btn btn-default')
-				{
-				}
-				elseif ($class == 'btn pull-right')
-				{
-				}
-				elseif ($class == 'btn btn-default pull-right')
-				{
-				}
-				else
-				{
-					$class = $this->getType($catid, 'class');
-				}
-			}
-
-			if (KunenaTemplate::getInstance()->tooltips())
-			{
-				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
-			}
-
-			if ($this->userid == \Joomla\CMS\Factory::getUser()->id && $avatarLink)
-			{
-				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
-			}
-			else
-			{
-				$link = $this->getURL(true, $task);
-			}
-
-			if (!empty($rel))
-			{
-				$rels = 'rel="' . $rel . '"';
-			}
-			else
-			{
-				$rels = '';
-			}
-
-			if ($rels == 'rel="canonical"')
-			{
-				$config          = \Joomla\CMS\Factory::getApplication('site');
-				$componentParams = $config->getParams('com_config');
-				$robots          = $componentParams->get('robots');
-
-				if ($robots == 'noindex, follow' || $robots == 'noindex, nofollow')
-				{
-					$rels = 'rel="nofollow"';
-				}
-				else
-				{
-					$rels = 'rel="canonical"';
-				}
-			}
-
-			if (!empty($link))
-			{
-				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";
-			}
-			else
-			{
-				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
-			}
-		}
-
-		return $this->_link[$key];
 	}
 
 	/**
@@ -777,7 +585,6 @@ class KunenaUser extends JObject
 		return $this->_link[$key];
 	}
 
-
 	/**
 	 * @param   bool   $xhtml
 	 * @param   string $task
@@ -805,75 +612,569 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Get users type as a string inside the specified category.
+	 * Return local time for the user.
 	 *
-	 * @param   int  $catid Category id or 0 for global.
-	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
+	 * @return KunenaDate  User time instance.
+	 * @since Kunena
+	 */
+	public function getTime()
+	{
+		if (!isset($this->_time))
+		{
+			$timezone = \Joomla\CMS\Factory::getApplication()->get('offset', null);
+
+			if ($this->userid)
+			{
+				$user     = \Joomla\CMS\User\User::getInstance($this->userid);
+				$timezone = $user->getParam('timezone', $timezone);
+			}
+
+			$this->_time = new KunenaDate('now', $timezone);
+
+			try
+			{
+				$offset = new DateTimeZone($timezone);
+				$this->_time->setTimezone($offset);
+			}
+			catch (Exception $e)
+			{
+				// TODO: log error?
+			}
+		}
+
+		return $this->_time;
+	}
+
+	/**
+	 * Return registration date.
+	 *
+	 * @return KunenaDate
+	 * @since Kunena
+	 */
+	public function getRegisterDate()
+	{
+		return KunenaDate::getInstance($this->registerDate);
+	}
+
+	/**
+	 * Return last visit date.
+	 *
+	 * @return KunenaDate
+	 * @since Kunena
+	 */
+	public function getLastVisitDate()
+	{
+		if (!$this->lastvisitDate || $this->lastvisitDate == "0000-00-00 00:00:00")
+		{
+			$date = KunenaDate::getInstance($this->registerDate);
+		}
+		else
+		{
+			$date = KunenaDate::getInstance($this->lastvisitDate);
+		}
+
+		return $date;
+	}
+
+	/**
+	 * @param   string $layout
+	 *
+	 * @since Kunena
+	 */
+	public function setTopicLayout($layout = 'default')
+	{
+		if ($layout != 'default')
+		{
+			$layout = $this->getTopicLayout($layout);
+		}
+
+		$this->_app->setUserState('com_kunena.topic_layout', $layout);
+
+		if ($this->userid && $this->view != $layout)
+		{
+			$this->view = $layout;
+			$this->save(true);
+		}
+	}
+
+	/**
+	 * @param   null|string $layout
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public function getType($catid = 0, $code = false)
+	public function getTopicLayout($layout = null)
 	{
-		static $types = array(
-			'admin'      => 'COM_KUNENA_VIEW_ADMIN',
-			'localadmin' => 'COM_KUNENA_VIEW_ADMIN',
-			'globalmod'  => 'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
-			'moderator'  => 'COM_KUNENA_VIEW_MODERATOR',
-			'user'       => 'COM_KUNENA_VIEW_USER',
-			'guest'      => 'COM_KUNENA_VIEW_VISITOR',
-			'banned'     => 'COM_KUNENA_VIEW_BANNED',
-			'blocked'    => 'COM_KUNENA_VIEW_BLOCKED',
-		);
+		if ($layout == 'default')
+		{
+			$layout = null;
+		}
 
-		$adminCategories     = KunenaAccess::getInstance()->getAdminStatus($this);
-		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
+		if (!$layout)
+		{
+			$layout = $this->_app->getUserState('com_kunena.topic_layout');
+		}
 
-		if ($this->userid == 0)
+		if (!$layout)
 		{
-			$type = 'guest';
+			$layout = $this->view;
 		}
-		elseif ($this->isBlocked())
+
+		switch ($layout)
 		{
-			$type = 'blocked';
+			case 'flat':
+			case 'threaded':
+			case 'indented':
+				break;
+			default:
+				$layout = $this->_config->topic_layout;
 		}
-		elseif ($this->isBanned())
+
+		return $layout;
+	}
+
+	/**
+	 * Method to save the KunenaUser object to the database.
+	 *
+	 * @param   boolean $updateOnly Save the object only if not a new user.
+	 *
+	 * @return    boolean True on success.
+	 * @since Kunena
+	 */
+	public function save($updateOnly = false)
+	{
+		// Create the user table object
+		$table  = $this->getTable();
+		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
+		$table->bind($this->getProperties(), $ignore);
+		$table->exists($this->_exists);
+
+		// Check and store the object.
+		if (!$table->check())
 		{
-			$type = 'banned';
+			$this->setError($table->getError());
+
+			return false;
 		}
-		elseif (!empty($adminCategories[0]))
+
+		// Are we creating a new user
+		$isnew = !$this->_exists;
+
+		// If we aren't allowed to create new users return
+		if (!$this->userid || ($isnew && $updateOnly))
 		{
-			$type = 'admin';
+			return true;
 		}
-		elseif (!empty($adminCategories[$catid]))
+
+		// Store the user data in the database
+		if (!$result = $table->store())
 		{
-			$type = 'localadmin';
+			$this->setError($table->getError());
 		}
-		elseif (!empty($moderatedCategories[0]))
+
+		$access = KunenaAccess::getInstance();
+		$access->clearCache();
+
+		// Set the id for the KunenaUser object in case we created a new user.
+		if ($result && $isnew)
 		{
-			$type = 'globalmod';
+			$this->load($table->get('userid'));
+
+			// Self::$_instances [$table->get ( 'id' )] = $this;
 		}
-		elseif (!empty($moderatedCategories[$catid]))
+
+		return $result;
+	}
+
+	/**
+	 * Get the URL to private messages
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getPrivateMsgURL()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		return $private->getInboxURL();
+	}
+
+	/**
+	 * Get the label for URL to private messages
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getPrivateMsgLabel()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		if ($this->isMyself())
 		{
-			$type = 'moderator';
-		}
-		elseif (!$catid && !empty($moderatedCategories))
-		{
-			$type = 'moderator';
+			$count = $private->getUnreadCount($this->userid);
+
+			if ($count)
+			{
+				return JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count);
+			}
+			else
+			{
+				return JText::_('COM_KUNENA_PMS_INBOX');
+			}
 		}
 		else
 		{
-			$type = 'user';
+			return JText::_('COM_KUNENA_PM_WRITE');
 		}
+	}
 
-		if ($code === 'class')
+	/**
+	 * Get link to private messages.
+	 *
+	 * @return string  URL.
+	 *
+	 * @since  K4.0
+	 */
+	public function getPrivateMsgLink()
+	{
+		if (!isset($this->_pm))
 		{
-			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
+			$private = KunenaFactory::getPrivateMessaging();
 
-			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0] . $type;
+			if (!$this->userid)
+			{
+				$this->_pm = '';
+			}
+			elseif ($this->isMyself())
+			{
+				$count     = $private->getUnreadCount($this->userid);
+				$this->_pm = $private->getInboxLink($count
+					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
+					: JText::_('COM_KUNENA_PMS_INBOX')
+				);
+			}
+			else
+			{
+				$this->_pm = $private->getInboxLink(JText::_('COM_KUNENA_PM_WRITE'));
+			}
 		}
 
-		return $code ? $type : $types[$type];
+		return $this->_pm;
+	}
+
+	/**
+	 * Show email address if current user has permissions to see it.
+	 *
+	 * @param $profile
+	 *
+	 * @return string Cloaked email address or empty string.
+	 *
+	 * @since  K5.1
+	 */
+	public function getEmail($profile)
+	{
+		$me     = KunenaUserHelper::getMyself();
+		$config = KunenaConfig::getInstance();
+
+		if ($me->isModerator() || $me->isAdmin())
+		{
+			return true;
+		}
+
+		if ($config->showemail && $profile->email)
+		{
+			if ($profile->hideEmail == 0)
+			{
+				return true;
+			}
+
+			if ($profile->hideEmail == 2 && $me->exists())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get email address if current user has permissions to see it.
+	 *
+	 * @return string  Cloaked email address or empty string.
+	 *
+	 * @since  K4.0
+	 */
+	public function getEmailLink()
+	{
+		if (!isset($this->_email))
+		{
+			$config = KunenaConfig::getInstance();
+			$me     = KunenaUserHelper::getMyself();
+
+			$this->_email = '';
+
+			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
+			{
+				$this->_email = JHtml::_('email.cloak', $this->email);
+			}
+		}
+
+		return $this->_email;
+	}
+
+	/**
+	 * Get website link from the user.
+	 *
+	 * @return string  Link to the website.
+	 *
+	 * @since  K4.0
+	 */
+	public function getWebsiteLink()
+	{
+		if (!isset($this->_website) && $this->websiteurl)
+		{
+			$this->_website = '';
+
+			$url = $this->getWebsiteURL();
+
+			$name = $this->getWebsiteName();
+
+			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer">' . $this->escape($name) . '</a>';
+		}
+
+		return (string) $this->_website;
+	}
+
+	/**
+	 * Get website URL from the user.
+	 *
+	 * @return string  URL to the website.
+	 *
+	 * @since  K4.0
+	 */
+	public function getWebsiteURL()
+	{
+		$url = $this->websiteurl;
+
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+		{
+			$url = 'http://' . $url;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get website name from the user.
+	 *
+	 * @return string  Name to the website or the URL if the name isn't set.
+	 *
+	 * @since  K4.0
+	 */
+	public function getWebsiteName()
+	{
+		$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+
+		return $name;
+	}
+
+	/**
+	 * @param   string $var
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	 * Output gender.
+	 *
+	 * @param   bool $translate
+	 *
+	 * @return string  One of: male, female or unknown.
+	 *
+	 * @since  K4.0
+	 */
+	public function getGender($translate = true)
+	{
+		switch ($this->gender)
+		{
+			case 1 :
+				$gender = 'male';
+				break;
+			case 2 :
+				$gender = 'female';
+				break;
+			default :
+				$gender = 'unknown';
+		}
+
+		return $translate ? JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender) : $gender;
+	}
+
+	/**
+	 * Render user signature.
+	 *
+	 * @return string
+	 *
+	 * @since  K4.0
+	 */
+	public function getSignature()
+	{
+		$config = KunenaConfig::getInstance();
+
+		if (!$config->signature)
+		{
+			return false;
+		}
+
+		if (!isset($this->_signature))
+		{
+			$this->_signature = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
+		}
+
+		return $this->_signature;
+	}
+
+	/**
+	 * Render user karma.
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getKarma()
+	{
+		$karma = '';
+
+		if ($this->userid)
+		{
+			$config = KunenaConfig::getInstance();
+			$me     = KunenaUserHelper::getMyself();
+
+			$karma = $this->karma;
+
+			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
+			{
+				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
+
+				if ($topicicontype == 'B3')
+				{
+					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
+					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
+				}
+				elseif ($topicicontype == 'B2')
+				{
+					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+			}
+		}
+
+		return $karma;
+	}
+
+	/**
+	 * Render user sidebar.
+	 *
+	 * @param   KunenaLayout $layout
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getSideProfile($layout)
+	{
+		$config = KunenaFactory::getConfig();
+
+		$view                  = clone $layout;
+		$view->config          = $config;
+		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
+
+		if ($view->config->showkarma && $this->userid)
+		{
+			$view->userkarma_title = JText::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
+
+			if ($view->me->userid && $view->me->userid != $this->userid)
+			{
+				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
+
+				if ($topicicontype == 'B3')
+				{
+					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
+					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
+				}
+				elseif ($topicicontype == 'B2')
+				{
+					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+
+				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+			}
+		}
+
+		$view->userkarma = "{$view->userkarma_title} {$view->userkarma_minus} {$view->userkarma_plus}";
+
+		if ($view->config->showuserstats)
+		{
+			$view->userrankimage = $this->getRank($layout->category->id, 'image');
+			$view->userranktitle = $this->getRank($layout->category->id, 'title');
+			$view->userposts     = $this->posts;
+			$view->userthankyou  = $this->thankyou;
+			$activityIntegration = KunenaFactory::getActivityIntegration();
+			$view->userpoints    = $activityIntegration->getUserPoints($this->userid);
+			$view->usermedals    = $activityIntegration->getUserMedals($this->userid);
+		}
+		else
+		{
+			$view->userrankimage = null;
+			$view->userranktitle = null;
+			$view->userposts     = null;
+			$view->userthankyou  = null;
+			$view->userpoints    = null;
+			$view->usermedals    = null;
+		}
+
+		$view->personalText = $this->getPersonalText();
+
+		$params = new \Joomla\Registry\Registry;
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', $layout->getLayout());
+
+		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaSidebar');
+
+		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}
 
 	/**
@@ -1079,343 +1380,134 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Return local time for the user.
+	 * Get users type as a string inside the specified category.
 	 *
-	 * @return KunenaDate  User time instance.
+	 * @param   int  $catid Category id or 0 for global.
+	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
+	 *
+	 * @return string
 	 * @since Kunena
 	 */
-	public function getTime()
+	public function getType($catid = 0, $code = false)
 	{
-		if (!isset($this->_time))
+		static $types = array(
+			'admin'      => 'COM_KUNENA_VIEW_ADMIN',
+			'localadmin' => 'COM_KUNENA_VIEW_ADMIN',
+			'globalmod'  => 'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
+			'moderator'  => 'COM_KUNENA_VIEW_MODERATOR',
+			'user'       => 'COM_KUNENA_VIEW_USER',
+			'guest'      => 'COM_KUNENA_VIEW_VISITOR',
+			'banned'     => 'COM_KUNENA_VIEW_BANNED',
+			'blocked'    => 'COM_KUNENA_VIEW_BLOCKED',
+		);
+
+		$adminCategories     = KunenaAccess::getInstance()->getAdminStatus($this);
+		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
+
+		if ($this->userid == 0)
 		{
-			$timezone = \Joomla\CMS\Factory::getApplication()->get('offset', null);
-
-			if ($this->userid)
-			{
-				$user     = \Joomla\CMS\User\User::getInstance($this->userid);
-				$timezone = $user->getParam('timezone', $timezone);
-			}
-
-			$this->_time = new KunenaDate('now', $timezone);
-
-			try
-			{
-				$offset = new DateTimeZone($timezone);
-				$this->_time->setTimezone($offset);
-			}
-			catch (Exception $e)
-			{
-				// TODO: log error?
-			}
+			$type = 'guest';
 		}
-
-		return $this->_time;
-	}
-
-	/**
-	 * Return registration date.
-	 *
-	 * @return KunenaDate
-	 * @since Kunena
-	 */
-	public function getRegisterDate()
-	{
-		return KunenaDate::getInstance($this->registerDate);
-	}
-
-	/**
-	 * Return last visit date.
-	 *
-	 * @return KunenaDate
-	 * @since Kunena
-	 */
-	public function getLastVisitDate()
-	{
-		if (!$this->lastvisitDate || $this->lastvisitDate == "0000-00-00 00:00:00")
+		elseif ($this->isBlocked())
 		{
-			$date = KunenaDate::getInstance($this->registerDate);
+			$type = 'blocked';
+		}
+		elseif ($this->isBanned())
+		{
+			$type = 'banned';
+		}
+		elseif (!empty($adminCategories[0]))
+		{
+			$type = 'admin';
+		}
+		elseif (!empty($adminCategories[$catid]))
+		{
+			$type = 'localadmin';
+		}
+		elseif (!empty($moderatedCategories[0]))
+		{
+			$type = 'globalmod';
+		}
+		elseif (!empty($moderatedCategories[$catid]))
+		{
+			$type = 'moderator';
+		}
+		elseif (!$catid && !empty($moderatedCategories))
+		{
+			$type = 'moderator';
 		}
 		else
 		{
-			$date = KunenaDate::getInstance($this->lastvisitDate);
+			$type = 'user';
 		}
 
-		return $date;
+		if ($code === 'class')
+		{
+			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
+
+			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0] . $type;
+		}
+
+		return $code ? $type : $types[$type];
 	}
 
 	/**
-	 * @param   null|string $layout
-	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
-	public function getTopicLayout($layout = null)
+	public function isBlocked()
 	{
-		if ($layout == 'default')
-		{
-			$layout = null;
-		}
-
-		if (!$layout)
-		{
-			$layout = $this->_app->getUserState('com_kunena.topic_layout');
-		}
-
-		if (!$layout)
-		{
-			$layout = $this->view;
-		}
-
-		switch ($layout)
-		{
-			case 'flat':
-			case 'threaded':
-			case 'indented':
-				break;
-			default:
-				$layout = $this->_config->topic_layout;
-		}
-
-		return $layout;
-	}
-
-	/**
-	 * @param   string $layout
-	 *
-	 * @since Kunena
-	 */
-	public function setTopicLayout($layout = 'default')
-	{
-		if ($layout != 'default')
-		{
-			$layout = $this->getTopicLayout($layout);
-		}
-
-		$this->_app->setUserState('com_kunena.topic_layout', $layout);
-
-		if ($this->userid && $this->view != $layout)
-		{
-			$this->view = $layout;
-			$this->save(true);
-		}
-	}
-
-	/**
-	 * Get the URL to private messages
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getPrivateMsgURL()
-	{
-		$private = KunenaFactory::getPrivateMessaging();
-
-		return $private->getInboxURL();
-	}
-
-	/**
-	 * Get the label for URL to private messages
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getPrivateMsgLabel()
-	{
-		$private = KunenaFactory::getPrivateMessaging();
-
-		if ($this->isMyself())
-		{
-			$count = $private->getUnreadCount($this->userid);
-
-			if ($count)
-			{
-				return JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count);
-			}
-			else
-			{
-				return JText::_('COM_KUNENA_PMS_INBOX');
-			}
-		}
-		else
-		{
-			return JText::_('COM_KUNENA_PM_WRITE');
-		}
-	}
-
-	/**
-	 * Get link to private messages.
-	 *
-	 * @return string  URL.
-	 *
-	 * @since  K4.0
-	 */
-	public function getPrivateMsgLink()
-	{
-		if (!isset($this->_pm))
-		{
-			$private = KunenaFactory::getPrivateMessaging();
-
-			if (!$this->userid)
-			{
-				$this->_pm = '';
-			}
-			elseif ($this->isMyself())
-			{
-				$count     = $private->getUnreadCount($this->userid);
-				$this->_pm = $private->getInboxLink($count
-					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
-					: JText::_('COM_KUNENA_PMS_INBOX')
-				);
-			}
-			else
-			{
-				$this->_pm = $private->getInboxLink(JText::_('COM_KUNENA_PM_WRITE'));
-			}
-		}
-
-		return $this->_pm;
-	}
-
-	/**
-	 * Show email address if current user has permissions to see it.
-	 *
-	 * @param $profile
-	 *
-	 * @return string Cloaked email address or empty string.
-	 *
-	 * @since  K5.1
-	 */
-	public function getEmail($profile)
-	{
-		$me     = KunenaUserHelper::getMyself();
-		$config = KunenaConfig::getInstance();
-
-		if ($me->isModerator() || $me->isAdmin())
+		if ($this->blocked)
 		{
 			return true;
-		}
-
-		if ($config->showemail && $profile->email)
-		{
-			if ($profile->hideEmail == 0)
-			{
-				return true;
-			}
-
-			if ($profile->hideEmail == 2 && $me->exists())
-			{
-				return true;
-			}
 		}
 
 		return false;
 	}
 
 	/**
-	 * Get email address if current user has permissions to see it.
-	 *
-	 * @return string  Cloaked email address or empty string.
-	 *
-	 * @since  K4.0
+	 * @return boolean
+	 * @since Kunena
 	 */
-	public function getEmailLink()
+	public function isBanned()
 	{
-		if (!isset($this->_email))
+		if (!$this->banned)
 		{
-			$config = KunenaConfig::getInstance();
-			$me     = KunenaUserHelper::getMyself();
-
-			$this->_email = '';
-
-			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
-			{
-				$this->_email = JHtml::_('email.cloak', $this->email);
-			}
+			return false;
 		}
 
-		return $this->_email;
-	}
-
-	/**
-	 * Get website URL from the user.
-	 *
-	 * @return string  URL to the website.
-	 *
-	 * @since  K4.0
-	 */
-	public function getWebsiteURL()
-	{
-		$url = $this->websiteurl;
-
-		if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+		if ($this->blocked || $this->banned == $this->_db->getNullDate())
 		{
-			$url = 'http://' . $url;
+			return true;
 		}
 
-		return $url;
+		$ban = new \Joomla\CMS\Date\Date($this->banned);
+		$now = new \Joomla\CMS\Date\Date;
+
+		return ($ban->toUnix() > $now->toUnix());
 	}
 
-	/**
-	 * Get website name from the user.
-	 *
-	 * @return string  Name to the website or the URL if the name isn't set.
-	 *
-	 * @since  K4.0
-	 */
-	public function getWebsiteName()
+	public function GetUserGroup($userid)
 	{
-		$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+		jimport('joomla.access.access');
+		$groups = \Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
 
-		return $name;
-	}
+		$groupid_list = implode(',', $groups);
 
-	/**
-	 * Get website link from the user.
-	 *
-	 * @return string  Link to the website.
-	 *
-	 * @since  K4.0
-	 */
-	public function getWebsiteLink()
-	{
-		if (!isset($this->_website) && $this->websiteurl)
+		foreach ($groups as $groupId => $value)
 		{
-			$this->_website = '';
+			$db    = \Joomla\CMS\Factory::getDbo();
+			$query = $db->getQuery(true)
+				->select('title')
+				->from('#__usergroups')
+				->where('id = ' . (int) $groupid_list);
 
-			$url = $this->getWebsiteURL();
-
-			$name = $this->getWebsiteName();
-
-			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer">' . $this->escape($name) . '</a>';
+			$db->setQuery($query);
+			$groupNames = $db->loadResult();
+			$groupNames .= '<br/>';
 		}
 
-		return (string) $this->_website;
-	}
-
-	/**
-	 * Output gender.
-	 *
-	 * @param   bool $translate
-	 *
-	 * @return string  One of: male, female or unknown.
-	 *
-	 * @since  K4.0
-	 */
-	public function getGender($translate = true)
-	{
-		switch ($this->gender)
-		{
-			case 1 :
-				$gender = 'male';
-				break;
-			case 2 :
-				$gender = 'female';
-				break;
-			default :
-				$gender = 'unknown';
-		}
-
-		return $translate ? JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender) : $gender;
+		return $groupNames;
 	}
 
 	/**
@@ -1440,168 +1532,6 @@ class KunenaUser extends JObject
 		}
 
 		return $this->_personalText;
-	}
-
-	/**
-	 * Render user signature.
-	 *
-	 * @return string
-	 *
-	 * @since  K4.0
-	 */
-	public function getSignature()
-	{
-		$config = KunenaConfig::getInstance();
-
-		if (!$config->signature)
-		{
-			return false;
-		}
-
-		if (!isset($this->_signature))
-		{
-			$this->_signature = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
-		}
-
-		return $this->_signature;
-	}
-
-	/**
-	 * Render user karma.
-	 *
-	 * @return string
-	 *
-	 * @since  K5.0
-	 */
-	public function getKarma()
-	{
-		$karma = '';
-
-		if ($this->userid)
-		{
-			$config = KunenaConfig::getInstance();
-			$me     = KunenaUserHelper::getMyself();
-
-			$karma = $this->karma;
-
-			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
-			{
-				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
-
-				if ($topicicontype == 'B3')
-				{
-					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				elseif ($topicicontype == 'fa')
-				{
-					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
-					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
-				}
-				elseif ($topicicontype == 'B2')
-				{
-					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				else
-				{
-					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
-			}
-		}
-
-		return $karma;
-	}
-
-	/**
-	 * Render user sidebar.
-	 *
-	 * @param   KunenaLayout $layout
-	 *
-	 * @return string
-	 *
-	 * @since  K5.0
-	 */
-	public function getSideProfile($layout)
-	{
-		$config = KunenaFactory::getConfig();
-
-		$view                  = clone $layout;
-		$view->config          = $config;
-		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
-
-		if ($view->config->showkarma && $this->userid)
-		{
-			$view->userkarma_title = JText::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
-
-			if ($view->me->userid && $view->me->userid != $this->userid)
-			{
-				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
-
-				if ($topicicontype == 'B3')
-				{
-					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				elseif ($topicicontype == 'fa')
-				{
-					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
-					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
-				}
-				elseif ($topicicontype == 'B2')
-				{
-					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				else
-				{
-					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-
-				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
-			}
-		}
-
-		$view->userkarma = "{$view->userkarma_title} {$view->userkarma_minus} {$view->userkarma_plus}";
-
-		if ($view->config->showuserstats)
-		{
-			$view->userrankimage = $this->getRank($layout->category->id, 'image');
-			$view->userranktitle = $this->getRank($layout->category->id, 'title');
-			$view->userposts     = $this->posts;
-			$view->userthankyou  = $this->thankyou;
-			$activityIntegration = KunenaFactory::getActivityIntegration();
-			$view->userpoints    = $activityIntegration->getUserPoints($this->userid);
-			$view->usermedals    = $activityIntegration->getUserMedals($this->userid);
-		}
-		else
-		{
-			$view->userrankimage = null;
-			$view->userranktitle = null;
-			$view->userposts     = null;
-			$view->userthankyou  = null;
-			$view->userpoints    = null;
-			$view->usermedals    = null;
-		}
-
-		$view->personalText = $this->getPersonalText();
-
-		$params = new \Joomla\Registry\Registry;
-		$params->set('ksource', 'kunena');
-		$params->set('kunena_view', 'topic');
-		$params->set('kunena_layout', $layout->getLayout());
-
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger('onKunenaSidebar');
-
-		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}
 
 	/**
@@ -1692,40 +1622,107 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Get list of social buttons
+	 * @param   null|string $name
+	 * @param   null|string $title
+	 * @param   string      $rel
+	 * @param   string      $task
+	 * @param   string      $class
+	 *
+	 * @param   int         $catid
+	 *
+	 * @param   int           $avatarLink
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public function socialButtons()
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
 	{
-		$social = array ('twitter' => array ('url' => 'https://twitter.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TWITTER' ), 'nourl' => '0' ),
-			'facebook' => array ('url' => 'https://www.facebook.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FACEBOOK' ), 'nourl' => '0' ),
-			'myspace' => array ('url' => 'https://www.myspace.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MYSPACE' ), 'nourl' => '0' ),
-			'linkedin' => array ('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_LINKEDIN' ), 'nourl' => '0' ),
-			'delicious' => array ('url' => 'https://del.icio.us/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DELICIOUS' ), 'nourl' => '0' ),
-			'friendfeed' => array ('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FRIENDFEED' ), 'nourl' => '0' ),
-			'digg' => array ('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_DIGG' ), 'nourl' => '0' ),
-			'skype' => array ('url' => 'skype:##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '0' ),
-			'yim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_YIM' ), 'nourl' => '1' ),
-			'aim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_AIM' ), 'nourl' => '1' ),
-			'google' => array ('url' => 'https://plus.google.com/+##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '0' ),
-			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MICROSOFT' ), 'nourl' => '1' ),
-			'icq' => array ('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_ICQ' ), 'nourl' => '0' ),
-			'blogspot' => array ('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
-			'flickr' => array ('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
-			'bebo' => array ('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' ),
-			'instagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
-			'qq' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QQ' ), 'nourl' => '1' ),
-			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
-			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),
-			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WECHAT' ), 'nourl' => '1' ),
-			'vk' => array ('url' => 'https://vk.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '0' ),
-			'telegram' => array ('url' => 'https://t.me/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '0' ),
-			'apple' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_APPLE' ), 'nourl' => '1' )
-		);
+		if (!$name)
+		{
+			$name = $this->getName();
+		}
 
-		return $social;
+		$key = "{$name}.{$title}.{$rel}.{$catid}";
+
+		if (empty($this->_link[$key]))
+		{
+			if (!$title)
+			{
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+			}
+
+			$class = ($class !== null) ? $class : $this->getType($catid, 'class');
+
+			if (!empty($class))
+			{
+				if ($class == 'btn')
+				{
+				}
+				elseif ($class == 'btn btn-default')
+				{
+				}
+				elseif ($class == 'btn pull-right')
+				{
+				}
+				elseif ($class == 'btn btn-default pull-right')
+				{
+				}
+				else
+				{
+					$class = $this->getType($catid, 'class');
+				}
+			}
+
+			if (KunenaTemplate::getInstance()->tooltips())
+			{
+				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
+			}
+
+			if ($this->userid == \Joomla\CMS\Factory::getUser()->id && $avatarLink)
+			{
+				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
+			}
+			else
+			{
+				$link = $this->getURL(true, $task);
+			}
+
+			if (!empty($rel))
+			{
+				$rels = 'rel="' . $rel . '"';
+			}
+			else
+			{
+				$rels = '';
+			}
+
+			if ($rels == 'rel="canonical"')
+			{
+				$config          = \Joomla\CMS\Factory::getApplication('site');
+				$componentParams = $config->getParams('com_config');
+				$robots          = $componentParams->get('robots');
+
+				if ($robots == 'noindex, follow' || $robots == 'noindex, nofollow')
+				{
+					$rels = 'rel="nofollow"';
+				}
+				else
+				{
+					$rels = 'rel="canonical"';
+				}
+			}
+
+			if (!empty($link))
+			{
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";
+			}
+			else
+			{
+				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
+			}
+		}
+
+		return $this->_link[$key];
 	}
 
 	/**
@@ -1735,7 +1732,7 @@ class KunenaUser extends JObject
 	 * @param   bool   $gray
 	 *
 	 * @deprecated 5.1.0
-	 * @since K2.0
+	 * @since      K2.0
 	 */
 	public function socialButton($name, $gray = false)
 	{
@@ -1792,14 +1789,40 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $var
+	 * Get list of social buttons
 	 *
 	 * @return string
 	 * @since Kunena
 	 */
-	public function escape($var)
+	public function socialButtons()
 	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+		$social = array('twitter'    => array('url' => 'https://twitter.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'),
+						'facebook'   => array('url' => 'https://www.facebook.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'),
+						'myspace'    => array('url' => 'https://www.myspace.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'),
+						'linkedin'   => array('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'),
+						'delicious'  => array('url' => 'https://del.icio.us/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'), 'nourl' => '0'),
+						'friendfeed' => array('url' => 'http://friendfeed.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'),
+						'digg'       => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
+						'skype'      => array('url' => 'skype:##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
+						'yim'        => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
+						'aim'        => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_AIM'), 'nourl' => '1'),
+						'google'     => array('url' => 'https://plus.google.com/+##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '0'),
+						'microsoft'  => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
+						'icq'        => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),
+						'blogspot'   => array('url' => 'https://##VALUE##.blogspot.com/', 'title' => JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'),
+						'flickr'     => array('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'),
+						'bebo'       => array('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'),
+						'instagram'  => array('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'),
+						'qq'         => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QQ'), 'nourl' => '1'),
+						'qzone'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'),
+						'weibo'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'),
+						'wechat'     => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'),
+						'vk'         => array('url' => 'https://vk.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'),
+						'telegram'   => array('url' => 'https://t.me/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
+						'apple'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1')
+		);
+
+		return $social;
 	}
 
 	/**
@@ -1855,28 +1878,5 @@ class KunenaUser extends JObject
 		{
 			return false;
 		}
-	}
-
-	public function GetUserGroup($userid)
-	{
-		jimport('joomla.access.access');
-		$groups = \Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
-
-		$groupid_list = implode(',', $groups);
-
-		foreach ($groups as $groupId => $value)
-		{
-			$db    = \Joomla\CMS\Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('title')
-				->from('#__usergroups')
-				->where('id = ' . (int) $groupid_list);
-
-			$db->setQuery($query);
-			$groupNames = $db->loadResult();
-			$groupNames .= '<br/>';
-		}
-
-		return $groupNames;
 	}
 }

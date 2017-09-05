@@ -47,7 +47,7 @@ class KunenaAdminViewSmiley extends KunenaView
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
+		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

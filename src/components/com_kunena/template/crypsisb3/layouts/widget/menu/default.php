@@ -20,15 +20,17 @@ defined('_JEXEC') or die;
 	$columninx  = 0;
 	$lastlevel  = 4;
 	$extrastyle = '';
+
 	foreach ($this->list as $i => &$item)
 	{
 		// The next item is deeper.
-		if (($item->level == 2) and ($lastlevel == 1))
+		if (($item->level == 2) && ($lastlevel == 1))
 		{
 			$columninx++;
 		}
 
 		$class = 'item-' . $item->id;
+
 		if ($item->id == $this->active_id)
 		{
 			$class .= ' current';
@@ -41,6 +43,7 @@ defined('_JEXEC') or die;
 		elseif ($item->type == 'alias')
 		{
 			$aliasToId = $item->params->get('aliasoptions');
+
 			if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
 			{
 				$class .= ' active';
@@ -115,6 +118,7 @@ defined('_JEXEC') or die;
 					break;
 			}
 		}
+
 		// The next item is deeper.
 		if ($item->deeper)
 		{
@@ -136,13 +140,16 @@ defined('_JEXEC') or die;
 		{
 			echo '</li>';
 			$nlevel = $item->level;
+
 			for ($x = 0; $x < $item->level_diff; $x++)
 			{
 				$nlevel--;
+
 				if ($nlevel == 1)
 				{
 					echo '</ul></div></li>';
 				}
+
 				echo '</ul></li>';
 				$extrastyle = '';
 			}
@@ -152,6 +159,7 @@ defined('_JEXEC') or die;
 		{
 			echo '</li>';
 		}
+
 		$lastlevel = $item->level;
 	}
 	?>

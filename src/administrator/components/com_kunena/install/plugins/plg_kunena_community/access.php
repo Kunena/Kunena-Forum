@@ -96,6 +96,36 @@ class KunenaAccessCommunity
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function loadGroups()
+	{
+		if ($this->groups === false)
+		{
+			$db    = \Joomla\CMS\Factory::getDBO();
+			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
+				FROM #__community_groups
+				ORDER BY categoryid, name";
+			$db->setQuery($query);
+
+			try
+			{
+				$this->groups = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			if ($this->categories !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
+	}
+
+	/**
 	 * Get HTML list of the available groups
 	 *
 	 * @param   string $accesstype Access type.
@@ -133,6 +163,38 @@ class KunenaAccessCommunity
 		}
 
 		return $html;
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function loadCategories()
+	{
+		if ($this->categories === false)
+		{
+			$db    = \Joomla\CMS\Factory::getDBO();
+			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
+				FROM #__community_groups_category
+				ORDER BY parent, name";
+			$db->setQuery($query);
+
+			try
+			{
+				$this->categories = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			$this->tree = new KunenaTree($this->categories);
+
+			if ($this->groups !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
 	}
 
 	/**
@@ -249,67 +311,5 @@ class KunenaAccessCommunity
 		}
 
 		return array($allow, $deny);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadCategories()
-	{
-		if ($this->categories === false)
-		{
-			$db    = \Joomla\CMS\Factory::getDBO();
-			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
-				FROM #__community_groups_category
-				ORDER BY parent, name";
-			$db->setQuery($query);
-
-			try
-			{
-				$this->categories = (array) $db->loadObjectList('id');
-			}
-			catch (RuntimeException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-
-			$this->tree = new KunenaTree($this->categories);
-
-			if ($this->groups !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadGroups()
-	{
-		if ($this->groups === false)
-		{
-			$db    = \Joomla\CMS\Factory::getDBO();
-			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
-				FROM #__community_groups
-				ORDER BY categoryid, name";
-			$db->setQuery($query);
-
-			try
-			{
-				$this->groups = (array) $db->loadObjectList('id');
-			}
-			catch (RuntimeException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-
-			if ($this->categories !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
 	}
 }

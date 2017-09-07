@@ -124,7 +124,7 @@ class KunenaInstaller
 	 * @param   string  $prefix Database prefix.
 	 * @param   boolean $reload Reload all tables.
 	 *
-	 * @return string|null  Column type or NULL if either table or column does not exist.
+	 * @return boolean|null Column type or NULL if either table or column does not exist.
 	 * @since Kunena
 	 */
 	public static function getTableColumn($table, $column, $prefix = '#__', $reload = false)

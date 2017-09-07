@@ -36,9 +36,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Get attachments attached to a message with AJAX.
 	 *
-	 * @throws RuntimeException
-	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadattachments()
@@ -91,9 +90,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Remove files with AJAX.
 	 *
-	 * @throws RuntimeException
-	 *
-	 * @return string
+	 * @return void
 	 * @since Kunena
 	 */
 	public function removeattachments()
@@ -133,7 +130,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Upload files with AJAX.
 	 *
-	 * @throws RuntimeException
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function upload()

@@ -29,6 +29,7 @@ class KunenaAdminControllerIcons extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    5.1
 	 */
 	public function __construct($config = array())

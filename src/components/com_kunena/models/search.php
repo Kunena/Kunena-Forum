@@ -304,6 +304,7 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTotal()

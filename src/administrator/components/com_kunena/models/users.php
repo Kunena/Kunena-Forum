@@ -56,6 +56,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return boolean|KunenaUser
 	 *
+	 * @throws Exception
 	 * @since   3.0
 	 */
 	public function getItems()

@@ -22,6 +22,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 {
 	/**
 	 * @return  mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getSmileyspaths()

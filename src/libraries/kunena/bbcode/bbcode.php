@@ -1580,6 +1580,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
@@ -1635,6 +1636,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
@@ -2038,6 +2040,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoVideo($bbcode, $action, $name, $default, $params, $content)
@@ -2686,6 +2689,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoTweet($bbcode, $action, $name, $default, $params, $content)

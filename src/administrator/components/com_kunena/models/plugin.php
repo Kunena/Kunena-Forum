@@ -122,6 +122,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @param   integer $pk The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getItem($pk = null)
@@ -223,6 +224,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  mixed  The data for the form.
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	protected function loadFormData()
@@ -248,6 +250,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @param   string $group
 	 *
+	 * @throws Exception
 	 * @since   Joomla 3.1
 	 */
 	protected function preprocessData($context, &$data, $group = 'kunena')
@@ -273,6 +276,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	protected function populateState()

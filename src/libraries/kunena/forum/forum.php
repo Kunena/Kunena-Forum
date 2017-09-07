@@ -277,7 +277,7 @@ abstract class KunenaForum
 	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return string Version number.
+	 * @return bool Version number.
 	 * @since Kunena
 	 */
 	public static function version()
@@ -336,7 +336,7 @@ abstract class KunenaForum
 	/**
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
-	 * @return string Major version in xxx.yyy format.
+	 * @return bool Major version in xxx.yyy format.
 	 * @since Kunena
 	 */
 	public static function versionMajor()
@@ -352,7 +352,7 @@ abstract class KunenaForum
 	/**
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
-	 * @return string Date in yyyy-mm-dd format.
+	 * @return bool Date in yyyy-mm-dd format.
 	 * @since Kunena
 	 */
 	public static function versionDate()
@@ -368,7 +368,7 @@ abstract class KunenaForum
 	/**
 	 * Returns codename from Kunena release.
 	 *
-	 * @return string Codename.
+	 * @return bool Codename.
 	 * @since Kunena
 	 */
 	public static function versionName()

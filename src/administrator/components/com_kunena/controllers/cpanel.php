@@ -30,6 +30,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @param   array $config construct
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
@@ -45,6 +46,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @return array|null|string
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public static function onGetIcons()

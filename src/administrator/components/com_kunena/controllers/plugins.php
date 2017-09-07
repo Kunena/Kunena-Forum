@@ -66,6 +66,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function publish()
@@ -153,6 +154,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function reorder()
@@ -233,6 +235,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function checkin()

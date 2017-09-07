@@ -37,6 +37,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function display($layout = null, $tpl = null)
@@ -59,6 +60,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
@@ -78,6 +80,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayAnnouncement($tpl = null)
@@ -138,6 +141,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayForumJump($tpl = null)
@@ -170,6 +174,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayBreadcrumb($tpl = null)
@@ -276,6 +281,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayWhosonline($tpl = null)
@@ -359,6 +365,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayStatistics($tpl = null)
@@ -395,6 +402,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayFooter($tpl = null)
@@ -438,6 +446,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayMenu($tpl = null)
@@ -458,6 +467,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getMenu()
@@ -489,6 +499,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayLoginBox($tpl = null)

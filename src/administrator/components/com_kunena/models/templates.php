@@ -106,7 +106,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return null|string
+	 * @return boolean|null|string
 	 * @since Kunena
 	 */
 	function getFileLessParsed()
@@ -126,7 +126,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return null|string
+	 * @return boolean|null|string
 	 * @since Kunena
 	 */
 	function getFileContentParsed()

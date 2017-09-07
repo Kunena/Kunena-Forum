@@ -482,6 +482,7 @@ class KunenaPagination
 	 *
 	 * @return  string  The HTML for the limit # input box.
 	 *
+	 * @throws Exception
 	 * @since   1.5
 	 */
 	public function getLimitBox($all = false)
@@ -775,6 +776,7 @@ class KunenaPagination
 	 *
 	 * @return  string  HTML link
 	 *
+	 * @throws Exception
 	 * @since   1.5
 	 */
 	protected function _item_active(\Joomla\CMS\Pagination\PaginationObject $item)
@@ -807,6 +809,7 @@ class KunenaPagination
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   1.5
 	 */
 	protected function _item_inactive(\Joomla\CMS\Pagination\PaginationObject $item)

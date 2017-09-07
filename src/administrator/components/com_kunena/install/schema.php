@@ -174,6 +174,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null)
@@ -537,6 +538,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getSchemaDiff($old, $new)
@@ -1026,6 +1028,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 * @param $dbschema
 	 * @param $upgrade
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function upgradeSchema($dbschema, $upgrade)

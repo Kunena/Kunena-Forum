@@ -352,6 +352,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   null|string $url
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function sendNotification($url = null)
@@ -515,7 +516,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
 	 * @param   bool                     $xhtml
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getPermaUrl($category = null, $xhtml = true)
@@ -552,7 +553,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   string                $url
 	 * @param   bool                  $once
 	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function attachEmailBody(\Joomla\CMS\Mail\Mail $mail, $subscription, $subject, $url, $once)

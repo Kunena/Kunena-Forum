@@ -61,9 +61,9 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @access private
 	 *
-	 * @return null
+	 * @return void
 	 * @since  Kunena
-	 **/
+	 */
 	function setToolBar()
 	{
 		// Set the titlebar text

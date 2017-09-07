@@ -49,6 +49,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

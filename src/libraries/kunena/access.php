@@ -475,6 +475,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
 	 * @since   Kunena
 	 */
@@ -544,6 +545,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAllowedCategories($user = null)
@@ -663,6 +665,7 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function isAdmin($user = null, $catid = 0)

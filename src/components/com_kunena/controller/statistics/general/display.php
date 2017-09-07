@@ -59,6 +59,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

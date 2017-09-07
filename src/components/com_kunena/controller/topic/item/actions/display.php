@@ -325,7 +325,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   bool   $normal  Define if the button will have the class btn or btn-small
 	 * @param   string $icon
 	 *
-	 * @return string
+	 * @return KunenaLayout|KunenaLayoutBase
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')

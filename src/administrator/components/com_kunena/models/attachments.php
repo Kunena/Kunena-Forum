@@ -50,6 +50,7 @@ class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string $direction
 	 *
 	 * @return    void
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	protected function populateState($ordering = null, $direction = null)

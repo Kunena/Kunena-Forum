@@ -67,6 +67,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array
 	 *
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	protected function _getTopics()
@@ -193,6 +194,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get all deleted messages.
 	 *
 	 * @return    array
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	protected function _getMessages()

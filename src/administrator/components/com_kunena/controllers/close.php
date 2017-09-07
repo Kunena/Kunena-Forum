@@ -30,6 +30,7 @@ class KunenaAdminControllerClose extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 *
 	 * @since    Kunena

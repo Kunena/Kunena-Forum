@@ -61,6 +61,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Return view as a string.
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __toString()

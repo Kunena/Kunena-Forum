@@ -80,7 +80,7 @@ abstract class KunenaMenuFix
 	/**
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
-	 * @return array
+	 * @return void
 	 * @throws Exception
 	 * @since Kunena
 	 */

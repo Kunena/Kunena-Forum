@@ -118,6 +118,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

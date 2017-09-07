@@ -44,7 +44,6 @@ class KunenaDatabaseQueryElement
 	 * @param   mixed  $elements String or array.
 	 * @param   string $glue     The glue for elements.
 	 *
-	 * @return    KunenaDatabaseQueryElement
 	 * @since    1.6
 	 */
 	public function __construct($name, $elements, $glue = ',')

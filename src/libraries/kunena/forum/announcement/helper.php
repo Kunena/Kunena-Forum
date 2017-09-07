@@ -65,7 +65,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string $layout layout
 	 * @param   bool   $xhtml  xhtml
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
 	static public function getUrl($layout = null, $xhtml = true)
@@ -210,7 +210,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 *
-	 * @return array
+	 * @return void
 	 * @since Kunena
 	 */
 	public static function cleanup()

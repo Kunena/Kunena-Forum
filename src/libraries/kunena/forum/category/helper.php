@@ -942,6 +942,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param $alias
 	 *
 	 * @return boolean|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getAlias($category_id, $alias)

@@ -102,6 +102,7 @@ class KunenaControllerHome extends KunenaController
 	 * @param   array $visited
 	 *
 	 * @return null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())

@@ -1116,7 +1116,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool        $xhtml
 	 * @param   null|string $action
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
@@ -1313,9 +1313,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
-	 * @throws KunenaExceptionAuthorise
-	 * @throws InvalidArgumentException
-	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -1977,7 +1975,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
@@ -1994,7 +1992,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseOwn(KunenaUser $user)
@@ -2019,7 +2017,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authorisePoll(KunenaUser $user)
@@ -2050,7 +2048,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseVote(KunenaUser $user)
@@ -2091,7 +2089,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseNoVotes(KunenaUser $user)

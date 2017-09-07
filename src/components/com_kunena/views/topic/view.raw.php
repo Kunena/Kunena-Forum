@@ -46,9 +46,10 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string $tpl
 	 *
+	 * @return void
+	 * @throws Exception
 	 * @since K4.0
 	 *
-	 * @return void
 	 * @since Kunena
 	 */
 	public function displayListEmoji($tpl = null)
@@ -93,7 +94,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Send list of topic icons in JSON for the category set selected
 	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayTopicIcons()
@@ -204,6 +206,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayRate($tpl = null)
@@ -234,7 +237,7 @@ class KunenaViewTopic extends KunenaView
 
 		echo $response;
 	}
-	
+
 	/**
 	 * Return the template text corresponding to the category selected
 	 *
@@ -245,12 +248,12 @@ class KunenaViewTopic extends KunenaView
 	public function displayCategorytemplatetext($tpl = null)
 	{
 		$app      = \Joomla\CMS\Factory::getApplication();
-		$catid = $this->app->input->getInt('catid', 0);
+		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 
-		$category         = KunenaForumCategoryHelper::get($catid);
+		$category = KunenaForumCategoryHelper::get($catid);
 
-		$response =  $category->topictemplate;
+		$response = $category->topictemplate;
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');

@@ -141,7 +141,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws KunenaExceptionAuthorise
+	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save()
@@ -989,7 +990,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload avatar with AJAX.
 	 *
-	 * @throws RuntimeException
+	 * @throws null
 	 * @since 5.1
 	 */
 	public function upload()
@@ -1111,9 +1112,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Get avatar attached to a profile with AJAX.
 	 *
-	 * @throws RuntimeException
-	 *
-	 * @return string
+	 * @return void
 	 * @since 5.1
 	 */
 	public function loadAvatar()

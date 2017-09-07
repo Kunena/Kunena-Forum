@@ -279,6 +279,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   null $ordering
 	 * @param   null $direction
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)

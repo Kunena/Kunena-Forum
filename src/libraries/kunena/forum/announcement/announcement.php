@@ -110,7 +110,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $layout
 	 * @param   bool   $xhtml
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
@@ -151,7 +151,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getTaskUrl($task = null, $xhtml = true)
@@ -196,6 +196,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $mode
 	 *
 	 * @return integer|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayField($field, $mode = null)
@@ -414,7 +415,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseNew(KunenaUser $user)
@@ -430,7 +431,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -451,7 +452,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
@@ -478,7 +480,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseWrite(KunenaUser $user)

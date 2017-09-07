@@ -31,6 +31,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @param   array $config Construct
 	 *
+	 * @throws Exception
 	 * @since 2.0
 	 */
 	public function __construct($config = array())

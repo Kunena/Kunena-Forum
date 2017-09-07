@@ -78,6 +78,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

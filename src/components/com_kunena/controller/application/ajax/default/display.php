@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function exists()
@@ -115,6 +116,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * @param   mixed $content Content to be returned.
 	 *
 	 * @return  string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayRaw($content)
@@ -134,7 +136,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 *
 	 * @param   mixed $content Content to be returned.
 	 *
-	 * @return  string
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayJson($content)

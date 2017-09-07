@@ -111,6 +111,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

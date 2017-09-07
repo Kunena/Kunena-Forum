@@ -158,6 +158,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumCategory|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAdminCategory()
@@ -235,6 +236,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * @param   null $order
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function saveorder($pks = null, $order = null)

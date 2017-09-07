@@ -62,7 +62,7 @@ class KunenaBbcodeEditor
 	 * @param   null $pos
 	 * @param        $where
 	 *
-	 * @return boolean
+	 * @return void
 	 * @since Kunena
 	 */
 	public function insertElement($element, $pos = null, $where = null)
@@ -138,6 +138,7 @@ class KunenaBbcodeEditor
 	 *
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function initialize()

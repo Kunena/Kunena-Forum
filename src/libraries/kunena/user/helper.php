@@ -441,6 +441,7 @@ abstract class KunenaUserHelper
 	 * Get the number of users online
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getOnlineCount()
@@ -494,6 +495,7 @@ abstract class KunenaUserHelper
 	 * Get the list of users online by giving list of userid
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getOnlineUsers()
@@ -545,6 +547,7 @@ abstract class KunenaUserHelper
 	 * @param   mixed $user The user object to get the status
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getStatus($user)

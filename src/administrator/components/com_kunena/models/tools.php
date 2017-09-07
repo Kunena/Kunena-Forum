@@ -485,8 +485,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get the default joomla template.
 	 *
-	 * @return    string
+	 * @return boolean|stdClass
 	 *
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	protected function _getJoomlaTemplate()
@@ -590,6 +591,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @return    string
 	 *
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	protected function _getTablesCollation()

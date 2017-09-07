@@ -1414,6 +1414,7 @@ class KunenaConfig extends JObject
 	 * Email set for the configuration
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getEmail()

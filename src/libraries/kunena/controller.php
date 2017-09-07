@@ -326,6 +326,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)

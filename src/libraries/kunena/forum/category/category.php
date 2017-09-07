@@ -442,6 +442,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool   $silent
 	 *
 	 * @return boolean
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
@@ -780,7 +781,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return integer
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getTopics()
@@ -834,7 +835,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return integer
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function getPosts()
@@ -937,6 +938,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -1316,6 +1318,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * Delete this category and all related information from the database.
 	 *
 	 * @return bool    True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete()
@@ -1673,6 +1676,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)

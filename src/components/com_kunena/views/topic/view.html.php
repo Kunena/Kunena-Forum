@@ -501,6 +501,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getMessageProfileBox()
@@ -612,6 +613,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getTopicActions()
@@ -709,6 +711,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getMessageActions()
@@ -786,6 +789,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param        $message
 	 * @param   null $template
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayMessage($id, $message, $template = null)
@@ -1204,6 +1208,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $type
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _prepareDocument($type)

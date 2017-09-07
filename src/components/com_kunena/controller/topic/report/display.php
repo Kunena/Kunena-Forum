@@ -92,6 +92,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

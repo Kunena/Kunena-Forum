@@ -363,6 +363,7 @@ class Com_KunenaInstallerScript
 	 * @param $version
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function checkRequirements($version)

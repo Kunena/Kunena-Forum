@@ -52,7 +52,6 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @param   mixed $properties   Associative array to set the initial properties of the object.
 	 *                              If not profided, default values will be used.
 	 *
-	 * @return  KunenaDatabaseObject
 	 * @internal
 	 * @since Kunena
 	 */
@@ -115,8 +114,8 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @param   int     $identifier Object identifier to load.
 	 * @param   boolean $reload     Force object reload from the database.
 	 *
-	 * @return  KunenaDatabaseObject
-	 * @throws  Exception
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)

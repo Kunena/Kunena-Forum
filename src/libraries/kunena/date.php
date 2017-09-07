@@ -47,6 +47,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	 * @param   string $class
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')

@@ -55,6 +55,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * @return  boolean  True if access level check and checkout passes, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function edit($key = null, $urlVar = null)
@@ -171,6 +172,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * @return  string  The arguments to append to the redirect URL.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	protected function getRedirectToListAppend()
@@ -229,6 +231,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * @return  boolean  True if access level checks pass, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function cancel($key = null)
@@ -309,6 +312,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * @return  boolean  True if successful, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function save($key = null, $urlVar = null)

@@ -981,6 +981,7 @@ class lessc
 	 * @param $orderedValues
 	 * @param $keywordValues
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function zipSetArgs($args, $orderedValues, $keywordValues)
@@ -1038,11 +1039,13 @@ class lessc
 	}
 
 	// compile a prop and update $lines or $blocks appropriately
+
 	/**
 	 * @param $prop
 	 * @param $block
 	 * @param $out
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileProp($prop, $block, $out)
@@ -1232,6 +1235,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileValue($value)
@@ -1315,7 +1319,8 @@ class lessc
 	/**
 	 * @param $args
 	 *
-	 * @return number
+	 * @return float|int
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_pow($args)
@@ -1540,6 +1545,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_rgbahex($color)
@@ -1923,6 +1929,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_mix($args)
@@ -2001,6 +2008,7 @@ class lessc
 	 * @param string $error
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function assertColor($value, $error = "expected color value")
@@ -2020,6 +2028,7 @@ class lessc
 	 * @param string $error
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function assertNumber($value, $error = "expecting number")
@@ -2038,6 +2047,7 @@ class lessc
 	 * @param string $name
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function assertArgs($value, $expectedArgs, $name = "")
@@ -2339,6 +2349,7 @@ class lessc
 	 * @param bool $forExpression
 	 *
 	 * @return array|bool|null
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function reduce($value, $forExpression = false)
@@ -2769,6 +2780,7 @@ class lessc
 	 * @param $right
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function op_color_color($op, $left, $right)
@@ -2810,6 +2822,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	function lib_red($color)
@@ -2828,6 +2841,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	function lib_green($color)
@@ -2846,6 +2860,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	function lib_blue($color)
@@ -2862,12 +2877,14 @@ class lessc
 
 
 	// operator on two numbers
+
 	/**
 	 * @param $op
 	 * @param $left
 	 * @param $right
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function op_number_number($op, $left, $right)
@@ -3059,6 +3076,7 @@ class lessc
 	 * @param null $name
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	public function compile($string, $name = null)
@@ -3127,11 +3145,13 @@ class lessc
 	}
 
 	// compile only if changed input has changed or output doesn't exist
+
 	/**
 	 * @param $in
 	 * @param $out
 	 *
 	 * @return bool
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	public function checkedCompile($in, $out)
@@ -3166,6 +3186,7 @@ class lessc
 	 * @param bool  $force Force rebuild?
 	 *
 	 * @return array lessphp cache structure
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	public function cachedCompile($in, $force = false)
@@ -4714,6 +4735,7 @@ class lessc_parser
 	 * @param $isVararg
 	 *
 	 * @return bool
+	 * @throws exception
 	 * @since LESSC
 	 */
 	protected function argumentDef(&$args, &$isVararg)

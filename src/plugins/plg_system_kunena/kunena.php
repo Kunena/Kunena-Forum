@@ -21,6 +21,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object $subject Subject
 	 * @param   array  $config  Config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function __construct(&$subject, $config)
@@ -123,6 +124,7 @@ EOF;
 	 * @param   int    $eid      id
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)

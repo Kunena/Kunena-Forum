@@ -164,6 +164,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * Uninstall Kunena, run from Joomla installer.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function uninstall()
@@ -234,6 +235,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
 	 *
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	public function getState($property = null, $default = null)
@@ -437,6 +439,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return bool|null
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function extract($path, $filename, $dest = null, $silent = false)
@@ -493,6 +496,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * @param   string $name
 	 *
 	 * @return bool
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function installLanguage($tag, $name = '')
@@ -569,6 +573,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return bool|null
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function installModule($path, $name)
@@ -634,6 +639,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return bool|null
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function installPlugin($path, $group, $name, $publish, $ordering = 0)
@@ -861,6 +867,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	/**
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @throws KunenaSchemaException
 	 * @since Kunena
@@ -1042,7 +1049,9 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	/**
+	 * @throws Exception
 	 * @throws KunenaInstallerException
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function stepDatabase()
@@ -1119,6 +1128,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	}
 
 	/**
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @since Kunena
 	 */
@@ -1505,6 +1515,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @since Kunena
 	 */
@@ -1562,6 +1573,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @since Kunena
 	 */
@@ -1712,6 +1724,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function migrateAvatarGalleries()
@@ -1746,6 +1759,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function migrateCategoryImages()
@@ -1818,6 +1832,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @since Kunena
 	 */

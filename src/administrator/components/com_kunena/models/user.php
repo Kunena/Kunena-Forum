@@ -130,6 +130,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getListmodcats()
@@ -175,6 +176,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getListuserranks()
@@ -221,6 +223,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMoveuser()

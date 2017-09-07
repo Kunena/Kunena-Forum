@@ -63,7 +63,8 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @param   int    $id     Id of the button.
 	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
-	 * @return  string
+	 * @return KunenaLayout|KunenaLayoutBase
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)

@@ -29,6 +29,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @param   array $config construct
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())

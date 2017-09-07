@@ -30,6 +30,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   string $base  Base path.
 	 *
 	 * @return  KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function factory($paths, $base = 'pages')

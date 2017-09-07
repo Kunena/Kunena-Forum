@@ -169,7 +169,7 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   array $items The array of objects
 	 *
-	 * @return  array The array of translated objects
+	 * @return void The array of translated objects
 	 * @since Kunena
 	 */
 	protected function translate(&$items)

@@ -80,7 +80,7 @@ class KunenaAccessComprofiler
 	 * @param   string $accesstype Access type.
 	 * @param   int    $id         Group id.
 	 *
-	 * @return string|null
+	 * @return boolean|integer|null
 	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)

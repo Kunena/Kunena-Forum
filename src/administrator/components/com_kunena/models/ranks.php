@@ -49,6 +49,7 @@ class KunenaAdminModelRanks extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   string $direction
 	 *
 	 * @return    void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function populateState($ordering = null, $direction = null)

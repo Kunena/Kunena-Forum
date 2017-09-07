@@ -254,6 +254,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

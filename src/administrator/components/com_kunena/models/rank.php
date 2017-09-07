@@ -24,6 +24,7 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return mixed
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getRankspaths()

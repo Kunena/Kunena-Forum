@@ -22,6 +22,7 @@ class KunenaAdminModelConfig extends KunenaModel
 {
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getConfiglists()

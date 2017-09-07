@@ -205,7 +205,8 @@ class KunenaForumTopicRate extends JObject
 	 * @param   int $start
 	 * @param   int $limit
 	 *
-	 * @return array
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUsers($start = 0, $limit = 0)
@@ -250,7 +251,7 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * @param   int $userid
 	 *
-	 * @return int userid if hes in table else empty
+	 * @return bool userid if hes in table else empty
 	 * @internal param int $pid
 	 * @since    2.0
 	 */

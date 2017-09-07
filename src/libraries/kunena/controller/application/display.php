@@ -55,6 +55,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return \Joomla\CMS\Layout\BaseLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function execute()

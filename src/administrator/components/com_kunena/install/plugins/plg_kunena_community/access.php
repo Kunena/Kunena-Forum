@@ -75,7 +75,7 @@ class KunenaAccessCommunity
 	 * @param   string $accesstype Access type.
 	 * @param   int    $id         Group id.
 	 *
-	 * @return string|null
+	 * @return boolean|null|string
 	 * @since Kunena
 	 */
 	public function getGroupName($accesstype, $id = null)

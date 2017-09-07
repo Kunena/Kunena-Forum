@@ -186,6 +186,7 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected static function prepare($uri = null)
@@ -659,6 +660,7 @@ abstract class KunenaRoute
 	 * @param   string $anchor  Anchor (location in the page).
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getReferrer($default = null, $anchor = null)

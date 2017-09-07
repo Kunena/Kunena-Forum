@@ -49,9 +49,8 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	/**
 	 * Prepare category display.
 	 *
-	 * @return void
+	 * @return KunenaExceptionAuthorise
 	 *
-	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena 5.1
 	 */
 	protected function before()
@@ -79,6 +78,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena 5.1
 	 */
 	protected function prepareDocument()

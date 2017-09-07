@@ -66,6 +66,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the application object.
 	 *
 	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function loadApplication()

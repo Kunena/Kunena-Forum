@@ -130,7 +130,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @return null
+	 * @return integer|null
 	 * @since Kunena
 	 */
 	protected function getCBUserid()

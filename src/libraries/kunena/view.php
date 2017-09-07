@@ -219,6 +219,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param   array $messages
 	 * @param   int   $code
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayError($messages = array(), $code = 404)

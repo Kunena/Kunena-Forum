@@ -38,6 +38,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 *
 	 * @since    Kunena
@@ -409,6 +410,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return KunenaForumCategory|void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 */
 	protected function _save()
@@ -730,10 +733,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save order
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	public function saveorder()
@@ -805,6 +808,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   3.0
 	 */
 	public function saveOrderAjax()
@@ -839,10 +843,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Order Up
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	public function orderup()
@@ -911,10 +915,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Order Down
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	public function orderdown()
@@ -971,6 +975,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
+	 * @throws Exception
 	 * @since  5.1.0
 	 */
 	public function batch_categories()

@@ -157,9 +157,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @param   string $property
 	 *
-	 * @return string
-	 * @throws InvalidArgumentException
-	 *
+	 * @return integer
 	 * @since  K4.0
 	 */
 	public function __get($property)
@@ -337,6 +335,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
@@ -566,6 +565,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	function upload($key = 'kattachment', $catid = null)

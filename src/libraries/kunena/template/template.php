@@ -194,6 +194,7 @@ class KunenaTemplate extends JObject
 	 *
 	 * @param   null $name
 	 *
+	 * @throws Exception
 	 * @since     Kunena
 	 */
 	public function __construct($name = null)
@@ -306,6 +307,7 @@ class KunenaTemplate extends JObject
 	 * @param   int $name Template name or null for default/selected template in your configuration
 	 *
 	 * @return    KunenaTemplate    The template object.
+	 * @throws Exception
 	 * @since     1.6
 	 */
 	public static function getInstance($name = null)
@@ -1480,6 +1482,7 @@ HTML;
 	 * @param          $category_iconset
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)

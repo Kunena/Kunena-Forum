@@ -21,6 +21,7 @@ class KunenaControllerMisc extends KunenaController
 	/**
 	 * @param   array $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($config = array())

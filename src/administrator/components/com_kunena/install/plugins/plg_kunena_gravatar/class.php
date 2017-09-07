@@ -79,7 +79,7 @@ class KunenaGravatar
 	/**
 	 * @param   string $email
 	 *
-	 * @return string $email
+	 * @return void $email
 	 * @since Kunena
 	 */
 	public function setEmail($email)

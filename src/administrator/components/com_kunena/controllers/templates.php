@@ -41,6 +41,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())

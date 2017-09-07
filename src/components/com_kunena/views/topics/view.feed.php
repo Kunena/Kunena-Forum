@@ -20,7 +20,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return Exception
+	 * @return void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -93,7 +93,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return Exception
+	 * @return void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -138,7 +138,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
-	 * @return Exception
+	 * @return void
 	 * @throws Exception
 	 * @since Kunena
 	 */

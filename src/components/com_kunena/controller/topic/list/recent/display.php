@@ -21,6 +21,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare recent topics list.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()
@@ -297,6 +298,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

@@ -88,6 +88,7 @@ abstract class KunenaRouteLegacy
 	/**
 	 * @param $item
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function convertMenuItem($item)

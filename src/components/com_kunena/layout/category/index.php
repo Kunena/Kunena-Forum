@@ -118,7 +118,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int $category_id The category Id
 	 * @param   int $numTopics   The number of topics
 	 *
-	 * @return string|null
+	 * @return boolean|null
 	 * @since Kunena
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
@@ -142,7 +142,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int         $catid The Id of category
 	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
-	 * @return null|string
+	 * @return boolean|null
 	 * @since Kunena
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)

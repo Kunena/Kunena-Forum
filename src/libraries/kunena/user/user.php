@@ -146,6 +146,7 @@ class KunenaUser extends JObject
 	/**
 	 * @param   int $identifier
 	 *
+	 * @throws Exception
 	 * @internal
 	 * @since Kunena
 	 */
@@ -245,6 +246,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -422,6 +424,7 @@ class KunenaUser extends JObject
 	 * Method to delete the KunenaUser object from the database.
 	 *
 	 * @return    boolean    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete()
@@ -615,6 +618,7 @@ class KunenaUser extends JObject
 	 * Return local time for the user.
 	 *
 	 * @return KunenaDate  User time instance.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTime()
@@ -739,6 +743,7 @@ class KunenaUser extends JObject
 	 * @param   boolean $updateOnly Save the object only if not a new user.
 	 *
 	 * @return    boolean True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($updateOnly = false)
@@ -867,7 +872,7 @@ class KunenaUser extends JObject
 	 *
 	 * @param $profile
 	 *
-	 * @return string Cloaked email address or empty string.
+	 * @return bool Cloaked email address or empty string.
 	 *
 	 * @since  K5.1
 	 */
@@ -1095,7 +1100,7 @@ class KunenaUser extends JObject
 	 *
 	 * @param   KunenaLayout $layout
 	 *
-	 * @return string
+	 * @return void
 	 *
 	 * @since  K5.0
 	 */
@@ -1630,9 +1635,10 @@ class KunenaUser extends JObject
 	 *
 	 * @param   int         $catid
 	 *
-	 * @param   int           $avatarLink
+	 * @param   int         $avatarLink
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
@@ -1791,7 +1797,7 @@ class KunenaUser extends JObject
 	/**
 	 * Get list of social buttons
 	 *
-	 * @return string
+	 * @return array
 	 * @since Kunena
 	 */
 	public function socialButtons()
@@ -1828,7 +1834,7 @@ class KunenaUser extends JObject
 	/**
 	 * @param   string $name
 	 *
-	 * @return string
+	 * @return integer|null
 	 * @since Kunena
 	 */
 	public function __get($name)

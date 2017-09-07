@@ -29,6 +29,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
 	{
@@ -296,6 +297,7 @@ class KunenaAdminViewTools extends KunenaView
 
 	/**
 	 *
+	 * @since Kunena
 	 */
 	protected function setToolBarReport()
 	{

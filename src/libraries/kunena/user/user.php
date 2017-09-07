@@ -1797,7 +1797,7 @@ class KunenaUser extends JObject
 	/**
 	 * Get list of social buttons
 	 *
-	 * @return array
+	 * @return array|string
 	 * @since Kunena
 	 */
 	public function socialButtons()

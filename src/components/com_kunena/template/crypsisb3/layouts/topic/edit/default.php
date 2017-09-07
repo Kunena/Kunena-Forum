@@ -311,7 +311,7 @@ else
 									</button>
 									<div class="clearfix"></div>
 									</br>
-									<div id="progress" class="progress progress-striped" style="display: none">
+									<div id="progress" class="progress progress-striped" style="display: none;">
 										<div class="bar"></div>
 									</div>
 									<!-- The container for the uploaded files -->

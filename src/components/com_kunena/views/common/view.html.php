@@ -115,7 +115,7 @@ class KunenaViewCommon extends KunenaView
 				return;
 			}
 
-			if ($this->announcement && $this->announcement->authorise('read'))
+			if ($this->announcement && $this->announcement->isAuthorised('read'))
 			{
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate   = $this->announcement->showdate;

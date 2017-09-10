@@ -60,7 +60,7 @@ class KunenaControllerTopics extends KunenaController
 
 			foreach ($topics as $topic)
 			{
-				if ($topic->authorise('permdelete') && $topic->delete())
+				if ($topic->isAuthorised('permdelete') && $topic->delete())
 				{
 					// Activity integration
 					$activity = KunenaFactory::getActivityIntegration();
@@ -156,7 +156,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->authorise('delete') && $topic->publish(KunenaForum::TOPIC_DELETED))
+				if ($topic->isAuthorised('delete') && $topic->publish(KunenaForum::TOPIC_DELETED))
 				{
 					$message = JText::_('COM_KUNENA_BULKMSG_DELETED');
 				}
@@ -219,7 +219,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->authorise('undelete') && $topic->publish(KunenaForum::PUBLISHED))
+				if ($topic->isAuthorised('undelete') && $topic->publish(KunenaForum::PUBLISHED))
 				{
 					$message = JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
 				}
@@ -282,7 +282,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->authorise('approve') && $topic->publish(KunenaForum::PUBLISHED))
+				if ($topic->isAuthorised('approve') && $topic->publish(KunenaForum::PUBLISHED))
 				{
 					$message = JText::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
 					$topic->sendNotification();
@@ -360,7 +360,7 @@ class KunenaControllerTopics extends KunenaController
 				{
 					foreach ($topics as $topic)
 					{
-						if ($topic->authorise('move') && $topic->move($target))
+						if ($topic->isAuthorised('move') && $topic->move($target))
 						{
 							$message = JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
 						}
@@ -376,7 +376,7 @@ class KunenaControllerTopics extends KunenaController
 					{
 						$topic = $message->getTopic();
 
-						if ($message->authorise('move') && $topic->move($target, $message->id))
+						if ($message->isAuthorised('move') && $topic->move($target, $message->id))
 						{
 							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
 						}
@@ -520,7 +520,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED))
+				if ($message->isAuthorised('approve') && $message->publish(KunenaForum::PUBLISHED))
 				{
 					$message->sendNotification();
 					$success++;
@@ -568,7 +568,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->authorise('delete') && $message->publish(KunenaForum::DELETED))
+				if ($message->isAuthorised('delete') && $message->publish(KunenaForum::DELETED))
 				{
 					$success++;
 				}
@@ -615,7 +615,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->authorise('undelete') && $message->publish(KunenaForum::PUBLISHED))
+				if ($message->isAuthorised('undelete') && $message->publish(KunenaForum::PUBLISHED))
 				{
 					$success++;
 				}
@@ -662,7 +662,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->authorise('permdelete') && $message->delete())
+				if ($message->isAuthorised('permdelete') && $message->delete())
 				{
 					$success++;
 				}

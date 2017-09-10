@@ -49,7 +49,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 		$items              = KunenaForumAnnouncementHelper::getAnnouncements();
 		$this->announcement = array_pop($items);
 
-		if (!$this->announcement || !$this->announcement->authorise('read'))
+		if (!$this->announcement || !$this->announcement->isAuthorised('read'))
 		{
 			return false;
 		}

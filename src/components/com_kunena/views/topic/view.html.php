@@ -94,7 +94,7 @@ class KunenaViewTopic extends KunenaView
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
 			$errors[] = JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP');
 		}
-		elseif (!$this->topic->authorise('read'))
+		elseif (!$this->topic->isAuthorised('read'))
 		{
 			// User is not allowed to see the topic
 			$errors[] = $this->topic->getError();
@@ -173,7 +173,7 @@ class KunenaViewTopic extends KunenaView
 		$this->topic->hit();
 
 		// Check is subscriptions have been sent and reset the value
-		if ($this->topic->authorise('subscribe'))
+		if ($this->topic->isAuthorised('subscribe'))
 		{
 			$usertopic = $this->topic->getUserTopic();
 
@@ -187,7 +187,7 @@ class KunenaViewTopic extends KunenaView
 		// Get keywords, captcha & quick reply
 		/*
 		$this->captcha    = KunenaSpamRecaptcha::getInstance();
-		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());     */
+		$this->quickreply = ($this->topic->isAuthorised('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());     */
 		$this->keywords = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');
@@ -386,7 +386,7 @@ class KunenaViewTopic extends KunenaView
 			$this->topic = $parent->getTopic();
 		}
 
-		if (!$parent->authorise('reply'))
+		if (!$parent->isAuthorised('reply'))
 		{
 			$this->app->enqueueMessage($parent->getError(), 'notice');
 
@@ -407,7 +407,7 @@ class KunenaViewTopic extends KunenaView
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->authorise('edit', null, false))
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null, false))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -440,7 +440,7 @@ class KunenaViewTopic extends KunenaView
 
 		$this->message = KunenaForumMessageHelper::get($mesid);
 
-		if (!$this->message->authorise('edit'))
+		if (!$this->message->isAuthorised('edit'))
 		{
 			$this->app->enqueueMessage($this->message->getError(), 'notice');
 
@@ -450,7 +450,7 @@ class KunenaViewTopic extends KunenaView
 		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->authorise('edit', null, false))
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null, false))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -473,7 +473,7 @@ class KunenaViewTopic extends KunenaView
 		$this->attachments = $this->message->getAttachments();
 
 		// Get poll
-		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->authorise('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->authorise('poll.edit', null, false))))
+		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->isAuthorised('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->isAuthorised('poll.edit', null, false))))
 		{
 			$this->poll = $this->topic->getPoll();
 		}
@@ -627,7 +627,7 @@ class KunenaViewTopic extends KunenaView
 		$this->topicButtons = new JObject;
 
 		// Reply topic
-		if ($this->topic->authorise('reply'))
+		if ($this->topic->isAuthorised('reply'))
 		{
 			// This user is allowed to reply to this topic
 			$this->topicButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication'));
@@ -639,7 +639,7 @@ class KunenaViewTopic extends KunenaView
 			// This user is allowed to unsubscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user'));
 		}
-		elseif ($this->topic->authorise('subscribe'))
+		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// This user is allowed to subscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user'));
@@ -651,7 +651,7 @@ class KunenaViewTopic extends KunenaView
 			// This user is allowed to unfavorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user'));
 		}
-		elseif ($this->topic->authorise('favorite'))
+		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// This user is allowed to add a favorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user'));

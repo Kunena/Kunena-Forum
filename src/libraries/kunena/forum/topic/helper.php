@@ -152,7 +152,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($ids as $id)
 		{
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true))
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null))
 			{
 				$list [$id] = self::$_instances [$id];
 			}

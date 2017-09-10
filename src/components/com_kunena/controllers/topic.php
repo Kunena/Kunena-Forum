@@ -334,7 +334,7 @@ class KunenaControllerTopic extends KunenaController
 			// Reply topic
 			$parent = KunenaForumMessageHelper::get($this->id);
 
-			if (!$parent->authorise('reply'))
+			if (!$parent->isAuthorised('reply'))
 			{
 				$this->app->enqueueMessage($parent->getError(), 'notice');
 				$this->setRedirectBack();
@@ -422,7 +422,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->authorise('edit', null, false))
+		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
 		{
 			$topic->icon_id = $fields['icon_id'];
 		}
@@ -564,7 +564,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!empty($poll_options) && !empty($poll_title))
 		{
-			if ($topic->authorise('poll.create', null, false))
+			if ($topic->isAuthorised('poll.create', null, false))
 			{
 				$poll        = $topic->getPoll();
 				$poll->title = $poll_title;
@@ -627,11 +627,11 @@ class KunenaControllerTopic extends KunenaController
 
 		$category = KunenaForumCategoryHelper::get($this->return);
 
-		if ($message->authorise('read', null, false) && $this->id)
+		if ($message->isAuthorised('read', null, false) && $this->id)
 		{
 			$this->setRedirect($message->getUrl($category, false));
 		}
-		elseif ($topic->authorise('read', null, false))
+		elseif ($topic->isAuthorised('read', null, false))
 		{
 			$this->setRedirect($topic->getUrl($category, false));
 		}
@@ -673,7 +673,7 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		if (!$message->authorise('edit'))
+		if (!$message->isAuthorised('edit'))
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage($message->getError(), 'notice');
@@ -736,7 +736,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->authorise('edit', null, false))
+		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
 		{
 			$topic->icon_id = $fields['icon_id'];
 		}
@@ -849,7 +849,7 @@ class KunenaControllerTopic extends KunenaController
 				if (!$topic->poll_id)
 				{
 					// Create a new poll
-					if (!$topic->authorise('poll.create'))
+					if (!$topic->isAuthorised('poll.create'))
 					{
 						$this->app->enqueueMessage($topic->getError(), 'notice');
 					}
@@ -867,7 +867,7 @@ class KunenaControllerTopic extends KunenaController
 				else
 				{
 					// Edit existing poll
-					if (!$topic->authorise('poll.edit'))
+					if (!$topic->isAuthorised('poll.edit'))
 					{
 						$this->app->enqueueMessage($topic->getError(), 'notice');
 					}
@@ -881,10 +881,10 @@ class KunenaControllerTopic extends KunenaController
 					}
 				}
 			}
-			elseif ($poll->exists() && $topic->authorise('poll.edit'))
+			elseif ($poll->exists() && $topic->isAuthorised('poll.edit'))
 			{
 				// Delete poll
-				if (!$topic->authorise('poll.delete'))
+				if (!$topic->isAuthorised('poll.delete'))
 				{
 					// Error: No permissions to delete poll
 					$this->app->enqueueMessage($topic->getError(), 'notice');
@@ -907,7 +907,7 @@ class KunenaControllerTopic extends KunenaController
 		if ($message->hold == 1)
 		{
 			// If user cannot approve message by himself, send email to moderators.
-			if (!$topic->authorise('approve'))
+			if (!$topic->isAuthorised('approve'))
 			{
 				$message->sendNotification();
 			}
@@ -1001,7 +1001,7 @@ class KunenaControllerTopic extends KunenaController
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1)
+			if (!$topic->isAuthorised('approve') && $countlink >= $this->config->max_links + 1)
 			{
 				return false;
 			}
@@ -1048,7 +1048,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
 
-		if (!$message->authorise($type))
+		if (!$message->isAuthorised($type))
 		{
 			$this->app->enqueueMessage($message->getError());
 			$this->setRedirectBack();
@@ -1142,7 +1142,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if ($topic->authorise('read') && $topic->subscribe(1))
+		if ($topic->isAuthorised('read') && $topic->subscribe(1))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'));
 
@@ -1174,7 +1174,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if ($topic->authorise('read') && $topic->subscribe(0))
+		if ($topic->isAuthorised('read') && $topic->subscribe(0))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_UNSUBSCRIBED_TOPIC'));
 
@@ -1206,7 +1206,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if ($topic->authorise('read') && $topic->favorite(1))
+		if ($topic->isAuthorised('read') && $topic->favorite(1))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_FAVORITED_TOPIC'));
 
@@ -1238,7 +1238,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if ($topic->authorise('read') && $topic->favorite(0))
+		if ($topic->isAuthorised('read') && $topic->favorite(0))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'));
 
@@ -1270,7 +1270,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if (!$topic->authorise('sticky'))
+		if (!$topic->isAuthorised('sticky'))
 		{
 			$this->app->enqueueMessage($topic->getError(), 'notice');
 		}
@@ -1317,7 +1317,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if (!$topic->authorise('sticky'))
+		if (!$topic->isAuthorised('sticky'))
 		{
 			$this->app->enqueueMessage($topic->getError(), 'notice');
 		}
@@ -1364,7 +1364,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if (!$topic->authorise('lock'))
+		if (!$topic->isAuthorised('lock'))
 		{
 			$this->app->enqueueMessage($topic->getError(), 'notice');
 		}
@@ -1411,7 +1411,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 
-		if (!$topic->authorise('lock'))
+		if (!$topic->isAuthorised('lock'))
 		{
 			$this->app->enqueueMessage($topic->getError(), 'notice');
 		}
@@ -1476,7 +1476,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$category = $topic->getCategory();
 
-		if ($target->authorise('delete') && $target->publish($hold))
+		if ($target->isAuthorised('delete') && $target->publish($hold))
 		{
 			if ($this->config->log_moderation)
 			{
@@ -1496,9 +1496,9 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage($target->getError(), 'notice');
 		}
 
-		if (!$target->authorise('read'))
+		if (!$target->isAuthorised('read'))
 		{
-			if ($target instanceof KunenaForumMessage && $target->getTopic()->authorise('read'))
+			if ($target instanceof KunenaForumMessage && $target->getTopic()->isAuthorised('read'))
 			{
 				$target = $target->getTopic();
 				$target = KunenaForumMessageHelper::get($target->last_post_id);
@@ -1544,7 +1544,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$category = $topic->getCategory();
 
-		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED))
+		if ($target->isAuthorised('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
 			{
@@ -1604,7 +1604,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$category = $topic->getCategory();
 
-		if ($target->authorise('permdelete') && $target->delete())
+		if ($target->isAuthorised('permdelete') && $target->delete())
 		{
 			if ($this->config->log_moderation)
 			{
@@ -1674,7 +1674,7 @@ class KunenaControllerTopic extends KunenaController
 		$topic    = $message->getTopic();
 		$category = $topic->getCategory();
 
-		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
+		if ($target->isAuthorised('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
 			{
@@ -1755,11 +1755,11 @@ class KunenaControllerTopic extends KunenaController
 		$error        = null;
 		$targetobject = null;
 
-		if (!$object->authorise('move'))
+		if (!$object->isAuthorised('move'))
 		{
 			$error = $object->getError();
 		}
-		elseif (!$target->authorise('read'))
+		elseif (!$target->isAuthorised('read'))
 		{
 			$error = $target->getError();
 		}
@@ -1891,7 +1891,7 @@ class KunenaControllerTopic extends KunenaController
 		$messagetext = $message->message;
 		$baduser     = KunenaFactory::getUser($message->userid);
 
-		if (!$target->authorise('read'))
+		if (!$target->isAuthorised('read'))
 		{
 			// Deny access if user cannot read target
 			$this->app->enqueueMessage($target->getError(), 'notice');
@@ -2027,7 +2027,7 @@ class KunenaControllerTopic extends KunenaController
 		$topic = KunenaForumTopicHelper::get($id);
 		$poll  = $topic->getPoll();
 
-		if (!$topic->authorise('poll.vote'))
+		if (!$topic->isAuthorised('poll.vote'))
 		{
 			$this->app->enqueueMessage($topic->getError(), 'error');
 		}

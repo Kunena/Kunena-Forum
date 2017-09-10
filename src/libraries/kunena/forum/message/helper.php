@@ -57,7 +57,7 @@ abstract class KunenaForumMessageHelper
 		foreach ($ids as $id)
 		{
 			// TODO: authorisation needs topics to be loaded, make sure that they are! (performance increase)
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true))
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null))
 			{
 				$list [$id] = self::$_instances [$id];
 			}

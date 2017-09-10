@@ -58,7 +58,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 1;
 
-			if (!$announcement->authorise('edit') || !$announcement->save())
+			if (!$announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -105,7 +105,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 0;
 
-			if (!$announcement->authorise('edit') || !$announcement->save())
+			if (!$announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -158,7 +158,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 
-			if (!$announcement->authorise('delete') || !$announcement->delete())
+			if (!$announcement->isAuthorised('delete') || !$announcement->delete())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -205,7 +205,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 		$announcement->bind($fields);
 
-		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save())
+		if (!$announcement->isAuthorised($id ? 'edit' : 'create') || !$announcement->save())
 		{
 			$this->app->enqueueMessage($announcement->getError(), 'error');
 			$this->setRedirectBack();

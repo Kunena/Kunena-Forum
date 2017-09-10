@@ -159,7 +159,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
+					if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 					{
 						$this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
 					}

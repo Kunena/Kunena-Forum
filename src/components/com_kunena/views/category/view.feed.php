@@ -34,7 +34,7 @@ class KunenaViewCategory extends KunenaView
 
 		$this->category = $this->get('Category');
 
-		if (!$this->category->authorise('read'))
+		if (!$this->category->isAuthorised('read'))
 		{
 			throw new Exception($this->category->getError(), 404);
 		}

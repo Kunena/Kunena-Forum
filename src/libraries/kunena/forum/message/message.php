@@ -319,7 +319,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		else
 		{
 			// Otherwise message is either unapproved or published depending if the category is moderated or not
-			$message->hold = $category->review ? (int) !$category->authorise('moderate', $user, true) : 0;
+			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user, true) : 0;
 		}
 
 		if ($fields === true)
@@ -1147,7 +1147,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		// Update rest of the information
 		$category            = $this->getCategory();
-		$this->hold          = $category->review && !$category->authorise('moderate', $user, true) ? 1 : $this->hold;
+		$this->hold          = $category->review && !$category->isAuthorised('moderate', $user, true) ? 1 : $this->hold;
 		$this->modified_by   = $user->userid;
 		$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
 	}
@@ -1395,7 +1395,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Flood protection
 		$config = KunenaFactory::getConfig();
 
-		if ($config->floodprotection && !$this->getCategory()->authorise('moderate') && !$this->exists())
+		if ($config->floodprotection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists())
 		{
 			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
 
@@ -1418,7 +1418,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (!$this->exists() && !$this->getCategory()->authorise('moderate'))
+		if (!$this->exists() && !$this->getCategory()->isAuthorised('moderate'))
 		{
 			// Ignore identical messages (posted within 5 minutes)
 			$duplicatetimewindow = \Joomla\CMS\Factory::getDate()->toUnix() - 5 * 60;

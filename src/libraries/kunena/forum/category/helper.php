@@ -496,7 +496,7 @@ abstract class KunenaForumCategoryHelper
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$action      = isset($params['action']) ? (string) $params['action'] : 'read';
 
-		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->authorise($action, null, true))
+		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->isAuthorised($action, null, true))
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -766,7 +766,7 @@ abstract class KunenaForumCategoryHelper
 					$clist = self::_getChildren(array($id), $levels - 1, $params, $optimize);
 				}
 
-				$allowed = $params['action'] == 'none' || ($params['action'] == 'read' && !empty(self::$allowed[$id])) || $instance->authorise($params['action'], null, true);
+				$allowed = $params['action'] == 'none' || ($params['action'] == 'read' && !empty(self::$allowed[$id])) || $instance->isAuthorised($params['action'], null, true);
 
 				if (empty($clist) && !$allowed)
 				{

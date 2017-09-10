@@ -55,7 +55,7 @@ abstract class JHtmlKunenaForum
 		{
 			$category = KunenaForumCategoryHelper::get($catid);
 
-			if (!$category->getParent()->authorise($action) && !KunenaUserHelper::getMyself()->isAdmin())
+			if (!$category->getParent()->isAuthorised($action) && !KunenaUserHelper::getMyself()->isAdmin())
 			{
 				$categories = KunenaForumCategoryHelper::getParents($catid, $levels, $params);
 			}
@@ -90,7 +90,7 @@ abstract class JHtmlKunenaForum
 
 					foreach ($channels_local as $id => $channel)
 					{
-						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->isAuthorised($action))
 						{
 							unset($channels_local[$id]);
 						}
@@ -145,7 +145,7 @@ abstract class JHtmlKunenaForum
 
 		foreach ($categories as $category)
 		{
-			$disabled = !$category->authorise($action) || (!$sections && $category->isSection());
+			$disabled = !$category->isAuthorised($action) || (!$sections && $category->isSection());
 
 			if ($preselect && empty($selected) && !$disabled)
 			{

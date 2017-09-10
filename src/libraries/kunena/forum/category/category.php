@@ -346,7 +346,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	{
 		foreach ($this->getChannels() as $category)
 		{
-			if ($category->authorise('topic.create', $user, true))
+			if ($category->isAuthorised('topic.create', $user, true))
 			{
 				return $category;
 			}
@@ -358,7 +358,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			foreach ($categories as $category)
 			{
-				if ($category->authorise('topic.create', null, true))
+				if ($category->isAuthorised('topic.create', null, true))
 				{
 					return $category;
 				}
@@ -434,45 +434,6 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->_channels[$action];
-	}
-
-	/**
-	 * @param   string $action
-	 * @param   mixed  $user
-	 * @param   bool   $silent
-	 *
-	 * @return boolean
-	 * @throws null
-	 * @since Kunena
-	 */
-	public function authorise($action = 'read', $user = null, $silent = false)
-	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		if ($user === null)
-		{
-			$user = KunenaUserHelper::getMyself();
-		}
-		elseif (!($user instanceof KunenaUser))
-		{
-			$user = KunenaUserHelper::get($user);
-		}
-
-		$exception = $this->tryAuthorise($action, $user, false);
-
-		if ($silent === false && $exception)
-		{
-			$this->setError($exception->getMessage());
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		if ($silent !== null)
-		{
-			return !$exception;
-		}
-
-		return $exception ? $exception->getMessage() : null;
 	}
 
 	/**
@@ -882,7 +843,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$message->name   = $user->getName('');
 		$message->userid = $user->userid;
 		$message->ip     = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
-		$message->hold   = $this->review ? (int) !$this->authorise('moderate', $user, true) : 0;
+		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user, true) : 0;
 
 		if ($safefields)
 		{
@@ -1022,7 +983,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
-	 * @example if ($category->authorise('admin')) $category->addModerator($user);
+	 * @example if ($category->isAuthorised('admin')) $category->addModerator($user);
 	 * @since   Kunena
 	 */
 	public function addModerator($user = null)
@@ -1038,7 +999,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
-	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
 	 * @since   Kunena
 	 */
 	public function setModerator($user = null, $value = false)
@@ -1051,7 +1012,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @param   array $users
 	 *
-	 * @example if ($category->authorise('admin')) $category->addModerators(array($user1, $user2, $user3));
+	 * @example if ($category->isAuthorised('admin')) $category->addModerators(array($user1, $user2, $user3));
 	 * @since   Kunena
 	 */
 	public function addModerators($users = array())
@@ -1075,7 +1036,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
-	 * @example if ($category->authorise('admin')) $category->removeModerator($user);
+	 * @example if ($category->isAuthorised('admin')) $category->removeModerator($user);
 	 * @since   Kunena
 	 */
 	public function removeModerator($user = null)

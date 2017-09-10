@@ -1482,14 +1482,11 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 				$query = (string) $action;
 				$this->db->setQuery($query);
 
+				$success = true;
+
 				try
 				{
 					$this->db->execute();
-
-					if (!$this->db->getErrorNum())
-					{
-						$success = true;
-					}
 				}
 				catch (Exception $e)
 				{

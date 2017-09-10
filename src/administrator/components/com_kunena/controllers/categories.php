@@ -110,7 +110,7 @@ class KunenaAdminControllerCategories extends KunenaController
 				continue;
 			}
 
-			if (!$category->authorise('admin'))
+			if (!$category->isAuthorised('admin'))
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 			}
@@ -444,7 +444,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
 		$parent   = KunenaForumCategoryHelper::get(intval($post ['parent_id']));
 
-		if ($category->exists() && !$category->authorise('admin'))
+		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
 			// Category exists and user is not admin in category
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
@@ -652,7 +652,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		foreach ($categories as $category)
 		{
-			if (!$category->authorise('admin'))
+			if (!$category->isAuthorised('admin'))
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 			}
@@ -712,7 +712,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		$category = KunenaForumCategoryHelper::get($id);
 
-		if (!$category->authorise('admin'))
+		if (!$category->isAuthorised('admin'))
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 		}

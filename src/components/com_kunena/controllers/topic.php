@@ -319,7 +319,7 @@ class KunenaControllerTopic extends KunenaController
 			// Create topic
 			$category = KunenaForumCategoryHelper::get($this->catid);
 
-			if (!$category->authorise('topic.create'))
+			if (!$category->isAuthorised('topic.create'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'notice');
 				$this->setRedirectBack();

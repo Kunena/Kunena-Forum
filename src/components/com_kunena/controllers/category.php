@@ -87,7 +87,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			// One category
 			$category = KunenaForumCategoryHelper::get($catid);
 
-			if (!$category->authorise('read'))
+			if (!$category->isAuthorised('read'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'error');
 				$this->setRedirectBack();
@@ -140,7 +140,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 		$category = KunenaForumCategoryHelper::get($this->app->input->getInt('catid', 0));
 
-		if (!$category->authorise('read'))
+		if (!$category->isAuthorised('read'))
 		{
 			$this->app->enqueueMessage($category->getError(), 'error');
 			$this->setRedirectBack();
@@ -185,7 +185,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 		foreach ($categories as $category)
 		{
-			if (!$category->authorise('read'))
+			if (!$category->isAuthorised('read'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'error');
 				continue;

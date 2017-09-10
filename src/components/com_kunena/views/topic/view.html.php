@@ -728,7 +728,7 @@ class KunenaViewTopic extends KunenaView
 		$this->message_closed = null;
 
 		// Reply / Quote
-		if ($this->message->authorise('reply'))
+		if ($this->message->isAuthorised('reply'))
 		{
 			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
@@ -741,13 +741,13 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Thank you
-		if ($this->message->authorise('thankyou') && !array_key_exists($this->me->userid, $this->message->thankyou))
+		if ($this->message->isAuthorised('thankyou') && !array_key_exists($this->me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
 		}
 
 		// Unthank you
-		if ($this->message->authorise('unthankyou') && array_key_exists($this->me->userid, $this->message->thankyou))
+		if ($this->message->isAuthorised('unthankyou') && array_key_exists($this->me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou', $this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
 		}
@@ -759,22 +759,22 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Moderation and own post actions
-		$this->message->authorise('edit') ? $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation')) : null;
-		$this->message->authorise('move') ? $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
+		$this->message->isAuthorised('edit') ? $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation')) : null;
+		$this->message->isAuthorised('move') ? $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
 
 		if ($this->message->hold == 1)
 		{
-			$this->message->authorise('approve') ? $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
-			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('approve') ? $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 		elseif ($this->message->hold == 2 || $this->message->hold == 3)
 		{
-			$this->message->authorise('undelete') ? $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
-			$this->message->authorise('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
+			$this->message->isAuthorised('undelete') ? $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
 		}
 		else
 		{
-			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
@@ -840,7 +840,7 @@ class KunenaViewTopic extends KunenaView
 					$thankyous = $message->thankyou;
 				}
 
-				if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
+				if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
 					$canUnthankyou = true;
 				}

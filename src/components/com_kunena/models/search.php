@@ -312,7 +312,7 @@ class KunenaModelSearch extends KunenaModel
 		$text = $this->getState('searchwords');
 		$q = strlen($text);
 
-		if ($q < 3 && !$this->getState('query.searchuser') && \Joomla\CMS\Factory::getApplication()->input->getString('childforums'))
+		if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
 

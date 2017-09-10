@@ -38,7 +38,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function jump()
 	{
-		$catid = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+	    $catid = $this->app->input->getInt('catid', 0);
 
 		if (!$catid)
 		{
@@ -64,8 +64,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid    = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
-		$children = \Joomla\CMS\Factory::getApplication()->input->getBool('children', 0);
+		$catid    = $this->app->input->getInt('catid', 0);
+		$children = $this->app->input->getBool('children', 0);
 
 		if (!$catid)
 		{
@@ -138,7 +138,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get(\Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0));
+		$category = KunenaForumCategoryHelper::get($this->app->input->getInt('catid', 0));
 
 		if (!$category->authorise('read'))
 		{
@@ -175,10 +175,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid  = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(\Joomla\CMS\Factory::getApplication()->input->get('categories', array(), 'post', 'array'));
+			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);

@@ -50,7 +50,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @since Kunena
 	 */
-	public function __construct(JInput $input = null, $app = null, $options = null)
+	public function __construct(\Joomla\Input\Input $input = null, $app = null, $options = null)
 	{
 		// Setup dependencies.
 		$this->app   = isset($app) ? $app : $this->loadApplication();

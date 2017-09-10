@@ -622,6 +622,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isModerator($user = null, $catid = 0)
 	{
@@ -747,6 +748,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return string|array
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
 	{
@@ -793,6 +795,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null)
 	{
@@ -965,6 +968,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @return array
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{

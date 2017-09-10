@@ -230,6 +230,8 @@ class KunenaProfilerItem
 	{
 		$this->calls++;
 		$this->start[] = $starttime;
+
+		return $starttime;
 	}
 
 	/**

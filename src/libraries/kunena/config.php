@@ -1260,6 +1260,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @return KunenaConfig|mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance()
 	{
@@ -1290,6 +1291,7 @@ class KunenaConfig extends JObject
 	 * @param   null $userinfo Not used.
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($userinfo = null)
 	{

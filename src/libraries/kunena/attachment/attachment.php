@@ -387,6 +387,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return KunenaLayout
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLayout()
 	{
@@ -396,6 +397,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 * @since K4.0
+	 * @throws Exception
 	 */
 	public function getTextLink()
 	{
@@ -405,6 +407,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 * @since K4.0
+	 * @throws Exception
 	 */
 	public function getImageLink()
 	{

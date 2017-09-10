@@ -322,6 +322,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param   array $errors
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -411,6 +412,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @throws LogicException
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
 	{

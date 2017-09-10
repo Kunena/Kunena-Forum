@@ -30,6 +30,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaTemplate
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTemplate($name = null)
 	{
@@ -163,6 +164,7 @@ abstract class KunenaFactory
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
@@ -211,6 +213,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaConfig
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getConfig()
 	{

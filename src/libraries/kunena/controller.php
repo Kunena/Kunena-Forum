@@ -495,6 +495,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string $anchor
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

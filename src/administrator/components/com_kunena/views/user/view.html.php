@@ -21,6 +21,7 @@ class KunenaAdminViewUser extends KunenaView
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayEdit()
 	{

@@ -56,6 +56,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
+	 * @throws Exception
 	 * @since  K5.0
 	 *
 	 * @since  Kunena
@@ -111,6 +112,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	public function cancel()

@@ -387,6 +387,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param       $parent
 	 *
 	 * @return mixed|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function parse($text, $len = 0, $parent)
@@ -657,6 +658,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param   KunenaForumCategory|null $category
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)

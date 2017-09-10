@@ -175,6 +175,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	/**
 	 *
 	 * @return void
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function doExecute()

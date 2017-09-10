@@ -34,6 +34,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

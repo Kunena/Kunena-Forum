@@ -111,6 +111,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
@@ -152,6 +153,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTaskUrl($task = null, $xhtml = true)
@@ -393,6 +395,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -442,6 +445,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseWrite(KunenaUser $user)

@@ -106,6 +106,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
@@ -116,12 +117,13 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param             $user
-	 * @param   string    $task
-	 * @param   bool      $xhtml
+	 * @param               $user
+	 * @param   string      $task
+	 * @param   bool        $xhtml
 	 * @param   bool|string $avatarTab
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')

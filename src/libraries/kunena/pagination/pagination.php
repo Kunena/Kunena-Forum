@@ -561,6 +561,7 @@ class KunenaPagination
 	 * @return  string  Pagination page list string.
 	 *
 	 * @since   1.5
+	 * @throws Exception
 	 */
 	public function getPagesLinks()
 	{
@@ -656,6 +657,7 @@ class KunenaPagination
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function setChrome()
 	{

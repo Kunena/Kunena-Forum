@@ -31,6 +31,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Constructor.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
@@ -129,6 +130,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return array|KunenaUser[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function find()

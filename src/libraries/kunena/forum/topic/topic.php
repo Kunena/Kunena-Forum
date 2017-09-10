@@ -190,6 +190,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function subscribe($value = true, $user = null)
@@ -212,6 +213,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumTopicUser
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserTopic($user = null)
 	{
@@ -227,6 +229,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function favorite($value = true, $user = null)
@@ -248,6 +251,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function sticky($value = 1)
@@ -263,6 +267,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool $cascade
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($cascade = true)
@@ -346,6 +351,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function lock($value = 1)
@@ -776,6 +782,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Increase hit counter for this topic.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function hit()
 	{
@@ -805,6 +812,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string   $prefix
 	 *
 	 * @return \Joomla\CMS\Pagination\Pagination|KunenaPagination
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = '')
@@ -915,6 +923,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed       $hold
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPostLocation($mesid, $direction = null, $hold = null)
@@ -971,6 +980,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumTopicUser
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserInfo($user = null)
 	{
@@ -1046,6 +1056,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $field
 	 *
 	 * @return integer|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayField($field)
@@ -1077,6 +1088,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $hold
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getReplies($hold = null)
@@ -1088,6 +1100,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $hold
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTotal($hold = null)
@@ -1110,8 +1123,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool                $xhtml
 	 * @param   string              $action
 	 *
-	 * @return string
+	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -1124,6 +1138,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null|string $action
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
@@ -1260,6 +1275,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function markNew($user = null)
@@ -1419,6 +1435,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return    boolean|KunenaForumCategory|KunenaForumTopic    Target KunenaForumCategory or KunenaForumTopic or
 	 *                                                            false on failure
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function move($target, $ids = false, $shadow = false, $subject = '', $subjectall = false, $topic_iconid = null)
@@ -1952,6 +1969,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
@@ -1969,6 +1987,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseOwn(KunenaUser $user)
@@ -2067,6 +2086,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseNoVotes(KunenaUser $user)

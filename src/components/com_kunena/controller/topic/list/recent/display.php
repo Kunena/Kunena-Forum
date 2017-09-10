@@ -23,6 +23,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

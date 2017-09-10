@@ -63,6 +63,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getRates()

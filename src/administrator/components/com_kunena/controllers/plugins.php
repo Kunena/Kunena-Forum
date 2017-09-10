@@ -273,6 +273,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * Regenerate editor file
 	 *
 	 * @since 5.0.2
+	 * @throws Exception
 	 */
 	public function resync()
 	{

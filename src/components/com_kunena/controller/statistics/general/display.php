@@ -30,6 +30,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

@@ -70,6 +70,7 @@ abstract class KunenaMenuFix
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function initialize()
 	{

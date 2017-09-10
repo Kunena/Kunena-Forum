@@ -43,6 +43,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function add()
@@ -253,6 +254,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
 	 */
 	public function cancel()

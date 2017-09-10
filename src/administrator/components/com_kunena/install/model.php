@@ -151,6 +151,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * @since Kunena
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function install()
 	{
@@ -951,6 +952,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function stepExtract()
 	{
@@ -1028,6 +1030,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function stepPlugins()
 	{
@@ -2869,6 +2872,8 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * In addition it checks if there is a link to Kunena in any of the menus
 	 * and if not, adds a forum link in the mainmenu.
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws KunenaInstallerException
 	 */
 	function createMenu()
 	{
@@ -3150,6 +3155,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function recountThankyou()

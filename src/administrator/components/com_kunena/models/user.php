@@ -24,6 +24,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 * @return array|KunenaForumTopic[]|void
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getSubscriptions()
@@ -257,6 +258,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{

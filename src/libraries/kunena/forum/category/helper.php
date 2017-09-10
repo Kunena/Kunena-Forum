@@ -37,6 +37,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * Initialize class.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	static public function initialize()
 	{
@@ -267,6 +268,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return integer
 	 *
+	 * @throws Exception
 	 * @since    2.0.0
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
@@ -382,6 +384,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int|array $catids
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getNewTopics($catids)
@@ -543,6 +546,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaForumCategory[]
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getOrphaned($levels = 0, $params = array())
@@ -637,6 +641,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getChildren($parents = 0, $levels = 0, $params = array())

@@ -93,6 +93,7 @@ class KunenaForumCategoryUser extends JObject
 	 *
 	 * @return KunenaForumCategoryUser
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	static public function getInstance($id = null, $user = null, $reload = false)
 	{

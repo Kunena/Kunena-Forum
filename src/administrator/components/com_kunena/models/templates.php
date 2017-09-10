@@ -65,6 +65,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @return array
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getTemplates()
@@ -223,6 +224,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -294,6 +296,8 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 * @since Kunena
+	 * @return array|mixed
+	 * @throws Exception
 	 */
 	protected function loadFormData()
 	{

@@ -56,6 +56,7 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
+	 * @throws Exception
 	 * @since   5.0
 	 */
 	public function getTotal()
@@ -297,6 +298,8 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since   5.0
 	 */
 	public function getItems()

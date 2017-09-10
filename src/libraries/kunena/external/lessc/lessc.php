@@ -371,6 +371,7 @@ class lessc
 	/**
 	 * @param $block
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileCSSBlock($block)
@@ -391,6 +392,7 @@ class lessc
 	/**
 	 * @param $media
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileMedia($media)
@@ -446,6 +448,7 @@ class lessc
 	 * @param $block
 	 * @param $selectors
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileNestedBlock($block, $selectors)
@@ -463,6 +466,7 @@ class lessc
 	/**
 	 * @param $root
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileRoot($root)
@@ -889,6 +893,7 @@ class lessc
 	 * @param array $skip
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function patternMatchAll($blocks, $orderedArgs, $keywordArgs, $skip = array())
@@ -912,6 +917,7 @@ class lessc
 	}
 
 	// attempt to find blocks matched by path and args
+
 	/**
 	 * @param       $searchIn
 	 * @param       $path
@@ -920,6 +926,7 @@ class lessc
 	 * @param array $seen
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function findBlocks($searchIn, $path, $orderedArgs, $keywordArgs, $seen = array())
@@ -1758,6 +1765,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_darken($args)
@@ -1774,6 +1782,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_lighten($args)
@@ -1790,6 +1799,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_saturate($args)
@@ -1806,6 +1816,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_desaturate($args)
@@ -1822,6 +1833,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_spin($args)
@@ -1840,6 +1852,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_fadeout($args)
@@ -1854,6 +1867,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_fadein($args)
@@ -1923,10 +1937,12 @@ class lessc
 	}
 
 	// set the alpha of the color
+
 	/**
 	 * @param $args
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_fade($args)
@@ -2778,6 +2794,7 @@ class lessc
 	 * @param $rgt
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function op_number_color($op, $lft, $rgt)
@@ -3883,6 +3900,8 @@ class lessc_parser
 	 * position into $s. Then if a chain fails, use $this->seek($s) to
 	 * go back where we started.
 	 * @since LESSC
+	 * @return bool
+	 * @throws exception
 	 */
 	protected function parseChunk()
 	{

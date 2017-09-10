@@ -174,6 +174,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Load global rate for the topic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayGetrate()
 	{

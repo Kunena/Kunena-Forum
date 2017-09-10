@@ -1082,6 +1082,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	function __construct()
 	{
@@ -2335,6 +2336,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 *
 	 * @return boolean|string
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
@@ -2448,6 +2450,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
@@ -2494,6 +2497,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 *
 	 * @return boolean|string
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoFile($bbcode, $action, $name, $default, $params, $content)
@@ -2585,6 +2589,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 *
 	 * @return boolean|string
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content)

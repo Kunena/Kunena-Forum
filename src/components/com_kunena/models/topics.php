@@ -220,6 +220,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getTopics()
@@ -270,6 +272,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getRecentTopics()
 	{
@@ -361,6 +365,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getUserTopics()
 	{
@@ -420,6 +426,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getPosts()
 	{
@@ -474,6 +482,7 @@ class KunenaModelTopics extends KunenaModel
 	 * @param   array $userlist
 	 * @param   array $postlist
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
@@ -509,6 +518,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getMessages()
@@ -524,6 +535,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTotal()
 	{
@@ -538,6 +550,7 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return array|null
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopicActions()
 	{
@@ -623,6 +636,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return array|null
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getPostActions()

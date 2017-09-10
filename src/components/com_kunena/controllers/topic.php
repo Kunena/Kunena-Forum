@@ -644,6 +644,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function edit()
@@ -1013,6 +1014,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function thankyou()
@@ -1023,6 +1025,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function unthankyou()
@@ -1035,6 +1038,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $type
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function setThankyou($type)
@@ -1130,6 +1134,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function subscribe()
 	{
@@ -1162,6 +1168,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function unsubscribe()
 	{
@@ -1194,6 +1202,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function favorite()
 	{
@@ -1226,6 +1236,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function unfavorite()
 	{
@@ -1258,6 +1270,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function sticky()
 	{
@@ -1305,6 +1319,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function unsticky()
 	{
@@ -1352,6 +1368,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function lock()
 	{
@@ -1399,6 +1417,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function unlock()
 	{
@@ -1446,6 +1466,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function delete()
 	{
@@ -1516,6 +1538,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function undelete()
 	{
@@ -1571,6 +1594,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function permdelete()
 	{
@@ -1643,6 +1667,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function approve()
 	{
@@ -2009,6 +2034,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function vote()
@@ -2067,6 +2093,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function resetvotes()
 	{

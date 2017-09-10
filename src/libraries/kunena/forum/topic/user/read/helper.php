@@ -36,6 +36,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUserRead
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function get($topic = null, $user = null, $reload = false)
@@ -72,6 +73,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   mixed      $user
 	 *
 	 * @return KunenaForumTopicUserRead[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $user = null)

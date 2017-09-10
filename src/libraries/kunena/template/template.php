@@ -406,6 +406,7 @@ class KunenaTemplate extends JObject
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function initialize()
 	{
@@ -445,6 +446,7 @@ class KunenaTemplate extends JObject
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadLanguage()
 	{
@@ -463,6 +465,7 @@ class KunenaTemplate extends JObject
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function initializeBackend()
 	{
@@ -955,6 +958,7 @@ HTML;
 	 * @param   bool $url
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopicIconIndexPath($index, $url = false)
@@ -979,6 +983,7 @@ HTML;
 	 * @param   int  $checked
 	 *
 	 * @return array|SimpleXMLElement
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopicIcons($all = false, $checked = 0)

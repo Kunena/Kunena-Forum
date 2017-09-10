@@ -21,6 +21,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{

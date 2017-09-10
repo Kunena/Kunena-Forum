@@ -189,6 +189,7 @@ abstract class KunenaRoute
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected static function prepare($uri = null)
 	{
@@ -311,6 +312,8 @@ abstract class KunenaRoute
 	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected static function setItemID(\Joomla\CMS\Uri\Uri $uri)
@@ -403,6 +406,7 @@ abstract class KunenaRoute
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function build()
 	{
@@ -560,6 +564,7 @@ abstract class KunenaRoute
 	 *
 	 * @return integer
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected static function checkItem($item, \Joomla\CMS\Uri\Uri $uri)
 	{
@@ -600,6 +605,7 @@ abstract class KunenaRoute
 	 * @param   \Joomla\CMS\Uri\Uri $uri
 	 *
 	 * @return integer
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected static function checkCategory($item, \Joomla\CMS\Uri\Uri $uri)
@@ -716,6 +722,7 @@ abstract class KunenaRoute
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
@@ -784,6 +791,7 @@ abstract class KunenaRoute
 	 * @return \Joomla\CMS\Uri\Uri|string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function normalize($uri = null, $object = false)
 	{
@@ -825,6 +833,7 @@ abstract class KunenaRoute
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function cacheLoad()
 	{
@@ -851,6 +860,7 @@ abstract class KunenaRoute
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function cacheStore()
 	{
@@ -1047,6 +1057,7 @@ abstract class KunenaRoute
 	 * @param   bool                $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
@@ -1058,6 +1069,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return array|boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
@@ -1071,6 +1083,7 @@ abstract class KunenaRoute
 	 * @return array|boolean|integer
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getItemID($uri = null)
 	{
@@ -1105,6 +1118,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
@@ -1124,6 +1138,7 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
@@ -1147,6 +1162,7 @@ abstract class KunenaRoute
 	 * @param   bool       $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)

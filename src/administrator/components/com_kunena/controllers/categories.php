@@ -55,9 +55,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
+	 * @throws Exception
+	 * @throws null
 	 * @since    Kunena
 	 */
 	public function lock()
@@ -152,9 +152,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function unlock()
 	{
@@ -170,9 +170,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function review()
@@ -189,9 +190,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function unreview()
@@ -208,9 +210,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function allow_anonymous()
@@ -227,9 +230,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function deny_anonymous()
@@ -246,9 +250,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function allow_polls()
@@ -265,9 +270,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function deny_polls()
@@ -284,9 +290,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function publish()
@@ -303,9 +310,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 *
-	 * @throws Exception
 	 * @since    Kunena
 	 */
 	public function unpublish()
@@ -947,6 +955,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return void
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since 2.0
 	 */
 	public function archive()
@@ -966,6 +975,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return void
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since K4.0
 	 *
 	 * @since Kunena

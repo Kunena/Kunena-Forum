@@ -26,6 +26,7 @@ class KunenaIntegrationComprofiler
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function open()
 	{
@@ -62,6 +63,7 @@ class KunenaIntegrationComprofiler
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function close()
 	{

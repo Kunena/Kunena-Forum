@@ -203,12 +203,13 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @param   mixed  $uri        Kunena URI, either as string, \Joomla\CMS\Uri\Uri or array
 	 * @param   string $content
-	 * @param   string $class      Link class
 	 * @param   string $title      Link title
+	 * @param   string $class      Link class
 	 * @param   string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')

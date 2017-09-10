@@ -106,6 +106,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @internal  param $string
 	 */
 	public function onAfterReply($message)

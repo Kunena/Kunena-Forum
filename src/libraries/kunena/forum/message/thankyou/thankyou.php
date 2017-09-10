@@ -49,6 +49,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)

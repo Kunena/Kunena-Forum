@@ -35,6 +35,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	 * Change topic layout to flat.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

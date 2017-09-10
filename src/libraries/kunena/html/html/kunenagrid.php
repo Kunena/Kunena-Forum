@@ -231,6 +231,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $bootstrap
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function published($i, $value, $prefix = '', $bootstrap = false)

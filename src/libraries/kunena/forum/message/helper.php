@@ -33,6 +33,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaForumMessage[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getMessages($ids = false, $authorise = 'read')
@@ -225,6 +227,7 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @return array
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())

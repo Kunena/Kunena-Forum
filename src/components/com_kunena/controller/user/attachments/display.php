@@ -52,6 +52,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

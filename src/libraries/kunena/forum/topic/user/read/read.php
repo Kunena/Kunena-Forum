@@ -90,6 +90,7 @@ class KunenaForumTopicUserRead extends JObject
 	 *
 	 * @return KunenaForumTopicUserRead
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	static public function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -99,6 +100,7 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * @return KunenaForumTopicUserRead
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopic()
 	{

@@ -319,6 +319,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
 	 * @since 5.1.0
+	 * @return
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function getBatchCategories()
 	{
@@ -338,6 +341,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|KunenaForumCategory[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getAdminCategories()
@@ -448,6 +453,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{

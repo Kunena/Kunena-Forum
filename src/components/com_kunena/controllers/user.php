@@ -80,6 +80,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function search()
 	{
@@ -126,6 +127,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function karmaup()
 	{
@@ -135,6 +137,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function karmadown()
 	{
@@ -237,6 +240,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function ban()
 	{
@@ -450,6 +454,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function cancel()
 	{
@@ -1071,6 +1076,7 @@ class KunenaControllerUser extends KunenaController
 	 * Remove avatar with AJAX
 	 *
 	 * @since 5.1
+	 * @throws Exception
 	 */
 	public function removeAvatar()
 	{

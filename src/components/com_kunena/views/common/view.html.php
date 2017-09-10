@@ -175,6 +175,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function displayBreadcrumb($tpl = null)
@@ -657,6 +658,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $params
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getRSSLink($name, $rel = 'follow', $params = '')

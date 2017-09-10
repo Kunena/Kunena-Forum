@@ -94,6 +94,7 @@ class KunenaAvatar
 	 * @param   int    $sizey
 	 *
 	 * @return string|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
@@ -151,6 +152,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return string|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)

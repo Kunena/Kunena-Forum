@@ -71,6 +71,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
 	 */

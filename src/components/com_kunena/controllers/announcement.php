@@ -22,6 +22,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function none()
 	{

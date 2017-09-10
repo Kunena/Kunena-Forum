@@ -77,6 +77,7 @@ class KunenaAccessCommunity
 	 *
 	 * @return boolean|null|string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -98,6 +99,7 @@ class KunenaAccessCommunity
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function loadGroups()
 	{
@@ -133,6 +135,7 @@ class KunenaAccessCommunity
 	 *
 	 * @return array
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -168,6 +171,7 @@ class KunenaAccessCommunity
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function loadCategories()
 	{

@@ -53,6 +53,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -104,6 +105,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLastestCategories()
@@ -122,6 +124,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return array|boolean|KunenaForumCategory[]
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getCategories()
@@ -295,6 +298,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return boolean
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getTopics()
@@ -370,7 +374,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTotal()
 	{
@@ -384,7 +390,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTopicActions()
 	{
@@ -469,6 +477,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModerators()

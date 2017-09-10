@@ -227,6 +227,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int $levels How many levels to search.
 	 *
 	 * @return array    List of KunenaForumCategory objects.
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getChildren($levels = 0)
@@ -241,6 +242,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumCategoryUser
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserInfo($user = null)
 	{
@@ -255,6 +257,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function subscribe($value = true, $user = null)
 	{
@@ -305,6 +308,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int|null $action   Limitstart.
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
@@ -323,6 +327,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|null
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getNewTopicUrl($xhtml = true)
@@ -374,6 +380,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $action
 	 *
 	 * @return KunenaForumCategory|KunenaForumCategory[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getChannels($action = 'read')
@@ -576,6 +584,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true)
@@ -646,6 +655,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $field Field to be displayed.
 	 *
 	 * @return integer|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayField($field)
@@ -955,6 +965,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool $objects
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModerators($includeGlobal = true, $objects = true)
@@ -989,6 +1000,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @example if ($category->isAuthorised('admin')) $category->addModerator($user);
 	 * @since   Kunena
 	 */
@@ -1019,6 +1031,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @param   array $users
 	 *
+	 * @throws Exception
 	 * @example if ($category->isAuthorised('admin')) $category->addModerators(array($user1, $user2, $user3));
 	 * @since   Kunena
 	 */
@@ -1043,6 +1056,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @example if ($category->isAuthorised('admin')) $category->removeModerator($user);
 	 * @since   Kunena
 	 */
@@ -1537,6 +1551,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return boolean
 	 *
 	 * @since    2.0.0
+	 * @throws Exception
 	 */
 	public function getSubscribed($userid = null)
 	{
@@ -1558,6 +1573,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @see   KunenaDatabaseObject::saveInternal()
 	 * @since Kunena
+	 * @return boolean
+	 * @throws Exception
 	 */
 	protected function saveInternal()
 	{
@@ -1795,6 +1812,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function authoriseChannel(KunenaUser $user)
@@ -1814,6 +1833,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
@@ -1831,6 +1851,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseModerate(KunenaUser $user)
@@ -1853,6 +1874,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseGlobalModerate(KunenaUser $user)
@@ -1875,6 +1897,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseAdmin(KunenaUser $user)
@@ -1938,6 +1961,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseUpload(KunenaUser $user)

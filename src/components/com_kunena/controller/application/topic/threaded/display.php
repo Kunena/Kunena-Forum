@@ -35,6 +35,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * Change topic layout to threaded.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

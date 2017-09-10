@@ -106,6 +106,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @see   KunenaControllerBase::execute()
 	 * @since Kunena
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
+	 * @throws Exception
 	 */
 	public function execute()
 	{
@@ -150,6 +152,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Executed before display.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

@@ -266,6 +266,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getLastId()

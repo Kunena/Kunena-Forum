@@ -23,7 +23,9 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the options of the topic
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTopicOptions()
 	{

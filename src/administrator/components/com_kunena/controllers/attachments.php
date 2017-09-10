@@ -48,6 +48,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 * @return void
 	 *
 	 * @since 2.0
+	 * @throws null
 	 */
 	public function delete()
 	{

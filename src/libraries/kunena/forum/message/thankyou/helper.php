@@ -32,6 +32,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function get($identifier, $reload = false)
@@ -356,6 +357,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int $ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false)

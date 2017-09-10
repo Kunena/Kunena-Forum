@@ -185,6 +185,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	function displayTopicRows()
 	{
@@ -231,6 +232,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	function displayPostRows()
 	{
@@ -273,6 +275,7 @@ class KunenaViewTopics extends KunenaView
 	 * @param $userid
 	 * @param $username
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)

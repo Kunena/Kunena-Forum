@@ -20,6 +20,7 @@ abstract class KunenaCacheHelper
 	 * Clear all cache types. Please avoid using this function except after installation and
 	 * when user wants to do it manually.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function clearAll()
 	{
@@ -69,6 +70,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear Kunena access cache.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function clearAccess()
 	{

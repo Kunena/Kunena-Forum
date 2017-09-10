@@ -72,6 +72,7 @@ class KunenaAdminViewTools extends KunenaView
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	function displaySubscriptions()
 	{

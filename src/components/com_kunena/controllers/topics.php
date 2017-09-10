@@ -22,6 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function none()
 	{
@@ -30,7 +31,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
+	 * @return boolean|void
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function permdel()
@@ -129,6 +132,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function delete()
@@ -192,6 +196,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function restore()
@@ -255,6 +260,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function approve()
@@ -418,6 +424,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function unfavorite()
@@ -464,6 +471,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function unsubscribe()
@@ -495,6 +503,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function approve_posts()
@@ -543,6 +552,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function delete_posts()
@@ -590,6 +600,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function restore_posts()
@@ -637,6 +648,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function permdel_posts()

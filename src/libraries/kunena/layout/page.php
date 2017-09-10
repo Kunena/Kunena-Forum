@@ -110,6 +110,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 *
 	 * @return  KunenaLayout
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function execute($path, \Joomla\Input\Input $input = null, $options = null)
 	{
@@ -135,12 +136,14 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Add path to breadcrumbs.
 	 *
-	 * @param $text
-	 * @param $uri
-	 * @param $ignore
+	 * @param        $text
+	 * @param        $uri
+	 * @param   bool $ignore
 	 *
 	 * @return $this
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{

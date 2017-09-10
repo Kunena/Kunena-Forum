@@ -68,6 +68,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
@@ -98,6 +99,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function favorite($ids, $value = true, $user = null)
@@ -127,6 +129,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   string $authorise
 	 *
 	 * @return KunenaForumTopic[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $authorise = 'read')
@@ -222,6 +226,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumTopicUser[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getUserTopics($ids = false, $user = null)
@@ -242,6 +247,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())

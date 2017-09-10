@@ -359,6 +359,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function recount()
@@ -689,6 +690,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function fixlegacy()
@@ -835,6 +837,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
 	 */
 	public function cancel()
@@ -847,6 +850,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
 	 */
 	public function uninstall()
@@ -899,6 +903,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function systemreport()

@@ -102,6 +102,7 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{

@@ -73,7 +73,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	static public function getById($ids = false, $authorise = 'read')
 	{
@@ -168,6 +170,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|string $ids
 	 *
 	 * @return KunenaAttachment[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getNumberAttachments($ids = false)
@@ -248,6 +251,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false, $authorise = 'read')
@@ -368,6 +372,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   null  $user
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getExtensions($category, $user = null)

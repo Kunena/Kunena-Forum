@@ -23,6 +23,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display categories Index sublayout
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayCategories()
@@ -38,6 +39,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to display category action sublayout
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayCategoryActions()
@@ -205,6 +207,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   bool                $canonical
 	 *
 	 * @return string
+	 * @throws Exception
+	 * @throws null
 	 * @see   KunenaLayout::getLastPostLink()
 	 * @since Kunena
 	 */

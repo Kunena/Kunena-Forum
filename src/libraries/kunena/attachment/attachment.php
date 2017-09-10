@@ -445,6 +445,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -460,9 +461,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
-	 * @throws KunenaExceptionAuthorise
-	 * @throws InvalidArgumentException
-	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -532,6 +531,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool   $silent
 	 *
 	 * @return boolean
+	 * @throws null
 	 * @deprecated K4.0
 	 * @since      Kunena
 	 */
@@ -823,6 +823,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	protected function authoriseOwn(KunenaUser $user)

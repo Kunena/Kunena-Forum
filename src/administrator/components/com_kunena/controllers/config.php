@@ -52,6 +52,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function apply()
@@ -66,6 +67,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function save($url = null)
@@ -124,6 +126,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function setdefault()

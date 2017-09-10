@@ -64,6 +64,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param   int    $sizey
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)

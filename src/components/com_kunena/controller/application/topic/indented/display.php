@@ -35,6 +35,7 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 * Change topic layout to indented.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

@@ -460,6 +460,7 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStatusText()
@@ -512,6 +513,7 @@ class KunenaUser extends JObject
 	 * @param   int        $sizey
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90)
@@ -526,6 +528,7 @@ class KunenaUser extends JObject
 	 * @param   int        $sizey
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90)
@@ -1754,6 +1757,7 @@ class KunenaUser extends JObject
 	 * @param   string $name
 	 * @param   bool   $gray
 	 *
+	 * @throws Exception
 	 * @deprecated 5.1.0
 	 * @since      K2.0
 	 */

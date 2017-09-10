@@ -149,6 +149,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTotal()

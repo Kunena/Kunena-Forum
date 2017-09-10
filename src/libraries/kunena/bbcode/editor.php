@@ -152,6 +152,7 @@ class KunenaBbcodeEditor
 	 * Initialize HMVC editor
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function initializeHMVC()

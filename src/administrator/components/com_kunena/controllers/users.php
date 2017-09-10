@@ -332,6 +332,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function trashusermessages()
 	{
@@ -413,6 +414,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function movemessages()
 	{
@@ -902,6 +904,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
 	 */
 	public function cancel()
@@ -915,6 +918,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function removecatsubscriptions()
@@ -959,6 +963,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function removetopicsubscriptions()

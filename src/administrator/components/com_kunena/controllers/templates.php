@@ -89,6 +89,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function add()
@@ -109,6 +110,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function edit()
@@ -143,6 +145,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function install()
@@ -256,6 +259,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function uninstall()
@@ -324,6 +328,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function chooseless()
@@ -349,6 +354,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function editless()
@@ -375,6 +381,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function choosecss()
@@ -392,6 +399,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function applyless()
@@ -438,6 +446,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function saveless()
@@ -488,6 +497,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function editcss()
@@ -514,6 +524,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function applycss()
@@ -557,6 +568,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function savecss()
@@ -602,6 +614,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function apply()
@@ -639,6 +652,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since  3.0.0
 	 */
 	protected function _saveParamFile($template)
@@ -670,6 +684,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function save()
@@ -705,6 +720,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since 3.0.5
 	 */
 	public function cancel()

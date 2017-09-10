@@ -251,6 +251,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getSystemReportAnonymous()
@@ -840,6 +841,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * Method to generate all the report configuration.
 	 *
 	 * @return    string
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	public function getSystemReport()

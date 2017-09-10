@@ -41,10 +41,10 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Purge
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0
 	 */
 	public function purge()
@@ -159,10 +159,10 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Restore
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0
 	 */
 	public function restore()
@@ -253,6 +253,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function cancel()

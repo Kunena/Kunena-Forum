@@ -163,6 +163,7 @@ class KunenaForumStatistics
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
@@ -199,6 +200,8 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $force
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function loadAll($force = false)
@@ -311,7 +314,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $override
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function loadTopicStats($override = false)
 	{
@@ -341,7 +346,9 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function loadTopTopics($limit = 0)
 	{
@@ -380,6 +387,7 @@ class KunenaForumStatistics
 	 *
 	 * @return array
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function loadTopPolls($limit = 0)
@@ -434,6 +442,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $override
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadUserStats($override = false)

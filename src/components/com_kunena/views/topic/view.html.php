@@ -200,6 +200,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayUnread($tpl = null)
@@ -221,6 +222,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayFlat($tpl = null)
@@ -233,6 +235,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayThreaded($tpl = null)
@@ -245,6 +248,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayIndented($tpl = null)
@@ -1026,6 +1030,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $maxpages
 	 *
 	 * @return KunenaPagination
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getPaginationObject($maxpages)
@@ -1048,6 +1053,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $maxpages
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getPagination($maxpages)
@@ -1113,6 +1119,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string $anchor
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function redirectBack($anchor = '')

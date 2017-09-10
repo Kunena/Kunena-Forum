@@ -50,6 +50,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * @return    array
 	 * @throws Exception
 	 * @since    1.6
+	 * @throws null
 	 */
 	public function getTrashItems()
 	{
@@ -69,6 +70,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * @return    array
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since    1.6
 	 */
 	protected function _getTopics()
@@ -196,6 +198,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array
 	 * @throws Exception
+	 * @throws null
 	 * @since    1.6
 	 */
 	protected function _getMessages()
@@ -360,6 +363,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    1.6
 	 */
 	public function getPurgeItems()

@@ -33,6 +33,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare search form display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

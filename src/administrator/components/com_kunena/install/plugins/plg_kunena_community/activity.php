@@ -42,6 +42,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onAfterPost($message)
 	{
@@ -92,6 +93,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return mixed|string|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	private function buildContent($message)

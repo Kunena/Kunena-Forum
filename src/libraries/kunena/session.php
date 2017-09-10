@@ -43,6 +43,7 @@ class KunenaSession extends JObject
 	 * @param   mixed|null $identifier
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($identifier)
 	{
@@ -129,6 +130,7 @@ class KunenaSession extends JObject
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($update = false, $userid = null)
 	{
@@ -149,6 +151,7 @@ class KunenaSession extends JObject
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function updateSessionInfo()
 	{
@@ -188,6 +191,7 @@ class KunenaSession extends JObject
 	 *
 	 * @return    boolean True on success
 	 * @since     1.5
+	 * @throws Exception
 	 */
 	public function save($updateOnly = false)
 	{

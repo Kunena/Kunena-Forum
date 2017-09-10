@@ -192,6 +192,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -340,6 +341,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function after()
 	{

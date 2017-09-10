@@ -122,6 +122,8 @@ class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 	 * @param   int    $limit
 	 *
 	 * @return KunenaAttachment[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)

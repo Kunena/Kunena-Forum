@@ -33,6 +33,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 * Prepare category list display.
 	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

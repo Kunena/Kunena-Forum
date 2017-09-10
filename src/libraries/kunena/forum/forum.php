@@ -202,6 +202,7 @@ abstract class KunenaForum
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
 	 * @since 2.0.0-BETA2
+	 * @throws Exception
 	 */
 	public static function setup()
 	{

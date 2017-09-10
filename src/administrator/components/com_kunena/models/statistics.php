@@ -48,6 +48,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
+	 * @throws Exception
 	 * @since   3.1
 	 */
 	public function getTotal()
@@ -161,6 +162,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
+	 * @throws Exception
 	 * @since   3.1
 	 */
 	public function getItems()

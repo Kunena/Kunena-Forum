@@ -51,6 +51,7 @@ abstract class KunenaModule
 	/**
 	 * Display module contents.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	final public function display()
 	{

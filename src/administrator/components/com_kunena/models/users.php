@@ -132,6 +132,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since  3.0
 	 */
 	public function getModcatslist()

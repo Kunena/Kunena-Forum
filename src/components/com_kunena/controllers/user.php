@@ -901,8 +901,7 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
-		$input = $app->input;
+		$input = $this->app->input;
 		$method = $input->getMethod();
 		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 

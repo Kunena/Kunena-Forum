@@ -77,7 +77,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -117,11 +117,11 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$rank_title   = \Joomla\CMS\Factory::getApplication()->input->getString('rank_title');
-		$rank_image   = basename(\Joomla\CMS\Factory::getApplication()->input->getString('rank_image'));
-		$rank_special = \Joomla\CMS\Factory::getApplication()->input->getInt('rank_special');
-		$rank_min     = \Joomla\CMS\Factory::getApplication()->input->getInt('rank_min');
-		$rankid       = \Joomla\CMS\Factory::getApplication()->input->getInt('rankid', 0);
+		$rank_title   = $this->app->input->getString('rank_title');
+		$rank_image   = basename($this->app->input->getString('rank_image'));
+		$rank_special = $this->app->input->getInt('rank_special');
+		$rank_min     = $this->app->input->getInt('rank_min');
+		$rankid       = $this->app->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
@@ -138,7 +138,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -159,7 +159,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -228,7 +228,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
@@ -243,7 +243,7 @@ class KunenaAdminControllerRanks extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}

@@ -77,7 +77,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -114,10 +114,10 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$smiley_code        = \Joomla\CMS\Factory::getApplication()->input->getString('smiley_code');
-		$smiley_location    = basename(\Joomla\CMS\Factory::getApplication()->input->getString('smiley_url'));
-		$smiley_emoticonbar = \Joomla\CMS\Factory::getApplication()->input->getInt('smiley_emoticonbar', 0);
-		$smileyid           = \Joomla\CMS\Factory::getApplication()->input->getInt('smileyid', 0);
+		$smiley_code        = $this->app->input->getString('smiley_code');
+		$smiley_location    = basename($this->app->input->getString('smiley_url'));
+		$smiley_emoticonbar = $this->app->input->getInt('smiley_emoticonbar', 0);
+		$smileyid           = $this->app->input->getInt('smileyid', 0);
 
 		if (!$smileyid)
 		{
@@ -134,7 +134,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -155,7 +155,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -223,7 +223,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
@@ -238,7 +238,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}

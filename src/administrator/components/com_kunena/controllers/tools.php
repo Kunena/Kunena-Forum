@@ -57,8 +57,8 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$fix    = \Joomla\CMS\Factory::getApplication()->input->getCmd('fix');
-		$delete = \Joomla\CMS\Factory::getApplication()->input->getCmd('delete');
+		$fix    = $this->app->input->getCmd('fix');
+		$delete = $this->app->input->getCmd('delete');
 
 		if ($fix)
 		{
@@ -101,7 +101,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$ids = \Joomla\CMS\Factory::getApplication()->input->get('prune_forum', array(), 'post', 'array');
+		$ids = $this->app->input->get('prune_forum', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -115,15 +115,15 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		// Convert days to seconds for timestamp functions...
-		$prune_days = \Joomla\CMS\Factory::getApplication()->input->getInt('prune_days', 36500);
+		$prune_days = $this->app->input->getInt('prune_days', 36500);
 		$prune_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($prune_days * 86400);
 
-		$trashdelete = \Joomla\CMS\Factory::getApplication()->input->getInt('trashdelete', 0);
+		$trashdelete = $this->app->input->getInt('trashdelete', 0);
 
 		$where   = array();
 		$where[] = " AND tt.last_post_time < {$prune_date}";
 
-		$controloptions = \Joomla\CMS\Factory::getApplication()->input->getString('controloptions', 0);
+		$controloptions = $this->app->input->getString('controloptions', 0);
 
 		if ($controloptions == 'answered')
 		{
@@ -163,7 +163,7 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		// Keep sticky topics?
-		if (\Joomla\CMS\Factory::getApplication()->input->getInt('keepsticky', 1))
+		if ($this->app->input->getInt('keepsticky', 1))
 		{
 			$where[] = ' AND tt.ordering=0';
 		}
@@ -214,10 +214,10 @@ class KunenaAdminControllerTools extends KunenaController
 	 */
 	public function syncusers()
 	{
-		$useradd     = \Joomla\CMS\Factory::getApplication()->input->getBool('useradd', 0);
-		$userdel     = \Joomla\CMS\Factory::getApplication()->input->getBool('userdel', 0);
-		$userrename  = \Joomla\CMS\Factory::getApplication()->input->getBool('userrename', 0);
-		$userdellife = \Joomla\CMS\Factory::getApplication()->input->getBool('userdellife', 0);
+	    $useradd     = $this->app->input->getBool('useradd', 0);
+	    $userdel     = $this->app->input->getBool('userdel', 0);
+	    $userrename  = $this->app->input->getBool('userrename', 0);
+	    $userdellife = $this->app->input->getBool('userdellife', 0);
 
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -245,7 +245,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -268,7 +268,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -298,7 +298,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -322,7 +322,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			    $this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -343,7 +343,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -734,7 +734,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$re_string = \Joomla\CMS\Factory::getApplication()->input->getString('re_string', null);
+		$re_string = $this->app->input->getString('re_string', null);
 
 		if ($re_string != null)
 		{
@@ -748,7 +748,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -792,7 +792,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$cleanup_days = \Joomla\CMS\Factory::getApplication()->input->getInt('cleanup_ip_days', 365);
+		$cleanup_days = $this->app->input->getInt('cleanup_ip_days', 365);
 		$where        = '';
 
 		if ($cleanup_days)
@@ -811,7 +811,7 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			$this->app->enqueueMessage($e->getMessage());
 
 			return;
 		}

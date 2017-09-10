@@ -26,7 +26,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 */
 	public function canPublish()
 	{
-		return $this->announcement->authorise('edit');
+		return $this->announcement->isAuthorised('edit');
 	}
 
 	/**
@@ -37,7 +37,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 */
 	public function canEdit()
 	{
-		return $this->announcement->authorise('edit');
+		return $this->announcement->isAuthorised('edit');
 	}
 
 	/**
@@ -48,7 +48,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 */
 	public function canDelete()
 	{
-		return $this->announcement->authorise('delete');
+		return $this->announcement->isAuthorised('delete');
 	}
 
 	/**

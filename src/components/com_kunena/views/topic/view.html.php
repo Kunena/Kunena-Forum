@@ -84,7 +84,7 @@ class KunenaViewTopic extends KunenaView
 
 		$channels = $this->category->getChannels();
 
-		if ($this->category->id && !$this->category->authorise('read'))
+		if ($this->category->id && !$this->category->isAuthorised('read'))
 		{
 			// User is not allowed to see the category
 			$errors[] = $this->category->getError();
@@ -658,7 +658,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Moderator specific buttons
-		if ($this->category->authorise('moderate'))
+		if ($this->category->isAuthorised('moderate'))
 		{
 			$sticky = $this->topic->ordering ? 'unsticky' : 'sticky';
 			$lock   = $this->topic->locked ? 'unlock' : 'lock';
@@ -894,7 +894,7 @@ class KunenaViewTopic extends KunenaView
 		if (!$contents)
 		{
 			// Show admins the IP address of the user:
-			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))
+			if ($this->category->isAuthorised('admin') || ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
 			{
 				if ($this->message->ip)
 				{

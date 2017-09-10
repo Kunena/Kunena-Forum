@@ -476,7 +476,7 @@ window.addEvent('domready', function(){
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
 	 * @since   Kunena
 	 */
 	public function setModerator($category, $user = null, $status = true)

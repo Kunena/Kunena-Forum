@@ -424,7 +424,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			{
 				// @var KunenaForumCategory $channel
 
-				if (($channel->id == $this->id && $action == 'read') || $channel->authorise($action, null, false))
+				if (($channel->id == $this->id && $action == 'read') || $channel->isAuthorised($action, null, false))
 				{
 					$this->_channels[$action][$channel->id] = $channel;
 				}

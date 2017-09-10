@@ -439,7 +439,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				{
 					$topic = $object->getTopic();
 
-					if (!$object->authorise('move'))
+					if (!$object->isAuthorised('move'))
 					{
 						$error = $object->getError();
 					}

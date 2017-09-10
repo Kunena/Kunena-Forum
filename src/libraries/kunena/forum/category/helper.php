@@ -226,7 +226,7 @@ abstract class KunenaForumCategoryHelper
 				{
 					// @var KunenaForumCategory $category
 
-					if (!$category->authorise($authorise, null, true))
+					if (!$category->isAuthorised($authorise, null, true))
 					{
 						unset($list [$category->id]);
 					}
@@ -244,7 +244,7 @@ abstract class KunenaForumCategoryHelper
 				{
 					// @var KunenaForumCategory $category
 
-					if (!$category->authorise($authorise, null, true))
+					if (!$category->isAuthorised($authorise, null, true))
 					{
 						unset($list [$category->id]);
 					}

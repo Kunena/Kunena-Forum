@@ -395,27 +395,27 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		foreach ($this->topics as $topic)
 		{
-			if (!$delete && $topic->authorise('delete'))
+			if (!$delete && $topic->isAuthorised('delete'))
 			{
 				$delete = true;
 			}
 
-			if (!$approve && $topic->authorise('approve'))
+			if (!$approve && $topic->isAuthorised('approve'))
 			{
 				$approve = true;
 			}
 
-			if (!$undelete && $topic->authorise('undelete'))
+			if (!$undelete && $topic->isAuthorised('undelete'))
 			{
 				$undelete = true;
 			}
 
-			if (!$move && $topic->authorise('move'))
+			if (!$move && $topic->isAuthorised('move'))
 			{
 				$move = $this->actionMove = true;
 			}
 
-			if (!$permdelete && $topic->authorise('permdelete'))
+			if (!$permdelete && $topic->isAuthorised('permdelete'))
 			{
 				$permdelete = true;
 			}

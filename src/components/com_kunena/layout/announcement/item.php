@@ -35,12 +35,12 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	{
 		$this->buttons = array();
 
-		if ($this->announcement->authorise('edit'))
+		if ($this->announcement->isAuthorised('edit'))
 		{
 			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
 		}
 
-		if ($this->announcement->authorise('delete'))
+		if ($this->announcement->isAuthorised('delete'))
 		{
 			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUri('delete'), 'delete', 'announcement', 'permanent');
 		}

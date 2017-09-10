@@ -214,10 +214,10 @@ class KunenaAdminControllerTools extends KunenaController
 	 */
 	public function syncusers()
 	{
-	    $useradd     = $this->app->input->getBool('useradd', 0);
-	    $userdel     = $this->app->input->getBool('userdel', 0);
-	    $userrename  = $this->app->input->getBool('userrename', 0);
-	    $userdellife = $this->app->input->getBool('userdellife', 0);
+		$useradd     = $this->app->input->getBool('useradd', 0);
+		$userdel     = $this->app->input->getBool('userdel', 0);
+		$userrename  = $this->app->input->getBool('userrename', 0);
+		$userdellife = $this->app->input->getBool('userdellife', 0);
 
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -322,7 +322,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-			    $this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}

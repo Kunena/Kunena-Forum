@@ -39,7 +39,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	function jump()
 	{
-	    $catid = $this->app->input->getInt('catid', 0);
+		$catid = $this->app->input->getInt('catid', 0);
 
 		if (!$catid)
 		{

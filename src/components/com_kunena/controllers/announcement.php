@@ -129,7 +129,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-	    $cid = $this->app->input->post->get('cid', array(), 'array');
+		$cid = $this->app->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));

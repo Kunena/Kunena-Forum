@@ -62,7 +62,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function lock()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
@@ -158,7 +158,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unlock()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
@@ -177,7 +177,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function review()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
@@ -196,7 +196,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unreview()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
@@ -215,7 +215,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_anonymous()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 1);
@@ -234,7 +234,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_anonymous()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 0);
@@ -253,7 +253,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_polls()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 1);
@@ -272,7 +272,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_polls()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 0);
@@ -291,7 +291,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function publish()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
@@ -310,7 +310,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unpublish()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
@@ -860,7 +860,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderup()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
@@ -932,7 +932,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderdown()
 	{
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);

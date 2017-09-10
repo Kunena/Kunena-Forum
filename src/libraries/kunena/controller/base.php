@@ -206,7 +206,7 @@ abstract class KunenaControllerBase implements Serializable
 		// Unserialize the input and options.
 		list ($this->input, $this->options) = unserialize($input);
 
-		if (!($this->input instanceof \Joomla\CMS\Input\Input))
+		if (!($this->input instanceof \Joomla\Input\Input))
 		{
 			throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', get_class($this), gettype($this->input)));
 		}

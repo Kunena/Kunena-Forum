@@ -111,7 +111,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @return  KunenaLayout
 	 * @since Kunena
 	 */
-	public function execute($path, \Joomla\CMS\Input\Input $input = null, $options = null)
+	public function execute($path, \Joomla\Input\Input $input = null, $options = null)
 	{
 		return $this->request($path, $input, $options)->execute();
 	}
@@ -126,7 +126,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @return  KunenaControllerDisplay
 	 * @since Kunena
 	 */
-	public function request($path, \Joomla\CMS\Input\Input $input = null, $options = null)
+	public function request($path, \Joomla\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
 			->setPrimary()->set('layout', $this->getLayout());

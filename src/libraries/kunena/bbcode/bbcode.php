@@ -95,6 +95,7 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param $params
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function parseUrl($params)
@@ -1109,6 +1110,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $ItemID The eBay ID of object to query
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getEbayItem($ItemID)
@@ -1146,6 +1148,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|mixed|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
@@ -1194,6 +1197,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoURL($bbcode, $action, $name, $default, $params, $content)
@@ -1264,6 +1268,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
@@ -1397,6 +1402,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
@@ -1442,6 +1448,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
@@ -1491,6 +1498,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
@@ -1670,6 +1678,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $ItemID
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function renderEbayLayout($ItemID)
@@ -1716,6 +1725,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $ItemID The eBay ID of object to query
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getEbayItemFromCache($ItemID)
@@ -1912,6 +1922,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content)
@@ -1979,6 +1990,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
@@ -2322,6 +2334,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
@@ -2433,6 +2446,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   bool             $displayImage
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
@@ -2479,6 +2493,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoFile($bbcode, $action, $name, $default, $params, $content)
@@ -2569,6 +2584,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content)
@@ -2661,6 +2677,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
@@ -2728,6 +2745,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet id to render in layout
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function renderTweet($tweetid)
@@ -2766,6 +2784,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet ID to query against twitter API
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getTweet($tweetid)

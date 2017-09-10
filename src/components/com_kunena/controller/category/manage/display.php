@@ -51,6 +51,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 *
 	 * @return KunenaExceptionAuthorise
 	 *
+	 * @throws Exception
 	 * @since Kunena 5.1
 	 */
 	protected function before()

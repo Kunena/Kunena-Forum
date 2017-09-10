@@ -291,6 +291,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getIcon()
@@ -340,6 +341,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumCategory
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getNewTopicCategory($user = null)
@@ -536,6 +538,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -595,6 +598,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool|string $xhtml
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @result string
 	 * @since  Kunena
 	 */
@@ -692,6 +696,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $alias
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function deleteAlias($alias)
@@ -832,6 +837,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $safefields
 	 *
 	 * @return array
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function newTopic(array $fields = null, $user = null, array $safefields = null)
@@ -999,6 +1005,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
 	 * @since   Kunena
 	 */
@@ -1190,6 +1197,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int   $limit
 	 *
 	 * @return int    Number of purged topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function purge($time, $params = array(), $limit = 1000)
@@ -1237,6 +1245,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int   $limit
 	 *
 	 * @return int    Number of trashed topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function trash($time, $params = array(), $limit = 1000)
@@ -1445,6 +1454,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int              $postdelta
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function update($topic, $topicdelta = 0, $postdelta = 0)
@@ -1587,6 +1597,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string $alias
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addAlias($alias)
@@ -1665,6 +1676,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
@@ -1682,6 +1694,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseSubscribe(KunenaUser $user)
@@ -1706,6 +1719,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseCatSubscribe(KunenaUser $user)
@@ -1730,6 +1744,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseFavorite(KunenaUser $user)
@@ -1882,6 +1897,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authorisePoll(KunenaUser $user)

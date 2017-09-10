@@ -268,6 +268,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * Get Status
 	 *
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStatus()
@@ -279,6 +280,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * Get Action
 	 *
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAction()
@@ -288,6 +290,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 
 	/**
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStep()
@@ -297,6 +300,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 
 	/**
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTask()
@@ -308,6 +312,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	 * Get version
 	 *
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getVersion()
@@ -402,6 +407,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return bool|string
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getInstallError()
@@ -1300,6 +1306,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
 	// TODO: move to migration
 
 	/**
+	 * @throws Exception
 	 * @throws KunenaInstallerException
 	 * @since Kunena
 	 */

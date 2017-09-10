@@ -279,7 +279,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @param   string $title Show the title on the browser
 	 *
-	 * @throws LogicException
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function setTitle($title)

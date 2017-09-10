@@ -41,6 +41,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)

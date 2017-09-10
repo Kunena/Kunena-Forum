@@ -166,6 +166,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Initialize and display the layout.
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function display()
@@ -304,6 +305,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param        $title
 	 * @param   bool $replace
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function setTitle($title, $replace = false)

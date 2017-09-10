@@ -55,6 +55,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function publish()

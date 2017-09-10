@@ -34,8 +34,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

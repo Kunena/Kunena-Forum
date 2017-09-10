@@ -57,6 +57,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * Prepare category index display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

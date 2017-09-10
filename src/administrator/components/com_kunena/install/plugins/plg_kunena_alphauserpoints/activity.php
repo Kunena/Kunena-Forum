@@ -289,6 +289,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
 	 */

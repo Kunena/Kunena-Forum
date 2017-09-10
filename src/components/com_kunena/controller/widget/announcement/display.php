@@ -33,6 +33,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 	 * Prepare announcement box display.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

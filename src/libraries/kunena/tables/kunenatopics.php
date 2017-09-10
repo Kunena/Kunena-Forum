@@ -172,6 +172,7 @@ class TableKunenaTopics extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)

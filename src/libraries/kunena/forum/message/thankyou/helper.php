@@ -63,6 +63,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
@@ -119,6 +120,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $endtime   Ending time as unix timestamp.
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getTotal($starttime = null, $endtime = null)
@@ -165,6 +167,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
@@ -204,6 +207,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getTopMessages($limitstart = 0, $limit = 10)
@@ -242,6 +246,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
@@ -280,6 +285,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @return boolean|int    Number of rows is successful, false on error.
 	 *
+	 * @throws Exception
 	 * @since K2.0
 	 */
 	static public function recountThankyou()
@@ -313,6 +319,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Recount thank yous.
 	 *
 	 * @return boolean|int    Number of rows is successful, false on error.
+	 * @throws Exception
 	 * @since K2.0
 	 */
 	static public function recount()

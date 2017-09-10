@@ -51,6 +51,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * Prepare credits display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

@@ -23,6 +23,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool $urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -534,6 +535,7 @@ class KunenaControllerUser extends KunenaController
 	 * Save online status for user
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function status()
@@ -566,6 +568,7 @@ class KunenaControllerUser extends KunenaController
 	 * Set online status text for user
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function statusText()
@@ -1112,6 +1115,7 @@ class KunenaControllerUser extends KunenaController
 	 * Get avatar attached to a profile with AJAX.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since 5.1
 	 */
 	public function loadAvatar()
@@ -1162,6 +1166,7 @@ class KunenaControllerUser extends KunenaController
 	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function saveAvatar()

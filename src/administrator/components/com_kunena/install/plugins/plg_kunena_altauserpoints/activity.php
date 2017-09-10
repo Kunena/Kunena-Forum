@@ -266,6 +266,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $userid
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserPoints($userid)

@@ -277,6 +277,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since 5.0
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getReportData()

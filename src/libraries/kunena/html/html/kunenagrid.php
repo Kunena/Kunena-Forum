@@ -265,6 +265,7 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return string The Html code
 	 *
+	 * @throws Exception
 	 * @internal param string $text An optional text to display
 	 * @since    3.0
 	 */
@@ -392,6 +393,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $bootstrap
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)

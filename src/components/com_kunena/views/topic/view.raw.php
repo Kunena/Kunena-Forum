@@ -243,6 +243,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena 5.1
 	 */
 	public function displayCategorytemplatetext($tpl = null)

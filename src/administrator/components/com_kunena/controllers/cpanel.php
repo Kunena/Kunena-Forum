@@ -128,6 +128,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function display($cachable = false, $urlparams = false)

@@ -42,6 +42,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @param   bool  $loadData
 	 *
 	 * @return boolean|mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getForm($data = array(), $loadData = true)

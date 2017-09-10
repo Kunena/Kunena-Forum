@@ -214,6 +214,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return array|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	protected function getSQL()
@@ -230,6 +231,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return array|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getCreateSQL()

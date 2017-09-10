@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function exists()

@@ -140,6 +140,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   KunenaForumMessage $message
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)

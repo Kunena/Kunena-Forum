@@ -29,6 +29,7 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $translate
 	 *
 	 * @return string
+	 * @throws null
 	 * @since Kunena
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)

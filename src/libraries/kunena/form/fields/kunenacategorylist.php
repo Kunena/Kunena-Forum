@@ -26,6 +26,7 @@ class JFormFieldKunenaCategoryList extends \Joomla\CMS\Form\FormField
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getInput()

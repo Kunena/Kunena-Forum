@@ -48,6 +48,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
 	 * @return    array
+	 * @throws Exception
 	 * @since    1.6
 	 */
 	public function getTrashItems()

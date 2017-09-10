@@ -457,6 +457,7 @@ class KunenaPagination
 	 *
 	 * @return  string  Pagination footer.
 	 *
+	 * @throws Exception
 	 * @since   1.5
 	 */
 	public function getListFooter()

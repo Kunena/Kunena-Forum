@@ -285,6 +285,7 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function post()

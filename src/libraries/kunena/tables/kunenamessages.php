@@ -160,6 +160,7 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)
@@ -273,6 +274,7 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   boolean $updateNulls has no effect.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @see   KunenaTable::store()
 	 * @since Kunena
 	 */

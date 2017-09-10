@@ -121,6 +121,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|boolean|KunenaForumCategory[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategories()
@@ -293,6 +294,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopics()

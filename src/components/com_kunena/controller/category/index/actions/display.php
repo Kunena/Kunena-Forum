@@ -39,6 +39,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * Prepare message actions display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

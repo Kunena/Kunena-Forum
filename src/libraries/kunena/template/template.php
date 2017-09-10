@@ -728,6 +728,7 @@ HTML;
 	 * @param   string $group
 	 *
 	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
@@ -788,6 +789,7 @@ HTML;
 	 * @param   string $filename
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCachePath($filename = '')
@@ -847,6 +849,7 @@ HTML;
 	 * @param $filename
 	 *
 	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function addScript($filename)
@@ -1069,6 +1072,7 @@ HTML;
 	 * @param   bool   $url
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopicIconPath($filename = '', $url = true)
@@ -1101,6 +1105,7 @@ HTML;
 	 * @param   KunenaForumTopic $topic
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @internal param string $category_iconset
 	 * @since    Kunena
 	 */
@@ -1343,6 +1348,7 @@ HTML;
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryIcon($category)
@@ -1370,6 +1376,7 @@ HTML;
 	 * @param   bool $url
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
@@ -1394,6 +1401,7 @@ HTML;
 	 * @param   int  $checked
 	 *
 	 * @return array|SimpleXMLElement
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
@@ -1632,6 +1640,7 @@ HTML;
 	 * @param $topic
 	 *
 	 * @return stdClass
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopicLabel($topic)
@@ -1703,6 +1712,7 @@ HTML;
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function borderless()

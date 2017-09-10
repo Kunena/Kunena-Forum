@@ -70,6 +70,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * By default language files are also loaded from the parent templates.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadLanguage()
@@ -88,6 +89,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function initialize()

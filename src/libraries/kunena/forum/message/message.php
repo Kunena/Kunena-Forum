@@ -162,6 +162,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function isNew($user = null)
@@ -287,6 +288,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   null|array $safefields
 	 *
 	 * @return array
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function newReply($fields = array(), $user = null, $safefields = null)
@@ -771,6 +773,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Method to delete the KunenaForumMessage object from the database.
 	 *
 	 * @return bool    True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete()
@@ -1042,6 +1045,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -1066,9 +1071,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
-	 * @throws KunenaExceptionAuthorise
-	 * @throws InvalidArgumentException
-	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -1137,6 +1140,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   array $fields
 	 * @param   mixed $user
 	 *
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function edit($fields = array(), $user = null)
@@ -1188,6 +1192,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   null   $catid
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function uploadAttachment($tmpid, $postvar, $catid = null)
@@ -1302,6 +1307,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function check()
@@ -1488,6 +1495,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -1557,6 +1565,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseThankyou(KunenaUser $user)
@@ -1588,6 +1597,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseEditTime(KunenaUser $user)
@@ -1629,6 +1639,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseDelete(KunenaUser $user)
@@ -1652,6 +1663,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseAttachmentsImage(KunenaUser $user)
@@ -1696,6 +1708,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseAttachmentsFile(KunenaUser $user)

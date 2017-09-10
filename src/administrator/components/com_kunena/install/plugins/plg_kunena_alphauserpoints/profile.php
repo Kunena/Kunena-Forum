@@ -43,6 +43,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
 	 */
@@ -64,6 +65,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 *
 	 * @return array
 	 *
+	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
 	 */

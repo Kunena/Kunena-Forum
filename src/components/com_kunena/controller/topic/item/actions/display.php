@@ -39,6 +39,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * Prepare topic actions display.
 	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

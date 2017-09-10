@@ -110,6 +110,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)

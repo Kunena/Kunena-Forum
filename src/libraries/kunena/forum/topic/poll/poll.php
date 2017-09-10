@@ -169,6 +169,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getOptions()
@@ -226,6 +227,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserCount()
@@ -255,6 +257,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUsers($start = 0, $limit = 0)
@@ -283,6 +286,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMyTime($user = null)
@@ -315,6 +319,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function vote($option, $change = false, $user = null)
@@ -453,6 +458,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLastVoteId($user = null)
@@ -479,6 +485,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMyVotes($user = null)
@@ -510,6 +517,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $delta
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function changeOptionVotes($option, $delta)
@@ -564,6 +572,7 @@ class KunenaForumTopicPoll extends JObject
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete()
@@ -647,6 +656,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($updateOnly = false)

@@ -97,6 +97,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function uninstall($parent)
@@ -119,6 +120,7 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function preflight($type, $parent)

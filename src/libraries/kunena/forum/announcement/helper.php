@@ -103,6 +103,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return KunenaForumAnnouncement[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
@@ -167,6 +168,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getCount($filter = true)

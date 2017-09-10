@@ -64,6 +64,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayDefault($tpl = null)
@@ -256,6 +257,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function DisplayCreate($tpl = null)
@@ -349,6 +352,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function DisplayReply($tpl = null)
@@ -429,6 +434,8 @@ class KunenaViewTopic extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function displayEdit($tpl = null)
@@ -977,6 +984,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $matches
 	 *
 	 * @return mixed|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function fillMessageInfo($matches)
@@ -1003,6 +1011,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null $template
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayMessages($template = null)
@@ -1396,6 +1405,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   string $title Title name on the browser
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function setTitle($title)

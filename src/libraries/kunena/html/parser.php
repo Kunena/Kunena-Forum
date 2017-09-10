@@ -33,6 +33,7 @@ abstract class KunenaHtmlParser
 	 * @param   bool $emoticonbar
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
@@ -118,6 +119,7 @@ abstract class KunenaHtmlParser
 	 * @param   string $target
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function &prepareContent(&$content, $target = 'body')

@@ -123,6 +123,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
@@ -198,6 +199,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)

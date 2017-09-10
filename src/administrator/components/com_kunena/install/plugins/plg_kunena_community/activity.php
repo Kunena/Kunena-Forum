@@ -152,6 +152,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)

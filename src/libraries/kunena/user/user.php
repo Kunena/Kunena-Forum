@@ -360,6 +360,7 @@ class KunenaUser extends JObject
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function isAdmin(KunenaForumCategory $category = null)
@@ -375,6 +376,7 @@ class KunenaUser extends JObject
 	 * @param   KunenaForumCategory $category
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function isModerator(KunenaForumCategory $category = null)
@@ -448,6 +450,7 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStatus()
@@ -466,6 +469,7 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAllowedCategories()
@@ -480,6 +484,7 @@ class KunenaUser extends JObject
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMessageOrdering()
@@ -538,6 +543,7 @@ class KunenaUser extends JObject
 	 * @param   null $class
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @internal param int $catid Category id or 0 for global.
 	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
 	 *
@@ -593,6 +599,7 @@ class KunenaUser extends JObject
 	 * @param   string $task
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getURL($xhtml = true, $task = '')
@@ -683,6 +690,7 @@ class KunenaUser extends JObject
 	/**
 	 * @param   string $layout
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function setTopicLayout($layout = 'default')
@@ -874,6 +882,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return bool Cloaked email address or empty string.
 	 *
+	 * @throws Exception
 	 * @since  K5.1
 	 */
 	public function getEmail($profile)
@@ -907,6 +916,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Cloaked email address or empty string.
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getEmailLink()
@@ -1025,6 +1035,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getSignature()
@@ -1049,6 +1060,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since  K5.0
 	 */
 	public function getKarma()
@@ -1102,6 +1114,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since  K5.0
 	 */
 	public function getSideProfile($layout)
@@ -1188,6 +1201,7 @@ class KunenaUser extends JObject
 	 * @param   bool|null $special True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
@@ -1391,6 +1405,7 @@ class KunenaUser extends JObject
 	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getType($catid = 0, $code = false)
@@ -1520,6 +1535,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getPersonalText()
@@ -1543,6 +1559,7 @@ class KunenaUser extends JObject
 	 * @param   string $name
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function profileIcon($name)
@@ -1752,6 +1769,7 @@ class KunenaUser extends JObject
 	 * @param   bool   $gray
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	public function socialButtonsTemplate($name, $gray = false)
@@ -1861,6 +1879,7 @@ class KunenaUser extends JObject
 	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function canDoCaptcha()

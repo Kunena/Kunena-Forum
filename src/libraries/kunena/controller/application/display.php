@@ -272,6 +272,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function exists()

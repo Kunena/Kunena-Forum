@@ -190,8 +190,8 @@ class KunenaImage extends KunenaCompatImage
 	 *
 	 * @return  KunenaImage
 	 *
+	 * @throws Exception
 	 * @since   11.3
-	 * @throws  LogicException
 	 */
 	public function resize($width, $height, $createNew = true, $scaleMethod = self::SCALE_INSIDE)
 	{

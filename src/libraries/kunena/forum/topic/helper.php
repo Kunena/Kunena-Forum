@@ -166,6 +166,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids)
@@ -240,6 +241,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
@@ -433,6 +435,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of deleted topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function delete($ids)
@@ -503,6 +506,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of trashed topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function trash($ids)
@@ -559,6 +563,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   int   $end
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
@@ -697,6 +702,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user   User
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function fetchNewStatus(array $topics, $user = null)

@@ -102,6 +102,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function find()

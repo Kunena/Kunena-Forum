@@ -203,6 +203,7 @@ class KunenaForumTopicUser extends JObject
 	 * @param   int                $postDelta
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function update(KunenaForumMessage $message = null, $postDelta = 0)

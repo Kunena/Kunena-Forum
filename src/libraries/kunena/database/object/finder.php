@@ -200,6 +200,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function find()
@@ -242,6 +243,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function count()

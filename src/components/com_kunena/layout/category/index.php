@@ -41,6 +41,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   string $category The KunenaCategory object
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryIcon($category)
@@ -81,6 +82,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   string $subcategory The KunenaCategory object
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getSmallCategoryIcon($subcategory)
@@ -143,6 +145,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   bool|string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return boolean|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)

@@ -125,6 +125,7 @@ class KunenaAvatar
 	 * @param   int $sizey
 	 *
 	 * @return StdClass
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getSize($sizex = 90, $sizey = 90)

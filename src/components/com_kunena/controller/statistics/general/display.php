@@ -28,7 +28,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

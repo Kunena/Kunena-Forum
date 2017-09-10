@@ -60,6 +60,7 @@ class KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function showIcon($userid)
@@ -134,6 +135,7 @@ class KunenaPrivate
 	 * @param   string $icon
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @internal param $text
 	 * @since    Kunena
 	 */

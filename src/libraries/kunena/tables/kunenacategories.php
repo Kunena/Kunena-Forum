@@ -244,6 +244,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($id = null, $reset = true)
@@ -379,6 +380,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param $id
 	 *
 	 * @return integer|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function isChild($id)

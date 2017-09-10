@@ -80,6 +80,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $name
 	 * @param   array  $paths The paths queue.
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($name, array $paths = null)
@@ -382,6 +383,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename)
@@ -395,6 +397,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScript($filename)
@@ -409,6 +412,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $type
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
@@ -608,6 +612,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   $path
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function subLayout($path)

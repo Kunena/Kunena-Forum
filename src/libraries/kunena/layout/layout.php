@@ -99,6 +99,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null $id
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -111,6 +112,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string $title
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getIcon($name, $title = '')

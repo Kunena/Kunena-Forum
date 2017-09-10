@@ -166,6 +166,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @internal  param $string
 	 */
 	public function getSubscribers($message)

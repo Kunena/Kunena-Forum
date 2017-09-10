@@ -417,6 +417,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since K4.0
 	 */
 	public function getThumbnailLink()
@@ -692,9 +693,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool   $overwrite If not allowed, throw exception if the file exists.
 	 *
 	 * @return boolean
-	 * @throws InvalidArgumentException
-	 * @throws RuntimeException
-	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function saveFile($source, $basename = null, $extension = null, $unlink = false, $overwrite = false)
@@ -790,6 +789,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	protected function authoriseRead(KunenaUser $user)

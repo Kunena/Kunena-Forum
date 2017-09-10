@@ -116,6 +116,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
@@ -172,6 +173,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function move($old, $new)
@@ -216,6 +218,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function merge($old, $new)
@@ -265,6 +268,7 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * @param   int $id
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function reloadTopic($id)
@@ -309,6 +313,7 @@ abstract class KunenaForumTopicUserReadHelper
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function recount()
@@ -337,6 +342,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   int $days
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function purge($days = 365)

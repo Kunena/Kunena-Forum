@@ -159,6 +159,7 @@ abstract class KunenaRoute
 	 * @param   bool $object
 	 *
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function current($object = false)
@@ -713,6 +714,7 @@ abstract class KunenaRoute
 	 * @param   int  $ssl
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
@@ -780,6 +782,7 @@ abstract class KunenaRoute
 	 * @param   bool                $object
 	 *
 	 * @return \Joomla\CMS\Uri\Uri|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function normalize($uri = null, $object = false)
@@ -1066,6 +1069,7 @@ abstract class KunenaRoute
 	 * @param   null $uri
 	 *
 	 * @return array|boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getItemID($uri = null)

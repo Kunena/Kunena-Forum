@@ -38,6 +38,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -57,6 +58,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)

@@ -60,6 +60,7 @@ class KunenaProfile
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopHits($limit = 0)
@@ -88,6 +89,7 @@ class KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)

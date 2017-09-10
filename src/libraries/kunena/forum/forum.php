@@ -110,6 +110,7 @@ abstract class KunenaForum
 	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
 	 *
 	 * @return boolean True if online.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function enabled($checkAdmin = true)
@@ -395,6 +396,7 @@ abstract class KunenaForum
 	 * @param   null|string     $template Name of the template file.
 	 * @param   array|JRegistry $params   Extra parameters to control the model.
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())

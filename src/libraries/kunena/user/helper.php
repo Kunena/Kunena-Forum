@@ -195,6 +195,7 @@ abstract class KunenaUserHelper
 	 * @param   array $userids
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function loadUsers(array $userids = array())
@@ -279,6 +280,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getTotalCount()
@@ -328,6 +330,7 @@ abstract class KunenaUserHelper
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getTopPosters($limit = 0)
@@ -598,6 +601,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
+	 * @throws Exception
 	 * @since K5.1
 	 */
 	public static function recount()
@@ -631,6 +635,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
+	 * @throws Exception
 	 * @since K5.1
 	 */
 	public static function recountBanned()
@@ -664,6 +669,7 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
+	 * @throws Exception
 	 * @since K5.1
 	 */
 	public static function recountPostsNull()

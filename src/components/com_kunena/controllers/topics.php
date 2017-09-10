@@ -319,6 +319,7 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function move()

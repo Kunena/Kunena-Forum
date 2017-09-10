@@ -205,6 +205,7 @@ class lessc
 	 * @param $out
 	 *
 	 * @return array|bool
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function tryImport($importPath, $parentBlock, $out)
@@ -292,6 +293,7 @@ class lessc
 	 * @param $sourceParser
 	 * @param $importDir
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileImportedProps($props, $block, $out, $sourceParser, $importDir)
@@ -475,6 +477,7 @@ class lessc
 	 * @param $block
 	 * @param $out
 	 *
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileProps($block, $out)
@@ -539,6 +542,7 @@ class lessc
 	 * @param $queries
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileMediaQuery($queries)
@@ -722,10 +726,12 @@ class lessc
 	}
 
 	// reduces selector expressions
+
 	/**
 	 * @param $selectors
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function compileSelectors($selectors)
@@ -766,6 +772,7 @@ class lessc
 	 * @param $keywordArgs
 	 *
 	 * @return bool
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function patternMatch($block, $orderedArgs, $keywordArgs)
@@ -1343,6 +1350,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return int
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_mod($args)
@@ -1356,6 +1364,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_tan($num)
@@ -1367,6 +1376,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_sin($num)
@@ -1378,6 +1388,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_cos($num)
@@ -1389,6 +1400,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_atan($num)
@@ -1402,6 +1414,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_asin($num)
@@ -1415,6 +1428,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_acos($num)
@@ -1428,6 +1442,7 @@ class lessc
 	 * @param $num
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_sqrt($num)
@@ -1439,6 +1454,7 @@ class lessc
 	 * @param $value
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_extract($value)
@@ -1566,6 +1582,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_argb($color)
@@ -1574,10 +1591,12 @@ class lessc
 	}
 
 	// utility func to unquote a string
+
 	/**
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_e($arg)
@@ -1607,6 +1626,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib__sprintf($args)
@@ -1650,6 +1670,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_floor($arg)
@@ -1663,6 +1684,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_ceil($arg)
@@ -1676,6 +1698,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_round($arg)
@@ -1689,6 +1712,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_unit($arg)
@@ -1713,6 +1737,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function colorArgs($args)
@@ -1843,6 +1868,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_hue($color)
@@ -1856,6 +1882,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_saturation($color)
@@ -1869,6 +1896,7 @@ class lessc
 	 * @param $color
 	 *
 	 * @return float
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_lightness($color)
@@ -1913,6 +1941,7 @@ class lessc
 	 * @param $arg
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_percentage($arg)
@@ -1979,6 +2008,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function lib_contrast($args)
@@ -2249,6 +2279,7 @@ class lessc
 	 * @param $func
 	 *
 	 * @return array|bool
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function funcToColor($func)
@@ -2613,10 +2644,12 @@ class lessc
 	}
 
 	// evaluate an expression
+
 	/**
 	 * @param $exp
 	 *
 	 * @return array|string
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function evaluate($exp)
@@ -2761,6 +2794,7 @@ class lessc
 	 * @param $rgt
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	protected function op_color_number($op, $lft, $rgt)
@@ -3449,6 +3483,7 @@ class lessc
 	 * @param null $less
 	 *
 	 * @return bool
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	public static function ccompile($in, $out, $less = null)
@@ -3467,6 +3502,7 @@ class lessc
 	 * @param null $less
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since LESSC
 	 */
 	public static function cexecute($in, $force = false, $less = null)

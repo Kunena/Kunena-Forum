@@ -621,6 +621,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	private function getRSSURL($params = '', $xhtml = true)
@@ -669,6 +670,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $rel
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
@@ -690,6 +692,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $class
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')

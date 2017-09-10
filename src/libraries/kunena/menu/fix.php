@@ -242,6 +242,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function fixLegacy()

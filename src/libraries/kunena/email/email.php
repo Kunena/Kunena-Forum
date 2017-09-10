@@ -21,6 +21,7 @@ abstract class KunenaEmail
 	 * @param   array                 $receivers
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function send(\Joomla\CMS\Mail\Mail $mail, array $receivers)

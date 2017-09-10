@@ -208,6 +208,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
@@ -243,6 +244,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
@@ -282,6 +284,7 @@ class KunenaAccessCommunity
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)

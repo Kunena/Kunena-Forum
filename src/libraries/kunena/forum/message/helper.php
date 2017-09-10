@@ -69,6 +69,7 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
@@ -128,6 +129,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool   $orderbyid
 	 *
 	 * @return KunenaForumMessage[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
@@ -176,6 +178,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool   $orderbyid
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
@@ -221,6 +224,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   array          $params
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
@@ -388,6 +392,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   null|array  $hold
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
@@ -471,6 +476,7 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   array|string $mesids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function loadLocation($mesids)
@@ -560,6 +566,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int $topicids
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function recount($topicids = false)
@@ -603,6 +610,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   array $ids
 	 *
 	 * @return array|void
+	 * @throws Exception
 	 * @since 5.0.3
 	 */
 	static public function getMessagesByTopics(array $ids)

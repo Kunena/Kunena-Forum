@@ -93,6 +93,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 * Prepare AJAX display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

@@ -338,6 +338,7 @@ class KunenaUserBan extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50)
@@ -381,6 +382,7 @@ class KunenaUserBan extends JObject
 	 * @param $userid
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getUserHistory($userid)

@@ -111,6 +111,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
@@ -169,6 +170,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   string                   $value Row to pick up as value.
 	 *
 	 * @return array List of [topic][userid] = value.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getUserIds(array $topics, $value = 'user_id')
@@ -225,6 +227,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function move($old, $new)
@@ -269,6 +272,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   KunenaForumTopic $new
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function merge($old, $new)
@@ -321,6 +325,7 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * @param   int $id
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function reloadTopic($id)
@@ -379,6 +384,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @param   int            $end
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)

@@ -64,7 +64,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

@@ -113,6 +113,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadById(array $ids)
@@ -191,6 +192,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadByMessage(array $ids)
@@ -313,6 +315,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
@@ -385,6 +388,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $user
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getImageExtensions($category = null, $user = null)
@@ -460,6 +464,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed $user
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getFileExtensions($category = null, $user = null)
@@ -528,6 +533,7 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function cleanup()
@@ -613,6 +619,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaAttachment[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getByUserid($user, array $params)
@@ -677,6 +684,7 @@ abstract class KunenaAttachmentHelper
 	 * Load the total count of attachments
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since K5.1
 	 */
 	public static function getTotalAttachments()

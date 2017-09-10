@@ -379,6 +379,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadTopPolls($limit = 0)
@@ -470,6 +471,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadTopPosters($limit = 0)
@@ -506,6 +508,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadTopProfiles($limit = 0)
@@ -542,6 +545,7 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadTopThankyous($limit = 0)

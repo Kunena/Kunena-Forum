@@ -46,7 +46,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

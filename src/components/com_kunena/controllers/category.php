@@ -23,6 +23,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @param   array $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($config = array())
@@ -52,6 +53,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function markread()
@@ -126,6 +128,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function subscribe()
@@ -163,6 +166,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function unsubscribe()

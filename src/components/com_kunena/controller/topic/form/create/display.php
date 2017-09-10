@@ -34,7 +34,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 *
 	 * @return boolean
 	 *
-	 * @throws RuntimeException
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()

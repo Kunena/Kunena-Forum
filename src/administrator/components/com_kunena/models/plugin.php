@@ -69,6 +69,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return boolean|JForm
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	public function getForm($data = array(), $loadData = true)

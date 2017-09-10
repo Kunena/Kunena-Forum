@@ -140,6 +140,7 @@ class KunenaForumTopicRate extends JObject
 	 * @param $user
 	 *
 	 * @return boolean|\Joomla\CMS\Response\JsonResponse
+	 * @throws Exception
 	 * @internal param int $userid
 	 *
 	 * @since    2.0

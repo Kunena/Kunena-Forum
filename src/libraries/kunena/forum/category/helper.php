@@ -64,6 +64,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function &loadCategories()
@@ -160,6 +161,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumCategory[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getSubscriptions($user = null)
@@ -189,6 +191,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string     $authorise
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $reverse = false, $authorise = 'read')
@@ -297,6 +300,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return array (total, list)
 	 *
+	 * @throws Exception
 	 * @since    2.0.0
 	 */
 	static public function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
@@ -377,6 +381,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   int|array $catids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getNewTopics($catids)
@@ -487,6 +492,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array $params
 	 *
 	 * @return KunenaForumCategory[]
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getParents($id = 0, $levels = 100, $params = array())
@@ -673,6 +679,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool  $optimize
 	 *
 	 * @return array|KunenaForumCategory[]
+	 * @throws null
 	 * @since Kunena
 	 */
 	static protected function _getChildren(array $parents, $levels, array $params, $optimize)
@@ -805,6 +812,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string|array $categories
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function recount($categories = '')
@@ -896,6 +904,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function fixAliases()

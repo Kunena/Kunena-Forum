@@ -52,6 +52,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAdminOptions()
@@ -215,6 +216,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getAdminModerators()

@@ -78,6 +78,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	protected function setVariable($cid, $variable, $value)
@@ -389,6 +391,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 */
 	public function apply()
@@ -547,6 +551,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 */
 	public function save2new()
@@ -560,6 +566,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 */
 	public function save()
@@ -573,6 +581,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0.0-BETA2
 	 */
 	public function save2copy()
@@ -600,6 +610,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return    array  Contains the modified title and alias.
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
@@ -616,10 +627,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Remove
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	public function remove()
@@ -690,10 +701,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Cancel
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K3.0
 	 */
 	public function cancel()
@@ -935,6 +946,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since 2.0
 	 */
 	public function archive()
@@ -953,6 +965,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
 	 *
 	 * @since Kunena

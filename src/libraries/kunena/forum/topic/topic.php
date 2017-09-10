@@ -372,6 +372,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int $value
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function publish($value = KunenaForum::PUBLISHED)
@@ -404,6 +405,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function recount()
@@ -472,6 +474,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int                $postdelta
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function update($message = null, $postdelta = 0)
@@ -661,6 +664,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool $recount
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete($recount = true)
@@ -742,6 +746,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @param   null|string $url
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function sendNotification($url = null)
@@ -825,6 +830,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $action
 	 *
 	 * @return \Joomla\CMS\Uri\Uri|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUri($category = null, $action = null)
@@ -1059,6 +1065,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $category_icon
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getIcon($category_icon = '')
@@ -1156,6 +1163,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   array|null $safefields
 	 *
 	 * @return KunenaForumMessage
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function newReply($fields = array(), $user = null, $safefields = null)
@@ -1210,6 +1218,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function hasNew($user = null)
@@ -1262,6 +1271,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function markRead($user = null)
@@ -1289,6 +1299,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -1768,6 +1780,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Method to put the KunenaForumTopic object on trash this is still present in database.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function trash()
@@ -1805,6 +1818,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function resetvotes()
@@ -1869,6 +1883,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -2010,6 +2025,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user
 	 *
 	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseVote(KunenaUser $user)

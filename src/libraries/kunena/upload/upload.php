@@ -441,6 +441,7 @@ class KunenaUpload
 	 * @param   int $filesize The size of avatar in bytes
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function checkFileSizeAvatar($filesize)
@@ -521,6 +522,7 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
@@ -549,6 +551,7 @@ class KunenaUpload
 	 * @param   int $filesize The size of file in bytes
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function checkFileSizeImageAttachment($filesize)
@@ -651,6 +654,7 @@ class KunenaUpload
 	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')

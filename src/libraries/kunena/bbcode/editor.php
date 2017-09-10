@@ -29,6 +29,7 @@ class KunenaBbcodeEditor
 	/**
 	 * @param   array $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function __construct($config = array())
@@ -192,6 +193,7 @@ class KunenaBbcodeEditor
 	 * @param   string           $parseMethod The parse method name to call
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
@@ -335,6 +337,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement $xml
 	 *
 	 * @return KunenaBbcodeEditorButton
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)

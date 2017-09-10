@@ -23,6 +23,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function none()
 	{
@@ -33,6 +34,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function publish()
 	{
@@ -80,6 +82,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function unpublish()
 	{
@@ -127,6 +130,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -141,6 +145,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function delete()
 	{
@@ -180,6 +185,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function save()
 	{

@@ -41,6 +41,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -111,6 +112,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

@@ -255,6 +255,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function cancel()
 	{

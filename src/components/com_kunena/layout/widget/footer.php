@@ -47,6 +47,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function getRSS()
 	{

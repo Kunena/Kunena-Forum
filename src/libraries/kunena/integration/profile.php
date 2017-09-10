@@ -91,6 +91,7 @@ class KunenaProfile
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{

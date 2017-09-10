@@ -754,6 +754,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function sendNotification($url = null)
 	{
@@ -814,6 +815,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return \Joomla\CMS\Pagination\Pagination|KunenaPagination
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = '')
 	{
@@ -840,6 +842,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return \Joomla\CMS\Uri\Uri|null
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUri($category = null, $action = null)
 	{
@@ -1126,6 +1129,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return boolean
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -1140,6 +1144,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{

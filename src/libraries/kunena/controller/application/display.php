@@ -57,6 +57,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @return \Joomla\CMS\Layout\BaseLayout
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute()
 	{
@@ -193,6 +194,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	protected function before()
 	{

@@ -266,6 +266,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @return boolean
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function getUrl($category = null, $xhtml = true)
 	{
@@ -278,6 +279,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @return \Joomla\CMS\Uri\Uri
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUri($category = null)
 	{
@@ -358,6 +360,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @return boolean|null
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function sendNotification($url = null)
 	{
@@ -523,6 +526,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getPermaUrl($category = null, $xhtml = true)
 	{

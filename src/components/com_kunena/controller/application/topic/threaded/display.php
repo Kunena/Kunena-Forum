@@ -37,6 +37,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

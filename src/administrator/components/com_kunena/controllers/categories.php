@@ -334,6 +334,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function add()
 	{
@@ -363,6 +364,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -827,6 +829,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since   3.0
+	 * @throws null
 	 */
 	public function saveOrderAjax()
 	{
@@ -998,6 +1001,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since  5.1.0
+	 * @throws null
 	 */
 	public function batch_categories()
 	{

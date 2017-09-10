@@ -25,6 +25,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -81,6 +82,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function search()
 	{
@@ -108,6 +110,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function change()
 	{
@@ -128,6 +131,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function karmaup()
 	{
@@ -138,6 +142,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function karmadown()
 	{
@@ -465,6 +470,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function login()
 	{
@@ -504,6 +510,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function logout()
 	{
@@ -542,6 +549,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function status()
 	{
@@ -575,6 +583,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function statusText()
 	{
@@ -609,6 +618,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function karma($karmaDelta)
 	{

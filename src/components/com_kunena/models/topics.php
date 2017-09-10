@@ -536,6 +536,7 @@ class KunenaModelTopics extends KunenaModel
 	 * @return integer
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function getTotal()
 	{
@@ -551,6 +552,7 @@ class KunenaModelTopics extends KunenaModel
 	 * @return array|null
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function getTopicActions()
 	{

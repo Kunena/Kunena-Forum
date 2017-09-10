@@ -101,6 +101,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -170,6 +171,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @return mixed
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
@@ -230,6 +232,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{

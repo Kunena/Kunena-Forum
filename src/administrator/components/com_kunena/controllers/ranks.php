@@ -45,6 +45,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function add()
 	{
@@ -67,6 +68,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @throws Exception
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -105,6 +107,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -179,6 +182,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function rankupload()
 	{
@@ -216,6 +220,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function remove()
 	{
@@ -261,6 +266,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{

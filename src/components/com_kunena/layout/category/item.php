@@ -244,6 +244,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPagination($maxpages)
 	{

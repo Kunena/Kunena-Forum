@@ -79,6 +79,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getSession($update = false)
 	{

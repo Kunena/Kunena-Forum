@@ -23,6 +23,7 @@ class KunenaControllerTopics extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function none()
 	{

@@ -130,6 +130,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

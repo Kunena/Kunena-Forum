@@ -337,6 +337,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since  K4.0
+	 * @throws null
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{

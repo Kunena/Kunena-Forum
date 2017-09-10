@@ -593,6 +593,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{

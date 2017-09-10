@@ -45,6 +45,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function add()
 	{
@@ -67,6 +68,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * @since    2.0
 	 * @throws Exception
 	 * @since    Kunena
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -102,6 +104,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -174,6 +177,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function smileyupload()
 	{
@@ -210,6 +214,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function remove()
 	{
@@ -256,6 +261,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{

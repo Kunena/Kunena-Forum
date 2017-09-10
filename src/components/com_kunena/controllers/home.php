@@ -31,6 +31,7 @@ class KunenaControllerHome extends KunenaController
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

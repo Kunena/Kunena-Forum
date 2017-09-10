@@ -188,6 +188,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function prepareDocument()
 	{

@@ -159,6 +159,7 @@ class KunenaModelSearch extends KunenaModel
 	/**
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function buildWhere()
 	{
@@ -498,6 +499,7 @@ class KunenaModelSearch extends KunenaModel
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{

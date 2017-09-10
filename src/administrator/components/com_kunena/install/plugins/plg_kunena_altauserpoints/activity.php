@@ -43,6 +43,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function onAfterPost($message)
 	{
@@ -128,6 +129,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function onAfterReply($message)
 	{

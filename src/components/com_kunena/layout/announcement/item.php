@@ -31,6 +31,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @return array
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getActions()
 	{
@@ -67,6 +68,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{

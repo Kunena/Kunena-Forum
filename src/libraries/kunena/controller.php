@@ -173,6 +173,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute($task)
 	{
@@ -328,6 +329,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 *                                                     support chaining.
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -496,6 +498,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

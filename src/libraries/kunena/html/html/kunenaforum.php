@@ -211,6 +211,7 @@ abstract class JHtmlKunenaForum
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{

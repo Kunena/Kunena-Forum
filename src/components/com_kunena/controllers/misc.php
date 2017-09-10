@@ -32,6 +32,7 @@ class KunenaControllerMisc extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function template()
 	{

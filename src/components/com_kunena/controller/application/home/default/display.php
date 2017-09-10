@@ -36,6 +36,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute()
 	{

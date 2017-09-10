@@ -25,6 +25,7 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function displayRows()
 	{

@@ -660,6 +660,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{

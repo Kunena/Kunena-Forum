@@ -48,6 +48,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
+	 * @throws null
 	 */
 	public function onAfterPost($message)
 	{
@@ -140,6 +141,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @throws Exception
 	 * @deprecated  6.0
 	 * @since       Kunena
+	 * @throws null
 	 */
 	public function onAfterReply($message)
 	{

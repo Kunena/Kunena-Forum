@@ -39,6 +39,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function loadattachments()
 	{
@@ -1539,6 +1540,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function undelete()
 	{
@@ -1595,6 +1597,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function permdelete()
 	{
@@ -1668,6 +1671,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function approve()
 	{
@@ -1737,6 +1741,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function move()
 	{
@@ -1862,6 +1867,7 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function report()
 	{
@@ -2094,6 +2100,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	public function resetvotes()
 	{

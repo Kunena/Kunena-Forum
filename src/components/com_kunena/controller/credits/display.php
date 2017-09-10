@@ -53,6 +53,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

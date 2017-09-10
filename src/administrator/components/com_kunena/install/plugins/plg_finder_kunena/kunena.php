@@ -387,6 +387,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @since   2.5
 	 * @throws  Exception on database error.
+	 * @throws null
 	 */
 	protected function getItem($id)
 	{
@@ -458,6 +459,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @return FinderIndexerResult
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function createIndexerResult($message)
 	{

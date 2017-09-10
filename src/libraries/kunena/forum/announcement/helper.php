@@ -68,6 +68,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	static public function getUrl($layout = null, $xhtml = true)
 	{

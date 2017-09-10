@@ -47,6 +47,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

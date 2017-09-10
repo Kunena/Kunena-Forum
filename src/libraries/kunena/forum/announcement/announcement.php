@@ -113,6 +113,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{
@@ -155,6 +156,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTaskUrl($task = null, $xhtml = true)
 	{

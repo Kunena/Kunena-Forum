@@ -60,6 +60,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * @since  K5.0
 	 *
 	 * @since  Kunena
+	 * @throws null
 	 */
 	public function clean()
 	{
@@ -114,6 +115,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K5.0
+	 * @throws null
 	 */
 	public function cancel()
 	{

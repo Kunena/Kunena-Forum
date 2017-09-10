@@ -330,6 +330,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{

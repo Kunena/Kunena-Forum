@@ -37,6 +37,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

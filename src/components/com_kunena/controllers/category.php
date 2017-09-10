@@ -36,6 +36,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function jump()
 	{

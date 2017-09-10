@@ -46,6 +46,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return boolean|void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -82,6 +83,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -379,6 +381,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return  void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function move()
 	{
@@ -485,6 +488,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function logout()
 	{
@@ -523,6 +527,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function remove()
 	{
@@ -602,6 +607,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function ban()
 	{
@@ -662,6 +668,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function unban()
 	{
@@ -722,6 +729,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function block()
 	{
@@ -782,6 +790,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function unblock()
 	{
@@ -842,6 +851,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function batch_moderators()
 	{
@@ -906,6 +916,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{
@@ -920,6 +931,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function removecatsubscriptions()
 	{
@@ -965,6 +977,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function removetopicsubscriptions()
 	{

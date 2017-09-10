@@ -46,6 +46,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function diagnostics()
 	{
@@ -90,6 +91,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function prune()
 	{
@@ -211,6 +213,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function syncusers()
 	{
@@ -361,6 +364,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function recount()
 	{
@@ -476,6 +480,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @throws Exception
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function dorecount()
 	{
@@ -672,6 +677,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function trashmenu()
 	{
@@ -692,6 +698,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function fixlegacy()
 	{
@@ -725,6 +732,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function purgeReStatements()
 	{
@@ -783,6 +791,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function cleanupIP()
 	{
@@ -839,6 +848,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{
@@ -852,6 +862,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function uninstall()
 	{
@@ -905,6 +916,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function systemreport()
 	{

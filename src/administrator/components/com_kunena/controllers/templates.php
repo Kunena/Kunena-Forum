@@ -57,6 +57,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function publish()
 	{
@@ -91,6 +92,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function add()
 	{
@@ -112,6 +114,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -147,6 +150,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function install()
 	{
@@ -261,6 +265,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function uninstall()
 	{
@@ -330,6 +335,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function chooseless()
 	{
@@ -356,6 +362,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function editless()
 	{
@@ -383,6 +390,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function choosecss()
 	{
@@ -401,6 +409,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function applyless()
 	{
@@ -448,6 +457,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function saveless()
 	{
@@ -499,6 +509,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function editcss()
 	{
@@ -526,6 +537,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function applycss()
 	{
@@ -570,6 +582,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function savecss()
 	{
@@ -616,6 +629,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function apply()
 	{
@@ -654,6 +668,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since  3.0.0
+	 * @throws null
 	 */
 	protected function _saveParamFile($template)
 	{
@@ -686,6 +701,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -722,6 +738,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since 3.0.5
+	 * @throws null
 	 */
 	public function cancel()
 	{

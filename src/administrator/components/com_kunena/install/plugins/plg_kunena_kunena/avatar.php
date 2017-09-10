@@ -38,6 +38,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getEditURL()
 	{

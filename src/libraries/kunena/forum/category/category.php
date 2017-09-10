@@ -310,6 +310,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -586,6 +587,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return boolean|null
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true)
 	{
@@ -610,6 +612,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @throws Exception
 	 * @result string
 	 * @since  Kunena
+	 * @throws null
 	 */
 	public function getRSSUrl($xhtml = true)
 	{

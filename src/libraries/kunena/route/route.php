@@ -161,6 +161,7 @@ abstract class KunenaRoute
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null|string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function current($object = false)
 	{
@@ -669,6 +670,7 @@ abstract class KunenaRoute
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getReferrer($default = null, $anchor = null)
 	{
@@ -1059,6 +1061,7 @@ abstract class KunenaRoute
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
@@ -1071,6 +1074,7 @@ abstract class KunenaRoute
 	 * @return array|boolean|integer
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
 	{
@@ -1120,6 +1124,7 @@ abstract class KunenaRoute
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
 	{
@@ -1140,6 +1145,7 @@ abstract class KunenaRoute
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
 	{
@@ -1164,6 +1170,7 @@ abstract class KunenaRoute
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{

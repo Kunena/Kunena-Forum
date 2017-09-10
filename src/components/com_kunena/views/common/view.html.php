@@ -368,6 +368,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayStatistics($tpl = null)
 	{
@@ -405,6 +406,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayFooter($tpl = null)
 	{
@@ -449,6 +451,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayMenu($tpl = null)
 	{
@@ -502,6 +505,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayLoginBox($tpl = null)
 	{
@@ -624,6 +628,7 @@ class KunenaViewCommon extends KunenaView
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
@@ -660,6 +665,7 @@ class KunenaViewCommon extends KunenaView
 	 * @return string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function getRSSLink($name, $rel = 'follow', $params = '')
 	{
@@ -674,6 +680,7 @@ class KunenaViewCommon extends KunenaView
 	 * @return boolean|string
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{

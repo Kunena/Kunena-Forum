@@ -125,6 +125,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
 	protected function before()
 	{

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use \CBLib\Application\Application;
+
 /**
  * Class KunenaPrivateComprofiler
  * @since Kunena
@@ -45,7 +47,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	{
 		global $_CB_framework, $_CB_PMS;
 
-		$myid = $_CB_framework->myId();
+		$myid = Application::MyUser()->getUserId();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($myid == 0 || $userid == 0 || $userid == $myid)
@@ -53,7 +55,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return '';
 		}
 
-		outputCbTemplate($_CB_framework->getUi());
+		outputCbTemplate(Application::Cms()->getClientId());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
 		$url         = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
@@ -87,7 +89,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	{
 		global $_CB_framework, $_CB_PMS;
 
-		$myid = $_CB_framework->myId();
+		$myid = Application::MyUser()->getUserId();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($myid == 0 || $userid == 0)
@@ -148,7 +150,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		$userid = $_CB_framework->myId();
+		$userid = Application::MyUser()->getUserId();
 
 		$cbUser = CBuser::getInstance((int) $userid);
 

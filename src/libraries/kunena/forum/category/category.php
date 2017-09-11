@@ -355,7 +355,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	{
 		foreach ($this->getChannels() as $category)
 		{
-			if ($category->isAuthorised('topic.create', $user, true))
+			if ($category->isAuthorised('topic.create', $user))
 			{
 				return $category;
 			}
@@ -367,7 +367,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			foreach ($categories as $category)
 			{
-				if ($category->isAuthorised('topic.create', null, true))
+				if ($category->isAuthorised('topic.create', null))
 				{
 					return $category;
 				}
@@ -862,7 +862,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$message->name   = $user->getName('');
 		$message->userid = $user->userid;
 		$message->ip     = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
-		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user, true) : 0;
+		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user) : 0;
 
 		if ($safefields)
 		{

@@ -348,7 +348,7 @@ class KunenaPagination
 
 		if (!$this->viewall)
 		{
-			$this->uri->delVar($limitstartKey, '');
+			$this->uri->delVar($limitstartKey);
 			$data->all->base = '0';
 			$data->all->link = JRoute::_((string) $this->uri);
 		}

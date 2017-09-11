@@ -115,7 +115,7 @@ abstract class KunenaForum
 	 */
 	public static function enabled($checkAdmin = true)
 	{
-		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena', true))
+		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
 		{
 			return false;
 		}

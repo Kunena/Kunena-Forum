@@ -420,7 +420,7 @@ class KunenaViewTopic extends KunenaView
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null, false))
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -465,7 +465,7 @@ class KunenaViewTopic extends KunenaView
 		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null, false))
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -488,7 +488,7 @@ class KunenaViewTopic extends KunenaView
 		$this->attachments = $this->message->getAttachments();
 
 		// Get poll
-		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->isAuthorised('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->isAuthorised('poll.edit', null, false))))
+		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->isAuthorised('poll.create', null)) || ($this->topic->poll_id && $this->topic->isAuthorised('poll.edit', null))))
 		{
 			$this->poll = $this->topic->getPoll();
 		}

@@ -325,7 +325,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		else
 		{
 			// Otherwise message is either unapproved or published depending if the category is moderated or not
-			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user, true) : 0;
+			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
 		}
 
 		if ($fields === true)
@@ -1170,7 +1170,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		// Update rest of the information
 		$category            = $this->getCategory();
-		$this->hold          = $category->review && !$category->isAuthorised('moderate', $user, true) ? 1 : $this->hold;
+		$this->hold          = $category->review && !$category->isAuthorised('moderate', $user) ? 1 : $this->hold;
 		$this->modified_by   = $user->userid;
 		$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
 	}

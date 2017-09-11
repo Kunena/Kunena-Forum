@@ -260,7 +260,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Remove base and add canonical link.
 		$this->document->setBase('');
 		$kinput     = \Joomla\CMS\Factory::getApplication()->input;
-		$limitstart = $kinput->getInt('limitstart', 'limitstart', 0);
+		$limitstart = $kinput->getInt('limitstart', 0);
 
 		if (!$limitstart)
 		{

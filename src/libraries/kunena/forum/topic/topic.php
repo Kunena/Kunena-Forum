@@ -1209,7 +1209,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		else
 		{
 			// Otherwise message is either unapproved or published depending if the category is moderated or not
-			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user, true) : 0;
+			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
 		}
 
 		if ($fields === true)

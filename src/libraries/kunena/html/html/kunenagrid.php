@@ -154,15 +154,13 @@ abstract class JHtmlKunenaGrid
 	{
 		$userid = \Joomla\CMS\Factory::getUser()->get('id');
 
-		$result = false;
-
 		if ($row instanceof \Joomla\CMS\Table\Table)
 		{
 			$result = $row->isCheckedOut($userid);
 		}
 		else
 		{
-			$result = \Joomla\CMS\Table\Table::isCheckedOut($userid, $row->checked_out);
+			$result = false;
 		}
 
 		if ($result)

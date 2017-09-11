@@ -718,7 +718,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena
 	 */
-	public function subRequest($path, \Joomla\Input\Input $input = null, $options = null)
+	public function subRequest($path, \Joomla\CMS\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

@@ -28,17 +28,6 @@ class PlgKunenaKunena extends JPlugin
 
 		parent::__construct($subject, $config);
 
-		$powered = JPluginHelper::isEnabled('kunena', 'powered');
-		if (!$powered)
-		{
-			$styles = <<<EOF
-		.layout#kunena + div { display: block !important;}
-		#kunena + div { display: block !important;}
-EOF;
-
-			$document = JFactory::getDocument();
-			$document->addStyleDeclaration($styles);
-		}
 
 		$method = method_exists(get_class(new KunenaControllerApplicationDisplay), 'poweredBy');
 		if (!$method)

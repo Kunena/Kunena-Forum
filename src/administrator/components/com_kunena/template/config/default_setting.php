@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post" name="settingFormModal" id="settingFormModal">
 	<div class="modal hide fade" id="settingModal">
 		<input type="hidden" name="task" value="setdefault" />
-		<?php echo JHTML::_('form.token') ?>
+		<?php echo JHtml::_('form.token') ?>
 
 		<div class="modal-header">
 			<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>

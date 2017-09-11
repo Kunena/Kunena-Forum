@@ -1674,7 +1674,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
-				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
+				$article->text = JHtml::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
 			}

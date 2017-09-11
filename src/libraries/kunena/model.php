@@ -41,7 +41,7 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseModel
 	public $params = null;
 
 	/**
-	 * @var \Joomla\CMS\Input\Input
+	 * @var \Joomla\Input\Input
 	 * @since Kunena
 	 */
 	protected $input = null;
@@ -65,13 +65,13 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseModel
 	protected $embedded = false;
 
 	/**
-	 * @param   array  $config config
-	 * @param   Jinput $input
+	 * @param   array                $config config
+	 * @param   \Joomla\Input\Input  $input
 	 *
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function __construct($config = array(), JInput $input = null)
+	public function __construct($config = array(), Joomla\Input\Input $input = null)
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);

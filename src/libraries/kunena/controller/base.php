@@ -27,7 +27,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The input object.
 	 *
-	 * @var    \Joomla\CMS\Input\Input
+	 * @var    \Joomla\Input\Input
 	 * @since Kunena
 	 */
 	protected $input;
@@ -43,7 +43,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \Joomla\Input\Input                       $input   The input object.
+	 * @param \Joomla\Input\Input                       $input   The input object.
 	 * @param   \Joomla\CMS\Application\BaseApplication $app     The application object.
 	 * @param   \Joomla\Registry\Registry|array         $options Array \Joomla\Registry\Registry object with the
 	 *                                                           options to load.
@@ -78,7 +78,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Load the input object.
 	 *
-	 * @return  \Joomla\CMS\Input\Input  The input object.
+	 * @return  \Joomla\Input\Input  The input object.
 	 * @since Kunena
 	 */
 	protected function loadInput()
@@ -170,7 +170,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the input object.
 	 *
-	 * @return  \Joomla\CMS\Input\Input  The input object.
+	 * @return  \Joomla\Input\Input  The input object.
 	 * @since Kunena
 	 */
 	public function getInput()

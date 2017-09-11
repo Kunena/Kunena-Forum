@@ -1532,7 +1532,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return  KunenaControllerDisplay
 	 * @since K4.0
 	 */
-	public function subRequest($path, JInput $input = null, $options = null)
+	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

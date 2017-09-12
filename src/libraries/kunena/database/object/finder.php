@@ -259,7 +259,7 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		else
 		{
-			$query->clear('SELECT')->clear('order')->select('COUNT(*)');
+			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
 

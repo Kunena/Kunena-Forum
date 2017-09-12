@@ -3021,7 +3021,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
 			{
 				// Add scheme to raw domain URLs.
-				$url = "http://{$content}";
+				$url = "https://{$content}";
 			}
 
 			$url_parsed = parse_url($url);
@@ -3079,7 +3079,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
 				{
 					// Add scheme to raw domain URLs.
-					$url = "http://{$content}";
+					$url = "https://{$content}";
 				}
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';

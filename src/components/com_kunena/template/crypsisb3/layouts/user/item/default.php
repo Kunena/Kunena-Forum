@@ -19,7 +19,7 @@ $tabs = $this->getTabs();
 </h1>
 
 <h2 class="pull-right">
-	<?php if ($this->profile->isAuthorised('edit') || $this->me->isAdmin() || $this->me->isModerator()) : ?>
+	<?php if ($this->profile->isAuthorised('edit') || $this->me->isAdmin()) : ?>
 		<?php echo $this->profile->getLink(
 			KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
 			JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default'

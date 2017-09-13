@@ -922,6 +922,7 @@ class KunenaControllerUser extends KunenaController
 		$input = $this->app->input;
 		$method = $input->getMethod();
 		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
+		$app = \Joomla\CMS\Factory::getApplication();
 
 		if ($app->input->get('signature', null) === null)
 		{

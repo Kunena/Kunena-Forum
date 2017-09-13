@@ -899,19 +899,22 @@ class KunenaControllerUser extends KunenaController
 			return false;
 		}
 
-		// Reload the user.
-		$this->user->load($this->user->id);
-		$session = \Joomla\CMS\Factory::getSession();
-		$session->set('user', $this->user);
-
-		// Update session if username has been changed
-		if ($username && $username != $this->user->username)
+		if ($this->user->id == $this->me->userid)
 		{
-			$table = \Joomla\CMS\Table\Table::getInstance('session', '\Joomla\CMS\Table\Table');
-			$table->load($session->getId());
+			// Reload the user.
+			$this->user->load($this->user->id);
+			$session = \Joomla\CMS\Factory::getSession();
+			$session->set('user', $this->user);
 
-			$table->username = $this->user->username;
-			$table->store();
+			// Update session if username has been changed
+			if ($username && $username != $this->user->username)
+			{
+				$table = \Joomla\CMS\Table\Table::getInstance('session', 'JTable');
+				$table->load($session->getId());
+
+				$table->username = $this->user->username;
+				$table->store();
+			}
 		}
 
 		return true;
@@ -922,9 +925,8 @@ class KunenaControllerUser extends KunenaController
 		$input = $this->app->input;
 		$method = $input->getMethod();
 		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
-		$app = \Joomla\CMS\Factory::getApplication();
 
-		if ($app->input->get('signature', null) === null)
+		if ($this->app->input->get('signature', null) === null)
 		{
 			return;
 		}
@@ -982,7 +984,8 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function deleteOldAvatars()
 	{
-		if (preg_match('|^users/|', $this->me->avatar))
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		if (preg_match('|^users/|', $user->avatar))
 		{
 			// Delete old uploaded avatars:
 			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
@@ -991,16 +994,16 @@ class KunenaControllerUser extends KunenaController
 
 				foreach ($deletelist as $delete)
 				{
-					if (is_file($delete . '/' . $this->me->avatar))
+					if (is_file($delete . '/' . $user->avatar))
 					{
-						KunenaFile::delete($delete . '/' . $this->me->avatar);
+						KunenaFile::delete($delete . '/' . $user->avatar);
 					}
 				}
 			}
 
-			if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar))
+			if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar))
 			{
-				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
+				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
 			}
 		}
 	}
@@ -1020,12 +1023,11 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$upload = KunenaUpload::getInstance();
+		$user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		// We are converting all exceptions into JSON.
 		try
 		{
-			$me = KunenaUserHelper::getMyself();
-
 			$caption = $this->input->getString('caption');
 			$options = array(
 				'filename'   => $this->input->getString('filename'),
@@ -1050,13 +1052,13 @@ class KunenaControllerUser extends KunenaController
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
 
-				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
-				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
 				// Save in the table KunenaUser
-				$kuser = KunenaFactory::getUser();
-				$kuser->avatar = 'users/avatar' . $this->me->userid . '.' . $extension;
+				$kuser = $user;
+				$kuser->avatar = 'users/avatar' . $user->userid . '.' . $extension;
 				$kuser->save();
 			}
 		}
@@ -1107,7 +1109,7 @@ class KunenaControllerUser extends KunenaController
 		$this->deleteOldAvatars();
 
 		// Save in the table KunenaUser
-		$kuser = KunenaFactory::getUser();
+		$kuser = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 		$kuser->avatar = '';
 		$success = $kuser->save();
 
@@ -1189,7 +1191,8 @@ class KunenaControllerUser extends KunenaController
 	protected function saveAvatar()
 	{
 		$action         = $this->app->input->getString('avatar', 'keep');
-		$current_avatar = $this->me->avatar;
+		$kuser          = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$current_avatar = $kuser->avatar;
 
 		$avatarFile = $this->app->input->files->get('avatarfile');
 
@@ -1202,7 +1205,7 @@ class KunenaControllerUser extends KunenaController
 
 			$upload = KunenaUpload::getInstance();
 
-			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
+			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $kuser->userid, 'avatar');
 
 			if (!empty($uploaded))
 			{
@@ -1221,16 +1224,16 @@ class KunenaControllerUser extends KunenaController
 					}
 
 					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' .
-						$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop
+						$kuser->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop
 					);
 				}
 
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
-				$this->me->avatar = 'users/avatar' . $this->me->userid . '.' . $uploaded->ext;
+				$kuser->avatar = 'users/avatar' . $kuser->userid . '.' . $uploaded->ext;
 			}
 			else
 			{
-				$this->me->avatar = $current_avatar;
+				$kuser->avatar = $current_avatar;
 
 				return false;
 			}
@@ -1240,11 +1243,11 @@ class KunenaControllerUser extends KunenaController
 			$this->deleteOldAvatars();
 
 			// Set default avatar
-			$this->me->avatar = '';
+			$kuser->avatar = '';
 		}
 		elseif (substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false)
 		{
-			$this->me->avatar = $action;
+			$kuser->avatar = $action;
 		}
 
 		return true;

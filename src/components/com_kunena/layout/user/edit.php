@@ -28,7 +28,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 	 */
 	public function getTabsEdit()
 	{
-		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin();
+		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
 
 		// Define all tabs.
 		$tabs = array();

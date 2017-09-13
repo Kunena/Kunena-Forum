@@ -28,19 +28,19 @@ $this->me = KunenaUserHelper::getMyself();
 
 	<div class="tabs">
 		<ul id="KunenaUserEdit" class="nav nav-tabs">
-			<?php if ($this->profile->userid == $this->me->userid || $this->me->isAdmin() || $this->me->isModerator()): ?>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<li class="active">
 				<a href="#home" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER'); ?>
 				</a>
 			</li>
 			<?php endif; ?>
-			<li <?php if ($this->profile->userid != $this->me->userid && !$this->me->isAdmin() && !$this->me->isModerator()) { echo 'class="active"'; }?>>
+			<li <?php if ($this->profile->userid != $this->me->userid) { echo 'class="active"'; }?>>
 				<a href="#editprofile" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE'); ?>
 				</a>
 			</li>
-			<?php if ($this->profile->userid == $this->me->userid || $this->me->isAdmin() || $this->me->isModerator()): ?>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<li>
 				<a href="#editavatar" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR'); ?>
@@ -55,7 +55,7 @@ $this->me = KunenaUserHelper::getMyself();
 		</ul>
 
 		<div id="KunenaUserEdit" class="tab-content">
-			<?php if ($this->profile->userid == $this->me->userid || $this->me->isAdmin() || $this->me->isModerator()): ?>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<div class="tab-pane fade in active" id="home">
 				<?php echo $this->subRequest('User/Edit/User'); ?>
 			</div>
@@ -63,7 +63,7 @@ $this->me = KunenaUserHelper::getMyself();
 			<div class="tab-pane fade <?php if ($this->profile->userid != $this->me->userid) { echo 'in active'; }?>" id="editprofile">
 				<?php echo $this->subRequest('User/Edit/Profile'); ?>
 			</div>
-			<?php if ($this->profile->userid == $this->me->userid || $this->me->isAdmin() || $this->me->isModerator()): ?>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<div class="tab-pane fade" id="editavatar">
 				<?php echo $this->subRequest('User/Edit/Avatar'); ?>
 			</div>

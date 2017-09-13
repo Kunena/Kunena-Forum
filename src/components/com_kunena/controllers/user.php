@@ -753,12 +753,6 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			$value            = $post_password;
-			$meter            = isset($element['strengthmeter']) ? ' meter="0"' : '1';
-			$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
-			$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : $params->get('minimum_length');
-			$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
-			$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
-			$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
 
 			if (!empty($params))
 			{
@@ -778,13 +772,6 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			// If the field is empty and not required, the field is valid.
-			$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
-
-			if (!$required && empty($value))
-			{
-				return true;
-			}
-
 			$valueLength = strlen($value);
 
 			// Load language file of com_users component

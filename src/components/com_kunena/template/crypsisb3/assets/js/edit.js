@@ -16,8 +16,8 @@ function kPreviewHelper(previewActive) {
 	if (jQuery('#editor').val() != null) {
 		jQuery.ajax({
 			type: 'POST',
+			url: jQuery('#kpreview_url').val(),
 			async: false,
-			url     : jQuery('#kpreview_url').val(),
 			dataType: 'json',
 			data: {body: jQuery('#editor').val()},
 			success: function (data) {
@@ -68,6 +68,10 @@ jQuery(document).ready(function ($) {
 			item = '.qreply';
 		}
 
+		if ($('#wysibb-body').length > 0) {
+			item = '#wysibb-body';
+		}
+
 		if (item != undefined) {
 			$(item).atwho({
 				at: ":",
@@ -100,6 +104,7 @@ jQuery(document).ready(function ($) {
 			limit: 5
 		});
 	}
+
 
 	/* Store form data into localstorage every 1 second */
 	if ($.fn.sisyphus != undefined) {
@@ -137,7 +142,7 @@ jQuery(document).ready(function ($) {
 		$("#editor").attr('required', 'required');
 	});
 
-	// Load topic icons by ajax request
+	var category_template_text;
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
@@ -154,6 +159,7 @@ jQuery(document).ready(function ($) {
 			}
 		}
 
+		// Load topic icons by ajax request
 		$.ajax({
 			type: 'POST',
 			url: kurl_topicons_request,
@@ -222,6 +228,42 @@ jQuery(document).ready(function ($) {
 				});
 			}
 		});
+
+		// Load template text for the category by ajax request
+		category_template_text = function () {
+			var tmp = null;
+			$.ajax({
+				type: 'POST',
+				url: $('#kurl_category_template_text').val(),
+				async: false,
+				dataType: 'json',
+				data: {catid: catid},
+				success: function (data) {
+					if (data.length > 1) {
+						$('#modal_confirm_template_category').modal('show');
+
+						tmp = data;
+					}
+				}
+			});
+
+			return tmp;
+		}();
+	});
+
+	$('#modal_confirm_erase').click(function () {
+		$('#modal_confirm_template_category').modal('hide');
+		var textarea = $("#editor").next();
+		textarea.empty();
+		$('#editor').insertAtCaret(category_template_text);
+	});
+
+	$('#modal_confirm_erase_keep_old').click(function () {
+		$('#modal_confirm_template_category').modal('hide');
+		var existing_content = $('#editor').val();
+		var textarea = $("#editor").next();
+		textarea.empty();
+		$('#editor').insertAtCaret(category_template_text + ' ' + existing_content);
 	});
 
 	if ($.fn.datepicker != undefined) {

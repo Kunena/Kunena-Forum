@@ -12,23 +12,8 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		if(Joomla.getOptions('com_kunena.editor'))
-    {
-      var value = $('#editor').val();
-    }
-    else
-    {
-      var value = $('#editor').val();
-    }
-
-    if(Joomla.getOptions('com_kunena.editor'))
-    {
-		  $('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
-    }
-    else
-    {
-      $('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
-    }
+		var value = $('#editor').val();
+		$('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
 		if (button != undefined) {
 			button.removeClass('btn-primary');
@@ -278,6 +263,8 @@ jQuery(function ($) {
 			$('#remove-all').show();
 			$('#insert-all').show();
 
+			$('#kattach_form').show();
+
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
@@ -299,7 +286,7 @@ jQuery(function ($) {
 
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
-			if (filecoutntmp > kunena_upload_files_maxfiles) {
+			if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
 				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
 
 				$('#form_submit_button').prop('disabled', false);
@@ -356,14 +343,13 @@ jQuery(function ($) {
 		}
 	}).on('fileuploaddone', function (e, data) {
 		// $.each(data.result.data, function (index, file)
+			var progress = parseInt(data.loaded / data.total * 100, 10);
+			$('#progress .bar').css(
+				'width',
+				progress + '%'
+			);
 
-		var progress = parseInt(data.loaded / data.total * 100, 10);
-		$('#progress .bar').css(
-			'width',
-			progress + '%'
-		);
-
-		var link = $('<a>')
+			var link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
 
@@ -387,6 +373,8 @@ jQuery(function ($) {
 			data.context.append(removeButton.clone(true).data(data));
 		}
 		else if (data.result.message) {
+			$('#form_submit_button').prop('disabled', false);
+
 			data.uploaded = false;
 			data.context.append(removeButton.clone(true).data(data));
 

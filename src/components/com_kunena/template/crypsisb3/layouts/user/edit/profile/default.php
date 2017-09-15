@@ -126,7 +126,7 @@ $this->addScript('assets/js/profile.js');
 				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
 				. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>" >
 				<?php endif; ?>
-					<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $social ?>" class="form-control"
+					<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>" class="form-control"
 						   value="<?php echo $this->escape($this->profile->$key); ?>" />
 				</span>
 			</td>

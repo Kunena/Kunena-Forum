@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 // Note. It is important to remove spaces between elements.
 ?>
 
-<ul class="nav">
+<ul class="nav navbar-nav">
 	<?php
 
 	$columninx  = 0;

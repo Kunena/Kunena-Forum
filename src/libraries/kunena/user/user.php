@@ -280,8 +280,8 @@ class KunenaUser extends JObject
 		}
 
 		$input     = \Joomla\CMS\Factory::getApplication()->input;
-		$method    = $input->getMethod();
-		$kuser     = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
+		$method    = $input->getInt('userid');;
+		$kuser     = KunenaFactory::getUser($method);
 		$config    = KunenaConfig::getInstance();
 		$exception = null;
 

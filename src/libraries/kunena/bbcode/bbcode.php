@@ -1553,7 +1553,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 		else
 		{
-			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
+			return '<div class="kmsgtext-confidentialguests">' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
 		}
 	}
 

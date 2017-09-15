@@ -595,7 +595,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$status_text     = $this->app->input->getString('status_text', null, 'POST');
+		$status_text     = $this->app->input->post->getString('status_text', null);
 		$me              = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
 

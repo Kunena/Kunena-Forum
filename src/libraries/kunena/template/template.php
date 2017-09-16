@@ -316,7 +316,7 @@ class KunenaTemplate extends JObject
 
 		if (!$name)
 		{
-			$name = \Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', KunenaFactory::getConfig()->template, 'COOKIE');
+			$name = \Joomla\CMS\Factory::getApplication()->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
 		}
 
 		$name = KunenaPath::clean($name);

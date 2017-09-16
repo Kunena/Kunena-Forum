@@ -242,7 +242,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			if (!$this->redirect)
 			{
 				// If controller didn't set a new redirect, try if request has return url in it.
-				$return = base64_decode($app->input->get('return', '', 'BASE64'));
+				$return = base64_decode($app->input->getBase64('return'));
 
 				// Only allow internal urls to be used.
 				if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))

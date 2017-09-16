@@ -37,7 +37,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		jimport('joomla.application.component.helper');
 
 		// Check if Kunena component is installed/enabled
-		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena', true))
+		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
 		{
 			return;
 		}

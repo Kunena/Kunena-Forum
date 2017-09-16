@@ -530,7 +530,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode($this->app->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($this->app->input->getBase64('return'));
 
 		if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
 		{

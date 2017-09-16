@@ -739,7 +739,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
+		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null))
 		{
 			$topic->icon_id = $fields['icon_id'];
 		}

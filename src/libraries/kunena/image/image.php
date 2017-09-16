@@ -17,7 +17,7 @@ define('MIME_PNG', 'image/png');
  * Helper class for image manipulation.
  * @since Kunena
  */
-class KunenaImage extends KunenaCompatImage
+class KunenaImage extends \Joomla\Image\Image
 {
 	/**
 	 * @param $dst_image
@@ -316,7 +316,7 @@ class KunenaImage extends KunenaCompatImage
 		if ($createNew)
 		{
 			// @codeCoverageIgnoreStart
-			$new = new KunenaImage($handle);
+			$new = new KunenaImage;
 
 			return $new;
 
@@ -333,5 +333,4 @@ class KunenaImage extends KunenaCompatImage
 			return $this;
 		}
 	}
-
 }

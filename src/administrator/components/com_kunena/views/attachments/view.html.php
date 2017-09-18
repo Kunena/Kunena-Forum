@@ -56,12 +56,12 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function setToolbar()
 	{
 		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
 
-		JToolBarHelper::spacer();
+		JToolbarHelper::spacer();
 	}
 
 	/**

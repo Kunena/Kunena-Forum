@@ -59,22 +59,22 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	protected function setToolBarEdit()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		JToolbarHelper::spacer();
-		JToolBarHelper::apply('apply');
-		JToolBarHelper::save('save');
-		JToolBarHelper::save2new('save2new');
+		JToolbarHelper::apply('apply');
+		JToolbarHelper::save('save');
+		JToolbarHelper::save2new('save2new');
 
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())
 		{
-			JToolBarHelper::save2copy('save2copy');
+			JToolbarHelper::save2copy('save2copy');
 		}
 
-		JToolBarHelper::cancel();
+		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -130,19 +130,19 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
 
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		JToolbarHelper::spacer();
+		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
 
-		JToolBarHelper::editList();
-		JToolBarHelper::divider();
-		JToolBarHelper::publish();
-		JToolBarHelper::unpublish();
-		JToolBarHelper::divider();
-		JToolBarHelper::deleteList();
-		JToolBarHelper::spacer();
+		JToolbarHelper::editList();
+		JToolbarHelper::divider();
+		JToolbarHelper::publish();
+		JToolbarHelper::unpublish();
+		JToolbarHelper::divider();
+		JToolbarHelper::deleteList();
+		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 
 		// Get the toolbar object instance
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');

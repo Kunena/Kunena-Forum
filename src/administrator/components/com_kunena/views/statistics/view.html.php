@@ -153,7 +153,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function setToolbar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
 	}
 
 	/**

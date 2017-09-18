@@ -67,7 +67,7 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . JText::_('COM_KUNENA_INSTALLER'), 'kunena.png');
+		JToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . JText::_('COM_KUNENA_INSTALLER'), 'kunena.png');
 
 	}
 

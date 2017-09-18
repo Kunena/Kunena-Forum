@@ -70,7 +70,7 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

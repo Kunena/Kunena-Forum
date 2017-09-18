@@ -117,16 +117,16 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'users');
-		JToolBarHelper::spacer();
-		JToolBarHelper::apply('apply');
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
-		JToolBarHelper::spacer();
+		JToolbarHelper::title(JText::_('COM_KUNENA'), 'users');
+		JToolbarHelper::spacer();
+		JToolbarHelper::apply('apply');
+		JToolbarHelper::spacer();
+		JToolbarHelper::save('save');
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
+		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -148,11 +148,11 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'users');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
+		JToolbarHelper::title(JText::_('COM_KUNENA'), 'users');
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel();
+		JToolbarHelper::spacer();
 	}
 }

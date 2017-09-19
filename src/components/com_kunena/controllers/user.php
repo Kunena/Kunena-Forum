@@ -73,7 +73,12 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Else the user does not exists.
-		throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_USER_UNKNOWN'), 404);
+		if (!$this->me)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_USER_UNKNOWN'), 404);
+		}
+
+		parent::display();
 	}
 
 	/**

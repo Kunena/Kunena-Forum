@@ -14,12 +14,19 @@ $cols = !empty($this->actions) ? 6 : 5;
 $colspan = !empty($this->actions) ? 4 : 3;
 $view = JFactory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
+$social = $this->ktemplate->params->get('socialshare');
 
 $this->addStyleSheet('assets/css/rating.css');
 ?>
 <div><?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_list_top'); ?></div>
 <div class="row-fluid">
 	<div class="span12">
+	<?php if ($social == 1) : ?>
+		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+	<?php endif; ?>
+	<?php if ($social == 2) : ?>
+		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
+	<?php endif; ?>
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>

@@ -137,7 +137,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 
 						<div class="form-group" id="kanynomous-check-name"
-							<?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+						<?php if ($this->me->userid && !$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="col-md-10">

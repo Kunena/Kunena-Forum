@@ -116,7 +116,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 		catch (Exception $e)
 		{
-			return $this->renderError($e);
+			return $this->renderException($e);
+		}
+		catch (Throwable $t)
+		{
+			return $this->renderException($t);
 		}
 	}
 
@@ -294,12 +298,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
-	 * @param   Exception $e
+	 * Render the exception as string
+	 *
+	 * @param   Throwable|Exception $e
 	 *
 	 * @return string
-	 * @since Kunena
 	 */
-	public function renderError(Exception $e)
+	public function renderException($e)
 	{
 		// Exceptions aren't allowed in string conversion, log the error and output it as a string.
 		$trace    = $e->getTrace();
@@ -314,7 +319,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 			if (isset($caller['class']) && isset($caller['function'])
 				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__
-			)
+				)
 			{
 				break;
 			}

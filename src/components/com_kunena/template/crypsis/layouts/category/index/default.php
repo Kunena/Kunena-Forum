@@ -20,6 +20,14 @@ if ($this->config->enableforumjump)
 $mmm    = 0;
 $config = KunenaFactory::getTemplate()->params;
 
+if ($config->get('socialshare') == 1)
+{
+	echo "<div>" . $this->subLayout('Widget/Social') . "</div>";
+}
+if ($config->get('socialshare') == 2)
+	echo "<div>" . $this->subLayout('Widget/Socialcustomtag') . "</div>";
+}
+
 if ($config->get('displayModule'))
 {
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');

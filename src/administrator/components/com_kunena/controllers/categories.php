@@ -440,7 +440,10 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$post       = $this->app->post->getArray();
+
+		$app        = JFactory::getApplication();
+		$input      = $app->input;
+		$post       = $app->input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
 		if ($post['task'] == 'save2copy')

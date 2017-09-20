@@ -163,42 +163,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php echo $this->escape($this->headerText) ?>
 	</h1>
 
-	<div class="well">
-		<div class="row column-row">
-			<div class="col-md-12 column-item">
-				<fieldset>
-					<?php if (isset($this->selectcatlist))
-					:
-	?>
-						<div class="form-group">
-							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
-							<div class="col-sm-10"><?php echo $this->selectcatlist ?></div>
-						</div>
-					<?php endif; ?>
-
-					<div class="form-group" id="kanynomous-check-name"
-							<?php if ($this->me->userid && !$this->category->allow_anonymous)
-							:
-	?>style="display:none;"<?php
-							endif; ?>>
-						<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
-						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
-						<div class="col-md-10">
-							<input type="text" id="kauthorname" name="authorname"
-								   placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control"
-								   maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required/>
-							<?php
-							$login    = '<a class="btn-link" href="index.php?option=com_users&view=login"> ' . JText::_('JLOGIN') . '</a>';
-							$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
-							echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register); ?>
-						</div>
-					</div>
-
-					<?php if ($this->config->askemail && !$this->me->userid)
-					:
-	?>
-						<div class="form-group">
-							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
+						<div class="form-group" id="kanynomous-check-name"
+						<?php if ($this->me->userid && !$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
+							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="col-md-10">
 								<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							<!-- Encourage guest user to login or register -->

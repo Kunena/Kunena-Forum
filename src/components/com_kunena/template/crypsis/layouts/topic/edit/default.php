@@ -169,15 +169,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
 							</div>
 						<?php endif; ?>
-						<?php
-						if ($this->message->userid)
-:
-	?>
-							<div class="control-group" id="kanynomous-check"
-									<?php if (!$this->category->allow_anonymous)
-	:
-	?>style="display:none;"<?php
-									endif; ?>>
+						<?php if ($this->message->userid) : ?>
+							<div class="control-group" id="kanynomous-check" <?php if (!$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls">

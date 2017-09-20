@@ -24,7 +24,9 @@ if ($config->get('socialshare') == 1)
 {
 	echo "<div>" . $this->subLayout('Widget/Social') . "</div>";
 }
+
 if ($config->get('socialshare') == 2)
+{
 	echo "<div>" . $this->subLayout('Widget/Socialcustomtag') . "</div>";
 }
 

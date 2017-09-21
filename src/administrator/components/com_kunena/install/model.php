@@ -27,7 +27,7 @@ use Joomla\Archive\Archive;
  *
  * @since   1.6
  */
-class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseModel
+class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
 	 * Flag to indicate model state initialization.

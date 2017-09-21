@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
  *
  * @since  2.0
  */
-class KunenaModel extends \Joomla\CMS\MVC\Model\BaseModel
+class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
 	 * @var  string JSite|JAdministrator

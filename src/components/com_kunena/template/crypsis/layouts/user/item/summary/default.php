@@ -41,9 +41,11 @@ if ($this->config->showuserstats)
 			<?php if ($avatar) : ?>
 			<div class="span2">
 				<div class="center"> <?php echo $avatar; ?> </div>
+				<?php if($this->config->user_status): ?>
 				<div class="center">
 					<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
 				</div>
+				<?php endif; ?>
 			</div>
 			<?php endif; ?>
 			<div class="span10">

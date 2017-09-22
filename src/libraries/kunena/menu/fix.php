@@ -70,6 +70,7 @@ abstract class KunenaMenuFix
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function initialize()
 	{
@@ -80,7 +81,7 @@ abstract class KunenaMenuFix
 	/**
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
-	 * @return array
+	 * @return void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -92,7 +93,7 @@ abstract class KunenaMenuFix
 		$query = $db->getQuery(true);
 		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
 		$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
-		$query->select('e.element as component, m.published');
+		$query->select('e.element AS component, m.published');
 		$query->from('#__menu AS m');
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 		$query->where('m.parent_id > 0');
@@ -134,6 +135,97 @@ abstract class KunenaMenuFix
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 */
+	protected static function build()
+	{
+		if (!isset(self::$structure))
+		{
+			self::$structure = array();
+
+			foreach (self::$items as $item)
+			{
+				if (!is_object($item))
+				{
+					continue;
+				}
+
+				$itemid = null;
+				$view   = null;
+
+				if ($item->type == 'alias' && !empty($item->query['Itemid']))
+				{
+					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
+
+					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
+					{
+						$itemid                   = $item->query['Itemid'];
+						self::$aliases[$item->id] = $itemid;
+					}
+					elseif (!$realitem)
+					{
+						$itemid                   = 0;
+						self::$invalid[$item->id] = $itemid;
+					}
+
+					$view = 'alias';
+				}
+				elseif ($item->type == 'component' && $item->component == 'com_kunena')
+				{
+					$itemid = $item->id;
+					$view   = empty($item->query['view']) ? 'legacy' : $item->query['view'];
+				}
+
+				if ($itemid !== null && $view)
+				{
+					$language                                                            = isset($item->language) ? strtolower($item->language) : '*';
+					$home                                                                = self::getHome($item);
+					self::$filtered[$item->id]                                           = $itemid;
+					self::$same[$item->route][$item->id]                                 = $item;
+					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
+
+					if (KunenaRouteLegacy::isLegacy($view))
+					{
+						self::$legacy[$item->id] = $item->id;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param   StdClass $item
+	 *
+	 * @return object
+	 * @since Kunena
+	 */
+	protected static function getHome($item)
+	{
+		if (!$item)
+		{
+			return null;
+		}
+
+		$id = $item->id;
+
+		if (!isset(self::$parent[$id]))
+		{
+			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage'))
+			{
+				self::$parent[$id] = $item;
+			}
+			else
+			{
+				$parent            = isset(self::$items[$item->parent_id]) ? self::$items[$item->parent_id] : null;
+				self::$parent[$id] = self::getHome($parent);
+			}
+		}
+
+		return self::$parent[$id];
+	}
+
+	/**
 	 * @return array
 	 * @since Kunena
 	 */
@@ -151,6 +243,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function fixLegacy()
@@ -258,96 +351,5 @@ abstract class KunenaMenuFix
 	public static function getConflicts()
 	{
 		return array();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected static function build()
-	{
-		if (!isset(self::$structure))
-		{
-			self::$structure = array();
-
-			foreach (self::$items as $item)
-			{
-				if (!is_object($item))
-				{
-					continue;
-				}
-
-				$itemid = null;
-				$view   = null;
-
-				if ($item->type == 'alias' && !empty($item->query['Itemid']))
-				{
-					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
-
-					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
-					{
-						$itemid                   = $item->query['Itemid'];
-						self::$aliases[$item->id] = $itemid;
-					}
-					elseif (!$realitem)
-					{
-						$itemid                   = 0;
-						self::$invalid[$item->id] = $itemid;
-					}
-
-					$view = 'alias';
-				}
-				elseif ($item->type == 'component' && $item->component == 'com_kunena')
-				{
-					$itemid = $item->id;
-					$view   = empty($item->query['view']) ? 'legacy' : $item->query['view'];
-				}
-
-				if ($itemid !== null && $view)
-				{
-					$language                                                            = isset($item->language) ? strtolower($item->language) : '*';
-					$home                                                                = self::getHome($item);
-					self::$filtered[$item->id]                                           = $itemid;
-					self::$same[$item->route][$item->id]                                 = $item;
-					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
-
-					if (KunenaRouteLegacy::isLegacy($view))
-					{
-						self::$legacy[$item->id] = $item->id;
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param   StdClass $item
-	 *
-	 * @return object
-	 * @since Kunena
-	 */
-	protected static function getHome($item)
-	{
-		if (!$item)
-		{
-			return null;
-		}
-
-		$id = $item->id;
-
-		if (!isset(self::$parent[$id]))
-		{
-			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage'))
-			{
-				self::$parent[$id] = $item;
-			}
-			else
-			{
-				$parent            = isset(self::$items[$item->parent_id]) ? self::$items[$item->parent_id] : null;
-				self::$parent[$id] = self::getHome($parent);
-			}
-		}
-
-		return self::$parent[$id];
 	}
 }

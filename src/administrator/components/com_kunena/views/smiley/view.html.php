@@ -42,12 +42,12 @@ class KunenaAdminViewSmiley extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
+		JToolbarHelper::spacer();
+		JToolbarHelper::save('save');
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

@@ -130,7 +130,8 @@ abstract class KunenaError
 	 *
 	 * @param $exception
 	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since 5.0
 	 */
 	public static function displayDatabaseError($exception)

@@ -33,10 +33,11 @@ class pkg_kunena_languagesInstallerScript
 	}
 
 	/**
-	 * @param   string         $type
+	 * @param   string                                    $type
 	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function preflight($type, $parent)

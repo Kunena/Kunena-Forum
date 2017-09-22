@@ -46,7 +46,7 @@ class KunenaAdminViewIcons extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_A_ICONS_MANAGER'));
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_A_ICONS_MANAGER'));
 
 	}
 }

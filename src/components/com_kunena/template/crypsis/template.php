@@ -33,6 +33,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function initialize()

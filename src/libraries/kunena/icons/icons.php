@@ -24,6 +24,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function arrowdown()
@@ -54,6 +55,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function arrowup()
@@ -84,6 +86,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function arrowdownanchor()
@@ -118,6 +121,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function arrowupanchor()
@@ -152,6 +156,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function chevronright()
@@ -182,6 +187,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function members()
@@ -212,6 +218,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function user()
@@ -242,6 +249,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function lock()
@@ -272,6 +280,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function star()
@@ -307,6 +316,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function shield()
@@ -337,6 +347,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function flag()
@@ -372,6 +383,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function poll()
@@ -402,6 +414,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function stats()
@@ -433,6 +446,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function search()
@@ -463,6 +477,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function collapse()
@@ -493,6 +508,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function clock()
@@ -523,6 +539,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function thumbsup()
@@ -553,6 +570,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function cancel()
@@ -583,6 +601,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function ip()
@@ -618,6 +637,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function email()
@@ -653,6 +673,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function bookmark()
@@ -683,6 +704,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function back()
@@ -713,6 +735,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function save()
@@ -743,6 +766,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function edit()
@@ -773,6 +797,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function pencil()
@@ -803,6 +828,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function attach()
@@ -838,6 +864,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function plus()
@@ -870,13 +897,14 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function rss($text = null)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-		$class = ' ' . KunenaTemplate::getInstance()->tooltips();
+		$class         = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{
@@ -901,6 +929,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function upload()
@@ -931,6 +960,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function picture()
@@ -961,6 +991,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function file()
@@ -991,6 +1022,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function delete()
@@ -1021,6 +1053,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function poll_add()
@@ -1055,6 +1088,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function poll_rem()
@@ -1089,6 +1123,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function undo()
@@ -1124,6 +1159,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function shuffle()
@@ -1152,11 +1188,12 @@ class KunenaIcons
 	/**
 	 * Return the category icon
 	 *
-	 * @param      $categoryicon
+	 * @param        $categoryicon
 	 * @param   null $new
 	 * @param   bool $big
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function caticon($categoryicon, $new = null, $big = true)
@@ -1315,6 +1352,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function home()
@@ -1345,6 +1383,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function calendar()
@@ -1375,6 +1414,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function hamburger()
@@ -1405,6 +1445,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function info()
@@ -1435,6 +1476,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function online()
@@ -1465,6 +1507,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function away()
@@ -1495,6 +1538,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function busy()
@@ -1525,6 +1569,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function invisible()
@@ -1555,6 +1600,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function cog()
@@ -1585,6 +1631,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function drawer()
@@ -1615,6 +1662,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function out()
@@ -1645,6 +1693,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function grid()
@@ -1675,6 +1724,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function globe()
@@ -1710,6 +1760,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function location()
@@ -1745,6 +1796,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	static public function pm()

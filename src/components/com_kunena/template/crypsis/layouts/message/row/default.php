@@ -59,10 +59,16 @@ if ($topic->moved_id > 0)
 ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
-	<?php if ($topic->unread) : ?>
+	<?php
+	if ($topic->unread)
+	:
+	?>
 	<td class="hidden-phone span1 center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, true); ?>
-	<?php else :  ?>
+	<?php else
+
+:
+	?>
 	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
 	<?php endif;?>
@@ -73,7 +79,8 @@ if ($topic->moved_id > 0)
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink($topic, 'unread', $this->escape($topic->subject) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
-					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, true);
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, true
+				);
 			}
 			else
 			{
@@ -94,37 +101,49 @@ if ($topic->moved_id > 0)
 				class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?></div>
 		</div>
 		<div class="pull-right">
-			<?php if ($userTopic->favorite) : ?>
+			<?php if ($userTopic->favorite)
+			:
+	?>
 				<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
 			<?php endif; ?>
 
-			<?php if ($userTopic->posts) : ?>
+			<?php if ($userTopic->posts)
+			:
+	?>
 				<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"><?php echo KunenaIcons::flag(); ?></span>
 			<?php endif; ?>
 
-			<?php if ($topic->attachments) : ?>
+			<?php if ($topic->attachments)
+			:
+	?>
 				<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"><?php echo KunenaIcons::attach(); ?></span>
 			<?php endif; ?>
 
-			<?php if ($topic->poll_id) : ?>
+			<?php if ($topic->poll_id)
+			:
+	?>
 				<span <?php echo KunenaTemplate::getInstance()->tooltips(true);?> title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"><?php echo KunenaIcons::poll(); ?></span>
 			<?php endif; ?>
 		</div>
 		<div class="hidden-phone">
-		    <span class="ktopic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,KunenaTemplate::getInstance()->tooltips())); ?></span>
-            <br>
-            <?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
-			<?php if ($config->post_dateformat != 'none') : ?>
+			<span class="ktopic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(), null, null, KunenaTemplate::getInstance()->tooltips())); ?></span>
+			<br>
+			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
+			<?php if ($config->post_dateformat != 'none')
+			:
+	?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-            <?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+			<?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<?php endif; ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
-				 * <span class="label label-info">
-				 * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-				 * </span>    */ ?>
-				<?php if ($topic->locked != 0) : ?>
+					   * <span class="label label-info">
+					   * <?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+					   * </span>    */ ?>
+				<?php if ($topic->locked != 0)
+				:
+	?>
 					<span class="label label-important">
 						<?php echo KunenaIcons::lock(); ?><?php echo JText::_('COM_KUNENA_LOCKED'); ?>
 					</span>
@@ -141,7 +160,9 @@ if ($topic->moved_id > 0)
 	<td class="span2">
 		<div class="container-fluid">
 			<div class="row-fluid">
-			<?php if ($config->avataroncat) : ?>
+			<?php if ($config->avataroncat)
+			:
+	?>
 				<div class="span3">
 					<?php echo $topic->getLastPostAuthor()->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 				</div>
@@ -158,7 +179,9 @@ if ($topic->moved_id > 0)
 		</div>
 	</td>
 
-	<?php if (!empty($this->checkbox)) : ?>
+	<?php if (!empty($this->checkbox))
+	:
+	?>
 		<td class="span1 center">
 			<input class="kcheck" type="checkbox" name="posts[<?php echo $message->id ?>]" value="1"/>
 		</td>

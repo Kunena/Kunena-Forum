@@ -18,22 +18,35 @@ $status         = $config->user_status;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<?php if ($this->me->getStatus() == 0 && $status) : ?>
+			<?php if ($this->me->getStatus() == 0 && $status)
+			:
+	?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 1 && $status) : ?>
+			<?php elseif ($this->me->getStatus() == 1 && $status)
+:
+	?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 2 && $status) : ?>
+			<?php elseif ($this->me->getStatus() == 2 && $status)
+:
+	?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 3 && $status) : ?>
+			<?php elseif ($this->me->getStatus() == 3 && $status)
+:
+	?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
-			<?php else : ?>
+			<?php else
+
+:
+	?>
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>
 		</a>
 
 		<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
-			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) :?>
+			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
+			:
+?>
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
@@ -47,7 +60,9 @@ $status         = $config->user_status;
 			</div>
 			<div class="divider"></div>
 
-			<?php if ($status) : ?>
+			<?php if ($status)
+			:
+	?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
 					<div>
 						<input id="status-online" class="hide" type="radio" value="0" name="status"/>
@@ -73,7 +88,8 @@ $status         = $config->user_status;
 					<div>
 						<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
 						<label for="status-busy" class="btn btn-link">
-							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . \Joomla\CMS\Session\Session::getFormToken() . '=1');; ?>"
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . \Joomla\CMS\Session\Session::getFormToken() . '=1');
+							; ?>"
 							   class="btn btn-link">
 								<?php echo KunenaIcons::busy(); ?>
 								<?php echo JText::_('COM_KUNENA_BUSY') ?>
@@ -106,7 +122,9 @@ $status         = $config->user_status;
 			</div>
 			<div class="divider"></div>
 
-			<?php if (!empty($this->announcementsUrl)) : ?>
+			<?php if (!empty($this->announcementsUrl))
+			:
+	?>
 				<div id="announcement">
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
 						<?php echo KunenaIcons::pencil(); ?>
@@ -115,7 +133,9 @@ $status         = $config->user_status;
 				</div>
 			<?php endif; ?>
 
-			<?php if (!empty($this->pm_link)) : ?>
+			<?php if (!empty($this->pm_link))
+			:
+	?>
 				<div id="mail">
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
 						<?php echo KunenaIcons::email(); ?>
@@ -132,7 +152,9 @@ $status         = $config->user_status;
 			</div>
 			<div class="divider"></div>
 
-			<?php if ($markAllReadUrl) : ?>
+			<?php if ($markAllReadUrl)
+			:
+	?>
 				<div id="allread">
 					<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
 						<?php echo KunenaIcons::drawer(); ?>
@@ -165,12 +187,12 @@ from the parent forcing the dropsown to take over z-index calculation */
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form" class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')
-		->set('id', 'statusTextModal')
-		->set('name', 'status_text')
-		->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
-		->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
-		->set('data', $this->me->status_text)
-		->set('form', 'statusText-form'); ?>
+	->set('id', 'statusTextModal')
+	->set('name', 'status_text')
+	->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
+	->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
+	->set('data', $this->me->status_text)
+	->set('form', 'statusText-form'); ?>
 	<input type="hidden" name="view" value="user"/>
 	<input type="hidden" name="task" value="statustext"/>
 	<?php echo JHtml::_('form.token'); ?>

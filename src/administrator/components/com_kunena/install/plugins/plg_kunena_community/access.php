@@ -75,8 +75,9 @@ class KunenaAccessCommunity
 	 * @param   string $accesstype Access type.
 	 * @param   int    $id         Group id.
 	 *
-	 * @return string|null
+	 * @return boolean|null|string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -96,6 +97,37 @@ class KunenaAccessCommunity
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function loadGroups()
+	{
+		if ($this->groups === false)
+		{
+			$db    = \Joomla\CMS\Factory::getDBO();
+			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
+				FROM #__community_groups
+				ORDER BY categoryid, name";
+			$db->setQuery($query);
+
+			try
+			{
+				$this->groups = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			if ($this->categories !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
+	}
+
+	/**
 	 * Get HTML list of the available groups
 	 *
 	 * @param   string $accesstype Access type.
@@ -103,6 +135,7 @@ class KunenaAccessCommunity
 	 *
 	 * @return array
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -136,6 +169,39 @@ class KunenaAccessCommunity
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function loadCategories()
+	{
+		if ($this->categories === false)
+		{
+			$db    = \Joomla\CMS\Factory::getDBO();
+			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
+				FROM #__community_groups_category
+				ORDER BY parent, name";
+			$db->setQuery($query);
+
+			try
+			{
+				$this->categories = (array) $db->loadObjectList('id');
+			}
+			catch (RuntimeException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+
+			$this->tree = new KunenaTree($this->categories);
+
+			if ($this->groups !== false)
+			{
+				$this->tree->add($this->groups);
+			}
+		}
+	}
+
+	/**
 	 * Load moderators and administrators for listed categories.
 	 *
 	 * This function is used to add category administrators and moderators to listed categories. In addition
@@ -146,6 +212,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadCategoryRoles(array $categories = null)
@@ -181,6 +248,7 @@ class KunenaAccessCommunity
 	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function authoriseCategories($userid, array &$categories)
@@ -220,6 +288,7 @@ class KunenaAccessCommunity
 	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
@@ -249,67 +318,5 @@ class KunenaAccessCommunity
 		}
 
 		return array($allow, $deny);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadCategories()
-	{
-		if ($this->categories === false)
-		{
-			$db    = \Joomla\CMS\Factory::getDBO();
-			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
-				FROM #__community_groups_category
-				ORDER BY parent, name";
-			$db->setQuery($query);
-
-			try
-			{
-				$this->categories = (array) $db->loadObjectList('id');
-			}
-			catch (RuntimeException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-
-			$this->tree = new KunenaTree($this->categories);
-
-			if ($this->groups !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function loadGroups()
-	{
-		if ($this->groups === false)
-		{
-			$db    = \Joomla\CMS\Factory::getDBO();
-			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
-				FROM #__community_groups
-				ORDER BY categoryid, name";
-			$db->setQuery($query);
-
-			try
-			{
-				$this->groups = (array) $db->loadObjectList('id');
-			}
-			catch (RuntimeException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-
-			if ($this->categories !== false)
-			{
-				$this->tree->add($this->groups);
-			}
-		}
 	}
 }

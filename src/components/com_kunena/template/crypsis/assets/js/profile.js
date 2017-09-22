@@ -13,11 +13,10 @@ jQuery(document).ready(function () {
 			orientation: "top auto"
 		});
 	}
-	
+
 	var avatartab = jQuery.parseJSON(Joomla.getOptions('com_kunena.avatartab'));
-	  
-	if (avatartab)            
-	{
+
+	if (avatartab) {
 		jQuery('.nav-tabs a[href=#editavatar]').tab('show');
 	}
 });

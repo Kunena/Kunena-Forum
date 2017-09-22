@@ -40,12 +40,14 @@ defined('_JEXEC') or die;
 
 	<tbody>
 	<?php
-	if (!empty($this->banHistory)) :
+	if (!empty($this->banHistory))
+	:
 		$i = count($this->banHistory);
 
 		// @var KunenaUserBan $banInfo
 
-		foreach ($this->banHistory as $banInfo) :
+		foreach ($this->banHistory as $banInfo)
+		:
 			?>
 			<tr>
 				<td class="center">
@@ -78,7 +80,9 @@ defined('_JEXEC') or die;
 				</td>
 			</tr>
 
-			<?php if ($banInfo->reason_public) : ?>
+			<?php if ($banInfo->reason_public)
+			:
+	?>
 			<tr>
 				<td></td>
 				<td>
@@ -88,9 +92,11 @@ defined('_JEXEC') or die;
 					<?php echo KunenaHtmlParser::parseText($banInfo->reason_public); ?>
 				</td>
 			</tr>
-		<?php endif; ?>
+			<?php endif; ?>
 
-			<?php if ($this->me->isModerator() && $banInfo->reason_private) : ?>
+			<?php if ($this->me->isModerator() && $banInfo->reason_private)
+			:
+	?>
 			<tr>
 				<td></td>
 				<td>
@@ -99,19 +105,21 @@ defined('_JEXEC') or die;
 					<?php echo KunenaHtmlParser::parseText($banInfo->reason_private); ?>
 				</td>
 			</tr>
-		<?php endif; ?>
+			<?php endif; ?>
 
 			<?php
 			if ($this->me->isModerator() && !empty($banInfo->comments))
 			{
-				foreach ($banInfo->comments as $comment) :
+				foreach ($banInfo->comments as $comment)
+				:
 					?>
 					<tr>
 						<td></td>
 						<td>
 							<strong>
 								<?php echo JText::sprintf(
-									'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink());
+									'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink()
+								);
 								?>
 							</strong>
 						</td>
@@ -127,7 +135,8 @@ defined('_JEXEC') or die;
 
 		<?php endforeach; ?>
 
-	<?php else : ?>
+	<?php else:
+	?>
 
 		<tr>
 			<td colspan="6">

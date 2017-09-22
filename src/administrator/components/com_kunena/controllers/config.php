@@ -37,6 +37,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
@@ -51,7 +52,9 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws null
 	 */
 	public function apply()
 	{
@@ -65,7 +68,9 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws null
 	 */
 	public function save($url = null)
 	{
@@ -123,7 +128,9 @@ class KunenaAdminControllerConfig extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws null
 	 */
 	public function setdefault()
 	{

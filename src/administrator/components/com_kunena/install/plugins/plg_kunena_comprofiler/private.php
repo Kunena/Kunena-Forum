@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use \CBLib\Application\Application;
+
 /**
  * Class KunenaPrivateComprofiler
  * @since Kunena
@@ -38,16 +40,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return string|void
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-	}
-
-	/**
-	 * @param $userid
-	 *
 	 * @return string
 	 * @since Kunena
 	 */
@@ -55,7 +47,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	{
 		global $_CB_framework, $_CB_PMS;
 
-		$myid = $_CB_framework->myId();
+		$myid = Application::MyUser()->getUserId();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($myid == 0 || $userid == 0 || $userid == $myid)
@@ -63,7 +55,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return '';
 		}
 
-		outputCbTemplate($_CB_framework->getUi());
+		outputCbTemplate(Application::Cms()->getClientId());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
 		$url         = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
@@ -97,7 +89,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	{
 		global $_CB_framework, $_CB_PMS;
 
-		$myid = $_CB_framework->myId();
+		$myid = Application::MyUser()->getUserId();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($myid == 0 || $userid == 0)
@@ -119,6 +111,55 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		}
 
 		return $html;
+	}
+
+	/**
+	 * @return null|string
+	 * @since Kunena
+	 */
+	public function getInboxURL()
+	{
+		global $_CB_framework;
+
+		$userid = $this->getCBUserid();
+
+		if ($userid === null)
+		{
+			return null;
+		}
+
+		return $_CB_framework->userProfileUrl($userid);
+	}
+
+	/**
+	 * @return integer|null
+	 * @since Kunena
+	 */
+	protected function getCBUserid()
+	{
+		global $_CB_framework;
+
+		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+
+		if (file_exists($cbpath))
+		{
+			require_once $cbpath;
+		}
+		else
+		{
+			return null;
+		}
+
+		$userid = Application::MyUser()->getUserId();
+
+		$cbUser = CBuser::getInstance((int) $userid);
+
+		if ($cbUser === null)
+		{
+			return null;
+		}
+
+		return $userid;
 	}
 
 	/**
@@ -147,51 +188,12 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @return null
+	 * @param $userid
+	 *
+	 * @return string|void
 	 * @since Kunena
 	 */
-	protected function getCBUserid()
+	protected function getURL($userid)
 	{
-		global $_CB_framework;
-
-		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-
-		if (file_exists($cbpath))
-		{
-			require_once $cbpath;
-		}
-		else
-		{
-			return null;
-		}
-
-		$userid = $_CB_framework->myId();
-
-		$cbUser = CBuser::getInstance((int) $userid);
-
-		if ($cbUser === null)
-		{
-			return null;
-		}
-
-		return $userid;
-	}
-
-	/**
-	 * @return null|string
-	 * @since Kunena
-	 */
-	public function getInboxURL()
-	{
-		global $_CB_framework;
-
-		$userid = $this->getCBUserid();
-
-		if ($userid === null)
-		{
-			return null;
-		}
-
-		return $_CB_framework->userProfileUrl($userid);
 	}
 }

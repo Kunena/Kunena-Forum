@@ -20,6 +20,17 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 {
 	/**
+	 *
+	 * @since Kunena
+	 */
+	const ANY = 0;
+	/**
+	 *
+	 * @since Kunena
+	 */
+	const ACTIVE = 1;
+
+	/**
 	 * @var null
 	 * @since Kunena
 	 */
@@ -98,17 +109,6 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	public $params = null;
 
 	/**
-	 *
-	 * @since Kunena
-	 */
-	const ANY = 0;
-	/**
-	 *
-	 * @since Kunena
-	 */
-	const ACTIVE = 1;
-
-	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena
@@ -123,6 +123,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
@@ -172,10 +173,33 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	}
 
 	/**
+	 * @param   mixed $data
+	 * @param   array $ignore
+	 *
+	 * @return boolean|void
+	 * @since Kunena
+	 */
+	public function bind($data, $ignore = array())
+	{
+		if (isset($data['comments']))
+		{
+			$data['comments'] = !is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
+		}
+
+		if (isset($data['params']))
+		{
+			$data['params'] = !is_string($data['params']) ? json_encode($data['params']) : $data['params'];
+		}
+
+		parent::bind($data, $ignore);
+	}
+
+	/**
 	 * @param       $ip
 	 * @param   int $mode
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
@@ -241,27 +265,5 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 		}
 
 		return ($this->getError() == '');
-	}
-
-	/**
-	 * @param   mixed $data
-	 * @param   array $ignore
-	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 */
-	public function bind($data, $ignore = array())
-	{
-		if (isset($data['comments']))
-		{
-			$data['comments'] = !is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
-		}
-
-		if (isset($data['params']))
-		{
-			$data['params'] = !is_string($data['params']) ? json_encode($data['params']) : $data['params'];
-		}
-
-		parent::bind($data, $ignore);
 	}
 }

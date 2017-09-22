@@ -49,55 +49,6 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 *
-	 * @since Kunena
-	 */
-	function displayPurge()
-	{
-		$this->purgeitems    = $this->get('PurgeItems');
-		$this->md5Calculated = $this->get('Md5');
-
-		$this->setToolBarPurge();
-		$this->display();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarDefault()
-	{
-		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-		JToolBarHelper::spacer();
-
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolBarPurge()
-	{
-		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
-
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 *
 	 * @return array
 	 * @since Kunena
 	 */
@@ -139,5 +90,54 @@ class KunenaAdminViewTrash extends KunenaView
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function setToolBarDefault()
+	{
+		// Set the titlebar text
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+		JToolbarHelper::divider();
+		JToolbarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
+		JToolbarHelper::spacer();
+
+		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	function displayPurge()
+	{
+		$this->purgeitems    = $this->get('PurgeItems');
+		$this->md5Calculated = $this->get('Md5');
+
+		$this->setToolBarPurge();
+		$this->display();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function setToolBarPurge()
+	{
+		// Set the titlebar text
+		JToolbarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel();
+		JToolbarHelper::spacer();
+
+		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

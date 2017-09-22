@@ -24,9 +24,9 @@ defined('_JEXEC') or die();
 		<button id="kunena-toggle" class="btn" style="float: left;"><?php echo JText::_('COM_KUNENA_INSTALL_DETAILS'); ?></button>
 		<div class="pull-right">
 			<button id="kunena-component" class="btn kunena-close"
-			        disabled="disabled"><?php echo JText::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
+					disabled="disabled"><?php echo JText::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
 			<button id="kunena-installer" class="btn kunena-close" disabled="disabled" data-dismiss="modal"
-			        aria-hidden="true"><?php echo JText::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
+					aria-hidden="true"><?php echo JText::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
 		</div>
 		<div id="kunena-container" class="hidden">
 			<p class="clr clearfix"></p>

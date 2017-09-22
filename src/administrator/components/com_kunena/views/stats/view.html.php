@@ -22,10 +22,12 @@ class KunenaAdminViewStats extends KunenaView
 	 *
 	 * @internal param null $tpl
 	 * @since    Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	function displayDefault()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
+		JToolbarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
 
 		$document = \Joomla\CMS\Factory::getDocument();
 		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);

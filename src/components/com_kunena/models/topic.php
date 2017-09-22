@@ -45,6 +45,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -127,6 +128,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumTopic
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTopic()
@@ -179,6 +181,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array|boolean|KunenaForumMessage[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMessages()
@@ -260,6 +263,7 @@ class KunenaModelTopic extends KunenaModel
 	 * @param   array $indent
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
@@ -346,6 +350,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTotal()
@@ -355,6 +360,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMyVotes()
@@ -364,6 +370,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModerators()
@@ -376,6 +383,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPoll()
 	{
@@ -384,6 +392,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPollUserCount()
@@ -393,6 +402,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPollUsers()

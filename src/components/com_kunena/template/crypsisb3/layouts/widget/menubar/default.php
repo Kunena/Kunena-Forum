@@ -14,7 +14,10 @@ defined('_JEXEC') or die;
 	<div class="navbar-inner">
 		<div class="visible-lg">
 			<?php echo $this->subRequest('Widget/Menu'); ?>
-			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu')) :?>
+			<?php
+			if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
+			:
+?>
 				<?php echo $this->subRequest('Widget/Login'); ?>
 			<?php endif; ?>
 		</div>
@@ -23,7 +26,9 @@ defined('_JEXEC') or die;
 				<div><a class="btn btn-link" data-toggle="collapse" data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?> </a></div>
 				<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
 			</div>
-			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu')) :?>
+			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
+			:
+?>
 				<?php echo $this->subRequest('Widget/Login'); ?>
 			<?php endif; ?>
 		</div>

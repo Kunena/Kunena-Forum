@@ -30,6 +30,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())
@@ -43,7 +44,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function diagnostics()
 	{
@@ -55,8 +58,8 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$fix    = \Joomla\CMS\Factory::getApplication()->input->getCmd('fix');
-		$delete = \Joomla\CMS\Factory::getApplication()->input->getCmd('delete');
+		$fix    = $this->app->input->getCmd('fix');
+		$delete = $this->app->input->getCmd('delete');
 
 		if ($fix)
 		{
@@ -88,6 +91,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function prune()
 	{
@@ -99,7 +103,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$ids = \Joomla\CMS\Factory::getApplication()->input->get('prune_forum', array(), 'post', 'array');
+		$ids = $this->app->input->get('prune_forum', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -113,15 +117,15 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		// Convert days to seconds for timestamp functions...
-		$prune_days = \Joomla\CMS\Factory::getApplication()->input->getInt('prune_days', 36500);
+		$prune_days = $this->app->input->getInt('prune_days', 36500);
 		$prune_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($prune_days * 86400);
 
-		$trashdelete = \Joomla\CMS\Factory::getApplication()->input->getInt('trashdelete', 0);
+		$trashdelete = $this->app->input->getInt('trashdelete', 0);
 
 		$where   = array();
 		$where[] = " AND tt.last_post_time < {$prune_date}";
 
-		$controloptions = \Joomla\CMS\Factory::getApplication()->input->getString('controloptions', 0);
+		$controloptions = $this->app->input->getString('controloptions', 0);
 
 		if ($controloptions == 'answered')
 		{
@@ -161,7 +165,7 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		// Keep sticky topics?
-		if (\Joomla\CMS\Factory::getApplication()->input->getInt('keepsticky', 1))
+		if ($this->app->input->getInt('keepsticky', 1))
 		{
 			$where[] = ' AND tt.ordering=0';
 		}
@@ -207,14 +211,16 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function syncusers()
 	{
-		$useradd     = \Joomla\CMS\Factory::getApplication()->input->getBool('useradd', 0);
-		$userdel     = \Joomla\CMS\Factory::getApplication()->input->getBool('userdel', 0);
-		$userrename  = \Joomla\CMS\Factory::getApplication()->input->getBool('userrename', 0);
-		$userdellife = \Joomla\CMS\Factory::getApplication()->input->getBool('userdellife', 0);
+		$useradd     = $this->app->input->getBool('useradd', 0);
+		$userdel     = $this->app->input->getBool('userdel', 0);
+		$userrename  = $this->app->input->getBool('userrename', 0);
+		$userdellife = $this->app->input->getBool('userdellife', 0);
 
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -242,7 +248,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -265,7 +271,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -295,7 +301,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -319,7 +325,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -340,7 +346,7 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -356,7 +362,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function recount()
 	{
@@ -428,6 +436,43 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Set proper response for both AJAX and traditional calls.
+	 *
+	 * @param   $response
+	 * @param   $ajax
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 */
+	protected function setResponse($response, $ajax)
+	{
+		if (!$ajax)
+		{
+			if (!empty($response['error']))
+			{
+				$this->setMessage($response['error'], 'error');
+			}
+
+			if (!empty($response['href']))
+			{
+				$this->setRedirect($response['href']);
+			}
+		}
+		else
+		{
+			while (@ob_end_clean())
+			{
+			}
+
+			header('Content-type: application/json');
+			echo json_encode($response);
+			flush();
+			jexit();
+		}
+	}
+
+	/**
 	 * Perform recount on statistics in smaller chunks.
 	 *
 	 * @return void
@@ -435,6 +480,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @throws Exception
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function dorecount()
 	{
@@ -477,7 +523,7 @@ class KunenaAdminControllerTools extends KunenaController
 							KunenaAttachmentHelper::cleanup();
 							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
-							$msg = JText::sprintf(
+							$msg          = JText::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
@@ -489,7 +535,7 @@ class KunenaAdminControllerTools extends KunenaController
 							// Update user's topic statistics
 							KunenaForumTopicUserHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
-							$msg = JText::sprintf(
+							$msg          = JText::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
@@ -590,207 +636,6 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 * Set proper response for both AJAX and traditional calls.
-	 *
-	 * @param   $response
-	 * @param   $ajax
-	 *
-	 * @return void
-	 *
-	 * @since    2.0
-	 */
-	protected function setResponse($response, $ajax)
-	{
-		if (!$ajax)
-		{
-			if (!empty($response['error']))
-			{
-				$this->setMessage($response['error'], 'error');
-			}
-
-			if (!empty($response['href']))
-			{
-				$this->setRedirect($response['href']);
-			}
-		}
-		else
-		{
-			while (@ob_end_clean())
-			{
-			}
-
-			header('Content-type: application/json');
-			echo json_encode($response);
-			flush();
-			jexit();
-		}
-	}
-
-	/**
-	 * Trash Menu
-	 *
-	 * @return void
-	 *
-	 * @since    2.0
-	 */
-	public function trashmenu()
-	{
-		require_once KPATH_ADMIN . '/install/model.php';
-
-		$installer = new KunenaModelInstall;
-		$installer->deleteMenu();
-		$installer->createMenu();
-
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_MENU_CREATED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Fix Legacy
-	 *
-	 * @return void
-	 *
-	 * @since    2.0
-	 */
-	public function fixlegacy()
-	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		$legacy = KunenaMenuFix::getLegacy();
-		$errors = KunenaMenuFix::fixLegacy();
-
-		if ($errors)
-		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0]), 'notice');
-		}
-		else
-		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy)));
-		}
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Purge restatements
-	 *
-	 * @return  void
-	 *
-	 * @since    2.0
-	 */
-	public function purgeReStatements()
-	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		$re_string = \Joomla\CMS\Factory::getApplication()->input->getString('re_string', null);
-
-		if ($re_string != null)
-		{
-			$db    = \Joomla\CMS\Factory::getDbo();
-			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			$count = $db->getAffectedRows();
-
-			if ($count > 0)
-			{
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $re_string));
-				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-			}
-			else
-			{
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $re_string));
-				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
-	}
-
-	/**
-	 * Clean ip
-	 *
-	 * @throws Exception
-	 *
-	 * @return void
-	 *
-	 * @since    2.0
-	 */
-	public function cleanupIP()
-	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		$cleanup_days = \Joomla\CMS\Factory::getApplication()->input->getInt('cleanup_ip_days', 365);
-		$where        = '';
-
-		if ($cleanup_days)
-		{
-			$clean_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($cleanup_days * 86400);
-			$where      = 'WHERE time < ' . $clean_date;
-		}
-
-		$db    = \Joomla\CMS\Factory::getDbo();
-		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (RuntimeException $e)
-		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-			return;
-		}
-
-		$count = $db->getAffectedRows();
-
-		if ($count > 0)
-		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
-		else
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
-	}
-
-	/**
 	 * Check timeout
 	 *
 	 * @param   bool $stop stop
@@ -826,11 +671,184 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Trash Menu
+	 *
+	 * @return void
+	 *
+	 * @throws Exception
+	 * @since    2.0
+	 * @throws null
+	 */
+	public function trashmenu()
+	{
+		require_once KPATH_ADMIN . '/install/model.php';
+
+		$installer = new KunenaModelInstall;
+		$installer->deleteMenu();
+		$installer->createMenu();
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_MENU_CREATED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Fix Legacy
+	 *
+	 * @return void
+	 *
+	 * @throws Exception
+	 * @since    2.0
+	 * @throws null
+	 */
+	public function fixlegacy()
+	{
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$legacy = KunenaMenuFix::getLegacy();
+		$errors = KunenaMenuFix::fixLegacy();
+
+		if ($errors)
+		{
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0]), 'notice');
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy)));
+		}
+
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Purge restatements
+	 *
+	 * @return  void
+	 *
+	 * @throws Exception
+	 * @since    2.0
+	 * @throws null
+	 */
+	public function purgeReStatements()
+	{
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$re_string = $this->app->input->getString('re_string', null);
+
+		if ($re_string != null)
+		{
+			$db    = \Joomla\CMS\Factory::getDbo();
+			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				$this->app->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			$count = $db->getAffectedRows();
+
+			if ($count > 0)
+			{
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $re_string));
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
+			else
+			{
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $re_string));
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
+	/**
+	 * Clean ip
+	 *
+	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 * @throws null
+	 */
+	public function cleanupIP()
+	{
+		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$cleanup_days = $this->app->input->getInt('cleanup_ip_days', 365);
+		$where        = '';
+
+		if ($cleanup_days)
+		{
+			$clean_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($cleanup_days * 86400);
+			$where      = 'WHERE time < ' . $clean_date;
+		}
+
+		$db    = \Joomla\CMS\Factory::getDbo();
+		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (RuntimeException $e)
+		{
+			$this->app->enqueueMessage($e->getMessage());
+
+			return;
+		}
+
+		$count = $db->getAffectedRows();
+
+		if ($count > 0)
+		{
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
+	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{
@@ -842,7 +860,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function uninstall()
 	{
@@ -894,7 +914,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function systemreport()
 	{

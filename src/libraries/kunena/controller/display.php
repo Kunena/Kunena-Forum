@@ -17,12 +17,6 @@ defined('_JEXEC') or die();
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
-	 * @var string
-	 * @since Kunena
-	 */
-	protected $name = 'Empty';
-
-	/**
 	 * @var null
 	 * @since Kunena
 	 */
@@ -41,14 +35,79 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $config;
 
 	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	protected $name = 'Empty';
+
+	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $primary = false;
 
 	/**
+	 * @internal
+	 * @since Kunena
+	 */
+	public function setPrimary()
+	{
+		$this->primary = true;
+
+		return $this;
+	}
+
+	/**
+	 * Return view as a string.
+	 *
+	 * @return string
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function __toString()
+	{
+		try
+		{
+			$output = $this->execute();
+		}
+		catch (KunenaExceptionAuthorise $e)
+		{
+			if (!$this->primary)
+			{
+				return (string) KunenaLayout::factory('Empty');
+			}
+
+			$document = \Joomla\CMS\Factory::getDocument();
+			$document->setTitle($e->getResponseStatus());
+			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $e->getResponseStatus())
+				->set('body', $e->getMessage());
+		}
+		catch (Exception $e)
+		{
+			if (!$this->primary)
+			{
+				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
+			}
+
+			$title    = '500 Internal Server Error';
+			$document = \Joomla\CMS\Factory::getDocument();
+			$document->setTitle($title);
+			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $title, true);
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $title)
+				->set('body', $e->getMessage());
+		}
+
+		return (string) $output;
+	}
+
+	/**
 	 * @see   KunenaControllerBase::execute()
 	 * @since Kunena
+	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
+	 * @throws Exception
 	 */
 	public function execute()
 	{
@@ -91,9 +150,26 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * Executed before display.
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function before()
+	{
+		$this->layout = $this->input->getCmd('layout', 'default');
+		$this->config = KunenaConfig::getInstance();
+
+		if ($this->primary)
+		{
+			$this->document = \Joomla\CMS\Factory::getDocument();
+		}
+	}
+
+	/**
 	 * Initialize and display the layout.
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function display()
@@ -107,29 +183,25 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @internal
+	 * Returns an associative array of public object properties.
+	 *
+	 * @return  array
 	 * @since Kunena
 	 */
-	public function setPrimary()
+	public function getProperties()
 	{
-		$this->primary = true;
+		$properties = (array) $this;
+		$list       = array();
 
-		return $this;
-	}
-
-	/**
-	 * Executed before display.
-	 * @since Kunena
-	 */
-	protected function before()
-	{
-		$this->layout = $this->input->getCmd('layout', 'default');
-		$this->config = KunenaConfig::getInstance();
-
-		if ($this->primary)
+		foreach ($properties as $property => $value)
 		{
-			$this->document = \Joomla\CMS\Factory::getDocument();
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
 		}
+
+		return $list;
 	}
 
 	/**
@@ -151,51 +223,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function prepareDocument()
 	{
 
-	}
-
-	/**
-	 * Return view as a string.
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function __toString()
-	{
-		try
-		{
-			$output = $this->execute();
-		}
-		catch (KunenaExceptionAuthorise $e)
-		{
-			if (!$this->primary)
-			{
-				return (string) KunenaLayout::factory('Empty');
-			}
-
-			$document = \Joomla\CMS\Factory::getDocument();
-			$document->setTitle($e->getResponseStatus());
-			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
-			$output = KunenaLayout::factory('Misc/Default', 'pages')
-				->set('header', $e->getResponseStatus())
-				->set('body', $e->getMessage());
-		}
-		catch (Exception $e)
-		{
-			if (!$this->primary)
-			{
-				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage($e) : '');
-			}
-
-			$title    = '500 Internal Server Error';
-			$document = \Joomla\CMS\Factory::getDocument();
-			$document->setTitle($title);
-			\Joomla\CMS\Factory::getApplication()->setHeader('Status', $title, true);
-			$output = KunenaLayout::factory('Misc/Default', 'pages')
-				->set('header', $title)
-				->set('body', $e->getMessage());
-		}
-
-		return (string) $output;
 	}
 
 	/**
@@ -229,28 +256,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->layout = $layout;
 
 		return $this;
-	}
-
-	/**
-	 * Returns an associative array of public object properties.
-	 *
-	 * @return  array
-	 * @since Kunena
-	 */
-	public function getProperties()
-	{
-		$properties = (array) $this;
-		$list       = array();
-
-		foreach ($properties as $property => $value)
-		{
-			if ($property[0] != "\0")
-			{
-				$list[$property] = $value;
-			}
-		}
-
-		return $list;
 	}
 
 	/**
@@ -303,6 +308,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param        $title
 	 * @param   bool $replace
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function setTitle($title, $replace = false)

@@ -220,6 +220,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getTopics()
@@ -270,6 +272,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getRecentTopics()
 	{
@@ -361,6 +365,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getUserTopics()
 	{
@@ -420,6 +426,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function getPosts()
 	{
@@ -474,6 +482,7 @@ class KunenaModelTopics extends KunenaModel
 	 * @param   array $userlist
 	 * @param   array $postlist
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
@@ -509,6 +518,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getMessages()
@@ -524,6 +535,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return integer
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function getTotal()
 	{
@@ -538,6 +551,8 @@ class KunenaModelTopics extends KunenaModel
 	/**
 	 * @return array|null
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function getTopicActions()
 	{
@@ -550,27 +565,27 @@ class KunenaModelTopics extends KunenaModel
 
 		foreach ($this->topics as $topic)
 		{
-			if (!$delete && $topic->authorise('delete'))
+			if (!$delete && $topic->isAuthorised('delete'))
 			{
 				$delete = true;
 			}
 
-			if (!$approve && $topic->authorise('approve'))
+			if (!$approve && $topic->isAuthorised('approve'))
 			{
 				$approve = true;
 			}
 
-			if (!$undelete && $topic->authorise('undelete'))
+			if (!$undelete && $topic->isAuthorised('undelete'))
 			{
 				$undelete = true;
 			}
 
-			if (!$move && $topic->authorise('move'))
+			if (!$move && $topic->isAuthorised('move'))
 			{
 				$move = $this->actionMove = true;
 			}
 
-			if (!$permdelete && $topic->authorise('permdelete'))
+			if (!$permdelete && $topic->isAuthorised('permdelete'))
 			{
 				$permdelete = true;
 			}
@@ -623,6 +638,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return array|null
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getPostActions()
@@ -636,22 +653,22 @@ class KunenaModelTopics extends KunenaModel
 
 		foreach ($this->messages as $message)
 		{
-			if (!$delete && $message->authorise('delete'))
+			if (!$delete && $message->isAuthorised('delete'))
 			{
 				$delete = true;
 			}
 
-			if (!$approve && $message->authorise('approve'))
+			if (!$approve && $message->isAuthorised('approve'))
 			{
 				$approve = true;
 			}
 
-			if (!$undelete && $message->authorise('undelete'))
+			if (!$undelete && $message->isAuthorised('undelete'))
 			{
 				$undelete = true;
 			}
 
-			if (!$permdelete && $message->authorise('permdelete'))
+			if (!$permdelete && $message->isAuthorised('permdelete'))
 			{
 				$permdelete = true;
 			}

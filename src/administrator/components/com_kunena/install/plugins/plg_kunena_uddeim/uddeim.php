@@ -21,6 +21,7 @@ class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object $subject
 	 * @param   array  $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)

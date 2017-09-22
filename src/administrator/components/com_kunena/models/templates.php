@@ -36,45 +36,13 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * Method to auto-populate the model state.
-	 * @since Kunena
-	 */
-	protected function populateState()
-	{
-		$this->context = 'com_kunena.admin.templates';
-
-		$app = \Joomla\CMS\Factory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-
-		if ($layout)
-		{
-			$this->context .= '.' . $layout;
-		}
-
-		// Edit state information
-		$value = $this->getUserStateFromRequest($this->context . '.edit', 'name', '', 'cmd');
-		$this->setState('template', $value);
-
-		// List state information
-		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
-		$this->setState('list.limit', $value);
-
-		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
-		$this->setState('list.ordering', $value);
-
-		$value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
-		$this->setState('list.start', $value);
-	}
-
-	/**
 	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array $data
 	 * @param   bool  $loadData
 	 *
 	 * @return boolean|mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getForm($data = array(), $loadData = true)
@@ -95,26 +63,9 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
-	 * @since Kunena
-	 */
-	protected function loadFormData()
-	{
-		// Check the session for previously entered form data.
-		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
-
-		if (empty($data))
-		{
-			$template = $this->getState('template');
-			$data     = KunenaTemplate::getInstance($template)->params->toArray();
-		}
-
-		return $data;
-	}
-
-	/**
 	 * @return array
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getTemplates()
@@ -139,24 +90,6 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return object
-	 * @since Kunena
-	 */
-	function getTotal()
-	{
-		return $this->getState('list.total');
-	}
-
-	/**
-	 * @return object
-	 * @since Kunena
-	 */
-	function getStart()
-	{
-		return $this->getState('list.start');
-	}
-
-	/**
 	 * @return boolean|stdClass
 	 * @since Kunena
 	 */
@@ -175,7 +108,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return null|string
+	 * @return boolean|null|string
 	 * @since Kunena
 	 */
 	function getFileLessParsed()
@@ -195,7 +128,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return null|string
+	 * @return boolean|null|string
 	 * @since Kunena
 	 */
 	function getFileContentParsed()
@@ -225,44 +158,6 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 		$ftp = \Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;
-	}
-
-	/**
-	 * @param          $key
-	 * @param          $request
-	 * @param   null   $default
-	 * @param   string $type
-	 * @param   bool   $resetPage
-	 *
-	 * @return mixed|null
-	 *
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
-	{
-		$app       = \Joomla\CMS\Factory::getApplication();
-		$input     = $app->input;
-		$old_state = $app->getUserState($key);
-		$cur_state = ($old_state !== null) ? $old_state : $default;
-		$new_state = $input->get($request, null, $type);
-
-		if (($cur_state != $new_state) && ($resetPage))
-		{
-			$input->set('limitstart', 0);
-		}
-
-		// Save the new value only if it is set in this request.
-		if ($new_state !== null)
-		{
-			$app->setUserState($key, $new_state);
-		}
-		else
-		{
-			$new_state = $cur_state;
-		}
-
-		return $new_state;
 	}
 
 	/**
@@ -306,5 +201,115 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 		$id .= ':' . $this->getState('list.direction');
 
 		return md5($this->context . ':' . $id);
+	}
+
+	/**
+	 * @return object
+	 * @since Kunena
+	 */
+	function getTotal()
+	{
+		return $this->getState('list.total');
+	}
+
+	/**
+	 * @return object
+	 * @since Kunena
+	 */
+	function getStart()
+	{
+		return $this->getState('list.start');
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function populateState()
+	{
+		$this->context = 'com_kunena.admin.templates';
+
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		// Edit state information
+		$value = $this->getUserStateFromRequest($this->context . '.edit', 'name', '', 'cmd');
+		$this->setState('template', $value);
+
+		// List state information
+		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
+		$this->setState('list.limit', $value);
+
+		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
+		$this->setState('list.ordering', $value);
+
+		$value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
+		$this->setState('list.start', $value);
+	}
+
+	/**
+	 * @param          $key
+	 * @param          $request
+	 * @param   null   $default
+	 * @param   string $type
+	 * @param   bool   $resetPage
+	 *
+	 * @return mixed|null
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
+	{
+		$app       = \Joomla\CMS\Factory::getApplication();
+		$input     = $app->input;
+		$old_state = $app->getUserState($key);
+		$cur_state = ($old_state !== null) ? $old_state : $default;
+		$new_state = $input->get($request, null, $type);
+
+		if (($cur_state != $new_state) && ($resetPage))
+		{
+			$input->set('limitstart', 0);
+		}
+
+		// Save the new value only if it is set in this request.
+		if ($new_state !== null)
+		{
+			$app->setUserState($key, $new_state);
+		}
+		else
+		{
+			$new_state = $cur_state;
+		}
+
+		return $new_state;
+	}
+
+	/**
+	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @since Kunena
+	 * @return array|mixed
+	 * @throws Exception
+	 */
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+
+		if (empty($data))
+		{
+			$template = $this->getState('template');
+			$data     = KunenaTemplate::getInstance($template)->params->toArray();
+		}
+
+		return $data;
 	}
 }

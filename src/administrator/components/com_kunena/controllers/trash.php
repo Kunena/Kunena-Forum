@@ -29,6 +29,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())
@@ -40,10 +41,10 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Purge
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0
 	 */
 	public function purge()
@@ -56,11 +57,11 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = \Joomla\CMS\Factory::getApplication()->input->getCmd('type', 'topics', 'post');
-		$md5  = \Joomla\CMS\Factory::getApplication()->input->getString('md5', null);
+		$type = $this->app->input->getCmd('type', 'topics', 'post');
+		$md5  = $this->app->input->getString('md5', null);
 
 		if (!empty($cid))
 		{
@@ -158,10 +159,10 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Restore
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since    2.0
 	 */
 	public function restore()
@@ -174,10 +175,10 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = \Joomla\CMS\Factory::getApplication()->input->getCmd('type', 'topics', 'post');
+		$type = $this->app->input->getCmd('type', 'topics', 'post');
 
 		if (empty($cid))
 		{
@@ -252,7 +253,9 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function cancel()
 	{

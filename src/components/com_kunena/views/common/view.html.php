@@ -37,6 +37,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   null $tpl
 	 *
 	 * @return mixed|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function display($layout = null, $tpl = null)
@@ -59,6 +60,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayDefault($tpl = null)
@@ -78,6 +80,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayAnnouncement($tpl = null)
@@ -112,7 +115,7 @@ class KunenaViewCommon extends KunenaView
 				return;
 			}
 
-			if ($this->announcement && $this->announcement->authorise('read'))
+			if ($this->announcement && $this->announcement->isAuthorised('read'))
 			{
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate   = $this->announcement->showdate;
@@ -138,6 +141,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayForumJump($tpl = null)
@@ -170,6 +174,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function displayBreadcrumb($tpl = null)
@@ -276,6 +282,7 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function displayWhosonline($tpl = null)
@@ -359,7 +366,9 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayStatistics($tpl = null)
 	{
@@ -395,7 +404,9 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayFooter($tpl = null)
 	{
@@ -438,7 +449,9 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayMenu($tpl = null)
 	{
@@ -458,6 +471,7 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function getMenu()
@@ -489,7 +503,9 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayLoginBox($tpl = null)
 	{
@@ -610,7 +626,9 @@ class KunenaViewCommon extends KunenaView
 	 * @param   bool|string $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
@@ -645,7 +663,9 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $params
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function getRSSLink($name, $rel = 'follow', $params = '')
 	{
@@ -658,7 +678,9 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $rel
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{
@@ -679,6 +701,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $class
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')

@@ -31,6 +31,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @param   array $config Construct
 	 *
+	 * @throws Exception
 	 * @since 2.0
 	 */
 	public function __construct($config = array())
@@ -47,6 +48,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 * @return void
 	 *
 	 * @since 2.0
+	 * @throws null
 	 */
 	public function delete()
 	{
@@ -58,7 +60,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!$cid)

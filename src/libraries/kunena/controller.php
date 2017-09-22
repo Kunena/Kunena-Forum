@@ -147,56 +147,23 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * Execute task (slightly modified from Joomla).
-	 *
-	 * @param   string $task
-	 *
-	 * @return mixed
-	 * @throws Exception
-	 *
-	 * @since Kunena
-	 */
-	protected function executeTask($task)
-	{
-		$dot        = strpos($task, '.');
-		$this->task = $dot ? substr($task, $dot + 1) : $task;
-
-		$task = strtolower($this->task);
-
-		if (isset($this->taskMap[$this->task]))
-		{
-			$doTask = $this->taskMap[$this->task];
-		}
-		elseif (isset($this->taskMap['__default']))
-		{
-			$doTask = $this->taskMap['__default'];
-		}
-		else
-		{
-			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
-		}
-
-		// Record the actual task being fired
-		$this->doTask = $doTask;
-
-		return $this->$doTask();
-	}
-
-	/**
 	 * Calls a task and creates HTML or JSON response from it.
 	 *
 	 * If response is in HTML, we just redirect and enqueue message if there's an exception.
 	 * NOTE: legacy display task is a special case and reverts to original Joomla behavior.
 	 *
-	 * If response is in JSON, we return JSON response, which follows \Joomla\CMS\Response\JsonResponse with some extra data:
+	 * If response is in JSON, we return JSON response, which follows \Joomla\CMS\Response\JsonResponse with some extra
+	 * data:
 	 *
 	 * Default:   {code, location=null, success, message, messages, data={step, location, html}}
 	 * Redirect:  {code, location=[string], success, message, messages=null, data}
-	 * Exception: {code, location=[null|string], success=false, message, messages, data={exceptions=[{code, message}...]}}
+	 * Exception: {code, location=[null|string], success=false, message, messages, data={exceptions=[{code,
+	 * message}...]}}
 	 *
 	 * code = [int]: Usually HTTP status code, but can also error code from the exception (informal only).
 	 * location = [null|string]: If set, JavaScript should always redirect to another page.
-	 * success = [bool]: Determines whether the request (or action) was successful. Can be false without being an error.
+	 * success = [bool]: Determines whether the request (or action) was successful. Can be false without being an
+	 * error.
 	 * message = [string|null]: The main response message.
 	 * messages = [array|null]: Array of enqueue'd messages.
 	 * data = [mixed]: The response data.
@@ -206,6 +173,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @return void
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute($task)
 	{
@@ -274,7 +242,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			if (!$this->redirect)
 			{
 				// If controller didn't set a new redirect, try if request has return url in it.
-				$return = base64_decode($app->input->get('return', '', 'BASE64'));
+				$return = base64_decode($app->input->getBase64('return'));
 
 				// Only allow internal urls to be used.
 				if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
@@ -315,13 +283,53 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
+	 * Execute task (slightly modified from Joomla).
+	 *
+	 * @param   string $task
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 *
+	 * @since Kunena
+	 */
+	protected function executeTask($task)
+	{
+		$dot        = strpos($task, '.');
+		$this->task = $dot ? substr($task, $dot + 1) : $task;
+
+		$task = strtolower($this->task);
+
+		if (isset($this->taskMap[$this->task]))
+		{
+			$doTask = $this->taskMap[$this->task];
+		}
+		elseif (isset($this->taskMap['__default']))
+		{
+			$doTask = $this->taskMap['__default'];
+		}
+		else
+		{
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+
+		// Record the actual task being fired
+		$this->doTask = $doTask;
+
+		return $this->$doTask();
+	}
+
+	/**
 	 * Method to display a view.
 	 *
 	 * @param   boolean    $cachable  If true, the view output will be cached
-	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see {@link \Joomla\CMS\Filter\InputFilter::clean()}.
+	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see
+	 *                                {@link \Joomla\CMS\Filter\InputFilter::clean()}.
 	 *
-	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to support chaining.
+	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to
+	 *                                                     support chaining.
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -489,6 +497,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string $anchor
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

@@ -43,6 +43,7 @@ class KunenaLoginJoomla
 	 * @param   string  $secretkey  The secretkey given by user when TFA is enabled
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)

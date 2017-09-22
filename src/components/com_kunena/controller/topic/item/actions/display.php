@@ -39,6 +39,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * Prepare topic actions display.
 	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -325,14 +327,16 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   bool   $normal  Define if the button will have the class btn or btn-small
 	 * @param   string $icon
 	 *
-	 * @return string
+	 * @return KunenaLayout|KunenaLayoutBase
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'   => KunenaRoute::_($url), 'name' => $name,
-			                      'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon)
+								  'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon)
 			);
 	}
 }

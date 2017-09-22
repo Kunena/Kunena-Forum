@@ -38,25 +38,38 @@ if ($show)
 			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 
-		<?php if ($optional_username) : ?>
+		<?php if ($optional_username)
+		:
+	?>
 			<li>
 				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
 			</li>
 		<?php endif; ?>
 
-		<?php if ($avatar) : ?>
+		<?php if ($avatar)
+		:
+	?>
 			<li>
 				<?php echo $user->getLink($avatar, null, ''); ?>
 			</li>
-			<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
+			<?php if (isset($this->topic_starter) && $this->topic_starter)
+			:
+	?>
 				<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-			<?php endif; ?>
-			<?php /*if (!$this->topic_starter && $user->isModerator()) : */ ?><!--
-					<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */ ?></span>
-				--><?php /*endif;*/ ?>
+			<?php endif;
+?>
+			<?php // If (!$this->topic_starter && $user->isModerator()) :
+	?><!--
+					<span class="topic-moderator"><?php // Echo JText::_('COM_KUNENA_MODERATOR')
+	?></span>
+				--><?php // Endif;
+	?>
 
 		<?php endif; ?>
-		<?php if ($user->exists()) : ?>
+		<?php
+		if ($user->exists())
+		:
+	?>
 			<li>
 				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>
@@ -66,19 +79,25 @@ if ($show)
 <div class="col-md-2">
 	<br>
 	<ul class="profilebox center">
-		<?php if (!empty($rankTitle)) : ?>
+		<?php if (!empty($rankTitle))
+		:
+	?>
 			<li>
 				<?php echo $this->escape($rankTitle); ?>
 			</li>
 		<?php endif; ?>
 
-		<?php if (!empty($rankImage)) : ?>
+		<?php if (!empty($rankImage))
+		:
+	?>
 			<li>
 				<?php echo $rankImage; ?>
 			</li>
 		<?php endif; ?>
 
-		<?php if (!empty($personalText)) : ?>
+		<?php if (!empty($personalText))
+		:
+	?>
 			<li>
 				<?php echo $personalText; ?>
 			</li>
@@ -87,33 +106,45 @@ if ($show)
 </div>
 <div class="col-md-2">
 	<br>
-	<?php if ($user->posts >= 1) : ?>
+	<?php if ($user->posts >= 1)
+	:
+	?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 			<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
 		</li>
 	<?php endif; ?>
 
-	<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
+	<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma)
+	:
+	?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
 			<span> <?php echo $karma; ?> </span>
 		</li>
 	<?php endif; ?>
 
-	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
+	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou)
+	:
+	?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 			<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
 		</li>
 	<?php endif; ?>
-	<?php if (isset($user->points)) : ?>
+	<?php
+	if (isset($user->points))
+	:
+	?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
 			<span> <?php echo (int) $user->points; ?> </span>
 		</li>
 	<?php endif; ?>
-	<?php if ($show && !empty($user->medals)) : ?>
+	<?php
+	if ($show && !empty($user->medals))
+	:
+	?>
 		<li>
 			<?php echo implode(' ', $user->medals); ?>
 		</li>

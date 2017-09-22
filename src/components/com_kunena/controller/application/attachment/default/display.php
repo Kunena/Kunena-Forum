@@ -38,6 +38,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * @throws RuntimeException
 	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute()
 	{
@@ -69,8 +70,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return void
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function display()
@@ -195,6 +196,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Prepare attachment display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()

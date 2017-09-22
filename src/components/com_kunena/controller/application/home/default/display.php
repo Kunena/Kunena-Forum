@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function exists()
@@ -33,8 +34,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function execute()
 	{
@@ -112,11 +114,12 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Get default menu item to be shown up.
 	 *
-	 * @param   \Joomla\CMS\Menu\SiteMenu  $menu    Joomla menu.
-	 * @param   object                     $active  Active menu item.
-	 * @param   array                      $visited Already visited menu items.
+	 * @param   \Joomla\CMS\Menu\SiteMenu $menu    Joomla menu.
+	 * @param   object                    $active  Active menu item.
+	 * @param   array                     $visited Already visited menu items.
 	 *
 	 * @return object|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getDefaultMenuItem(\Joomla\CMS\Menu\SiteMenu $menu, $active, $visited = array())

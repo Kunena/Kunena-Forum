@@ -23,18 +23,6 @@ class KunenaForumStatistics
 	protected static $_instance = null;
 
 	/**
-	 * @var JDatabaseDriver|null
-	 * @since Kunena
-	 */
-	protected $_db = null;
-
-	/**
-	 * @var KunenaConfig|null
-	 * @since Kunena
-	 */
-	protected $_config = null;
-
-	/**
 	 * @var null
 	 * @since Kunena
 	 */
@@ -161,8 +149,21 @@ class KunenaForumStatistics
 	public $showpopthankyoustats = false;
 
 	/**
+	 * @var JDatabaseDriver|null
+	 * @since Kunena
+	 */
+	protected $_db = null;
+
+	/**
+	 * @var KunenaConfig|null
+	 * @since Kunena
+	 */
+	protected $_config = null;
+
+	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
@@ -199,6 +200,8 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool $force
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function loadAll($force = false)
@@ -227,69 +230,12 @@ class KunenaForumStatistics
 		$this->loadLastDays();
 	}
 
-	/**
-	 * @param   bool $override
-	 *
-	 * @since Kunena
-	 */
-	public function loadUserStats($override = false)
+	public function loadMemberCount()
 	{
-		if ($this->showpopuserstats || $override)
+		if ($this->memberCount === null)
 		{
-			$this->top[] = $this->loadTopPosters();
-
-			if (!end($this->top))
-			{
-				array_pop($this->top);
-			}
-
-			$this->top[] = $this->loadTopProfiles();
-
-			if (!end($this->top))
-			{
-				array_pop($this->top);
-			}
+			$this->memberCount = KunenaUserHelper::getTotalCount();
 		}
-
-		if ($this->showpopthankyoustats || $override)
-		{
-			$this->top[] = $this->loadTopThankyous();
-
-			if (!end($this->top))
-			{
-				array_pop($this->top);
-			}
-		}
-
-	}
-
-	/**
-	 * @param   bool $override
-	 *
-	 * @since Kunena
-	 */
-	public function loadTopicStats($override = false)
-	{
-		if ($this->showpopsubjectstats || $override)
-		{
-			$this->top[] = $this->loadTopTopics();
-
-			if (!end($this->top))
-			{
-				array_pop($this->top);
-			}
-		}
-
-		if ($this->showpoppollstats || $override)
-		{
-			$this->top[] = $this->loadTopPolls();
-
-			if (!end($this->top))
-			{
-				array_pop($this->top);
-			}
-		}
-
 	}
 
 	public function loadLastUserId()
@@ -297,14 +243,6 @@ class KunenaForumStatistics
 		if ($this->lastUserId === null)
 		{
 			$this->lastUserId = KunenaUserHelper::getLastId();
-		}
-	}
-
-	public function loadMemberCount()
-	{
-		if ($this->memberCount === null)
-		{
-			$this->memberCount = KunenaUserHelper::getTotalCount();
 		}
 	}
 
@@ -329,7 +267,7 @@ class KunenaForumStatistics
 				else
 				{
 					$this->categoryCount++;
-					$this->topicCount += $category->numTopics;
+					$this->topicCount   += $category->numTopics;
 					$this->messageCount += $category->numPosts;
 				}
 			}
@@ -374,10 +312,43 @@ class KunenaForumStatistics
 	}
 
 	/**
+	 * @param   bool $override
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
+	 */
+	public function loadTopicStats($override = false)
+	{
+		if ($this->showpopsubjectstats || $override)
+		{
+			$this->top[] = $this->loadTopTopics();
+
+			if (!end($this->top))
+			{
+				array_pop($this->top);
+			}
+		}
+
+		if ($this->showpoppollstats || $override)
+		{
+			$this->top[] = $this->loadTopPolls();
+
+			if (!end($this->top))
+			{
+				array_pop($this->top);
+			}
+		}
+
+	}
+
+	/**
 	 * @param   int $limit
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function loadTopTopics($limit = 0)
 	{
@@ -415,78 +386,8 @@ class KunenaForumStatistics
 	 * @param   int $limit
 	 *
 	 * @return array
-	 * @since Kunena
-	 */
-	public function loadTopPosters($limit = 0)
-	{
-		$limit = $limit ? $limit : $this->_config->popusercount;
-
-		if (count($this->topPosters) < $limit)
-		{
-			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
-
-			$top = reset($this->topPosters);
-
-			if (!$top)
-			{
-				return array();
-			}
-
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
-			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_POSTS');
-
-			foreach ($this->topPosters as &$item)
-			{
-				$item          = clone $item;
-				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
-				$item->percent = round(100 * $item->count / $top->count);
-			}
-		}
-
-		return array_slice($this->topPosters, 0, $limit);
-	}
-
-	/**
-	 * @param   int $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	public function loadTopProfiles($limit = 0)
-	{
-		$limit = $limit ? $limit : $this->_config->popusercount;
-
-		if (count($this->topProfiles) < $limit)
-		{
-			$this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
-
-			$top = reset($this->topProfiles);
-
-			if (!$top)
-			{
-				return array();
-			}
-
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
-			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_HITS');
-
-			foreach ($this->topProfiles as &$item)
-			{
-				$item          = clone $item;
-				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
-				$item->percent = round(100 * $item->count / $top->count);
-			}
-		}
-
-		return array_slice($this->topProfiles, 0, $limit);
-	}
-
-	/**
-	 * @param   int $limit
-	 *
-	 * @return array
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function loadTopPolls($limit = 0)
@@ -539,9 +440,121 @@ class KunenaForumStatistics
 	}
 
 	/**
+	 * @param   bool $override
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function loadUserStats($override = false)
+	{
+		if ($this->showpopuserstats || $override)
+		{
+			$this->top[] = $this->loadTopPosters();
+
+			if (!end($this->top))
+			{
+				array_pop($this->top);
+			}
+
+			$this->top[] = $this->loadTopProfiles();
+
+			if (!end($this->top))
+			{
+				array_pop($this->top);
+			}
+		}
+
+		if ($this->showpopthankyoustats || $override)
+		{
+			$this->top[] = $this->loadTopThankyous();
+
+			if (!end($this->top))
+			{
+				array_pop($this->top);
+			}
+		}
+
+	}
+
+	/**
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function loadTopPosters($limit = 0)
+	{
+		$limit = $limit ? $limit : $this->_config->popusercount;
+
+		if (count($this->topPosters) < $limit)
+		{
+			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
+
+			$top = reset($this->topPosters);
+
+			if (!$top)
+			{
+				return array();
+			}
+
+			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
+			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
+			$top->titleCount = JText::_('COM_KUNENA_USRL_POSTS');
+
+			foreach ($this->topPosters as &$item)
+			{
+				$item          = clone $item;
+				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
+				$item->percent = round(100 * $item->count / $top->count);
+			}
+		}
+
+		return array_slice($this->topPosters, 0, $limit);
+	}
+
+	/**
+	 * @param   int $limit
+	 *
+	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function loadTopProfiles($limit = 0)
+	{
+		$limit = $limit ? $limit : $this->_config->popusercount;
+
+		if (count($this->topProfiles) < $limit)
+		{
+			$this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
+
+			$top = reset($this->topProfiles);
+
+			if (!$top)
+			{
+				return array();
+			}
+
+			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
+			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
+			$top->titleCount = JText::_('COM_KUNENA_USRL_HITS');
+
+			foreach ($this->topProfiles as &$item)
+			{
+				$item          = clone $item;
+				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
+				$item->percent = round(100 * $item->count / $top->count);
+			}
+		}
+
+		return array_slice($this->topProfiles, 0, $limit);
+	}
+
+	/**
+	 * @param   int $limit
+	 *
+	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadTopThankyous($limit = 0)

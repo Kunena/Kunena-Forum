@@ -34,8 +34,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -155,6 +155,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

@@ -63,7 +63,7 @@ class KunenaImageHelper
 				$options = array('quality' => $quality);
 
 				// Resize image and copy it to temporary file.
-				$image = new KunenaImage($file);
+				$image = new KunenaImage;
 
 				if ($crop && $info->width > $info->height)
 				{

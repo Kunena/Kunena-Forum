@@ -14,9 +14,9 @@ $icon            = KunenaFactory::getTemplate()->getTopicLabel($this->topic);
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $class           = ' class="' . ' label label-' . $icon->labeltype . '"';
+
 if ($topicicontype == 'B3')
 {
-
 	$icons = '<span class="glyphicon glyphicon-' . $icon->b3 . '" aria-hidden="true"></span>';
 }
 elseif ($topicicontype == 'fa')
@@ -29,7 +29,10 @@ else
 }
 ?>
 <span <?php echo $class; ?> >
-	<?php if ($topicicontype !== 0) : ?>
+	<?php
+	if ($topicicontype !== 0)
+	:
+	?>
 		<?php echo $icons ?>
 	<?php endif; ?>
 	<span class="sr-only"></span><?php echo JText::_($icon->name); ?>

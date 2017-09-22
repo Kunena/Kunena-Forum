@@ -27,6 +27,8 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare profile form items.
 	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -65,6 +67,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

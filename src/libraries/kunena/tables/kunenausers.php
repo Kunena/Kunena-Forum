@@ -419,6 +419,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   bool $reset
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($userid = null, $reset = true)

@@ -86,13 +86,13 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	protected $userstate = array();
 
 	/**
-	 * @param   Jinput                             $input  input
+	 * @param   \Joomla\Input\Input                $input  input
 	 * @param   \Joomla\Registry\Registry          $config config
 	 * @param   \Joomla\Application\Web\WebClient  $client client
 	 *
 	 * @since Kunena
 	 */
-	public function __construct(JInput $input = null, \Joomla\Registry\Registry $config = null, \Joomla\Application\Web\WebClient $client = null)
+	public function __construct(Joomla\Input\Input $input = null, \Joomla\Registry\Registry $config = null, \Joomla\Application\Web\WebClient $client = null)
 	{
 		parent::__construct($input, $config, $client);
 
@@ -175,6 +175,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	/**
 	 *
 	 * @return void
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function doExecute()

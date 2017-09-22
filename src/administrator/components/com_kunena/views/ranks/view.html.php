@@ -19,6 +19,22 @@ defined('_JEXEC') or die();
 class KunenaAdminViewRanks extends KunenaView
 {
 	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return    array    The HTML code for the select tag
+	 * @since Kunena
+	 */
+	public static function specialOptions()
+	{
+		// Build the active state filter options.
+		$options   = array();
+		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+		return $options;
+	}
+
+	/**
 	 * @param   null $tpl
 	 *
 	 * @return mixed
@@ -54,32 +70,16 @@ class KunenaAdminViewRanks extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');
 
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 
-		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
-		JToolBarHelper::editList();
-		JToolBarHelper::divider();
-		JToolBarHelper::deleteList();
-		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * Returns an array of standard published state filter options.
-	 *
-	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
-	 */
-	public static function specialOptions()
-	{
-		// Build the active state filter options.
-		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
-
-		return $options;
+		JToolbarHelper::spacer();
+		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
+		JToolbarHelper::editList();
+		JToolbarHelper::divider();
+		JToolbarHelper::deleteList();
+		JToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

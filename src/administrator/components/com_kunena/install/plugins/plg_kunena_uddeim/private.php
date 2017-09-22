@@ -54,38 +54,6 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-		static $itemid = false;
-
-		if ($itemid === false)
-		{
-			$itemid = 0;
-
-			if (method_exists($this->uddeim, 'getItemid'))
-			{
-				$itemid = $this->uddeim->getItemid();
-			}
-
-			if ($itemid)
-			{
-				$itemid = '&Itemid=' . (int) $itemid;
-			}
-			else
-			{
-				$itemid = '';
-			}
-		}
-
-		return JRoute::_('index.php?option=com_uddeim&task=new&recip=' . (int) $userid . $itemid);
-	}
-
-	/**
-	 * @param $userid
-	 *
 	 * @return mixed
 	 * @since Kunena
 	 */
@@ -117,5 +85,37 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	public function getInboxURL()
 	{
 		return JRoute::_($this->uddeim->getLinkToBox('inbox', false));
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	protected function getURL($userid)
+	{
+		static $itemid = false;
+
+		if ($itemid === false)
+		{
+			$itemid = 0;
+
+			if (method_exists($this->uddeim, 'getItemid'))
+			{
+				$itemid = $this->uddeim->getItemid();
+			}
+
+			if ($itemid)
+			{
+				$itemid = '&Itemid=' . (int) $itemid;
+			}
+			else
+			{
+				$itemid = '';
+			}
+		}
+
+		return JRoute::_('index.php?option=com_uddeim&task=new&recip=' . (int) $userid . $itemid);
 	}
 }

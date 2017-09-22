@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
-	<name>plg_kunena_community</name>
-	<version>@kunenaversion@</version>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<author>Kunena Team</author>
-	<authorEmail>Kunena@kunena.org</authorEmail>
-	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPLv3 or later</license>
-	<description>PLG_KUNENA_COMMUNITY_DESCRIPTION</description>
-	<files>
-		<filename plugin="community">community.php</filename>
-		<filename>access.php</filename>
-		<filename>activity.php</filename>
-		<filename>avatar.php</filename>
-		<filename>login.php</filename>
-		<filename>private.php</filename>
-		<filename>profile.php</filename>
-		<folder>language</folder>
-	</files>
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
-				<!-- JomSocial group support for Kunena categories -->
-				<field name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS" description="PLG_KUNENA_COMMUNITY_ACCESS_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<!-- Decide to use either Kunena or JomSocial login/registration flow -->
-				<field name="login" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_LOGIN" description="PLG_KUNENA_COMMUNITY_LOGIN_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<!-- Write streams or no -->
-				<field name="activity" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACTIVITY" description="PLG_KUNENA_COMMUNITY_ACTIVITY_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<!-- Decide to use either Kunena or JomSocial Avatar -->
-				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_AVATAR" description="PLG_KUNENA_COMMUNITY_AVATAR_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<!-- Decide to use either Kunena or JomSocial Profile -->
-				<field name="profile" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PROFILE" description="PLG_KUNENA_COMMUNITY_PROFILE_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<!-- Decide to use JomSocial private messaging system or not -->
-				<field name="private" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PRIVATE" description="PLG_KUNENA_COMMUNITY_PRIVATE_DESC"
-				       class="btn-group">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-				<field name="activity_points_limit" type="text" default="0" label="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT"
-				       description="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT_DESC"/>
-			</fieldset>
-		</fields>
-	</config>
+    <name>plg_kunena_community</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPLv3 or later</license>
+    <description>PLG_KUNENA_COMMUNITY_DESCRIPTION</description>
+    <files>
+        <filename plugin="community">community.php</filename>
+        <filename>access.php</filename>
+        <filename>activity.php</filename>
+        <filename>avatar.php</filename>
+        <filename>login.php</filename>
+        <filename>private.php</filename>
+        <filename>profile.php</filename>
+        <folder>language</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <!-- JomSocial group support for Kunena categories -->
+                <field name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS"
+                       description="PLG_KUNENA_COMMUNITY_ACCESS_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <!-- Decide to use either Kunena or JomSocial login/registration flow -->
+                <field name="login" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_LOGIN"
+                       description="PLG_KUNENA_COMMUNITY_LOGIN_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <!-- Write streams or no -->
+                <field name="activity" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACTIVITY"
+                       description="PLG_KUNENA_COMMUNITY_ACTIVITY_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <!-- Decide to use either Kunena or JomSocial Avatar -->
+                <field name="avatar" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_AVATAR"
+                       description="PLG_KUNENA_COMMUNITY_AVATAR_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <!-- Decide to use either Kunena or JomSocial Profile -->
+                <field name="profile" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PROFILE"
+                       description="PLG_KUNENA_COMMUNITY_PROFILE_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <!-- Decide to use JomSocial private messaging system or not -->
+                <field name="private" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PRIVATE"
+                       description="PLG_KUNENA_COMMUNITY_PRIVATE_DESC"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="activity_points_limit" type="text" default="0"
+                       label="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT"
+                       description="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT_DESC"/>
+            </fieldset>
+        </fields>
+    </config>
 </extension>

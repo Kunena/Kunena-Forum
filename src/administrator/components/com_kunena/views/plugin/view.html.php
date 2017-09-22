@@ -41,7 +41,7 @@ class KunenaAdminViewPlugin extends KunenaView
 	 *
 	 * @param   null $tpl
 	 *
-	 * @return boolean
+	 * @return void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -65,8 +65,9 @@ class KunenaAdminViewPlugin extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @return boolean
+	 * @return void
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	protected function addToolbar()
@@ -79,7 +80,7 @@ class KunenaAdminViewPlugin extends KunenaView
 		JToolbarHelper::cancel('cancel', 'JTOOLBAR_CLOSE');
 		JToolbarHelper::spacer();
 
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/plugins';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

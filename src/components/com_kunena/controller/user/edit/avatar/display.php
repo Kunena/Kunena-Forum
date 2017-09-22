@@ -66,7 +66,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -96,6 +96,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

@@ -29,6 +29,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @param   array $config construct
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())
@@ -45,6 +46,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return boolean|void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -81,6 +83,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -118,7 +121,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 
 			$user->personalText = $this->app->input->getString('personaltext', '');
-			$birthdate                = $this->app->input->getString('birthdate');
+			$birthdate          = $this->app->input->getString('birthdate');
 
 			if ($birthdate)
 			{
@@ -127,45 +130,45 @@ class KunenaAdminControllerUsers extends KunenaController
 				$birthdate = $date->format('Y-m-d');
 			}
 
-			$user->birthdate   = $birthdate;
-			$user->location    = trim($this->app->input->getString('location', ''));
-			$user->gender      = $this->app->input->getInt('gender', '');
-			$user->icq         = trim($this->app->input->getString('icq', ''));
-			$user->aim         = trim($this->app->input->getString('aim', ''));
-			$user->yim         = trim($this->app->input->getString('yim', ''));
-			$user->microsoft   = trim($this->app->input->getString('microsoft', ''));
-			$user->skype       = trim($this->app->input->getString('skype', ''));
-			$user->google      = trim($this->app->input->getString('google', ''));
-			$user->twitter     = trim($this->app->input->getString('twitter', ''));
-			$user->facebook    = trim($this->app->input->getString('facebook', ''));
-			$user->myspace     = trim($this->app->input->getString('myspace', ''));
-			$user->linkedin    = trim($this->app->input->getString('linkedin', ''));
-			$user->delicious   = trim($this->app->input->getString('delicious', ''));
-			$user->friendfeed  = trim($this->app->input->getString('friendfeed', ''));
-			$user->digg        = trim($this->app->input->getString('digg', ''));
-			$user->blogspot    = trim($this->app->input->getString('blogspot', ''));
-			$user->flickr      = trim($this->app->input->getString('flickr', ''));
-			$user->bebo        = trim($this->app->input->getString('bebo', ''));
-			$user->instagram   = trim($this->app->input->getString('instagram', ''));
-			$user->qq          = trim($this->app->input->getString('qq', ''));
-			$user->qzone       = trim($this->app->input->getString('qzone', ''));
-			$user->weibo       = trim($this->app->input->getString('weibo', ''));
-			$user->wechat      = trim($this->app->input->getString('wechat', ''));
-			$user->apple       = trim($this->app->input->getString('apple', ''));
-			$user->vk          = trim($this->app->input->getString('vk', ''));
-			$user->telegram    = trim($this->app->input->getString('telegram', ''));
-			$user->whatsapp    = trim($this->app->input->getString('whatsapp', ''));
-			$user->youtube     = trim($this->app->input->getString('youtube', ''));
-			$user->ok          = trim($this->app->input->getString('ok', ''));
-			$user->websitename = $this->app->input->getString('websitename', '');
-			$user->websiteurl  = $this->app->input->getString('websiteurl', '');
-			$user->hideEmail   = $this->app->input->getString('hidemail');
-			$user->showOnline  = $this->app->input->getString('showonline');
-			$user->cansubscribe  = $this->app->input->getString('cansubscribe');
-			$user->userlisttime  = $this->app->input->getString('userlisttime');
-			$user->view     = $newview;
-			$user->ordering = $neworder;
-			$user->rank     = $newrank;
+			$user->birthdate    = $birthdate;
+			$user->location     = trim($this->app->input->getString('location', ''));
+			$user->gender       = $this->app->input->getInt('gender', '');
+			$user->icq          = trim($this->app->input->getString('icq', ''));
+			$user->aim          = trim($this->app->input->getString('aim', ''));
+			$user->yim          = trim($this->app->input->getString('yim', ''));
+			$user->microsoft    = trim($this->app->input->getString('microsoft', ''));
+			$user->skype        = trim($this->app->input->getString('skype', ''));
+			$user->google       = trim($this->app->input->getString('google', ''));
+			$user->twitter      = trim($this->app->input->getString('twitter', ''));
+			$user->facebook     = trim($this->app->input->getString('facebook', ''));
+			$user->myspace      = trim($this->app->input->getString('myspace', ''));
+			$user->linkedin     = trim($this->app->input->getString('linkedin', ''));
+			$user->delicious    = trim($this->app->input->getString('delicious', ''));
+			$user->friendfeed   = trim($this->app->input->getString('friendfeed', ''));
+			$user->digg         = trim($this->app->input->getString('digg', ''));
+			$user->blogspot     = trim($this->app->input->getString('blogspot', ''));
+			$user->flickr       = trim($this->app->input->getString('flickr', ''));
+			$user->bebo         = trim($this->app->input->getString('bebo', ''));
+			$user->instagram    = trim($this->app->input->getString('instagram', ''));
+			$user->qq           = trim($this->app->input->getString('qq', ''));
+			$user->qzone        = trim($this->app->input->getString('qzone', ''));
+			$user->weibo        = trim($this->app->input->getString('weibo', ''));
+			$user->wechat       = trim($this->app->input->getString('wechat', ''));
+			$user->apple        = trim($this->app->input->getString('apple', ''));
+			$user->vk           = trim($this->app->input->getString('vk', ''));
+			$user->telegram     = trim($this->app->input->getString('telegram', ''));
+			$user->whatsapp     = trim($this->app->input->getString('whatsapp', ''));
+			$user->youtube      = trim($this->app->input->getString('youtube', ''));
+			$user->ok           = trim($this->app->input->getString('ok', ''));
+			$user->websitename  = $this->app->input->getString('websitename', '');
+			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
+			$user->hideEmail    = $this->app->input->getString('hidemail');
+			$user->showOnline   = $this->app->input->getString('showonline');
+			$user->cansubscribe = $this->app->input->getString('cansubscribe');
+			$user->userlisttime = $this->app->input->getString('userlisttime');
+			$user->view         = $newview;
+			$user->ordering     = $neworder;
+			$user->rank         = $newrank;
 
 			if ($deleteAvatar == 1)
 			{
@@ -243,7 +246,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 
 			$user->personalText = $this->app->input->getString('personaltext', '');
-			$birthdate                = $this->app->input->getString('birthdate');
+			$birthdate          = $this->app->input->getString('birthdate');
 
 			if ($birthdate)
 			{
@@ -252,42 +255,42 @@ class KunenaAdminControllerUsers extends KunenaController
 				$birthdate = $date->format('Y-m-d');
 			}
 
-			$user->birthdate   = $birthdate;
-			$user->location    = trim($this->app->input->getString('location', ''));
-			$user->gender      = $this->app->input->getInt('gender', '');
-			$user->icq         = trim($this->app->input->getString('icq', ''));
-			$user->aim         = trim($this->app->input->getString('aim', ''));
-			$user->yim         = trim($this->app->input->getString('yim', ''));
-			$user->microsoft   = trim($this->app->input->getString('microsoft', ''));
-			$user->skype       = trim($this->app->input->getString('skype', ''));
-			$user->google      = trim($this->app->input->getString('google', ''));
-			$user->twitter     = trim($this->app->input->getString('twitter', ''));
-			$user->facebook    = trim($this->app->input->getString('facebook', ''));
-			$user->myspace     = trim($this->app->input->getString('myspace', ''));
-			$user->linkedin    = trim($this->app->input->getString('linkedin', ''));
-			$user->delicious   = trim($this->app->input->getString('delicious', ''));
-			$user->friendfeed  = trim($this->app->input->getString('friendfeed', ''));
-			$user->digg        = trim($this->app->input->getString('digg', ''));
-			$user->blogspot    = trim($this->app->input->getString('blogspot', ''));
-			$user->flickr      = trim($this->app->input->getString('flickr', ''));
-			$user->bebo        = trim($this->app->input->getString('bebo', ''));
-			$user->instagram   = trim($this->app->input->getString('instagram', ''));
-			$user->qq          = trim($this->app->input->getString('qq', ''));
-			$user->qzone       = trim($this->app->input->getString('qzone', ''));
-			$user->weibo       = trim($this->app->input->getString('weibo', ''));
-			$user->wechat      = trim($this->app->input->getString('wechat', ''));
-			$user->apple       = trim($this->app->input->getString('apple', ''));
-			$user->vk          = trim($this->app->input->getString('vk', ''));
-			$user->telegram    = trim($this->app->input->getString('telegram', ''));
-			$user->whatsapp    = trim($this->app->input->getString('whatsapp', ''));
-			$user->youtube     = trim($this->app->input->getString('youtube', ''));
-			$user->ok          = trim($this->app->input->getString('ok', ''));
-			$user->websitename = $this->app->input->getString('websitename', '');
-			$user->websiteurl  = $this->app->input->getString('websiteurl', '');
-			$user->hideEmail   = $this->app->input->getString('hidemail');
-			$user->showOnline  = $this->app->input->getString('showonline');
-			$user->cansubscribe  = $this->app->input->getString('cansubscribe');
-			$user->userlisttime  = $this->app->input->getString('userlisttime');
+			$user->birthdate    = $birthdate;
+			$user->location     = trim($this->app->input->getString('location', ''));
+			$user->gender       = $this->app->input->getInt('gender', '');
+			$user->icq          = trim($this->app->input->getString('icq', ''));
+			$user->aim          = trim($this->app->input->getString('aim', ''));
+			$user->yim          = trim($this->app->input->getString('yim', ''));
+			$user->microsoft    = trim($this->app->input->getString('microsoft', ''));
+			$user->skype        = trim($this->app->input->getString('skype', ''));
+			$user->google       = trim($this->app->input->getString('google', ''));
+			$user->twitter      = trim($this->app->input->getString('twitter', ''));
+			$user->facebook     = trim($this->app->input->getString('facebook', ''));
+			$user->myspace      = trim($this->app->input->getString('myspace', ''));
+			$user->linkedin     = trim($this->app->input->getString('linkedin', ''));
+			$user->delicious    = trim($this->app->input->getString('delicious', ''));
+			$user->friendfeed   = trim($this->app->input->getString('friendfeed', ''));
+			$user->digg         = trim($this->app->input->getString('digg', ''));
+			$user->blogspot     = trim($this->app->input->getString('blogspot', ''));
+			$user->flickr       = trim($this->app->input->getString('flickr', ''));
+			$user->bebo         = trim($this->app->input->getString('bebo', ''));
+			$user->instagram    = trim($this->app->input->getString('instagram', ''));
+			$user->qq           = trim($this->app->input->getString('qq', ''));
+			$user->qzone        = trim($this->app->input->getString('qzone', ''));
+			$user->weibo        = trim($this->app->input->getString('weibo', ''));
+			$user->wechat       = trim($this->app->input->getString('wechat', ''));
+			$user->apple        = trim($this->app->input->getString('apple', ''));
+			$user->vk           = trim($this->app->input->getString('vk', ''));
+			$user->telegram     = trim($this->app->input->getString('telegram', ''));
+			$user->whatsapp     = trim($this->app->input->getString('whatsapp', ''));
+			$user->youtube      = trim($this->app->input->getString('youtube', ''));
+			$user->ok           = trim($this->app->input->getString('ok', ''));
+			$user->websitename  = $this->app->input->getString('websitename', '');
+			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
+			$user->hideEmail    = $this->app->input->getString('hidemail');
+			$user->showOnline   = $this->app->input->getString('showonline');
+			$user->cansubscribe = $this->app->input->getString('cansubscribe');
+			$user->userlisttime = $this->app->input->getString('userlisttime');
 
 			$user->view     = $newview;
 			$user->ordering = $neworder;
@@ -331,6 +334,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function trashusermessages()
 	{
@@ -377,6 +381,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return  void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function move()
 	{
@@ -412,6 +417,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function movemessages()
 	{
@@ -438,7 +444,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				{
 					$topic = $object->getTopic();
 
-					if (!$object->authorise('move'))
+					if (!$object->isAuthorised('move'))
 					{
 						$error = $object->getError();
 					}
@@ -482,6 +488,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function logout()
 	{
@@ -520,6 +527,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function remove()
 	{
@@ -599,6 +607,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function ban()
 	{
@@ -659,6 +668,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function unban()
 	{
@@ -719,6 +729,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function block()
 	{
@@ -779,6 +790,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function unblock()
 	{
@@ -839,6 +851,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function batch_moderators()
 	{
@@ -901,7 +914,9 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since K4.0
+	 * @throws null
 	 */
 	public function cancel()
 	{
@@ -914,7 +929,9 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function removecatsubscriptions()
 	{
@@ -958,7 +975,9 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function removetopicsubscriptions()
 	{

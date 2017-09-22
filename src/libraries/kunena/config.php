@@ -1215,7 +1215,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var string
 	 * @since  K5.1.0
-     */
+	 */
 	public $avatartypes = 'gif, jpeg, jpg, png';
 
 	/**
@@ -1260,6 +1260,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @return KunenaConfig|mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance()
 	{
@@ -1285,61 +1286,12 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param   mixed $properties
-	 *
-	 * @since Kunena
-	 */
-	public function bind($properties)
-	{
-		$this->setProperties($properties);
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	public function save()
-	{
-		$db = \Joomla\CMS\Factory::getDBO();
-
-		// Perform custom validation of config data before we write it.
-		$this->check();
-
-		// Get current configuration
-		$params = $this->getProperties();
-		unset($params['id']);
-
-		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		// Clear cache.
-		KunenaCacheHelper::clear();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	public function reset()
-	{
-		$instance = new KunenaConfig;
-		$this->bind($instance->getProperties());
-	}
-
-	/**
 	 * Load config settings from database table.
 	 *
 	 * @param   null $userinfo Not used.
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($userinfo = null)
 	{
@@ -1384,16 +1336,13 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param   string $name
+	 * @param   mixed $properties
 	 *
-	 * @return \Joomla\Registry\Registry
-	 *
-	 * @internal
 	 * @since Kunena
 	 */
-	public function getPlugin($name)
+	public function bind($properties)
 	{
-		return isset($this->plugins[$name]) ? $this->plugins[$name] : new \Joomla\Registry\Registry;
+		$this->setProperties($properties);
 	}
 
 	/**
@@ -1411,9 +1360,64 @@ class KunenaConfig extends JObject
 	}
 
 	/**
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function save()
+	{
+		$db = \Joomla\CMS\Factory::getDBO();
+
+		// Perform custom validation of config data before we write it.
+		$this->check();
+
+		// Get current configuration
+		$params = $this->getProperties();
+		unset($params['id']);
+
+		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		// Clear cache.
+		KunenaCacheHelper::clear();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	public function reset()
+	{
+		$instance = new KunenaConfig;
+		$this->bind($instance->getProperties());
+	}
+
+	/**
+	 * @param   string $name
+	 *
+	 * @return \Joomla\Registry\Registry
+	 *
+	 * @internal
+	 * @since Kunena
+	 */
+	public function getPlugin($name)
+	{
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new \Joomla\Registry\Registry;
+	}
+
+	/**
 	 * Email set for the configuration
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getEmail()

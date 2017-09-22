@@ -68,6 +68,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
@@ -98,6 +99,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed $user
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function favorite($ids, $value = true, $user = null)
@@ -127,6 +129,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   string $authorise
 	 *
 	 * @return KunenaForumTopic[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $authorise = 'read')
@@ -152,7 +156,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($ids as $id)
 		{
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true))
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null))
 			{
 				$list [$id] = self::$_instances [$id];
 			}
@@ -164,10 +168,65 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
+	 * @param   array $ids
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static protected function loadTopics(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
+			$id = intval($id);
+
+			if (!$id || isset(self::$_instances [$id]))
+			{
+				unset($ids[$i]);
+			}
+		}
+
+		if (empty($ids))
+		{
+			return;
+		}
+
+		$idlist = implode(',', $ids);
+		$db     = \Joomla\CMS\Factory::getDBO();
+		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (array) $db->loadAssocList('id');
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		foreach ($ids as $id)
+		{
+			if (isset($results[$id]))
+			{
+				$instance = new KunenaForumTopic($results[$id]);
+				$instance->exists(true);
+				self::$_instances [$id] = $instance;
+			}
+			else
+			{
+				self::$_instances [$id] = null;
+			}
+		}
+
+		unset($results);
+	}
+
+	/**
 	 * @param   mixed $ids
 	 * @param   mixed $user
 	 *
 	 * @return KunenaForumTopicUser[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getUserTopics($ids = false, $user = null)
@@ -187,6 +246,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   array $params
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
@@ -380,6 +441,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of deleted topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function delete($ids)
@@ -450,6 +512,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int $ids
 	 *
 	 * @return int    Count of trashed topics.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function trash($ids)
@@ -506,6 +569,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   int   $end
 	 *
 	 * @return boolean|integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
@@ -637,11 +701,14 @@ abstract class KunenaForumTopicHelper
 		return $rows;
 	}
 
+	// Internal functions
+
 	/**
 	 * @param   array $topics Topics
 	 * @param   mixed $user   User
 	 *
 	 * @return array|boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function fetchNewStatus(array $topics, $user = null)
@@ -717,60 +784,5 @@ abstract class KunenaForumTopicHelper
 		}
 
 		return $list;
-	}
-
-	// Internal functions
-
-	/**
-	 * @param   array $ids
-	 *
-	 * @since Kunena
-	 */
-	static protected function loadTopics(array $ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (array) $db->loadAssocList('id');
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$instance = new KunenaForumTopic($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
-			}
-			else
-			{
-				self::$_instances [$id] = null;
-			}
-		}
-
-		unset($results);
 	}
 }

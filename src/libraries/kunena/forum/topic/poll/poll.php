@@ -88,6 +88,52 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
+	 * Method to load a KunenaForumTopicPoll object by id.
+	 *
+	 * @param   int $id The poll id to be loaded.
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function load($id)
+	{
+		// Create the table object
+		$table = $this->getTable();
+
+		// Load the KunenaTable object based on id
+		$this->_exists = $table->load($id);
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		return $this->_exists;
+	}
+
+	/**
+	 * Method to get the polls table object.
+	 *
+	 * @param   string $type   Polls table name to be used.
+	 * @param   string $prefix Polls table prefix to be used.
+	 *
+	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
+	 * @since Kunena
+	 */
+	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
+	{
+		static $tabletype = null;
+
+		// Set a custom table type is defined
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
+			$tabletype ['name']   = $type;
+			$tabletype ['prefix'] = $prefix;
+		}
+
+		// Create the user table object
+		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+	}
+
+	/**
 	 * Returns KunenaForumTopicPoll object.
 	 *
 	 * @param   mixed $identifier Poll to load - Can be only an integer.
@@ -102,21 +148,52 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   null|bool $exists
-	 *
-	 * @return boolean
+	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function exists($exists = null)
+	public function getTotal()
 	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
+		if (is_null($this->_total))
 		{
-			$this->_exists = $exists;
+			$this->_total = 0;
+			$options      = $this->getOptions();
+
+			foreach ($options as $option)
+			{
+				$this->_total += $option->votes;
+			}
 		}
 
-		return $return;
+		return $this->_total;
+	}
+
+	/**
+	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getOptions()
+	{
+		if ($this->options === false)
+		{
+			$query = "SELECT *
+				FROM #__kunena_polls_options
+				WHERE pollid={$this->_db->Quote($this->id)}
+				ORDER BY id";
+			$this->_db->setQuery($query);
+
+			try
+			{
+				$this->options = (array) $this->_db->loadObjectList('id');
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+		}
+
+		return $this->options;
 	}
 
 	/**
@@ -150,54 +227,8 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 */
-	public function getOptions()
-	{
-		if ($this->options === false)
-		{
-			$query = "SELECT *
-				FROM #__kunena_polls_options
-				WHERE pollid={$this->_db->Quote($this->id)}
-				ORDER BY id";
-			$this->_db->setQuery($query);
-
-			try
-			{
-				$this->options = (array) $this->_db->loadObjectList('id');
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		return $this->options;
-	}
-
-	/**
 	 * @return integer
-	 * @since Kunena
-	 */
-	public function getTotal()
-	{
-		if (is_null($this->_total))
-		{
-			$this->_total = 0;
-			$options      = $this->getOptions();
-
-			foreach ($options as $option)
-			{
-				$this->_total += $option->votes;
-			}
-		}
-
-		return $this->_total;
-	}
-
-	/**
-	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserCount()
@@ -227,6 +258,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUsers($start = 0, $limit = 0)
@@ -255,62 +287,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 */
-	public function getMyVotes($user = null)
-	{
-		$user = KunenaFactory::getUser($user);
-
-		if (!isset($this->myvotes[$user->userid]))
-		{
-			$query = "SELECT SUM(votes)
-				FROM #__kunena_polls_users
-				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
-			$this->_db->setQuery($query);
-
-			try
-			{
-				$this->myvotes[$user->userid] = $this->_db->loadResult();
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		return $this->myvotes[$user->userid];
-	}
-
-	/**
-	 * @param   mixed $user
-	 *
-	 * @return integer
-	 * @since Kunena
-	 */
-	public function getLastVoteId($user = null)
-	{
-		$user  = KunenaFactory::getUser($user);
-		$query = "SELECT lastvote
-				FROM #__kunena_polls_users
-				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
-		$this->_db->setQuery($query);
-
-		try
-		{
-			$this->mylastvoteId = $this->_db->loadResult();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $this->mylastvoteId;
-	}
-
-	/**
-	 * @param   mixed $user
-	 *
-	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMyTime($user = null)
@@ -343,6 +320,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   mixed $user
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function vote($option, $change = false, $user = null)
@@ -460,10 +438,87 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
+	 * @param   null|bool $exists
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function exists($exists = null)
+	{
+		$return = $this->_exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
+		return $return;
+	}
+
+	/**
+	 * @param   mixed $user
+	 *
+	 * @return integer
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getLastVoteId($user = null)
+	{
+		$user  = KunenaFactory::getUser($user);
+		$query = "SELECT lastvote
+				FROM #__kunena_polls_users
+				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
+		$this->_db->setQuery($query);
+
+		try
+		{
+			$this->mylastvoteId = $this->_db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $this->mylastvoteId;
+	}
+
+	/**
+	 * @param   mixed $user
+	 *
+	 * @return integer
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getMyVotes($user = null)
+	{
+		$user = KunenaFactory::getUser($user);
+
+		if (!isset($this->myvotes[$user->userid]))
+		{
+			$query = "SELECT SUM(votes)
+				FROM #__kunena_polls_users
+				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
+			$this->_db->setQuery($query);
+
+			try
+			{
+				$this->myvotes[$user->userid] = $this->_db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+		}
+
+		return $this->myvotes[$user->userid];
+	}
+
+	/**
 	 * @param   int $option
 	 * @param   int $delta
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function changeOptionVotes($option, $delta)
@@ -499,30 +554,6 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * Method to get the polls table object.
-	 *
-	 * @param   string $type   Polls table name to be used.
-	 * @param   string $prefix Polls table prefix to be used.
-	 *
-	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
-	 * @since Kunena
-	 */
-	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
-	{
-		static $tabletype = null;
-
-		// Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
-		{
-			$tabletype ['name']   = $type;
-			$tabletype ['prefix'] = $prefix;
-		}
-
-		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
-	}
-
-	/**
 	 * @param   array $data
 	 * @param   array $allow
 	 *
@@ -539,31 +570,10 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * Method to load a KunenaForumTopicPoll object by id.
-	 *
-	 * @param   int $id The poll id to be loaded.
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function load($id)
-	{
-		// Create the table object
-		$table = $this->getTable();
-
-		// Load the KunenaTable object based on id
-		$this->_exists = $table->load($id);
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-
-		return $this->_exists;
-	}
-
-	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function delete()
@@ -647,6 +657,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($updateOnly = false)

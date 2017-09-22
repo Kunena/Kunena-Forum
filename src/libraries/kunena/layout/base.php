@@ -80,6 +80,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $name
 	 * @param   array  $paths The paths queue.
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($name, array $paths = null)
@@ -88,6 +89,17 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		$this->_name        = $name;
 		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
 		$this->debug        = JDEBUG || KunenaConfig::getInstance()->get('debug');
+	}
+
+	/**
+	 * Method to load the paths queue.
+	 *
+	 * @return  array  The paths queue.
+	 * @since Kunena
+	 */
+	protected function loadPaths()
+	{
+		return array();
 	}
 
 	/**
@@ -104,57 +116,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 		catch (Exception $e)
 		{
-			return $this->renderError($e);
+			return $this->renderException($e);
 		}
-	}
-
-	/**
-	 * Dirty function to debug layout/path errors
-	 *
-	 * @return  string
-	 * @since Kunena
-	 */
-	public function debugInfo()
-	{
-		$rawPath = strtolower(str_replace('.', '/', $this->_name)) . '/' . $this->layout . '.php';
-
-		$html = "<pre>";
-		$html .= '<strong>Layout:</strong> ' . $this->_name . '<br />';
-		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
-		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
-		$html .= '<strong>includePaths:</strong> ';
-		$html .= print_r($this->includePaths, true);
-		$html .= '<strong>Checking paths:</strong> <br />';
-
-		foreach ($this->includePaths as $path)
+		catch (Throwable $t)
 		{
-			$file = $path . '/' . $this->layout . '.php';
-
-			if (!is_file($file))
-			{
-				$html .= 'NOT exists: ' . $file . '<br />';
-				$file = $path . '/default.php';
-
-				if (!is_file($file))
-				{
-					$html .= 'NOT exists: ' . $file . '<br />';
-				}
-				else
-				{
-					$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
-					break;
-				}
-			}
-			else
-			{
-				$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
-				break;
-			}
+			return $this->renderException($t);
 		}
-
-		$html .= "</pre>";
-
-		return $html;
 	}
 
 	/**
@@ -216,30 +183,128 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
-	 * Set/override debug mode.
+	 * Dirty function to debug layout/path errors
 	 *
-	 * @param   array $data
-	 *
-	 * @return KunenaLayoutBase Instance of $this to allow chaining.
-	 * @internal param bool $value
-	 *
-	 * @internal param bool $value
-	 * @since    Kunena
+	 * @return  string
+	 * @since Kunena
 	 */
-	public function debug($data = array())
+	public function debugInfo()
 	{
-		$this->debug = (bool) $data;
+		$rawPath = strtolower(str_replace('.', '/', $this->_name)) . '/' . $this->layout . '.php';
+
+		$html = "<pre>";
+		$html .= '<strong>Layout:</strong> ' . $this->_name . '<br />';
+		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
+		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
+		$html .= '<strong>includePaths:</strong> ';
+		$html .= print_r($this->includePaths, true);
+		$html .= '<strong>Checking paths:</strong> <br />';
+
+		foreach ($this->includePaths as $path)
+		{
+			$file = $path . '/' . $this->layout . '.php';
+
+			if (!is_file($file))
+			{
+				$html .= 'NOT exists: ' . $file . '<br />';
+				$file = $path . '/default.php';
+
+				if (!is_file($file))
+				{
+					$html .= 'NOT exists: ' . $file . '<br />';
+				}
+				else
+				{
+					$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
+					break;
+				}
+			}
+			else
+			{
+				$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
+				break;
+			}
+		}
+
+		$html .= "</pre>";
+
+		return $html;
+	}
+
+	/**
+	 * Method to get the view layout.
+	 *
+	 * @return  string  The layout name.
+	 * @since Kunena
+	 */
+	public function getLayout()
+	{
+		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+
+		return $layout ? $layout : 'default';
+	}
+
+	/**
+	 * Method to set the view layout.
+	 *
+	 * @param   string $layout The layout name.
+	 *
+	 * @return KunenaLayout|KunenaLayoutBase
+	 * @since Kunena
+	 */
+	public function setLayout($layout)
+	{
+		if (!$layout)
+		{
+			$layout = 'default';
+		}
+
+		$this->layout = $layout;
 
 		return $this;
 	}
 
 	/**
-	 * @param   Exception $e
+	 * Method to get the layout path. If layout file isn't found, fall back to default layout.
 	 *
-	 * @return string
+	 * @param   string $layout The layout name, defaulting to the current one.
+	 *
+	 * @return  mixed  The layout file name if found, false otherwise.
 	 * @since Kunena
 	 */
-	public function renderError(Exception $e)
+	public function getPath($layout = null)
+	{
+		if (!$layout)
+		{
+			$layout = $this->getLayout();
+		}
+
+		$paths = array();
+
+		foreach ($this->includePaths as $path)
+		{
+			$paths[] = $path;
+		}
+
+		// Find the layout file path.
+		$path = KunenaPath::find($paths, "{$layout}.php");
+
+		if (!$path)
+		{
+			$path = KunenaPath::find($paths, 'default.php');
+		}
+
+		return $path;
+	}
+
+	/**
+	 * Render the exception as string
+	 *
+	 * @param   Throwable|Exception $e
+	 *
+	 * @return string
+	 */
+	public function renderException($e)
 	{
 		// Exceptions aren't allowed in string conversion, log the error and output it as a string.
 		$trace    = $e->getTrace();
@@ -254,7 +319,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 			if (isset($caller['class']) && isset($caller['function'])
 				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__
-			)
+				)
 			{
 				break;
 			}
@@ -300,11 +365,30 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
+	 * Set/override debug mode.
+	 *
+	 * @param   array $data
+	 *
+	 * @return KunenaLayoutBase Instance of $this to allow chaining.
+	 * @internal param bool $value
+	 *
+	 * @internal param bool $value
+	 * @since    Kunena
+	 */
+	public function debug($data = array())
+	{
+		$this->debug = (bool) $data;
+
+		return $this;
+	}
+
+	/**
 	 * Add stylesheet to the document.
 	 *
 	 * @param $filename
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename)
@@ -318,6 +402,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScript($filename)
@@ -332,57 +417,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $type
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
 		return KunenaFactory::getTemplate()->addScriptDeclaration($content, $type);
-	}
-
-	/**
-	 * Method to get the view layout.
-	 *
-	 * @return  string  The layout name.
-	 * @since Kunena
-	 */
-	public function getLayout()
-	{
-		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
-
-		return $layout ? $layout : 'default';
-	}
-
-	/**
-	 * Method to get the layout path. If layout file isn't found, fall back to default layout.
-	 *
-	 * @param   string $layout The layout name, defaulting to the current one.
-	 *
-	 * @return  mixed  The layout file name if found, false otherwise.
-	 * @since Kunena
-	 */
-	public function getPath($layout = null)
-	{
-		if (!$layout)
-		{
-			$layout = $this->getLayout();
-		}
-
-		$paths = array();
-
-		foreach ($this->includePaths as $path)
-		{
-			$paths[] = $path;
-		}
-
-		// Find the layout file path.
-		$path = KunenaPath::find($paths, "{$layout}.php");
-
-		if (!$path)
-		{
-			$path = KunenaPath::find($paths, 'default.php');
-		}
-
-		return $path;
 	}
 
 	/**
@@ -394,26 +434,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function getPaths()
 	{
 		return $this->includePaths;
-	}
-
-	/**
-	 * Method to set the view layout.
-	 *
-	 * @param   string $layout The layout name.
-	 *
-	 * @return KunenaLayout|KunenaLayoutBase
-	 * @since Kunena
-	 */
-	public function setLayout($layout)
-	{
-		if (!$layout)
-		{
-			$layout = 'default';
-		}
-
-		$this->layout = $layout;
-
-		return $this;
 	}
 
 	/**
@@ -447,44 +467,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
-	 * Modifies a property of the object, creating it if it does not already exist.
-	 *
-	 * @param   string $property The name of the property.
-	 * @param   mixed  $value    The value of the property to set.
-	 *
-	 * @return KunenaLayout|KunenaLayoutBase
-	 * @since Kunena
-	 */
-	public function set($property, $value = null)
-	{
-		$isFactory = is_object($value) && method_exists($value, '__invoke');
-
-		if ($isFactory)
-		{
-			$this->closures[$property] = $value;
-		}
-		else
-		{
-			$this->{$property} = $value;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Property overloading.
-	 *
-	 * @param $property
-	 * @param $value
-	 *
-	 * @since Kunena
-	 */
-	public function __set($property, $value)
-	{
-		$this->set($property, $value);
-	}
-
-	/**
 	 * Property overloading.
 	 *
 	 * @param $property
@@ -508,6 +490,44 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		return $this->closures[$property]();
+	}
+
+	/**
+	 * Property overloading.
+	 *
+	 * @param $property
+	 * @param $value
+	 *
+	 * @since Kunena
+	 */
+	public function __set($property, $value)
+	{
+		$this->set($property, $value);
+	}
+
+	/**
+	 * Modifies a property of the object, creating it if it does not already exist.
+	 *
+	 * @param   string $property The name of the property.
+	 * @param   mixed  $value    The value of the property to set.
+	 *
+	 * @return KunenaLayout|KunenaLayoutBase
+	 * @since Kunena
+	 */
+	public function set($property, $value = null)
+	{
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
+
+		if ($isFactory)
+		{
+			$this->closures[$property] = $value;
+		}
+		else
+		{
+			$this->{$property} = $value;
+		}
+
+		return $this;
 	}
 
 	/**
@@ -589,17 +609,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
-	 * Method to load the paths queue.
-	 *
-	 * @return  array  The paths queue.
-	 * @since Kunena
-	 */
-	protected function loadPaths()
-	{
-		return array();
-	}
-
-	/**
 	 * Display layout from current layout.
 	 *
 	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
@@ -608,6 +617,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   $path
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function subLayout($path)
@@ -615,25 +625,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		return self::factory($path)
 			->setLayout($this->getLayout())
 			->setOptions($this->getOptions());
-	}
-
-	/**
-	 * Display arbitrary MVC triad from current layout.
-	 *
-	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
-	 * easier to read and gain some context awareness.
-	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
-	 *
-	 * @return KunenaControllerDisplay|KunenaLayout
-	 * @since Kunena
-	 */
-	public function subRequest($path, \Joomla\CMS\Input\Input $input = null, $options = null)
-	{
-		return KunenaRequest::factory($path . '/Display', $input, $options)
-			->setLayout($this->getLayout());
 	}
 
 	/**
@@ -648,6 +639,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $base  Base path.
 	 *
 	 * @return  KunenaLayout
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function factory($paths, $base = 'layouts')
@@ -716,5 +708,24 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		// Create default layout object.
 		return new KunenaLayout($path, $templatePaths);
+	}
+
+	/**
+	 * Display arbitrary MVC triad from current layout.
+	 *
+	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
+	 * easier to read and gain some context awareness.
+	 *
+	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
+	 * @return KunenaControllerDisplay|KunenaLayout
+	 * @since Kunena
+	 */
+	public function subRequest($path, \Joomla\Input\Input $input = null, $options = null)
+	{
+		return KunenaRequest::factory($path . '/Display', $input, $options)
+			->setLayout($this->getLayout());
 	}
 }

@@ -33,7 +33,9 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since K2.0
+	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{

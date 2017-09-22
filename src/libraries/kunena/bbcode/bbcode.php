@@ -95,6 +95,7 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @param $params
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function parseUrl($params)
@@ -291,6 +292,42 @@ class KunenaBbcode extends NBBC_BBCode
 	}
 
 	/**
+	 * @param $params
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function canCloakEmail(&$params)
+	{
+
+		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
+		{
+			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
+			$params = new \Joomla\Registry\Registry($plugin->params);
+
+			if ($params->get('mode', 1))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function get_title($url)
+	{
+		$str = file_get_contents($url);
+
+		if (strlen($str) > 0)
+		{
+			$str = trim(preg_replace('/\s+/', ' ', $str)); // supports line breaks inside <title>
+			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title); // ignore case
+
+			return $title[1];
+		}
+	}
+
+	/**
 	 * @param $string
 	 *
 	 * @return array
@@ -363,7 +400,7 @@ class KunenaBbcode extends NBBC_BBCode
 				elseif ($invalid || empty($params['host']) || !empty($params['pass']))
 				{
 					$output[$index - 1] .= $token;
-					$output[$index] = '';
+					$output[$index]     = '';
 				}
 				else
 				{
@@ -380,29 +417,6 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		return $output;
-	}
-
-	/**
-	 * @param $params
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function canCloakEmail(&$params)
-	{
-
-		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
-		{
-			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
-			$params = new \Joomla\Registry\Registry($plugin->params);
-
-			if ($params->get('mode', 1))
-			{
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -441,19 +455,6 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		return false;
-	}
-
-	public function get_title($url)
-	{
-		$str = file_get_contents($url);
-
-		if (strlen($str) > 0)
-		{
-			$str = trim(preg_replace('/\s+/', ' ', $str)); // supports line breaks inside <title>
-			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title); // ignore case
-
-			return $title[1];
-		}
 	}
 }
 
@@ -1081,6 +1082,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	function __construct()
 	{
@@ -1104,26 +1106,38 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @return KunenaForumMessage|null
+	 * Query from eBay API the JSON stream of item id given to render
+	 *
+	 * @param   int $ItemID The eBay ID of object to query
+	 *
+	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
-	protected function getMessage()
+	public static function getEbayItem($ItemID)
 	{
-		if (empty($this->parent))
+		$config = KunenaFactory::getConfig();
+
+		if (is_numeric($ItemID) && $config->ebay_api_key && ini_get('allow_url_fopen'))
 		{
-			return null;
-		}
-		elseif ($this->parent instanceof KunenaForumMessage)
-		{
-			return $this->parent;
-		}
-		elseif (isset($this->parent->message)
-		)
-		{
-			return $this->parent->message;
+			$options = new \Joomla\Registry\Registry;
+
+			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+
+			// Create a 'stream' transport.
+			$http = new \Joomla\CMS\Http\Http($options, $transport);
+
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+
+			if ($response->code == '200')
+			{
+				$resp = json_decode($response->body);
+
+				return $resp;
+			}
 		}
 
-		return null;
+		return '';
 	}
 
 	/**
@@ -1135,6 +1149,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|mixed|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
@@ -1183,6 +1198,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoURL($bbcode, $action, $name, $default, $params, $content)
@@ -1253,6 +1269,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
@@ -1386,6 +1403,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
@@ -1431,6 +1449,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
@@ -1480,6 +1499,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
@@ -1533,8 +1553,31 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 		else
 		{
-			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
+			return '<div class="kmsgtext-confidentialguests">' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
 		}
+	}
+
+	/**
+	 * @return KunenaForumMessage|null
+	 * @since Kunena
+	 */
+	protected function getMessage()
+	{
+		if (empty($this->parent))
+		{
+			return null;
+		}
+		elseif ($this->parent instanceof KunenaForumMessage)
+		{
+			return $this->parent;
+		}
+		elseif (isset($this->parent->message)
+		)
+		{
+			return $this->parent->message;
+		}
+
+		return null;
 	}
 
 	/**
@@ -1546,6 +1589,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
@@ -1601,6 +1645,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
@@ -1622,10 +1667,76 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
-			return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/'.$content.'?lang=' . $config->ebaylanguagecode . '&campid='.$config->ebay_affiliate_id.'">www.ebay.com/itm/'.$content.'</a>';
+			return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/' . $content . '?lang=' . $config->ebaylanguagecode . '&campid=' . $config->ebay_affiliate_id . '">www.ebay.com/itm/' . $content . '</a>';
 		}
 
 		return self::renderEbayLayout($content);
+	}
+
+	/**
+	 * Render eBay layout from template
+	 *
+	 * @param $ItemID
+	 *
+	 * @return boolean|string
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function renderEbayLayout($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (empty($config->ebay_api_key))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+
+			return false;
+		}
+		elseif (!is_numeric($ItemID))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+
+			return false;
+		}
+
+		$layout = KunenaLayout::factory('BBCode/eBay');
+
+		if ($layout->getPath())
+		{
+			$ebay = self::getEbayItemFromCache($ItemID);
+
+			if (is_object($ebay) && $ebay->Ack == 'Success')
+			{
+				return (string) $layout
+					->set('content', $ItemID)
+					// ->set('params', $params)
+					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+					->set('pictureurl', $ebay->Item->PictureURL[0])
+					->set('status', $ebay->Item->ListingStatus)
+					->set('ack', $ebay->Ack)
+					->set('title', $ebay->Item->Title)
+					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			}
+		}
+	}
+
+	/**
+	 * Load eBay object item from cache
+	 *
+	 * @param   int $ItemID The eBay ID of object to query
+	 *
+	 * @return string
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function getEbayItemFromCache($ItemID)
+	{
+		$cache = \Joomla\CMS\Factory::getCache('Kunena_ebay_request');
+		$cache->setCaching(true);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
+		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
+
+		return $ebay_item;
 	}
 
 	/**
@@ -1758,9 +1869,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onContentPrepare', array('text', &$article, &$params, 0));
-				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
+				$article->text       = JHtml::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
-				$html = $article->text;
+				$html                = $article->text;
 			}
 
 			if (!empty($denied))
@@ -1812,6 +1923,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content)
@@ -1879,6 +1991,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
@@ -1940,6 +2053,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function DoVideo($bbcode, $action, $name, $default, $params, $content)
@@ -2021,27 +2135,27 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			'break' => array('flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', ''),
 
-			'clipfish' => array ('flash', 464, 380, 0, 0, 'https://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
+			'clipfish' => array('flash', 464, 380, 0, 0, 'https://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', ''),
 
 			'dailymotion' => array('flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', array(array(6, 'wmode', 'transparent'))),
 
 			'metacafe' => array('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array(array(6, 'wmode', 'transparent'))),
 
-			'myspace' => array ('iframe', 430, 346, 0, 0, 'https://media.myspace.com/play/video/%vcode%', '', array (array (6, 'wmode', 'transparent' ) ) ),
+			'myspace' => array('iframe', 430, 346, 0, 0, 'https://media.myspace.com/play/video/%vcode%', '', array(array(6, 'wmode', 'transparent'))),
 
-			'rutube' => array ('flash', 400, 353, 0, 0, 'https://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
+			'rutube' => array('flash', 400, 353, 0, 0, 'https://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)'),
 
 			'sapo' => array('flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', array(array(6, 'wmode', 'transparent'))),
 
-			'veoh' => array ('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', '' ),
+			'veoh' => array('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', ''),
 
 			'videojug' => array('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', ''),
 
 			'vimeo' => array('iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', ''),
 
-			'youtube' => array ('iframe', 425, 355, 0, 0, 'https://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+			'youtube' => array('iframe', 425, 355, 0, 0, 'https://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
 
-			'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+			'youku' => array('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
 
 			// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 			//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
@@ -2093,7 +2207,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$vid_height = (int) ($vid_height * $vid_size / 100);
 		}
 
-		$vid_width += $vid_addx;
+		$vid_width  += $vid_addx;
 		$vid_height += $vid_addy;
 
 		if (!isset($params ["size"]))
@@ -2221,6 +2335,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
@@ -2332,7 +2448,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   bool             $displayImage
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
@@ -2342,7 +2460,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$layout = KunenaLayout::factory('BBCode/Attachment')
+		$layout                                              = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
 		$config                                              = KunenaConfig::getInstance();
@@ -2378,6 +2496,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoFile($bbcode, $action, $name, $default, $params, $content)
@@ -2468,6 +2588,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content)
@@ -2560,6 +2682,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
@@ -2588,6 +2711,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param                $content
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
@@ -2626,6 +2750,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet id to render in layout
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function renderTweet($tweetid)
@@ -2664,6 +2789,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @param   int $tweetid The tweet ID to query against twitter API
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getTweet($tweetid)
@@ -2863,59 +2989,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * Query from eBay API the JSON stream of item id given to render
-	 *
-	 * @param   int $ItemID The eBay ID of object to query
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public static function getEbayItem($ItemID)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if (is_numeric($ItemID) && $config->ebay_api_key && ini_get('allow_url_fopen'))
-		{
-			$options = new \Joomla\Registry\Registry;
-
-			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
-
-			// Create a 'stream' transport.
-			$http = new \Joomla\CMS\Http\Http($options, $transport);
-
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
-
-			if ($response->code == '200')
-			{
-				$resp = json_decode($response->body);
-
-				return $resp;
-			}
-		}
-
-		return '';
-	}
-
-
-	/**
-	 * Load eBay object item from cache
-	 *
-	 * @param   int $ItemID The eBay ID of object to query
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public static function getEbayItemFromCache($ItemID)
-	{
-		$cache = \Joomla\CMS\Factory::getCache('Kunena_ebay_request');
-		$cache->setCaching(true);
-		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
-
-		return $ebay_item;
-	}
-
-	/**
 	 * @param $bbcode
 	 * @param $action
 	 * @param $name
@@ -2948,7 +3021,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
 			{
 				// Add scheme to raw domain URLs.
-				$url = "http://{$content}";
+				$url = "https://{$content}";
 			}
 
 			$url_parsed = parse_url($url);
@@ -2992,9 +3065,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			$url_parsed = parse_url($content);
 
-			if ($url_parsed['scheme']=='https' || $url_parsed['scheme']=='http')
+			if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
 			{
-				$content = $url_parsed['host']  . $url_parsed['path'];
+				$content = $url_parsed['host'] . $url_parsed['path'];
 			}
 			else
 			{
@@ -3006,56 +3079,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
 				{
 					// Add scheme to raw domain URLs.
-					$url = "http://{$content}";
+					$url = "https://{$content}";
 				}
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
-			}
-		}
-	}
-
-	/**
-	 * Render eBay layout from template
-	 *
-	 * @param $ItemID
-	 *
-	 * @return boolean|string
-	 * @since Kunena
-	 */
-	public static function renderEbayLayout($ItemID)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if (empty($config->ebay_api_key))
-		{
-			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
-
-			return false;
-		}
-		elseif (!is_numeric($ItemID))
-		{
-			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
-
-			return false;
-		}
-
-		$layout = KunenaLayout::factory('BBCode/eBay');
-
-		if ($layout->getPath())
-		{
-			$ebay = self::getEbayItemFromCache($ItemID);
-
-			if (is_object($ebay) && $ebay->Ack == 'Success')
-			{
-				return (string) $layout
-					->set('content', $ItemID)
-					// ->set('params', $params)
-					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-					->set('pictureurl', $ebay->Item->PictureURL[0])
-					->set('status', $ebay->Item->ListingStatus)
-					->set('ack', $ebay->Ack)
-					->set('title', $ebay->Item->Title)
-					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
 			}
 		}
 	}

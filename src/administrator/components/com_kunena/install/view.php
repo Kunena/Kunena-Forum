@@ -61,19 +61,20 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @access private
 	 *
-	 * @return null
+	 * @return void
 	 * @since  Kunena
-	 **/
+	 */
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . JText::_('COM_KUNENA_INSTALLER'), 'kunena.png');
+		JToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . JText::_('COM_KUNENA_INSTALLER'), 'kunena.png');
 
 	}
 
 	/**
 	 *
 	 * @since Kunena
+	 * @throws KunenaSchemaException
 	 */
 	function displaySchema()
 	{
@@ -100,6 +101,7 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 *
 	 * @since Kunena
+	 * @throws KunenaSchemaException
 	 */
 	function displaySchemaDiff()
 	{

@@ -60,48 +60,6 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 * Set the toolbar on log manager
-	 * @since Kunena
-	 */
-	protected function setToolbar()
-	{
-		// Get the toolbar object instance
-		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
-
-		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
-
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES');
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	function displayClean()
-	{
-		$this->setToolBarClean();
-		$this->display();
-	}
-
-	/**
-	 *
-	 * @since Kunena
-	 */
-	protected function setToolbarClean()
-	{
-		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
-
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-
-	}
-
-	/**
 	 * @return array
 	 * @since  Kunena
 	 */
@@ -190,6 +148,48 @@ class KunenaAdminViewLogs extends KunenaView
 		}
 
 		return $filterFields;
+	}
+
+	/**
+	 * Set the toolbar on log manager
+	 * @since Kunena
+	 */
+	protected function setToolbar()
+	{
+		// Get the toolbar object instance
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
+
+		// Set the titlebar text
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
+
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES');
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	function displayClean()
+	{
+		$this->setToolBarClean();
+		$this->display();
+	}
+
+	/**
+	 *
+	 * @since Kunena
+	 */
+	protected function setToolbarClean()
+	{
+		// Set the titlebar text
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
+
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel();
+
 	}
 
 	/**

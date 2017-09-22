@@ -52,7 +52,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -74,6 +74,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

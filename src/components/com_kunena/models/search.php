@@ -159,6 +159,7 @@ class KunenaModelSearch extends KunenaModel
 	/**
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function buildWhere()
 	{
@@ -304,6 +305,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return boolean|integer
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getTotal()
@@ -311,7 +314,7 @@ class KunenaModelSearch extends KunenaModel
 		$text = $this->getState('searchwords');
 		$q = strlen($text);
 
-		if ($q < 3 && !$this->getState('query.searchuser') && \Joomla\CMS\Factory::getApplication()->input->getString('childforums'))
+		if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
 
@@ -361,6 +364,8 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return array|boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getResults()
@@ -452,8 +457,8 @@ class KunenaModelSearch extends KunenaModel
 	{
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-		                  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '');
+						  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '');
 
 		$url_params = '';
 		$state      = $this->getState();
@@ -492,7 +497,9 @@ class KunenaModelSearch extends KunenaModel
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{

@@ -21,7 +21,9 @@ defined('_JEXEC') or die;
 				<?php echo $this->announcement->displayField('title'); ?>
 			</a>
 
-			<?php if ($this->announcement->showdate) : ?>
+			<?php if ($this->announcement->showdate)
+			:
+	?>
 				<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
 			<?php endif; ?>
 		</h5>
@@ -29,7 +31,9 @@ defined('_JEXEC') or die;
 		<div>
 			<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
 		</div>
-		<?php if (!empty($this->announcement->description)) : ?>
+		<?php if (!empty($this->announcement->description))
+		:
+	?>
 			<div>
 				<a class="btn-link"
 				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"

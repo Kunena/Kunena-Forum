@@ -34,6 +34,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -49,6 +50,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

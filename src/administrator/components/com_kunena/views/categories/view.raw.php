@@ -51,7 +51,7 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = 'DELETE FROM #__kunena_aliases WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);
 

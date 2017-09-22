@@ -46,26 +46,26 @@ ALTER TABLE	`#__kunena_user_read`	MODIFY `time` datetime NOT NULL;
 
 
 INSERT IGNORE INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
-	SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+	`SELECT` userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 	FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
 	GROUP BY user_id, topic_id;
 
 INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, favorite)
-	SELECT f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
+	`SELECT` f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
 	FROM #__kunena_favorites AS f
 	INNER JOIN #__kunena_messages AS m ON m.id=f.thread
 	WHERE f.userid>0
 	ON DUPLICATE KEY UPDATE favorite=1;
 
 INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, subscribed)
-	SELECT s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
+	`SELECT` s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
 	FROM #__kunena_subscriptions AS s
 	INNER JOIN #__kunena_messages AS m ON m.id=s.thread
 	WHERE s.userid>0
 	ON DUPLICATE KEY UPDATE subscribed=1;
 
 INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
-	SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
+	`SELECT` userid AS user_id, catid AS category_id, 1 AS subscribed
 	FROM #__kunena_subscriptions_categories
 	WHERE userid>0
 	ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);

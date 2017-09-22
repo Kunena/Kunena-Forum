@@ -23,6 +23,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @param   array $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($config = array())
@@ -35,10 +36,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function jump()
 	{
-		$catid = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+		$catid = $this->app->input->getInt('catid', 0);
 
 		if (!$catid)
 		{
@@ -52,6 +54,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function markread()
@@ -64,8 +67,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid    = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
-		$children = \Joomla\CMS\Factory::getApplication()->input->getBool('children', 0);
+		$catid    = $this->app->input->getInt('catid', 0);
+		$children = $this->app->input->getBool('children', 0);
 
 		if (!$catid)
 		{
@@ -87,7 +90,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			// One category
 			$category = KunenaForumCategoryHelper::get($catid);
 
-			if (!$category->authorise('read'))
+			if (!$category->isAuthorised('read'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'error');
 				$this->setRedirectBack();
@@ -126,6 +129,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function subscribe()
@@ -138,9 +142,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get(\Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0));
+		$category = KunenaForumCategoryHelper::get($this->app->input->getInt('catid', 0));
 
-		if (!$category->authorise('read'))
+		if (!$category->isAuthorised('read'))
 		{
 			$this->app->enqueueMessage($category->getError(), 'error');
 			$this->setRedirectBack();
@@ -163,6 +167,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 	/**
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	function unsubscribe()
@@ -175,17 +180,17 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			return;
 		}
 
-		$catid  = \Joomla\CMS\Factory::getApplication()->input->getInt('catid', 0);
+		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(\Joomla\CMS\Factory::getApplication()->input->get('categories', array(), 'post', 'array'));
+			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
 
 		foreach ($categories as $category)
 		{
-			if (!$category->authorise('read'))
+			if (!$category->isAuthorised('read'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'error');
 				continue;

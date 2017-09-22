@@ -217,7 +217,7 @@ class KunenaActivity
 	/**
 	 * Get list of medals.
 	 *
-	 * @param   int  $userid Users id
+	 * @param   int $userid Users id
 	 *
 	 * @return void
 	 * @since Kunena

@@ -21,6 +21,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function exists()
@@ -34,7 +35,9 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 * Change topic layout to threaded.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

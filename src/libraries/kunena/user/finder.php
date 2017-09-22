@@ -31,6 +31,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Constructor.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
@@ -47,7 +48,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
 	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
-	 * @param   bool  $register True = registration date, False = last visit date.
+	 * @param   bool                  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -129,6 +130,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return array|KunenaUser[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function find()

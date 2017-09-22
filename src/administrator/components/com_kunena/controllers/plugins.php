@@ -62,31 +62,11 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
-	 * Getmodel
-	 *
-	 * @param   string $name   name
-	 * @param   string $prefix prefix
-	 * @param   array  $config config
-	 *
-	 * @return object
-	 *
-	 * @since    2.0
-	 */
-	public function getModel($name = '', $prefix = '', $config = array())
-	{
-		if (empty($name))
-		{
-			$name = 'plugin';
-		}
-
-		return parent::getModel($name, $prefix, $config);
-	}
-
-	/**
 	 * Method to publish a list of items
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function publish()
@@ -149,10 +129,32 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
+	 * Getmodel
+	 *
+	 * @param   string $name   name
+	 * @param   string $prefix prefix
+	 * @param   array  $config config
+	 *
+	 * @return object
+	 *
+	 * @since    2.0
+	 */
+	public function getModel($name = '', $prefix = '', $config = array())
+	{
+		if (empty($name))
+		{
+			$name = 'plugin';
+		}
+
+		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
 	 * Changes the order of one or more records.
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function reorder()
@@ -233,6 +235,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function checkin()
@@ -270,6 +273,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * Regenerate editor file
 	 *
 	 * @since 5.0.2
+	 * @throws Exception
 	 */
 	public function resync()
 	{

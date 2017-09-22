@@ -42,12 +42,12 @@ class KunenaAdminViewRank extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
+		JToolbarHelper::spacer();
+		JToolbarHelper::save('save');
+		JToolbarHelper::spacer();
+		JToolbarHelper::cancel();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

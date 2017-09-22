@@ -21,47 +21,10 @@ jimport('joomla.application.component.model');
 class KunenaAdminModelUser extends KunenaModel
 {
 	/**
-	 * Method to auto-populate the model state.
-	 * @since Kunena
-	 */
-	protected function populateState()
-	{
-		$this->context = 'com_kunena.admin.user';
-
-		$app = \Joomla\CMS\Factory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout        = $app->input->get('layout');
-		$this->context = 'com_kunena.admin.user';
-
-		if ($layout)
-		{
-			$this->context .= '.' . $layout;
-		}
-
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('userid');
-		$this->setState($this->getName() . '.id', $value);
-	}
-
-	/**
-	 * @return KunenaUser
-	 *
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getUser()
-	{
-		$userid = $this->getState($this->getName() . '.id');
-
-		$user = KunenaUserHelper::get($userid);
-
-		return $user;
-	}
-
-	/**
 	 * @return array|KunenaForumTopic[]|void
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getSubscriptions()
@@ -168,6 +131,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getListmodcats()
@@ -197,7 +161,23 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
+	 * @return KunenaUser
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function getUser()
+	{
+		$userid = $this->getState($this->getName() . '.id');
+
+		$user = KunenaUserHelper::get($userid);
+
+		return $user;
+	}
+
+	/**
 	 * @return array|mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getListuserranks()
@@ -244,6 +224,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getMoveuser()
@@ -272,5 +253,29 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 
 		return $userids;
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function populateState()
+	{
+		$this->context = 'com_kunena.admin.user';
+
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout        = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.user';
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('userid');
+		$this->setState($this->getName() . '.id', $value);
 	}
 }

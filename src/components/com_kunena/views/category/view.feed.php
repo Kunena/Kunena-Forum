@@ -34,7 +34,7 @@ class KunenaViewCategory extends KunenaView
 
 		$this->category = $this->get('Category');
 
-		if (!$this->category->authorise('read'))
+		if (!$this->category->isAuthorised('read'))
 		{
 			throw new Exception($this->category->getError(), 404);
 		}
@@ -78,6 +78,7 @@ class KunenaViewCategory extends KunenaView
 	 * @param $userid
 	 * @param $username
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)

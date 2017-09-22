@@ -36,7 +36,9 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -46,9 +48,10 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string $tpl
 	 *
+	 * @return void
+	 * @throws Exception
 	 * @since K4.0
 	 *
-	 * @return void
 	 * @since Kunena
 	 */
 	public function displayListEmoji($tpl = null)
@@ -85,7 +88,9 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -93,7 +98,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Send list of topic icons in JSON for the category set selected
 	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayTopicIcons()
@@ -172,6 +178,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Load global rate for the topic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayGetrate()
 	{
@@ -204,6 +211,7 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayRate($tpl = null)
@@ -233,5 +241,30 @@ class KunenaViewTopic extends KunenaView
 		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo $response;
+	}
+
+	/**
+	 * Return the template text corresponding to the category selected
+	 *
+	 * @param   null $tpl
+	 *
+	 * @throws Exception
+	 * @since Kunena 5.1
+	 */
+	public function displayCategorytemplatetext($tpl = null)
+	{
+		$app      = \Joomla\CMS\Factory::getApplication();
+		$catid    = $this->app->input->getInt('catid', 0);
+		$response = '';
+
+		$category = KunenaForumCategoryHelper::get($catid);
+
+		$response = $category->topictemplate;
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
 	}
 }

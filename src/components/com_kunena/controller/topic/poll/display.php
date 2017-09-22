@@ -52,7 +52,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -128,6 +129,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

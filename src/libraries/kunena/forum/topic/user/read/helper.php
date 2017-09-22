@@ -36,6 +36,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUserRead
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function get($topic = null, $user = null, $reload = false)
@@ -72,6 +73,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   mixed      $user
 	 *
 	 * @return KunenaForumTopicUserRead[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getTopics($ids = false, $user = null)
@@ -113,160 +115,10 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public static function move($old, $new)
-	{
-		// Update database
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-
-			return false;
-		}
-
-		// Update internal state
-		if (isset(self::$_topics [$old->id]))
-		{
-			if ($new->id != $old->id)
-			{
-				self::$_topics [$new->id] = self::$_topics [$old->id];
-				unset(self::$_topics [$old->id]);
-			}
-
-			foreach (self::$_topics [$new->id] as &$instance)
-			{
-				$instance->topic_id    = $new->id;
-				$instance->category_id = $new->category_id;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public static function merge($old, $new)
-	{
-		$db = \Joomla\CMS\Factory::getDBO();
-
-		// Move all user topics which do not exist in new topic
-		$queries[] = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
-			SET ur.topic_id={$db->quote($new->id)}, ur.category_id={$db->quote($new->category_id)}
-			WHERE o.topic_id={$db->quote($old->id)} AND ur.topic_id IS NULL";
-
-		// Merge user topics information that exists in both topics
-		$queries[] = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
-			SET ur.message_id = LEAST( o.message_id, ur.message_id ),
-				ur.time = LEAST( o.time, ur.time )
-				WHERE ur.topic_id = {$db->quote($new->id)}
-				AND o.topic_id = {$db->quote($old->id)}";
-
-		// Delete all user topics from the shadow topic
-		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($old->id)}";
-
-		foreach ($queries as $query)
-		{
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				KunenaError::displayDatabaseError($e);
-
-				return false;
-			}
-		}
-
-		// Update internal state
-		self::reloadTopic($old->id);
-		self::reloadTopic($new->id);
-
-		return true;
-	}
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	static public function recount()
-	{
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
-			SET ur.category_id=t.category_id";
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param   int $days
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	static public function purge($days = 365)
-	{
-		// Purge items that are older than x days (defaulting to a year)
-		$db        = \Joomla\CMS\Factory::getDBO();
-		$timestamp = \Joomla\CMS\Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
-		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-
-			return false;
-		}
-
-		return true;
-	}
-
-	// Internal functions
-
-	/**
 	 * @param   array      $ids
 	 * @param   KunenaUser $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadTopics(array $ids, KunenaUser $user)
@@ -319,8 +171,106 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
+	 * @param   KunenaForumTopic $old
+	 * @param   KunenaForumTopic $new
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function move($old, $new)
+	{
+		// Update database
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		// Update internal state
+		if (isset(self::$_topics [$old->id]))
+		{
+			if ($new->id != $old->id)
+			{
+				self::$_topics [$new->id] = self::$_topics [$old->id];
+				unset(self::$_topics [$old->id]);
+			}
+
+			foreach (self::$_topics [$new->id] as &$instance)
+			{
+				$instance->topic_id    = $new->id;
+				$instance->category_id = $new->category_id;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param   KunenaForumTopic $old
+	 * @param   KunenaForumTopic $new
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function merge($old, $new)
+	{
+		$db = \Joomla\CMS\Factory::getDBO();
+
+		// Move all user topics which do not exist in new topic
+		$queries[] = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
+			SET ur.topic_id={$db->quote($new->id)}, ur.category_id={$db->quote($new->category_id)}
+			WHERE o.topic_id={$db->quote($old->id)} AND ur.topic_id IS NULL";
+
+		// Merge user topics information that exists in both topics
+		$queries[] = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
+			SET ur.message_id = LEAST( o.message_id, ur.message_id ),
+				ur.time = LEAST( o.time, ur.time )
+				WHERE ur.topic_id = {$db->quote($new->id)}
+				AND o.topic_id = {$db->quote($old->id)}";
+
+		// Delete all user topics from the shadow topic
+		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($old->id)}";
+
+		foreach ($queries as $query)
+		{
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
+				return false;
+			}
+		}
+
+		// Update internal state
+		self::reloadTopic($old->id);
+		self::reloadTopic($new->id);
+
+		return true;
+	}
+
+	/**
 	 * @param   int $id
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function reloadTopic($id)
@@ -359,5 +309,63 @@ abstract class KunenaForumTopicUserReadHelper
 		}
 
 		unset($results);
+	}
+
+	// Internal functions
+
+	/**
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function recount()
+	{
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$query = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
+			SET ur.category_id=t.category_id";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param   int $days
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function purge($days = 365)
+	{
+		// Purge items that are older than x days (defaulting to a year)
+		$db        = \Joomla\CMS\Factory::getDBO();
+		$timestamp = \Joomla\CMS\Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
+		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		return true;
 	}
 }

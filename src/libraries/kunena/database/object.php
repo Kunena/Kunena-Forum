@@ -47,38 +47,36 @@ abstract class KunenaDatabaseObject extends JObject
 	protected $_saving = false;
 
 	/**
-	 * Returns the global object.
+	 * Class constructor, overridden in descendant classes.
 	 *
-	 * @param   int     $identifier Object identifier to load.
-	 * @param   boolean $reload     Force object reload from the database.
+	 * @param   mixed $properties   Associative array to set the initial properties of the object.
+	 *                              If not profided, default values will be used.
 	 *
-	 * @return  KunenaDatabaseObject
-	 * @throws  Exception
+	 * @internal
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public function __construct($properties = null)
 	{
-		throw new Exception(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
-	}
-
-	/**
-	 * Returns true if the object exists in the database.
-	 *
-	 * @param   boolean $exists Internal parameter to change state.
-	 *
-	 * @return  boolean  True if object exists in database.
-	 * @since Kunena
-	 */
-	public function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
+		if (!$this->_name)
 		{
-			$this->_exists = (bool) $exists;
+			$this->_name = get_class($this);
 		}
 
-		return $return;
+		// Load properties from database.
+		if (!empty($this->id))
+		{
+			$this->_exists = true;
+		}
+		// Bind properties provided as parameters.
+		elseif ($properties !== null)
+		{
+			$this->bind($properties);
+		}
+		// Initialize new object.
+		else
+		{
+			$this->load();
+		}
 	}
 
 	/**
@@ -111,36 +109,18 @@ abstract class KunenaDatabaseObject extends JObject
 	}
 
 	/**
-	 * Method to load object from the database.
+	 * Returns the global object.
 	 *
-	 * @param   mixed $id Id to be loaded.
+	 * @param   int     $identifier Object identifier to load.
+	 * @param   boolean $reload     Force object reload from the database.
 	 *
-	 * @return  boolean  True on success.
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function load($id = null)
+	static public function getInstance($identifier = null, $reload = false)
 	{
-		if ($id !== null)
-		{
-			$this->id = intval($id);
-		}
-
-		// Create the table object
-		$table = $this->getTable();
-
-		// Load the object based on id
-		if ($this->id)
-		{
-			$this->_exists = $table->load($this->id);
-		}
-
-		// Always set id
-		$table->id = $this->id;
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties($table->getProperties());
-
-		return $this->_exists;
+		throw new Exception(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
 	}
 
 	/**
@@ -215,6 +195,78 @@ abstract class KunenaDatabaseObject extends JObject
 	}
 
 	/**
+	 * Method to perform sanity checks on the instance properties to ensure
+	 * they are safe to store in the database.
+	 *
+	 * Child classes should override this method to make sure the data they are storing in
+	 * the database is safe and as expected before storage.
+	 *
+	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 * @since Kunena
+	 */
+	public function check()
+	{
+		return true;
+	}
+
+	/**
+	 * Method to get the table object.
+	 *
+	 * @return  \Joomla\CMS\Table\Table|KunenaTable  The table object.
+	 * @since Kunena
+	 */
+	protected function getTable()
+	{
+		return \Joomla\CMS\Table\Table::getInstance($this->_table, 'Table');
+	}
+
+	/**
+	 * Method to load object from the database.
+	 *
+	 * @param   mixed $id Id to be loaded.
+	 *
+	 * @return  boolean  True on success.
+	 * @since Kunena
+	 */
+	public function load($id = null)
+	{
+		if ($id !== null)
+		{
+			$this->id = intval($id);
+		}
+
+		// Create the table object
+		$table = $this->getTable();
+
+		// Load the object based on id
+		if ($this->id)
+		{
+			$this->_exists = $table->load($this->id);
+		}
+
+		// Always set id
+		$table->id = $this->id;
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		return $this->_exists;
+	}
+
+	// Internal functions
+
+	/**
+	 * Internal save method.
+	 *
+	 * @return  boolean  True on success.
+	 * @since Kunena
+	 */
+	protected function saveInternal()
+	{
+		return true;
+	}
+
+	/**
 	 * Method to delete the object from the database.
 	 *
 	 * @return    boolean    True on success.
@@ -263,75 +315,22 @@ abstract class KunenaDatabaseObject extends JObject
 	}
 
 	/**
-	 * Method to perform sanity checks on the instance properties to ensure
-	 * they are safe to store in the database.
+	 * Returns true if the object exists in the database.
 	 *
-	 * Child classes should override this method to make sure the data they are storing in
-	 * the database is safe and as expected before storage.
+	 * @param   boolean $exists Internal parameter to change state.
 	 *
-	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 * @return  boolean  True if object exists in database.
 	 * @since Kunena
 	 */
-	public function check()
+	public function exists($exists = null)
 	{
-		return true;
-	}
+		$return = $this->_exists;
 
-	// Internal functions
-
-	/**
-	 * Class constructor, overridden in descendant classes.
-	 *
-	 * @param   mixed $properties   Associative array to set the initial properties of the object.
-	 *                              If not profided, default values will be used.
-	 *
-	 * @return  KunenaDatabaseObject
-	 * @internal
-	 * @since Kunena
-	 */
-	public function __construct($properties = null)
-	{
-		if (!$this->_name)
+		if ($exists !== null)
 		{
-			$this->_name = get_class($this);
+			$this->_exists = (bool) $exists;
 		}
 
-		// Load properties from database.
-		if (!empty($this->id))
-		{
-			$this->_exists = true;
-		}
-		// Bind properties provided as parameters.
-		elseif ($properties !== null)
-		{
-			$this->bind($properties);
-		}
-		// Initialize new object.
-		else
-		{
-			$this->load();
-		}
-	}
-
-	/**
-	 * Method to get the table object.
-	 *
-	 * @return  \Joomla\CMS\Table\Table|KunenaTable  The table object.
-	 * @since Kunena
-	 */
-	protected function getTable()
-	{
-		return \Joomla\CMS\Table\Table::getInstance($this->_table, 'Table');
-	}
-
-	/**
-	 * Internal save method.
-	 *
-	 * @return  boolean  True on success.
-	 * @since Kunena
-	 */
-	protected function saveInternal()
-	{
-		return true;
+		return $return;
 	}
 }

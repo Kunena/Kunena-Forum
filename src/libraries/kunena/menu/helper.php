@@ -36,6 +36,7 @@ abstract class KunenaMenuHelper
 	 * @param   \Joomla\Registry\Registry $params The module options.
 	 *
 	 * @return    array
+	 * @throws Exception
 	 * @see        modules/mod_menu/helper.php
 	 * @since      Kunena
 	 */

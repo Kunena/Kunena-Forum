@@ -33,6 +33,7 @@ abstract class KunenaHtmlParser
 	 * @param   bool $emoticonbar
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
@@ -81,6 +82,7 @@ abstract class KunenaHtmlParser
 	 * @param   int $len
 	 *
 	 * @return mixed|string|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function parseText($txt, $len = 0)
@@ -103,6 +105,49 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
+	 * @param $string
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public static function escape($string)
+	{
+		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	 * @param          $content
+	 * @param   string $target
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function &prepareContent(&$content, $target = 'body')
+	{
+		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events       = (int) $config->get('jcontentevents', false);
+		$event_target = (array) $config->get('jcontentevent_target', array('body'));
+
+		if ($events && in_array($target, $event_target))
+		{
+			$row       = new stdClass;
+			$row->text =& $content;
+
+			// Run events
+			$params = new \Joomla\Registry\Registry;
+			$params->set('ksource', 'kunena');
+
+			$dispatcher = JEventDispatcher::getInstance();
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
+			$content = $row->text;
+		}
+
+		return $content;
+	}
+
+	/**
 	 * @param          $txt
 	 * @param   null   $parent
 	 * @param   int    $len
@@ -110,6 +155,7 @@ abstract class KunenaHtmlParser
 	 * @param   string $context
 	 *
 	 * @return mixed|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
@@ -139,6 +185,7 @@ abstract class KunenaHtmlParser
 	 * @param   int $len
 	 *
 	 * @return mixed|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function plainBBCode($txt, $len = 0)
@@ -163,6 +210,7 @@ abstract class KunenaHtmlParser
 	 * @param   bool $html
 	 *
 	 * @return string|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function stripBBCode($txt, $len = 0, $html = true)
@@ -192,9 +240,9 @@ abstract class KunenaHtmlParser
 
 		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
-			$pattern = "/[^@\s]*@[^@\s]*\.[^@\s]*/";
+			$pattern     = "/[^@\s]*@[^@\s]*\.[^@\s]*/";
 			$replacement = ' ';
-			$txt = preg_replace($pattern, $replacement, $txt);
+			$txt         = preg_replace($pattern, $replacement, $txt);
 		}
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
@@ -211,47 +259,5 @@ abstract class KunenaHtmlParser
 		}
 
 		return $txt;
-	}
-
-	/**
-	 * @param          $content
-	 * @param   string $target
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public static function &prepareContent(&$content, $target = 'body')
-	{
-		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-		$events       = (int) $config->get('jcontentevents', false);
-		$event_target = (array) $config->get('jcontentevent_target', array('body'));
-
-		if ($events && in_array($target, $event_target))
-		{
-			$row       = new stdClass;
-			$row->text =& $content;
-
-			// Run events
-			$params = new \Joomla\Registry\Registry;
-			$params->set('ksource', 'kunena');
-
-			$dispatcher = JEventDispatcher::getInstance();
-			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
-			$content = $row->text;
-		}
-
-		return $content;
-	}
-
-	/**
-	 * @param $string
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public static function escape($string)
-	{
-		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 	}
 }

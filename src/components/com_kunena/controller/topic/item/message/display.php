@@ -70,7 +70,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -159,7 +160,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
+					if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 					{
 						$this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
 					}
@@ -173,7 +174,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
 			{
-				$this->reportMessageLink = JHTML::_('kunenaforum.link',
+				$this->reportMessageLink = JHtml::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
 					. '&mesid=' . intval($this->message->id),

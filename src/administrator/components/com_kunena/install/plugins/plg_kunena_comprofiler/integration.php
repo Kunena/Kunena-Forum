@@ -26,6 +26,7 @@ class KunenaIntegrationComprofiler
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function open()
 	{
@@ -40,8 +41,29 @@ class KunenaIntegrationComprofiler
 	}
 
 	/**
+	 * Triggers CB events
+	 *
+	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
+	 *
+	 * @param $event
+	 * @param $params
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function trigger($event, &$params)
+	{
+		global $_PLUGINS;
+		$config            = KunenaFactory::getConfig();
+		$params ['config'] = $config;
+		$_PLUGINS->loadPluginGroup('user');
+		$_PLUGINS->trigger('kunenaIntegration', array($event, &$config, &$params));
+	}
+
+	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function close()
 	{
@@ -53,24 +75,5 @@ class KunenaIntegrationComprofiler
 		self::$open = false;
 		$params     = array();
 		self::trigger('onEnd', $params);
-	}
-
-	/**
-	 * Triggers CB events
-	 *
-	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
-	 *
-	 * @param $event
-	 * @param $params
-	 *
-	 * @since Kunena
-	 */
-	public static function trigger($event, &$params)
-	{
-		global $_PLUGINS;
-		$config            = KunenaFactory::getConfig();
-		$params ['config'] = $config;
-		$_PLUGINS->loadPluginGroup('user');
-		$_PLUGINS->trigger('kunenaIntegration', array($event, &$config, &$params));
 	}
 }

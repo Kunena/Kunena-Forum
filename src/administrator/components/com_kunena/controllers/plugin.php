@@ -47,88 +47,6 @@ class KunenaAdminControllerPlugin extends KunenaController
 	}
 
 	/**
-	 * Method to get a model object, loading it if required.
-	 *
-	 * @param   string $name   The model name.  Optional.
-	 * @param   string $prefix The class prefix.  Optional.
-	 * @param   array  $config Configuration array for model. Optional.
-	 *
-	 * @return  object  The model.
-	 *
-	 * @since   12.2
-	 */
-	public function getModel($name = '', $prefix = '', $config = array())
-	{
-		if (empty($name))
-		{
-			$name = 'plugin';
-		}
-
-		return parent::getModel($name, $prefix, $config);
-	}
-
-	/**
-	 * Method to check if you can add a new record.
-	 *
-	 * Extended classes can override this if necessary.
-	 *
-	 * @return boolean
-	 *
-	 * @internal param array $data An array of input data.
-	 *
-	 * @since    12.2
-	 */
-	protected function allowAdd()
-	{
-		$user = \Joomla\CMS\Factory::getUser();
-
-		return ($user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create')));
-	}
-
-	/**
-	 * Method to check if you can add a new record.
-	 *
-	 * Extended classes can override this if necessary.
-	 *
-	 * @param   array  $data An array of input data.
-	 * @param   string $key  The name of the key for the primary key; default is id.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   12.2
-	 */
-	protected function allowEdit($data = array(), $key = 'id')
-	{
-		return \Joomla\CMS\Factory::getUser()->authorise('core.edit', $this->option);
-	}
-
-	/**
-	 * Method to check if you can save a new or existing record.
-	 *
-	 * Extended classes can override this if necessary.
-	 *
-	 * @param   array  $data An array of input data.
-	 * @param   string $key  The name of the key for the primary key.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   12.2
-	 */
-	protected function allowSave($data, $key = 'id')
-	{
-		$recordId = isset($data[$key]) ? $data[$key] : '0';
-
-		if ($recordId)
-		{
-			return $this->allowEdit($data, $key);
-		}
-		else
-		{
-			return $this->allowAdd();
-		}
-	}
-
-	/**
 	 * Method to edit an existing record.
 	 *
 	 * @param   string $key      The name of the primary key of the URL variable.
@@ -137,6 +55,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * @return  boolean  True if access level check and checkout passes, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function edit($key = null, $urlVar = null)
@@ -211,12 +130,108 @@ class KunenaAdminControllerPlugin extends KunenaController
 	}
 
 	/**
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param   string $name   The model name.  Optional.
+	 * @param   string $prefix The class prefix.  Optional.
+	 * @param   array  $config Configuration array for model. Optional.
+	 *
+	 * @return  object  The model.
+	 *
+	 * @since   12.2
+	 */
+	public function getModel($name = '', $prefix = '', $config = array())
+	{
+		if (empty($name))
+		{
+			$name = 'plugin';
+		}
+
+		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array  $data An array of input data.
+	 * @param   string $key  The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   12.2
+	 */
+	protected function allowEdit($data = array(), $key = 'id')
+	{
+		return \Joomla\CMS\Factory::getUser()->authorise('core.edit', $this->option);
+	}
+
+	/**
+	 * Gets the URL arguments to append to a list redirect.
+	 *
+	 * @return  string  The arguments to append to the redirect URL.
+	 *
+	 * @throws Exception
+	 * @since   12.2
+	 */
+	protected function getRedirectToListAppend()
+	{
+		$tmpl   = \Joomla\CMS\Factory::getApplication()->input->get('tmpl');
+		$append = '';
+
+		// Setup redirect info.
+		if ($tmpl)
+		{
+			$append .= '&tmpl=' . $tmpl;
+		}
+
+		return $append;
+	}
+
+	/**
+	 * Gets the URL arguments to append to an item redirect.
+	 *
+	 * @param   integer $recordId The primary key id for the item.
+	 * @param   string  $urlVar   The name of the URL variable for the id.
+	 *
+	 * @return  string  The arguments to append to the redirect URL.
+	 *
+	 * @since   12.2
+	 */
+	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
+	{
+		$tmpl   = $this->input->get('tmpl');
+		$layout = $this->input->get('layout', 'edit');
+		$append = '';
+
+		// Setup redirect info.
+		if ($tmpl)
+		{
+			$append .= '&tmpl=' . $tmpl;
+		}
+
+		if ($layout)
+		{
+			$append .= '&layout=' . $layout;
+		}
+
+		if ($recordId)
+		{
+			$append .= '&' . $urlVar . '=' . $recordId;
+		}
+
+		return $append;
+	}
+
+	/**
 	 * Method to cancel an edit.
 	 *
 	 * @param   string $key The name of the primary key of the URL variable.
 	 *
 	 * @return  boolean  True if access level checks pass, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function cancel($key = null)
@@ -289,84 +304,15 @@ class KunenaAdminControllerPlugin extends KunenaController
 	}
 
 	/**
-	 * Gets the URL arguments to append to an item redirect.
-	 *
-	 * @param   integer $recordId The primary key id for the item.
-	 * @param   string  $urlVar   The name of the URL variable for the id.
-	 *
-	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since   12.2
-	 */
-	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
-	{
-		$tmpl   = $this->input->get('tmpl');
-		$layout = $this->input->get('layout', 'edit');
-		$append = '';
-
-		// Setup redirect info.
-		if ($tmpl)
-		{
-			$append .= '&tmpl=' . $tmpl;
-		}
-
-		if ($layout)
-		{
-			$append .= '&layout=' . $layout;
-		}
-
-		if ($recordId)
-		{
-			$append .= '&' . $urlVar . '=' . $recordId;
-		}
-
-		return $append;
-	}
-
-	/**
-	 * Gets the URL arguments to append to a list redirect.
-	 *
-	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since   12.2
-	 */
-	protected function getRedirectToListAppend()
-	{
-		$tmpl   = \Joomla\CMS\Factory::getApplication()->input->get('tmpl');
-		$append = '';
-
-		// Setup redirect info.
-		if ($tmpl)
-		{
-			$append .= '&tmpl=' . $tmpl;
-		}
-
-		return $append;
-	}
-
-	/**
-	 * Function that allows child controller access to model data
-	 * after the data has been saved.
-	 *
-	 * @param   object       $model     The data model object.
-	 * @param   array        $validData The validated data.
-	 *
-	 * @return  void
-	 *
-	 * @since   12.2
-	 */
-	protected function postSaveHook($model, $validData = array())
-	{
-	}
-
-	/**
 	 * Method to save a record.
 	 *
 	 * @param   string $key    The name of the primary key of the URL variable.
-	 * @param   string $urlVar The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param   string $urlVar The name of the URL variable if different from the primary key (sometimes required to
+	 *                         avoid router collisions).
 	 *
 	 * @return  boolean  True if successful, false otherwise.
 	 *
+	 * @throws Exception
 	 * @since   12.2
 	 */
 	public function save($key = null, $urlVar = null)
@@ -588,5 +534,64 @@ class KunenaAdminControllerPlugin extends KunenaController
 		$this->postSaveHook($model, $validData);
 
 		return true;
+	}
+
+	/**
+	 * Method to check if you can save a new or existing record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array  $data An array of input data.
+	 * @param   string $key  The name of the key for the primary key.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   12.2
+	 */
+	protected function allowSave($data, $key = 'id')
+	{
+		$recordId = isset($data[$key]) ? $data[$key] : '0';
+
+		if ($recordId)
+		{
+			return $this->allowEdit($data, $key);
+		}
+		else
+		{
+			return $this->allowAdd();
+		}
+	}
+
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @return boolean
+	 *
+	 * @internal param array $data An array of input data.
+	 *
+	 * @since    12.2
+	 */
+	protected function allowAdd()
+	{
+		$user = \Joomla\CMS\Factory::getUser();
+
+		return ($user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create')));
+	}
+
+	/**
+	 * Function that allows child controller access to model data
+	 * after the data has been saved.
+	 *
+	 * @param   object $model     The data model object.
+	 * @param   array  $validData The validated data.
+	 *
+	 * @return  void
+	 *
+	 * @since   12.2
+	 */
+	protected function postSaveHook($model, $validData = array())
+	{
 	}
 }

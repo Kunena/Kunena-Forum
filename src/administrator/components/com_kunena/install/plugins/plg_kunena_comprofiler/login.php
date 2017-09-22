@@ -40,8 +40,10 @@ class KunenaLoginComprofiler
 	 * @param $password
 	 * @param $rememberme
 	 *
-	 * @return null
+	 * @return null|string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function loginUser($username, $password, $rememberme)
 	{
@@ -61,8 +63,10 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return null
+	 * @return null|string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function logoutUser()
 	{

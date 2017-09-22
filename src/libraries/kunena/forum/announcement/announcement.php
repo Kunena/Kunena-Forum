@@ -29,6 +29,18 @@ defined('_JEXEC') or die();
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
 	/**
+	 * @var array
+	 * @since Kunena
+	 */
+	protected static $actions = array(
+		'none'   => array(),
+		'read'   => array('Read'),
+		'create' => array('New', 'NotBanned', 'Write'),
+		'edit'   => array('Read', 'NotBanned', 'Write'),
+		'delete' => array('Read', 'NotBanned', 'Write'),
+	);
+
+	/**
 	 * @var string
 	 * @since Kunena
 	 */
@@ -57,18 +69,6 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @since Kunena
 	 */
 	protected $_authfcache = null;
-
-	/**
-	 * @var array
-	 * @since Kunena
-	 */
-	protected static $actions = array(
-		'none'   => array(),
-		'read'   => array('Read'),
-		'create' => array('New', 'NotBanned', 'Write'),
-		'edit'   => array('Read', 'NotBanned', 'Write'),
-		'delete' => array('Read', 'NotBanned', 'Write'),
-	);
 
 	/**
 	 * @param   mixed $properties
@@ -110,8 +110,10 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $layout
 	 * @param   bool   $xhtml
 	 *
-	 * @return string
+	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{
@@ -151,8 +153,10 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $task
 	 * @param   bool   $xhtml
 	 *
-	 * @return string
+	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTaskUrl($task = null, $xhtml = true)
 	{
@@ -196,6 +200,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string $mode
 	 *
 	 * @return integer|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function displayField($field, $mode = null)
@@ -350,45 +355,6 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   mixed  $user
-	 * @param   bool   $silent
-	 *
-	 * @return boolean
-	 * @deprecated K4.0
-	 * @since      Kunena
-	 */
-	public function authorise($action = 'read', $user = null, $silent = false)
-	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		if ($user === null)
-		{
-			$user = KunenaUserHelper::getMyself();
-		}
-		elseif (!($user instanceof KunenaUser))
-		{
-			$user = KunenaUserHelper::get($user);
-		}
-
-		$exception = $this->tryAuthorise($action, $user, false);
-
-		if ($silent === false && $exception)
-		{
-			$this->setError($exception->getMessage());
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		if ($silent !== null)
-		{
-			return !$exception;
-		}
-
-		return $exception ? $exception->getMessage() : null;
-	}
-
-	/**
 	 * @return boolean
 	 * @since Kunena
 	 */
@@ -414,7 +380,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
 	 */
 	protected function authoriseNew(KunenaUser $user)
@@ -430,7 +396,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -451,7 +418,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
@@ -478,7 +446,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user
 	 *
-	 * @return null|string
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function authoriseWrite(KunenaUser $user)

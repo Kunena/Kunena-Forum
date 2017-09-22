@@ -39,6 +39,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 * Prepare announcement list display.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()
@@ -72,6 +73,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

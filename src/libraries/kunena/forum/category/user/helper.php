@@ -30,6 +30,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   bool     $reload   Reload objects from the database.
 	 *
 	 * @return KunenaForumCategoryUser    The user category object.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function get($category = null, $user = null, $reload = false)
@@ -63,6 +64,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   mixed          $user The user id to load.
 	 *
 	 * @return KunenaForumCategoryUser[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getCategories($ids = false, $user = null)
@@ -105,67 +107,12 @@ abstract class KunenaForumCategoryUserHelper
 	}
 
 	/**
-	 * @param   array $ids
-	 * @param   null  $user
-	 *
-	 * @since Kunena
-	 */
-	static public function markRead(array $ids, $user = null)
-	{
-		$user = KunenaUserHelper::get($user);
-
-		$items      = self::getCategories($ids, $user);
-		$updateList = array();
-		$insertList = array();
-
-		$db   = \Joomla\CMS\Factory::getDbo();
-		$time = \Joomla\CMS\Factory::getDate()->toUnix();
-
-		foreach ($items as $item)
-		{
-			if ($item->exists())
-			{
-				$updateList[] = (int) $item->category_id;
-			}
-			else
-			{
-				$insertList[] = "{$db->quote($user->userid)}, {$db->quote($item->category_id)}, {$db->quote($time)}";
-			}
-		}
-
-		if ($updateList)
-		{
-			$idlist = implode(',', $updateList);
-			$query  = $db->getQuery(true);
-			$query
-				->update('#__kunena_user_categories')
-				->set("allreadtime={$db->quote($time)}")
-				->where("user_id={$db->quote($user->userid)}")
-				->where("category_id IN ({$idlist})");
-			$db->setQuery($query);
-			$db->execute();
-		}
-
-		if ($insertList)
-		{
-			$query = $db->getQuery(true);
-			$query
-				->insert('#__kunena_user_categories')
-				->columns('user_id, category_id, allreadtime')
-				->values($insertList);
-			$db->setQuery($query);
-			$db->execute();
-		}
-	}
-
-	// Internal functions
-
-	/**
 	 * Load categories for a specific user.
 	 *
 	 * @param   array      $ids The category ids to load.
 	 * @param   KunenaUser $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadCategories(array $ids, KunenaUser $user)
@@ -215,5 +162,62 @@ abstract class KunenaForumCategoryUserHelper
 		}
 
 		unset($results);
+	}
+
+	// Internal functions
+
+	/**
+	 * @param   array $ids
+	 * @param   null  $user
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function markRead(array $ids, $user = null)
+	{
+		$user = KunenaUserHelper::get($user);
+
+		$items      = self::getCategories($ids, $user);
+		$updateList = array();
+		$insertList = array();
+
+		$db   = \Joomla\CMS\Factory::getDbo();
+		$time = \Joomla\CMS\Factory::getDate()->toUnix();
+
+		foreach ($items as $item)
+		{
+			if ($item->exists())
+			{
+				$updateList[] = (int) $item->category_id;
+			}
+			else
+			{
+				$insertList[] = "{$db->quote($user->userid)}, {$db->quote($item->category_id)}, {$db->quote($time)}";
+			}
+		}
+
+		if ($updateList)
+		{
+			$idlist = implode(',', $updateList);
+			$query  = $db->getQuery(true);
+			$query
+				->update('#__kunena_user_categories')
+				->set("allreadtime={$db->quote($time)}")
+				->where("user_id={$db->quote($user->userid)}")
+				->where("category_id IN ({$idlist})");
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		if ($insertList)
+		{
+			$query = $db->getQuery(true);
+			$query
+				->insert('#__kunena_user_categories')
+				->columns('user_id, category_id, allreadtime')
+				->values($insertList);
+			$db->setQuery($query);
+			$db->execute();
+		}
 	}
 }

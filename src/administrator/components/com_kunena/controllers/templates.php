@@ -41,6 +41,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @param   array $config config
 	 *
+	 * @throws Exception
 	 * @since    2.0
 	 */
 	public function __construct($config = array())
@@ -54,7 +55,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function publish()
 	{
@@ -87,7 +90,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function add()
 	{
@@ -107,7 +112,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function edit()
 	{
@@ -141,7 +148,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function install()
 	{
@@ -254,7 +263,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function uninstall()
 	{
@@ -322,7 +333,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function chooseless()
 	{
@@ -347,7 +360,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function editless()
 	{
@@ -373,7 +388,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function choosecss()
 	{
@@ -390,7 +407,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function applyless()
 	{
@@ -436,7 +455,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function saveless()
 	{
@@ -486,7 +507,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function editcss()
 	{
@@ -512,7 +535,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function applycss()
 	{
@@ -555,7 +580,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function savecss()
 	{
@@ -600,7 +627,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function apply()
 	{
@@ -631,11 +660,48 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
+	 * Method to save param.ini file on filesystem.
+	 *
+	 * @param   string $template The name of the template.
+	 *
+	 * @return void
+	 *
+	 * @throws Exception
+	 * @since  3.0.0
+	 * @throws null
+	 */
+	protected function _saveParamFile($template)
+	{
+		$params = $this->app->input->get('jform', array(), 'post', 'array');
+
+		// Set FTP credentials, if given
+		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
+		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+		if (count($params))
+		{
+			$registry = new \Joomla\Registry\Registry;
+			$registry->loadArray($params);
+			$txt    = $registry->toString('INI');
+			$return = KunenaFile::write($file, $txt);
+
+			if (!$return)
+			{
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
+				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+			}
+		}
+	}
+
+	/**
 	 * Save
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since    2.0
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -666,44 +732,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 * Method to save param.ini file on filesystem.
-	 *
-	 * @param   string $template The name of the template.
-	 *
-	 * @return void
-	 *
-	 * @since  3.0.0
-	 */
-	protected function _saveParamFile($template)
-	{
-		$params = $this->app->input->get('jform', array(), 'post', 'array');
-
-		// Set FTP credentials, if given
-		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
-		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
-
-		if (count($params))
-		{
-			$registry = new \Joomla\Registry\Registry;
-			$registry->loadArray($params);
-			$txt    = $registry->toString('INI');
-			$return = KunenaFile::write($file, $txt);
-
-			if (!$return)
-			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
-				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
-			}
-		}
-	}
-
-	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since 3.0.5
+	 * @throws null
 	 */
 	public function cancel()
 	{

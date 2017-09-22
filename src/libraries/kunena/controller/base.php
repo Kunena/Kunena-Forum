@@ -27,7 +27,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The input object.
 	 *
-	 * @var    \Joomla\CMS\Input\Input
+	 * @var    \Joomla\Input\Input
 	 * @since Kunena
 	 */
 	protected $input;
@@ -43,13 +43,15 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   Jinput           $input   The input object.
+	 * @param \Joomla\Input\Input                       $input   The input object.
 	 * @param   \Joomla\CMS\Application\BaseApplication $app     The application object.
-	 * @param   \Joomla\Registry\Registry|array  $options Array / \Joomla\Registry\Registry object with the options to load.
+	 * @param   \Joomla\Registry\Registry|array         $options Array \Joomla\Registry\Registry object with the
+	 *                                                           options to load.
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function __construct(JInput $input = null, $app = null, $options = null)
+	public function __construct(\Joomla\Input\Input $input = null, $app = null, $options = null)
 	{
 		// Setup dependencies.
 		$this->app   = isset($app) ? $app : $this->loadApplication();
@@ -59,6 +61,47 @@ abstract class KunenaControllerBase implements Serializable
 		{
 			$this->setOptions($options);
 		}
+	}
+
+	/**
+	 * Load the application object.
+	 *
+	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function loadApplication()
+	{
+		return \Joomla\CMS\Factory::getApplication();
+	}
+
+	/**
+	 * Load the input object.
+	 *
+	 * @return  \Joomla\Input\Input  The input object.
+	 * @since Kunena
+	 */
+	protected function loadInput()
+	{
+		return $this->app->input;
+	}
+
+	/**
+	 * Get the options.
+	 *
+	 * @return  \Joomla\Registry\Registry  Object with the options.
+	 *
+	 * @since   K4.0
+	 */
+	public function getOptions()
+	{
+		// Always return a \Joomla\Registry\Registry instance
+		if (!($this->options instanceof \Joomla\Registry\Registry))
+		{
+			$this->resetOptions();
+		}
+
+		return $this->options;
 	}
 
 	/**
@@ -88,24 +131,6 @@ abstract class KunenaControllerBase implements Serializable
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Get the options.
-	 *
-	 * @return  \Joomla\Registry\Registry  Object with the options.
-	 *
-	 * @since   K4.0
-	 */
-	public function getOptions()
-	{
-		// Always return a \Joomla\Registry\Registry instance
-		if (!($this->options instanceof \Joomla\Registry\Registry))
-		{
-			$this->resetOptions();
-		}
-
-		return $this->options;
 	}
 
 	/**
@@ -145,7 +170,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the input object.
 	 *
-	 * @return  \Joomla\CMS\Input\Input  The input object.
+	 * @return  \Joomla\Input\Input  The input object.
 	 * @since Kunena
 	 */
 	public function getInput()
@@ -171,7 +196,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return JController|KunenaControllerBase
 	 *
-	 * @throws  UnexpectedValueException if input is not the right class.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function unserialize($input)
@@ -182,33 +207,11 @@ abstract class KunenaControllerBase implements Serializable
 		// Unserialize the input and options.
 		list ($this->input, $this->options) = unserialize($input);
 
-		if (!($this->input instanceof \Joomla\CMS\Input\Input))
+		if (!($this->input instanceof \Joomla\Input\Input))
 		{
 			throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', get_class($this), gettype($this->input)));
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Load the application object.
-	 *
-	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
-	 * @since Kunena
-	 */
-	protected function loadApplication()
-	{
-		return \Joomla\CMS\Factory::getApplication();
-	}
-
-	/**
-	 * Load the input object.
-	 *
-	 * @return  \Joomla\CMS\Input\Input  The input object.
-	 * @since Kunena
-	 */
-	protected function loadInput()
-	{
-		return $this->app->input;
 	}
 }

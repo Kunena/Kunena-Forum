@@ -32,6 +32,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou|void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function get($identifier, $reload = false)
@@ -59,173 +60,11 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * Get total number of Thank yous.
-	 *
-	 * @param   int $starttime Starting time as unix timestamp.
-	 * @param   int $endtime   Ending time as unix timestamp.
-	 *
-	 * @return integer
-	 * @since Kunena
-	 */
-	static public function getTotal($starttime = null, $endtime = null)
-	{
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$where = array();
-
-		if (!empty($starttime))
-		{
-			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(intval($starttime))})";
-		}
-
-		if (!empty($endtime))
-		{
-			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
-		}
-
-		$query = "SELECT COUNT(*) FROM #__kunena_thankyou";
-
-		if (!empty($where))
-		{
-			$query .= " WHERE " . implode(" AND ", $where);
-		}
-
-		$db->setQuery($query);
-
-		try
-		{
-			$results = (int) $db->loadResult();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $results;
-	}
-
-	/**
-	 * Get users with most thank yous received / given.
-	 *
-	 * @param   bool $target
-	 * @param   int  $limitstart
-	 * @param   int  $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
-	{
-		$field = 'targetuserid';
-
-		if (!$target)
-		{
-			$field = 'userid';
-		}
-
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
-				FROM #__kunena_thankyou AS s
-				INNER JOIN #__users AS u
-				WHERE s.{$field}=u.id
-				GROUP BY s.{$field}
-				ORDER BY countid DESC";
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
-
-		try
-		{
-			$results = (array) $db->loadObjectList();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $results;
-	}
-
-	/**
-	 * Get messages with most thank yous given.
-	 *
-	 * @param   int $limitstart
-	 * @param   int $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	static public function getTopMessages($limitstart = 0, $limit = 10)
-	{
-		$db         = \Joomla\CMS\Factory::getDBO();
-		$categories = KunenaForumCategoryHelper::getCategories();
-		$catlist    = implode(',', array_keys($categories));
-		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
-				FROM #__kunena_thankyou AS s
-				INNER JOIN #__kunena_messages AS m ON s.postid=m.id
-				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
-				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0
-				GROUP BY s.postid
-				ORDER BY countid DESC";
-
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
-
-		try
-		{
-			$results = (array) $db->loadObjectList();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $results;
-	}
-
-	/**
-	 * Get messages where a user received / gave thank you.
-	 *
-	 * @param   int  $userid
-	 * @param   bool $target
-	 * @param   int  $limitstart
-	 * @param   int  $limit
-	 *
-	 * @return array
-	 * @since Kunena
-	 */
-	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
-	{
-		$db    = \Joomla\CMS\Factory::getDBO();
-		$field = 'targetuserid';
-
-		if (!$target)
-		{
-			$field = 'userid';
-		}
-
-		$categories = KunenaForumCategoryHelper::getCategories();
-		$catlist    = implode(',', array_keys($categories));
-		$query      = "SELECT m.catid, m.thread, m.id
-				FROM #__kunena_thankyou AS t
-				INNER JOIN #__kunena_messages AS m ON m.id=t.postid
-				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
-				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
-
-		try
-		{
-			$results = (array) $db->loadObjectList();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $results;
-	}
-
-	/**
 	 * Load users who have given thank you to listed messages.
 	 *
 	 * @param   array $ids
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static protected function loadMessages(array $ids)
@@ -276,10 +115,178 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
+	 * Get total number of Thank yous.
+	 *
+	 * @param   int $starttime Starting time as unix timestamp.
+	 * @param   int $endtime   Ending time as unix timestamp.
+	 *
+	 * @return integer
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function getTotal($starttime = null, $endtime = null)
+	{
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$where = array();
+
+		if (!empty($starttime))
+		{
+			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(intval($starttime))})";
+		}
+
+		if (!empty($endtime))
+		{
+			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
+		}
+
+		$query = "SELECT COUNT(*) FROM #__kunena_thankyou";
+
+		if (!empty($where))
+		{
+			$query .= " WHERE " . implode(" AND ", $where);
+		}
+
+		$db->setQuery($query);
+
+		try
+		{
+			$results = (int) $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Get users with most thank yous received / given.
+	 *
+	 * @param   bool $target
+	 * @param   int  $limitstart
+	 * @param   int  $limit
+	 *
+	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
+	{
+		$field = 'targetuserid';
+
+		if (!$target)
+		{
+			$field = 'userid';
+		}
+
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
+				FROM #__kunena_thankyou AS s
+				INNER JOIN #__users AS u
+				WHERE s.{$field}=u.id
+				GROUP BY s.{$field}
+				ORDER BY countid DESC";
+		$db->setQuery($query, (int) $limitstart, (int) $limit);
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Get messages with most thank yous given.
+	 *
+	 * @param   int $limitstart
+	 * @param   int $limit
+	 *
+	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function getTopMessages($limitstart = 0, $limit = 10)
+	{
+		$db         = \Joomla\CMS\Factory::getDBO();
+		$categories = KunenaForumCategoryHelper::getCategories();
+		$catlist    = implode(',', array_keys($categories));
+		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
+				FROM #__kunena_thankyou AS s
+				INNER JOIN #__kunena_messages AS m ON s.postid=m.id
+				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
+				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0
+				GROUP BY s.postid
+				ORDER BY countid DESC";
+
+		$db->setQuery($query, (int) $limitstart, (int) $limit);
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Get messages where a user received / gave thank you.
+	 *
+	 * @param   int  $userid
+	 * @param   bool $target
+	 * @param   int  $limitstart
+	 * @param   int  $limit
+	 *
+	 * @return array
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
+	{
+		$db    = \Joomla\CMS\Factory::getDBO();
+		$field = 'targetuserid';
+
+		if (!$target)
+		{
+			$field = 'userid';
+		}
+
+		$categories = KunenaForumCategoryHelper::getCategories();
+		$catlist    = implode(',', array_keys($categories));
+		$query      = "SELECT m.catid, m.thread, m.id
+				FROM #__kunena_thankyou AS t
+				INNER JOIN #__kunena_messages AS m ON m.id=t.postid
+				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
+				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
+		$db->setQuery($query, (int) $limitstart, (int) $limit);
+
+		try
+		{
+			$results = (array) $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Recount thank yous is null.
 	 *
 	 * @return boolean|int    Number of rows is successful, false on error.
 	 *
+	 * @throws Exception
 	 * @since K2.0
 	 */
 	static public function recountThankyou()
@@ -313,6 +320,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Recount thank yous.
 	 *
 	 * @return boolean|int    Number of rows is successful, false on error.
+	 * @throws Exception
 	 * @since K2.0
 	 */
 	static public function recount()
@@ -349,6 +357,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int $ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getByMessage($ids = false)

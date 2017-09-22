@@ -22,7 +22,7 @@ jimport('joomla.application.component.model');
  *
  * @since  K1.6
  */
-class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
+class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
 	 * Flag to indicate model state initialization.
@@ -174,6 +174,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null)
@@ -213,6 +214,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return array|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	protected function getSQL()
@@ -229,6 +231,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	/**
 	 * @return array|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getCreateSQL()
@@ -537,6 +540,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function getSchemaDiff($old, $new)
@@ -920,7 +924,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 				case 'create':
 				case '':
 					$action = 'create';
-					$str .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
+					$str    .= 'CREATE TABLE ' . $this->db->quoteName($tablename) . ' (' . "\n";
 
 					foreach ($table->childNodes as $field)
 					{
@@ -1026,6 +1030,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseModel
 	 * @param $dbschema
 	 * @param $upgrade
 	 *
+	 * @throws KunenaSchemaException
 	 * @since Kunena
 	 */
 	public function upgradeSchema($dbschema, $upgrade)

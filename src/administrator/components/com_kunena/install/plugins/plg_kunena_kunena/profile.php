@@ -38,7 +38,9 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -54,59 +56,10 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param             $user
-	 * @param   string    $task
-	 * @param   bool      $xhtml
-	 * @param bool|string $avatarTab
-	 *
-	 * @return bool
-	 * @since Kunena
-	 */
-	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
-	{
-		if ($user == 0)
-		{
-			return false;
-		}
-
-		if (!($user instanceof KunenaUser))
-		{
-			$user = KunenaUserHelper::get($user);
-		}
-
-		if ($user === false)
-		{
-			return false;
-		}
-
-		$userid = "&userid={$user->userid}";
-
-		if ($task && $task != 'edit')
-		{
-			// TODO: remove in the future.
-			$do = $task ? '&do=' . $task : '';
-
-			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
-		}
-		else
-		{
-			$layout = $task ? '&layout=' . $task : '';
-
-			if ($layout)
-			{
-				return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}{$avatarTab}", $xhtml);
-			}
-			else
-			{
-				return KunenaRoute::getUserUrl($user, $xhtml);
-			}
-		}
-	}
-
-	/**
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
@@ -154,12 +107,66 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		$avatartab = '&avatartab=1';
 
 		return $this->getProfileURL($userid, 'edit', $xhtml = true, $avatartab);
+	}
+
+	/**
+	 * @param               $user
+	 * @param   string      $task
+	 * @param   bool        $xhtml
+	 * @param   bool|string $avatarTab
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
+	 */
+	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
+	{
+		if ($user == 0)
+		{
+			return false;
+		}
+
+		if (!($user instanceof KunenaUser))
+		{
+			$user = KunenaUserHelper::get($user);
+		}
+
+		if ($user === false)
+		{
+			return false;
+		}
+
+		$userid = "&userid={$user->userid}";
+
+		if ($task && $task != 'edit')
+		{
+			// TODO: remove in the future.
+			$do = $task ? '&do=' . $task : '';
+
+			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
+		}
+		else
+		{
+			$layout = $task ? '&layout=' . $task : '';
+
+			if ($layout)
+			{
+				return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}{$avatarTab}", $xhtml);
+			}
+			else
+			{
+				return KunenaRoute::getUserUrl($user, $xhtml);
+			}
+		}
 	}
 }

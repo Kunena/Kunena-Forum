@@ -34,7 +34,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm"
-		      name="adminForm">
+			  name="adminForm">
 			<input type="hidden" name="task" value="recount"/>
 			<?php echo JHtml::_('form.token'); ?>
 

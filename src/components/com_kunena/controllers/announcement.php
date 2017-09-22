@@ -22,6 +22,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function none()
 	{
@@ -32,6 +34,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function publish()
 	{
@@ -43,7 +46,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$cid = $this->app->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
@@ -58,7 +61,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 1;
 
-			if (!$announcement->authorise('edit') || !$announcement->save())
+			if (!$announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -79,6 +82,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function unpublish()
 	{
@@ -90,7 +94,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
@@ -105,7 +109,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 0;
 
-			if (!$announcement->authorise('edit') || !$announcement->save())
+			if (!$announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -126,10 +130,11 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function edit()
 	{
-		$cid = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$cid = $this->app->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
@@ -140,6 +145,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function delete()
 	{
@@ -151,14 +157,14 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = \Joomla\CMS\Factory::getApplication()->input->get('cid', (array) \Joomla\CMS\Factory::getApplication()->input->getInt('id'), 'post', 'array');
+		$cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 
-			if (!$announcement->authorise('delete') || !$announcement->delete())
+			if (!$announcement->isAuthorised('delete') || !$announcement->delete())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
 			}
@@ -179,6 +185,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function save()
 	{
@@ -192,20 +199,20 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		$now                    = new \Joomla\CMS\Date\Date;
 		$fields                 = array();
-		$fields['title']        = \Joomla\CMS\Factory::getApplication()->input->getString('title', '', 'post', 'raw');
-		$fields['description']  = \Joomla\CMS\Factory::getApplication()->input->getString('description', '', 'post', 'raw');
-		$fields['sdescription'] = \Joomla\CMS\Factory::getApplication()->input->getString('sdescription', '', 'post', 'raw');
-		$fields['created']      = \Joomla\CMS\Factory::getApplication()->input->getString('created', $now->toSql());
-		$fields['publish_up']   = \Joomla\CMS\Factory::getApplication()->input->getString('publish_up', $now->toSql());
-		$fields['publish_down'] = \Joomla\CMS\Factory::getApplication()->input->getString('publish_down', $now->toSql());
-		$fields['published']    = \Joomla\CMS\Factory::getApplication()->input->getInt('published', 1);
-		$fields['showdate']     = \Joomla\CMS\Factory::getApplication()->input->getInt('showdate', 1);
+		$fields['title']        = $this->app->input->getString('title', '', 'post', 'raw');
+		$fields['description']  = $this->app->input->getString('description', '', 'post', 'raw');
+		$fields['sdescription'] = $this->app->input->getString('sdescription', '', 'post', 'raw');
+		$fields['created']      = $this->app->input->getString('created', $now->toSql());
+		$fields['publish_up']   = $this->app->input->getString('publish_up', $now->toSql());
+		$fields['publish_down'] = $this->app->input->getString('publish_down', $now->toSql());
+		$fields['published']    = $this->app->input->getInt('published', 1);
+		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
-		$id           = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
+		$id           = $this->app->input->getInt('id');
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 		$announcement->bind($fields);
 
-		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save())
+		if (!$announcement->isAuthorised($id ? 'edit' : 'create') || !$announcement->save())
 		{
 			$this->app->enqueueMessage($announcement->getError(), 'error');
 			$this->setRedirectBack();

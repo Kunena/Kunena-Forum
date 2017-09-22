@@ -30,6 +30,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @param   array $config construct
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
@@ -39,45 +40,13 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
-	 * Display
-	 *
-	 * @param   bool $cachable  cachable
-	 * @param   bool $urlparams urlparams
-	 *
-	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
-	 *
-	 * @since    2.0.0-BETA2
-	 */
-	public function display($cachable = false, $urlparams = false)
-	{
-		$db = \Joomla\CMS\Factory::getDbo();
-
-		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
-		$now       = time();
-		$timestamp = $this->app->getUserState('pkg_kunena.updateCheck', 0);
-
-		if ($timestamp < $now)
-		{
-			$query = $db->getQuery(true)
-				->update($db->quoteName('#__update_sites'))
-				->set($db->quoteName('enabled') . '=1')
-				->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
-			$db->setQuery($query);
-			$db->execute();
-
-			$this->app->setUserState('pkg_kunena.updateCheck', $now + 60 * 60 * 6);
-		}
-
-		parent::display($cachable, $urlparams);
-	}
-
-	/**
 	 * On get icons
 	 *
 	 * Display Kunena updates on dashboard
 	 *
 	 * @return array|null|string
 	 *
+	 * @throws Exception
 	 * @since    2.0.0-BETA2
 	 */
 	public static function onGetIcons()
@@ -149,5 +118,40 @@ class KunenaAdminControllerCpanel extends KunenaController
 		}
 
 		return '<a href="' . $link . '"><img src="' . \Joomla\CMS\Uri\Uri::root() . $icon . '"/></a>';
+	}
+
+	/**
+	 * Display
+	 *
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
+	 *
+	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
+	 *
+	 * @throws Exception
+	 * @since    2.0.0-BETA2
+	 * @throws null
+	 */
+	public function display($cachable = false, $urlparams = false)
+	{
+		$db = \Joomla\CMS\Factory::getDbo();
+
+		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
+		$now       = time();
+		$timestamp = $this->app->getUserState('pkg_kunena.updateCheck', 0);
+
+		if ($timestamp < $now)
+		{
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__update_sites'))
+				->set($db->quoteName('enabled') . '=1')
+				->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
+			$db->setQuery($query);
+			$db->execute();
+
+			$this->app->setUserState('pkg_kunena.updateCheck', $now + 60 * 60 * 6);
+		}
+
+		parent::display($cachable, $urlparams);
 	}
 }

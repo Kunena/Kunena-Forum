@@ -21,6 +21,7 @@ class KunenaControllerMisc extends KunenaController
 	/**
 	 * @param   array $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct($config = array())
@@ -31,11 +32,13 @@ class KunenaControllerMisc extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function template()
 	{
 		$name = \Joomla\CMS\Factory::getApplication()->input->getString('name',
-					\Joomla\CMS\Factory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));
+			\Joomla\CMS\Factory::getApplication()->input->cookie->getString('kunena_template', '')
+		);
 
 		if ($name)
 		{

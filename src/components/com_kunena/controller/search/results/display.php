@@ -45,6 +45,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare search results display.
 	 *
 	 * @return void
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -99,6 +101,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

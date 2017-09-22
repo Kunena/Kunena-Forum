@@ -181,8 +181,7 @@ abstract class KunenaDatabaseObjectFinder
 				{
 					$db = $this->db;
 					array_walk(
-						$value, function (&$item) use ($db)
-						{
+						$value, function (&$item) use ($db) {
 							$item = $db->quote($item);
 						}
 					);
@@ -201,6 +200,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function find()
@@ -228,9 +228,22 @@ abstract class KunenaDatabaseObjectFinder
 	}
 
 	/**
+	 * Override to include your own static filters.
+	 *
+	 * @param   JDatabaseQuery $query
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	protected function build(JDatabaseQuery $query)
+	{
+	}
+
+	/**
 	 * Count items.
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function count()
@@ -246,7 +259,7 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		else
 		{
-			$query->clear('select')->clear('order')->select('COUNT(*)');
+			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
 
@@ -260,17 +273,5 @@ abstract class KunenaDatabaseObjectFinder
 		}
 
 		return $count;
-	}
-
-	/**
-	 * Override to include your own static filters.
-	 *
-	 * @param   JDatabaseQuery $query
-	 *
-	 * @return void
-	 * @since Kunena
-	 */
-	protected function build(JDatabaseQuery $query)
-	{
 	}
 }

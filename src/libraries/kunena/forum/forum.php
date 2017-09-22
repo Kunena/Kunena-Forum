@@ -22,30 +22,6 @@ defined('_JEXEC') or die();
 abstract class KunenaForum
 {
 	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected static $version = false;
-
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected static $version_major = false;
-
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected static $version_date = false;
-
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
-	protected static $version_name = false;
-
-	/**
 	 *
 	 * @since Kunena
 	 */
@@ -70,7 +46,6 @@ abstract class KunenaForum
 	 * @since Kunena
 	 */
 	const TOPIC_CREATION = 4;
-
 	/**
 	 *
 	 * @since Kunena
@@ -81,6 +56,75 @@ abstract class KunenaForum
 	 * @since Kunena
 	 */
 	const ADMINISTRATOR = 2;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected static $version = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected static $version_major = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected static $version_date = false;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	protected static $version_name = false;
+
+	/**
+	 * Checks if Kunena Forum is safe to be used and online.
+	 *
+	 * It is a good practice to check if Kunena Forum is online before displaying
+	 * forum content to the user. It's even more important if you allow user to post
+	 * or manipulate forum! By following this practice administrator can have single
+	 * point which he can use to be sure that nobody has access to any data inside
+	 * his forum.
+	 *
+	 * Use case: Administrator is upgrading his forum to the next major version and wants
+	 * to be sure that everything works before putting forum back to online. He logs in
+	 * and can see everything. For everyone else no forum related information is shown.
+	 *
+	 * <code>
+	 * // Check if Kunena Forum has been installed, online and compatible with your code
+	 *    if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *        // Initialize the framework (new in 2.0.0)
+	 *        KunenaForum::setup();
+	 *        // It's now safe to display something or to save Kunena objects
+	 * }
+	 * </code>
+	 *
+	 * @see   KunenaForum::installed()
+	 * @see   KunenaForum::isCompatible()
+	 * @see   KunenaForum::setup()
+	 *
+	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
+	 *
+	 * @return boolean True if online.
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public static function enabled($checkAdmin = true)
+	{
+		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
+		{
+			return false;
+		}
+
+		$config = KunenaFactory::getConfig();
+
+		return !$config->board_offline
+			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
+	}
 
 	/**
 	 * Check if Kunena Forum is safe to be used.
@@ -113,47 +157,24 @@ abstract class KunenaForum
 	}
 
 	/**
-	 * Checks if Kunena Forum is safe to be used and online.
+	 * Check if Kunena Forum is running from a Git repository.
 	 *
-	 * It is a good practice to check if Kunena Forum is online before displaying
-	 * forum content to the user. It's even more important if you allow user to post
-	 * or manipulate forum! By following this practice administrator can have single
-	 * point which he can use to be sure that nobody has access to any data inside
-	 * his forum.
+	 * Developers tend to do their work directly in the Git repositories instead of
+	 * creating and installing new builds after every change. This function can be
+	 * used to check the condition and make sure we do not break users repository
+	 * by replacing files during upgrade.
 	 *
-	 * Use case: Administrator is upgrading his forum to the next major version and wants
-	 * to be sure that everything works before putting forum back to online. He logs in
-	 * and can see everything. For everyone else no forum related information is shown.
-	 *
-	 * <code>
-	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *    if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
-	 *        // Initialize the framework (new in 2.0.0)
-	 *        KunenaForum::setup();
-	 *        // It's now safe to display something or to save Kunena objects
-	 * }
-	 * </code>
-	 *
-	 * @see   KunenaForum::installed()
-	 * @see   KunenaForum::isCompatible()
-	 * @see   KunenaForum::setup()
-	 *
-	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
-	 *
-	 * @return boolean True if online.
+	 * @return boolean True if Git repository is detected.
 	 * @since Kunena
 	 */
-	public static function enabled($checkAdmin = true)
+	public static function isDev()
 	{
-		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena', true))
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
-			return false;
+			return true;
 		}
 
-		$config = KunenaFactory::getConfig();
-
-		return !$config->board_offline
-			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
+		return false;
 	}
 
 	/**
@@ -181,6 +202,7 @@ abstract class KunenaForum
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
 	 * @since 2.0.0-BETA2
+	 * @throws Exception
 	 */
 	public static function setup()
 	{
@@ -255,30 +277,9 @@ abstract class KunenaForum
 	}
 
 	/**
-	 * Check if Kunena Forum is running from a Git repository.
-	 *
-	 * Developers tend to do their work directly in the Git repositories instead of
-	 * creating and installing new builds after every change. This function can be
-	 * used to check the condition and make sure we do not break users repository
-	 * by replacing files during upgrade.
-	 *
-	 * @return boolean True if Git repository is detected.
-	 * @since Kunena
-	 */
-	public static function isDev()
-	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return string Version number.
+	 * @return bool Version number.
 	 * @since Kunena
 	 */
 	public static function version()
@@ -291,52 +292,30 @@ abstract class KunenaForum
 		return self::$version;
 	}
 
-	/**
-	 * Returns major version number (2.0, 3.0, 3.1 and so on).
-	 *
-	 * @return string Major version in xxx.yyy format.
-	 * @since Kunena
-	 */
-	public static function versionMajor()
+	protected static function buildVersion()
 	{
-		if (self::$version_major === false)
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
 		{
-			self::buildVersion();
+			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+			if (file_exists($file))
+			{
+				$manifest      = simplexml_load_file($file);
+				self::$version = (string) $manifest->version . '-GIT';
+			}
+			else
+			{
+				self::$version = strtoupper('@kunenaversion@');
+			}
+		}
+		else
+		{
+			self::$version = strtoupper('@kunenaversion@');
 		}
 
-		return self::$version_major;
-	}
-
-	/**
-	 * Returns build date from Kunena Forum (for Git today).
-	 *
-	 * @return string Date in yyyy-mm-dd format.
-	 * @since Kunena
-	 */
-	public static function versionDate()
-	{
-		if (self::$version_date === false)
-		{
-			self::buildVersion();
-		}
-
-		return self::$version_date;
-	}
-
-	/**
-	 * Returns codename from Kunena release.
-	 *
-	 * @return string Codename.
-	 * @since Kunena
-	 */
-	public static function versionName()
-	{
-		if (self::$version_name === false)
-		{
-			self::buildVersion();
-		}
-
-		return self::$version_name;
+		self::$version_major = substr(self::$version, 0, 3);
+		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? \Joomla\CMS\Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
+		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 
 	/**
@@ -357,6 +336,56 @@ abstract class KunenaForum
 	}
 
 	/**
+	 * Returns major version number (2.0, 3.0, 3.1 and so on).
+	 *
+	 * @return bool Major version in xxx.yyy format.
+	 * @since Kunena
+	 */
+	public static function versionMajor()
+	{
+		if (self::$version_major === false)
+		{
+			self::buildVersion();
+		}
+
+		return self::$version_major;
+	}
+
+	/**
+	 * Returns build date from Kunena Forum (for Git today).
+	 *
+	 * @return bool Date in yyyy-mm-dd format.
+	 * @since Kunena
+	 */
+	public static function versionDate()
+	{
+		if (self::$version_date === false)
+		{
+			self::buildVersion();
+		}
+
+		return self::$version_date;
+	}
+
+	/**
+	 * Returns codename from Kunena release.
+	 *
+	 * @return bool Codename.
+	 * @since Kunena
+	 */
+	public static function versionName()
+	{
+		if (self::$version_name === false)
+		{
+			self::buildVersion();
+		}
+
+		return self::$version_name;
+	}
+
+	// Internal functions
+
+	/**
 	 * Displays Kunena Forum view/layout inside your extension.
 	 *
 	 * <code>
@@ -368,6 +397,7 @@ abstract class KunenaForum
 	 * @param   null|string     $template Name of the template file.
 	 * @param   array|JRegistry $params   Extra parameters to control the model.
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())
@@ -456,33 +486,5 @@ abstract class KunenaForum
 
 		// Render the view.
 		$view->displayLayout($layout, $template);
-	}
-
-	// Internal functions
-
-	protected static function buildVersion()
-	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
-		{
-			$file          = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-
-			if (file_exists($file))
-			{
-				$manifest      = simplexml_load_file($file);
-				self::$version = (string) $manifest->version . '-GIT';
-			}
-			else
-			{
-				self::$version = strtoupper('@kunenaversion@');
-			}
-		}
-		else
-		{
-			self::$version = strtoupper('@kunenaversion@');
-		}
-
-		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? \Joomla\CMS\Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
-		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

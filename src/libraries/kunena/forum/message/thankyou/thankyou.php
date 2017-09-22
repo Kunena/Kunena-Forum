@@ -49,24 +49,12 @@ class KunenaForumMessageThankyou extends JObject
 	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumMessageThankyouHelper::get($identifier, $reload);
-	}
-
-	/**
-	 * Check if the user has already said thank you.
-	 *
-	 * @param   int $userid
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function exists($userid)
-	{
-		return isset($this->users[(int) $userid]);
 	}
 
 	/**
@@ -85,7 +73,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @param   mixed $user
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -137,9 +125,23 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
+	 * Check if the user has already said thank you.
+	 *
+	 * @param   int $userid
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function exists($userid)
+	{
+		return isset($this->users[(int) $userid]);
+	}
+
+	/**
 	 * @param   KunenaForumMessage $message
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
@@ -178,7 +180,7 @@ class KunenaForumMessageThankyou extends JObject
 	 *
 	 * @param   mixed $user
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
 	 */

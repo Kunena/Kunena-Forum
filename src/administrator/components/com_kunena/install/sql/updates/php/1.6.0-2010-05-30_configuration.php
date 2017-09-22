@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
  * @param $parent
  *
  * @return array
+ * @throws Exception
  * @since Kunena
  */
 function kunena_160_2010_05_30_configuration($parent)

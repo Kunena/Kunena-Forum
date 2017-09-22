@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
  * @param $parent
  *
  * @return array|null
+ * @throws Exception
  * @throws KunenaInstallerException
  * @since Kunena
  */

@@ -60,28 +60,7 @@ class KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 * @since Kunena
-	 */
-	protected function getOnClick($userid)
-	{
-		return '';
-	}
-
-	/**
-	 * @param $userid
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-		return '';
-	}
-
-	/**
-	 * @param $userid
-	 *
-	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function showIcon($userid)
@@ -129,11 +108,34 @@ class KunenaPrivate
 	}
 
 	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	protected function getURL($userid)
+	{
+		return '';
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	protected function getOnClick($userid)
+	{
+		return '';
+	}
+
+	/**
 	 * @param          $userid
 	 * @param   string $class
 	 * @param   string $icon
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @internal param $text
 	 * @since    Kunena
 	 */
@@ -176,8 +178,8 @@ class KunenaPrivate
 		if ($userid == $my->id)
 		{
 			$this->pmCount = $this->getUnreadCount($my->id);
-			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
-			$url = $this->getInboxURL();
+			$text          = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$url           = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
 		}
@@ -187,14 +189,14 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $text
+	 * @param $userid
 	 *
-	 * @return string
+	 * @return integer
 	 * @since Kunena
 	 */
-	public function getInboxLink($text)
+	public function getUnreadCount($userid)
 	{
-		return '';
+		return 0;
 	}
 
 	/**
@@ -207,13 +209,13 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param $text
 	 *
-	 * @return integer
+	 * @return string
 	 * @since Kunena
 	 */
-	public function getUnreadCount($userid)
+	public function getInboxLink($text)
 	{
-		return 0;
+		return '';
 	}
 }

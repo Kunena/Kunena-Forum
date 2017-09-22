@@ -21,7 +21,9 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 	 * Prepare user's topic list.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

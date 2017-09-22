@@ -21,6 +21,7 @@ class KunenaModelUser extends KunenaModel
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -76,6 +77,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getQueryWhere()
@@ -156,6 +158,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTotal()
@@ -184,6 +187,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCount()
@@ -217,6 +221,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getItems()

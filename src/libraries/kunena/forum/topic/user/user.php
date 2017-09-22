@@ -64,46 +64,6 @@ class KunenaForumTopicUser extends JObject
 	}
 
 	/**
-	 * @param   mixed $id
-	 * @param   mixed $user
-	 * @param   bool  $reload
-	 *
-	 * @return KunenaForumTopicUser
-	 * @since Kunena
-	 */
-	static public function getInstance($id = null, $user = null, $reload = false)
-	{
-		return KunenaForumTopicUserHelper::get($id, $user, $reload);
-	}
-
-	/**
-	 * @return KunenaForumTopic
-	 * @since Kunena
-	 */
-	public function getTopic()
-	{
-		return KunenaForumTopicHelper::get($this->topic_id);
-	}
-
-	/**
-	 * @param   null|bool $exists
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-	/**
 	 * Method to get the topics table object.
 	 *
 	 * @param   string $type   Topics table name to be used.
@@ -128,15 +88,17 @@ class KunenaForumTopicUser extends JObject
 	}
 
 	/**
-	 * @param   array $data
-	 * @param   array $ignore
+	 * @param   mixed $id
+	 * @param   mixed $user
+	 * @param   bool  $reload
 	 *
+	 * @return KunenaForumTopicUser
 	 * @since Kunena
+	 * @throws Exception
 	 */
-	public function bind(array $data, array $ignore = array())
+	static public function getInstance($id = null, $user = null, $reload = false)
 	{
-		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties($data);
+		return KunenaForumTopicUserHelper::get($id, $user, $reload);
 	}
 
 	/**
@@ -192,6 +154,125 @@ class KunenaForumTopicUser extends JObject
 	}
 
 	/**
+	 * Method to delete the KunenaForumTopicUser object from the database.
+	 *
+	 * @return bool    True on success.
+	 * @since Kunena
+	 */
+	public function delete()
+	{
+		if (!$this->exists())
+		{
+			return true;
+		}
+
+		// Create the table object
+		$table = $this->getTable();
+
+		$result = $table->delete(array('topic_id' => $this->topic_id, 'user_id' => $this->user_id));
+
+		if (!$result)
+		{
+			$this->setError($table->getError());
+		}
+
+		$this->_exists = false;
+
+		return $result;
+	}
+
+	/**
+	 * @param   null|bool $exists
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	function exists($exists = null)
+	{
+		$return = $this->_exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
+		return $return;
+	}
+
+	/**
+	 * @param   KunenaForumMessage $message
+	 * @param   int                $postDelta
+	 *
+	 * @return boolean|null
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	function update(KunenaForumMessage $message = null, $postDelta = 0)
+	{
+		$this->posts       += $postDelta;
+		$this->category_id = $this->getTopic()->category_id;
+
+		if ($message && !$message->hold && $message->thread == $this->topic_id)
+		{
+			if ($message->parent == 0)
+			{
+				$this->owner = 1;
+			}
+
+			if ($this->last_post_id < $message->id)
+			{
+				$this->last_post_id = $message->id;
+			}
+		}
+		elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id))
+		{
+			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
+					GROUP BY userid, thread";
+			$this->_db->setQuery($query, 0, 1);
+
+			try
+			{
+				$info = $this->_db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+
+				return null;
+			}
+
+			if ($info)
+			{
+				$this->bind($info);
+			}
+		}
+
+		return $this->save();
+	}
+
+	/**
+	 * @return KunenaForumTopic
+	 * @since Kunena
+	 */
+	public function getTopic()
+	{
+		return KunenaForumTopicHelper::get($this->topic_id);
+	}
+
+	/**
+	 * @param   array $data
+	 * @param   array $ignore
+	 *
+	 * @since Kunena
+	 */
+	public function bind(array $data, array $ignore = array())
+	{
+		$data = array_diff_key($data, array_flip($ignore));
+		$this->setProperties($data);
+	}
+
+	/**
 	 * Method to save the KunenaForumTopicUser object to the database.
 	 *
 	 * @param   bool $updateOnly Save the object only if not a new topic.
@@ -236,84 +317,5 @@ class KunenaForumTopicUser extends JObject
 		}
 
 		return $result;
-	}
-
-	/**
-	 * Method to delete the KunenaForumTopicUser object from the database.
-	 *
-	 * @return bool    True on success.
-	 * @since Kunena
-	 */
-	public function delete()
-	{
-		if (!$this->exists())
-		{
-			return true;
-		}
-
-		// Create the table object
-		$table = $this->getTable();
-
-		$result = $table->delete(array('topic_id' => $this->topic_id, 'user_id' => $this->user_id));
-
-		if (!$result)
-		{
-			$this->setError($table->getError());
-		}
-
-		$this->_exists = false;
-
-		return $result;
-	}
-
-	/**
-	 * @param   KunenaForumMessage $message
-	 * @param   int                $postDelta
-	 *
-	 * @return boolean|null
-	 * @since Kunena
-	 */
-	function update(KunenaForumMessage $message = null, $postDelta = 0)
-	{
-		$this->posts += $postDelta;
-		$this->category_id = $this->getTopic()->category_id;
-
-		if ($message && !$message->hold && $message->thread == $this->topic_id)
-		{
-			if ($message->parent == 0)
-			{
-				$this->owner = 1;
-			}
-
-			if ($this->last_post_id < $message->id)
-			{
-				$this->last_post_id = $message->id;
-			}
-		}
-		elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id))
-		{
-			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
-					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
-					GROUP BY userid, thread";
-			$this->_db->setQuery($query, 0, 1);
-
-			try
-			{
-				$info = $this->_db->loadAssocList();
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				KunenaError::displayDatabaseError($e);
-
-				return null;
-			}
-
-			if ($info)
-			{
-				$this->bind($info);
-			}
-		}
-
-		return $this->save();
 	}
 }

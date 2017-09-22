@@ -29,6 +29,7 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $translate
 	 *
 	 * @return string
+	 * @throws null
 	 * @since Kunena
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
@@ -55,7 +56,7 @@ abstract class JHtmlKunenaForum
 		{
 			$category = KunenaForumCategoryHelper::get($catid);
 
-			if (!$category->getParent()->authorise($action) && !KunenaUserHelper::getMyself()->isAdmin())
+			if (!$category->getParent()->isAuthorised($action) && !KunenaUserHelper::getMyself()->isAdmin())
 			{
 				$categories = KunenaForumCategoryHelper::getParents($catid, $levels, $params);
 			}
@@ -90,7 +91,7 @@ abstract class JHtmlKunenaForum
 
 					foreach ($channels_local as $id => $channel)
 					{
-						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->isAuthorised($action))
 						{
 							unset($channels_local[$id]);
 						}
@@ -145,7 +146,7 @@ abstract class JHtmlKunenaForum
 
 		foreach ($categories as $category)
 		{
-			$disabled = !$category->authorise($action) || (!$sections && $category->isSection());
+			$disabled = !$category->isAuthorised($action) || (!$sections && $category->isSection());
 
 			if ($preselect && empty($selected) && !$disabled)
 			{
@@ -202,13 +203,15 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @param   mixed  $uri        Kunena URI, either as string, \Joomla\CMS\Uri\Uri or array
 	 * @param   string $content
-	 * @param   string $class      Link class
 	 * @param   string $title      Link title
+	 * @param   string $class      Link class
 	 * @param   string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
@@ -257,7 +260,7 @@ abstract class JHtmlKunenaForum
 	 * @param         $options
 	 * @param   array $selected
 	 *
-	 * @param   null    $class_input
+	 * @param   null  $class_input
 	 *
 	 * @return string
 	 * @since Kunena

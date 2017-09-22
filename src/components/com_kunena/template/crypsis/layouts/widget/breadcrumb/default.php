@@ -13,14 +13,18 @@ defined('_JEXEC') or die;
 $pathway = $this->breadcrumb->getPathway();
 $item    = array_shift($pathway);
 
-if ($item) : ?>
+if ($item)
+:
+	?>
 <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
 	<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 		<?php echo KunenaIcons::home(); ?>
 		<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
 	</li>
 
-	<?php foreach($pathway as $item) : ?>
+	<?php foreach ($pathway as $item)
+	:
+	?>
 	<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
 	<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 		<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
@@ -28,4 +32,4 @@ if ($item) : ?>
 	<?php endforeach; ?>
 
 </ol>
-<?php endif; ?>
+<?php endif;

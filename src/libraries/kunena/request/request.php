@@ -35,15 +35,14 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string $path Controller path.
-	 * @param   JInput $input
-	 * @param   mixed  $options
+	 * @param   string              $path Controller path.
+	 * @param   \Joomla\Input\Input $input
+	 * @param   mixed               $options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
-	 * @throws    InvalidArgumentException
 	 * @since Kunena
 	 */
-	public static function factory($path, JInput $input = null, $options = null)
+	public static function factory($path, \Joomla\Input\Input $input = null, $options = null)
 	{
 		// Normalize input.
 		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));

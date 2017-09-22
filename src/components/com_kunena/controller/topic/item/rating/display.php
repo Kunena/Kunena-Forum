@@ -34,6 +34,7 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

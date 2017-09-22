@@ -38,31 +38,12 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @return mixed
-	 * @since Kunena
-	 */
-	protected function _getAUPversion()
-	{
-		return AltaUserPointsHelper::getAupVersion();
-	}
-
-	/**
-	 * @param          $plugin_function
-	 * @param   string $spc
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	protected function _buildKeyreference($plugin_function, $spc = '')
-	{
-		return AltaUserPointsHelper::buildKeyreference($plugin_function, $spc);
-	}
-
-	/**
 	 * @param $message
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function onAfterPost($message)
 	{
@@ -88,7 +69,67 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @return boolean
 	 * @since Kunena
+	 */
+	private function _checkPermissions($message)
+	{
+		$category   = $message->getCategory();
+		$accesstype = $category->accesstype;
+
+		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
+		{
+			return false;
+		}
+
+		// FIXME: Joomla 2.5 can mix up groups and access levels
+		if ($accesstype == 'joomla.level' && $category->access <= 2)
+		{
+			return true;
+		}
+		elseif ($category->pub_access == 1 || $category->pub_access == 2)
+		{
+			return true;
+		}
+		elseif ($category->admin_access == 1 || $category->admin_access == 2)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param $ruleName
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	private function _checkRuleEnabled($ruleName)
+	{
+		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
+
+		return !empty($ruleEnabled[0]->published);
+	}
+
+	/**
+	 * @param          $plugin_function
+	 * @param   string $spc
+	 *
+	 * @return mixed
+	 * @since Kunena
+	 */
+	protected function _buildKeyreference($plugin_function, $spc = '')
+	{
+		return AltaUserPointsHelper::buildKeyreference($plugin_function, $spc);
+	}
+
+	/**
+	 * @param $message
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
 	 */
 	public function onAfterReply($message)
 	{
@@ -168,14 +209,21 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param $var
+	 * @param $ruleName
 	 *
-	 * @return string
+	 * @return null
 	 * @since Kunena
 	 */
-	function escape($var)
+	private function _getPointsOnThankyou($ruleName)
 	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
+
+		if (!empty($ruleEnabled[0]->published))
+		{
+			return $ruleEnabled[0]->points2;
+		}
+
+		return null;
 	}
 
 	/**
@@ -208,9 +256,21 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
+	 * @param $var
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
 	 * @param   int $userid
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserPoints($userid)
@@ -236,66 +296,11 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
-	 *
-	 * @return boolean
+	 * @return mixed
 	 * @since Kunena
 	 */
-	private function _checkPermissions($message)
+	protected function _getAUPversion()
 	{
-		$category   = $message->getCategory();
-		$accesstype = $category->accesstype;
-
-		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
-		{
-			return false;
-		}
-
-		// FIXME: Joomla 2.5 can mix up groups and access levels
-		if ($accesstype == 'joomla.level' && $category->access <= 2)
-		{
-			return true;
-		}
-		elseif ($category->pub_access == 1 || $category->pub_access == 2)
-		{
-			return true;
-		}
-		elseif ($category->admin_access == 1 || $category->admin_access == 2)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param $ruleName
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	private function _checkRuleEnabled($ruleName)
-	{
-		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
-
-		return !empty($ruleEnabled[0]->published);
-	}
-
-	/**
-	 * @param $ruleName
-	 *
-	 * @return null
-	 * @since Kunena
-	 */
-	private function _getPointsOnThankyou($ruleName)
-	{
-		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
-
-		if (!empty($ruleEnabled[0]->published))
-		{
-			return $ruleEnabled[0]->points2;
-		}
-
-		return null;
+		return AltaUserPointsHelper::getAupVersion();
 	}
 }

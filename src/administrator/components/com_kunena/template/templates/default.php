@@ -60,7 +60,9 @@ JHtml::_('dropdown.init');
 					</tr>
 					</tfoot>
 					<tbody>
-					<?php foreach ($this->templates as $id => $row) : ?>
+					<?php foreach ($this->templates as $id => $row)
+					:
+	?>
 						<tr>
 							<td>
 								<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
@@ -72,9 +74,14 @@ JHtml::_('dropdown.init');
 						</span>
 							</td>
 							<td class="center">
-								<?php if ($row->published == 1) : ?>
+								<?php if ($row->published == 1)
+								:
+	?>
 									<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
-								<?php else : ?>
+								<?php else
+
+	:
+	?>
 									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
 										<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
 									</a>

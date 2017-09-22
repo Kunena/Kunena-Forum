@@ -44,10 +44,10 @@ class KunenaAdminViewConfig extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		JToolbarHelper::spacer();
-		JToolBarHelper::apply();
-		JToolBarHelper::save('save');
-		JToolBarHelper::divider();
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
+		JToolbarHelper::apply();
+		JToolbarHelper::save('save');
+		JToolbarHelper::divider();
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 
 		JHtml::_('bootstrap.modal', 'settingModal');
 		$title = JText::_('COM_KUNENA_RESET_CONFIG');
@@ -57,7 +57,7 @@ class KunenaAdminViewConfig extends KunenaView
 		$bar->appendButton('Custom', $dhtml, 'restore');
 
 		JToolbarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/configuration';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		$help_url = 'https://docs.kunena.org/en/manual/backend/configuration';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

@@ -18,11 +18,16 @@ defined('_JEXEC') or die;
 		</div>
 	</div>
 	<h2 class="btn-link">
-		<?php if ($this->statisticsUrl) : ?>
+		<?php if ($this->statisticsUrl)
+		:
+	?>
 			<a href="<?php echo $this->statisticsUrl; ?>">
 				<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 			</a>
-		<?php else : ?>
+		<?php else
+
+:
+	?>
 			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
 	</h2>

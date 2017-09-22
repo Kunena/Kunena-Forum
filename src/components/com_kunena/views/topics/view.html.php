@@ -20,7 +20,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -56,7 +58,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayUser($tpl = null)
 	{
@@ -89,7 +93,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null $tpl
 	 *
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function displayPosts($tpl = null)
 	{
@@ -215,7 +221,9 @@ class KunenaViewTopics extends KunenaView
 	 * @param $matches
 	 *
 	 * @return mixed|string
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	function fillTopicInfo($matches)
 	{

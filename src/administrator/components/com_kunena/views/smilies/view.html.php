@@ -54,15 +54,15 @@ class KunenaAdminViewSmilies extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');
 
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-		JToolBarHelper::editList();
-		JToolBarHelper::divider();
-		JToolBarHelper::deleteList();
-		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
+		JToolbarHelper::spacer();
+		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
+		JToolbarHelper::editList();
+		JToolbarHelper::divider();
+		JToolbarHelper::deleteList();
+		JToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

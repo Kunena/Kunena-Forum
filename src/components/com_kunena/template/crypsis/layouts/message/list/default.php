@@ -30,11 +30,13 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 			</h1>
 		</div>
 
-		<?php if ($view != 'user') : ?>
+		<?php if ($view != 'user')
+:
+	?>
 			<h2 class="filter-time pull-right">
 				<div class="filter-sel">
 					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					      method="post" target="_self" class="form-inline hidden-phone">
+						  method="post" target="_self" class="form-inline hidden-phone">
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
 						</div>
@@ -47,29 +49,33 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('catid', 'all')
-		->setLayout('topic'); ?>
+	->set('catid', 'all')
+	->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
-      name="ktopicsform" id="ktopicsform">
+	  name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-condensed">
 		<thead>
-		<?php if (empty($this->messages)) : ?>
+		<?php if (empty($this->messages))
+:
+	?>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
 					<?php echo JText::_('COM_KUNENA_NO_POSTS') ?>
 				</td>
 			</tr>
-		<?php else : ?>
+		<?php else
+:
+	?>
 			<tr class="category">
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
@@ -86,7 +92,9 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 				<td class="span3">
 					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
-				<?php if (!empty($this->actions)) : ?>
+				<?php if (!empty($this->actions))
+	:
+	?>
 					<td class="span1 center">
 						<label>
 							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
@@ -97,7 +105,9 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 		<?php endif; ?>
 		</thead>
 		<tfoot>
-		<?php if (!empty($this->messages)) : ?>
+		<?php if (!empty($this->messages))
+:
+	?>
 			<tr>
 				<td class="center hidden-phone">
 					<a id="forumbottom"> </a>
@@ -108,16 +118,21 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 				<td colspan="<?php echo $colspan; ?>">
 					<div class="input-append">
 						<?php if (!empty($this->moreUri))
-						{
+	{
 							echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'nofollow');
-						} ?>
-						<?php if (!empty($this->actions)) : ?>
+} ?>
+						<?php
+						if (!empty($this->actions))
+	:
+	?>
 							<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-							<?php if (isset($this->actions['move'])) :
+							<?php
+							if (isset($this->actions['move']))
+		:
 								$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
-							<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+													<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
 						<?php endif; ?>
 					</div>
 				</td>
@@ -128,7 +143,7 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 		<tbody>
 		<?php
 		foreach ($this->messages as $i => $message)
-		{
+{
 			echo $this->subLayout('Message/Row')
 				->set('message', $message)
 				->set('position', $i)
@@ -144,9 +159,11 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
 </div>
 
-<?php if ($view != 'user') : ?>
+<?php if ($view != 'user')
+:
+	?>
 	<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-	      method="post" target="_self" class="timefilter pull-right">
+		  method="post" target="_self" class="timefilter pull-right">
 		<?php $this->displayTimeFilter('sel'); ?>
 	</form>
 <?php endif; ?>

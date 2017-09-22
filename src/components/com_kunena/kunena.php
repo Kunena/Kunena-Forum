@@ -16,7 +16,8 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !Kunena
 	$lang = \Joomla\CMS\Factory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-	\Joomla\CMS\Factory::getApplication()->sendHeaders('Status', '503 Service Temporarily Unavailable', true);
+	\Joomla\CMS\Factory::getApplication()->setHeader('status', 503, true);
+	\Joomla\CMS\Factory::getApplication()->sendHeaders();
 	?>
 	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
 	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>

@@ -32,7 +32,9 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 <table class="table table-bordered table-striped">
 
-	<?php if ($this->config->allowavatarupload) : ?>
+	<?php if ($this->config->allowavatarupload)
+	:
+	?>
 		<tr>
 			<td>
 				<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
@@ -61,16 +63,20 @@ $this->addStyleSheet('assets/css/fileupload.css');
 		</tr>
 	<?php endif; ?>
 
-	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages)) : ?>
+	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages))
+	:
+	?>
 	<tr>
 		<td class="span3">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 			<input id="kunena_url_avatargallery" type="hidden"
-			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+				   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 		</td>
 		<td>
 
-				<?php if ($this->galleryOptions) : ?>
+				<?php if ($this->galleryOptions)
+				:
+	?>
 					<div>
 						<?php echo JHtml::_(
 							'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
@@ -79,13 +85,17 @@ $this->addStyleSheet('assets/css/fileupload.css');
 					</div>
 				<?php endif; ?>
 
-				<?php if ($this->galleryImages) : ?>
+				<?php if ($this->galleryImages)
+				:
+	?>
 					<ul id="gallery_list" class="thumbnails">
 
-						<?php foreach ($this->galleryImages as $image) : ?>
+						<?php foreach ($this->galleryImages as $image)
+						:
+	?>
 							<li class="span2">
 								<input type="radio" name="avatar" id="radio<?php echo $image ?>"
-								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
+									   value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
 									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
 								</label>

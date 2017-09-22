@@ -46,7 +46,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -135,6 +136,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

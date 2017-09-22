@@ -32,7 +32,7 @@ class KunenaViewCategory extends KunenaView
 		{
 			$this->category = $this->get('Category');
 
-			if (!$this->category->authorise('read'))
+			if (!$this->category->isAuthorised('read'))
 			{
 				$response['error'] = $this->category->getError();
 			}
@@ -52,7 +52,9 @@ class KunenaViewCategory extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}

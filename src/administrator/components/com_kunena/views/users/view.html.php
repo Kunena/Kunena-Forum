@@ -51,7 +51,7 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * setToolbar
 	 *
-	 * @return    string
+	 * @return void
 	 * @since Kunena
 	 */
 	protected function setToolbar()
@@ -60,12 +60,12 @@ class KunenaAdminViewUsers extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_USER_MANAGER'), 'users');
-		JToolBarHelper::spacer();
-		JToolBarHelper::editList();
-		JToolBarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_USER_MANAGER'), 'users');
+		JToolbarHelper::spacer();
+		JToolbarHelper::editList();
+		JToolbarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
+		JToolbarHelper::divider();
+		JToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 
 		JHtml::_('bootstrap.modal', 'moderateModal');
 		$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
@@ -74,16 +74,53 @@ class KunenaAdminViewUsers extends KunenaView
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		JToolbarHelper::divider();
+		JToolbarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
-		JToolBarHelper::spacer();
-		$help_url  = 'https://docs.kunena.org/en/manual/backend/users';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		JToolbarHelper::spacer();
+		JToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		JToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return     array
+	 * @since Kunena
+	 */
+	protected function getSortFields()
+	{
+		$sortFields   = array();
+		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
+		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
+		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'ip', JText::_('COM_KUNENA_GEN_IP'));
+
+		return $sortFields;
+	}
+
+	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return     array
+	 * @since Kunena
+	 */
+	protected function getSortDirectionFields()
+	{
+		$sortDirection   = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
 	}
 
 	/**
@@ -148,43 +185,6 @@ class KunenaAdminViewUsers extends KunenaView
 		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
-	}
-
-	/**
-	 * Returns an array of type filter options.
-	 *
-	 * @return     array
-	 * @since Kunena
-	 */
-	protected function getSortFields()
-	{
-		$sortFields   = array();
-		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
-		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
-		$sortFields[] = JHtml::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
-		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
-		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
-		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
-		$sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
-		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
-		$sortFields[] = JHtml::_('select.option', 'ip', JText::_('COM_KUNENA_GEN_IP'));
-
-		return $sortFields;
-	}
-
-	/**
-	 * Returns an array of type filter options.
-	 *
-	 * @return     array
-	 * @since Kunena
-	 */
-	protected function getSortDirectionFields()
-	{
-		$sortDirection   = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-		return $sortDirection;
 	}
 
 	/**

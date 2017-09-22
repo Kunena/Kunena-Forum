@@ -10,7 +10,7 @@ ALTER TABLE `#__kunena_user_categories`	ADD KEY `role` (role);
 
 
 INSERT INTO #__kunena_user_categories (user_id, category_id, role)
-	SELECT u.userid AS user_id, IF(m.catid>0,m.catid,0) AS category_id, 1 AS role
+	`SELECT` u.userid AS user_id, IF(m.catid>0,m.catid,0) AS category_id, 1 AS role
 		FROM #__kunena_users AS u
 		LEFT JOIN #__kunena_moderation AS m ON u.userid=m.userid
 		LEFT JOIN #__kunena_categories AS c ON m.catid=c.id

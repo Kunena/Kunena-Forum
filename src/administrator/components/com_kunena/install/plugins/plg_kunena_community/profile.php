@@ -41,6 +41,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -57,28 +58,10 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task
-	 * @param   bool   $xhtml
-	 *
-	 * @return boolean|string
-	 * @since Kunena
-	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
-	{
-		// Make sure that user profile exist.
-		if (!$userid || CFactory::getUser($userid) === null)
-		{
-			return false;
-		}
-
-		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
-	}
-
-	/**
 	 * @param   int $limit
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
@@ -123,5 +106,24 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
+	}
+
+	/**
+	 * @param          $userid
+	 * @param   string $task
+	 * @param   bool   $xhtml
+	 *
+	 * @return boolean|string
+	 * @since Kunena
+	 */
+	public function getProfileURL($userid, $task = '', $xhtml = true)
+	{
+		// Make sure that user profile exist.
+		if (!$userid || CFactory::getUser($userid) === null)
+		{
+			return false;
+		}
+
+		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
 	}
 }

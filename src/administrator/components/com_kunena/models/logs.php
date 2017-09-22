@@ -52,103 +52,33 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * Method to auto-populate the model state.
+	 * Method to get the total number of items for the data set.
 	 *
-	 * @param   null $ordering
-	 * @param   null $direction
+	 * @return  integer  The total number of items available in the data set.
 	 *
-	 * @since Kunena
+	 * @throws Exception
+	 * @since   5.0
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	public function getTotal()
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		// Get a storage key.
+		$store = $this->getStoreId('getTotal');
 
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-
-		if ($layout)
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store]))
 		{
-			$this->context .= '.' . $layout;
+			return $this->cache[$store];
 		}
 
-		$filter_active = '';
+		// Load the total.
+		$finder = $this->getFinder();
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string');
-		$this->setState('filter.id', $value);
+		$total = (int) $finder->count();
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
-		$this->setState('filter.type', $value);
+		// Add the total to the internal cache.
+		$this->cache[$store] = $total;
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
-		$this->setState('filter.user', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string');
-		$this->setState('filter.category', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.topic', 'filter_topic', '', 'string');
-		$this->setState('filter.topic', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.target_user', 'filter_target_user', '', 'string');
-		$this->setState('filter.target_user', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
-		$this->setState('filter.ip', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', '', 'string');
-		$this->setState('filter.time_start', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
-		$this->setState('filter.time_stop', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.operation', 'filter_operation', '', 'string');
-		$this->setState('filter.operation', $value);
-
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
-		$this->setState('filter.usertypes', $value);
-
-		$this->setState('filter.active', !empty($filter_active));
-
-		$group = array();
-
-		if ($this->getUserStateFromRequest($this->context . '.group.type', 'group_type', false, 'bool'))
-		{
-			$group['type'] = 'a.type';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.user', 'group_user', false, 'bool'))
-		{
-			$group['user'] = 'a.user_id';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.category', 'group_category', false, 'bool'))
-		{
-			$group['category'] = 'a.category_id';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.topic', 'group_topic', false, 'bool'))
-		{
-			$group['topic'] = 'a.topic_id';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.target_user', 'group_target_user', false, 'bool'))
-		{
-			$group['target_user'] = 'a.target_user';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.ip', 'group_ip', false, 'bool'))
-		{
-			$group['ip'] = 'a.ip';
-		}
-
-		if ($this->getUserStateFromRequest($this->context . '.group.operation', 'group_operation', false, 'bool'))
-		{
-			$group['operation'] = 'a.operation';
-		}
-
-		$this->setState('group', $group);
-
-		// List state information.
-		parent::populateState('id', 'desc');
+		return $this->cache[$store];
 	}
 
 	/**
@@ -180,35 +110,6 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 		$id .= ':' . json_encode($this->getState('group'));
 
 		return parent::getStoreId($id);
-	}
-
-	/**
-	 * Method to get the total number of items for the data set.
-	 *
-	 * @return  integer  The total number of items available in the data set.
-	 *
-	 * @since   5.0
-	 */
-	public function getTotal()
-	{
-		// Get a storage key.
-		$store = $this->getStoreId('getTotal');
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
-		{
-			return $this->cache[$store];
-		}
-
-		// Load the total.
-		$finder = $this->getFinder();
-
-		$total = (int) $finder->count();
-
-		// Add the total to the internal cache.
-		$this->cache[$store] = $total;
-
-		return $this->cache[$store];
 	}
 
 	/**
@@ -397,6 +298,8 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
+	 * @throws Exception
+	 * @throws null
 	 * @since   5.0
 	 */
 	public function getItems()
@@ -416,13 +319,11 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 			->limit((int) $this->getState('list.limit'))
 			->find();
 
-		$userIds1 = $items->map(function ($item, $key)
-		{
+		$userIds1 = $items->map(function ($item, $key) {
 			return $item->user_id;
 
 		});
-		$userIds2 = $items->map(function ($item, $key)
-		{
+		$userIds2 = $items->map(function ($item, $key) {
 
 			return $item->target_user;
 
@@ -431,8 +332,7 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 
 		KunenaUserHelper::loadUsers($userIds);
 
-		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key)
-		{
+		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) {
 			return $item->topic_id;
 
 		})->all());
@@ -441,5 +341,106 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 		$this->cache[$store] = $items;
 
 		return $this->cache[$store];
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * @param   null $ordering
+	 * @param   null $direction
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function populateState($ordering = null, $direction = null)
+	{
+		$app = \Joomla\CMS\Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$filter_active = '';
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string');
+		$this->setState('filter.id', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
+		$this->setState('filter.type', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
+		$this->setState('filter.user', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string');
+		$this->setState('filter.category', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.topic', 'filter_topic', '', 'string');
+		$this->setState('filter.topic', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.target_user', 'filter_target_user', '', 'string');
+		$this->setState('filter.target_user', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
+		$this->setState('filter.ip', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', '', 'string');
+		$this->setState('filter.time_start', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
+		$this->setState('filter.time_stop', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.operation', 'filter_operation', '', 'string');
+		$this->setState('filter.operation', $value);
+
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
+		$this->setState('filter.usertypes', $value);
+
+		$this->setState('filter.active', !empty($filter_active));
+
+		$group = array();
+
+		if ($this->getUserStateFromRequest($this->context . '.group.type', 'group_type', false, 'bool'))
+		{
+			$group['type'] = 'a.type';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.user', 'group_user', false, 'bool'))
+		{
+			$group['user'] = 'a.user_id';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.category', 'group_category', false, 'bool'))
+		{
+			$group['category'] = 'a.category_id';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.topic', 'group_topic', false, 'bool'))
+		{
+			$group['topic'] = 'a.topic_id';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.target_user', 'group_target_user', false, 'bool'))
+		{
+			$group['target_user'] = 'a.target_user';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.ip', 'group_ip', false, 'bool'))
+		{
+			$group['ip'] = 'a.ip';
+		}
+
+		if ($this->getUserStateFromRequest($this->context . '.group.operation', 'group_operation', false, 'bool'))
+		{
+			$group['operation'] = 'a.operation';
+		}
+
+		$this->setState('group', $group);
+
+		// List state information.
+		parent::populateState('id', 'desc');
 	}
 }

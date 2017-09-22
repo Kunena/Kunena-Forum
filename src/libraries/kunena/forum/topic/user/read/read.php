@@ -60,46 +60,6 @@ class KunenaForumTopicUserRead extends JObject
 	}
 
 	/**
-	 * @param   mixed $id
-	 * @param   mixed $user
-	 * @param   bool  $reload
-	 *
-	 * @return KunenaForumTopicUserRead
-	 * @since Kunena
-	 */
-	static public function getInstance($id = null, $user = null, $reload = false)
-	{
-		return KunenaForumTopicUserReadHelper::get($id, $user, $reload);
-	}
-
-	/**
-	 * @return KunenaForumTopicUserRead
-	 * @since Kunena
-	 */
-	public function getTopic()
-	{
-		return KunenaForumTopicUserReadHelper::get($this->topic_id);
-	}
-
-	/**
-	 * @param   null|bool $exists
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	function exists($exists = null)
-	{
-		$return = $this->_exists;
-
-		if ($exists !== null)
-		{
-			$this->_exists = $exists;
-		}
-
-		return $return;
-	}
-
-	/**
 	 * Method to get the topics table object.
 	 *
 	 * @param   string $type   Topics table name to be used.
@@ -121,6 +81,30 @@ class KunenaForumTopicUserRead extends JObject
 
 		// Create the user table object
 		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+	}
+
+	/**
+	 * @param   mixed $id
+	 * @param   mixed $user
+	 * @param   bool  $reload
+	 *
+	 * @return KunenaForumTopicUserRead
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	static public function getInstance($id = null, $user = null, $reload = false)
+	{
+		return KunenaForumTopicUserReadHelper::get($id, $user, $reload);
+	}
+
+	/**
+	 * @return KunenaForumTopicUserRead
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function getTopic()
+	{
+		return KunenaForumTopicUserReadHelper::get($this->topic_id);
 	}
 
 	/**
@@ -260,5 +244,23 @@ class KunenaForumTopicUserRead extends JObject
 		$this->_exists = false;
 
 		return $result;
+	}
+
+	/**
+	 * @param   null|bool $exists
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	function exists($exists = null)
+	{
+		$return = $this->_exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
+		return $return;
 	}
 }

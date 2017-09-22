@@ -21,13 +21,13 @@ class KunenaAccessJoomla
 	 * @var null
 	 * @since Kunena
 	 */
-	protected $params = null;
+	static protected $viewLevels = null;
 
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
-	static protected $viewLevels = null;
+	protected $params = null;
 
 	/**
 	 * @param $params
@@ -73,7 +73,7 @@ class KunenaAccessJoomla
 			$accessname = JText::sprintf($category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_($groupname) : JText::_('COM_KUNENA_NOBODY'));
 
 			$list["joomla.group.{$category->pub_access}"] = array('type'  => 'joomla.group', 'id' => $category->pub_access, 'alias' => $accessname,
-			                                                      'title' => $accessname);
+																  'title' => $accessname);
 
 			$groupname = $this->getGroupName($category->accesstype, $category->admin_access);
 
@@ -81,14 +81,14 @@ class KunenaAccessJoomla
 			{
 				$accessname                                     = JText::sprintf($category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_($groupname));
 				$list["joomla.group.{$category->admin_access}"] = array('type'  => 'joomla.group', 'id' => $category->admin_access, 'alias' => $accessname,
-				                                                        'title' => $accessname);
+																		'title' => $accessname);
 			}
 		}
 		else
 		{
 			$groupname                                = $this->getGroupName($category->accesstype, $category->access);
 			$list["joomla.level.{$category->access}"] = array('type'  => 'joomla.level', 'id' => $category->access, 'alias' => $groupname,
-			                                                  'title' => $groupname);
+															  'title' => $groupname);
 		}
 
 		return $list;
@@ -266,6 +266,121 @@ class KunenaAccessJoomla
 	}
 
 	/**
+	 * @param        $action
+	 * @param   null $asset
+	 *
+	 * @return array
+	 * @since  Kunena
+	 */
+	protected function getAuthorisedUsers($action, $asset = null)
+	{
+		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
+		$asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
+
+		// Default to the root asset node.
+		if (empty($asset))
+		{
+			$asset = 1;
+		}
+
+		// Get all asset rules
+		$rules = \Joomla\CMS\Access\Access::getAssetRules($asset, true);
+		$data  = $rules->getData();
+
+		// Get all action rules for the asset
+		$groups = array();
+
+		if (!empty($data [$action]))
+		{
+			$groups = $data [$action]->getData();
+		}
+
+		// Split groups into allow and deny list
+		$allow = array();
+		$deny  = array();
+
+		foreach ($groups as $groupid => $access)
+		{
+			if ($access)
+			{
+				$allow[] = $groupid;
+			}
+			else
+			{
+				$deny[] = $groupid;
+			}
+		}
+
+		// Get userids
+		if ($allow)
+		{
+			// These users can do the action
+			$allow = $this->getUsersByGroup($allow, true);
+		}
+
+		if ($deny)
+		{
+			// But these users have explicit deny for the action
+			$deny = $this->getUsersByGroup($deny, true);
+		}
+
+		// Remove denied users from allowed users list
+		return array_diff($allow, $deny);
+	}
+
+	/**
+	 * Method to return a list of user Ids contained in a Group (derived from Joomla 1.6)
+	 *
+	 * @param   int|array $groupId   The group Id
+	 * @param   boolean   $recursive Recursively include all child groups (optional)
+	 * @param   array     $inUsers   Only list selected users.
+	 *
+	 * @return    array
+	 * @since Kunena
+	 */
+	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
+	{
+		// Get a database object.
+		$db = \Joomla\CMS\Factory::getDbo();
+
+		$test = $recursive ? '>=' : '=';
+
+		if (empty($groupId))
+		{
+			return array();
+		}
+
+		if (is_array($groupId))
+		{
+			$groupId = implode(',', $groupId);
+		}
+
+		$inUsers = implode(',', $inUsers);
+
+		// First find the users contained in the group
+		$query = $db->getQuery(true);
+		$query->select('DISTINCT(user_id)');
+		$query->from('#__usergroups AS ug1');
+		$query->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt');
+		$query->join('INNER', '#__user_usergroup_map AS m ON ug2.id=m.group_id');
+		$query->where("ug1.id IN ({$groupId})");
+
+		if ($inUsers)
+		{
+			$query->where("user_id IN ({$inUsers})");
+		}
+
+		$db->setQuery($query);
+
+		$result = (array) $db->loadColumn();
+
+		// Clean up any NULL values, just in case
+		Joomla\Utilities\ArrayHelper::toInteger($result);
+
+		return $result;
+	}
+
+	/**
 	 * Authorise user actions in a category.
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
@@ -284,6 +399,8 @@ class KunenaAccessJoomla
 
 		return array('topic.create' => !empty($post), 'topic.reply' => !empty($reply), 'topic.post.reply' => !empty($reply));
 	}
+
+	// Internal functions
 
 	/**
 	 * Authorise list of categories.
@@ -385,8 +502,6 @@ class KunenaAccessJoomla
 		return array($allow, $deny);
 	}
 
-	// Internal functions
-
 	/**
 	 * Method to return a list of groups which have view level (derived from Joomla 1.6)
 	 *
@@ -419,120 +534,5 @@ class KunenaAccessJoomla
 		}
 
 		return isset(self::$viewLevels[$viewlevel]) ? self::$viewLevels[$viewlevel] : array();
-	}
-
-	/**
-	 * Method to return a list of user Ids contained in a Group (derived from Joomla 1.6)
-	 *
-	 * @param   int|array $groupId   The group Id
-	 * @param   boolean   $recursive Recursively include all child groups (optional)
-	 * @param   array     $inUsers   Only list selected users.
-	 *
-	 * @return    array
-	 * @since Kunena
-	 */
-	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
-	{
-		// Get a database object.
-		$db = \Joomla\CMS\Factory::getDbo();
-
-		$test = $recursive ? '>=' : '=';
-
-		if (empty($groupId))
-		{
-			return array();
-		}
-
-		if (is_array($groupId))
-		{
-			$groupId = implode(',', $groupId);
-		}
-
-		$inUsers = implode(',', $inUsers);
-
-		// First find the users contained in the group
-		$query = $db->getQuery(true);
-		$query->select('DISTINCT(user_id)');
-		$query->from('#__usergroups as ug1');
-		$query->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt');
-		$query->join('INNER', '#__user_usergroup_map AS m ON ug2.id=m.group_id');
-		$query->where("ug1.id IN ({$groupId})");
-
-		if ($inUsers)
-		{
-			$query->where("user_id IN ({$inUsers})");
-		}
-
-		$db->setQuery($query);
-
-		$result = (array) $db->loadColumn();
-
-		// Clean up any NULL values, just in case
-		Joomla\Utilities\ArrayHelper::toInteger($result);
-
-		return $result;
-	}
-
-	/**
-	 * @param        $action
-	 * @param   null $asset
-	 *
-	 * @return array
-	 * @since  Kunena
-	 */
-	protected function getAuthorisedUsers($action, $asset = null)
-	{
-		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
-		$asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
-
-		// Default to the root asset node.
-		if (empty($asset))
-		{
-			$asset = 1;
-		}
-
-		// Get all asset rules
-		$rules = \Joomla\CMS\Access\Access::getAssetRules($asset, true);
-		$data  = $rules->getData();
-
-		// Get all action rules for the asset
-		$groups = array();
-
-		if (!empty($data [$action]))
-		{
-			$groups = $data [$action]->getData();
-		}
-
-		// Split groups into allow and deny list
-		$allow = array();
-		$deny  = array();
-
-		foreach ($groups as $groupid => $access)
-		{
-			if ($access)
-			{
-				$allow[] = $groupid;
-			}
-			else
-			{
-				$deny[] = $groupid;
-			}
-		}
-
-		// Get userids
-		if ($allow)
-		{
-			// These users can do the action
-			$allow = $this->getUsersByGroup($allow, true);
-		}
-
-		if ($deny)
-		{
-			// But these users have explicit deny for the action
-			$deny = $this->getUsersByGroup($deny, true);
-		}
-
-		// Remove denied users from allowed users list
-		return array_diff($allow, $deny);
 	}
 }

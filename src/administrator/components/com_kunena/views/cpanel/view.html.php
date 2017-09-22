@@ -24,17 +24,17 @@ class KunenaAdminViewCpanel extends KunenaView
 	 */
 	function displayDefault()
 	{
-		$help_url  = 'https://docs.kunena.org/en/';
-		JToolBarHelper::help('COM_KUNENA', false, $help_url);
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
-		JToolBarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));
-		JToolBarHelper::link('https://www.kunena.org/forum', JText::_('Get Support'));
+		$help_url = 'https://docs.kunena.org/en/';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+		JToolbarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));
+		JToolbarHelper::link('https://www.kunena.org/forum', JText::_('Get Support'));
 
 		if (\Joomla\CMS\Factory::getUser()->authorise('core.admin', 'com_kunena'))
 		{
-			JToolBarHelper::spacer();
-			JToolBarHelper::preferences('com_kunena');
-			JToolBarHelper::spacer();
+			JToolbarHelper::spacer();
+			JToolbarHelper::preferences('com_kunena');
+			JToolbarHelper::spacer();
 		}
 
 		$this->display();

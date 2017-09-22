@@ -28,8 +28,9 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -59,6 +60,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

@@ -53,6 +53,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -104,6 +105,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLastestCategories()
@@ -121,6 +123,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|boolean|KunenaForumCategory[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getCategories()
@@ -293,6 +297,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function getTopics()
@@ -368,7 +374,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTotal()
 	{
@@ -382,7 +390,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getTopicActions()
 	{
@@ -395,27 +405,27 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		foreach ($this->topics as $topic)
 		{
-			if (!$delete && $topic->authorise('delete'))
+			if (!$delete && $topic->isAuthorised('delete'))
 			{
 				$delete = true;
 			}
 
-			if (!$approve && $topic->authorise('approve'))
+			if (!$approve && $topic->isAuthorised('approve'))
 			{
 				$approve = true;
 			}
 
-			if (!$undelete && $topic->authorise('undelete'))
+			if (!$undelete && $topic->isAuthorised('undelete'))
 			{
 				$undelete = true;
 			}
 
-			if (!$move && $topic->authorise('move'))
+			if (!$move && $topic->isAuthorised('move'))
 			{
 				$move = $this->actionMove = true;
 			}
 
-			if (!$permdelete && $topic->authorise('permdelete'))
+			if (!$permdelete && $topic->isAuthorised('permdelete'))
 			{
 				$permdelete = true;
 			}
@@ -467,6 +477,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModerators()

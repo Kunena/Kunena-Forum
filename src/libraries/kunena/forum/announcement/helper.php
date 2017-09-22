@@ -65,8 +65,10 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string $layout layout
 	 * @param   bool   $xhtml  xhtml
 	 *
-	 * @return string
+	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	static public function getUrl($layout = null, $xhtml = true)
 	{
@@ -103,6 +105,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return KunenaForumAnnouncement[]
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
@@ -167,6 +170,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool $filter filter
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	static public function getCount($filter = true)
@@ -210,7 +214,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 *
-	 * @return array
+	 * @return void
 	 * @since Kunena
 	 */
 	public static function cleanup()

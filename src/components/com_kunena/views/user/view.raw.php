@@ -46,7 +46,9 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -56,8 +58,9 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
+	 * @return void
+	 * @throws Exception
 	 * @since K4.0
-	 * @return JSon
 	 */
 	public function displayListMention($tpl = null)
 	{
@@ -81,7 +84,9 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -90,7 +95,8 @@ class KunenaViewUser extends KunenaView
 	 * Return the list of files for the avatar gallery selected by the user
 	 *
 	 * @since K5.0
-	 * @return JSON
+	 * @return void
+	 * @throws Exception
 	 */
 	public function displayGalleryimages()
 	{
@@ -110,7 +116,9 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}

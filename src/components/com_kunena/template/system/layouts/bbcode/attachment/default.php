@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 // @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
+
 if ($attachment->isImage())
 {
 	echo $this->render('image');
@@ -34,4 +35,3 @@ else
 	echo $this->render('file');
 }
 
-?>

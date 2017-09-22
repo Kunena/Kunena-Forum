@@ -29,6 +29,7 @@ abstract class KunenaTemplateHelper
 	 * @param $template
 	 *
 	 * @return integer
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function isDefault($template)

@@ -40,7 +40,9 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -59,27 +61,6 @@ class KunenaProfileEasyprofile extends KunenaProfile
 		{
 			return JRoute::_('index.php?option=com_jsn&view=list&Itemid=' . $this->params->get('menuitem', ''), false);
 		}
-	}
-
-	/**
-	 * @param          $userid
-	 * @param   string $task
-	 * @param   bool   $xhtml
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
-	{
-		// Make sure that user profile exist.
-		if (!$userid || JsnHelper::getUser($userid) === null)
-		{
-			return false;
-		}
-
-		$user = JsnHelper::getUser($userid);
-
-		return $user->getLink();
 	}
 
 	/**
@@ -102,6 +83,27 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
+	}
+
+	/**
+	 * @param          $userid
+	 * @param   string $task
+	 * @param   bool   $xhtml
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function getProfileURL($userid, $task = '', $xhtml = true)
+	{
+		// Make sure that user profile exist.
+		if (!$userid || JsnHelper::getUser($userid) === null)
+		{
+			return false;
+		}
+
+		$user = JsnHelper::getUser($userid);
+
+		return $user->getLink();
 	}
 }
 

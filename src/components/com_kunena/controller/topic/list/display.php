@@ -54,6 +54,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array $mesIds  List of additional message Ids to be loaded.
 	 *
 	 * @return  void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
@@ -111,6 +112,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

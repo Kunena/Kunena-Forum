@@ -56,7 +56,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	/**
 	 * Load user list.
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function before()
@@ -118,6 +118,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

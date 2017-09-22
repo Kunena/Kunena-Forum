@@ -46,7 +46,7 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -67,6 +67,7 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	 * Prepare document.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function prepareDocument()

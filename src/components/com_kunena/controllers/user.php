@@ -23,7 +23,9 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool $urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -73,12 +75,20 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
+		// Else the user does not exists.
+		if (!$this->me)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_USER_UNKNOWN'), 404);
+		}
+
 		parent::display();
 	}
 
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function search()
 	{
@@ -106,6 +116,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function change()
 	{
@@ -125,6 +136,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function karmaup()
 	{
@@ -134,6 +147,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
 	 */
 	public function karmadown()
 	{
@@ -141,7 +156,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws KunenaExceptionAuthorise
+	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save()
@@ -235,10 +251,11 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function ban()
 	{
-	    $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if (!$user->exists() || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -448,6 +465,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function cancel()
 	{
@@ -458,6 +476,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function login()
 	{
@@ -497,6 +516,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function logout()
 	{
@@ -516,7 +536,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode($this->app->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($this->app->input->getBase64('return'));
 
 		if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
 		{
@@ -533,7 +553,9 @@ class KunenaControllerUser extends KunenaController
 	 * Save online status for user
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function status()
 	{
@@ -565,7 +587,9 @@ class KunenaControllerUser extends KunenaController
 	 * Set online status text for user
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function statusText()
 	{
@@ -577,7 +601,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$status_text     = $this->app->input->getString('status_text', null, 'POST');
+		$status_text     = $this->app->input->post->getString('status_text', null);
 		$me              = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
 
@@ -600,6 +624,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -734,12 +759,6 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			$value            = $post_password;
-			$meter            = isset($element['strengthmeter']) ? ' meter="0"' : '1';
-			$threshold        = isset($element['threshold']) ? (int) $element['threshold'] : 66;
-			$minimumLength    = isset($element['minimum_length']) ? (int) $element['minimum_length'] : $params->get('minimum_length');
-			$minimumIntegers  = isset($element['minimum_integers']) ? (int) $element['minimum_integers'] : 0;
-			$minimumSymbols   = isset($element['minimum_symbols']) ? (int) $element['minimum_symbols'] : 0;
-			$minimumUppercase = isset($element['minimum_uppercase']) ? (int) $element['minimum_uppercase'] : 0;
 
 			if (!empty($params))
 			{
@@ -759,13 +778,6 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			// If the field is empty and not required, the field is valid.
-			$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
-
-			if (!$required && empty($value))
-			{
-				return true;
-			}
-
 			$valueLength = strlen($value);
 
 			// Load language file of com_users component
@@ -774,7 +786,7 @@ class KunenaControllerUser extends KunenaController
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
 			{
-			    $this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+				$this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
 			}
 
 			// We don't allow white space inside passwords
@@ -785,7 +797,7 @@ class KunenaControllerUser extends KunenaController
 
 			if (strlen($valueTrim) != $valueLength)
 			{
-			    $this->app->enqueueMessage(
+				$this->app->enqueueMessage(
 					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
 					'warning'
 				);
@@ -800,7 +812,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nInts < $minimumIntegers)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
 						'warning'
 					);
@@ -816,7 +828,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nsymbols < $minimumSymbols)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
 						'warning'
 					);
@@ -832,7 +844,7 @@ class KunenaControllerUser extends KunenaController
 
 				if ($nUppercase < $minimumUppercase)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
 						'warning'
 					);
@@ -846,7 +858,7 @@ class KunenaControllerUser extends KunenaController
 			{
 				if (strlen((string) $value) < $minimumLength)
 				{
-				    $this->app->enqueueMessage(
+					$this->app->enqueueMessage(
 						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
 						'warning'
 					);
@@ -880,19 +892,22 @@ class KunenaControllerUser extends KunenaController
 			return false;
 		}
 
-		// Reload the user.
-		$this->user->load($this->user->id);
-		$session = \Joomla\CMS\Factory::getSession();
-		$session->set('user', $this->user);
-
-		// Update session if username has been changed
-		if ($username && $username != $this->user->username)
+		if ($this->user->id == $this->me->userid)
 		{
-			$table = \Joomla\CMS\Table\Table::getInstance('session', '\Joomla\CMS\Table\Table');
-			$table->load($session->getId());
+			// Reload the user.
+			$this->user->load($this->user->id);
+			$session = \Joomla\CMS\Factory::getSession();
+			$session->set('user', $this->user);
 
-			$table->username = $this->user->username;
-			$table->store();
+			// Update session if username has been changed
+			if ($username && $username != $this->user->username)
+			{
+				$table = \Joomla\CMS\Table\Table::getInstance('session', 'JTable');
+				$table->load($session->getId());
+
+				$table->username = $this->user->username;
+				$table->store();
+			}
 		}
 
 		return true;
@@ -900,12 +915,11 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
-		$input = $app->input;
+		$input = $this->app->input;
 		$method = $input->getMethod();
 		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
-		if ($app->input->get('signature', null) === null)
+		if ($this->app->input->get('signature', null) === null)
 		{
 			return;
 		}
@@ -963,7 +977,8 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function deleteOldAvatars()
 	{
-		if (preg_match('|^users/|', $this->me->avatar))
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		if (preg_match('|^users/|', $user->avatar))
 		{
 			// Delete old uploaded avatars:
 			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
@@ -972,16 +987,16 @@ class KunenaControllerUser extends KunenaController
 
 				foreach ($deletelist as $delete)
 				{
-					if (is_file($delete . '/' . $this->me->avatar))
+					if (is_file($delete . '/' . $user->avatar))
 					{
-						KunenaFile::delete($delete . '/' . $this->me->avatar);
+						KunenaFile::delete($delete . '/' . $user->avatar);
 					}
 				}
 			}
 
-			if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar))
+			if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar))
 			{
-				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
+				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
 			}
 		}
 	}
@@ -989,9 +1004,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload avatar with AJAX.
 	 *
-	 * @throws RuntimeException
+	 * @throws null
 	 * @since 5.1
-     */
+	 */
 	public function upload()
 	{
 		// Only support JSON requests.
@@ -1001,12 +1016,11 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$upload = KunenaUpload::getInstance();
+		$user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		// We are converting all exceptions into JSON.
 		try
 		{
-			$me = KunenaUserHelper::getMyself();
-
 			$caption = $this->input->getString('caption');
 			$options = array(
 				'filename'   => $this->input->getString('filename'),
@@ -1031,13 +1045,13 @@ class KunenaControllerUser extends KunenaController
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
 
-				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
-				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid . '.' . $extension);
+				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
 				// Save in the table KunenaUser
-				$kuser = KunenaFactory::getUser();
-				$kuser->avatar = 'users/avatar' . $this->me->userid . '.' . $extension;
+				$kuser = $user;
+				$kuser->avatar = 'users/avatar' . $user->userid . '.' . $extension;
 				$kuser->save();
 			}
 		}
@@ -1068,6 +1082,7 @@ class KunenaControllerUser extends KunenaController
 	 * Remove avatar with AJAX
 	 *
 	 * @since 5.1
+	 * @throws Exception
 	 */
 	public function removeAvatar()
 	{
@@ -1087,7 +1102,7 @@ class KunenaControllerUser extends KunenaController
 		$this->deleteOldAvatars();
 
 		// Save in the table KunenaUser
-		$kuser = KunenaFactory::getUser();
+		$kuser = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 		$kuser->avatar = '';
 		$success = $kuser->save();
 
@@ -1111,9 +1126,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Get avatar attached to a profile with AJAX.
 	 *
-	 * @throws RuntimeException
-	 *
-	 * @return string
+	 * @return void
+	 * @throws Exception
 	 * @since 5.1
 	 */
 	public function loadAvatar()
@@ -1160,79 +1174,9 @@ class KunenaControllerUser extends KunenaController
 		jexit();
 	}
 
-	/**
-	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	protected function saveAvatar()
-	{
-	    $action         = $this->app->input->getString('avatar', 'keep');
-		$current_avatar = $this->me->avatar;
-
-		$avatarFile = $this->app->input->files->get('avatarfile');
-
-		if (!empty($avatarFile['tmp_name']))
-		{
-			if ($avatarFile['size'] < intval(KunenaConfig::getInstance()->avatarsize) * 1024)
-			{
-				$this->deleteOldAvatars();
-			}
-
-			$upload = KunenaUpload::getInstance();
-
-			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
-
-			if (!empty($uploaded))
-			{
-				$imageInfo = KunenaImage::getImageFileProperties($uploaded->destination);
-
-				// If image is not inside allowed size limits, resize it
-				if ($uploaded->size > intval($this->config->avatarsize) * 1024 || $imageInfo->width > '200' || $imageInfo->height > '200')
-				{
-					if ($this->config->avatarquality < 1 || $this->config->avatarquality > 100)
-					{
-						$quality = 70;
-					}
-					else
-					{
-						$quality = $this->config->avatarquality;
-					}
-
-					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' .
-						$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop
-					);
-				}
-
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
-				$this->me->avatar = 'users/avatar' . $this->me->userid . '.' . $uploaded->ext;
-			}
-			else
-			{
-				$this->me->avatar = $current_avatar;
-
-				return false;
-			}
-		}
-		elseif ($action == 'delete')
-		{
-			$this->deleteOldAvatars();
-
-			// Set default avatar
-			$this->me->avatar = '';
-		}
-		elseif (substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false)
-		{
-			$this->me->avatar = $action;
-		}
-
-		return true;
-	}
-
 	protected function saveSettings()
 	{
-	    $this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if ($this->app->input->get('hidemail', null) === null)
 		{

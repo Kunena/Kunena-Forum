@@ -31,6 +31,7 @@ class KunenaLogEntry
 	 * @param   KunenaForumTopic    $topic
 	 * @param   KunenaUser          $user
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct(

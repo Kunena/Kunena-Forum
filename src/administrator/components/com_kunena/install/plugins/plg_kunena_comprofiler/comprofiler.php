@@ -29,6 +29,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param $subject
 	 * @param $config
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)

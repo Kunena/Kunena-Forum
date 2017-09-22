@@ -37,6 +37,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Constructor.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
@@ -54,6 +55,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser $user
 	 *
 	 * @return $this
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function filterByUserAccess(KunenaUser $user)
@@ -112,7 +114,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
 	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
-	 * @param   bool  $lastPost True = last post, False = first post.
+	 * @param   bool                  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -314,6 +316,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   string $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumTopic[]
+	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	public function find($access = 'read')

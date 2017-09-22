@@ -22,19 +22,6 @@ abstract class KunenaFactory
 	static $session = null;
 
 	/**
-	 * Get a Kunena configuration object
-	 *
-	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
-	 *
-	 * @return KunenaConfig
-	 * @since Kunena
-	 */
-	public static function getConfig()
-	{
-		return KunenaConfig::getInstance();
-	}
-
-	/**
 	 * Get a Kunena template object
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
@@ -43,6 +30,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaTemplate
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTemplate($name = null)
 	{
@@ -70,7 +58,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int  $id     The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param   int  $id     The user to load - Can be an integer or string - If string, it is converted to Id
+	 *                       automatically.
 	 * @param   bool $reload reload
 	 *
 	 * @return KunenaUser
@@ -90,6 +79,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getSession($update = false)
 	{
@@ -99,6 +89,18 @@ abstract class KunenaFactory
 		}
 
 		return self::$session;
+	}
+
+	/**
+	 * @param   boolean $session null
+	 *
+	 * @since Kunena
+	 *
+	 * @return void
+	 */
+	public static function setSession($session)
+	{
+		self::$session = $session;
 	}
 
 	/**
@@ -163,6 +165,7 @@ abstract class KunenaFactory
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
@@ -205,19 +208,22 @@ abstract class KunenaFactory
 	}
 
 	/**
-	 * @param   boolean $session null
-	 * @since Kunena
+	 * Get a Kunena configuration object
 	 *
-	 * @return void
+	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
+	 *
+	 * @return KunenaConfig
+	 * @since Kunena
+	 * @throws Exception
 	 */
-	public static function setSession($session)
+	public static function getConfig()
 	{
-		self::$session = $session;
+		return KunenaConfig::getInstance();
 	}
 
 	/**
-	 * @param   string  $lang     language
-	 * @param   string  $filename filename
+	 * @param   string $lang     language
+	 * @param   string $filename filename
 	 *
 	 * @return boolean
 	 * @since Kunena

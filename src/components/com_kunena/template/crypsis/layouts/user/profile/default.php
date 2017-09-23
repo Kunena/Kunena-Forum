@@ -14,15 +14,15 @@ defined('_JEXEC') or die;
 
 $user = $this->user;
 $avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-$show = KunenaConfig::getInstance()->showuserstats;
+$config = KunenaConfig::getInstance();
+$show = $config->showuserstats;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points = $activityIntegration->getUserPoints($user->userid);
 $medals = $activityIntegration->getUserMedals($user->userid);
-$config = KunenaConfig::getInstance();
 
 if ($show)
 {
-	if (KunenaConfig::getInstance()->showkarma)
+    if ($config->showkarma)
 	{
 		$karma = $user->getKarma();
 	}
@@ -49,7 +49,7 @@ if ($show)
 	</li>
 	<?php endif; ?>
 
-	<?php if ($user->exists()) : ?>
+	<?php if ($user->exists() && $config->user_status) : ?>
 	<li>
 		<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 	</li>
@@ -87,13 +87,13 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
+			<?php if (!empty($karma) && $config->showkarma) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
+			<?php if ($show && isset($user->thankyou) && $config->showthankyou) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 			</li>

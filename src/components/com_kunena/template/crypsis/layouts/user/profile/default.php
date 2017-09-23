@@ -12,17 +12,17 @@ defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user                = $this->user;
-$avatar              = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-$show                = KunenaConfig::getInstance()->showuserstats;
+$user = $this->user;
+$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$config = KunenaConfig::getInstance();
+$show = $config->showuserstats;
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points              = $activityIntegration->getUserPoints($user->userid);
-$medals              = $activityIntegration->getUserMedals($user->userid);
-$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+$points = $activityIntegration->getUserPoints($user->userid);
+$medals = $activityIntegration->getUserMedals($user->userid);
 
 if ($show)
 {
-	if (KunenaConfig::getInstance()->showkarma)
+    if ($config->showkarma)
 	{
 		$karma = $user->getKarma();
 	}
@@ -37,17 +37,57 @@ if ($show)
 			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
 
-		<?php if ($optional_username)
-		:
-	?>
+	<?php if ($avatar) : ?>
+	<li>
+		<?php echo $user->getLink($avatar, null, ''); ?>
+		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
+				<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+		<?php endif;?>
+		<?php /*if ($user->isModerator()) : */?><!--
+			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */?></span>
+		--><?php /*endif;*/?>
+	</li>
+	<?php endif; ?>
+
+	<?php if ($user->exists() && $config->user_status) : ?>
+	<li>
+		<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
+	</li>
+	<?php endif; ?>
+
+	<?php if (!empty($rankTitle)) : ?>
+	<li>
+		<?php echo $this->escape($rankTitle); ?>
+	</li>
+	<?php endif; ?>
+
+	<?php if (!empty($rankImage)) : ?>
+	<li>
+		<?php echo $rankImage; ?>
+	</li>
+	<?php endif; ?>
+
+	<?php if (!empty($personalText)) : ?>
+	<li>
+		<?php echo $personalText; ?>
+	</li>
+	<?php endif; ?>
+</ul>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default'); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
+<?php if ($user->userid > 1) : ?>
+<div class="profile-expand center">
+	<span class="heading btn btn-small heading-less" style="display:none;"><?php echo KunenaIcons::arrowup();?> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+	<span class="heading btn btn-small"><?php echo KunenaIcons::arrowdown();?> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+	<div class="content" style="display:none;">
+		<ul>
+			<?php if ($user->posts >= 1) : ?>
 			<li>
 				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
 			</li>
 		<?php endif; ?>
 
-		<?php if ($avatar)
-		:
-	?>
+			<?php if (!empty($karma) && $config->showkarma) : ?>
 			<li>
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, 1); ?>
 				<?php
@@ -70,9 +110,7 @@ if ($show)
 			</li>
 		<?php endif; ?>
 
-		<?php if ($user->exists())
-		:
-	?>
+			<?php if ($show && isset($user->thankyou) && $config->showthankyou) : ?>
 			<li>
 				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>

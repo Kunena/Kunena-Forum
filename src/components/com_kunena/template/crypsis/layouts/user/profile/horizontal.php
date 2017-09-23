@@ -13,14 +13,14 @@ defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user              = $this->user;
-$avatar            = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
-$show              = KunenaConfig::getInstance()->showuserstats;
-$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
+$user   = $this->user;
+$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+$config = KunenaConfig::getInstance();
+$show   = $config->showuserstats;
 
 if ($show)
 {
-	if (KunenaConfig::getInstance()->showkarma)
+    if ($config->showkarma)
 	{
 		$karma = $user->getKarma();
 	}
@@ -43,10 +43,7 @@ if ($show)
 				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
 			</li>
 		<?php endif; ?>
-		<?php
-		if ($avatar)
-		:
-	?>
+		<?php if ($user->exists() && $config->user_status) : ?>
 			<li>
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, 1); ?>
 				<?php
@@ -116,18 +113,14 @@ if ($show)
 		</li>
 	<?php endif; ?>
 
-	<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma)
-	:
-	?>
+	<?php if (!empty($karma) && $config->showkarma) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
 			<span> <?php echo $karma; ?> </span>
 		</li>
 	<?php endif; ?>
 
-	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou)
-	:
-	?>
+	<?php if ($show && isset($user->thankyou) && $config->showthankyou) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 			<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>

@@ -56,9 +56,9 @@ JHtml::_('behavior.multiselect');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value=""/>
-			<input type="hidden" name="boxchecked" value="1"/>
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="boxchecked" value="1" />
 			<fieldset>
 				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?></legend>
 				<table class="table table-bordered table-striped">

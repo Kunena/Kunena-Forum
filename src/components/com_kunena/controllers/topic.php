@@ -89,6 +89,48 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * Set inline to 0 on the attachment object.
+	 *
+	 * @return void
+	 * @since Kunena 5.1
+	 */
+	public function removeinline()
+	{
+	    // Only support JSON requests.
+	    if ($this->input->getWord('format', 'html') != 'json')
+	    {
+	        throw new RuntimeException(JText::_('Bad Request'), 400);
+	    }
+
+	    if (!\Joomla\CMS\Session\Session::checkToken('request'))
+	    {
+	        throw new RuntimeException(JText::_('Forbidden'), 403);
+	    }
+
+	    $attach_id         = $this->input->getInt('file_id', 0);
+
+	    $success           = array();
+	    $instance          = KunenaAttachmentHelper::get($attach_id);
+	    $success['result'] = $instance->setInline(0);
+	    unset($instance);
+
+	    header('Content-type: application/json');
+	    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+	    header("Cache-Control: no-store, no-cache, must-revalidate");
+	    header("Cache-Control: post-check=0, pre-check=0", false);
+	    header("Pragma: no-cache");
+
+	    while (@ob_end_clean())
+	    {
+	    }
+
+	    echo json_encode($success);
+
+	    jexit();
+	}
+
+	/**
 	 * Remove files with AJAX.
 	 *
 	 * @return void

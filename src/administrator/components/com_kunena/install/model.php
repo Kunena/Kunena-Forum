@@ -175,7 +175,6 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		JFile::write(KPATH_ADMIN . '/install.php', $contents);
 
 		// Uninstall all plugins.
-		$this->uninstallPlugin('kunena', 'alphauserpoints');
 		$this->uninstallPlugin('kunena', 'altauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');

@@ -51,12 +51,6 @@ source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_f
 source_lang = en-GB
 minimum_perc = 0
 
-[Kunena.admin-plg_kunena_alphauserpoints-sys]
-file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_alphauserpoints.sys.ini
-source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini
-source_lang = en-GB
-minimum_perc = 0
-
 [Kunena.admin-plg_kunena_altauserpoints-sys]
 file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini
 source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini

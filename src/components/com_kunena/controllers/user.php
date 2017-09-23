@@ -195,23 +195,6 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
 		}
 
-		if ($success)
-		{
-			if ($this->format == 'json')
-			{
-				// Pre-create both 28px and 100px avatars so we have them available for AJAX
-				$avatars           = array();
-				$avatars['small']  = $this->me->getAvatarUrl(28, 28);
-				$avatars['medium'] = $this->me->getAvatarUrl(100, 100);
-				$return            = array('avatars' => $avatars);
-			}
-		}
-		else
-		{
-			$errors++;
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'error');
-		}
-
 		// Save Kunena user.
 		$this->saveProfile();
 		$this->saveSettings();

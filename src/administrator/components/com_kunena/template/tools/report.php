@@ -19,33 +19,27 @@ window.addEvent('domready', function(){
 	$('link_sel_all').addEvent('click', function(e){
 		$('report_final').select();
 		try {
-	var successful = document.execCommand('copy');
-	var msg = successful ? 'successful' : 'unsuccessful';
-	console.log('Copying text command was ' + msg);
-	}
-	catch (err)
-	{
-	console.log('Oops, unable to copy');
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Copying text command was ' + msg);
+		}
+		catch (err)
+		{
+			console.log('Oops, unable to copy');
 	}
 	});
-});
-"
-);
 
-$document->addScriptDeclaration(
-	"
-window.addEvent('domready', function(){
-	$('link_sel_all_complete').addEvent('click', function(e){
+    $('link_sel_all_complete').addEvent('click', function(e){
 		$('report_final_anonymous').select();
 		try {
-	var successful = document.execCommand('copy');
-	var msg = successful ? 'successful' : 'unsuccessful';
-	console.log('Copying text command was ' + msg);
-	}
-	catch (err)
-	{
-	console.log('Oops, unable to copy');
-	}
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Copying text command was ' + msg);
+		}
+		catch (err)
+		{
+			console.log('Oops, unable to copy');
+		}
 	});
 });
 "

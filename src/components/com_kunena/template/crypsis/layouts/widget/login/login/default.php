@@ -89,7 +89,7 @@ defined('_JEXEC') or die;
 
 				<div id="form-login-submit" class="control-group center">
 					<p>
-						<button type="submit" tabindex="3" name="submit" class="btn btn-primary btn">
+						<button type="submit" tabindex="3" name="submit" class="btn btn-primary">
 							<?php echo JText::_('JLOGIN'); ?>
 						</button>
 					</p>

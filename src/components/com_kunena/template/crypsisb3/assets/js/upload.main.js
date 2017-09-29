@@ -4,9 +4,9 @@ jQuery(function ($) {
 	$.widget('blueimp.fileupload', $.blueimp.fileupload, {
 		options: {
 			// The maximum width of resized images:
-			imageMaxWidth: imageheight,
+			imageMaxWidth: imagewidth,
 			// The maximum height of resized images:
-			imageMaxHeight: imagewidth
+			imageMaxHeight: imageheight
 		}
 	});
 
@@ -113,9 +113,9 @@ jQuery(function ($) {
 				});
 			}
 		});
-		
+
 		$('#alert_max_file').remove();
-		
+
 		fileCount = 0;
 	});
 
@@ -206,9 +206,9 @@ jQuery(function ($) {
 			}
 
 			fileCount = fileCount - 1;
-			
+
 			$('#alert_max_file').remove();
-			
+
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
 				url    : kunena_upload_files_rem + '&fil_id=' + file_id,
@@ -254,9 +254,9 @@ jQuery(function ($) {
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
 				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
-				
+
 				$('#form_submit_button').prop('disabled', false);
-				
+
 				return false;
 			}
 			else {
@@ -273,9 +273,9 @@ jQuery(function ($) {
 
 			if (filecoutntmp > kunena_upload_files_maxfiles) {
 				$('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
-				
+
 				$('#form_submit_button').prop('disabled', false);
-				
+
 				return false;
 			}
 			else {

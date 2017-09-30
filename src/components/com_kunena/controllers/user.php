@@ -950,6 +950,14 @@ class KunenaControllerUser extends KunenaController
 		$user->websitename = $input->$method->get('websitename', '', 'string');
 		$user->websiteurl  = $input->$method->get('websiteurl', '', 'string');
 		$user->signature   = $input->$method->get('signature', '', 'raw');
+
+		// Save avatar from gallery
+		$avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');
+
+		if (!empty($avatar_gallery))
+		{
+		    $user->avatar = $avatar_gallery;
+		}
 	}
 
 	/**

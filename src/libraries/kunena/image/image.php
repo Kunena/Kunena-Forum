@@ -316,7 +316,7 @@ class KunenaImage extends \Joomla\Image\Image
 		if ($createNew)
 		{
 			// @codeCoverageIgnoreStart
-			$new = new KunenaImage;
+			$new = new KunenaImage($handle);
 
 			return $new;
 

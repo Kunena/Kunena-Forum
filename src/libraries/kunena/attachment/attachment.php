@@ -653,7 +653,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 					try
 					{
-						$image = new KunenaImage;
+						$image = new KunenaImage($uploadBasePath . $fileNameWithExt);
 						$image = $image->resize($config->imagewidth, $config->imagewidth, false);
 						$image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
 						unset($image);

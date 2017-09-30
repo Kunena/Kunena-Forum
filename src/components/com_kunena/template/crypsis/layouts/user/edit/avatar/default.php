@@ -72,7 +72,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 			<input id="kunena_url_avatargallery" type="hidden"
 				   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 		</td>
-		<td>
+		<td class="span9">
 
 				<?php if ($this->galleryOptions)
 				:
@@ -93,7 +93,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 						<?php foreach ($this->galleryImages as $image)
 						:
 	?>
-							<li class="span2">
+							<li>
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
 									   value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">

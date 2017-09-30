@@ -35,7 +35,7 @@ JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imagewidth);
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');

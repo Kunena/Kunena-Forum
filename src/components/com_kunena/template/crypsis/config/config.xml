@@ -160,7 +160,7 @@
 	</fieldset>
 
 	<fieldset name="bbcode">
-		<field name="editor" type="list" default="1" label="COM_KUNENA_TEMPLATE_EDITOR" description="COM_KUNENA_TEMPLATE_EDITOR_DESC">
+		<field name="editor" type="list" default="0" label="COM_KUNENA_TEMPLATE_EDITOR" description="COM_KUNENA_TEMPLATE_EDITOR_DESC">
 			<option value="0">COM_KUNENA_TEMPLATE_EDITOR_BBCODE</option>
 			<option value="1">COM_KUNENA_TEMPLATE_EDITOR_WYSIBB</option>
 		</field>

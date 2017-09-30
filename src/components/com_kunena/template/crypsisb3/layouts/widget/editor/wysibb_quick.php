@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-$this->addScript('assets/js/jquery.wysibb.min.js');
+$this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');

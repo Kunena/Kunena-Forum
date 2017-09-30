@@ -185,6 +185,32 @@ jQuery(function ($) {
 			insertInMessage(file_id, filename, $this);
 		});
 
+	var removeInline = $('<button>')
+		.addClass("btn btn-primary")
+		.html('<i class="icon-upload"></i> Remove inline')
+		.on('click', function (e) {
+			var $this = $(this),
+				data = $this.data();
+
+			var file_id = 0;
+			if (data.uploaded == true) {
+				if (data.result != false) {
+					file_id = data.result.data.id;
+				}
+				else {
+					file_id = data.file_id;
+				}
+			}
+ 
+			$.ajax({
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
+				type: 'POST',
+				success: function (result) {
+				  console.log(result);	
+				}
+			});
+	});
+	
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
@@ -371,6 +397,7 @@ jQuery(function ($) {
 			}
 
 			data.context.append(removeButton.clone(true).data(data));
+			data.context.append(removeInline.clone(true).data(data));
 		}
 		else if (data.result.message) {
 			$('#form_submit_button').prop('disabled', false);

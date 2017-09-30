@@ -733,8 +733,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				continue;
 			}
 
-			$attachment->inline = 1;
-
 			if (!$attachment->save())
 			{
 				$this->setError($attachment->getError());

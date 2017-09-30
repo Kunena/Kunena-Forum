@@ -21,7 +21,7 @@ abstract class KunenaEmail
 	 *
 	 * @return boolean
 	 */
-	public static function send(JMail $mail, array $receivers)
+	public static function send($mail, array $receivers)
 	{
 		$config = KunenaFactory::getConfig();
 

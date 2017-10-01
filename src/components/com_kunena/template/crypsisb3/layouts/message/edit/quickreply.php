@@ -71,11 +71,12 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 
 $template = KunenaTemplate::getInstance();
 $quick    = $template->params->get('quick');
+$editor   = $template->params->get('editor');
 ?>
 
 <?php if ($quick == 1) : ?>
 <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" style="display:none;">
+     aria-hidden="true" style="display:none;" data-backdrop="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 
@@ -141,7 +142,7 @@ $quick    = $template->params->get('quick');
 									</label>
 									<?php if ($editor == 1)
 									{
-										echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $this->config);
+										echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
 									}
 									else
 									{

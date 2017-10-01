@@ -86,7 +86,7 @@ $editor   = $template->params->get('editor');
 <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true" style="display:none;">
 	<?php elseif ($quick == 0) : ?>
-	<div class="kreply-form col-md-12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false"
+	<div class="kreply-form span12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false"
 	     style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
 		<?php endif; ?>
 		<div class="modal-header">

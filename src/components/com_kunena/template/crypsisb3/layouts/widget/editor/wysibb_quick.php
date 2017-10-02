@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
@@ -8,7 +9,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 $this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');

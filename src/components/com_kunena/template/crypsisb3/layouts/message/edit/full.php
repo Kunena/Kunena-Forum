@@ -23,7 +23,13 @@ $topic    = isset($this->topic) ? $this->topic : $message->getTopic();
 $category = isset($this->category) ? $this->category : $message->getCategory();
 $config   = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-$editor   = $template->params->get('editor');
+
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/edit.js');
 
@@ -32,7 +38,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('assets/js/sisyphus.js');
 }
 
-// Fixme: can't get the controller working on this
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 {
 	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
@@ -56,6 +61,10 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		}
 	}
 }
+
+$template = KunenaTemplate::getInstance();
+$quick    = $template->params->get('quick');
+$editor   = $template->params->get('editor');
 ?>
 
 <div class="kreply col-md-12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block;">
@@ -126,12 +135,12 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				</label>
 				<?php if ($editor == 1)
 				{
-					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $this->config);
+					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $config);
 				}
-else
-{
-	echo '<textarea class="qreply form-control" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
-} ?>
+				else
+				{
+					echo '<textarea class="col-md-12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+				} ?>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe'))

@@ -403,7 +403,37 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('og:type', 'article', 'property');
 		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
 		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
-		$doc->setMetaData('og:image', $this->topic->getAuthor()->getAvatarURL(), 'property');
+
+		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
+		{
+			$image = JURI::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
+		}
+		else
+		{
+			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
+		}
+
+		if ($this->topic->attachments > 0)
+		{
+			$attachments = KunenaAttachmentHelper::getByMessage($this->topic->first_post_id);
+			$item        = array();
+
+			foreach ($attachments as $attach)
+			{
+				$object        = new stdClass;
+				$object->path  = $attach->getUrl();
+				$object->image = $attach->isImage();
+				$item          = $object;
+			}
+
+			$attach = $item;
+			if ($attach->image)
+			{
+				$image = $attach->path;
+			}
+		}
+
+		$doc->setMetaData('og:image', $image, 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 

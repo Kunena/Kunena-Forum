@@ -14,6 +14,7 @@ $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
+$social = $this->ktemplate->params->get('socialshare');
 
 if (KunenaConfig::getInstance()->ratingenabled)
 {
@@ -22,6 +23,12 @@ if (KunenaConfig::getInstance()->ratingenabled)
 ?>
 <div class="row">
 	<div class="col-md-12">
+	<?php if ($social == 1) : ?>
+		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+	<?php endif; ?>
+	<?php if ($social == 2) : ?>
+		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
+	<?php endif; ?>
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>

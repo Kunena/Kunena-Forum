@@ -403,7 +403,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('og:type', 'article', 'property');
 		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
 		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
-		$doc->setMetaData('og:image', $this->topic->getAuthor()->getAvatarImage(), 'property');
+		$doc->setMetaData('og:image', $this->topic->getAuthor()->getAvatarURL(), 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 

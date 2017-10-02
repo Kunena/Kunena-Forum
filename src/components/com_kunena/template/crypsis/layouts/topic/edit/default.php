@@ -160,9 +160,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<div class="row-fluid column-row">
 				<div class="span12 column-item">
 					<fieldset>
-						<?php if (isset($this->selectcatlist))
-:
-	?>
+						<?php if (isset($this->selectcatlist)) :?>
 							<div class="control-group">
 								<!-- Username -->
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>

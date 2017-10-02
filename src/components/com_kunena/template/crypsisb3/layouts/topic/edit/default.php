@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
@@ -53,6 +52,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 $this->k = 0;
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
@@ -108,54 +108,50 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<input id="kurl_category_template_text" type="hidden"
 		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
 	<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
-	<input id="kpreview_url" type="hidden" name="kpreview_url"
-		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+	<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
 	<?php if (!$this->config->allow_change_subject)
-	:
-	?>
+		:
+		?>
 		<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 	<?php endif; ?>
 	<?php
 	if ($this->message->exists())
-	:
-	?>
+		:
+		?>
 		<input type="hidden" name="task" value="edit"/>
 		<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
 	<?php else
 
-:
-	?>
+		:
+		?>
 		<input type="hidden" name="task" value="post"/>
 		<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>"/>
 	<?php endif; ?>
 	<?php
 	if (!isset($this->selectcatlist))
-	:
-	?>
+		:
+		?>
 		<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
 	<?php endif; ?>
 	<?php
 	if ($this->category->id && $this->category->id != $this->message->catid)
-	:
-	?>
+		:
+		?>
 		<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>"/>
 	<?php endif; ?>
 	<?php
 	if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id)
-	:
-	?>
+		:
+		?>
 		<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>"/>
 	<?php endif; ?>
 	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>"/>
 	<input type="hidden" id="kunena_upload_files_url"
-		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1',
-			   false
-		   ) ?>"/>
+		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false) ?>"/>
 	<?php if ($this->me->exists())
-	:
-	?>
-		<input type="hidden" id="kurl_users" name="kurl_users"
-			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+		:
+		?>
+		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -396,24 +392,24 @@ else
 				</fieldset>
 			</div>
 		</div>
-	</div>
 	<div class="center">
 		<?php if ($editor == 1)
-		:
-	?>
+			:
+			?>
 			<input type="submit" class="btn btn-success" name="submit"
 				   value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 				   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
 		<?php else
-:
-	?>
+
+			:
+			?>
 			<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
 				<?php echo KunenaIcons::save(); ?>
 				<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
 		<?php endif;?>
 
-		<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="9">
+		<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="10">
 			<?php echo KunenaIcons::cancel(); ?>
 			<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 		</button>

@@ -18,6 +18,7 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $config = KunenaConfig::getInstance();
 $show   = $config->showuserstats;
+$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {

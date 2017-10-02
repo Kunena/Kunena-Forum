@@ -49,9 +49,6 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		$template     = KunenaFactory::getTemplate();
 		$catimagepath = $template->params->get('DefaultCategoryicon');
 
-		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
-		$uri  = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/' . $catimagepath . '/';
-
 		if ($category->getNewCount())
 		{
 			if (!empty($category->icon))

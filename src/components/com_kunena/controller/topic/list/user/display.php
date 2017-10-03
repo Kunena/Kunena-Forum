@@ -233,7 +233,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		}
 
 		$this->actions = $this->getTopicActions($this->topics, $actions);
+	}
 
+	protected function prepareDocument()
+	{
+		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 
 		if (JFile::exists(JPATH_SITE . KunenaConfig::getInstance()->emailheader))

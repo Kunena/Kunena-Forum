@@ -128,6 +128,21 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
+		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$doc->setMetaData('og:type', 'profile', 'property');
+		$doc->setMetaData('og:author', $this->profile->name, 'property');
+
+		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
+		{
+			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
+		}
+		else
+		{
+			$image = $this->profile->getAvatarURL('Profile', '200');
+		}
+
+		$doc->setMetaData('og:image', $image, 'property');
+
 		if ($robots == '')
 		{
 			$doc->setMetaData('robots', 'index, follow');

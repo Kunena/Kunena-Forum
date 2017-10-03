@@ -408,6 +408,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
 		}
+		elseif ($this->topic->getAuthor()->avatar == null)
+		{
+			if (JFile::exists(JPATH_SITE . '/'. KunenaConfig::getInstance()->emailheader))
+			{
+				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			}
+		}
 		else
 		{
 			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');

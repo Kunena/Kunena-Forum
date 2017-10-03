@@ -413,6 +413,14 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
 		}
 
+		$message = $this->topic->first_post_message;
+		$matches = preg_match("/http(s?):\/\/.*\/\img]/iu", $message, $title);
+
+		if ($matches)
+		{
+			$image  = substr($title[0], 0, -6);
+		}
+
 		if ($this->topic->attachments > 0)
 		{
 			$attachments = KunenaAttachmentHelper::getByMessage($this->topic->first_post_id);
@@ -427,6 +435,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 
 			$attach = $item;
+
 			if ($attach->image)
 			{
 				$image = $attach->path;

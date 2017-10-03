@@ -240,7 +240,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 
-		if (JFile::exists(JPATH_SITE . KunenaConfig::getInstance()->emailheader))
+		if (JFile::exists(JPATH_SITE . '/'. KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$doc->setMetaData('og:image', $image, 'property');

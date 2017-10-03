@@ -207,7 +207,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
-		if (JFile::exists(JPATH_SITE . KunenaConfig::getInstance()->emailheader))
+		if (JFile::exists(JPATH_SITE . '/'. KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$doc->setMetaData('og:image', $image, 'property');

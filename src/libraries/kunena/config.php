@@ -1174,7 +1174,7 @@ class KunenaConfig extends JObject
 	 * @var string to define the image location
 	 * @since  K5.0.2
 	 */
-	public $emailheader = '/media/kunena/email/hero-wide.png';
+	public $emailheader = 'media/kunena/email/hero-wide.png';
 
 	/**
 	 * @var integer

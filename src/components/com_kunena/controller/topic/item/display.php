@@ -428,17 +428,31 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			foreach ($attachments as $attach)
 			{
-				$object        = new stdClass;
-				$object->path  = $attach->getUrl();
-				$object->image = $attach->isImage();
-				$item          = $object;
+				$object           = new stdClass;
+				$object->path     = $attach->getUrl();
+				$object->image    = $attach->isImage();
+				$object->filename = $attach->filename;
+				$object->folder   = $attach->folder;
+				$item             = $object;
 			}
 
 			$attach = $item;
 
-			if ($attach->image)
+			if (JFile::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename))
 			{
-				$image = $attach->path;
+				if ($attach->image)
+				{
+					if (KunenaConfig::getInstance()->attachment_protection)
+					{
+						$url      = $attach->path;
+						$protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+						$image    = $protocol . $_SERVER['SERVER_NAME'] . $url;
+					}
+					else
+					{
+						$image = $attach->path;
+					}
+				}
 			}
 		}
 

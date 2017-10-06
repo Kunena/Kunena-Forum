@@ -46,7 +46,6 @@ jimport('joomla.utilities.date');
  * @property    int    $canSubscribe
  * @property    int    $userListtime
  * @property    string $icq
- * @property    string $aim
  * @property    string $yim
  * @property    string $microsoft
  * @property    string $skype
@@ -1840,7 +1839,6 @@ class KunenaUser extends JObject
 		                'digg'       => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
 		                'skype'      => array('url' => 'skype:##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
 		                'yim'        => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
-		                'aim'        => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_AIM'), 'nourl' => '1'),
 		                'google'     => array('url' => 'https://plus.google.com/+##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '0'),
 		                'microsoft'  => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
 		                'icq'        => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),

@@ -383,7 +383,6 @@ class KunenaControllerUser extends KunenaController
 			$user->location     = '';
 			$user->gender       = 0;
 			$user->icq          = '';
-			$user->aim          = '';
 			$user->yim          = '';
 			$user->microsoft    = '';
 			$user->skype        = '';
@@ -921,7 +920,6 @@ class KunenaControllerUser extends KunenaController
 		$user->location    = trim($input->$method->get('location', '', 'string'));
 		$user->gender      = $input->$method->get('gender', 0, 'int');
 		$user->icq         = trim($input->$method->get('icq', '', 'string'));
-		$user->aim         = trim($input->$method->get('aim', '', 'string'));
 		$user->yim         = trim($input->$method->get('yim', '', 'string'));
 		$user->microsoft   = trim($input->$method->get('microsoft', '', 'string'));
 		$user->skype       = trim($input->$method->get('skype', '', 'string'));

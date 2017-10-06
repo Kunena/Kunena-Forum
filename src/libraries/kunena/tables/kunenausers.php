@@ -209,13 +209,6 @@ class TableKunenaUsers extends KunenaTable
 	public $icq = null;
 
 	/**
-	 * AIM ID
-	 * @var string
-	 * @since Kunena
-	 **/
-	public $aim = null;
-
-	/**
 	 * YIM ID
 	 * @var string
 	 * @since Kunena

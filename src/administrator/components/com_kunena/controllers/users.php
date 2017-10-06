@@ -134,7 +134,6 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->location     = trim($this->app->input->getString('location', ''));
 			$user->gender       = $this->app->input->getInt('gender', '');
 			$user->icq          = trim($this->app->input->getString('icq', ''));
-			$user->aim          = trim($this->app->input->getString('aim', ''));
 			$user->yim          = trim($this->app->input->getString('yim', ''));
 			$user->microsoft    = trim($this->app->input->getString('microsoft', ''));
 			$user->skype        = trim($this->app->input->getString('skype', ''));
@@ -259,7 +258,6 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->location     = trim($this->app->input->getString('location', ''));
 			$user->gender       = $this->app->input->getInt('gender', '');
 			$user->icq          = trim($this->app->input->getString('icq', ''));
-			$user->aim          = trim($this->app->input->getString('aim', ''));
 			$user->yim          = trim($this->app->input->getString('yim', ''));
 			$user->microsoft    = trim($this->app->input->getString('microsoft', ''));
 			$user->skype        = trim($this->app->input->getString('skype', ''));

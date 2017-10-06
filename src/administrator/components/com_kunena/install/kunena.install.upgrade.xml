@@ -780,6 +780,11 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `youtube` VARCHAR(50) NULL AFTER `yim`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ok` VARCHAR(50) NULL AFTER `youtube`;</query>
         </version>
+        <version version="5.1.0-BETA2"
+                 versiondate="2017-10-06"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` DROP `aim`;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

@@ -61,11 +61,16 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 1;
 
-			if (!$announcement->isAuthorised('edit') || !$announcement->save())
+			try
 			{
-				$this->app->enqueueMessage($announcement->getError(), 'error');
+				$announcement->isAuthorised('edit') || $announcement->save();
 			}
-			else
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+			if ($announcement->isAuthorised('edit') || $announcement->save())
 			{
 				if ($this->config->log_moderation)
 				{
@@ -109,11 +114,17 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			$announcement->published = 0;
 
-			if (!$announcement->isAuthorised('edit') || !$announcement->save())
+			try
 			{
-				$this->app->enqueueMessage($announcement->getError(), 'error');
+				$announcement->isAuthorised('edit') || $announcement->save();
 			}
-			else
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+
+			if ($announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				if ($this->config->log_moderation)
 				{
@@ -164,11 +175,16 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 
-			if (!$announcement->isAuthorised('delete') || !$announcement->delete())
+			try
 			{
-				$this->app->enqueueMessage($announcement->getError(), 'error');
+				$announcement->isAuthorised('delete') || $announcement->delete();
 			}
-			else
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+			if ($announcement->isAuthorised('delete') || $announcement->delete())
 			{
 				if ($this->config->log_moderation)
 				{
@@ -212,9 +228,13 @@ class KunenaControllerAnnouncement extends KunenaController
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 		$announcement->bind($fields);
 
-		if (!$announcement->isAuthorised($id ? 'edit' : 'create') || !$announcement->save())
+		try
 		{
-			$this->app->enqueueMessage($announcement->getError(), 'error');
+			$announcement->isAuthorised($id ? 'edit' : 'create') || $announcement->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
 
 			return;

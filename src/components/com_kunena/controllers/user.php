@@ -200,10 +200,14 @@ class KunenaControllerUser extends KunenaController
 		$this->saveSettings();
 		$success = $this->user->save();
 
-		if (!$success)
+		try
+		{
+			$success;
+		}
+		catch (\Exception $e)
 		{
 			$errors++;
-			$this->app->enqueueMessage($this->user->getError(), 'error');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
@@ -326,11 +330,16 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
-		if (!$success)
+		try
 		{
-			$this->app->enqueueMessage($ban->getError(), 'error');
+			$success;
 		}
-		else
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($success)
 		{
 			if ($this->config->log_moderation)
 			{
@@ -553,13 +562,18 @@ class KunenaControllerUser extends KunenaController
 		$me         = KunenaUserHelper::getMyself();
 		$me->status = $status;
 
-		if (!$me->save())
+		try
 		{
-			$this->app->enqueueMessage($me->getError(), 'error');
+			$me->save();
 		}
-		else
+		catch (\Exception $e)
 		{
-			$this->app->enqueueMessage(JText::_('Successfully Saved Status'));
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($me->save())
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();
@@ -587,11 +601,16 @@ class KunenaControllerUser extends KunenaController
 		$me              = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
 
-		if (!$me->save())
+		try
 		{
-			$this->app->enqueueMessage($me->getError(), 'error');
+			$me->save();
 		}
-		else
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($me->save())
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
 		}
@@ -669,9 +688,13 @@ class KunenaControllerUser extends KunenaController
 
 		$this->me->karma_time = $now;
 
-		if ($this->me->userid != $target->userid && !$this->me->save())
+		try
 		{
-			$this->app->enqueueMessage($this->me->getError(), 'notice');
+			$this->me->userid == $target->userid && $this->me->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
 			$this->setRedirectBack();
 
 			return;
@@ -679,9 +702,13 @@ class KunenaControllerUser extends KunenaController
 
 		$target->karma += $karmaDelta;
 
-		if (!$target->save())
+		try
 		{
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$target->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
 			$this->setRedirectBack();
 
 			return;
@@ -867,9 +894,13 @@ class KunenaControllerUser extends KunenaController
 		$user     = new \Joomla\CMS\User\User($this->user->id);
 
 		// Bind the form fields to the user table and save.
-		if (!($user->bind($post) && $user->save(true)))
+		try
 		{
-			$this->app->enqueueMessage($user->getError(), 'notice');
+			$user->bind($post) && $user->save(true);
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
 
 			return false;
 		}

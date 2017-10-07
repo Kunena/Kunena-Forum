@@ -363,9 +363,13 @@ class KunenaControllerTopic extends KunenaController
 			// Create topic
 			$category = KunenaForumCategoryHelper::get($this->catid);
 
-			if (!$category->isAuthorised('topic.create'))
+			try
 			{
-				$this->app->enqueueMessage($category->getError(), 'notice');
+				$category->isAuthorised('topic.create');
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'notice');
 				$this->setRedirectBack();
 
 				return;
@@ -378,9 +382,13 @@ class KunenaControllerTopic extends KunenaController
 			// Reply topic
 			$parent = KunenaForumMessageHelper::get($this->id);
 
-			if (!$parent->isAuthorised('reply'))
+			try
 			{
-				$this->app->enqueueMessage($parent->getError(), 'notice');
+				$parent->isAuthorised('reply');
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'notice');
 				$this->setRedirectBack();
 
 				return;
@@ -403,7 +411,7 @@ class KunenaControllerTopic extends KunenaController
 				if (!empty($captcha_pubkey) && !empty($captcha_privkey))
 				{
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-					
+
 
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
@@ -718,10 +726,14 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		if (!$message->isAuthorised('edit'))
+		try
+		{
+			$message->isAuthorised('edit');
+		}
+		catch (\Exception $e)
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
-			$this->app->enqueueMessage($message->getError(), 'notice');
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
 			$this->setRedirectBack();
 
 			return;
@@ -811,13 +823,18 @@ class KunenaControllerTopic extends KunenaController
 			// Reload message (we don't want to change it).
 			$message->load();
 
+			try
+			{
+				$message->publish(KunenaForum::DELETED);
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'notice');
+			}
+
 			if ($message->publish(KunenaForum::DELETED))
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_DELETE'));
-			}
-			else
-			{
-				$this->app->enqueueMessage($message->getError(), 'notice');
 			}
 
 			$this->setRedirect($message->getUrl($this->return, false));
@@ -840,12 +857,14 @@ class KunenaControllerTopic extends KunenaController
 		$activity->onBeforeEdit($message);
 
 		// Save message
-		$success = $message->save();
-
-		if (!$success)
+		try
+		{
+			$message->save();
+		}
+		catch (\Exception $e)
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
-			$this->app->enqueueMessage($message->getError(), 'error');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
 
 			return;

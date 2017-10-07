@@ -35,11 +35,11 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		\Joomla\CMS\Log\Log::add('onKunenaAfterSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 		\Joomla\CMS\Log\Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
-		$dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
+		\JFactory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
 
 	}
 
@@ -62,11 +62,11 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
 
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
-		$dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
+		\JFactory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
 
 	}
 
@@ -86,11 +86,11 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		$dispatcher->trigger('onFinderAfterDelete', array($context, $table));
+		\JFactory::getApplication()->triggerEvent('onFinderAfterDelete', array($context, $table));
 	}
 
 	/**
@@ -109,10 +109,10 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		$dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
+		\JFactory::getApplication()->triggerEvent('onFinderBeforeDelete', array($context, $table));
 	}
 }

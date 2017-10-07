@@ -403,19 +403,19 @@ class KunenaControllerTopic extends KunenaController
 				if (!empty($captcha_pubkey) && !empty($captcha_privkey))
 				{
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-					$dispatcher = JEventDispatcher::getInstance();
+					
 
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
 					if (!empty($captcha_response))
 					{
 						// For ReCaptcha API 2.0
-						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
+						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
 					}
 					else
 					{
 						// For ReCaptcha API 1.0
-						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 					}
 
 					if (!$res[0])

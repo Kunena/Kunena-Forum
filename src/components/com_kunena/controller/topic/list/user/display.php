@@ -112,8 +112,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 			case 'plugin':
 				$pluginmode = $this->state->get('list.modetype');
-				$dispatcher = JEventDispatcher::getInstance();
-				$dispatcher->trigger('onKunenaGetUserTopics', array($pluginmode, &$finder, &$order, &$categoryIds, $this));
+
+				\JFactory::getApplication()->triggerEvent('onKunenaGetUserTopics', array($pluginmode, &$finder, &$order, &$categoryIds, $this));
 				break;
 
 			default :

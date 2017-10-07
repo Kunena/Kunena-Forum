@@ -61,10 +61,10 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
 		// FIXME: need to improve BBCode class on this...
 		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);

@@ -96,8 +96,8 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
+
+		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
 	}
 
 	/**

@@ -104,9 +104,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-					$dispatcher           = JEventDispatcher::getInstance();
-					$result               = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
-					$output               = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
+					$result               = \JFactory::getApplication()->triggerEvent('onInit', 'dynamic_recaptcha_1');
+					$output               = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
 							. $captcha_pubkey . '" data-theme="light"')
 					);
 					$this->captchaDisplay = $output[0];
@@ -127,10 +126,10 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		// Can user edit topic icons?
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))

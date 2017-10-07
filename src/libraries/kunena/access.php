@@ -79,8 +79,8 @@ class KunenaAccess
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$classes    = $dispatcher->trigger('onKunenaGetAccessControl');
+
+		$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetAccessControl');
 
 		foreach ($classes as $class)
 		{

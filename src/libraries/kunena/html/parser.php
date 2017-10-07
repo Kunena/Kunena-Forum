@@ -138,9 +138,9 @@ abstract class KunenaHtmlParser
 			$params = new \Joomla\Registry\Registry;
 			$params->set('ksource', 'kunena');
 
-			$dispatcher = JEventDispatcher::getInstance();
+
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
+			\JFactory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
 			$content = $row->text;
 		}
 

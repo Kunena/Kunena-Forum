@@ -86,10 +86,10 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		$this->action = 'edit';
 

@@ -257,16 +257,16 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
 		// Get the dispatcher and load the users plugins.
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
-		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
+		$results = \JFactory::getApplication()->triggerEvent('onContentPrepareData', array($context, $data));
 
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($dispatcher->getError());
+			\Joomla\CMS\Factory::getApplication()->enqueueMessage($results->getError());
 		}
 	}
 

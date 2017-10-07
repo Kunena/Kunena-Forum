@@ -70,8 +70,8 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$plugins = $dispatcher->trigger('onKunenaUserTabsEdit', array($tabs));
+
+		$plugins = \JFactory::getApplication()->triggerEvent('onKunenaUserTabsEdit', array($tabs));
 
 		$tabs = $tabs + $plugins;
 

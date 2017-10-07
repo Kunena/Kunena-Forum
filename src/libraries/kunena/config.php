@@ -1316,10 +1316,10 @@ class KunenaConfig extends JObject
 		// Perform custom validation of config data before we let anybody access it.
 		$this->check();
 
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$plugins = array();
-		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
+		\JFactory::getApplication()->triggerEvent('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 
 		foreach ($plugins as $name => $registry)

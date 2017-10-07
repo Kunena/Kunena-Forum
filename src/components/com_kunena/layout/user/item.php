@@ -248,8 +248,8 @@ class KunenaLayoutUserItem extends KunenaLayout
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$plugins = $dispatcher->trigger('onKunenaUserTabs', array($tabs));
+
+		$plugins = \JFactory::getApplication()->triggerEvent('onKunenaUserTabs', array($tabs));
 
 		$tabs = $tabs + $plugins;
 

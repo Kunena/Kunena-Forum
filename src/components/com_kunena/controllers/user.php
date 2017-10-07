@@ -208,8 +208,8 @@ class KunenaControllerUser extends KunenaController
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
 
-		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->user, $success));
+
+		\JFactory::getApplication()->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
 
 		if ($errors)
 		{

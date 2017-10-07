@@ -127,10 +127,10 @@ else
 }
 
 // Prepare and display the output.
-$dispatcher = JEventDispatcher::getInstance();
-$dispatcher->trigger('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
+
+\JFactory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
-$dispatcher->trigger('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
+\JFactory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
 echo $contents;
 
 // Remove custom error handlers.

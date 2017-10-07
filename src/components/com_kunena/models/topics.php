@@ -241,8 +241,8 @@ class KunenaModelTopics extends KunenaModel
 					$topics = false;
 
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-					$dispatcher = JEventDispatcher::getInstance();
-					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
+
+					\JFactory::getApplication()->triggerEvent('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
 
 					if (!empty($topics))
 					{

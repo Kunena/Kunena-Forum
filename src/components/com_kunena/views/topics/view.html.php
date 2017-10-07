@@ -149,10 +149,10 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ($this->topics as $this->topic)
 		{
@@ -253,10 +253,10 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 
 		foreach ($this->messages as $this->message)
 		{

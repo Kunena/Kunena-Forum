@@ -162,9 +162,9 @@ class KunenaBbcodeEditor
 		$this->editor_elements = self::parseXML($xml_file, 'parseHMVCXML');
 
 		// Hook to manipulate the Editor XML like adding buttons
-		$dispatcher = JEventDispatcher::getInstance();
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher->trigger('onKunenaBbcodeEditorInit', array($this));
+		\JFactory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', array($this));
 
 		$js = "bbcodeSettings = {
 		previewParserPath:	'',

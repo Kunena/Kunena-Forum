@@ -919,13 +919,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Activity integration
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 
 		if ($postDelta < 0)
 		{
-			$dispatcher->trigger('onDeleteKunenaPost', array(array($this->id)));
+			\JFactory::getApplication()->triggerEvent('onDeleteKunenaPost', array(array($this->id)));
 			$activity->onAfterDelete($this);
 		}
 		elseif ($postDelta > 0)

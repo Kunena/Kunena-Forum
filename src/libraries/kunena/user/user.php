@@ -1198,8 +1198,8 @@ class KunenaUser extends JObject
 		$params->set('kunena_layout', $layout->getLayout());
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger('onKunenaSidebar');
+
+		\JFactory::getApplication()->triggerEvent('onKunenaSidebar');
 
 		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}

@@ -35,10 +35,9 @@ class KunenaLayoutSearchResults extends KunenaLayout
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-
-		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->results, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->results, &$params, 0));
 
 		foreach ($this->results as $this->message)
 		{

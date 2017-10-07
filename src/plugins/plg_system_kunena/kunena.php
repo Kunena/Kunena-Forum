@@ -203,13 +203,13 @@ EOF;
 	 */
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{
-		$dispatcher = JEventDispatcher::getInstance();
+		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		$row       = new stdClass;
 		$row->text = &$text;
 
-		$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
+		\JFactory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
 
 		$text = &$row->text;
 

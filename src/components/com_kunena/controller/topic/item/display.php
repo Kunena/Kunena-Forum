@@ -398,6 +398,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
+		$image = '';
 		$doc = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 		$doc->setMetaData('og:type', 'article', 'property');
@@ -445,19 +446,22 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			$attach = $item;
 
-			if (JFile::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename))
+			if ($attach)
 			{
-				if ($attach->image)
+				if (JFile::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename))
 				{
-					if (KunenaConfig::getInstance()->attachment_protection)
+					if ($attach->image)
 					{
-						$url      = $attach->path;
-						$protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-						$image    = $protocol . $_SERVER['SERVER_NAME'] . $url;
-					}
-					else
-					{
-						$image = $attach->path;
+						if (KunenaConfig::getInstance()->attachment_protection)
+						{
+							$url      = $attach->path;
+							$protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+							$image    = $protocol . $_SERVER['SERVER_NAME'] . $url;
+						}
+						else
+						{
+							$image = $attach->path;
+						}
 					}
 				}
 			}

@@ -74,8 +74,9 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	{
 		$this->ktemplate  = KunenaFactory::getTemplate();
 		$templatesettings = $this->ktemplate->params;
+		$config           = KunenaConfig::getInstance();
 
-		if ($templatesettings->get('showvideotag') && $templatesettings->get('video'))
+		if ($config->showvideotag && $templatesettings->get('video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");
 		}
@@ -84,7 +85,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if (!$templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
+		if (!$config->disemoticons && $templatesettings->get('emoticons'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}
@@ -93,7 +94,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_disemoticons=0;");
 		}
 
-		if ($templatesettings->get('showebaytag') && $templatesettings->get('ebay'))
+		if ($config->showebaytag && $templatesettings->get('ebay'))
 		{
 			$this->addScriptDeclaration("kunena_showebaytag=1;");
 		}

@@ -132,21 +132,13 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 					. "&id={$this->topic->id}&mesid={$this->message->id}&"
 					. \Joomla\CMS\Session\Session::getFormToken() . '=1';
 
-				// Ror normal users, show only limited number of thankyou (config->thankyou_max).
-				if (!$this->me->isAdmin() && !$this->me->isModerator())
+				if (count($this->message->thankyou) > $this->config->thankyou_max)
 				{
-					if (count($this->message->thankyou) > $this->config->thankyou_max)
-					{
-						$this->more_thankyou = count($this->message->thankyou) - $this->config->thankyou_max;
-					}
+					$this->more_thankyou = count($this->message->thankyou) - $this->config->thankyou_max;
+				}
 
-					$this->total_thankyou = count($this->message->thankyou);
-					$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
-				}
-				else
-				{
-					$thankyous = $this->message->thankyou;
-				}
+				$this->total_thankyou = count($this->message->thankyou);
+				$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
 
 				$userids_thankyous = array();
 

@@ -62,7 +62,6 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
@@ -86,7 +85,6 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
@@ -108,7 +106,6 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
-
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 

@@ -279,7 +279,7 @@ class KunenaUser extends JObject
 		}
 
 		$input     = \Joomla\CMS\Factory::getApplication()->input;
-		$method    = $input->getInt('userid');;
+		$method    = $input->getInt('userid');
 		$kuser     = KunenaFactory::getUser($method);
 		$config    = KunenaConfig::getInstance();
 		$exception = null;
@@ -297,6 +297,7 @@ class KunenaUser extends JObject
 				{
 					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
+
 				if ($user->isModerator() && $kuser->isAdmin() && !$user->isAdmin())
 				{
 					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);

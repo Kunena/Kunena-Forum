@@ -319,7 +319,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 			if (isset($caller['class']) && isset($caller['function'])
 				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__
-				)
+            )
 			{
 				break;
 			}

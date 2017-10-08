@@ -149,7 +149,6 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -253,7 +252,6 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));

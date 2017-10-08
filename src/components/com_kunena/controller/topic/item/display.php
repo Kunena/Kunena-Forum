@@ -184,7 +184,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -411,7 +410,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 		elseif ($this->topic->getAuthor()->avatar == null)
 		{
-			if (JFile::exists(JPATH_SITE . '/'. KunenaConfig::getInstance()->emailheader))
+			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
 				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}

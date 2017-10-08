@@ -574,7 +574,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		
+
 		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}
 

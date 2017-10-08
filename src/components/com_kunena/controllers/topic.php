@@ -412,7 +412,6 @@ class KunenaControllerTopic extends KunenaController
 				{
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 
-
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
 					if (!empty($captcha_response))

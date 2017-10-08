@@ -160,7 +160,6 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -416,7 +415,6 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -483,7 +481,6 @@ class KunenaViewTopic extends KunenaView
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
-
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
@@ -1110,7 +1107,6 @@ class KunenaViewTopic extends KunenaView
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
-
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 

@@ -37,7 +37,8 @@ class KunenaViewTopic extends KunenaView
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
-			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+        );
 		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
@@ -89,7 +90,8 @@ class KunenaViewTopic extends KunenaView
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
-			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+        );
 		\Joomla\CMS\Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);

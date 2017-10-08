@@ -212,7 +212,6 @@ class KunenaControllerUser extends KunenaController
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
 
-
 		\JFactory::getApplication()->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
 
 		if ($errors)
@@ -767,7 +766,7 @@ class KunenaControllerUser extends KunenaController
 				return false;
 			}
 
-			$value            = $post_password;
+			$value = $post_password;
 
 			if (!empty($params))
 			{
@@ -778,12 +777,12 @@ class KunenaControllerUser extends KunenaController
 				$meterp            = $params->get('meter');
 				$thresholdp        = $params->get('threshold');
 
-				empty($minimumLengthp) ? : $minimumLength = (int) $minimumLengthp;
-				empty($minimumIntegersp) ? : $minimumIntegers = (int) $minimumIntegersp;
-				empty($minimumSymbolsp) ? : $minimumSymbols = (int) $minimumSymbolsp;
-				empty($minimumUppercasep) ? : $minimumUppercase = (int) $minimumUppercasep;
-				empty($meterp) ? : $meter = $meterp;
-				empty($thresholdp) ? : $threshold = $thresholdp;
+				empty($minimumLengthp) ?: $minimumLength = (int) $minimumLengthp;
+				empty($minimumIntegersp) ?: $minimumIntegers = (int) $minimumIntegersp;
+				empty($minimumSymbolsp) ?: $minimumSymbols = (int) $minimumSymbolsp;
+				empty($minimumUppercasep) ?: $minimumUppercase = (int) $minimumUppercasep;
+				empty($meterp) ?: $meter = $meterp;
+				empty($thresholdp) ?: $threshold = $thresholdp;
 			}
 
 			// If the field is empty and not required, the field is valid.
@@ -928,9 +927,9 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
-		$input = $this->app->input;
+		$input  = $this->app->input;
 		$method = $input->getMethod();
-		$user = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
+		$user   = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
 		if ($this->app->input->get('signature', null) === null)
 		{
@@ -985,7 +984,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($avatar_gallery))
 		{
-		    $user->avatar = $avatar_gallery;
+			$user->avatar = $avatar_gallery;
 		}
 	}
 
@@ -998,6 +997,7 @@ class KunenaControllerUser extends KunenaController
 	protected function deleteOldAvatars()
 	{
 		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+
 		if (preg_match('|^users/|', $user->avatar))
 		{
 			// Delete old uploaded avatars:
@@ -1070,7 +1070,7 @@ class KunenaControllerUser extends KunenaController
 				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
 				// Save in the table KunenaUser
-				$kuser = $user;
+				$kuser         = $user;
 				$kuser->avatar = 'users/avatar' . $user->userid . '.' . $extension;
 				$kuser->save();
 			}
@@ -1122,9 +1122,9 @@ class KunenaControllerUser extends KunenaController
 		$this->deleteOldAvatars();
 
 		// Save in the table KunenaUser
-		$kuser = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+		$kuser         = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 		$kuser->avatar = '';
-		$success = $kuser->save();
+		$success       = $kuser->save();
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

@@ -61,7 +61,6 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));

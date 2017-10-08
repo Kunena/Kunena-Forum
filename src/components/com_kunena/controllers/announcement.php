@@ -123,7 +123,6 @@ class KunenaControllerAnnouncement extends KunenaController
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 			}
 
-
 			if ($announcement->isAuthorised('edit') || !$announcement->save())
 			{
 				if ($this->config->log_moderation)

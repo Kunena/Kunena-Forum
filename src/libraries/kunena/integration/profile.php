@@ -33,7 +33,7 @@ class KunenaProfile
 		if (self::$instance === false)
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-			
+
 			$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetProfile');
 
 			foreach ($classes as $class)

@@ -919,7 +919,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Activity integration
-		
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 

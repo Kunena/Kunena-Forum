@@ -33,7 +33,7 @@ class KunenaPrivate
 		if (self::$instance === false)
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-			
+
 			$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetPrivate');
 
 			foreach ($classes as $class)

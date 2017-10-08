@@ -138,7 +138,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		}
 		elseif ($this->profile->avatar == null)
 		{
-			if (JFile::exists(JPATH_SITE . '/'. KunenaConfig::getInstance()->emailheader))
+			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
 				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}

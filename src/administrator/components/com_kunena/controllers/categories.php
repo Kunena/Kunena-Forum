@@ -440,7 +440,6 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-
 		$app        = JFactory::getApplication();
 		$input      = $app->input;
 		$post       = $app->input->post->getArray();

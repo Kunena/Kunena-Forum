@@ -126,7 +126,6 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));

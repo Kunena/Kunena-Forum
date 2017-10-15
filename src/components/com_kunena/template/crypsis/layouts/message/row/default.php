@@ -106,7 +106,7 @@ if ($topic->moved_id > 0)
 			<?php if ($config->post_dateformat != 'none') : ?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-            <?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+            <?php echo $topic->getAuthor()->getLink(null, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<?php endif; ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS

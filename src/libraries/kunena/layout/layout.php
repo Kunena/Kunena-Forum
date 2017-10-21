@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template
- * @subpackage  Categories
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Categories
  *
  * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -34,7 +34,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param   string  $content
+	 * @param   string $content
 	 */
 	public function appendAfter($content)
 	{
@@ -43,6 +43,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 	/**
 	 * @param $key
+	 *
 	 * @return string
 	 */
 	public function text($key)
@@ -84,10 +85,10 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param      $link
-	 * @param      $name
-	 * @param      $scope
-	 * @param      $type
+	 * @param        $link
+	 * @param        $name
+	 * @param        $scope
+	 * @param        $type
 	 * @param   null $id
 	 *
 	 * @return string
@@ -98,12 +99,12 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param        $name
+	 * @param          $name
 	 * @param   string $title
 	 *
 	 * @return string
 	 */
-	public function getIcon($name, $title='')
+	public function getIcon($name, $title = '')
 	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
 	}
@@ -115,8 +116,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * in the language file. The significant digits are used to limit the
 	 * number of digits displayed when in 10k or 1m mode.
 	 *
-	 * @param   int $number 		Number to be formated
-	 * @param   int $precision	Significant digits for output
+	 * @param   int $number    Number to be formated
+	 * @param   int $precision Significant digits for output
+	 *
 	 * @return string
 	 */
 	public function formatLargeNumber($number, $precision = 3)
@@ -192,7 +194,7 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			$con = $rel;
 		}
-		
+
 		if ($category->locked)
 		{
 			$class .= ' locked';
@@ -218,7 +220,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = true, $canonical = false)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -282,7 +284,7 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			$class .= ' locked';
 		}
-		
+
 		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -305,7 +307,7 @@ class KunenaLayout extends KunenaLayoutBase
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();
-		$channels = $category->getChannels();
+		$channels  = $category->getChannels();
 
 		if (!isset($channels[$lastTopic->category_id]))
 		{
@@ -348,7 +350,7 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			$con = $rel;
 		}
-		
+
 		if ($lastTopic->locked)
 		{
 			$class .= ' locked';
@@ -367,7 +369,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @deprecated 5.0
 	 * @return $this
 	 */
-	public function setLegacy(KunenaView $view = null) {
+	public function setLegacy(KunenaView $view = null)
+	{
 		$this->legacy = $view;
 
 		return $this;

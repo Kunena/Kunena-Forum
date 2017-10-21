@@ -5,8 +5,8 @@
  * @subpackage      Categories
  *
  * @copyright   (C) 2008 - 2017 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -37,7 +37,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param   string  $content
+	 * @param   string $content
 	 */
 	public function appendAfter($content)
 	{

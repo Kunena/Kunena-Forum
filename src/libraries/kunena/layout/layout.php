@@ -192,6 +192,11 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			$con = $rel;
 		}
+		
+		if ($category->locked)
+		{
+			$class .= ' locked';
+		}
 
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
 
@@ -273,6 +278,11 @@ class KunenaLayout extends KunenaLayoutBase
 			$con = $rel;
 		}
 
+		if ($topic->locked)
+		{
+			$class .= ' locked';
+		}
+		
 		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -337,6 +347,11 @@ class KunenaLayout extends KunenaLayoutBase
 		else
 		{
 			$con = $rel;
+		}
+		
+		if ($lastTopic->locked)
+		{
+			$class .= ' locked';
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);

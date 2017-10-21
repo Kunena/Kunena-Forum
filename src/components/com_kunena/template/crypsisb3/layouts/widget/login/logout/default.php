@@ -19,17 +19,20 @@ $status = $config->user_status;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<?php if ($this->me->getStatus() == 0 && $status) : ?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 1 && $status) : ?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 2 && $status) : ?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 3 && $status) : ?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
-			<?php else : ?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
-			<?php endif; ?>
+			<?php
+			$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
+
+			if ($this->me->getStatus() == 0 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20);
+			elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20);
+			elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20);
+			elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20);
+			else :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20);
+			endif; ?>
 			<b class="caret"></b>
 		</a>
 

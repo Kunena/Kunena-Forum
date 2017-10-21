@@ -1,60 +1,87 @@
 <?php
 /**
- * This is project's console commands configuration for Robo task runner.
+ * @package     Joomla.Site
+ * @subpackage  RoboFile
  *
- * Download robo.phar from http://robo.li/robo.phar and type in the root of the repo: $ php robo.phar
- * Or do: $ composer update, and afterwards you will be able to execute robo like $ php vendor/bin/robo
- *
- * @see http://robo.li/
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-require_once 'vendor/autoload.php';
+/**
+ * This is joomla project's console command file for Robo.li task runner.
+ *
+ * Or do: $ composer install, and afterwards you will be able to execute robo like
+ * $ ./libraries/vendor/bin/robo
+ *
+ * @see         http://robo.li/
+ */
+require_once __DIR__ . '/vendor/autoload.php';
 
 if (!defined('JPATH_BASE'))
 {
 	define('JPATH_BASE', __DIR__);
 }
 
+/**
+ * System Test (Codeception) test execution for Joomla!
+ *
+ * @package  RoboFile
+ *
+ * @since    Kunena 5.1
+ */
 class RoboFile extends \Robo\Tasks
 {
 	// Load tasks from composer, see composer.json
-	use \joomla_projects\robo\loadTasks;
 	use \Joomla\Jorobo\Tasks\loadTasks;
+	use \Joomla\Testing\Robo\Tasks\LoadTasks;
 
 	/**
 	 * File extension for executables
 	 *
 	 * @var string
-	 * @since Kunena
- 	 */
+	 * @since  Kunena 5.1
+	 */
 	private $executableExtension = '';
+
+	/**
+	 * Path to the codeception tests folder
+	 *
+	 * @var   string
+	 * @since  Kunena 5.1
+	 */
+	private $testsPath = 'tests/';
 
 	/**
 	 * Local configuration parameters
 	 *
-	 * @var array
-	 * @since Kunena
- 	 */
+	 * @var    array
+	 * @since  Kunena 5.1
+	 */
 	private $configuration = array();
 
 	/**
-	 * Path to the local CMS root
-	 *
-	 * @var string
-	 * @since Kunena
- 	 */
-	private $cmsPath = '';
+	 * @var array | null
+	 * @since  Kunena 5.1
+	 */
+	private $suiteConfig;
 
 	/**
-	 * Constructor
-	 * @since Kunena
- 	 */
+	 * Path to the local CMS test folder
+	 *
+	 * @var    string
+	 * @since  Kunena 5.1
+	 */
+	protected $cmsPath = null;
+
+	/**
+	 * RoboFile constructor.
+	 *
+	 * @since   Kunena 5.1
+	 */
 	public function __construct()
 	{
-		$this->configuration = $this->getConfiguration();
-
-		$this->cmsPath = $this->getCmsPath();
-
+		$this->configuration       = $this->getConfiguration();
+		$this->cmsPath             = $this->getTestingPath();
 		$this->executableExtension = $this->getExecutableExtension();
 
 		// Set default timezone (so no warnings are generated if it is not set)
@@ -64,9 +91,8 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Get the executable extension according to Operating System
 	 *
-	 * @return void
-	 * @since Kunena
- 	 */
+	 * @return
+	 */
 	private function getExecutableExtension()
 	{
 		if ($this->isWindows())
@@ -78,218 +104,83 @@ class RoboFile extends \Robo\Tasks
 	}
 
 	/**
-	 * Executes all the Selenium System Tests in a suite on your machine
+	 * Get (optional) configuration from an external file
 	 *
-	 * @param   array $opts Array of configuration options:
-	 *          - 'use-htaccess': renames and enable embedded Joomla .htaccess file
-	 *          - 'env': set a specific environment to get configuration from
-	 * @return mixed
-	 * @since Kunena
- 	 */
-	public function runTests($opts = ['use-htaccess' => false, 'env' => 'desktop'])
+	 * @since   Kunena 5.1
+	 *
+	 * @return  \stdClass|null
+	 */
+	public function getConfiguration()
 	{
-		$this->createTestingSite($opts['use-htaccess']);
+		$configurationFile = __DIR__ . '/RoboFile.ini';
 
-		$this->getComposer();
+		if (!file_exists($configurationFile))
+		{
+			$this->say('No local configuration file');
 
-		$this->taskComposerInstall()->run();
-
-		$this->runSelenium();
-
-		// Make sure to run the build command to generate AcceptanceTester
-		$this->_exec($this->isWindows() ? 'vendor\bin\codecept.bat build' : 'php vendor/bin/codecept build');
-
-		$this->taskCodecept()
-			->arg('--steps')
-			->arg('--debug')
-			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
-			->arg('tests/acceptance/install/')
-			->run()
-			->stopOnFail();
-
-		$this->taskCodecept()
-			->arg('--steps')
-			->arg('--debug')
-			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
-			->arg('tests/acceptance/administrator/')
-			->run()
-			->stopOnFail();
-
-		$this->taskCodecept()
-			->arg('--steps')
-			->arg('--debug')
-			->arg('--fail-fast')
-			->arg('--env ' . $opts['env'])
-			->arg('tests/acceptance/frontend/')
-			->run()
-			->stopOnFail();
-
-		/*
-		// Uncomment this lines if you need to debug selenium errors
-		$seleniumErrors = file_get_contents('selenium.log');
-		if ($seleniumErrors) {
-			$this->say('Printing Selenium Log files');
-			$this->say('------ selenium.log (start) ---------');
-			$this->say($seleniumErrors);
-			$this->say('------ selenium.log (end) -----------');
+			return null;
 		}
-		*/
+
+		$configuration = parse_ini_file($configurationFile);
+
+		if ($configuration === false)
+		{
+			$this->say('Local configuration file is empty or wrong (check is it in correct .ini format');
+
+			return null;
+		}
+
+		return json_decode(json_encode($configuration));
 	}
 
 	/**
-	 * Executes a specific Selenium System Tests in your machine
+	 * Get the correct CMS root path
 	 *
-	 * @param string $seleniumPath   Optional path to selenium-standalone-server-x.jar
-	 * @param string $pathToTestFile Optional name of the test to be run
-	 * @param string $suite          Optional name of the suite containing the tests, Acceptance by default.
+	 * @since   Kunena 5.1
 	 *
-	 * @return mixed
-	 * @since Kunena
- 	 */
-	public function runTest($pathToTestFile = null, $suite = 'acceptance')
+	 * @return  string
+	 */
+	private function getTestingPath()
 	{
-		$this->runSelenium();
-
-		// Make sure to run the build command to generate AcceptanceTester
-		$this->_exec($this->isWindows() ? 'vendor\bin\codecept.bat build' : 'php vendor/bin/codecept build');
-
-		if (!$pathToTestFile)
+		if (empty($this->configuration->cmsPath))
 		{
-			$this->say('Available tests in the system:');
-
-			$iterator = new RecursiveIteratorIterator(
-				new RecursiveDirectoryIterator(
-					'tests/' . $suite,
-					RecursiveDirectoryIterator::SKIP_DOTS
-				),
-				RecursiveIteratorIterator::SELF_FIRST
-			);
-
-			$tests = array();
-
-			$iterator->rewind();
-			$i = 1;
-
-			while ($iterator->valid())
-			{
-				if (strripos($iterator->getSubPathName(), 'cept.php')
-					|| strripos($iterator->getSubPathName(), 'cest.php'))
-				{
-					$this->say('[' . $i . '] ' . $iterator->getSubPathName());
-					$tests[$i] = $iterator->getSubPathName();
-					$i++;
-				}
-
-				$iterator->next();
-			}
-
-			$this->say('');
-			$testNumber	= $this->ask('Type the number of the test  in the list that you want to run...');
-			$test = $tests[$testNumber];
+			return $this->testsPath . 'joomla';
 		}
 
-		$pathToTestFile = 'tests/' . $suite . '/' . $test;
-
-		//loading the class to display the methods in the class
-		require 'tests/' . $suite . '/' . $test;
-
-		//logic to fetch the class name from the file name
-		$fileName = explode("/", $test);
-		$className = explode(".", $fileName[1]);
-
-		//if the selected file is cest only than we will give the option to execute individual methods, we don't need this in cept file
-		$i = 1;
-		if (strripos($className[0], 'cest'))
+		if (!file_exists(dirname($this->configuration->cmsPath)))
 		{
-			$class_methods = get_class_methods($className[0]);
-			$this->say('[' . $i . '] ' . 'All');
-			$methods[$i] = 'All';
-			$i++;
-			foreach ($class_methods as $method_name)
-			{
+			$this->say('CMS path written in local configuration does not exists or is not readable');
 
-				$reflect = new ReflectionMethod($className[0], $method_name);
-				if(!$reflect->isConstructor())
-				{
-					if ($reflect->isPublic())
-					{
-						$this->say('[' . $i . '] ' . $method_name);
-						$methods[$i] = $method_name;
-						$i++;
-					}
-				}
-			}
-			$this->say('');
-			$methodNumber = $this->ask('Please choose the method in the test that you would want to run...');
-			$method = $methods[$methodNumber];
+			return $this->testsPath . 'joomla';
 		}
 
-		if(isset($method) && $method != 'All')
-		{
-			$pathToTestFile = $pathToTestFile . ':' . $method;
-		}
-
-		$this->taskCodecept()
-			->test($pathToTestFile)
-			->arg('--steps')
-			->arg('--debug')
-			->run()
-			->stopOnFail();
-	}
-
-	/**
-	 * Run the specified checker tool. Valid options are phpmd, phpcs, phpcpd
-	 *
-	 * @param string $tool
-	 *
-	 * @return bool
-	 * @since Kunena
- 	 */
-	public function runChecker($tool = null)
-	{
-		if ($tool === null) {
-			$this->say('You have to specify a tool name as argument. Valid tools are phpmd, phpcs, phpcpd.');
-			return false;
-		}
-
-		if (!in_array($tool, array('phpmd', 'phpcs', 'phpcpd') )) {
-			$this->say('The tool you required is not known. Valid tools are phpmd, phpcs, phpcpd.');
-			return false;
-		}
-
-		switch ($tool) {
-			case 'phpmd':
-				return $this->runPhpmd();
-
-			case 'phpcs':
-				return $this->runPhpcs();
-
-			case 'phpcpd':
-				return $this->runPhpcpd();
-		}
+		return $this->configuration->cmsPath;
 	}
 
 	/**
 	 * Creates a testing Joomla site for running the tests (use it before run:test)
 	 *
-	 * @param   bool  $use_htaccess  (1/0) Rename and enable embedded Joomla .htaccess file
+	 * @param   bool $useHtaccess (1/0) Rename and enable embedded Joomla .htaccess file
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @return  void
 	 */
-	public function createTestingSite($use_htaccess = false)
+	public function createTestingSite($useHtaccess = false)
 	{
 		if (!empty($this->configuration->skipClone))
 		{
 			$this->say('Reusing Joomla CMS site already present at ' . $this->cmsPath);
+
 			return;
 		}
 
 		// Caching cloned installations locally
-		if (!is_dir('tests/cache') || (time() - filemtime('tests/cache') > 60 * 60 * 24))
+		if (!is_dir($this->testsPath . 'cache') || (time() - filemtime($this->testsPath . 'cache') > 60 * 60 * 24))
 		{
-			if (file_exists('tests/cache'))
+			if (file_exists($this->testsPath . 'cache'))
 			{
-				$this->taskDeleteDir('tests/cache')->run();
+				$this->taskDeleteDir($this->testsPath . 'cache')->run();
 			}
 
 			$this->_exec($this->buildGitCloneCommand());
@@ -310,194 +201,450 @@ class RoboFile extends \Robo\Tasks
 			}
 		}
 
-		$this->_copyDir('tests/cache', $this->cmsPath);
+		$exclude = ['tests', 'tests-phpunit', '.run', '.github', '.git', '.drone', 'docs', 'src', 'cache'];
+
+		$this->copyJoomla($this->cmsPath, $exclude);
 
 		// Optionally change owner to fix permissions issues
-		if (!empty($this->configuration->localUser) && !$this->isWindows())
+		if (!empty($this->configuration->localUser))
 		{
 			$this->_exec('chown -R ' . $this->configuration->localUser . ' ' . $this->cmsPath);
 		}
 
-		// Copy current package
-		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
-		{
-			$this->build(true);
-		}
-
-		$this->_copy('dist/pkg_kunena_v5.0.zip', $this->cmsPath . "/pkg_kunena_v5.0.zip");
-
-		$this->say('Joomla CMS site created at ' . $this->cmsPath);
+		$this->_copy('dist/pkg_kunena_v5.1-dev.zip', "tests/_data/pkg_kunena_v5.1-dev.zip");
 
 		// Optionally uses Joomla default htaccess file. Used by TravisCI
-		if ($use_htaccess == true)
+		if ($useHtaccess == true)
 		{
-			$this->_copy('./tests/kunena/htaccess.txt', './tests/kunena/.htaccess');
-			$this->_exec('sed -e "s,# RewriteBase /,RewriteBase /tests/kunena/,g" -in-place tests/kunena/.htaccess');
+			$this->say('Renaming htaccess.txt to .htaccess');
+			$this->_copy($this->cmsPath . '/htaccess.txt', $this->cmsPath . '/.htaccess');
+			$this->_exec('sed -e "s,# RewriteBase /,RewriteBase /tests/joomla-cms,g" -in-place tests/joomla/.htaccess');
 		}
 	}
 
 	/**
-	 * Get (optional) configuration from an external file
+	 * Copy the Joomla installation excluding folders
 	 *
-	 * @return \stdClass|null
+	 * @param   string  $dst      Target folder
+	 * @param   array   $exclude  Exclude list of folders
+	 *
+	 * @throws  Exception
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @return  void
 	 */
-	public function getConfiguration()
+	protected function copyJoomla($dst, $exclude = array())
 	{
-		$configurationFile = __DIR__ . '/RoboFile.ini';
+		$dir = @opendir( "." . '/' . $this->testsPath . 'cache');
 
-		if (!file_exists($configurationFile))
+		if (false === $dir)
 		{
-			$this->say("No local configuration file");
-			return null;
+			throw new Exception($this, "Cannot open source directory");
 		}
 
-		$configuration = parse_ini_file($configurationFile);
-		if ($configuration === false)
+		if (!is_dir($dst))
 		{
-			$this->say('Local configuration file is empty or wrong (check is it in correct .ini format');
-			return null;
+			mkdir($dst, 0755, true);
 		}
 
-		return json_decode(json_encode($configuration));
+		while (false !== ($file = readdir($dir)))
+		{
+			if (in_array($file, $exclude))
+			{
+				continue;
+			}
+
+			if (($file !== '.') && ($file !== '..'))
+			{
+				$srcFile  = "." . '/' . $this->testsPath . 'cache/' . $file;
+				$destFile = $dst . '/' . $file;
+
+				if (is_dir($srcFile))
+				{
+					$this->_copyDir($srcFile, $destFile);
+				}
+				else
+				{
+					copy($srcFile, $destFile);
+				}
+			}
+		}
+
+		closedir($dir);
 	}
 
 	/**
-	 * Build correct git clone command according to local configuration and OS
+	 * Downloads Composer
 	 *
-	 * @return string
-	 * @since Kunena
- 	 */
-	private function buildGitCloneCommand()
+	 * @since   Kunena 5.1
+	 *
+	 * @return  void
+	 */
+	private function getComposer()
 	{
-		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
+		// Make sure we have Composer
+		if (!file_exists('composer.phar'))
+		{
+			$this->_exec('curl -o ' . 'composer.phar  --retry 3 --retry-delay 5 -sS https://getcomposer.org/installer | php');
+		}
+	}
 
-		return "git" . $this->executableExtension . " clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git tests/cache";
+	/**
+	 * Runs Selenium Standalone Server.
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @return  void
+	 */
+	public function runSelenium()
+	{
+		$this->taskSeleniumStandaloneServer()
+			->setBinary('vendor/bin/selenium-server-standalone')
+			->setWebdriver($this->getWebDriver())
+			->runSelenium()
+			->waitForSelenium()
+			->run()
+			->stopOnFail();
+	}
+
+	/**
+	 * Executes all the Selenium System Tests in a suite on your machine
+	 *
+	 * @param   array $opts   Array of configuration options:
+	 *                        - 'use-htaccess': renames and enable embedded Joomla .htaccess file
+	 *                        - 'env': set a specific environment to get configuration from
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @return  mixed
+	 */
+	public function runTests($opts = ['use-htaccess' => false, 'env' => 'desktop'])
+	{
+		$this->say("Running tests");
+
+		$this->createTestingSite($opts['use-htaccess']);
+
+		$this->getComposer();
+
+		$this->taskComposerInstall('composer')->run();
+
+		$this->runSelenium();
+
+		// Make sure to run the build command to generate AcceptanceTester
+		if ($this->isWindows())
+		{
+			$this->_exec('php ' . $this->getWindowsPath('vendor/bin/codecept') . ' build');
+			$pathToCodeception = $this->getWindowsPath('vendor/bin/codecept');
+		}
+		else
+		{
+			$this->_exec('php ' . 'vendor/bin/codecept build');
+
+			$pathToCodeception = 'vendor/bin/codecept';
+		}
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/install/')
+			->run()
+			->stopOnFail();
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/administrator/')
+			->run()
+			->stopOnFail();
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/frontend/')
+			->run()
+			->stopOnFail();
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/libraries/')
+			->run()
+			->stopOnFail();
+
+		$this->taskCodecept($pathToCodeception)
+			->arg('--steps')
+			->arg('--debug')
+			->arg('--fail-fast')
+			->env($opts['env'])
+			->arg($this->testsPath . 'acceptance/plugins/')
+			->run()
+			->stopOnFail();
+	}
+
+	/**
+	 * Executes a specific Selenium System Tests in your machine
+	 *
+	 * @param   string  $pathToTestFile  Optional name of the test to be run
+	 * @param   string  $suite           Optional name of the suite containing the tests, Acceptance by default.
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @return  void
+	 */
+	public function runTest($pathToTestFile = null, $suite = 'acceptance')
+	{
+		$this->runSelenium();
+
+		// Make sure to run the build command to generate AcceptanceTester
+		$path = 'vendor/bin/codecept';
+		$this->_exec('php ' . $this->isWindows() ? $this->getWindowsPath($path) : $path . ' build');
+
+		if (!$pathToTestFile)
+		{
+			$this->say('Available tests in the system:');
+
+			$iterator = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator(
+					$this->testsPath . $suite,
+					RecursiveDirectoryIterator::SKIP_DOTS
+				),
+				RecursiveIteratorIterator::SELF_FIRST
+			);
+
+			$tests = array();
+			$i     = 1;
+
+			$iterator->rewind();
+
+			while ($iterator->valid())
+			{
+				if (strripos($iterator->getSubPathName(), 'cept.php')
+					|| strripos($iterator->getSubPathName(), 'cest.php')
+					|| strripos($iterator->getSubPathName(), '.feature')
+				)
+				{
+					$this->say('[' . $i . '] ' . $iterator->getSubPathName());
+
+					$tests[$i] = $iterator->getSubPathName();
+					$i++;
+				}
+
+				$iterator->next();
+			}
+
+			$this->say('');
+			$testNumber = $this->ask('Type the number of the test in the list that you want to run...');
+			$test       = $tests[$testNumber];
+		}
+
+		$pathToTestFile = $this->testsPath . $suite . '/' . $test;
+
+		// Loading the class to display the methods in the class
+
+		// Logic to fetch the class name from the file name
+		$fileName = explode("/", $test);
+
+		// If the selected file is cest only then we will give the option to execute individual methods, we don't need this in cept or feature files
+		$i = 1;
+
+		if (isset($fileName[1]) && strripos($fileName[1], 'cest'))
+		{
+			require $this->testsPath . $suite . '/' . $test;
+
+			$className     = explode(".", $fileName[1]);
+			$class_methods = get_class_methods($className[0]);
+
+			$this->say('[' . $i . '] ' . 'All');
+
+			$methods[$i] = 'All';
+			$i++;
+
+			foreach ($class_methods as $method_name)
+			{
+				$reflect = new ReflectionMethod($className[0], $method_name);
+
+				if (!$reflect->isConstructor() && $reflect->isPublic())
+				{
+					$this->say('[' . $i . '] ' . $method_name);
+
+					$methods[$i] = $method_name;
+
+					$i++;
+				}
+			}
+
+			$this->say('');
+			$methodNumber = $this->ask('Please choose the method in the test that you would want to run...');
+			$method       = $methods[$methodNumber];
+		}
+
+		if (isset($method) && $method != 'All')
+		{
+			$pathToTestFile = $pathToTestFile . ':' . $method;
+		}
+
+		$testPathCodecept = 'vendor/bin/codecept';
+
+		$this->taskCodecept($this->isWindows() ? $this->getWindowsPath($testPathCodecept) : $testPathCodecept)
+			->test($pathToTestFile)
+			->arg('--steps')
+			->arg('--debug')
+			->run()
+			->stopOnFail();
 	}
 
 	/**
 	 * Check if local OS is Windows
 	 *
-	 * @return bool
-	 * @since Kunena
- 	 */
+	 * @return  bool
+	 *
+	 * @since   Kunena 5.1
+	 */
 	private function isWindows()
 	{
 		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 	}
 
 	/**
-	 * Get the correct CMS root path
+	 * Return the correct path for Windows (needed by CMD)
+	 *
+	 * @param   string  $path  Linux path
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 5.1
+	 */
+	private function getWindowsPath($path)
+	{
+		return str_replace('/', DIRECTORY_SEPARATOR, $path);
+	}
+
+	/**
+	 * Detect the correct driver for selenium
+	 *
+	 * @return  string the webdriver string to use with selenium
+	 *
+	 * @since   Kunena 5.1
+	 */
+	public function getWebdriver()
+	{
+		$suiteConfig        = $this->getSuiteConfig();
+		$codeceptMainConfig = \Codeception\Configuration::config();
+		$browser            = $suiteConfig['modules']['config']['JoomlaBrowser']['browser'];
+
+		if ($browser == 'chrome')
+		{
+			$driver['type'] = 'webdriver.chrome.driver';
+		}
+		elseif ($browser == 'firefox')
+		{
+			$driver['type'] = 'webdriver.gecko.driver';
+		}
+		elseif ($browser == 'MicrosoftEdge')
+		{
+			$driver['type'] = 'webdriver.edge.driver';
+
+			// Check if we are using Windows Insider builds
+			if ($suiteConfig['modules']['config']['AcceptanceHelper']['MicrosoftEdgeInsiders'])
+			{
+				$browser = 'MicrosoftEdgeInsiders';
+			}
+		}
+		elseif ($browser == 'internet explorer')
+		{
+			$driver['type'] = 'webdriver.ie.driver';
+		}
+
+		// Check if we have a path for this browser and OS in the codeception settings
+		if (isset($codeceptMainConfig['webdrivers'][$browser][$this->getOs()]))
+		{
+			$driverPath = $codeceptMainConfig['webdrivers'][$browser][$this->getOs()];
+		}
+		else
+		{
+			$this->yell('No driver for your browser. Check your browser in acceptance.suite.yml and the webDrivers in codeception.yml');
+
+			// We can't do anything without a driver, exit
+			exit(1);
+		}
+
+		$driver['path'] = $driverPath;
+
+		return '-D' . implode('=', $driver);
+	}
+
+	/**
+	 * Return the os name
 	 *
 	 * @return string
-	 * @since Kunena
- 	 */
-	private function getCmsPath()
-	{
-		if (empty($this->configuration->cmsPath))
-		{
-			return 'tests/kunena';
-		}
-
-		if (!file_exists(dirname($this->configuration->cmsPath)))
-		{
-			$this->say("Cms path written in local configuration does not exists or is not readable");
-			return 'tests/kunena';
-		}
-
-		return $this->configuration->cmsPath;
-	}
-
-	/**
-	 * Runs Selenium Standalone Server.
 	 *
-	 * @return void
-	 * @since Kunena
- 	 */
-	public function runSelenium()
+	 * @since   Kunena 5.1
+	 */
+	private function getOs()
 	{
-		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
+		$os = php_uname('s');
+
+		if (strpos(strtolower($os), 'windows') !== false)
 		{
-			$this->_exec("vendor/bin/selenium-server-standalone >> selenium.log 2>&1 &");
-		}
-		else
-		{
-			$this->_exec("START java.exe -jar .\\vendor\\joomla-projects\\selenium-server-standalone\\bin\\selenium-server-standalone.jar");
+			return  'windows';
 		}
 
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+		if (strpos(strtolower($os), 'darwin') !== false)
 		{
-			sleep(10);
+			return 'mac';
 		}
-		else
-		{
-			$this->taskWaitForSeleniumStandaloneServer()
-				->run()
-				->stopOnFail();
-		}
+
+		return 'linux';
 	}
 
 	/**
-	 * Downloads Composer
+	 * Get the suite configuration
 	 *
-	 * @return void
-	 * @since Kunena
- 	 */
-	private function getComposer()
-	{
-		// Make sure we have Composer
-		if (!file_exists('./composer.phar'))
-		{
-			$insecure = $this->isWindows() ? ' --insecure' : '';
-			$this->_exec('curl ' . $insecure . ' --retry 3 --retry-delay 5 -sS https://getcomposer.org/installer | php');
-		}
-	}
-
-	/**
-	 * Kills the selenium server running
+	 * @param   string  $suite  Name of the test suite
 	 *
-	 * @param   string  $host  Web host of the remote server.
-	 * @param   string  $port  Server port.
+	 * @return  array
+	 *
+	 * @since   Kunena 5.1
 	 */
-	public function killSelenium($host = 'localhost', $port = '4444')
+	private function getSuiteConfig($suite = 'acceptance')
 	{
-		$this->say('Trying to kill the selenium server.');
-		$this->_exec("curl http://$host:$port/selenium-server/driver/?cmd=shutDownSeleniumServer");
+		if (!$this->suiteConfig)
+		{
+			$this->suiteConfig = Symfony\Component\Yaml\Yaml::parse(file_get_contents("tests/{$suite}.suite.yml"));
+		}
+
+		return $this->suiteConfig;
 	}
 
 	/**
-	 * Run the phpmd tool
+	 * Build correct git clone command according to local configuration and OS
+	 *
+	 * @return string
 	 */
-	private function runPhpmd()
+	private function buildGitCloneCommand()
 	{
-		return $this->_exec('phpmd' . ' src xml cleancode,codesize,controversial,design,naming,unusedcode');
+		$branch = empty($this->configuration->branch) ? 'staging' : $this->configuration->branch;
+
+		return "git clone -b $branch --single-branch --depth 1 https://github.com/joomla/joomla-cms.git " . $this->testsPath . "cache";
 	}
 
 	/**
-	 * Run the phpcs tool
+	 * Update Version __DEPLOY_VERSION__ in Weblinks. (Set the version up in the jorobo.ini)
+	 *
+	 * @return  void
 	 */
-	private function runPhpcs()
+	public function bump()
 	{
-		if (!file_exists('logs'))
-		{
-			mkdir('logs', 0777, true);
-		}
-
-		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
-		{
-			$this->_exec('phpcs' . ' -s --report-full=logs/full.txt --report-summary=logs/summary.txt --standard=Joomla src');
-		}
-		else
-		{
-			$this->_exec('phpcs' . ' -s --report-full=logs\\full.txt --report-summary=logs\\summary.txt --standard=Joomla .\\src');
-		}
-	}
-
-	/**
-	 * Run the phpcpd tool
-	 */
-	private function runPhpcpd()
-	{
-		$this->_exec('phpcpd' . ' src');
+		(new \Joomla\Jorobo\Tasks\BumpVersion())->run();
 	}
 
 	/**
@@ -506,15 +653,9 @@ class RoboFile extends \Robo\Tasks
 	 * @param   array  $params  Additional params
 	 *
 	 * @return  void
-	 * @since Kunena
- 	 */
-	public function build($params = ['dev' => false])
+	 */
+	public function build($params = ['dev' => true])
 	{
-		if (!file_exists('jorobo.ini'))
-		{
-			$this->_copy('jorobo.dist.ini', 'jorobo.ini');
-		}
-
-		$this->taskBuild($params)->run();
+		(new \Joomla\Jorobo\Tasks\Build($params))->run();
 	}
 }

@@ -38,12 +38,7 @@ class InstallJoomlaCest
 	public function installKunena(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
-		$I->amOnPage('/administrator/index.php?option=com_installer');
-		$I->waitForText('Extensions: Install', '30', ['css' => 'H1']);
-		$I->click(['link' => 'Install from Folder']);
-		$url = $I->getConfiguration('repo_folder');
-		$I->fillField(['id' => 'install_directory'], $url);
-		$I->click(['id' => 'installbutton_directory']); // Install button// Install button
+		$I->installExtensionFromFileUpload('pkg_kunena_v5.1-dev.zip');
 		$I->wait(10);
 		$I->comment('Close the installer');
 		$I->amOnPage('administrator/index.php?option=com_kunena');

@@ -7,7 +7,7 @@
  * @todo: this class should grow until being able to execute generic operations over a category: change status, add to category...
  *
  * @package Step\Acceptance
- * @see http://codeception.com/docs/06-ReusingTestCode#StepObjects
+ * @link http://codeception.com/docs/06-ReusingTestCode#StepObjects
  */
 namespace Step\Acceptance;
 /**
@@ -25,8 +25,7 @@ class category extends \AcceptanceTester
 	 * @param  String  $categoryName  Name of the Category which is to be created
 	 *
 	 * @return void
-	 * @since Kunena
- 	 */
+	 */
 	public function createCategory($categoryName)
 	{
 		$I = $this;
@@ -51,8 +50,7 @@ class category extends \AcceptanceTester
 	 * @param  String  $categoryName  Name of the category which is to be trashed
 	 *
 	 * @return void
-	 * @since Kunena
- 	 */
+	 */
 	public function trashCategory($categoryName)
 	{
 		$I = $this;
@@ -71,8 +69,7 @@ class category extends \AcceptanceTester
 	 * @param  String  $categoryName  Name of the category which is to be deleted
 	 *
 	 * @return void
-	 * @since Kunena
- 	 */
+	 */
 	public function deleteCategory($categoryName)
 	{
 		$I = $this;

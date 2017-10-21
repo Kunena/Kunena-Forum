@@ -1,8 +1,17 @@
 <?php
-
+/**
+ * @package     Joomla.Test
+ * @subpackage  FunctionalTester
+ *
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 /**
+ * Functional Tester global class for entry point
+ *
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -15,12 +24,14 @@
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ *
+ * @since  3.7.3
+ */
 class FunctionalTester extends \Codeception\Actor
 {
-    use _generated\FunctionalTesterActions;
+	use _generated\FunctionalTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+	/**
+	 * Define custom actions here
+	 */
 }

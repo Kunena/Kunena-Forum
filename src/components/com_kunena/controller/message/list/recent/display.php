@@ -233,7 +233,23 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				break;
 			case 'recent':
 			default:
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$userName = '';
+				if ($user->getName() != '')
+				{
+					$userName = $user->getName();
+					$charMapApostropheOnly = array('s','S','z','Z');
+					
+					if (in_array(substr($userName, -1), $charMapApostropheOnly))
+					{
+						$userName .= "' ";
+					}
+					else 
+					{
+						$userName .= "'s ";
+					}
+				}
+				
+				$this->headerText = $userName . JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 				$actions = array('approve', 'delete', 'move', 'permdelete');
 		}
 

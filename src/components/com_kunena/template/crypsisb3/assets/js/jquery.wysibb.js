@@ -1,4 +1,4 @@
-/*! WysiBB v1.5.1 2014-03-26 
+/*! WysiBB v1.5.1 2014-03-26
     Author: Vadim Dobroskok
  */
 if (typeof (WBBLANG)=="undefined") {WBBLANG = {};}
@@ -32,39 +32,39 @@ WBBLANG['en'] = CURLANG = {
 	smilebox: "Insert emoticon",
 	video: "Insert YouTube",
 	removeFormat:"Remove Format",
-	
+
 	modal_link_title: "Insert link",
 	modal_link_text: "Display text",
 	modal_link_url: "URL",
 	modal_email_text: "Display email",
 	modal_email_url: "Email",
 	modal_link_tab1: "Insert URL",
-	
+
 	modal_img_title: "Insert image",
 	modal_img_tab1: "Insert URL",
 	modal_img_tab2: "Upload image",
 	modal_imgsrc_text: "Enter image URL",
 	modal_img_btn: "Choose file",
 	add_attach: "Add Attachment",
-	
+
 	modal_video_text: "Enter the URL of the video",
-	
+
 	close: "Close",
 	save: "Save",
 	cancel: "Cancel",
 	remove: "Delete",
-	
+
 	validation_err: "The entered data is invalid",
 	error_onupload: "Error during file upload",
-	
+
 	fileupload_text1: "Drop file here",
 	fileupload_text2: "or",
-	
+
 	loading: "Loading",
 	auto: "Auto",
 	views: "Views",
 	downloads: "Downloads",
-	
+
 	//smiles
 	sm1: "Smile",
 	sm2: "Laughter",
@@ -81,7 +81,7 @@ wbbdebug=false;
 	'use strict';
 	$.wysibb = function(txtArea,settings) {
 		$(txtArea).data("wbb",this);
-		
+
 		if (settings && settings.deflang && typeof(WBBLANG[settings.deflang])!="undefined") {CURLANG = WBBLANG[settings.deflang];}
 		if (settings && settings.lang && typeof(WBBLANG[settings.lang])!="undefined") {CURLANG = WBBLANG[settings.lang];}
 		this.txtArea=txtArea;
@@ -90,12 +90,12 @@ wbbdebug=false;
 		this.options = {
 			bbmode:				false,
 			onlyBBmode:			false,
-			themeName:			"default", 
+			themeName:			"default",
 			bodyClass:			"",
 			lang:				"ru",
 			tabInsert:			true,
 //			toolbar:			false,
-			//img upload config 
+			//img upload config
 			imgupload:			false,
 			img_uploadurl:		"/iupload.php",
 			img_maxwidth:		800,
@@ -109,7 +109,7 @@ wbbdebug=false;
 //			direction:			"ltr",
 			smileConversion:	true,
 
-			//END img upload config 
+			//END img upload config
 			buttons: 			"bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,table,removeFormat",
 			allButtons: {
 				bold : {
@@ -233,7 +233,7 @@ wbbdebug=false;
 					buttonHTML: '<span class="fonticon ve-tlb-quote1">\uE00c</span>',
 					hotkey: 'ctrl+shift+3',
 					//subInsert: true,
-					transform : { 
+					transform : {
 						'<blockquote>{SELTEXT}</blockquote>':"[quote]{SELTEXT}[/quote]"
 					}
 				},
@@ -377,7 +377,7 @@ wbbdebug=false;
 						'<iframe src="http://www.youtube.com/embed/{SRC}" width="640" height="480" frameborder="0"></iframe>':'[video]{SRC}[/video]'
 					}
 				},
-				
+
 				//select options
 				fs_verysmall: {
 					title: CURLANG.fs_verysmall,
@@ -424,7 +424,7 @@ wbbdebug=false;
 						'<font size="6">{SELTEXT}</font>':'[size=200]{SELTEXT}[/size]'
 					}
 				},
-				
+
 				removeformat: {
 					title: CURLANG.removeFormat,
 					buttonHTML: '<span class="fonticon ve-tlb-removeformat1">\uE00f</span>',
@@ -445,11 +445,11 @@ wbbdebug=false;
 				//{title:CURLANG.sm1, img: '<img src="{themePrefix}{themeName}/img/smiles/sm1.png" class="sm">', bbcode:":)"},
 			],
 			attrWrap: ['src','color','href'] //use becouse FF and IE change values for this attr, modify [attr] to _[attr]
-		}
-		
+		};
+
 		//FIX for Opera. Wait while iframe loaded
 		this.inited=this.options.onlyBBmode;
-		
+
 		//init css prefix, if not set
 		if (!this.options.themePrefix) {
 			$('link').each($.proxy(function(idx, el) {
@@ -460,7 +460,7 @@ wbbdebug=false;
 				}
 			},this));
 		}
-		
+
 		//check for preset
 		if (typeof(WBBPRESET)!="undefined") {
 			if (WBBPRESET.allButtons) {
@@ -472,8 +472,8 @@ wbbdebug=false;
 				},this));
 			}
 			$.extend(true,this.options,WBBPRESET);
-		} 
-		
+		}
+
 		if (settings && settings.allButtons) {
 			$.each(settings.allButtons,$.proxy(function(k,v) {
 				if (v.transform && this.options.allButtons[k]) {
@@ -483,29 +483,29 @@ wbbdebug=false;
 		}
 		$.extend(true,this.options,settings);
 		this.init();
-	}
-	
+	};
+
 	$.wysibb.prototype = {
 		lastid : 1,
 		init:	function() {
 			$.log("Init",this);
 			//check for mobile
 			this.isMobile = function(a) {(/android|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|meego.+mobile|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a))}(navigator.userAgent||navigator.vendor||window.opera);
-			
+
 			//use bbmode on mobile devices
 			//this.isMobile = true; //TEMP
 			if (this.options.onlyBBmode===true) {this.options.bbmode=true;}
 			//create array of controls, for queryState
 			this.controllers = [];
-			
+
 			//convert button string to array
 			this.options.buttons = this.options.buttons.toLowerCase();
 			this.options.buttons = this.options.buttons.split(",");
-			
+
 			//init system transforms
 			this.options.allButtons["_systr"] = {};
 			this.options.allButtons["_systr"]["transform"]= this.options.systr;
-			
+
 			this.smileFind();
 			this.initTransforms();
 			this.build();
@@ -513,20 +513,20 @@ wbbdebug=false;
 			if (this.options.hotkeys===true && !this.isMobile) {
 				this.initHotkeys();
 			}
-			
+
 			//sort smiles
 			if (this.options.smileList && this.options.smileList.length>0) {
 				this.options.smileList.sort(function(a,b) {
 					return (b.bbcode.length-a.bbcode.length);
 				})
 			}
-			
+
 			this.$txtArea.parents("form").bind("submit",$.proxy(function() {
 				this.sync();
 				return true;
-			},this)); 
-			
-			
+			},this));
+
+
 			//phpbb2
 			this.$txtArea.parents("form").find("input[id*='preview'],input[id*='submit'],input[class*='preview'],input[class*='submit'],input[name*='preview'],input[name*='submit']").bind("mousedown",$.proxy(function() {
 				this.sync();
@@ -537,13 +537,13 @@ wbbdebug=false;
 				},this),1000);
 			},this));
 			//end phpbb2
-			
+
 			if (this.options.initCallback) {
 				this.options.initCallback.call(this);
 			}
-			
+
 			$.log(this);
-			
+
 		},
 		initTransforms: function() {
 			$.log("Create rules for transform HTML=>BB");
@@ -552,21 +552,21 @@ wbbdebug=false;
 			if (!o.rules) {o.rules={};}
 			if (!o.groups) {o.groups={};} //use for groupkey, For example: justifyleft,justifyright,justifycenter. It is must replace each other.
 			var  btnlist = o.buttons.slice();
-			
+
 			//add system transform
 			btnlist.push("_systr");
 			for (var bidx=0; bidx<btnlist.length; bidx++) {
 				var ob = o.allButtons[btnlist[bidx]];
 				if (!ob ) {continue;}
 				ob.en=true;
-				
+
 				//check for simplebbcode
 				if (ob.simplebbcode && $.isArray(ob.simplebbcode) && ob.simplebbcode.length==2) {
 					ob.bbcode = ob.html = ob.simplebbcode[0]+"{SELTEXT}"+ob.simplebbcode[1];
 					if (ob.transform) delete ob.transform;
 					if (ob.modal)  delete ob.modal;
 				}
-				
+
 				//add transforms to option list
 				if (ob.type=="select" && typeof(ob.options)=="string") {
 					var olist = ob.options.split(",");
@@ -578,7 +578,7 @@ wbbdebug=false;
 				}
 				if (ob.transform && ob.skipRules!==true) {
 					var obtr = $.extend({},ob.transform);
-					
+
 					/* if (ob.addWrap) {
 						//addWrap
 						$.log("needWrap");
@@ -588,26 +588,26 @@ wbbdebug=false;
 							obtr[newhtml] = bbcode;
 						}
 					} */
-					
+
 					for (var bhtml in obtr) {
 						var orightml = bhtml;
 						var bbcode = obtr[bhtml];
-						
+
 						//create root selector for isContain bbmode
 						if (!ob.bbSelector) {ob.bbSelector=[];}
 						if ($.inArray(bbcode,ob.bbSelector)==-1) {
 							ob.bbSelector.push(bbcode);
 						}
 						if (this.options.onlyBBmode===false) {
-						
-							//wrap attributes 
+
+							//wrap attributes
 							bhtml = this.wrapAttrs(bhtml);
-							
+
 
 							var $bel = $(document.createElement('DIV')).append($(this.elFromString(bhtml,document)));
 							var rootSelector = this.filterByNode($bel.children());
-							
-							
+
+
 							//check if current rootSelector is exist, create unique selector for each transform (1.2.2)
 							if (rootSelector=="div" || typeof(o.rules[rootSelector])!="undefined") {
 								//create unique selector
@@ -619,38 +619,38 @@ wbbdebug=false;
 								var nhtml2 = $bel.html();
 								nhtml2 = this.unwrapAttrs(nhtml2);
 								var obhtml = this.unwrapAttrs(bhtml);
-								
-								
+
+
 								ob.transform[nhtml2]=bbcode;
 								delete ob.transform[obhtml];
-								
+
 								bhtml=nhtml2;
 								orightml = nhtml2;
 							}
-							
+
 							//create root selector for isContain
 							if (!ob.excmd) {
 								if (!ob.rootSelector) {ob.rootSelector=[];}
 								ob.rootSelector.push(rootSelector);
 							}
-							
+
 							//check for rules on this rootSeletor
 							if (typeof(o.rules[rootSelector])=="undefined") {
 								o.rules[rootSelector]=[];
 							}
 							var crules={};
-							
+
 							if (bhtml.match(/\{\S+?\}/)) {
 								$bel.find('*').each($.proxy(function(idx,el) {
 									//check attributes
-									
+
 									var attributes = this.getAttributeList(el);
 									$.each(attributes,$.proxy(function(i, item) {
 										var attr = $(el).attr(item);
 										if (item.substr(0,1)=='_') {
 											item = item.substr(1);
 										}
-										
+
 										var r = attr.match(/\{\S+?\}/g);
 										if (r) {
 											for (var a=0; a<r.length; a++) {
@@ -662,16 +662,16 @@ wbbdebug=false;
 											}
 										}
 									},this));
-									
+
 									//check for text
 									var  sl=[];
 									if (!$(el).is("iframe")) {
 										$(el).contents().filter(function() {return this.nodeType===3}).each($.proxy(function(i,rel) {
 											var txt = rel.textContent || rel.data;
 											if (typeof(txt)=="undefined") {return true;}
-											var r = txt.match(/\{\S+?\}/g)
+											var r = txt.match(/\{\S+?\}/g);
 											if (r) {
-												for (var a=0; a<r.length; a++) {	
+												for (var a=0; a<r.length; a++) {
 													var rname = r[a].substr(1,r[a].length-2);
 														rname = rname.replace(this.getValidationRGX(rname),"");
 													var p = this.relFilterByNode(el,rootSelector);
@@ -686,23 +686,23 @@ wbbdebug=false;
 														//create wrap element
 														rel.data = txt.substr(0,txt.indexOf(rname)-1);
 														$(rel).after(this.elFromString(after_txt,document)).after(nel);
-														
+
 														sel=((sel) ? sel+" ":"")+this.filterByNode(nel);
 														regRepl=false;
 													}
-													crules[rname.toLowerCase()]={sel:sel,attr:false,rgx:regRepl}
+													crules[rname.toLowerCase()]={sel:sel,attr:false,rgx:regRepl};
 													sl[sl.length]=sel;
 												}
 											}
 										},this));
 									}
 									sl=null;
-									
-									
+
+
 								},this));
-								
+
 								var nbhtml = $bel.html();
-								//UnWrap attributes 
+								//UnWrap attributes
 								nbhtml = this.unwrapAttrs(nbhtml);
 								if (orightml!=nbhtml) {
 									//if we modify html, replace it
@@ -710,16 +710,16 @@ wbbdebug=false;
 									ob.transform[nbhtml]=bbcode;
 									bhtml=nbhtml;
 								}
-								
+
 							}
 							o.rules[rootSelector].push([bbcode,crules]);
-							
+
 							//check for onlyClearText
 							if (ob.onlyClearText===true) {
 								if (!this.cleartext) {this.cleartext={};}
 								this.cleartext[rootSelector]=btnlist[bidx];
 							}
-							
+
 							//check for groupkey
 							if (ob.groupkey) {
 								if (!o.groups[ob.groupkey]) {o.groups[ob.groupkey]=[]}
@@ -727,12 +727,12 @@ wbbdebug=false;
 							}
 						}
 					}
-					
+
 					//sort rootSelector
 					if (ob.rootSelector) {
 						this.sortArray(ob.rootSelector,-1);
 					}
-						
+
 					var htmll = $.map(ob.transform,function(bb,html) {return html}).sort(function(a,b) {
 							return ((b[0] || "").length-(a[0] || "").length)
 					});
@@ -740,12 +740,12 @@ wbbdebug=false;
 					ob.html = htmll[0];
 				}
 			};
-			
+
 			this.options.btnlist=btnlist; //use for transforms, becouse select elements not present in buttons
-			
+
 			//add custom rules, for table,tr,td and other
 			$.extend(o.rules,this.options.customRules);
-		
+
 			//smile rules
 			o.srules={};
 			if (this.options.smileList) {
@@ -755,14 +755,14 @@ wbbdebug=false;
 					o.srules[f]=[sm.bbcode,sm.img];
 				},this));
 			}
-			
+
 			//sort transforms by bbcode length desc
 			for (var rootsel in o.rules) {
 				this.options.rules[rootsel].sort(function(a,b) {
 					return (b[0].length-a[0].length)
 				});
 			}
-			
+
 			//create rootsel list
 			this.rsellist = [];
 			for (var rootsel in this.options.rules) {
@@ -770,29 +770,29 @@ wbbdebug=false;
 			}
 			this.sortArray(this.rsellist,-1);
 		},
-		
+
 		//BUILD
 		build: function() {
 			$.log("Build editor");
-			
+
 			//this.$editor = $('<div class="wysibb">');
 			this.$editor = $('<div>').addClass("wysibb");
-			
+
 			if (this.isMobile) {
 				this.$editor.addClass("wysibb-mobile");
 			}
-			
+
 			//set direction if defined
 			if (this.options.direction) {this.$editor.css("direction",this.options.direction)}
-			
+
 			this.$editor.insertAfter(this.txtArea).append(this.txtArea);
-			
+
 			this.startHeight = this.$txtArea.outerHeight();
 			this.$txtArea.addClass("wysibb-texarea");
 			this.buildToolbar();
 			//Build iframe if needed
 			this.$txtArea.wrap('<div class="wysibb-text">');
-			
+
 			if (this.options.onlyBBmode===false) {
 				var height = this.options.minheight || this.$txtArea.outerHeight();
 				var maxheight = this.options.resize_maxheight;
@@ -800,19 +800,19 @@ wbbdebug=false;
 				this.$body = $(this.strf('<div class="wysibb-text-editor" style="max-height:{maxheight}px;min-height:{height}px"></div>',{maxheight:mheight,height:height})).insertAfter(this.$txtArea);
 				this.body = this.$body[0];
 				this.$txtArea.hide();
-				
+
 				if (height>32) {
 					this.$toolbar.css("max-height",height);
 				}
-				
+
 				$.log("WysiBB loaded");
-				
+
 				this.$body.addClass("wysibb-body").addClass(this.options.bodyClass);
-				
+
 				//set direction if defined
 				if (this.options.direction) {this.$body.css("direction",this.options.direction)}
-				
-				
+
+
 				if ('contentEditable' in this.body) {
 					this.body.contentEditable=true;
 					try{
@@ -826,20 +826,20 @@ wbbdebug=false;
 					//use onlybbmode
 					this.options.onlyBBmode=this.options.bbmode=true;
 				}
-				
+
 				//check for exist content in textarea
 				if (this.txtArea.value.length>0) {
 					this.txtAreaInitContent();
 				}
-				
-				
+
+
 				//clear html on paste from external editors
 				this.$body.bind('keydown', $.proxy(function(e) {
 					if ((e.which == 86 && (e.ctrlKey==true || e.metaKey==true)) || (e.which == 45 && (e.shiftKey==true || e.metaKey==true))) {
 						if (!this.$pasteBlock) {
 							this.saveRange();
 							this.$pasteBlock = $(this.elFromString('<div style="opacity:0;" contenteditable="true">\uFEFF</div>'));
-							
+
 							this.$pasteBlock.appendTo(this.body);
 							//if (!$.support.search?type=2) {this.$pasteBlock.focus();} //IE 7,8 FIX
 								setTimeout($.proxy(function() {
@@ -867,7 +867,7 @@ wbbdebug=false;
 						return true;
 					}
 				},this));
-				
+
 				//insert BR on press enter
 				this.$body.bind('keydown',$.proxy(function(e) {
 					if (e.which == 13) {
@@ -879,12 +879,12 @@ wbbdebug=false;
 						}
 					}
 				},this));
-				
+
 				//tabInsert
 				if (this.options.tabInsert===true) {
 					this.$body.bind('keydown', $.proxy(this.pressTab,this));
 				}
-				
+
 				//add event listeners
 				this.$body.bind('mouseup keyup',$.proxy(this.updateUI,this));
 				this.$body.bind('mousedown',$.proxy(function(e) {this.clearLastRange();this.checkForLastBR(e.target)},this));
@@ -899,7 +899,7 @@ wbbdebug=false;
 				if (this.options.hotkeys===true) {
 					this.$body.bind('keydown',$.proxy(this.presskey,this));
 				}
-				
+
 				//smileConversion
 				if (this.options.smileConversion===true) {
 					this.$body.bind('keyup',$.proxy(this.smileConversion,this));
@@ -916,19 +916,19 @@ wbbdebug=false;
 							height: height
 						});
 				}
-				
+
 				this.imgListeners();
 			}
-			
-			
+
+
 			//this.$editor.append('<span class="powered">Powered by <a href="http://www.wysibb.com" target="_blank">WysiBB<a/></span>');
-			
-			//add event listeners to textarea 
+
+			//add event listeners to textarea
 			this.$txtArea.bind('mouseup keyup',$.proxy(function() {
 				clearTimeout(this.uitimer);
 				this.uitimer = setTimeout($.proxy(this.updateUI,this),100);
 			},this));
-			
+
 			//attach hotkeys
 			if (this.options.hotkeys===true) {
 				$(document).bind('keydown',$.proxy(this.presskey,this));
@@ -936,10 +936,10 @@ wbbdebug=false;
 		},
 		buildToolbar: function() {
 			if (this.options.toolbar === false) {return false;}
-			
+
 			//this.$toolbar = $('<div class="wysibb-toolbar">').prependTo(this.$editor);
 			this.$toolbar = $('<div>').addClass("wysibb-toolbar").prependTo(this.$editor);
-			
+
 			var $btnContainer;
 			$.each(this.options.buttons,$.proxy(function(i,bn) {
 				var opt = this.options.allButtons[bn];
@@ -963,10 +963,10 @@ wbbdebug=false;
 					}
 				}
 			},this));
-			
+
 			//fix for hide tooltip on quick mouse over
 			this.$toolbar.find(".btn-tooltip").hover(function () {$(this).parent().css("overflow","hidden")},function() {$(this).parent().css("overflow","visible")});
-			
+
 			//build bbcode switch button
 			//var $bbsw = $('<div class="wysibb-toolbar-container modeSwitch"><div class="wysibb-toolbar-btn" unselectable="on"><span class="btn-inner ve-tlb-bbcode" unselectable="on"></span></div></div>').appendTo(this.$toolbar);
 			var $bbsw = $(document.createElement('div')).addClass("wysibb-toolbar-container modeSwitch").html('<div class="wysibb-toolbar-btn mswitch" unselectable="on"><span class="btn-inner modesw" unselectable="on">[bbcode]</span></div>').appendTo(this.$toolbar);
@@ -983,9 +983,9 @@ wbbdebug=false;
 				container = this.$toolbar;
 			}
 			var btnHTML = (opt.buttonHTML) ? $(this.strf(opt.buttonHTML,this.options)).addClass("btn-inner") : this.strf('<span class="btn-inner btn-text">{text}</span>',{text:opt.buttonText.replace(/</g,"&lt;")});
-			var hotkey = (this.options.hotkeys===true && this.options.showHotkeys===true && opt.hotkey) ? (' <span class="tthotkey">['+opt.hotkey+']</span>'):""
+			var hotkey = (this.options.hotkeys===true && this.options.showHotkeys===true && opt.hotkey) ? (' <span class="tthotkey">['+opt.hotkey+']</span>'):"";
 			var $btn = $('<div class="wysibb-toolbar-btn wbb-'+bn+'">').appendTo(container).append(btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/>{hotkey}</span>',{title:opt.title,hotkey:hotkey}));
-			
+
 			//attach events
 			this.controllers.push($btn);
 			$btn.bind('queryState',$.proxy(function(e) {
@@ -1000,16 +1000,16 @@ wbbdebug=false;
 		buildColorpicker: function(container,bn,opt) {
 			var $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-cp">').appendTo(container).append('<div class="ve-tlb-colorpick"><span class="fonticon">\uE010</span><span class="cp-line"></span></div><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));
 			var $cpline = $btn.find(".cp-line");
-			
-			var $dropblock = $('<div class="wbb-list">').appendTo($btn); 
+
+			var $dropblock = $('<div class="wbb-list">').appendTo($btn);
 			$dropblock.append('<div class="nc">'+CURLANG.auto+'</div>');
-			var colorlist = (opt.colors) ? opt.colors.split(","):[]; 
+			var colorlist = (opt.colors) ? opt.colors.split(","):[];
 			for (var j=0; j<colorlist.length; j++) {
 				colorlist[j] = $.trim(colorlist[j]);
-				if (colorlist[j]=="-") { 
+				if (colorlist[j]=="-") {
 					//insert padding
 					$dropblock.append('<span class="pl"></span>');
-				}else{ 
+				}else{
 					$dropblock.append(this.strf('<div class="sc" style="background:{color}" title="{color}"></div>',{color:colorlist[j]}));
 				}
 			}
@@ -1042,13 +1042,13 @@ wbbdebug=false;
 				this.execCommand(bn,basecolor);
 				$btn.trigger('queryState');
 			},this));
-			$btn.mousedown(function(e) { 
+			$btn.mousedown(function(e) {
 				if (e.preventDefault) e.preventDefault();
 			});
 		},
 		buildTablepicker: function(container,bn,opt) {
 			var $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-tbl">').appendTo(container).append('<span class="btn-inner fonticon ve-tlb-table1">\uE00e</span><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));
-			
+
 			var $listblock = $('<div class="wbb-list">').appendTo($btn);
 			var $dropblock = $('<div>').css({"position":"relative","box-sizing":"border-box"}).appendTo($listblock);
 			var rows = opt.rows || 10;
@@ -1083,13 +1083,13 @@ wbbdebug=false;
 				e.preventDefault();
 				this.dropdownclick(".wbb-tbl",".wbb-list",e);
 			},this));
-			
+
 		},
 		buildSelect: function(container,bn,opt) {
-			var $btn = $('<div class="wysibb-toolbar-btn wbb-select wbb-'+bn+'">').appendTo(container).append(this.strf('<span class="val">{title}</span><ins class="fonticon sar">\uE012</ins>',opt)).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));  
+			var $btn = $('<div class="wysibb-toolbar-btn wbb-select wbb-'+bn+'">').appendTo(container).append(this.strf('<span class="val">{title}</span><ins class="fonticon sar">\uE012</ins>',opt)).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));
 			var $sblock = $('<div class="wbb-list">').appendTo($btn);
 			var $sval = $btn.find("span.val");
-			
+
 			var olist = ($.isArray(opt.options)) ? opt.options:opt.options.split(",");
 			var $selectbox = (this.isMobile) ? $("<select>").addClass("wbb-selectbox"):"";
 			for (var i=0; i<olist.length; i++) {
@@ -1097,13 +1097,13 @@ wbbdebug=false;
 				if (typeof(oname)=="string") {
 					var option = this.options.allButtons[oname];
 					if (option) {
-						//$.log("create: "+oname); 
+						//$.log("create: "+oname);
 						if (option.html) {
 							$('<span>').addClass("option").attr("oid",oname).attr("cmdvalue",option.exvalue).appendTo($sblock).append(this.strf(option.html,{seltext:option.title}));
 						}else{
 							$sblock.append(this.strf('<span class="option" oid="'+oname+'" cmdvalue="'+option.exvalue+'">{title}</span>',option));
 						}
-						
+
 						//SelectBox for mobile devices
 						if (this.isMobile) {
 							$selectbox.append($('<option>').attr("oid",oname).attr("cmdvalue",option.exvalue).append(option.title));
@@ -1113,10 +1113,10 @@ wbbdebug=false;
 					//build option list from array
 					var params = {
 						seltext: oname.title
-					}
+					};
 					params[opt.valueBBname]=oname.exvalue;
 					$('<span>').addClass("option").attr("oid",bn).attr("cmdvalue",oname.exvalue).appendTo($sblock).append(this.strf(opt.html,params));
-					
+
 					if (this.isMobile) {$selectbox.append($('<option>').attr("oid",bn).attr("cmdvalue",oname.exvalue).append(oname.exvalue))}
 				}
 			}
@@ -1124,7 +1124,7 @@ wbbdebug=false;
 			if (this.isMobile) {
 				$selectbox.appendTo(container);
 				this.controllers.push($selectbox);
-				
+
 				$selectbox.bind('queryState',$.proxy(function(e) {
 					//queryState
 					$selectbox.find("option").each($.proxy(function(i,el){
@@ -1137,7 +1137,7 @@ wbbdebug=false;
 						}
 					},this));
 				},this));
-				
+
 				$selectbox.change($.proxy(function(e) {
 					e.preventDefault();
 					var $o =  $(e.currentTarget).find(":selected");
@@ -1147,7 +1147,7 @@ wbbdebug=false;
 					this.execCommand(oid,opt.exvalue || cmdvalue || false);
 					$(e.currentTarget).trigger('queryState');
 				},this));
-				
+
 			}
 			this.controllers.push($btn);
 			$btn.bind('queryState',$.proxy(function(e) {
@@ -1181,7 +1181,7 @@ wbbdebug=false;
 		buildSmilebox: function(container,bn,opt) {
 			if (this.options.smileList && this.options.smileList.length>0) {
 				var $btnHTML = $(this.strf(opt.buttonHTML,opt)).addClass("btn-inner");
-				var $btn = $('<div class="wysibb-toolbar-btn wbb-smilebox wbb-'+bn+'">').appendTo(container).append($btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));  
+				var $btn = $('<div class="wysibb-toolbar-btn wbb-smilebox wbb-'+bn+'">').appendTo(container).append($btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>',{title:opt.title}));
 				var $sblock = $('<div class="wbb-list">').appendTo($btn);
 				if ($.isArray(this.options.smileList)) {
 					$.each(this.options.smileList,$.proxy(function(i,sm){
@@ -1205,10 +1205,10 @@ wbbdebug=false;
 					$btn.trigger('queryState');
 				},this));
 			}
-			
+
 			//check for onlyClearText
 			this.disNonActiveButtons();
-			
+
 		},
 		initModal: function() {
 			this.$modal=$("#wbbmodal");
@@ -1216,14 +1216,14 @@ wbbdebug=false;
 				$.log("Init modal");
 				this.$modal = $('<div>').attr("id","wbbmodal").prependTo(document.body)
 					.html('<div class="wbbm"><div class="wbbm-title"><span class="wbbm-title-text"></span><span class="wbbclose" title="'+CURLANG.close+'">×</span></div><div class="wbbm-content"></div><div class="wbbm-bottom"><button id="wbbm-submit" class="wbb-button">'+CURLANG.save+'</button><button id="wbbm-cancel" class="wbb-cancel-button">'+CURLANG.cancel+'</button><button id="wbbm-remove" class="wbb-remove-button">'+CURLANG.remove+'</button></div></div>').hide();
-				
+
 				this.$modal.find('#wbbm-cancel,.wbbclose').click($.proxy(this.closeModal,this));
 				this.$modal.bind('click',$.proxy(function(e) {
 					if ($(e.target).parents(".wbbm").size()==0) {
 						this.closeModal();
 					}
 				},this));
-				
+
 				$(document).bind("keydown",$.proxy(this.escModal,this)); //ESC key close modal
 			}
 		},
@@ -1243,7 +1243,7 @@ wbbdebug=false;
 								case "shift": {metasum+=4;break;}
 								case "alt": {metasum+=7;break;}
 							}
-						})
+						});
 						//$.log("metasum: "+metasum+" key: "+key+" code: "+(klist.indexOf(key)+48));
 						if (metasum>0) {
 							if (!this.hotkeys["m"+metasum]) {this.hotkeys["m"+metasum]=[];}
@@ -1263,19 +1263,19 @@ wbbdebug=false;
 				}
 			}
 		},
-		
+
 		//COgdfMMAND FUNCTIONS
 		execCommand: function(command,value) {
 			$.log("execCommand: "+command);
 			var opt = this.options.allButtons[command];
 			if (opt.en!==true) {return false;}
 			var queryState = this.queryState(command,value);
-			
+
 			//check for onlyClearText
 			var skipcmd = this.isInClearTextBlock();
 			if (skipcmd && skipcmd!=command) {return;}
-			
-			
+
+
 			if (opt.excmd) {
 				//use NativeCommand
 				if (this.options.bbmode) {
@@ -1382,7 +1382,7 @@ wbbdebug=false;
 								$.each(groupsel,$.proxy(function(i,sel) {
 									var is = this.isContain(snode,sel);
 									if (is) {
-										var $sp = $('<span>').html(is.innerHTML)
+										var $sp = $('<span>').html(is.innerHTML);
 										var id = this.setUID($sp);
 										$(is).replaceWith($sp);
 										this.selectNode(this.$editor.find("#"+id)[0]);
@@ -1401,7 +1401,7 @@ wbbdebug=false;
 			$.log("wbbInsertCallback: "+command);
 			var data = this.getCodeByCommand(command,paramobj);
 			this.insertAtCursor(data);
-			
+
 			if (this.seltextID && data.indexOf(this.seltextID)!=-1) {
 				var snode = this.$body.find("#"+this.seltextID)[0];
 				this.selectNode(snode);
@@ -1470,7 +1470,7 @@ wbbdebug=false;
 							shtml = this.clearFromSubInsert(shtml,command);
 						}
 						var ins = this.elFromString(shtml);
-						
+
 						var before_rng = (window.getSelection) ? rng.cloneRange():this.body.createTextRange();
 						var after_rng = (window.getSelection) ? rng.cloneRange():this.body.createTextRange();
 
@@ -1505,8 +1505,8 @@ wbbdebug=false;
 				},this));
 			}
 		},
-		execNativeCommand: function(cmd,param) { 
-			//$.log("execNativeCommand: '"+cmd+"' : "+param); 
+		execNativeCommand: function(cmd,param) {
+			//$.log("execNativeCommand: '"+cmd+"' : "+param);
 			this.body.focus(); //set focus to frame body
 			if (cmd=="insertHTML" && !window.getSelection) { //IE does't support insertHTML
 				var r = (this.lastRange) ? this.lastRange:document.selection.createRange(); //IE 7,8 range lost fix
@@ -1535,7 +1535,7 @@ wbbdebug=false;
 				}
 				document.execCommand(cmd, false, param);
 			}
-			
+
 		},
 		getCodeByCommand: function(command,paramobj) {
 			return (this.options.bbmode) ? this.getBBCodeByCommand(command,paramobj):this.getHTMLByCommand(command,paramobj);
@@ -1548,7 +1548,7 @@ wbbdebug=false;
 				//get selected text
 				params["seltext"] = this.getSelectText(true);
 			}
-			
+
 			var bbcode = this.options.allButtons[command].bbcode;
 			//bbcode = this.strf(bbcode,params);
 			bbcode = bbcode.replace(/\{(.*?)(\[.*?\])*\}/g,function(str,p,vrgx) {
@@ -1564,7 +1564,7 @@ wbbdebug=false;
 				}
 				return (typeof(params[p.toLowerCase()])=="undefined") ? "":params[p.toLowerCase()];
 			});
-			
+
 			//insert first with max params
 			var rbbcode=null,maxpcount=0;
 			if (this.options.allButtons[command].transform) {
@@ -1602,15 +1602,15 @@ wbbdebug=false;
 				else{
 					//clear selection from current command tags
 					params["seltext"] = this.clearFromSubInsert(params["seltext"],command);
-					
+
 					//toBB if params onlyClearText=true
 					if (this.options.allButtons[command].onlyClearText===true) {
-						params["seltext"] = this.toBB(params["seltext"]).replace(/\</g,"&lt;").replace(/\n/g,"<br/>").replace(/\s{3}/g,'<span class="wbbtab"></span>'); 
+						params["seltext"] = this.toBB(params["seltext"]).replace(/\</g,"&lt;").replace(/\n/g,"<br/>").replace(/\s{3}/g,'<span class="wbbtab"></span>');
 					}
-					
+
 				}
 			}
-			
+
 			var postsel="";
 			this.seltextID = "wbbid_"+(++this.lastid);
 			if (command!="link" && command!="img") {
@@ -1629,7 +1629,7 @@ wbbdebug=false;
 				}
 				return (typeof(params[p.toLowerCase()])=="undefined") ? "":params[p.toLowerCase()];
 			});
-			
+
 			//insert first with max params
 			var rhtml=null,maxpcount=0;
 			if (this.options.allButtons[command].transform) {
@@ -1655,7 +1655,7 @@ wbbdebug=false;
 			}
 			return (rhtml || html)+postsel;
 		},
-		
+
 		//SELECTION FUNCTIONS
 		getSelection: function() {
 			if (window.getSelection) {
@@ -1738,7 +1738,7 @@ wbbdebug=false;
 			if ($(sn).is(".imgWrap")) {sn = $(sn).children("img")[0];}
 			return sn;
 		},
-		getCursorPosBB: function() {	
+		getCursorPosBB: function() {
 			var pos=0;
 			if ('selectionStart' in this.txtArea) {
 				pos = this.txtArea.selectionStart;
@@ -1770,7 +1770,7 @@ wbbdebug=false;
 			if (!rng) {return;}
 			if (window.getSelection) {
 				var sel = this.getSelection();
-				rng.selectNodeContents(node)
+				rng.selectNodeContents(node);
 				sel.removeAllRanges();
 				sel.addRange(rng);
 			}else{
@@ -1828,7 +1828,7 @@ wbbdebug=false;
 		clearLastRange: function() {
 			this.lastRange=false;
 		},
-		 
+
 		//TRANSFORM FUNCTIONS
 		filterByNode: function(node) {
 			var $n = $(node);
@@ -1872,7 +1872,7 @@ wbbdebug=false;
 					filter+='['+item+']';
 				}
 			},this));
-			
+
 			//index
 			var idx = $n.parent().children(filter).index($n);
 			if (idx>0) {
@@ -1892,7 +1892,7 @@ wbbdebug=false;
 			return p;
 		},
 		getRegexpReplace: function(str,validname) {
-			str = str.replace(/(\(|\)|\[|\]|\.|\*|\?|\:|\\)/g,"\\$1") 
+			str = str.replace(/(\(|\)|\[|\]|\.|\*|\?|\:|\\)/g,"\\$1")
 				.replace(/\s+/g,"\\s+")
 				.replace(validname.replace(/(\(|\)|\[|\]|\.|\*|\?|\:|\\)/g,"\\$1"),"(.+)")
 				.replace(/\{\S+?\}/g,".*");
@@ -1913,23 +1913,23 @@ wbbdebug=false;
 				if (this.nodeType!=3 && this.lastChild && this.lastChild.tagName=="BR") {
 					$(this.lastChild).remove();
 				}
-			})
+			});
 			if ($e.is("div,blockquote,p") && $e[0].nodeType!=3 && $e[0].lastChild && $e[0].lastChild.tagName=="BR") {
 				$($e[0].lastChild).remove();
 			}
 			//END remove last BR
-			
+
 			//Remove BR
 			$e.find("ul > br, table > br, tr > br").remove();
 			//IE
-			
+
 			var outbb="";
-			
+
 			//transform smiles
 			$.each(this.options.srules,$.proxy(function(s,bb) {
 				$e.find(s).replaceWith(bb[0]);
 			},this));
-			
+
 			$e.contents().each($.proxy(function(i,el) {
 				var $el = $(el);
 				if (el.nodeType===3) {
@@ -1960,8 +1960,8 @@ wbbdebug=false;
 									var cont = (c.attr) ? $cel.attr(c.attr):$cel.html();
 									if (typeof(cont)=="undefined" || cont==null) {skip=true;return s;}
 									var regexp = c.rgx;
-									
-									//style fix 
+
+									//style fix
 									if (regexp && c.attr=="style" && regexp.substr(regexp.length-1,1)!=";") {
 										regexp+=";";
 									}
@@ -1978,7 +1978,7 @@ wbbdebug=false;
 											cont="";
 										}
 									}
-									
+
 									//if it is style attr, then keep tag alive, remove this style
 									if (c.attr && skip===false) {
 										if (c.attr=="style") {
@@ -1997,14 +1997,14 @@ wbbdebug=false;
 											}else{
 												$cel.attr("style",nstyle);
 											}
-										}else if (c.rgx===false){	
+										}else if (c.rgx===false){
 											keepElement=true;
 											keepAttr=true;
 											$cel.removeAttr(c.attr);
 										}
 									}
 									if ($el.is('table,tr,td,font')) {keepElement=true;}
-									
+
 									return cont || "";
 								},this));
 								if (skip) {continue;}
@@ -2022,7 +2022,7 @@ wbbdebug=false;
 										}else{
 											$el.empty().html('<span>'+bbcode+'</span>');
 										}
-										
+
 									}else{
 										if ($el.is("iframe")) {
 											outbb+=bbcode;
@@ -2030,7 +2030,7 @@ wbbdebug=false;
 											$el.empty().html(bbcode);
 											outbb+=this.toBB($el);
 											$el=null;
-											
+
 										}
 										break;
 									}
@@ -2042,20 +2042,20 @@ wbbdebug=false;
 					outbb+=this.toBB($el);
 				}
 			},this));
-			
+
 			outbb.replace(/\uFEFF/g,"");
 			return outbb;
 		},
 		getHTML: function(bbdata,init,skiplt) {
 			if (!this.options.bbmode && !init) {return this.$body.html()}
-			
+
 			if (!skiplt) {bbdata = bbdata.replace(/</g,"&lt;").replace(/\{/g,"&#123;").replace(/\}/g,"&#125;");}
 			bbdata = bbdata.replace(/\[code\]([\s\S]*?)\[\/code\]/g,function(s) {
 				s = s.substr("[code]".length,s.length-"[code]".length-"[/code]".length).replace(/\[/g,"&#91;").replace(/\]/g,"&#93;");
 				return "[code]"+s+"[/code]";
 			});
-			
-			
+
+
 			$.each(this.options.btnlist,$.proxy(function(i,b){
 				if (b!="|" && b!="-") {
 					var find=true;
@@ -2093,19 +2093,19 @@ wbbdebug=false;
 					},this));
 				}
 			},this));
-			
+
 			//transform system codes
 			$.each(this.options.systr,function(html,bb) {
 				bb = bb.replace(/(\(|\)|\[|\]|\.|\*|\?|\:|\\|\\)/g,"\\$1")
 					.replace(" ","\\s");
 				bbdata = bbdata.replace(new RegExp(bb,"g"),html);
 			});
-			
-			
+
+
 			var $wrap = $(this.elFromString("<div>"+bbdata+"</div>"));
 			//transform smiles
 			/* $wrap.contents().filter(function() {return this.nodeType==3}).each($.proxy(smilerpl,this)).end().find("*").contents().filter(function() {return this.nodeType==3}).each($.proxy(smilerpl,this));
-			
+
 			function smilerpl(i,el) {
 				var ndata = el.data;
 				$.each(this.options.smileList,$.proxy(function(i,row) {
@@ -2116,11 +2116,11 @@ wbbdebug=false;
 						el.data = ndata = el.data.substr(0,fidx);
 						$(el).after(afternode).after(this.strf(row.img,this.options));
 					}
-				},this));	
+				},this));
 			} */
 			this.getHTMLSmiles($wrap);
 			//$wrap.contents().filter(function() {return this.nodeType==3}).each($.proxy(this,smileRPL,this));
-			
+
 			return $wrap.html();
 		},
 		getHTMLSmiles: function(rel) {
@@ -2139,7 +2139,7 @@ wbbdebug=false;
 					return false;
 				}
 			this.getHTMLSmiles(el);
-			},this));	
+			},this));
 		},
 		//UTILS
 		setUID: function(el,attr) {
@@ -2200,7 +2200,7 @@ wbbdebug=false;
 			//return r.replace(/([^a-z0-9)/ig,"\\$1").replace(/\{.*?\}/g,"([\\s\\S]*?)");
 		},
 		checkForLastBR: function(node) {
-			if (!node) {$node = this.body;} 
+			if (!node) {$node = this.body;}
 			if (node.nodeType==3) {node=node.parentNode;}
 			var $node = $(node);
 			if ($node.is("span[id*='wbbid']")) {$node = $node.parent();}
@@ -2301,12 +2301,12 @@ wbbdebug=false;
 					$(document).unbind("mousedown",this.dropdownhandler);
 				}
 				this.lastRange=false;
-				
+
 			}else{
 				this.saveRange();
 				this.$editor.find("*[wbbshow]").each(function(i,el) {
 					$(el).removeClass("on").find($(el).attr("wbbshow")).hide().end().removeAttr("wbbshow");
-				})
+				});
 				$btn.attr("wbbshow",tsel);
 				$(document.body).bind("mousedown",$.proxy(function(evt) {this.dropdownhandler($btn,bsel,tsel,evt)},this));
 				if (this.$body) {
@@ -2335,7 +2335,7 @@ wbbdebug=false;
 				return '#'+color.toString(16);
 			}
 			var digits = /(.*?)rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(rgb);
-			return "#"+this.dec2hex(parseInt(digits[2]))+this.dec2hex(parseInt(digits[3]))+this.dec2hex(parseInt(digits[4])); 
+			return "#"+this.dec2hex(parseInt(digits[2]))+this.dec2hex(parseInt(digits[3]))+this.dec2hex(parseInt(digits[4]));
 		},
 		dec2hex: function(d) {
 			if(d>15) {
@@ -2353,7 +2353,7 @@ wbbdebug=false;
 		},
 		clearPaste: function(el) {
 			var $block = $(el);
-			//NEW 
+			//NEW
 			$.each(this.options.rules,$.proxy(function(s,ar) {
 				var $sf = $block.find(s).attr("wbbkeep",1);
 				if ($sf.size()>0) {
@@ -2376,12 +2376,12 @@ wbbdebug=false;
 			//$.log("BBCODE: "+this.toBB($block.clone(true)));
 			$block.html(this.getHTML(this.toBB($block),true));
 			$.log($block.html());
-			
+
 			//OLD
 			/* $.each(this.options.rules,$.proxy(function(s,bb) {
 				$block.find(s).attr("wbbkeep",1);
 			},this));
-			
+
 			//replace div and p without last br to html()+br
 			$block.find("*[wbbkeep!='1']").each($.proxy(function(i,el) {
 				var $this = $(el);
@@ -2425,7 +2425,7 @@ wbbdebug=false;
 					this.insertAtCursor('   ',false);
 				}else{
 					this.insertAtCursor('<span class="wbbtab">\uFEFF</span>',false);
-					//this.execNativeCommand("indent",false); 
+					//this.execNativeCommand("indent",false);
 				}
 			}
 		},
@@ -2494,7 +2494,7 @@ wbbdebug=false;
 						find=command;
 						return false;
 					}
-				},this))
+				},this));
 				return find;
 			}
 			return false;
@@ -2523,7 +2523,7 @@ wbbdebug=false;
 			$(el).after(sl);
 			this.selectNode(sl);
 		},
-		
+
 		//img listeners
 		imgListeners: function() {
 			$(document).on("mousedown",$.proxy(this.imgEventHandler,this));
@@ -2534,11 +2534,11 @@ wbbdebug=false;
 				this.$body.find(".imgWrap ").each(function() {
 					$.log("Removed imgWrap block");
 					$(this).replaceWith($(this).find("img"));
-				})
+				});
 				this.hasWrapedImage = false;
 				this.updateUI();
 			}
-			
+
 			if ($e.is("img") && $e.closest(".wysibb-body").size()>0) {
 				$e.wrap("<span class='imgWrap'></span>");
 				this.hasWrapedImage = $e;
@@ -2546,7 +2546,7 @@ wbbdebug=false;
 				this.selectNode($e.parent()[0]);
 			}
 		},
-		
+
 		//MODAL WINDOW
 		showModal: function(cmd,opt,queryState) {
 			$.log("showModal: "+cmd);
@@ -2561,7 +2561,7 @@ wbbdebug=false;
 				$.each(opt.tabs,$.proxy(function(i,row) {
 					if (i==0) {row['on']="on"}
 					$ul.append(this.strf('<li class="{on}" onClick="$(this).parent().find(\'.on\').removeClass(\'on\');$(this).addClass(\'on\');$(this).parents(\'.wbbm-content\').find(\'.tab-cont\').hide();$(this).parents(\'.wbbm-content\').find(\'.tab'+i+'\').show()">{title}</li>',row));
-					
+
 				},this))
 			}
 			if (opt.width) {
@@ -2575,7 +2575,7 @@ wbbdebug=false;
 			}
 			$.each(opt.tabs,$.proxy(function(i,r) {
 				var $c = $('<div>').addClass("tab-cont tab"+i).attr("tid",i).appendTo($cnt);
-				if (i>0) {$c.hide();} 
+				if (i>0) {$c.hide();}
 				if (r.html) {
 					$c.html(this.strf(r.html,this.options));
 				}else{
@@ -2594,20 +2594,20 @@ wbbdebug=false;
 							//default input
 							$c.append(this.strf('<div class="wbbm-inp-row"><label>{title}</label><input class="inp-text modal-text" type="text" name="{param}" value="{value}"/></div>',inp));
 						}
-						
-						
+
+
 					},this));
 				}
 			},this));
-			
+
 			//this.lastRange=this.getRange();
-			
+
 			if ($.isFunction(opt.onLoad)) {
 				opt.onLoad.call(this,cmd,opt,queryState);
 			}
-			
+
 			$wbbm.find('#wbbm-submit').click($.proxy(function() {
-				
+
 				if ($.isFunction(opt.onSubmit)) { //custom submit function, if return false, then don't process our function
 					var r = opt.onSubmit.call(this,cmd,opt,queryState);
 					if (r===false) {return;}
@@ -2644,7 +2644,7 @@ wbbdebug=false;
 					}
 					this.wbbInsertCallback(cmd,params);
 					//END insert callback
-					
+
 					this.closeModal();
 					this.updateUI();
 				}
@@ -2656,13 +2656,13 @@ wbbdebug=false;
 				this.closeModal();
 				this.updateUI();
 			},this));
-			
+
 			$(document.body).css("overflow","hidden"); //lock the screen, remove scroll on body
 			if ($("body").height() > $(window).height()) { //if body has scroll, add padding-right 18px
 				$(document.body).css("padding-right","18px");
 			}
 			this.$modal.show();
-			//if (window.getSelection) 
+			//if (window.getSelection)
 			if (this.isMobile) {
 				$wbbm.css("margin-top","10px");
 			}else{
@@ -2721,8 +2721,8 @@ wbbdebug=false;
 			}
 			return params;
 		},
-		
-		 
+
+
 		//imgUploader
 		imgLoadModal: function() {
 			$.log("imgLoadModal");
@@ -2737,19 +2737,19 @@ wbbdebug=false;
 					themeName: this.options.themeName,
 					success: $.proxy(function(data) {
 						this.$txtArea.insertImage(data.image_link,data.thumb_link);
-						
+
 						this.closeModal();
 						this.updateUI();
 					},this)
 				});
-				
+
 				this.$modal.find("#fileupl").bind("change",function() {
 					$("#fupform").submit();
 				});
 				this.$modal.find("#fupform").bind("submit",$.proxy(function(e) {
 					$(e.target).parents("#imguploader").hide().after('<div class="loader"><img src="'+this.options.themePrefix+'/'+this.options.themeName+'/img/loader.gif" /><br/><span>'+CURLANG.loading+'</span></div>').parent().css("text-align","center");
 				},this))
-				
+
 			}else{
 				this.$modal.find(".hastabs").removeClass("hastabs");
 				this.$modal.find("#imguploader").parents(".tab-cont").remove();
@@ -2774,12 +2774,12 @@ wbbdebug=false;
 				if (typeof(console)!="undefined") {
 					console.log((time-this.startTime)+" ms: "+msg);
 				}else{
-					$("#exlog").append('<p>'+(time-this.startTime)+" ms: "+msg+'</p>');  
+					$("#exlog").append('<p>'+(time-this.startTime)+" ms: "+msg+'</p>');
 				}
 				this.startTime=time;
 			}
 		},
-		
+
 		//Browser fixes
 		isChrome: function() {
 			return (window.chrome) ? true:false;
@@ -2792,17 +2792,17 @@ wbbdebug=false;
 				return html.replace(/\<(\/*?(table|tr|td))[^>]*\>/ig,"[$1]".toLowerCase()).replace(/\<\/*tbody[^>]*\>/ig,"");
 			}
 		}
-	}
-	
+	};
+
 	$.log = function(msg) {
 		if (typeof(wbbdebug)!="undefined" && wbbdebug===true) {
 			if (typeof(console)!="undefined") {
 				console.log(msg);
 			}else{
-				$("#exlog").append('<p>'+msg+'</p>');  
+				$("#exlog").append('<p>'+msg+'</p>');
 			}
 		}
-	}
+	};
 	$.fn.wysibb = function(settings) {
 		return this.each(function() {
 			var data = $(this).data("wbb");
@@ -2810,7 +2810,7 @@ wbbdebug=false;
 				new $.wysibb(this, settings);
 			}
 		});
-	}
+	};
 	$.fn.wdrag = function(opt) {
 		if (!opt.scope) {opt.scope=this;}
 		var start={x:0,y:0, height: 0};
@@ -2822,7 +2822,7 @@ wbbdebug=false;
 				y: e.pageY,
 				height: opt.height,
 				sheight: opt.scope.$body.height()
-			}
+			};
 			drag=true;
 			$(document).bind("mousemove",$.proxy(opt.scope.drag_mousemove,this));
 			$(this).addClass("drag");
@@ -2856,18 +2856,18 @@ wbbdebug=false;
 			}
 		};
 
-		
+
 		$(this).bind("mousedown",opt.scope.drag_mousedown);
 		$(document).bind("mouseup",$.proxy(opt.scope.drag_mouseup,this));
 	},
-	
+
 	//API
 	$.fn.getDoc = function() {
 		return this.data('wbb').doc;
-	}
+	};
 	$.fn.getSelectText = function(fromTextArea) {
 		return this.data('wbb').getSelectText(fromTextArea);
-	}
+	};
 	$.fn.bbcode = function(data) {
 		if (typeof(data)!="undefined") {
 			if (this.data('wbb').options.bbmode) {
@@ -2879,7 +2879,7 @@ wbbdebug=false;
 		}else{
 			return this.data('wbb').getBBCode();
 		}
-	}
+	};
 	$.fn.htmlcode = function(data) {
 		if (!this.data('wbb').options.onlyBBMode && this.data('wbb').inited===true) {
 			if (typeof(data)!="undefined") {
@@ -2889,43 +2889,43 @@ wbbdebug=false;
 				return this.data('wbb').getHTML(this.data('wbb').$txtArea.val());
 			}
 		}
-	}
+	};
 	$.fn.getBBCode = function() {
 		return this.data('wbb').getBBCode();
-	}
+	};
 	$.fn.getHTML = function() {
 		var wbb = this.data('wbb');
 		return wbb.getHTML(wbb.$txtArea.val());
-	}
+	};
 	$.fn.getHTMLByCommand = function(command,params) {
 		return this.data("wbb").getHTMLByCommand(command,params);
-	}
+	};
 	$.fn.getBBCodeByCommand = function(command,params) {
 		return this.data("wbb").getBBCodeByCommand(command,params);
-	}
+	};
 	$.fn.insertAtCursor = function(data,forceBBMode) {
 		this.data("wbb").insertAtCursor(data,forceBBMode);
 		return this.data("wbb");
-	}
+	};
 	$.fn.execCommand = function(command,value) {
 		this.data("wbb").execCommand(command,value);
 		return this.data("wbb");
-	}
+	};
 	$.fn.insertImage = function(imgurl,thumburl) {
 		var editor = this.data("wbb");
 		var code = (thumburl) ? editor.getCodeByCommand('link',{url:imgurl,seltext: editor.getCodeByCommand('img',{src:thumburl})}): editor.getCodeByCommand('img',{src:imgurl});
 		this.insertAtCursor(code);
 		return editor;
-	}
+	};
 	$.fn.sync = function() {
 		this.data("wbb").sync();
 		return this.data("wbb");
-	}
+	};
 	$.fn.destroy = function() {
 		this.data("wbb").destroy();
-	}
-	
-	
+	};
+
+
 	$.fn.queryState = function(command) {
 		return this.data("wbb").queryState(command);
 	}
@@ -2935,46 +2935,46 @@ wbbdebug=false;
 //Drag&Drop file uploader
 (function($) {
 	'use strict';
-	
-	$.fn.dragfileupload = function(options) {		
-		return this.each(function() { 
+
+	$.fn.dragfileupload = function(options) {
+		return this.each(function() {
 			var upl = new FileUpload(this, options);
 			upl.init();
 		});
-	}; 
-	
+	};
+
 	function FileUpload(e, options) {
 		this.$block=$(e);
-		
+
 		this.opt = $.extend({
 			url: false,
 			success: false,
 			extraParams: false,
 			fileParam: 'img',
 			validation: '\.(jpg|png|gif|jpeg)$',
-			
+
 			t1: CURLANG.fileupload_text1,
 			t2: CURLANG.fileupload_text2
 		},options);
 	}
-	
+
 	FileUpload.prototype = {
 		init: function() {
 			if (window.FormData != null) {
 				this.$block.addClass("drag");
 				this.$block.prepend('<div class="p2">'+this.opt.t2+'</div>');
 				this.$block.prepend('<div class="p">'+this.opt.t1+'</div>');
-				
+
 				this.$block.bind('dragover', function() {$(this).addClass('dragover');return false;});
 				this.$block.bind('dragleave', function() {$(this).removeClass('dragover');return false;});
-				
+
 				//upload progress
-				var uploadProgress = $.proxy(function(e) { 
+				var uploadProgress = $.proxy(function(e) {
 					var p = parseInt(e.loaded/e.total*100, 10);
 					this.$loader.children("span").text(CURLANG.loading+': '+ p+'%');
-					
+
 				}, this);
-				var xhr = jQuery.ajaxSettings.xhr(); 
+				var xhr = jQuery.ajaxSettings.xhr();
 				if (xhr.upload) {
 					xhr.upload.addEventListener('progress', uploadProgress, false);
 				}
@@ -2988,16 +2988,16 @@ wbbdebug=false;
 					}
 					var fData = new FormData();
 					fData.append(this.opt.fileParam, ufile);
-					
+
 					if (this.opt.extraParams) { //check for extraParams to upload
 						$.each(this.opt.extraParams,function(k,v) {
 							fData.append(k, v);
 						});
 					}
-					
+
 					this.$loader = $('<div class="loader"><img src="'+this.opt.themePrefix+'/'+this.opt.themeName+'/img/loader.gif" /><br/><span>'+CURLANG.loading+'</span></div>');
 					this.$block.html(this.$loader);
-					
+
 					$.ajax({
 						type: 'POST',
 						url: this.opt.url,
@@ -3008,7 +3008,7 @@ wbbdebug=false;
 						dataType: 'json',
 						success: $.proxy(function(data) {
 							if (data && data.status==1) {
-								this.opt.success(data); 
+								this.opt.success(data);
 							}else{
 								this.error(data.msg || CURLANG.error_onupload);
 							}
@@ -3016,7 +3016,7 @@ wbbdebug=false;
 						error: $.proxy(function (xhr, txt, thr) {this.error(CURLANG.error_onupload)},this)
 					});
 				},this);
-				
+
 			}
 		},
 		error: function(msg) {

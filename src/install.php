@@ -8,7 +8,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena package installer script.
@@ -161,7 +161,7 @@ EOS;
 	/**
 	 *  On some hosting the PHP version given with the version of the packet in the distribution
 	 *
-	 *  @param  string $version The PHP version to clean
+	 * @param   string $version The PHP version to clean
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -198,7 +198,9 @@ EOS;
 
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
-			$name, $version, $name, $minor, $name, $recommended), 'notice');
+            $name, $version, $name, $minor, $name, $recommended
+        ), 'notice'
+        );
 
 		return false;
 	}
@@ -301,7 +303,8 @@ EOS;
 		}
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version),
-			'notice');
+            'notice'
+        );
 
 		return false;
 	}

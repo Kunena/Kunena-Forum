@@ -37,7 +37,8 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param   string $content
+	 * @param   string $content content
+	 * @since Kunena
 	 */
 	public function appendAfter($content)
 	{

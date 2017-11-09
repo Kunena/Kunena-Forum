@@ -841,15 +841,17 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Set inline to the attachment object
 	 *
-	 * @param   int $inline
+	 * @param   int $inline inline
+	 *
 	 * @return boolean
+	 * @since Kunena
 	 */
-	public function setInline(int $inline)
+	public function setInline($inline)
 	{
-	    $this->inline = $inline;
+		$this->inline = $inline;
 
-	    $success = $this->save();
+		$success = $this->save();
 
-	    return $succes;
+		return $success;
 	}
 }

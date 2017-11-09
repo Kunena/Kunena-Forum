@@ -12,6 +12,5 @@ defined('_JEXEC') or die;
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag = $this->ktemplate->params->get('socialsharetag');
-?>
 
-<?php echo JHtml::_('content.prepare', $socialsharetag);
+echo JHtml::_('content.prepare', $socialsharetag);

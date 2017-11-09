@@ -300,9 +300,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Render the exception as string
 	 *
-	 * @param   Throwable|Exception $e
+	 * @param   Throwable|Exception $e exception
 	 *
 	 * @return string
+	 *
+	 * @since Kunena
 	 */
 	public function renderException($e)
 	{

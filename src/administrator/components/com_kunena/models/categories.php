@@ -319,7 +319,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
 	 * @since 5.1.0
-	 * @return
+	 * @return array
 	 * @throws Exception
 	 * @throws null
 	 */

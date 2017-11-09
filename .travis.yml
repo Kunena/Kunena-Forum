@@ -1,3 +1,5 @@
+dist: trusty
+sudo: required
 language: php
 php:
 - 5.6
@@ -5,6 +7,18 @@ php:
 - 7.1
 addons:
   firefox: "47.0.1"
+  sonarcloud:
+    organization: "kunena-forum"
+    token:
+      secure: "5236152baa004029e309405ee0af8e30ac1add88"
+jdk:
+  - oraclejdk8
+script:
+  - sonar-scanner
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
+
 before_script:
 - sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts
 - sudo apt-get update -qq
@@ -60,3 +74,4 @@ script:
 - vendor/bin/phing -f build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
+- sonar-scanner

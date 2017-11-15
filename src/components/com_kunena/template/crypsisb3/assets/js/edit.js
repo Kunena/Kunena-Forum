@@ -255,7 +255,7 @@ jQuery(document).ready(function ($) {
 		$('#modal_confirm_template_category').modal('hide');
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').insertAtCaret(category_template_text);
+		$('#editor').val(category_template_text);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
@@ -263,7 +263,7 @@ jQuery(document).ready(function ($) {
 		var existing_content = $('#editor').val();
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').insertAtCaret(category_template_text + ' ' + existing_content);
+		$('#editor').val(category_template_text + ' ' + existing_content);
 	});
 
 	if ($.fn.datepicker != undefined) {

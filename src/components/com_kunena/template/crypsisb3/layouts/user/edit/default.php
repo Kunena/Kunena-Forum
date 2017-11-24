@@ -11,6 +11,8 @@
 defined('_JEXEC') or die;
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me = KunenaUserHelper::getMyself();
+$avatar = KunenaFactory::getAvatarIntegration();
+
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
@@ -40,7 +42,7 @@ $this->me = KunenaUserHelper::getMyself();
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE'); ?>
 				</a>
 			</li>
-			<?php if ($this->profile->userid == $this->me->userid): ?>
+			<?php if ($this->profile->userid == $this->me->userid && $avatar instanceof KunenaAvatarKunena): ?>
 			<li>
 				<a href="#editavatar" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR'); ?>

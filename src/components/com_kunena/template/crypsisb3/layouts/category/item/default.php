@@ -63,7 +63,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		<tr>
 			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
-				<a href="#forumbottom">
+				<a href="#forumbottom" rel="nofollow">
 					<?php echo KunenaIcons::arrowdown();?>
 				</a>
 			</td>

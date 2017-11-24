@@ -11,6 +11,9 @@ addons:
     organization: "kunena-forum"
     token:
       secure: "5236152baa004029e309405ee0af8e30ac1add88"
+    branches:
+      - K5.0
+
 jdk:
   - oraclejdk8
 script:

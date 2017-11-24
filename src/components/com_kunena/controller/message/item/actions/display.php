@@ -304,11 +304,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				{
 					$icon = '';
 				}
-
-				echo KunenaLayout::factory('Widget/Button')
+				
+				$this->messageButtons->set('report',
+					KunenaLayout::factory('Widget/Button')
 					->setProperties(array('url' => '#report'. $mesid .'', 'name' => 'report', 'scope' => 'message',
 					                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
-					                      'modal' => 'modal', 'pullright' => 'pullright'));
+					                      'modal' => 'modal', 'pullright' => 'pullright')));
 			}
 		}
 

@@ -163,7 +163,7 @@ $this->getBBcodesEnabled();
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 					<div id="datepoll-container" class="span5 col-md-5">
 						<div class="input-append date">
-							<input type="text" class="span12 kpoll-time-to-live-input" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span class="add-on"><?php echo KunenaIcons::grid();?></span>
+							<input type="text" class="span12 kpoll-time-to-live-input" id="poll_time_to_live" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span class="add-on"><?php echo KunenaIcons::grid();?></span>
 						</div>
 					</div>
 				</div>

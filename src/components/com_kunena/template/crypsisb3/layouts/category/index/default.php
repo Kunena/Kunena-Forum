@@ -57,7 +57,7 @@ foreach ($this->sections as $section) :
 		</h2>
 
 		<h1 class="btn-link">
-			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), false, false); ?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 			<small class="hidden-xs nowrap">
 				<?php if ($section->getTopics() > 0) : ?>
 					(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)

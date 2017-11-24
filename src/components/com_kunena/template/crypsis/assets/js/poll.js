@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
 		newInput = document.createElement('input');
 		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
 		newInput.setAttribute('id', 'field_option'+options);
-		newInput.setAttribute('class', 'inputbox');
+		newInput.setAttribute('class', 'inputbox inputpollclear');
 		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');
 		polldiv.append(newInput);

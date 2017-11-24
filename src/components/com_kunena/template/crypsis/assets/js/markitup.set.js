@@ -173,9 +173,9 @@ jQuery(document).ready(function ($){
 	});
 
 	$('#clearpoll').click(function() {
-		$('#modal-poll-settings').on('hidden.bs.modal', function () {
-			$(this).find("input").val('').end();
-		});
+		$('#kpoll-title').val('');
+		$('.inputpollclear').val('');
+		$('#poll_time_to_live').val('');
 	});
 
 	if (!kunena_showvideotag) {

@@ -46,7 +46,7 @@ $this->addScript('assets/js/search.js');
 			<tr>
 				<th class="col-md-1 center hidden-xs">
 					<a id="forumtop"> </a>
-					<a href="#forumbottom">
+					<a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown();?>
 					</a>
 				</th>
@@ -208,7 +208,7 @@ $this->addScript('assets/js/search.js');
 			<tr>
 				<td class="col-md-1 center hidden-xs">
 					<a id="forumbottom"> </a>
-					<a href="#forumtop">
+					<a href="#forumtop" rel="nofollow">
 						<?php echo KunenaIcons::arrowup();?>
 					</a>
 				</td>

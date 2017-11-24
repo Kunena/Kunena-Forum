@@ -97,7 +97,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			// Is user allowed to mark forums as read?
 			$url = $category->getMarkReadUrl();
 
-			if ($this->me->exists() && $this->total)
+			if ($this->me->exists())
 			{
 				if ($url && $topicicontype == 'B3')
 				{

@@ -75,10 +75,14 @@ else
 		                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
 		                      'modal' => 'modal', 'pullright' => 'pullright'));
 	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-		<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	<?php endif; ?>

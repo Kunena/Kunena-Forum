@@ -43,13 +43,13 @@ $this->addScript('assets/js/search.js');
 
 	<table class="table table-bordered table-striped">
 		<thead>
-		<tr>
-			<th class="col-md-1 center hidden-xs">
-				<a id="forumtop"> </a>
-				<a href="#forumbottom">
-					<?php echo KunenaIcons::arrowdown(); ?>
-				</a>
-			</th>
+			<tr>
+				<th class="col-md-1 center hidden-xs">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom" rel="nofollow">
+						<?php echo KunenaIcons::arrowdown();?>
+					</a>
+				</th>
 
 			<?php if ($config->userlist_online) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
@@ -206,16 +206,16 @@ $this->addScript('assets/js/search.js');
 		</tbody>
 
 		<tfoot>
-		<tr>
-			<td class="col-md-1 center hidden-xs">
-				<a id="forumbottom"> </a>
-				<a href="#forumtop">
-					<?php echo KunenaIcons::arrowup(); ?>
-				</a>
-			</td>
-			<td colspan="8" class="hidden-xs">
-			</td>
-		</tr>
+			<tr>
+				<td class="col-md-1 center hidden-xs">
+					<a id="forumbottom"> </a>
+					<a href="#forumtop" rel="nofollow">
+						<?php echo KunenaIcons::arrowup();?>
+					</a>
+				</td>
+				<td colspan="8" class="hidden-xs">
+				</td>
+			</tr>
 		</tfoot>
 	</table>
 

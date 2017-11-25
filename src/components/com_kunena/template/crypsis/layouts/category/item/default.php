@@ -62,8 +62,8 @@ $this->addStyleSheet('assets/css/rating.css');
 		<tr>
 			<td class="span1 center hidden-phone">
 				<a id="forumtop"> </a>
-				<a href="#forumbottom">
-					<?php echo KunenaIcons::arrowdown(); ?>
+				<a href="#forumbottom" rel="nofollow">
+					<?php echo KunenaIcons::arrowdown();?>
 				</a>
 			</td>
 			<td class="span<?php echo $cols ?>">

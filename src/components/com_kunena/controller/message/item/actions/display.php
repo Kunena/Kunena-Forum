@@ -325,11 +325,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 					$icon = '';
 				}
 
-				echo KunenaLayout::factory('Widget/Button')
-					->setProperties(array('url' => '#report' . $mesid . '', 'name' => 'report', 'scope' => 'message',
-										  'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => $icon,
-						'modal' => 'modal', 'pullright' => 'pullright')
-					);
+				$this->messageButtons->set('report',
+					$this->getButton(sprintf($layout, '#report'. $mesid .''), 'report', 'message', 'user', 'btn_report', $button, $icon));
 			}
 		}
 

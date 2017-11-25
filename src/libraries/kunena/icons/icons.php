@@ -1826,4 +1826,72 @@ class KunenaIcons
 
 		return '<i class="icon icon-comments-2" aria-hidden="true"></i>';
 	}
+
+	/**
+	 * Return the report icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function report()
+	{
+		$ktemplate = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-flag" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return '<span class="kicon-report" aria-hidden="true"></span>';
+		}
+		else
+		{
+			return '<i class="kicon-report" aria-hidden="true"></i>';
+		}
+	}
+
+	/**
+	 * Return the report icon
+	 *
+	 * @return string
+	 *
+	 * @since K5.0
+	 */
+	static public function reportname()
+	{
+		$ktemplate = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'B2')
+		{
+			return 'icon icon-flag';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return 'glyphicon glyphicon-exclamation-sign';
+		}
+		elseif ($topicicontype == 'fa')
+		{
+			return 'fa fa-exclamation';
+		}
+		elseif ($topicicontype == 'image')
+		{
+			return 'kicon-report';
+		}
+		else
+		{
+			return '';
+		}
+	}
 }

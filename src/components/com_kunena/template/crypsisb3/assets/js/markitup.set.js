@@ -172,6 +172,12 @@ jQuery(document).ready(function ($){
 		return false;
 	});
 
+	$('#clearpoll').click(function() {
+		$('#kpoll-title').val('');
+		$('.inputpollclear').val('');
+		$('#poll_time_to_live').val('');
+	});
+
 	if (!kunena_showvideotag) {
 		$('.videodropdownbutton').remove();
 	}

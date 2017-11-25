@@ -254,7 +254,7 @@ if (!empty($codeTypes)) : ?>
 						<div id="datepoll-container">
 							<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 							<div class="input-group date">
-								<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy"
+								<input type="text" class="form-control" id="poll_time_to_live" data-date-format="mm/dd/yyyy"
 								       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 								<span class="input-group-addon">
 								<?php echo KunenaIcons::grid(); ?>

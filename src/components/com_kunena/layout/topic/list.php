@@ -26,6 +26,7 @@ class KunenaLayoutTopicList extends KunenaLayout
 	 * @param   string     $attrib Extra attribute to apply to the list
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-control filter" onchange="this.form.submit()"')
 	{

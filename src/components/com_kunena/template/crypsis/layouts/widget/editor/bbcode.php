@@ -26,8 +26,8 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
+$pollcheck = isset($this->poll);
 
-$this->getBBcodesEnabled();
 
 // Kunena bbcode editor
 ?>
@@ -242,7 +242,7 @@ if (!empty($codeTypes))
 		        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
-<?php if (!$this->message->parent && isset($this->poll)) : ?>
+<?php if ($pollcheck) : ?>
 	<div id="modal-poll-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	     aria-hidden="true" data-backdrop="false">
 		<div class="modal-header">

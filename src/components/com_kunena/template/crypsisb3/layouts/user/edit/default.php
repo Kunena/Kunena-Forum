@@ -34,22 +34,27 @@ $tabs          = $this->getTabsEdit();
 			<?php foreach ($tabs as $name => $tab)
 			:
 	?>
-				<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-					<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
-				</li>
+			<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
+			<?php else : ?>
+			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
+				<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+			</li>
+			<?php endif;?>
 			<?php endforeach; ?>
-
 		</ul>
 		<div class="tab-content">
 
 			<?php foreach ($tabs as $name => $tab)
 			:
 	?>
+			<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
+			<?php else : ?>
 				<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="edit<?php echo $name; ?>">
 					<div>
 						<?php echo $tab->content; ?>
 					</div>
 				</div>
+			<?php endif;?>
 			<?php endforeach; ?>
 
 		</div>

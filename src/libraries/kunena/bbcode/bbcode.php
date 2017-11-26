@@ -316,7 +316,14 @@ class KunenaBbcode extends NBBC_BBCode
 
 	public function get_title($url)
 	{
-		$str = file_get_contents($url);
+		try
+		{
+			$str = @file_get_contents($url);
+		}
+		catch (Exception $e)
+		{
+			return '';
+		}
 
 		if (strlen($str) > 0)
 		{

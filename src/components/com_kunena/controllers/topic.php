@@ -417,12 +417,12 @@ class KunenaControllerTopic extends KunenaController
 					if (!empty($captcha_response))
 					{
 						// For ReCaptcha API 2.0
-						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
+						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', array($this->app->input->getString('g-recaptcha-response')));
 					}
 					else
 					{
 						// For ReCaptcha API 1.0
-						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+						$res = \JFactory::getApplication()->triggerEvent('onCheckAnswer', array($this->app->input->getString('recaptcha_response_field')));
 					}
 
 					if (!$res[0])

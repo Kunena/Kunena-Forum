@@ -66,6 +66,18 @@ class KunenaActivity
 	}
 
 	/**
+	 * Triggered before posting a new topic.
+	 *
+	 * @param   string $message Message
+	 *
+	 * @since Kunena
+	 * @return void
+	 */
+	public function onBeforeHold($message)
+	{
+	}
+
+	/**
 	 * Triggered before editing a post.
 	 *
 	 * @param   string $message Message

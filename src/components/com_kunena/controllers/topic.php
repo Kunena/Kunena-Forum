@@ -577,6 +577,10 @@ class KunenaControllerTopic extends KunenaController
 				$activity->onBeforeReply($message);
 			}
 		}
+		else
+		{
+			$activity->onBeforeHold($message);
+		}
 
 		// Save message
 		$success = $message->save();

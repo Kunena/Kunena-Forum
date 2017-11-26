@@ -283,14 +283,13 @@ if (!empty($codeTypes)) : ?>
 					<input type="hidden" name="number_total_options" id="numbertotal"
 					       value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<div class="modal-footer">
+					<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+					<button class="btn btn-default" data-dismiss="modal"
+					        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 <?php endif; ?>
 <div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

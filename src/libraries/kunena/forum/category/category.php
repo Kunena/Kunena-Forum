@@ -1977,4 +1977,65 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		return null;
 	}
+
+	/**
+	 * @param $count
+	 *
+	 * @return int
+	 *
+	 * @since Kunena 5.0.13
+	 */
+	public function totalCount($count)
+	{
+		if ($count)
+		{
+			if ($count > 1)
+			{
+				return JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($count));
+			}
+			else
+			{
+				return JText::plural('COM_KUNENA_X_TOPICS_1', $count);
+			}
+		}
+
+		return JText::_('COM_KUNENA_X_TOPICS_0');
+	}
+
+	/**
+	 * This function formats a number to n significant digits when above
+	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
+	 * at 1,000,000 the output switches to 1m. Both k and m are defined
+	 * in the language file. The significant digits are used to limit the
+	 * number of digits displayed when in 10k or 1m mode.
+	 *
+	 * @param   int $number    Number to be formated
+	 * @param   int $precision Significant digits for output
+	 *
+	 * @return string
+	 */
+	public function formatLargeNumber($number, $precision = 3)
+	{
+		// Do we need to reduce the number of significant digits?
+		if ($number >= 10000)
+		{
+			// Round the number to n significant digits
+			$number = round($number, -1 * (log10($number) + 1) + $precision);
+		}
+
+		if ($number < 10000)
+		{
+			$output = $number;
+		}
+		elseif ($number >= 1000000)
+		{
+			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
+		}
+		else
+		{
+			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
+		}
+
+		return $output;
+	}
 }

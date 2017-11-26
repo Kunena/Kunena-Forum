@@ -57,11 +57,7 @@ foreach ($this->sections as $section) :
 		<h1>
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 			<small class="hidden-phone nowrap">
-				<?php if ($section->getTopics() > 0) : ?>
-					(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
-				<?php else : ?>
-					(<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>)
-				<?php endif; ?>
+				<?php echo KunenaForumCategory::getInstance()->totalCount($section->getTopics()); ?>
 			</small>
 		</h1>
 
@@ -106,12 +102,8 @@ foreach ($this->sections as $section) :
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-										<small class="hidden-phone nowrap">
-											<?php if ($category->getTopics() > 0) : ?>
-												(<?php echo JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($category->getTopics())); ?>)
-											<?php else : ?>
-												(<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>)
-											<?php endif; ?>
+										<small class="nowrap">
+											<?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
 													<sup class="knewchar"> (<?php echo $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
@@ -145,7 +137,7 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php $totaltopics = $subcategory->getTopics() > 0 ? JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($subcategory->getTopics())) : JText::_('COM_KUNENA_X_TOPICS_0'); ?>
+													<?php $totaltopics = KunenaForumCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
 
 													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
 														<?php echo $this->getCategoryLink($subcategory,  $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-phone muted"> ('

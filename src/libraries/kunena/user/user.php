@@ -1200,7 +1200,7 @@ class KunenaUser extends JObject
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaSidebar');
+		\JFactory::getApplication()->triggerEvent('onKunenaSidebar', array($this->userid));
 
 		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}

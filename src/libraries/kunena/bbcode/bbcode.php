@@ -29,7 +29,7 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @var int
 	 * @since Kunena
 	 */
-	public $autolink_disable = 1;
+	public $autolink_disable = 0;
 
 	/**
 	 * @var object
@@ -86,7 +86,7 @@ class KunenaBbcode extends NBBC_BBCode
 			$instance[intval($relative)] = new KunenaBbcode($relative);
 		}
 
-		$instance[intval($relative)]->autolink_disable = 1;
+		$instance[intval($relative)]->autolink_disable = 0;
 
 		return $instance[intval($relative)];
 	}

@@ -245,6 +245,7 @@ abstract class KunenaHtmlParser
 		}
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
+		$bbcode->autolink_disable = 1;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);

@@ -277,7 +277,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					}
 else
 {
-	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config);
+	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->poll);
 } ?>
 
 					<?php if ($this->message->exists() && $this->config->editmarkup)

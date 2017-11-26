@@ -231,7 +231,7 @@ if (!empty($codeTypes)) : ?>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
-	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

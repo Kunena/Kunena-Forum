@@ -1222,7 +1222,7 @@ class KunenaConfig extends JObject
 	 * @var string
 	 * @since  K5.1.0
 	 */
-	public $smartlinking = 1;
+	public $smartlinking = 0;
 
 	/**
 	 * @var string

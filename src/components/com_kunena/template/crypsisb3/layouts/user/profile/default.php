@@ -81,6 +81,8 @@ if ($show)
 		<?php endif; ?>
 	</ul>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default'); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default_' . $user->userid); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default_' . $user->rank); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">

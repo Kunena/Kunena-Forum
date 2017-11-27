@@ -146,7 +146,16 @@ class KunenaAdminViewCategories extends KunenaView
 
 		// Get the toolbar object instance
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
-		JHtml::_('bootstrap.modal', 'collapseModal');
+
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			JHtml::_('bootstrap.renderModal', 'collapseModal');
+		}
+		else
+		{
+			JHtml::_('bootstrap.modal', 'collapseModal');
+		}
+
 		$title = JText::_('JTOOLBAR_BATCH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
 		<i class=\"icon-checkbox-partial\" title=\"$title\"></i>

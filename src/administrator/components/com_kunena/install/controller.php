@@ -30,7 +30,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	protected $steps = null;
 
 	/**
-	 * @var bool|\Joomla\CMS\MVC\Model\BaseModel|null
+	 * @var bool|\Joomla\CMS\MVC\Model\BaseDatabaseModel|null
 	 * @since Kunena
 	 */
 	protected $model = null;
@@ -252,7 +252,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	static public function error($type, $errstr)
 	{
-		$model = \Joomla\CMS\MVC\Model\BaseModel::getInstance('Install', 'KunenaModel');
+		$model = \Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
 		echo json_encode(array('success' => false, 'html' => $errstr));
 	}

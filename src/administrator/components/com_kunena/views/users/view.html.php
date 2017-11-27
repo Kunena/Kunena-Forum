@@ -67,7 +67,15 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 
-		JHtml::_('bootstrap.modal', 'moderateModal');
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			JHtml::_('bootstrap.renderModal', 'moderateModal');
+		}
+		else
+		{
+			JHtml::_('bootstrap.modal', 'moderateModal');
+		}
+
 		$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>

@@ -49,7 +49,15 @@ class KunenaAdminViewConfig extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 
-		JHtml::_('bootstrap.modal', 'settingModal');
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			JHtml::_('bootstrap.renderModal', 'settingModal');
+		}
+		else
+		{
+			JHtml::_('bootstrap.modal', 'settingModal');
+		}
+
 		$title = JText::_('COM_KUNENA_RESET_CONFIG');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#settingModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>

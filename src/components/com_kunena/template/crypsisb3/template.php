@@ -97,7 +97,16 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		JHtml::_('bootstrap.framework');
 		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 		JHtml::_('jquery.framework');
-		JHtml::_('bootstrap.modal');
+
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			JHtml::_('bootstrap.renderModal');
+		}
+		else
+		{
+			JHtml::_('bootstrap.modal');
+		}
+
 		$this->addScript('assets/js/main.js');
 
 		// Compile CSS from LESS files.

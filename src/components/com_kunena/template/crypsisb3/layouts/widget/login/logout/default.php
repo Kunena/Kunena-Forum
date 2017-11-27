@@ -106,7 +106,16 @@ $status         = $config->user_status;
 			<?php endif; ?>
 
 			<div id="statustext">
-				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
+				<?php
+				if (version_compare(JVERSION, '4.0', '>'))
+				{
+					JHtml::_('bootstrap.renderModal', 'statusText');
+				}
+				else
+				{
+					JHtml::_('bootstrap.modal', 'statusText');
+				}
+				?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 					<?php echo KunenaIcons::edit(); ?>
 					<?php echo JText::_('COM_KUNENA_STATUS') ?>

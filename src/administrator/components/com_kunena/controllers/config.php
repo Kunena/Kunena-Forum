@@ -94,6 +94,17 @@ class KunenaAdminControllerConfig extends KunenaController
 
 				$postname = Joomla\String\StringHelper::strtolower(Joomla\String\StringHelper::substr($postsetting, 4));
 
+				if ($postname=='imagewidth' || $postname=='imageheight')
+				{
+					if (empty($postvalue))
+					{
+					    $this->app->enqueueMessage(JText::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'));
+						$this->setRedirect(KunenaRoute::_($url, false));
+
+						return;
+					}
+				}
+
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
 				if (array_key_exists($postname, $properties))

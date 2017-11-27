@@ -148,6 +148,16 @@ defined('_JEXEC') or die;
 				</td>
 			</tr>
 			<tr>
+				<td>
+					<label for="ban-delposts">
+						<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_PERM_ALL_POSTS'); ?>
+					</label>
+				</td>
+				<td>
+					<input type="checkbox" id="ban-delposts" name="bandelpostsperm" value="bandelpostsperm" />
+				</td>
+			</tr>
+			<tr>
 				<td class="center" colspan="2">
 					<input class="btn btn-primary" type="submit" value="<?php echo $this->banInfo->id
 						? JText::_('COM_KUNENA_BAN_EDIT')

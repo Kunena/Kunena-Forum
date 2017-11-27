@@ -27,10 +27,16 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $pollcheck = isset($this->poll);
-
-
 // Kunena bbcode editor
 ?>
+<script>
+	function localstorage() {
+		localStorage.getItem("copyKunenaeditor");
+	}
+	function localstorageremove() {
+		localStorage.removeItem("copyKunenaeditor");
+	}
+</script>
 <div class="control-group">
 	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
 	<div class="controls">

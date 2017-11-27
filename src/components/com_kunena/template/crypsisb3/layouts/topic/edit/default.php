@@ -324,7 +324,7 @@ else
 										<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 									</button>
 									<div class="clearfix"></div>
-									</br>
+									<br/>
 									<div id="progress" class="progress progress-striped" style="display: none;">
 										<div class="bar"></div>
 									</div>

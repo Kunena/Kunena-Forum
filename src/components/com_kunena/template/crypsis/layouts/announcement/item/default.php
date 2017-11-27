@@ -27,7 +27,7 @@ $actions      = $this->getActions();
 	<div>
 		<?php echo implode(' ', $actions); ?>
 	</div>
-	</br>
+	<br/>
 <?php endif; ?>
 
 <div class="well well-small">

@@ -273,7 +273,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 }
 else
 {
-	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->poll)->set('allow_polls', $this->topic->getCategory()->allow_polls);
+	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
 } ?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup)
@@ -319,7 +319,7 @@ else
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
 										<div class="clearfix"></div>
-										</br>
+										<br/>
 										<div id="progress" class="progress progress-striped" style="display: none;">
 											<div class="bar"></div>
 										</div>

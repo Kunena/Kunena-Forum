@@ -201,16 +201,16 @@ jQuery(function ($) {
 					file_id = data.file_id;
 				}
 			}
- 
+
 			$.ajax({
 				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
 				type: 'POST',
 				success: function (result) {
-				  console.log(result);	
+				  console.log(result);
 				}
 			});
 	});
-	
+
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')

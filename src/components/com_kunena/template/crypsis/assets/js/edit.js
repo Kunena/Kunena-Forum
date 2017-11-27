@@ -258,4 +258,15 @@ jQuery(document).ready(function ($) {
 			orientation: "top auto"
 		});
 	}
+
+	if (document.getElementById("gotoeditor") != undefined) {
+		document.getElementById("gotoeditor").addEventListener("click", function ()
+		{
+			if ($('.qreply').length > 0) {
+				var local = localStorage.setItem("copyKunenaeditor", $('.qreply').val());
+				local;
+				console.log(local);
+			}
+		} , false);
+	}
 });

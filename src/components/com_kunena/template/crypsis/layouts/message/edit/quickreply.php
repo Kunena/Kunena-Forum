@@ -174,7 +174,7 @@ $editor   = $template->params->get('editor');
 					</div>
 				<?php endif; ?>
 				<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
-				   role="button" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+				   role="button" id="gotoeditor" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 			</div>
 			<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 				<div class="control-group">

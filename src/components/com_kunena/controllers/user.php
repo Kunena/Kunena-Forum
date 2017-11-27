@@ -270,10 +270,11 @@ class KunenaControllerUser extends KunenaController
 		$reason_public  = $this->app->input->getString('reason_public', '');
 		$comment        = $this->app->input->getString('comment', '');
 
-		$banDelPosts    = $this->app->input->getString('bandelposts', '');
-		$DelAvatar      = $this->app->input->getString('delavatar', '');
-		$DelSignature   = $this->app->input->getString('delsignature', '');
-		$DelProfileInfo = $this->app->input->getString('delprofileinfo', '');
+		$banDelPosts     = $this->app->input->getString('bandelposts', '');
+		$banDelPostsPerm = $this->app->input->getString('bandelpostsperm', '');
+		$DelAvatar       = $this->app->input->getString('delavatar', '');
+		$DelSignature    = $this->app->input->getString('delsignature', '');
+		$DelProfileInfo  = $this->app->input->getString('delprofileinfo', '');
 
 		$delban = $this->app->input->getString('delban', '');
 
@@ -447,6 +448,26 @@ class KunenaControllerUser extends KunenaController
 			}
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
+		}
+
+		if (!empty($banDelPostsPerm))
+		{
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
+
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
+
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
+			foreach ($messages as $mes)
+			{
+				$mes->delete();
+			}
+
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
 		}
 
 		$this->setRedirect($user->getUrl(false));

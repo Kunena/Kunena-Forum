@@ -120,7 +120,7 @@ defined('_JEXEC') or die();
 						<dl class="dl-horizontal">
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_VERSION') ?>:</dt>
-							<dd><?php echo KunenaForum::version(); ?></dd>
+							<dd><?php echo strtoupper(KunenaForum::version()); ?></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CODENAME') ?>:</dt>
 							<dd><?php echo KunenaForum::versionName(); ?></dd>

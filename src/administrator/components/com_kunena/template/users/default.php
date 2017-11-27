@@ -178,7 +178,7 @@ JHtml::_('dropdown.init');
 					</thead>
 					<tfoot>
 					<tr>
-						<td colspan="8">
+						<td colspan="12">
 							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>

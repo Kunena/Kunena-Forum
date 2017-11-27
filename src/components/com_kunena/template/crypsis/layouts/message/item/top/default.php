@@ -43,21 +43,23 @@ else
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
 	<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink();?></span>
 </small>
-<div class="clear-fix"></div>
 <div class="horizontal-message">
 	<div class="profile-horizontal-top">
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 	</div>
-	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?> message-<?php echo $this->message->getState(); ?>"
-		data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
-	<div class="kmessage">
+	<div class="badger-left badger-info
+<?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>">
+		<div class="mykmsg-header"><?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' .
+				KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname .
+				' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject),
+					0, $subjectlengthmessage); ?>
+		</div>
 		<div class="kmsg">
-				<?php  if (!$this->me->userid && !$isReply) :
-					echo $message->displayField('message');
-				else:
-					echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-				endif;?>
-			</div>
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
 		</div>
 
 		<?php if ($signature) : ?>

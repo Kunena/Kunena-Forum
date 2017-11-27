@@ -44,26 +44,28 @@ else
 		<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 	</small>
 	<div class="clear-fix"></div>
-<div class="horizontal-message">
-	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?> message-<?php echo $this->message->getState(); ?>"
-	     data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
-		<div class="kmessage">
-			<div class="kmsg">
-				<?php  if (!$this->me->userid && !$isReply) :
-					echo $message->displayField('message');
-				else:
-					echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-				endif;?>
-			</div>
+<div class="horizontal-message message-bottom">
+	<div class="badger-left badger-info
+<?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>">
+		<div class="mykmsg-header"><?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' .
+				KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname .
+				' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject),
+					0, $subjectlengthmessage); ?>
+		</div>
+		<div class="kmsg">
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
 		</div>
 
-			<?php if ($signature) : ?>
-				<div class="ksig">
-					<hr>
-					<span class="ksignature"><?php echo $signature; ?></span>
-				</div>
-			<?php endif ?>
-		</div>
+		<?php if ($signature) : ?>
+			<div class="ksig">
+				<hr>
+				<span class="ksignature"><?php echo $signature; ?></span>
+			</div>
+		<?php endif ?>
 	</div>
 	<div class="profile-horizontal-bottom">
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
@@ -76,14 +78,10 @@ else
 		                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
 		                      'modal' => 'modal', 'pullright' => 'pullright'));
 	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
-					</div>
-				</div>
+		<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 			</div>
 		</div>
 	<?php endif; ?>

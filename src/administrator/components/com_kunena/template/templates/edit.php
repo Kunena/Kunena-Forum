@@ -30,9 +30,9 @@ JHtml::_('dropdown.init');
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 			<?php echo JHtml::_('form.token'); ?>
 
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="span12">
 						<h1 style="text-transform: capitalize;"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>
 							: <?php echo $this->escape($this->templatename); ?></h1>
 						<div class="tabbable-panel">

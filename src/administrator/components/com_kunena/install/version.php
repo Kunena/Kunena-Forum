@@ -67,7 +67,7 @@ class KunenaVersion
 
 		if (!empty($kn_version_warning) && !empty($kn_version_type))
 		{
-			return JText::sprintf($msg, KunenaForum::version(), $kn_version_type) . ' ' . $kn_version_warning;
+			return JText::sprintf($msg, '<strong>' . strtoupper(KunenaForum::version()), $kn_version_type . '</strong>') . ' ' . $kn_version_warning;
 		}
 
 		return '';
@@ -138,7 +138,7 @@ class KunenaVersion
 	 */
 	static function getVersionHTML()
 	{
-		return 'Kunena ' . KunenaForum::version() . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
+		return 'Kunena ' . strtoupper(KunenaForum::version()) . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
 	}
 
 	/**

@@ -54,8 +54,8 @@ if ($direction === "left")
 <?php elseif ($direction === "top")
 :
 	?>
-	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
-		<div class="span12" style="margin-left: 0;">
+	<div class="row-fluid message">
+		<div class="span12  message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Top')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
@@ -69,8 +69,8 @@ if ($direction === "left")
 <?php elseif ($direction === "bottom")
 :
 	?>
-	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
-		<div class="span12" style="margin-left: 0;">
+	<div class="row-fluid message">
+		<div class="span12 message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Bottom')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php

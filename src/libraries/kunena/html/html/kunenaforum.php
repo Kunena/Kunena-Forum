@@ -198,7 +198,6 @@ abstract class JHtmlKunenaForum
 	}
 
 	/**
-	 *
 	 * Creates link pointing to a Kunena page
 	 *
 	 * @param   mixed  $uri        Kunena URI, either as string, \Joomla\CMS\Uri\Uri or array

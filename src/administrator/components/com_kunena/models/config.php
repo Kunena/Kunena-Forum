@@ -25,7 +25,7 @@ class KunenaAdminModelConfig extends KunenaModel
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getConfiglists()
+	public function getConfiglists()
 	{
 		$lists = array();
 

@@ -44,7 +44,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		'categoryicons' => 'media/category_icons',
 		'images'        => 'media/images',
 		'js'            => 'media/js',
-		'css'           => 'media/css'
+		'css'           => 'media/css',
 	);
 
 	/**
@@ -61,7 +61,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		'user'      => 'kwho-user',
 		'guest'     => 'kwho-guest',
 		'banned'    => 'kwho-banned',
-		'blocked'   => 'kwho-blocked'
+		'blocked'   => 'kwho-blocked',
 	);
 
 	/**

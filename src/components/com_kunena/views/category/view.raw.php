@@ -23,7 +23,7 @@ class KunenaViewCategory extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		$response              = array();
 		$response['topiclist'] = array();

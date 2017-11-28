@@ -100,7 +100,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$moved  = 1;
 		$params = array(
 			'hold'  => $hold,
-			'moved' => $moved
+			'moved' => $moved,
 		);
 
 		switch ($topic_ordering)

@@ -106,7 +106,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$result               = \JFactory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
 					$output               = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-							. $captcha_pubkey . '" data-theme="light"')
+							. $captcha_pubkey . '" data-theme="light"', )
 					);
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
@@ -136,7 +136,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
-		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
+		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->action = 'post';
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);

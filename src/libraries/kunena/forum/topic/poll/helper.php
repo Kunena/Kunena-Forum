@@ -31,7 +31,7 @@ abstract class KunenaForumTopicPollHelper
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumTopicPoll)
 		{
@@ -54,10 +54,9 @@ abstract class KunenaForumTopicPollHelper
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	static public function recount()
+	public static function recount()
 	{
 		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);

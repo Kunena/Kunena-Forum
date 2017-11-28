@@ -33,7 +33,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function get($category = null, $user = null, $reload = false)
+	public static function get($category = null, $user = null, $reload = false)
 	{
 		if ($category instanceof KunenaForumCategory)
 		{
@@ -67,7 +67,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getCategories($ids = false, $user = null)
+	public static function getCategories($ids = false, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
@@ -115,7 +115,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadCategories(array $ids, KunenaUser $user)
+	protected static function loadCategories(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -173,7 +173,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function markRead(array $ids, $user = null)
+	public static function markRead(array $ids, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 

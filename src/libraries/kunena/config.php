@@ -1249,7 +1249,6 @@ class KunenaConfig extends JObject
 	public $quickreply = 1;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -1359,7 +1358,6 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -1390,7 +1388,6 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function reset()

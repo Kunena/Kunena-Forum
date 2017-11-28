@@ -135,7 +135,7 @@ class KunenaLoginComprofiler
 			return $_CB_framework->viewUrl('registers');
 		}
 
-		return null;
+		return;
 	}
 
 	/**

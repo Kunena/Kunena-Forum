@@ -53,7 +53,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 			{
 				$exception = array(
 					'code'    => $e->getCode(),
-					'message' => $e->getMessage()
+					'message' => $e->getMessage(),
 				);
 
 				if (JDEBUG)
@@ -61,7 +61,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 					$exception += array(
 						'type' => get_class($e),
 						'file' => $e->getFile(),
-						'line' => $e->getLine()
+						'line' => $e->getLine(),
 					);
 				}
 

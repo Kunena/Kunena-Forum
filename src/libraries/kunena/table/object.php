@@ -28,7 +28,7 @@ abstract class KunenaTableObject
 	 * @var array
 	 * @since  K4.0
 	 */
-	static protected $instances = null;
+	protected static $instances = null;
 
 	/**
 	 * Name of the database table to model.
@@ -37,7 +37,7 @@ abstract class KunenaTableObject
 	 * @var    string
 	 * @since  K4.0
 	 */
-	static protected $tbl = '';
+	protected static $tbl = '';
 
 	/**
 	 * Array of table fields with their default value (field=>default).
@@ -46,7 +46,7 @@ abstract class KunenaTableObject
 	 * @var array
 	 * @since  K4.0
 	 */
-	static protected $tbl_fields;
+	protected static $tbl_fields;
 
 	/**
 	 * Array of primary key fields in the table.
@@ -55,7 +55,7 @@ abstract class KunenaTableObject
 	 * @var    string
 	 * @since  K4.0
 	 */
-	static protected $tbl_keys = array();
+	protected static $tbl_keys = array();
 
 	/**
 	 * JDatabaseDriver object.
@@ -63,7 +63,7 @@ abstract class KunenaTableObject
 	 * @var    JDatabaseDriver
 	 * @since  K4.0
 	 */
-	static protected $db;
+	protected static $db;
 
 	/**
 	 * Indicator that the tables have been locked.
@@ -71,7 +71,7 @@ abstract class KunenaTableObject
 	 * @var    boolean
 	 * @since  K4.0
 	 */
-	static protected $_locked = false;
+	protected static $_locked = false;
 
 	/**
 	 * Flag whether the object exists in the database or not.
@@ -174,7 +174,7 @@ abstract class KunenaTableObject
 	 * @since  K4.0
 	 * @throws  UnexpectedValueException
 	 */
-	static public function getFields()
+	public static function getFields()
 	{
 		if (static::$tbl_fields === null)
 		{
@@ -479,7 +479,7 @@ abstract class KunenaTableObject
 	 * @throw   RuntimeException
 	 * @since   K4.0
 	 */
-	static public function getInstance($keys)
+	public static function getInstance($keys)
 	{
 		$k = json_encode(self::resolveKeys($keys));
 
@@ -525,7 +525,7 @@ abstract class KunenaTableObject
 	 * @since  K4.0
 	 * @throws UnexpectedValueException
 	 */
-	static protected function resolveKeys($fields)
+	protected static function resolveKeys($fields)
 	{
 		// First run: Initialise the table properties.
 		if (is_null(static::$tbl_fields))
@@ -577,7 +577,7 @@ abstract class KunenaTableObject
 	 * @return array
 	 * @since Kunena
 	 */
-	static public function &getInstances()
+	public static function &getInstances()
 	{
 		return static::$instances;
 	}
@@ -589,7 +589,7 @@ abstract class KunenaTableObject
 	 *
 	 * @since  K4.0
 	 */
-	static public function freeInstances($ids = null)
+	public static function freeInstances($ids = null)
 	{
 		if (!isset(static::$instances))
 		{
@@ -613,7 +613,7 @@ abstract class KunenaTableObject
 	 * @internal
 	 * @since Kunena
 	 */
-	static public function getQuery()
+	public static function getQuery()
 	{
 		$db    = static::$db;
 		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
@@ -629,7 +629,7 @@ abstract class KunenaTableObject
 	 * @return array
 	 * @since Kunena
 	 */
-	static public function &loadInstances(JDatabaseQuery $query)
+	public static function &loadInstances(JDatabaseQuery $query)
 	{
 		$db = \Joomla\CMS\Factory::getDbo();
 		$db->setQuery($query);

@@ -59,7 +59,7 @@ class plgKunenaEasyblog extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/avatar.php";
@@ -77,7 +77,7 @@ class plgKunenaEasyblog extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('profile', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/profile.php";

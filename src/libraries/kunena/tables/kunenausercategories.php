@@ -85,6 +85,6 @@ class TableKunenaUserCategories extends KunenaTable
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_CATEGORY_INVALID', (int) $category->id));
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

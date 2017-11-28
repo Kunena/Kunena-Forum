@@ -51,7 +51,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	protected $actionMove = false;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -317,7 +316,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'  => $hold,
-				'moved' => $moved);
+				'moved' => $moved, );
 
 			switch ($topic_ordering)
 			{
@@ -460,7 +459,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		if (count($actionDropdown) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actionDropdown;
@@ -498,7 +497,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		if (count($actionDropdown) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actionDropdown;

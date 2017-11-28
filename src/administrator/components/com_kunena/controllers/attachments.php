@@ -19,7 +19,6 @@ defined('_JEXEC') or die();
 class KunenaAdminControllerAttachments extends KunenaController
 {
 	/**
-	 *
 	 * @since    2.0.0-BETA2
 	 *
 	 * @var null|string

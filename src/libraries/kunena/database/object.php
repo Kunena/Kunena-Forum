@@ -118,7 +118,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public static function getInstance($identifier = null, $reload = false)
 	{
 		throw new Exception(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
 	}

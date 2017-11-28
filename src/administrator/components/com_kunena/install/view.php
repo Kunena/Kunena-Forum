@@ -64,7 +64,7 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	 * @return void
 	 * @since  Kunena
 	 */
-	function setToolBar()
+	public function setToolBar()
 	{
 		// Set the titlebar text
 		JToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . JText::_('COM_KUNENA_INSTALLER'), 'kunena.png');
@@ -72,11 +72,10 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws KunenaSchemaException
 	 */
-	function displaySchema()
+	public function displaySchema()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
 		$schema = new KunenaModelSchema;
@@ -99,11 +98,10 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws KunenaSchemaException
 	 */
-	function displaySchemaDiff()
+	public function displaySchemaDiff()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
 		$schema = new KunenaModelSchema;

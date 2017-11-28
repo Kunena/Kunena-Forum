@@ -44,7 +44,7 @@ class plgKunenaJoomla extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('access', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/access.php";
@@ -60,7 +60,7 @@ class plgKunenaJoomla extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('login', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/login.php";

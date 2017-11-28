@@ -31,7 +31,7 @@ abstract class KunenaForumTopicHelper
 	 * @return KunenaForumTopic
 	 * @since Kunena
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumTopic)
 		{
@@ -133,7 +133,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getTopics($ids = false, $authorise = 'read')
+	public static function getTopics($ids = false, $authorise = 'read')
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -173,7 +173,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadTopics(array $ids)
+	protected static function loadTopics(array $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -229,7 +229,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getUserTopics($ids = false, $user = null)
+	public static function getUserTopics($ids = false, $user = null)
 	{
 		if ($ids === false)
 		{
@@ -250,7 +250,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
+	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db     = \Joomla\CMS\Factory::getDBO();
@@ -711,7 +711,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function fetchNewStatus(array $topics, $user = null)
+	public static function fetchNewStatus(array $topics, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 

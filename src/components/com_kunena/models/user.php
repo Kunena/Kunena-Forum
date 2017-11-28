@@ -19,7 +19,6 @@ defined('_JEXEC') or die();
 class KunenaModelUser extends KunenaModel
 {
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

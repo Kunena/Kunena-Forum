@@ -161,7 +161,6 @@ class KunenaForumStatistics
 	protected $_config = null;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

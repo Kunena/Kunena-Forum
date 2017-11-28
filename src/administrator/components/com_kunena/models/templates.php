@@ -68,7 +68,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getTemplates()
+	public function getTemplates()
 	{
 		// Get template xml file info
 		$rows = KunenaTemplateHelper::parseXmlFiles();
@@ -93,7 +93,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @return boolean|stdClass
 	 * @since Kunena
 	 */
-	function getTemplatedetails()
+	public function getTemplatedetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
 		$details  = KunenaTemplateHelper::parseXmlFile($template);
@@ -111,7 +111,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @return boolean|null|string
 	 * @since Kunena
 	 */
-	function getFileLessParsed()
+	public function getFileLessParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
 		$filename = $this->app->getUserState('kunena.editless.filename');
@@ -121,7 +121,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 
 		if ($content === false)
 		{
-			return null;
+			return;
 		}
 
 		return $content;
@@ -131,7 +131,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @return boolean|null|string
 	 * @since Kunena
 	 */
-	function getFileContentParsed()
+	public function getFileContentParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
 		$filename = $this->app->getUserState('kunena.editcss.filename');
@@ -139,7 +139,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 
 		if ($content === false)
 		{
-			return null;
+			return;
 		}
 
 		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
@@ -152,7 +152,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @since Kunena
 	 */
-	function getFTPcredentials()
+	public function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
 		$ftp = \Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
@@ -207,7 +207,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @return object
 	 * @since Kunena
 	 */
-	function getTotal()
+	public function getTotal()
 	{
 		return $this->getState('list.total');
 	}
@@ -216,7 +216,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @return object
 	 * @since Kunena
 	 */
-	function getStart()
+	public function getStart()
 	{
 		return $this->getState('list.start');
 	}

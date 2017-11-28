@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutTopicEditHistory
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutTopicEditHistory extends KunenaLayout
 {

@@ -478,7 +478,6 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function reset()
@@ -534,6 +533,6 @@ class TableKunenaUsers extends KunenaTable
 			$this->setError(JText::_('COM_KUNENA_STATUS_TOOLONG'));
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

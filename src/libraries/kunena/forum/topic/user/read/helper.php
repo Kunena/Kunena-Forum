@@ -39,7 +39,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function get($topic = null, $user = null, $reload = false)
+	public static function get($topic = null, $user = null, $reload = false)
 	{
 		if ($topic instanceof KunenaForumTopic)
 		{
@@ -76,7 +76,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getTopics($ids = false, $user = null)
+	public static function getTopics($ids = false, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
@@ -121,7 +121,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadTopics(array $ids, KunenaUser $user)
+	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -273,7 +273,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function reloadTopic($id)
+	protected static function reloadTopic($id)
 	{
 		if (empty(self::$_topics [$id]))
 		{
@@ -318,7 +318,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function recount()
+	public static function recount()
 	{
 		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "UPDATE #__kunena_user_read AS ur
@@ -347,7 +347,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function purge($days = 365)
+	public static function purge($days = 365)
 	{
 		// Purge items that are older than x days (defaulting to a year)
 		$db        = \Joomla\CMS\Factory::getDBO();

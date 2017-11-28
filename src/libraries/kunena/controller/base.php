@@ -205,7 +205,7 @@ abstract class KunenaControllerBase implements Serializable
 		$this->app = $this->loadApplication();
 
 		// Unserialize the input and options.
-		list ($this->input, $this->options) = unserialize($input);
+		list($this->input, $this->options) = unserialize($input);
 
 		if (!($this->input instanceof \Joomla\Input\Input))
 		{

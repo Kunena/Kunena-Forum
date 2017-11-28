@@ -94,7 +94,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			return $selected;
 		}
 
-		return null;
+		return;
 	}
 
 	/**

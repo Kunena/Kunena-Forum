@@ -23,7 +23,7 @@ class KunenaViewCategory extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
@@ -81,7 +81,7 @@ class KunenaViewCategory extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function createItem($title, $url, $description, $category, $date, $userid, $username)
+	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rss_author_in_title)
 		{

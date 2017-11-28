@@ -43,7 +43,6 @@ class KunenaModelTopic extends KunenaModel
 	protected $topic = false;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -202,7 +201,7 @@ class KunenaModelTopic extends KunenaModel
 			$this->threaded = array();
 			$location       = $this->getState('list.start');
 
-			foreach ($this->messages AS $message)
+			foreach ($this->messages as $message)
 			{
 				$message->replynum = ++$location;
 

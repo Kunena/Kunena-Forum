@@ -22,7 +22,7 @@ abstract class KunenaRouteLegacy
 	 * @var array
 	 * @since Kunena
 	 */
-	static $functions = array(
+	public static $functions = array(
 		'entrypage'       => 1,
 		'listcat'         => 1,
 		'showcat'         => 1,

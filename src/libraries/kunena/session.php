@@ -149,7 +149,6 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -292,7 +291,6 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function markAllCategoriesRead()

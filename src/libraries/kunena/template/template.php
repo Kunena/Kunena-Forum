@@ -64,7 +64,7 @@ class KunenaTemplate extends JObject
 		'categoryicons' => 'media/category_icons',
 		'images'        => 'media/images',
 		'js'            => 'media/js',
-		'css'           => 'media/css'
+		'css'           => 'media/css',
 	);
 	/**
 	 * @var array
@@ -79,7 +79,7 @@ class KunenaTemplate extends JObject
 		'categoryicons' => 'media/category_icons',
 		'images'        => 'media/images',
 		'js'            => 'media/js',
-		'css'           => 'media/css'
+		'css'           => 'media/css',
 	);
 	/**
 	 * @var array
@@ -93,7 +93,7 @@ class KunenaTemplate extends JObject
 		'topicicons' => 'images/topicicons',
 		'images'     => 'images',
 		'js'         => 'js',
-		'css'        => 'css'
+		'css'        => 'css',
 	);
 	/**
 	 * @var array
@@ -137,7 +137,7 @@ class KunenaTemplate extends JObject
 		'user'      => 'kwho-user',
 		'guest'     => 'kwho-guest',
 		'banned'    => 'kwho-banned',
-		'blocked'   => 'kwho-blocked'
+		'blocked'   => 'kwho-blocked',
 	);
 	/**
 	 * @var array
@@ -360,7 +360,7 @@ class KunenaTemplate extends JObject
 
 			if (class_exists($classname))
 			{
-				self::$_instances [$name] = new $classname ($templatename);
+				self::$_instances [$name] = new $classname($templatename);
 			}
 			else
 			{
@@ -404,7 +404,6 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -444,7 +443,6 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -463,7 +461,6 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -495,7 +492,7 @@ class KunenaTemplate extends JObject
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod');
 		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit');
+		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', );
 
 		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -775,7 +772,6 @@ HTML;
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function clearCache()
@@ -820,7 +816,7 @@ HTML;
 	 * @return string
 	 * @since Kunena
 	 */
-	function findUrl($matches)
+	public function findUrl($matches)
 	{
 		$file = trim($matches[1], ' \'"');
 
@@ -841,7 +837,7 @@ HTML;
 	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
-	function addScriptDeclaration($content, $type = 'text/javascript')
+	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
 		return \Joomla\CMS\Factory::getDocument()->addScriptDeclaration($content, $type);
 	}
@@ -855,7 +851,7 @@ HTML;
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function addScript($filename)
+	public function addScript($filename)
 	{
 		if (!preg_match('|https?://|', $filename))
 		{
@@ -1543,7 +1539,7 @@ HTML;
 	 *
 	 * @since Kunena
 	 */
-	function compileLess($inputFile, $outputFile)
+	public function compileLess($inputFile, $outputFile)
 	{
 		if (!class_exists('lessc'))
 		{

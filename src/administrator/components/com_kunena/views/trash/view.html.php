@@ -19,10 +19,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewTrash extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$this->setLayout($this->state->get('layout'));
 		$this->trash_items       = $this->get('Trashitems');
@@ -48,7 +47,6 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
-	 *
 	 * @return array
 	 * @since Kunena
 	 */
@@ -79,7 +77,6 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
-	 *
 	 * @return array
 	 * @since Kunena
 	 */
@@ -93,7 +90,6 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
@@ -111,10 +107,9 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayPurge()
+	public function displayPurge()
 	{
 		$this->purgeitems    = $this->get('PurgeItems');
 		$this->md5Calculated = $this->get('Md5');
@@ -124,7 +119,6 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarPurge()

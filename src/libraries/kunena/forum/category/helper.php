@@ -39,7 +39,7 @@ abstract class KunenaForumCategoryHelper
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	static public function initialize()
+	public static function initialize()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -68,7 +68,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function &loadCategories()
+	public static function &loadCategories()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -114,7 +114,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @since Kunena
 	 */
-	static protected function buildTree(array &$instances)
+	protected static function buildTree(array &$instances)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		self::$_tree = array();
@@ -138,7 +138,7 @@ abstract class KunenaForumCategoryHelper
 	 * @internal
 	 * @since Kunena
 	 */
-	static public function register($instance)
+	public static function register($instance)
 	{
 		if ($instance->exists())
 		{
@@ -165,7 +165,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getSubscriptions($user = null)
+	public static function getSubscriptions($user = null)
 	{
 		$user  = KunenaUserHelper::get($user);
 		$db    = \Joomla\CMS\Factory::getDBO();
@@ -195,7 +195,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getCategories($ids = false, $reverse = false, $authorise = 'read')
+	public static function getCategories($ids = false, $reverse = false, $authorise = 'read')
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -305,7 +305,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since    2.0.0
 	 */
-	static public function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
+	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db     = \Joomla\CMS\Factory::getDBO();
@@ -387,7 +387,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getNewTopics($catids)
+	public static function getNewTopics($catids)
 	{
 		$user = KunenaUserHelper::getMyself();
 
@@ -441,7 +441,7 @@ abstract class KunenaForumCategoryHelper
 
 		$new = array();
 
-		foreach ($newlist AS $id => $item)
+		foreach ($newlist as $id => $item)
 		{
 			$new[$id] = (int) $item->new;
 		}
@@ -461,7 +461,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
 	 */
-	static public function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
+	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
 	{
 		if ($groupids === false)
 		{
@@ -498,7 +498,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getParents($id = 0, $levels = 100, $params = array())
+	public static function getParents($id = 0, $levels = 100, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -549,7 +549,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getOrphaned($levels = 0, $params = array())
+	public static function getOrphaned($levels = 0, $params = array())
 	{
 		$list = array();
 
@@ -578,7 +578,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return array
 	 * @since Kunena
 	 */
-	static public function getCategoryTree($parent = 0)
+	public static function getCategoryTree($parent = 0)
 	{
 		if ($parent === false)
 		{
@@ -598,7 +598,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @since    1.6
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -644,7 +644,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getChildren($parents = 0, $levels = 0, $params = array())
+	public static function getChildren($parents = 0, $levels = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -687,7 +687,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static protected function _getChildren(array $parents, $levels, array $params, $optimize)
+	protected static function _getChildren(array $parents, $levels, array $params, $optimize)
 	{
 		$list = array();
 
@@ -806,7 +806,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return array
 	 * @since Kunena
 	 */
-	static public function &getIndentation($categories)
+	public static function &getIndentation($categories)
 	{
 		$tree = new KunenaTree($categories);
 
@@ -820,7 +820,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function recount($categories = '')
+	public static function recount($categories = '')
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -912,7 +912,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function fixAliases()
+	public static function fixAliases()
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -959,7 +959,7 @@ abstract class KunenaForumCategoryHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getAlias($category_id, $alias)
+	public static function getAlias($category_id, $alias)
 	{
 		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);
@@ -992,7 +992,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return integer
 	 * @since Kunena
 	 */
-	static public function compareByNameAsc($a, $b)
+	public static function compareByNameAsc($a, $b)
 	{
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b]))
 		{
@@ -1009,7 +1009,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return integer
 	 * @since Kunena
 	 */
-	static public function compareByNameDesc($a, $b)
+	public static function compareByNameDesc($a, $b)
 	{
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b]))
 		{
@@ -1026,7 +1026,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return mixed
 	 * @since Kunena
 	 */
-	static public function stripName($original, $strip)
+	public static function stripName($original, $strip)
 	{
 		$strip = trim($strip);
 

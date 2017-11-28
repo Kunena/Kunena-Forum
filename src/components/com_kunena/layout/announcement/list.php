@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutAnnouncementList
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutAnnouncementList extends KunenaLayout
 {

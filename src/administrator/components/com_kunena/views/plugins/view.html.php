@@ -27,7 +27,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		$this->setToolbar();
 		$this->items      = $this->get('Items');

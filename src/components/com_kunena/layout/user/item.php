@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutUserItem
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutUserItem extends KunenaLayout
 {
@@ -66,7 +65,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order'     => 'time',
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
-				'display'          => $this->state->get('display', '')
+				'display'          => $this->state->get('display', ''),
 			);
 
 			$tab           = new stdClass;
@@ -211,7 +210,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		{
 			$params              = array(
 				'embedded' => 1,
-				'userid'   => $this->profile->userid
+				'userid'   => $this->profile->userid,
 			);
 			$tab                 = new stdClass;
 			$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');

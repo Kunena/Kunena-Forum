@@ -36,7 +36,6 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	protected $model = null;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -183,7 +182,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function uninstall()
+	public function uninstall()
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
@@ -234,11 +233,11 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @return mixed|null
 	 * @since Kunena
 	 */
-	function runStep()
+	public function runStep()
 	{
 		if (empty($this->steps[$this->step]['step']))
 		{
-			return null;
+			return;
 		}
 
 		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
@@ -250,7 +249,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @since Kunena
 	 */
-	static public function error($type, $errstr)
+	public static function error($type, $errstr)
 	{
 		$model = \Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
@@ -263,7 +262,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @return boolean
 	 * @since Kunena
 	 */
-	static public function exceptionHandler($exception)
+	public static function exceptionHandler($exception)
 	{
 		self::error('', 'Uncaught Exception: ' . $exception->getMessage());
 
@@ -279,7 +278,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @return boolean
 	 * @since Kunena
 	 */
-	static public function errorHandler($errno, $errstr, $errfile, $errline)
+	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		// Self::error('', "Fatal Error: $errstr in $errfile on line $errline");
 		switch ($errno)

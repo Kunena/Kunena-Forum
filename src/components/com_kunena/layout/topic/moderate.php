@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutTopicModerate
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutTopicModerate extends KunenaLayout
 {
@@ -47,8 +46,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$db     = \Joomla\CMS\Factory::getDbo();
 		$params = array(
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->Quote($this->topic->id)} ");
-		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
+			'where'   => " AND tt.id != {$db->Quote($this->topic->id)} ", );
+		list($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
 		{

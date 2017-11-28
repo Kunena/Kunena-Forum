@@ -24,7 +24,7 @@ class KunenaViewTopics extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
 		$this->params           = $this->state->get('params');
@@ -62,7 +62,7 @@ class KunenaViewTopics extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayUser($tpl = null)
+	public function displayUser($tpl = null)
 	{
 		$this->layout           = 'user';
 		$this->params           = $this->state->get('params');
@@ -97,7 +97,7 @@ class KunenaViewTopics extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayPosts($tpl = null)
+	public function displayPosts($tpl = null)
 	{
 		$this->layout           = 'posts';
 		$this->params           = $this->state->get('params');
@@ -126,7 +126,7 @@ class KunenaViewTopics extends KunenaView
 		$this->render('Message/List', $tpl);
 	}
 
-	function displayRows()
+	public function displayRows()
 	{
 		if ($this->layout == 'posts')
 		{
@@ -138,7 +138,7 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
-	function displayTopicRows()
+	public function displayTopicRows()
 	{
 		$lasttopic      = null;
 		$this->position = 0;
@@ -224,7 +224,7 @@ class KunenaViewTopics extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function fillTopicInfo($matches)
+	public function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
 		{
@@ -241,7 +241,7 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
-	function displayPostRows()
+	public function displayPostRows()
 	{
 		$lasttopic      = null;
 		$this->position = 0;

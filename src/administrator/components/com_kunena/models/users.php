@@ -42,7 +42,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 				'signature',
 				'enabled',
 				'banned',
-				'moderator'
+				'moderator',
 			);
 		}
 

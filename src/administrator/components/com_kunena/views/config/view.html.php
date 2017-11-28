@@ -19,10 +19,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewConfig extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$this->lists = $this->get('Configlists');
 
@@ -36,7 +35,6 @@ class KunenaAdminViewConfig extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDefault()

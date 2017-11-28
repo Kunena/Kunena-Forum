@@ -15,7 +15,6 @@ defined('_JEXEC') or die();
 /*
   KUNENA FORUM INSTALLER */
 
-
 $app  = \Joomla\CMS\Factory::getApplication();
 $view = $app->input->getCmd('view');
 $task = $app->input->getCmd('task');

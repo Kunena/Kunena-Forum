@@ -20,12 +20,10 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const ANY = 0;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const ACTIVE = 1;
@@ -264,6 +262,6 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 			}
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

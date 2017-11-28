@@ -94,7 +94,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		if (strpos($command, '.') !== false)
 		{
 			// Explode the controller.task command.
-			list ($view, $task) = explode('.', $command);
+			list($view, $task) = explode('.', $command);
 
 			// Reset the task without the controller context.
 			$input->set('task', $task);

@@ -26,7 +26,7 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 	 * @return KunenaControllerApplicationDisplay|null
 	 * @since Kunena
 	 */
-	static public function getInstance($view, $subview, $task, $input, $app)
+	public static function getInstance($view, $subview, $task, $input, $app)
 	{
 		// Define HMVC controller and execute it.
 		$controllerClass   = 'ComponentKunenaControllerApplication' . ucfirst($view) . ucfirst($subview) . ucfirst($task);
@@ -46,6 +46,6 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 			return $controller;
 		}
 
-		return null;
+		return;
 	}
 }

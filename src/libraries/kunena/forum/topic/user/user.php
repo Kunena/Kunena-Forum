@@ -96,13 +96,12 @@ class KunenaForumTopicUser extends JObject
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	static public function getInstance($id = null, $user = null, $reload = false)
+	public static function getInstance($id = null, $user = null, $reload = false)
 	{
 		return KunenaForumTopicUserHelper::get($id, $user, $reload);
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function reset()
@@ -187,7 +186,7 @@ class KunenaForumTopicUser extends JObject
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function exists($exists = null)
+	public function exists($exists = null)
 	{
 		$return = $this->_exists;
 
@@ -207,7 +206,7 @@ class KunenaForumTopicUser extends JObject
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function update(KunenaForumMessage $message = null, $postDelta = 0)
+	public function update(KunenaForumMessage $message = null, $postDelta = 0)
 	{
 		$this->posts       += $postDelta;
 		$this->category_id = $this->getTopic()->category_id;
@@ -239,7 +238,7 @@ class KunenaForumTopicUser extends JObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				return null;
+				return;
 			}
 
 			if ($info)

@@ -19,31 +19,31 @@ abstract class KunenaError
 	 * @var integer
 	 * @since Kunena
 	 */
-	static $enabled = 0;
+	public static $enabled = 0;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $handler = false;
+	public static $handler = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $debug = false;
+	public static $debug = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $admin = false;
+	public static $admin = false;
 
 	/**
 	 * @var
 	 * @since Kunena
 	 */
-	static $format;
+	public static $format;
 
 	/**
 	 * @throws Exception
@@ -82,7 +82,6 @@ abstract class KunenaError
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function cleanup()
@@ -298,7 +297,7 @@ abstract class KunenaError
 				// Build data from exceptions.
 				$exception = array(
 					'code'    => 500,
-					'message' => $errorMsg
+					'message' => $errorMsg,
 				);
 
 				if (JDEBUG)
@@ -306,7 +305,7 @@ abstract class KunenaError
 					$exception += array(
 						'type' => 'Fatal Error',
 						'file' => $error['file'],
-						'line' => $error['line']
+						'line' => $error['line'],
 					);
 				}
 

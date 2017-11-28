@@ -19,7 +19,6 @@ defined('_JEXEC') or die();
 class KunenaAdminViewUser extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -111,7 +110,6 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarEdit()
@@ -130,7 +128,6 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function displayMove()
@@ -142,7 +139,6 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarMove()

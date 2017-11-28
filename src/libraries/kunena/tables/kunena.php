@@ -351,7 +351,7 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 		{
 			$pk = array();
 
-			foreach ($tbl_keys AS $key)
+			foreach ($tbl_keys as $key)
 			{
 				$pk[$key] = $this->$key;
 			}
@@ -362,7 +362,7 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 			$pk  = array($key => $pk);
 		}
 
-		foreach ($tbl_keys AS $key)
+		foreach ($tbl_keys as $key)
 		{
 			$pk[$key] = is_null($pk[$key]) ? $this->$key : $pk[$key];
 

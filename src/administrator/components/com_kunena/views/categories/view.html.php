@@ -24,19 +24,17 @@ class KunenaAdminViewCategories extends KunenaView
 	public $categories = array();
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayCreate()
+	public function displayCreate()
 	{
 		$this->displayEdit();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayEdit()
+	public function displayEdit()
 	{
 		$this->category = $this->get('AdminCategory');
 
@@ -54,7 +52,6 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarEdit()
@@ -78,10 +75,9 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
@@ -122,7 +118,6 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDefault()

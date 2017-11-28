@@ -90,4 +90,3 @@ class KunenaProfileEasyblog extends KunenaProfile
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 }
-

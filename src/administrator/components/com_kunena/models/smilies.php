@@ -21,7 +21,6 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelSmilies extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
-	 *
 	 * @param   array $config
 	 *
 	 * @since Kunena

@@ -26,7 +26,7 @@ abstract class KunenaRoute
 	 * @var array
 	 * @since Kunena
 	 */
-	static $views = array(
+	public static $views = array(
 		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
 		'announcement' => array('layout' => 'default'),
 		'category'     => array('layout' => 'default', 'catid' => '0'),
@@ -45,115 +45,115 @@ abstract class KunenaRoute
 	 * @var array
 	 * @since Kunena
 	 */
-	static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
+	public static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
+	public static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
+	public static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
-	static $time = 0;
+	public static $time = 0;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $adminApp = false;
+	public static $adminApp = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $config = false;
+	public static $config = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $menus = false;
+	public static $menus = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $menu = false;
+	public static $menu = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $default = false;
+	public static $default = false;
 
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
-	static $active = null;
+	public static $active = null;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $home = false;
+	public static $home = false;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $search = false;
+	public static $search = false;
 
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
-	static $current = null;
+	public static $current = null;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $childlist = false;
+	public static $childlist = false;
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static $subtree = array();
+	public static $subtree = array();
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static $parent = array();
+	public static $parent = array();
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static $uris = array();
+	public static $uris = array();
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $urisSave = false;
+	public static $urisSave = false;
 
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
-	static protected $filtered = array();
+	protected static $filtered = array();
 
 	/**
 	 * @param   bool $object
@@ -405,7 +405,6 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -496,7 +495,7 @@ abstract class KunenaRoute
 	{
 		if (!$item)
 		{
-			return null;
+			return;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -833,7 +832,6 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -860,7 +858,6 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -925,7 +922,7 @@ abstract class KunenaRoute
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db    = \Joomla\CMS\Factory::getDbo();
-		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
+		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias . '%')}";
 		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
 
@@ -1045,7 +1042,6 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function cleanup()

@@ -18,9 +18,7 @@ defined('_JEXEC') or die();
  */
 class KunenaControllerTopics extends KunenaController
 {
-
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -408,7 +406,7 @@ class KunenaControllerTopics extends KunenaController
 						KunenaLog::LOG_TOPIC_MODERATE,
 						array(
 							'move'   => array('id' => $topic->id, 'mode' => 'topic'),
-							'target' => array('category_id' => $target->id)
+							'target' => array('category_id' => $target->id),
 						),
 						$topic->getCategory(),
 						$topic,

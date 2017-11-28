@@ -151,7 +151,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		// Initialize the options for \Joomla\CMS\Session\Session.
 		$options = array(
 			'name'   => $name,
-			'expire' => $lifetime
+			'expire' => $lifetime,
 		);
 
 		$session = \Joomla\CMS\Session\Session::getInstance($handler, $options);
@@ -173,7 +173,6 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 *
 	 * @return void
 	 * @throws null
 	 * @since Kunena
@@ -265,4 +264,3 @@ catch (Exception $e)
 {
 	echo $e->getMessage();
 }
-

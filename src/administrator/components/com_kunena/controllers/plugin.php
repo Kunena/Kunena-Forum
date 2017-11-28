@@ -577,7 +577,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	{
 		$user = \Joomla\CMS\Factory::getUser();
 
-		return ($user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create')));
+		return $user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create'));
 	}
 
 	/**

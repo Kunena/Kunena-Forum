@@ -85,7 +85,6 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -134,7 +133,6 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -145,7 +143,6 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -355,8 +352,8 @@ class KunenaControllerUser extends KunenaController
 							'resetProfile'   => (bool) $DelProfileInfo,
 							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
 							'deleteAvatar'   => (bool) $DelAvatar || $DelProfileInfo,
-							'deletePosts'    => (bool) $banDelPosts
-						)
+							'deletePosts'    => (bool) $banDelPosts,
+						),
 					),
 					null,
 					null,
@@ -474,7 +471,6 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -741,7 +737,6 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 *
 	 * @return boolean
 	 *
 	 * @throws Exception

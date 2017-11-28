@@ -23,7 +23,7 @@ class KunenaViewTopic extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayEdit($tpl = null)
+	public function displayEdit($tpl = null)
 	{
 		$body     = \Joomla\CMS\Factory::getApplication()->input->post->get('body', '', 'raw');
 		$response = array();

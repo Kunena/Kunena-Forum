@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutTopicEditEditor
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutWidgetEditor extends KunenaLayout
 {
@@ -31,12 +30,12 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 
 		if (!$templatesettings->get('highlightcode'))
 		{
-			return null;
+			return;
 		}
 
 		$paths = array(
 			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi'
+			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi',
 		);
 
 		foreach ($paths as $path)
@@ -60,7 +59,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			return $list;
 		}
 
-		return null;
+		return;
 	}
 
 	/**

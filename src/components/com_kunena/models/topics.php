@@ -49,7 +49,6 @@ class KunenaModelTopics extends KunenaModel
 	protected $actionMove = false;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function populateState()
@@ -270,7 +269,6 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -355,15 +353,14 @@ class KunenaModelTopics extends KunenaModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where);
+			'where'     => $where, );
 
-		list ($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -416,15 +413,14 @@ class KunenaModelTopics extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions);
+			'subscribed' => $subscriptions, );
 
-		list ($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -444,7 +440,7 @@ class KunenaModelTopics extends KunenaModel
 		$params['reverse']   = !$this->getState('list.categories.in');
 		$params['starttime'] = $time;
 		$params['user']      = $this->getState('user');
-		list ($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
+		list($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
 
 		$topicids = array();
 
@@ -630,7 +626,7 @@ class KunenaModelTopics extends KunenaModel
 
 		if (count($actionDropdown) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actionDropdown;
@@ -698,7 +694,7 @@ class KunenaModelTopics extends KunenaModel
 
 		if (count($actionDropdown) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actionDropdown;

@@ -103,6 +103,6 @@ class TableKunenaSessions extends KunenaTable
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

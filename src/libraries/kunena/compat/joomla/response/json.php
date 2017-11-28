@@ -15,5 +15,4 @@ defined('JPATH_PLATFORM') or die;
  */
 class KunenaCompatResponseJson extends \Joomla\CMS\Response\JsonResponse
 {
-
 }

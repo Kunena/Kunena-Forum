@@ -22,7 +22,7 @@ class KunenaViewCategory extends KunenaView
 	 *
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 	}
 

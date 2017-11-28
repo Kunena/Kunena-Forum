@@ -24,7 +24,6 @@ class KunenaGravatar
 	 */
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';

@@ -18,17 +18,15 @@ defined('_JEXEC') or die();
 class KunenaAdminViewTools extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$this->setToolBarDefault();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
@@ -39,10 +37,9 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayPrune()
+	public function displayPrune()
 	{
 		$this->forumList       = $this->get('PruneCategories');
 		$this->listtrashdelete = $this->get('PruneListtrashdelete');
@@ -54,7 +51,6 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarPrune()
@@ -70,11 +66,10 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	function displaySubscriptions()
+	public function displaySubscriptions()
 	{
 		$id = $this->app->input->get('id', 0, 'int');
 
@@ -93,17 +88,15 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displaySyncUsers()
+	public function displaySyncUsers()
 	{
 		$this->setToolBarSyncUsers();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarSyncUsers()
@@ -119,17 +112,15 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayRecount()
+	public function displayRecount()
 	{
 		$this->setToolBarRecount();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarRecount()
@@ -145,10 +136,9 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayMenu()
+	public function displayMenu()
 	{
 		$this->legacy    = KunenaMenuFix::getLegacy();
 		$this->invalid   = KunenaMenuFix::getInvalid();
@@ -159,7 +149,6 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarMenu()
@@ -181,17 +170,15 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayPurgeReStatements()
+	public function displayPurgeReStatements()
 	{
 		$this->setToolBarPurgeReStatements();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarPurgeReStatements()
@@ -207,17 +194,15 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayCleanupIP()
+	public function displayCleanupIP()
 	{
 		$this->setToolCleanupIP();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolCleanupIP()
@@ -233,17 +218,15 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDiagnostics()
+	public function displayDiagnostics()
 	{
 		$this->setToolBarDiagnostics();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDiagnostics()
@@ -257,10 +240,9 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayUninstall()
+	public function displayUninstall()
 	{
 		$this->setToolBarUninstall();
 
@@ -271,7 +253,6 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarUninstall()
@@ -285,10 +266,9 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayReport()
+	public function displayReport()
 	{
 		$this->systemreport           = $this->get('SystemReport');
 		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
@@ -297,7 +277,6 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarReport()

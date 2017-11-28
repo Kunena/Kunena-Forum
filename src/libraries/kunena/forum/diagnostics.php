@@ -50,7 +50,7 @@ abstract class KunenaForumDiagnostics
 			'userTopicOrphaned',
 			'userTopicWrongCategory',
 			'ratingOrphaned',
-			'channelOrphaned'
+			'channelOrphaned',
 		);
 	}
 
@@ -236,7 +236,7 @@ abstract class KunenaForumDiagnostics
 			return (string) $query;
 		}
 
-		return null;
+		return;
 	}
 
 	/**

@@ -269,7 +269,7 @@ class KunenaUser extends JObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -1220,13 +1220,13 @@ class KunenaUser extends JObject
 
 		if (!$config->showranking)
 		{
-			return null;
+			return;
 		}
 
 		// Guests do not have post rank, they only have special rank.
 		if ($special === false && !$this->userid)
 		{
-			return null;
+			return;
 		}
 
 		// First run? Initialize ranks.
@@ -1356,7 +1356,7 @@ class KunenaUser extends JObject
 
 		if ($special === true && !$rank->rank_special)
 		{
-			return null;
+			return;
 		}
 
 		if ($type == 'title')
@@ -1514,7 +1514,7 @@ class KunenaUser extends JObject
 		$ban = new \Joomla\CMS\Date\Date($this->banned);
 		$now = new \Joomla\CMS\Date\Date;
 
-		return ($ban->toUnix() > $now->toUnix());
+		return $ban->toUnix() > $now->toUnix();
 	}
 
 	public function GetUserGroup($userid)
@@ -1853,7 +1853,7 @@ class KunenaUser extends JObject
 		                'wechat'     => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'),
 		                'vk'         => array('url' => 'https://vk.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'),
 		                'telegram'   => array('url' => 'https://t.me/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
-		                'apple'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1')
+		                'apple'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'),
 		);
 
 		return $social;
@@ -1882,7 +1882,7 @@ class KunenaUser extends JObject
 			E_USER_NOTICE
 		);
 
-		return null;
+		return;
 	}
 
 	/**

@@ -119,7 +119,7 @@ class KunenaLoginJoomla
 			return JRoute::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 		}
 
-		return null;
+		return;
 	}
 
 	/**

@@ -216,7 +216,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->threaded = array();
 		$location       = $this->pagination->limitstart;
 
-		foreach ($this->messages AS $message)
+		foreach ($this->messages as $message)
 		{
 			$message->replynum = ++$location;
 

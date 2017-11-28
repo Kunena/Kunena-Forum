@@ -15,5 +15,4 @@ defined('JPATH_BASE') or die;
  */
 interface KunenaCompatLayout extends \Joomla\CMS\Layout\LayoutInterface
 {
-
 }

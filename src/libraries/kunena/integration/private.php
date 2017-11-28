@@ -28,7 +28,7 @@ class KunenaPrivate
 	 * @return boolean|KunenaPrivate
 	 * @since Kunena
 	 */
-	static public function getInstance($integration = null)
+	public static function getInstance($integration = null)
 	{
 		if (self::$instance === false)
 		{

@@ -377,7 +377,7 @@ class KunenaAdminControllerTools extends KunenaController
 					'success' => false,
 					'header'  => 'An Error Occurred',
 					'message' => 'Please see more details below.',
-					'error'   => JText::_('COM_KUNENA_ERROR_TOKEN')
+					'error'   => JText::_('COM_KUNENA_ERROR_TOKEN'),
 				),
 				$ajax
 			);
@@ -429,7 +429,7 @@ class KunenaAdminControllerTools extends KunenaController
 				'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 				'header'  => JText::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
 				'message' => $msg,
-				'href'    => $redirect
+				'href'    => $redirect,
 			),
 			$ajax
 		);
@@ -493,7 +493,7 @@ class KunenaAdminControllerTools extends KunenaController
 					'success' => false,
 					'header'  => JText::_('COM_KUNENA_AJAX_ERROR'),
 					'message' => JText::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
-					'error'   => JText::_('COM_KUNENA_ERROR_TOKEN')
+					'error'   => JText::_('COM_KUNENA_ERROR_TOKEN'),
 				),
 				$ajax
 			);
@@ -577,7 +577,7 @@ class KunenaAdminControllerTools extends KunenaController
 								'success' => true,
 								'status'  => '100%',
 								'header'  => $header,
-								'message' => $msg
+								'message' => $msg,
 							),
 							$ajax
 						);
@@ -616,7 +616,7 @@ class KunenaAdminControllerTools extends KunenaController
 					'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 					'header'  => JText::_('COM_KUNENA_AJAX_ERROR'),
 					'message' => JText::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
-					'error'   => $e->getMessage()
+					'error'   => $e->getMessage(),
 				),
 				$ajax
 			);
@@ -630,7 +630,7 @@ class KunenaAdminControllerTools extends KunenaController
 				'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 				'header'  => JText::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
 				'message' => $msg,
-				'href'    => $redirect
+				'href'    => $redirect,
 			), $ajax
 		);
 	}
@@ -749,7 +749,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($re_string != null)
 		{
 			$db    = \Joomla\CMS\Factory::getDbo();
-			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
+			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string . '%')}";
 			$db->setQuery($query);
 
 			try

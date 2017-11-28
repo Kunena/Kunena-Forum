@@ -42,7 +42,7 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 				'time',
 				'time_start',
 				'time_stop',
-				'operation'
+				'operation',
 			);
 		}
 

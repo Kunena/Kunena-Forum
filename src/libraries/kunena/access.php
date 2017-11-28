@@ -17,13 +17,11 @@ defined('_JEXEC') or die();
 class KunenaAccess
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const CATEGORY_SUBSCRIPTION = 1;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const TOPIC_SUBSCRIPTION = 2;
@@ -71,7 +69,6 @@ class KunenaAccess
 	protected $moderatorsByUserid = null;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -262,7 +259,7 @@ class KunenaAccess
 			$list [$key]['access'] = array(
 				'title' => JText::_('COM_KUNENA_ACCESS_UNKNOWN'),
 				'desc'  => JText::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
-				'input' => $category->access
+				'input' => $category->access,
 			);
 		}
 
@@ -373,7 +370,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name);
+												 'title' => $name, );
 		}
 
 		return $list;
@@ -406,7 +403,7 @@ window.addEvent('domready', function(){
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -845,7 +842,7 @@ window.addEvent('domready', function(){
 				{
 					if (method_exists($access, 'authoriseUsers'))
 					{
-						list ($a, $d) = $access->authoriseUsers($topic, $subscribers);
+						list($a, $d) = $access->authoriseUsers($topic, $subscribers);
 
 						if (!empty($a))
 						{

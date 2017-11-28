@@ -345,7 +345,7 @@ class KunenaControllerTopic extends KunenaController
 			'poll_title'        => \Joomla\CMS\Factory::getApplication()->input->getString('poll_title', ''),
 			'poll_options'      => \Joomla\CMS\Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0),
-			'subscribe'         => \Joomla\CMS\Factory::getApplication()->input->getInt('subscribeMe', 0)
+			'subscribe'         => \Joomla\CMS\Factory::getApplication()->input->getInt('subscribeMe', 0),
 		);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
@@ -375,7 +375,7 @@ class KunenaControllerTopic extends KunenaController
 				return;
 			}
 
-			list ($topic, $message) = $category->newTopic($fields);
+			list($topic, $message) = $category->newTopic($fields);
 		}
 		else
 		{
@@ -394,7 +394,7 @@ class KunenaControllerTopic extends KunenaController
 				return;
 			}
 
-			list ($topic, $message) = $parent->newReply($fields);
+			list($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
 		}
 
@@ -717,7 +717,7 @@ class KunenaControllerTopic extends KunenaController
 			'anonymous'         => \Joomla\CMS\Factory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => \Joomla\CMS\Factory::getApplication()->input->getString('poll_title', null),
 			'poll_options'      => \Joomla\CMS\Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0)
+			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0),
 		);
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
@@ -1197,7 +1197,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1231,7 +1230,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1265,7 +1263,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1299,7 +1296,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1333,7 +1329,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1382,7 +1377,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1431,7 +1425,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1480,7 +1473,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1529,7 +1521,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1601,7 +1592,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1658,7 +1648,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1732,7 +1721,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -1900,7 +1888,7 @@ class KunenaControllerTopic extends KunenaController
 					array(
 						'move'    => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
 						'target'  => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
-						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow)
+						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow),
 					),
 					$topic->getCategory(),
 					$topic,
@@ -1933,7 +1921,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @since Kunena
 	 * @throws null
 	 */
-	function report()
+	public function report()
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -2014,7 +2002,7 @@ class KunenaControllerTopic extends KunenaController
 				array(
 					'mesid'   => $message->id,
 					'reason'  => $reason,
-					'message' => $text
+					'message' => $text,
 				),
 				$topic->getCategory(),
 				$topic,
@@ -2161,7 +2149,6 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null

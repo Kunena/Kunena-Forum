@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
  */
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
-
 	/**
 	 * @param   null $step
 	 *

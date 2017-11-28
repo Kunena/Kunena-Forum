@@ -24,7 +24,7 @@ class KunenaBbcodeEditor
 	 * @var array
 	 * @since Kunena
 	 */
-	var $editor_elements = array();
+	public $editor_elements = array();
 
 	/**
 	 * @param   array $config
@@ -32,7 +32,7 @@ class KunenaBbcodeEditor
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function __construct($config = array())
+	public function __construct($config = array())
 	{
 		$this->config   = $config;
 		$this->template = KunenaFactory::getTemplate();
@@ -240,7 +240,7 @@ abstract class KunenaBbcodeEditorElement
 	 * @var
 	 * @since Kunena
 	 */
-	var $name;
+	public $name;
 
 	/**
 	 * Constructor for the base class for editor elements.
@@ -249,7 +249,7 @@ abstract class KunenaBbcodeEditorElement
 	 *
 	 * @since Kunena
 	 */
-	function __construct($name)
+	public function __construct($name)
 	{
 		$this->name = $name;
 	}
@@ -323,7 +323,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 *
 	 * @since Kunena
 	 */
-	function __construct($name, $class, $tag, $title, $alt)
+	public function __construct($name, $class, $tag, $title, $alt)
 	{
 		parent::__construct($name);
 
@@ -334,7 +334,6 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 *
 	 * @param   SimpleXMLElement $xml
 	 *
 	 * @return KunenaBbcodeEditorButton
@@ -414,7 +413,6 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 *
 	 * @return string
 	 * @since Kunena
 	 */
@@ -426,7 +424,6 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 *
 	 * @return string
 	 * @since Kunena
 	 */
@@ -758,7 +755,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 *
 	 * @since Kunena
 	 */
-	function addDisplayAction($selection, $class, $tag = null)
+	public function addDisplayAction($selection, $class, $tag = null)
 	{
 		$item['type']      = 'display';
 		$item['selection'] = $selection;
@@ -782,7 +779,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 *
 	 * @since Kunena
 	 */
-	function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
+	public function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
 	{
 		$item['type']   = 'wrap-selection';
 		$item['repeat'] = $repeat;
@@ -813,7 +810,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 *
 	 * @since Kunena
 	 */
-	function addUrlAction($url)
+	public function addUrlAction($url)
 	{
 		$item['type']    = 'url';
 		$item['url']     = $url;

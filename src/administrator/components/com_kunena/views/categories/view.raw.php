@@ -19,7 +19,6 @@ defined('_JEXEC') or die();
 class KunenaAdminViewCategories extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function displayChkAliases()
@@ -44,7 +43,6 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function displayDeleteAlias()

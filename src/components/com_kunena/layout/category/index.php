@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutCategoryIndex
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutCategoryIndex extends KunenaLayout
 {
@@ -134,7 +133,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			return $url;
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -157,6 +156,6 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}", $xhtml);
 		}
 
-		return null;
+		return;
 	}
 }

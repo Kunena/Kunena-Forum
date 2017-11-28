@@ -37,7 +37,7 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @since     5.0
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumTopicRate)
 		{
@@ -67,7 +67,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @return float
 	 * @since Kunena
 	 */
-	static public function getSelected($id)
+	public static function getSelected($id)
 	{
 		$db    = \Joomla\CMS\Factory::getDbo();
 		$query = $db->getQuery(true);

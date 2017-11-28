@@ -167,17 +167,15 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayClean()
+	public function displayClean()
 	{
 		$this->setToolBarClean();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolbarClean()

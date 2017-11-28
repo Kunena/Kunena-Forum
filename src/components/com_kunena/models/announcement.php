@@ -25,7 +25,6 @@ class KunenaModelAnnouncement extends KunenaModel
 	protected $total = false;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function populateState()
@@ -56,7 +55,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
 	 */
-	function getNewAnnouncement()
+	public function getNewAnnouncement()
 	{
 		return new KunenaForumAnnouncement;
 	}
@@ -65,7 +64,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
 	 */
-	function getAnnouncement()
+	public function getAnnouncement()
 	{
 		return KunenaForumAnnouncementHelper::get($this->getState('item.id'));
 	}
@@ -78,7 +77,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	{
 		if ($this->total === false)
 		{
-			return null;
+			return;
 		}
 
 		return $this->total;
@@ -89,7 +88,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getAnnouncements()
+	public function getAnnouncements()
 	{
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');

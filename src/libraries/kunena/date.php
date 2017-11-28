@@ -172,7 +172,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 			'w' => array(JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS')),
 			'd' => array(JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS')),
 			'h' => array(JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS')),
-			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')));
+			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')), );
 
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;

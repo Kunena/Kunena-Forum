@@ -24,7 +24,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function __construct(&$subject, $config)
+	public function __construct(&$subject, $config)
 	{
 		// Check if Kunena API exists
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -133,7 +133,7 @@ EOF;
 		// We don't want to handle discover install (where there's no manifest provided)
 		if (!$manifest)
 		{
-			return null;
+			return;
 		}
 
 		return $this->onExtensionBeforeUpdate($type, $manifest);
@@ -203,7 +203,7 @@ EOF;
 	 */
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{
-		
+
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		$row       = new stdClass;

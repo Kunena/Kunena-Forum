@@ -111,7 +111,7 @@ class KunenaControllerHome extends KunenaController
 		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
 		{
 			// There is no highlighted menu item
-			return null;
+			return;
 		}
 
 		$item = $menu->getItem($active->query ['defaultmenu']);
@@ -121,21 +121,21 @@ class KunenaControllerHome extends KunenaController
 			// Menu item points to nowhere, abort
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
-			return null;
+			return;
 		}
 		elseif (isset($visited[$item->id]))
 		{
 			// Menu loop detected, abort
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
-			return null;
+			return;
 		}
 		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view']))
 		{
 			// Menu item doesn't point to Kunena, abort
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
-			return null;
+			return;
 		}
 		elseif ($item->query ['view'] == 'home')
 		{

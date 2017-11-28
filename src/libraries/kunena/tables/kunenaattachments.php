@@ -161,6 +161,6 @@ class TableKunenaAttachments extends KunenaTable
 			}
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

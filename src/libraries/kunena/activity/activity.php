@@ -102,7 +102,6 @@ class KunenaActivity
 	}
 
 	/**
-	 *
 	 * @param   string $message Message
 	 *
 	 * @since Kunena

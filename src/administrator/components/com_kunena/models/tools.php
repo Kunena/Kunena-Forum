@@ -182,7 +182,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @since Kunena
 	 */
-	function getPruneCategories()
+	public function getPruneCategories()
 	{
 		$cat_params                = array();
 		$cat_params['ordering']    = 'ordering';
@@ -202,7 +202,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @since Kunena
 	 */
-	function getPruneListtrashdelete()
+	public function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
 		$trashdelete [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
@@ -216,7 +216,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @since Kunena
 	 */
-	function getPruneControlOptions()
+	public function getPruneControlOptions()
 	{
 		$contoloptions    = array();
 		$contoloptions [] = JHtml::_('select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL'));
@@ -236,7 +236,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @since Kunena
 	 */
-	function getPruneKeepSticky()
+	public function getPruneKeepSticky()
 	{
 		$optionsticky    = array();
 		$optionsticky [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));

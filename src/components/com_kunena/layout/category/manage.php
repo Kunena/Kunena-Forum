@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutCategoryManage
  *
  * @since  K5.1
- *
  */
 class KunenaLayoutCategoryManage extends KunenaLayout
 {

@@ -64,7 +64,6 @@ class KunenaBbcode extends NBBC_BBCode
 		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
-
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		\JFactory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
 	}
@@ -340,7 +339,7 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @return array
 	 * @since Kunena
 	 */
-	function Internal_AutoDetectURLs($string)
+	public function Internal_AutoDetectURLs($string)
 	{
 		$search = preg_split('/(?xi)
 		\b
@@ -483,7 +482,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @var array
 	 * @since Kunena
 	 */
-	var $default_smileys = array();
+	public $default_smileys = array();
 
 	/**
 	 * @var int
@@ -495,7 +494,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @var array
 	 * @since Kunena
 	 */
-	var $default_tag_rules = array(
+	public $default_tag_rules = array(
 		'b' => array(
 			'simple_start' => "<b>",
 			'simple_end'   => "</b>",
@@ -594,7 +593,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			'simple_start' => "<sub>",
 			'simple_end'   => "</sub>",
 			'class'        => 'inline',
-			'allow_in'     => array('listitem', 'block', 'columns', 'inline', 'link')
+			'allow_in'     => array('listitem', 'block', 'columns', 'inline', 'link'),
 		),
 
 		'spoiler' => array(
@@ -948,7 +947,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		'code' => array(
 			'mode'          => BBCODE_MODE_LIBRARY,
 			'method'        => 'DoCode',
-			'allow'         => array('type' => '/^[\w]*$/',),
+			'allow'         => array('type' => '/^[\w]*$/'),
 			'class'         => 'code',
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'content'       => BBCODE_VERBATIM,
@@ -1002,7 +1001,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		'ol' => array(
 			'mode'          => BBCODE_MODE_LIBRARY,
 			'method'        => 'DoList',
-			'allow'         => array('_default' => '/^[\d\w]*$/',),
+			'allow'         => array('_default' => '/^[\d\w]*$/'),
 			'default'       => array('_default' => '1'),
 			'class'         => 'list',
 			'allow_in'      => array('listitem', 'block', 'columns'),
@@ -1087,11 +1086,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	);
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	function __construct()
+	public function __construct()
 	{
 		if (!KunenaFactory::getConfig()->disemoticons)
 		{
@@ -1323,13 +1321,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	function DoList($bbcode, $action, $name, $default, $params, $content)
+	public function DoList($bbcode, $action, $name, $default, $params, $content)
 	{
 		// Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
 		// list style is that with image-based markers, which often slows down web sites.
-		$list_styles    = Array('1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha');
-		$ci_list_styles = Array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian');
-		$ul_types       = Array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square');
+		$list_styles    = array('1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha');
+		$ci_list_styles = array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian');
+		$ul_types       = array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square');
 		$default        = trim($default);
 
 		if (!$default)
@@ -1572,7 +1570,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	{
 		if (empty($this->parent))
 		{
-			return null;
+			return;
 		}
 		elseif ($this->parent instanceof KunenaForumMessage)
 		{
@@ -1584,7 +1582,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return $this->parent->message;
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1758,7 +1756,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function DoArticle($bbcode, $action, $name, $default, $params, $content)
+	public function DoArticle($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -1901,7 +1899,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	function DoQuote($bbcode, $action, $name, $default, $params, $content)
+	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -1933,7 +1931,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function DoCode($bbcode, $action, $name, $default, $params, $content)
+	public function DoCode($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -1962,7 +1960,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			$paths = array(
 				JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi.php',
-				JPATH_ROOT . '/plugins/content/geshi/geshi/geshi.php'
+				JPATH_ROOT . '/plugins/content/geshi/geshi/geshi.php',
 			);
 
 			foreach ($paths as $path)
@@ -2063,7 +2061,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function DoVideo($bbcode, $action, $name, $default, $params, $content)
+	public function DoVideo($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -2171,7 +2169,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (isset($vid_providers [$vid ["type"]]))
 		{
-			list ($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) = (isset($vid_providers [$vid ["type"]])) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+			list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) = (isset($vid_providers [$vid ["type"]])) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
 		}
 		else
 		{
@@ -2289,7 +2287,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		foreach (array_merge($vid_par1, $vid_par2, $vid_par3) as $vid_data)
 		{
-			list ($vid_key, $vid_name, $vid_value) = $vid_data;
+			list($vid_key, $vid_name, $vid_value) = $vid_data;
 
 			if ($vid_key & 1)
 			{
@@ -2346,7 +2344,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws null
 	 * @since Kunena
 	 */
-	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
+	public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -2479,7 +2477,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 		elseif (!$attachment->isAuthorised() && !$config->showimgforguest && $attachment->id != '0')
 		{
-			return null;
+			return;
 		}
 		elseif (!$attachment->isAuthorised())
 		{
@@ -2507,7 +2505,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws null
 	 * @since Kunena
 	 */
-	function DoFile($bbcode, $action, $name, $default, $params, $content)
+	public function DoFile($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{
@@ -2599,7 +2597,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @throws null
 	 * @since Kunena
 	 */
-	function DoImage($bbcode, $action, $name, $default, $params, $content)
+	public function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{

@@ -40,7 +40,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function display($layout = null, $tpl = null)
+	public function display($layout = null, $tpl = null)
 	{
 		$this->state = $this->get('State');
 
@@ -63,7 +63,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		$this->header = $this->escape($this->header);
 
@@ -83,7 +83,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayAnnouncement($tpl = null)
+	public function displayAnnouncement($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -144,7 +144,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayForumJump($tpl = null)
+	public function displayForumJump($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -178,7 +178,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws null
 	 * @since Kunena
 	 */
-	function displayBreadcrumb($tpl = null)
+	public function displayBreadcrumb($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -285,7 +285,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayWhosonline($tpl = null)
+	public function displayWhosonline($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -370,7 +370,7 @@ class KunenaViewCommon extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayStatistics($tpl = null)
+	public function displayStatistics($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -408,7 +408,7 @@ class KunenaViewCommon extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayFooter($tpl = null)
+	public function displayFooter($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -453,7 +453,7 @@ class KunenaViewCommon extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayMenu($tpl = null)
+	public function displayMenu($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -474,7 +474,7 @@ class KunenaViewCommon extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getMenu()
+	public function getMenu()
 	{
 		$basemenu = KunenaRoute::getMenu();
 
@@ -507,7 +507,7 @@ class KunenaViewCommon extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayLoginBox($tpl = null)
+	public function displayLoginBox($tpl = null)
 	{
 		if ($this->offline)
 		{
@@ -581,7 +581,7 @@ class KunenaViewCommon extends KunenaView
 	 * @return mixed|string
 	 * @since Kunena
 	 */
-	function fillLoginBoxInfo($matches)
+	public function fillLoginBoxInfo($matches)
 	{
 		switch ($matches[1])
 		{
@@ -594,7 +594,7 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
-	function getPrivateMessageLink()
+	public function getPrivateMessageLink()
 	{
 		// Private messages
 		$private = KunenaFactory::getPrivateMessaging();
@@ -612,7 +612,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @since Kunena
 	 */
-	function getUserlistURL($action = '', $xhtml = true)
+	public function getUserlistURL($action = '', $xhtml = true)
 	{
 		$profile = KunenaFactory::getProfile();
 
@@ -667,7 +667,7 @@ class KunenaViewCommon extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function getRSSLink($name, $rel = 'follow', $params = '')
+	public function getRSSLink($name, $rel = 'follow', $params = '')
 	{
 		return '<a href="' . $this->getRSSURL($params) . '">' . $name . '</a>';
 	}

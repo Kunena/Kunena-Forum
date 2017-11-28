@@ -31,7 +31,7 @@ abstract class JHtmlKunenaGrid
 	 * @return  string   The boolean setting widget.
 	 * @since Kunena
 	 */
-	static function boolean($i, $value, $taskOn = null, $taskOff = null)
+	public static function boolean($i, $value, $taskOn = null, $taskOff = null)
 	{
 		// Load the behavior.
 		self::behavior();
@@ -54,10 +54,9 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	static function behavior()
+	public static function behavior()
 	{
 		static $loaded = false;
 

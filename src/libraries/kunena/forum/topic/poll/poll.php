@@ -142,7 +142,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reset = false)
+	public static function getInstance($identifier = null, $reset = false)
 	{
 		return KunenaForumTopicPollHelper::get($identifier, $reset);
 	}

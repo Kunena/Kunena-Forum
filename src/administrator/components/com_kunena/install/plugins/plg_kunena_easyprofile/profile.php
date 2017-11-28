@@ -106,4 +106,3 @@ class KunenaProfileEasyprofile extends KunenaProfile
 		return $user->getLink();
 	}
 }
-

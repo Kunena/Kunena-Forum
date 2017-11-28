@@ -19,7 +19,6 @@ defined('_JEXEC') or die();
 class KunenaModelCommon extends KunenaModel
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function populateState()

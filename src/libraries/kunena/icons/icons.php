@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-
 /**
  * Class KunenaIcons
  *
@@ -27,7 +26,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function arrowdown()
+	public static function arrowdown()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -58,7 +57,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function arrowup()
+	public static function arrowup()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -89,7 +88,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function arrowdownanchor()
+	public static function arrowdownanchor()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -124,7 +123,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function arrowupanchor()
+	public static function arrowupanchor()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -159,7 +158,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function chevronright()
+	public static function chevronright()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -190,7 +189,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function members()
+	public static function members()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -221,7 +220,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function user()
+	public static function user()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -252,7 +251,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function lock()
+	public static function lock()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -283,7 +282,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function star()
+	public static function star()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -319,7 +318,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function shield()
+	public static function shield()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -350,7 +349,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function flag()
+	public static function flag()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -386,7 +385,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function poll()
+	public static function poll()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -417,7 +416,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function stats()
+	public static function stats()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -440,7 +439,6 @@ class KunenaIcons
 		return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
 	}
 
-
 	/**
 	 * Return the search icon
 	 *
@@ -449,7 +447,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function search()
+	public static function search()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -480,7 +478,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function collapse()
+	public static function collapse()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -511,7 +509,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function clock()
+	public static function clock()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -542,7 +540,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function thumbsup()
+	public static function thumbsup()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -573,7 +571,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function cancel()
+	public static function cancel()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -604,7 +602,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function ip()
+	public static function ip()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -640,7 +638,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function email()
+	public static function email()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -676,7 +674,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function bookmark()
+	public static function bookmark()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -707,7 +705,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function back()
+	public static function back()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -738,7 +736,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function save()
+	public static function save()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -769,7 +767,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function edit()
+	public static function edit()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -800,7 +798,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function pencil()
+	public static function pencil()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -831,7 +829,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function attach()
+	public static function attach()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -867,7 +865,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function plus()
+	public static function plus()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -900,7 +898,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function rss($text = null)
+	public static function rss($text = null)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -932,7 +930,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function upload()
+	public static function upload()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -963,7 +961,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function picture()
+	public static function picture()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -994,7 +992,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function file()
+	public static function file()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1025,7 +1023,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function delete()
+	public static function delete()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1056,7 +1054,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function poll_add()
+	public static function poll_add()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1091,7 +1089,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function poll_rem()
+	public static function poll_rem()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1126,7 +1124,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function undo()
+	public static function undo()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1162,7 +1160,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function shuffle()
+	public static function shuffle()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1196,7 +1194,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function caticon($categoryicon, $new = null, $big = true)
+	public static function caticon($categoryicon, $new = null, $big = true)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1355,7 +1353,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function home()
+	public static function home()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1386,7 +1384,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function calendar()
+	public static function calendar()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1417,7 +1415,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function hamburger()
+	public static function hamburger()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1448,7 +1446,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function info()
+	public static function info()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1479,7 +1477,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function online()
+	public static function online()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1510,7 +1508,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function away()
+	public static function away()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1541,7 +1539,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function busy()
+	public static function busy()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1572,7 +1570,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function invisible()
+	public static function invisible()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1603,7 +1601,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function cog()
+	public static function cog()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1634,7 +1632,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function drawer()
+	public static function drawer()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1665,7 +1663,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function out()
+	public static function out()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1696,7 +1694,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function grid()
+	public static function grid()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1727,7 +1725,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function globe()
+	public static function globe()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1763,7 +1761,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function location()
+	public static function location()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1799,7 +1797,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since K5.0
 	 */
-	static public function pm()
+	public static function pm()
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1834,7 +1832,7 @@ class KunenaIcons
 	 *
 	 * @since K5.0
 	 */
-	static public function report()
+	public static function report()
 	{
 		$ktemplate = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -1868,7 +1866,7 @@ class KunenaIcons
 	 *
 	 * @since K5.0
 	 */
-	static public function reportname()
+	public static function reportname()
 	{
 		$ktemplate = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');

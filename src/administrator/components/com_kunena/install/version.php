@@ -77,7 +77,7 @@ class KunenaVersion
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function checkVersion()
+	public function checkVersion()
 	{
 		$version = $this->getDBVersion();
 
@@ -105,7 +105,7 @@ class KunenaVersion
 	public function getDBVersion($prefix = 'kunena_')
 	{
 		$db    = \Joomla\CMS\Factory::getDBO();
-		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix().$prefix.'version')}";
+		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
 		$db->setQuery($query);
 
 		if ($db->loadResult())
@@ -136,7 +136,7 @@ class KunenaVersion
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
 	 * @since Kunena
 	 */
-	static function getVersionHTML()
+	public static function getVersionHTML()
 	{
 		return 'Kunena ' . strtoupper(KunenaForum::version()) . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
 	}
@@ -147,7 +147,7 @@ class KunenaVersion
 	 * @return string "© 2008 - 2017 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	 * @since Kunena
 	 */
-	static function getCopyrightHTML()
+	public static function getCopyrightHTML()
 	{
 		return ': &copy; 2008 - 2017 ' . JText::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
 			. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
@@ -162,7 +162,7 @@ class KunenaVersion
 	 *                License: GNU General Public License"
 	 * @since Kunena
 	 */
-	static function getLongVersionHTML()
+	public static function getLongVersionHTML()
 	{
 		return self::getVersionHTML() . ' | ' . self::getCopyrightHTML();
 	}

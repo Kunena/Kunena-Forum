@@ -82,6 +82,6 @@ class TableKunenaUserRead extends KunenaTable
 			$this->category_id = $topic->category_id;
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

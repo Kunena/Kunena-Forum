@@ -27,7 +27,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 		404 => '404 Not Found',
 		410 => '410 Gone',
 		500 => '500 Internal Server Error',
-		503 => '503 Service Temporarily Unavailable'
+		503 => '503 Service Temporarily Unavailable',
 	);
 
 	/**

@@ -745,4 +745,3 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }
-

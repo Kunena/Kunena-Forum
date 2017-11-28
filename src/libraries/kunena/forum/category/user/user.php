@@ -20,7 +20,6 @@ defined('_JEXEC') or die();
  * @property int    $subscribed
  * @property string $params
  * @since Kunena
- *
  */
 class KunenaForumCategoryUser extends JObject
 {
@@ -95,7 +94,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	static public function getInstance($id = null, $user = null, $reload = false)
+	public static function getInstance($id = null, $user = null, $reload = false)
 	{
 		return KunenaForumCategoryUserHelper::get($id, $user, $reload);
 	}
@@ -237,7 +236,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function exists($exists = null)
+	public function exists($exists = null)
 	{
 		$return = $this->_exists;
 

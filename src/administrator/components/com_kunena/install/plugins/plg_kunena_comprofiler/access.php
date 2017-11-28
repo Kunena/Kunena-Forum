@@ -106,7 +106,6 @@ class KunenaAccessComprofiler
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function loadGroups()
@@ -163,7 +162,7 @@ class KunenaAccessComprofiler
 			$html ['communitybuilder']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
 				'desc'  => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
-				'input' => JHtml::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected)
+				'input' => JHtml::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}
 
@@ -175,7 +174,6 @@ class KunenaAccessComprofiler
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function loadCategories()

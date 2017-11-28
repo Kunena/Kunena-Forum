@@ -37,7 +37,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getMessages($ids = false, $authorise = 'read')
+	public static function getMessages($ids = false, $authorise = 'read')
 	{
 		if ($ids === false)
 		{
@@ -74,7 +74,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadMessages(array $ids)
+	protected static function loadMessages(array $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -134,7 +134,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
+	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
 		$topic = KunenaForumTopicHelper::get($topic);
 
@@ -183,7 +183,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
+	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
 		$db    = \Joomla\CMS\Factory::getDBO();
 		$query = "SELECT m.*, t.message
@@ -230,7 +230,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws null
 	 * @since Kunena
 	 */
-	static public function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
+	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
 		$reverse     = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby     = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
@@ -445,7 +445,7 @@ abstract class KunenaForumMessageHelper
 	 * @return KunenaForumMessage    The message object.
 	 * @since Kunena
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumMessage)
 		{
@@ -616,7 +616,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws Exception
 	 * @since 5.0.3
 	 */
-	static public function getMessagesByTopics(array $ids)
+	public static function getMessagesByTopics(array $ids)
 	{
 		if (empty($ids))
 		{

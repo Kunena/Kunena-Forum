@@ -24,7 +24,7 @@ class KunenaViewTopics extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayDefault($tpl = null)
+	public function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
@@ -97,7 +97,7 @@ class KunenaViewTopics extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayUser($tpl = null)
+	public function displayUser($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
@@ -142,7 +142,7 @@ class KunenaViewTopics extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function displayPosts($tpl = null)
+	public function displayPosts($tpl = null)
 	{
 		if (!$this->config->enablerss)
 		{
@@ -183,11 +183,10 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	function displayTopicRows()
+	public function displayTopicRows()
 	{
 		$firstpost = $this->state->get('list.mode') == 'topics';
 
@@ -230,11 +229,10 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	function displayPostRows()
+	public function displayPostRows()
 	{
 		foreach ($this->messages as $message)
 		{
@@ -278,7 +276,7 @@ class KunenaViewTopics extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function createItem($title, $url, $description, $category, $date, $userid, $username)
+	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rss_author_in_title)
 		{

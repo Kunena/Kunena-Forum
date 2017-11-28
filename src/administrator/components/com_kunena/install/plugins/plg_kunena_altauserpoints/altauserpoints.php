@@ -58,7 +58,7 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/avatar.php";
@@ -76,7 +76,7 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('profile', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/profile.php";
@@ -94,7 +94,7 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('activity', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/activity.php";

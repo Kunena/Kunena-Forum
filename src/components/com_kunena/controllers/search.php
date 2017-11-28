@@ -30,7 +30,6 @@ class KunenaControllerSearch extends KunenaController
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function results()

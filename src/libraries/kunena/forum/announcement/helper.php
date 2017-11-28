@@ -32,7 +32,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumAnnouncement)
 		{
@@ -70,7 +70,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @since Kunena
 	 * @throws null
 	 */
-	static public function getUrl($layout = null, $xhtml = true)
+	public static function getUrl($layout = null, $xhtml = true)
 	{
 		$uri = self::getUri($layout);
 
@@ -85,7 +85,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
-	static public function getUri($layout = null)
+	public static function getUri($layout = null)
 	{
 		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
@@ -108,7 +108,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
+	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
 		$db       = \Joomla\CMS\Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
@@ -173,7 +173,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getCount($filter = true)
+	public static function getCount($filter = true)
 	{
 		$db       = \Joomla\CMS\Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());

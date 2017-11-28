@@ -223,7 +223,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 			return $ruleEnabled[0]->points2;
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -261,7 +261,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @return string
 	 * @since Kunena
 	 */
-	function escape($var)
+	public function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}

@@ -487,7 +487,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			}
 			else
 			{
-				return null;
+				return;
 			}
 		}
 

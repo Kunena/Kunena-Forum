@@ -244,7 +244,6 @@ class KunenaDatabaseQuery
 		return $this;
 	}
 
-
 	/**
 	 * @param   mixed $columns A string or an array of field names.
 	 *

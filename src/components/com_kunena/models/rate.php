@@ -18,7 +18,6 @@ defined('_JEXEC') or die();
  */
 class KunenaModelRate extends KunenaModel
 {
-
 	protected function populateState()
 	{
 		$id = $this->getInt('topicid', 0);
@@ -47,7 +46,7 @@ class KunenaModelRate extends KunenaModel
 	 * @return KunenaForumRate
 	 * @since Kunena
 	 */
-	function getNewRate()
+	public function getNewRate()
 	{
 		return new KunenaForumRate;
 	}
@@ -56,7 +55,7 @@ class KunenaModelRate extends KunenaModel
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function getRate()
+	public function getRate()
 	{
 		return KunenaForumRateHelper::get($this->getState('item.topicid'));
 	}
@@ -66,7 +65,7 @@ class KunenaModelRate extends KunenaModel
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getRates()
+	public function getRates()
 	{
 		return KunenaForumRateHelper::getRates($this->getState('list.start'), $this->getState('list.limit'), !$this->me->isModerator());
 	}

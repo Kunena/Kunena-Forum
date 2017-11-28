@@ -18,10 +18,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewTemplates extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$this->setToolBarDefault();
 		$this->templates  = $this->get('templates');
@@ -30,7 +29,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarDefault()
@@ -53,17 +51,15 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayAdd()
+	public function displayAdd()
 	{
 		$this->setToolBarAdd();
 		$this->display();
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarAdd()
@@ -77,11 +73,10 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	function displayEdit()
+	public function displayEdit()
 	{
 		$this->setToolBarEdit();
 
@@ -108,7 +103,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarEdit()
@@ -126,10 +120,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayChooseless()
+	public function displayChooseless()
 	{
 		$this->setToolBarChooseless();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -151,7 +144,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarChooseless()
@@ -167,10 +159,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayEditless()
+	public function displayEditless()
 	{
 		$this->setToolBarEditless();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -183,7 +174,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarEditless()
@@ -200,10 +190,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayChoosecss()
+	public function displayChoosecss()
 	{
 		$this->setToolBarChoosecss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -224,7 +213,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarChoosecss()
@@ -240,10 +228,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayEditcss()
+	public function displayEditcss()
 	{
 		$this->setToolBarEditcss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -255,7 +242,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolBarEditcss()
@@ -271,4 +257,3 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolbarHelper::spacer();
 	}
 }
-

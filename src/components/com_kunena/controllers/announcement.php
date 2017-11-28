@@ -18,9 +18,7 @@ defined('_JEXEC') or die();
  */
 class KunenaControllerAnnouncement extends KunenaController
 {
-
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null

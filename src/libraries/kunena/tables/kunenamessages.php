@@ -219,7 +219,6 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function reset()
@@ -267,7 +266,7 @@ class TableKunenaMessages extends KunenaTable
 
 		$this->modified_reason = trim($this->modified_reason);
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 
 	/**

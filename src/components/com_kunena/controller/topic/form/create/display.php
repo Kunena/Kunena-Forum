@@ -79,7 +79,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
-		list ($this->topic, $this->message) = $this->category->newTopic($saved);
+		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
 
@@ -103,7 +103,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$result               = \JFactory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
 					$output               = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-						. $captcha_pubkey . '" data-theme="light"'));
+						. $captcha_pubkey . '" data-theme="light"', ));
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
@@ -140,7 +140,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			'sections'    => 0,
 			'direction'   => 1,
 			'hide_lonely' => 1,
-			'action'      => 'topic.create'
+			'action'      => 'topic.create',
 		);
 
 		$this->selectcatlist = JHtml::_(

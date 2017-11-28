@@ -33,7 +33,6 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	protected $helpURL;
 
 	/**
-	 *
 	 * @since   1.6
 	 */
 	protected $_cache;

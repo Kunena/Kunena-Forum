@@ -66,6 +66,6 @@ class KunenaLoginEasySocial
 			return FRoute::registration();
 		}
 
-		return null;
+		return;
 	}
 }

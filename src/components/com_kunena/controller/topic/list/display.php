@@ -207,7 +207,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	{
 		if (!$actions)
 		{
-			return null;
+			return;
 		}
 
 		$options                = array();
@@ -252,7 +252,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 		if (count($actions) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actions;
@@ -271,7 +271,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	{
 		if (!$actions)
 		{
-			return null;
+			return;
 		}
 
 		$options               = array();
@@ -306,7 +306,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 		if (count($actions) == 1)
 		{
-			return null;
+			return;
 		}
 
 		return $actions;

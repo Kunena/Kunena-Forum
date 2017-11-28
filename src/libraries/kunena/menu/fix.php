@@ -68,7 +68,6 @@ abstract class KunenaMenuFix
 	public static $parent = null;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -135,7 +134,6 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected static function build()
@@ -204,7 +202,7 @@ abstract class KunenaMenuFix
 	{
 		if (!$item)
 		{
-			return null;
+			return;
 		}
 
 		$id = $item->id;

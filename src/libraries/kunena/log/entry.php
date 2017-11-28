@@ -54,7 +54,7 @@ class KunenaLogEntry
 			'ip'          => \Joomla\CMS\Factory::getApplication()->isClient('site') && isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
 			'time'        => $now->toUnix(),
 			'operation'   => $operation,
-			'data'        => json_encode($data)
+			'data'        => json_encode($data),
 		);
 	}
 

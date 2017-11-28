@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutWidgetModule
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutWidgetModule extends KunenaLayout
 {

@@ -52,7 +52,7 @@ class KunenaForumMessageThankyou extends JObject
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumMessageThankyouHelper::get($identifier, $reload);
 	}

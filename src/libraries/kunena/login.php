@@ -29,7 +29,6 @@ class KunenaLogin
 	protected $instances = array();
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -161,7 +160,7 @@ class KunenaLogin
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -178,7 +177,7 @@ class KunenaLogin
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -195,7 +194,7 @@ class KunenaLogin
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -212,7 +211,7 @@ class KunenaLogin
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -229,7 +228,7 @@ class KunenaLogin
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**

@@ -230,7 +230,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function isImage()
 	{
-		return (stripos($this->filetype, 'image/') !== false);
+		return stripos($this->filetype, 'image/') !== false;
 	}
 
 	/**
@@ -242,7 +242,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function isAudio()
 	{
-		return (stripos($this->filetype, 'audio/') !== false);
+		return stripos($this->filetype, 'audio/') !== false;
 	}
 
 	/**
@@ -254,7 +254,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function isVideo()
 	{
-		return (stripos($this->filetype, 'video/') !== false);
+		return stripos($this->filetype, 'video/') !== false;
 	}
 
 	/**
@@ -266,7 +266,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function isPdf()
 	{
-		return (stripos($this->filetype, 'application/pdf') !== false);
+		return stripos($this->filetype, 'application/pdf') !== false;
 	}
 
 	/**
@@ -470,7 +470,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -573,7 +573,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @throws Exception
 	 * @since  K4.0
 	 */
-	function upload($key = 'kattachment', $catid = null)
+	public function upload($key = 'kattachment', $catid = null)
 	{
 		jimport('joomla.filesystem.folder');
 		$config    = KunenaFactory::getConfig();
@@ -782,7 +782,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -816,7 +816,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -835,7 +835,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**

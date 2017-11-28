@@ -372,7 +372,7 @@ class TableKunenaCategories extends KunenaTable
 			$this->params = $this->params->toString();
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 
 	// Check if given forum is one of its own childs

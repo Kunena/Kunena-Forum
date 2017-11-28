@@ -24,7 +24,6 @@ class KunenaIntegrationComprofiler
 	protected static $open = false;
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -61,7 +60,6 @@ class KunenaIntegrationComprofiler
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

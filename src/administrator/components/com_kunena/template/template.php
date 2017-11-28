@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 class KunenaAdminTemplate
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function initialize()

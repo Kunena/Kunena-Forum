@@ -19,13 +19,12 @@ defined('_JEXEC') or die();
 class KunenaAdminViewSmilies extends KunenaView
 {
 	/**
-	 *
 	 * @param   null $tpl
 	 *
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$this->setToolbar();
 		$this->items      = $this->get('Items');
@@ -46,7 +45,6 @@ class KunenaAdminViewSmilies extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolbar()

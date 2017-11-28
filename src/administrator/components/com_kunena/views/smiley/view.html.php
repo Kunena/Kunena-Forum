@@ -37,7 +37,6 @@ class KunenaAdminViewSmiley extends KunenaView
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function setToolbar()

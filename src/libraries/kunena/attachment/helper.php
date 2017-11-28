@@ -37,7 +37,7 @@ abstract class KunenaAttachmentHelper
 	 * @return KunenaAttachment
 	 * @since Kunena
 	 */
-	static public function get($identifier = null, $reload = false)
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaAttachment)
 		{
@@ -77,7 +77,7 @@ abstract class KunenaAttachmentHelper
 	 * @since Kunena
 	 * @throws null
 	 */
-	static public function getById($ids = false, $authorise = 'read')
+	public static function getById($ids = false, $authorise = 'read')
 	{
 		if ($ids === false)
 		{
@@ -118,7 +118,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadById(array $ids)
+	protected static function loadById(array $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -173,7 +173,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getNumberAttachments($ids = false)
+	public static function getNumberAttachments($ids = false)
 	{
 		$ids = array($ids);
 
@@ -198,7 +198,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadByMessage(array $ids)
+	protected static function loadByMessage(array $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -254,7 +254,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getByMessage($ids = false, $authorise = 'read')
+	public static function getByMessage($ids = false, $authorise = 'read')
 	{
 		if ($ids === false)
 		{
@@ -375,7 +375,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getExtensions($category, $user = null)
+	public static function getExtensions($category, $user = null)
 	{
 		$imagetypes = self::getImageExtensions($category, $user);
 		$filetypes  = self::getFileExtensions($category, $user);
@@ -396,7 +396,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getImageExtensions($category = null, $user = null)
+	public static function getImageExtensions($category = null, $user = null)
 	{
 		if ($category !== null)
 		{
@@ -472,7 +472,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getFileExtensions($category = null, $user = null)
+	public static function getFileExtensions($category = null, $user = null)
 	{
 		$category = KunenaForumCategoryHelper::get($category);
 		$user     = KunenaUserHelper::get($user);
@@ -541,7 +541,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function cleanup()
+	public static function cleanup()
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -685,7 +685,6 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 *
 	 * Load the total count of attachments
 	 *
 	 * @return boolean
@@ -723,6 +722,6 @@ abstract class KunenaAttachmentHelper
 	 */
 	public function isImageMime($mime)
 	{
-		return (stripos($mime, 'image/') !== false);
+		return stripos($mime, 'image/') !== false;
 	}
 }

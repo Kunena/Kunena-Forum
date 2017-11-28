@@ -148,7 +148,6 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function rewind()
@@ -162,7 +161,6 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function next()

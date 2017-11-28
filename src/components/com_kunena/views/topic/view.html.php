@@ -41,25 +41,25 @@ class KunenaViewTopic extends KunenaView
 	 * @var null
 	 * @since Kunena
 	 */
-	var $poll = null;
+	public $poll = null;
 
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
-	var $mmm = 0;
+	public $mmm = 0;
 
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
-	var $k = 0;
+	public $k = 0;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	var $cache = true;
+	public $cache = true;
 
 	/**
 	 * @param   null $tpl
@@ -308,11 +308,11 @@ class KunenaViewTopic extends KunenaView
 							'sections'    => 0,
 							'direction'   => 1,
 							'hide_lonely' => 1,
-							'action'      => 'topic.create');
+							'action'      => 'topic.create', );
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
-		list ($this->topic, $this->message) = $this->category->newTopic($saved);
+		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		if (!$this->topic->category_id)
 		{
@@ -427,7 +427,7 @@ class KunenaViewTopic extends KunenaView
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
-		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
+		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
@@ -514,7 +514,7 @@ class KunenaViewTopic extends KunenaView
 		$this->render('Topic/Edit', $tpl);
 	}
 
-	function displayMessageProfile()
+	public function displayMessageProfile()
 	{
 		echo $this->getMessageProfileBox();
 	}
@@ -524,7 +524,7 @@ class KunenaViewTopic extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getMessageProfileBox()
+	public function getMessageProfileBox()
 	{
 		static $profiles = array();
 
@@ -621,12 +621,12 @@ class KunenaViewTopic extends KunenaView
 		return $profiles [$key];
 	}
 
-	function displayMessageContents()
+	public function displayMessageContents()
 	{
 		echo $this->loadTemplateFile('message');
 	}
 
-	function displayTopicActions()
+	public function displayTopicActions()
 	{
 		echo $this->getTopicActions();
 	}
@@ -636,7 +636,7 @@ class KunenaViewTopic extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getTopicActions()
+	public function getTopicActions()
 	{
 		$catid = $this->state->get('item.catid');
 		$id    = $this->state->get('item.id');
@@ -724,7 +724,7 @@ class KunenaViewTopic extends KunenaView
 		return (string) $this->loadTemplateFile('actions');
 	}
 
-	function displayMessageActions()
+	public function displayMessageActions()
 	{
 		echo $this->getMessageActions();
 	}
@@ -734,7 +734,7 @@ class KunenaViewTopic extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function getMessageActions()
+	public function getMessageActions()
 	{
 		$catid        = $this->state->get('item.catid');
 		$id           = $this->topic->id;
@@ -813,7 +813,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayMessage($id, $message, $template = null)
+	public function displayMessage($id, $message, $template = null)
 	{
 		$layout = $this->getLayout();
 
@@ -993,7 +993,7 @@ class KunenaViewTopic extends KunenaView
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	function fillMessageInfo($matches)
+	public function fillMessageInfo($matches)
 	{
 		switch ($matches[1])
 		{
@@ -1021,7 +1021,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function displayMessages($template = null)
+	public function displayMessages($template = null)
 	{
 		foreach ($this->messages as $id => $message)
 		{
@@ -1037,7 +1037,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function getPaginationObject($maxpages)
+	public function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
@@ -1061,7 +1061,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since Kunena
 	 * @throws null
 	 */
-	function getPagination($maxpages)
+	public function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
@@ -1072,7 +1072,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function hasThreadHistory()
+	public function hasThreadHistory()
 	{
 		if (!$this->config->showhistory || !$this->topic->exists())
 		{
@@ -1082,7 +1082,7 @@ class KunenaViewTopic extends KunenaView
 		return true;
 	}
 
-	function displayThreadHistory()
+	public function displayThreadHistory()
 	{
 		if (!$this->hasThreadHistory())
 		{
@@ -1185,7 +1185,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function displayMessageField($name)
+	public function displayMessageField($name)
 	{
 		return $this->message->displayField($name);
 	}
@@ -1196,7 +1196,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function displayTopicField($name)
+	public function displayTopicField($name)
 	{
 		return $this->topic->displayField($name);
 	}
@@ -1207,7 +1207,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return mixed
 	 * @since Kunena
 	 */
-	function displayCategoryField($name)
+	public function displayCategoryField($name)
 	{
 		return $this->category->displayField($name);
 	}
@@ -1216,7 +1216,7 @@ class KunenaViewTopic extends KunenaView
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function canSubscribe()
+	public function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
 		{

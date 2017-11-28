@@ -30,7 +30,6 @@ class KunenaIntegrationActivity
 	protected $instances = array();
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -54,7 +53,7 @@ class KunenaIntegrationActivity
 	 * @return static
 	 * @since Kunena
 	 */
-	static public function getInstance()
+	public static function getInstance()
 	{
 		if (!self::$instance)
 		{

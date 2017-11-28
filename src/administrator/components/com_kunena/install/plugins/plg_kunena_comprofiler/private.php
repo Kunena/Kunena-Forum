@@ -125,7 +125,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if ($userid === null)
 		{
-			return null;
+			return;
 		}
 
 		return $_CB_framework->userProfileUrl($userid);
@@ -147,7 +147,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		}
 		else
 		{
-			return null;
+			return;
 		}
 
 		$userid = Application::MyUser()->getUserId();
@@ -156,7 +156,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if ($cbUser === null)
 		{
-			return null;
+			return;
 		}
 
 		return $userid;
@@ -181,7 +181,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if ($userid === null)
 		{
-			return null;
+			return;
 		}
 
 		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';

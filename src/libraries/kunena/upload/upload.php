@@ -94,7 +94,7 @@ class KunenaUpload
 			'hash'       => null,
 			'chunkStart' => 0,
 			'chunkEnd'   => 0,
-			'image_type' => null
+			'image_type' => null,
 		);
 
 		$options += $defaults;
@@ -616,7 +616,7 @@ class KunenaUpload
 			{
 				$exception = array(
 					'code'    => $e->getCode(),
-					'message' => $e->getMessage()
+					'message' => $e->getMessage(),
 				);
 
 				if (JDEBUG)
@@ -624,7 +624,7 @@ class KunenaUpload
 					$exception += array(
 						'type' => get_class($e),
 						'file' => $e->getFile(),
-						'line' => $e->getLine()
+						'line' => $e->getLine(),
 					);
 				}
 

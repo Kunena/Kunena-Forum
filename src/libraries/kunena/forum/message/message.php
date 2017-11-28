@@ -147,7 +147,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @return KunenaForumMessage
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumMessageHelper::get($identifier, $reload);
 	}
@@ -368,12 +368,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$config->get('send_emails'))
 		{
-			return null;
+			return;
 		}
 
 		if ($this->hold > 1)
 		{
-			return null;
+			return;
 		}
 		elseif ($this->hold == 1)
 		{
@@ -547,7 +547,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$this->exists() || !$category->exists())
 		{
-			return null;
+			return;
 		}
 
 		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
@@ -778,7 +778,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$this->message = trim(preg_replace('/\[attachment\:\d+\].*?\[\/attachment\]/u', '', $this->message));
 
 		// Return true if we changed the message contents
-		return ($this->message != $message);
+		return $this->message != $message;
 	}
 
 	/**
@@ -1075,7 +1075,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Special case to ignore authorisation.
 			if ($action != 'read')
 			{
-				return null;
+				return;
 			}
 		}
 
@@ -1098,7 +1098,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -1543,7 +1543,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1560,7 +1560,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1585,7 +1585,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1615,7 +1615,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1632,7 +1632,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->getCategory()))
 		{
-			return null;
+			return;
 		}
 
 		// User is only allowed to edit post within time specified in the configuration
@@ -1659,7 +1659,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1681,7 +1681,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1726,7 +1726,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1771,6 +1771,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 }

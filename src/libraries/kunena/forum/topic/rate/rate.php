@@ -129,7 +129,7 @@ class KunenaForumTopicRate extends JObject
 	 * @return KunenaForumMessage|KunenaForumTopicRate
 	 * @since     Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumTopicRateHelper::get($identifier, $reload);
 	}

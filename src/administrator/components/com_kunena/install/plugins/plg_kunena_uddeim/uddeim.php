@@ -62,7 +62,7 @@ class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('private', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . "/private.php";

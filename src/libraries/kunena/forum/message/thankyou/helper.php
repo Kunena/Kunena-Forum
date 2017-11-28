@@ -35,7 +35,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function get($identifier, $reload = false)
+	public static function get($identifier, $reload = false)
 	{
 		if ($identifier instanceof KunenaForumMessageThankyou)
 		{
@@ -67,7 +67,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadMessages(array $ids)
+	protected static function loadMessages(array $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -124,7 +124,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getTotal($starttime = null, $endtime = null)
+	public static function getTotal($starttime = null, $endtime = null)
 	{
 		$db    = \Joomla\CMS\Factory::getDBO();
 		$where = array();
@@ -171,7 +171,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
+	public static function getTopUsers($target = true, $limitstart = 0, $limit = 10)
 	{
 		$field = 'targetuserid';
 
@@ -211,7 +211,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getTopMessages($limitstart = 0, $limit = 10)
+	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = \Joomla\CMS\Factory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
@@ -250,7 +250,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
+	public static function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
 		$db    = \Joomla\CMS\Factory::getDBO();
 		$field = 'targetuserid';
@@ -289,7 +289,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since K2.0
 	 */
-	static public function recountThankyou()
+	public static function recountThankyou()
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -323,7 +323,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since K2.0
 	 */
-	static public function recount()
+	public static function recount()
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 
@@ -360,7 +360,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getByMessage($ids = false)
+	public static function getByMessage($ids = false)
 	{
 		if ($ids === false)
 		{

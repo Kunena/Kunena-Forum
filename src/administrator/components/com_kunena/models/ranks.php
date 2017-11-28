@@ -20,7 +20,6 @@ jimport('joomla.application.component.modellist');
  */
 class KunenaAdminModelRanks extends \Joomla\CMS\MVC\Model\ListModel
 {
-
 	/**
 	 * @param   array $config
 	 *

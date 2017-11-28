@@ -655,7 +655,6 @@ class KunenaPagination
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

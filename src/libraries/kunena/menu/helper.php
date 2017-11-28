@@ -18,7 +18,6 @@ defined('_JEXEC') or die();
 abstract class KunenaMenuHelper
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function cleanCache()

@@ -19,10 +19,9 @@ defined('_JEXEC') or die();
 class KunenaAdminViewCpanel extends KunenaView
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		$help_url = 'https://docs.kunena.org/en/';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);

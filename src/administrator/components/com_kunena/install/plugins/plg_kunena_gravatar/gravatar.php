@@ -46,7 +46,7 @@ class plgKunenaGravatar extends \Joomla\CMS\Plugin\CMSPlugin
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return null;
+			return;
 		}
 
 		require_once __DIR__ . '/class.php';

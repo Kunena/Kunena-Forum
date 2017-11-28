@@ -19,14 +19,12 @@ defined('_JEXEC') or die();
 class KunenaAdminControllerCategories extends KunenaController
 {
 	/**
-	 *
 	 * @since    2.0.0-BETA2
 	 * @var null|string
 	 */
 	protected $baseurl = null;
 
 	/**
-	 *
 	 * @since    2.0.0-BETA2
 	 *
 	 * @var null|string

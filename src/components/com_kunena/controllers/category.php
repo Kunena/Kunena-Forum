@@ -38,7 +38,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 * @since Kunena
 	 * @throws null
 	 */
-	function jump()
+	public function jump()
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
@@ -57,7 +57,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 * @throws null
 	 * @since Kunena
 	 */
-	function markread()
+	public function markread()
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
@@ -132,7 +132,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 * @throws null
 	 * @since Kunena
 	 */
-	function subscribe()
+	public function subscribe()
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
@@ -170,7 +170,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 * @throws null
 	 * @since Kunena
 	 */
-	function unsubscribe()
+	public function unsubscribe()
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{

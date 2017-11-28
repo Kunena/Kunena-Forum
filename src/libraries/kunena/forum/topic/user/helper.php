@@ -39,7 +39,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function get($topic = null, $user = null, $reload = false)
+	public static function get($topic = null, $user = null, $reload = false)
 	{
 		if ($topic instanceof KunenaForumTopic)
 		{
@@ -71,7 +71,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getTopics($ids = false, $user = null)
+	public static function getTopics($ids = false, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
@@ -116,7 +116,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function loadTopics(array $ids, KunenaUser $user)
+	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -175,7 +175,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static public function getUserIds(array $topics, $value = 'user_id')
+	public static function getUserIds(array $topics, $value = 'user_id')
 	{
 		// Convert topic objects into ids
 		$ids = array();
@@ -330,7 +330,7 @@ abstract class KunenaForumTopicUserHelper
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	static protected function reloadTopic($id)
+	protected static function reloadTopic($id)
 	{
 		if (empty(self::$_topics [$id]))
 		{

@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 class KunenaTemplateLegacy
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function load()
@@ -94,5 +93,4 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
  */
 class CKunenaTools
 {
-
 }

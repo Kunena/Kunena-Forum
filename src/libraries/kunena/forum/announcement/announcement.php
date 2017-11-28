@@ -99,7 +99,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reload = false)
+	public static function getInstance($identifier = null, $reload = false)
 	{
 		return KunenaForumAnnouncementHelper::get($identifier, $reload);
 	}
@@ -304,7 +304,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -366,7 +366,6 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	// Internal functions
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	protected function saveInternal()
@@ -390,7 +389,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -412,7 +411,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -440,7 +439,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -463,6 +462,6 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return null;
+		return;
 	}
 }

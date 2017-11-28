@@ -20,7 +20,6 @@ jimport('joomla.application.component.modellist');
  */
 class KunenaAdminModelRank extends KunenaModel
 {
-
 	/**
 	 * @return mixed
 	 *
@@ -96,7 +95,7 @@ class KunenaAdminModelRank extends KunenaModel
 			return $selected;
 		}
 
-		return null;
+		return;
 	}
 
 	/**

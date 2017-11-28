@@ -191,7 +191,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -341,7 +340,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -400,7 +398,6 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		.layout#kunena + div { display: block !important;}
 		#kunena + div { display: block !important;}
 EOF;
-
 
 			$document = JFactory::getDocument();
 			$document->addStyleDeclaration($styles);

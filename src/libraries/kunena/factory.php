@@ -19,7 +19,7 @@ abstract class KunenaFactory
 	 * @var void
 	 * @since Kunena
 	 */
-	static $session = null;
+	public static $session = null;
 
 	/**
 	 * Get a Kunena template object

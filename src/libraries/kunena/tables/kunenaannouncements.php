@@ -145,6 +145,6 @@ class TableKunenaAnnouncements extends KunenaTable
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_DESCRIPTION'));
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

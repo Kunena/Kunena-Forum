@@ -20,13 +20,13 @@ abstract class KunenaHtmlParser
 	 * @var null
 	 * @since Kunena
 	 */
-	static $emoticons = null;
+	public static $emoticons = null;
 
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
-	static $relative = true;
+	public static $relative = true;
 
 	/**
 	 * @param   bool $grayscale

@@ -24,19 +24,19 @@ class KunenaPath extends JPath
 	 * @var null
 	 * @since Kunena
 	 */
-	static public $tmpdir = null;
+	public static $tmpdir = null;
 
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
-	static public $apache = null;
+	public static $apache = null;
 
 	/**
 	 * @var null
 	 * @since Kunena
 	 */
-	static public $owner = null;
+	public static $owner = null;
 
 	/**
 	 * Returns server writable temporary directory, preferring to Joomla tmp if possible.
@@ -120,6 +120,6 @@ class KunenaPath extends JPath
 		}
 
 		// Test ownership
-		return (self::$owner == fileowner($path));
+		return self::$owner == fileowner($path);
 	}
 }

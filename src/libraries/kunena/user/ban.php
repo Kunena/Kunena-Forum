@@ -19,12 +19,10 @@ jimport('joomla.utilities.date');
 class KunenaUserBan extends JObject
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const ANY = 0;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const ACTIVE = 1;

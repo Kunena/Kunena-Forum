@@ -308,7 +308,7 @@ class KunenaImage extends \Joomla\Image\Image
 		else
 		{
 			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
-					$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight())
+					$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
 			);
 		}
 

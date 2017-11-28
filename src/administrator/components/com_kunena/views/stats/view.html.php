@@ -19,13 +19,12 @@ defined('_JEXEC') or die();
 class KunenaAdminViewStats extends KunenaView
 {
 	/**
-	 *
 	 * @internal param null $tpl
 	 * @since    Kunena
 	 * @throws Exception
 	 * @throws null
 	 */
-	function displayDefault()
+	public function displayDefault()
 	{
 		JToolbarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
 

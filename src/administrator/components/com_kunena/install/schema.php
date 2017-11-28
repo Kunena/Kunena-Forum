@@ -104,7 +104,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		$value = parent::getState($property);
 
-		return (is_null($value) ? $default : $value);
+		return is_null($value) ? $default : $value;
 	}
 
 	/**
@@ -286,7 +286,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (!isset($sql[$table]))
 		{
-			return null;
+			return;
 		}
 
 		$this->db->setQuery($sql[$table]['sql']);
@@ -475,7 +475,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 				$fieldNode->setAttribute("name", $row->Field);
 				$fieldNode->setAttribute("type", $row->Type);
-				$fieldNode->setAttribute("null", (strtolower($row->Null) == 'yes') ? '1' : '0');
+				$fieldNode->setAttribute("null", (strtolower($row->null) == 'yes') ? '1' : '0');
 
 				if ($row->Default !== null)
 				{
@@ -550,7 +550,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (!$old || !$new)
 		{
-			return null;
+			return;
 		}
 
 		// $old->validate();
@@ -807,7 +807,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (!isset($schema) || $schema == false)
 		{
-			return null;
+			return;
 		}
 
 		$schema->formatOutput       = true;
@@ -908,7 +908,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 							case '':
 								break;
 							default:
-								echo ("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo "Kunena Installer: Unknown action $tablename.$action2 on xml file<br />";
 						}
 					}
 
@@ -953,7 +953,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 					}
 					break;
 				default:
-					echo ("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo "Kunena Installer: Unknown action $tablename.$action on xml file<br />";
 			}
 
 			if (!empty($str))
@@ -1155,7 +1155,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**

@@ -21,7 +21,7 @@ abstract class KunenaModule
 	 * @var string
 	 * @since Kunena
 	 */
-	static protected $css = null;
+	protected static $css = null;
 
 	/**
 	 * @var stdClass

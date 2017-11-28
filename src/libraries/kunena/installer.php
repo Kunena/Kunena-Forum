@@ -69,7 +69,7 @@ class KunenaInstaller
 		// Check if Kunena can be found from the database.
 		if (!self::detectTable('kunena_version'))
 		{
-			return null;
+			return;
 		}
 
 		// Get installed version.

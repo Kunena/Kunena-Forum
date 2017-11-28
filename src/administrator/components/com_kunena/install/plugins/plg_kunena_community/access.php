@@ -93,11 +93,10 @@ class KunenaAccessCommunity
 			return $this->groups;
 		}
 
-		return null;
+		return;
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -161,7 +160,7 @@ class KunenaAccessCommunity
 			$html ['jomsocial']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
 				'desc'  => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
-				'input' => JHtml::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected)
+				'input' => JHtml::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}
 
@@ -169,7 +168,6 @@ class KunenaAccessCommunity
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -221,7 +219,7 @@ class KunenaAccessCommunity
 		$query = "SELECT g.memberid AS user_id, c.id AS category_id, " . KunenaForum::ADMINISTRATOR . " AS role
 			FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
+			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote(COMMUNITY_GROUP_ADMIN)}";
 		$db->setQuery($query);
 
 		try

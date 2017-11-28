@@ -178,7 +178,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return KunenaForumTopic
 	 * @since Kunena
 	 */
-	static public function getInstance($identifier = null, $reset = false)
+	public static function getInstance($identifier = null, $reset = false)
 	{
 		return KunenaForumTopicHelper::get($identifier, $reset);
 	}
@@ -327,7 +327,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return boolean
 	 * @since Kunena
 	 */
-	function exists($exists = null)
+	public function exists($exists = null)
 	{
 		if ($exists !== null)
 		{
@@ -851,7 +851,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		if (!$this->exists() || !$category->exists())
 		{
-			return null;
+			return;
 		}
 
 		if ($action instanceof KunenaForumMessage)
@@ -1331,7 +1331,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			// Special case to ignore authorisation.
 			if ($action != 'read')
 			{
-				return null;
+				return;
 			}
 		}
 
@@ -1354,7 +1354,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -1881,7 +1881,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		return true;
 	}
 
-
 	// Internal functions
 
 	/**
@@ -1898,7 +1897,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1933,7 +1932,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1950,7 +1949,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1967,7 +1966,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1985,7 +1984,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_TOPIC_LOCKED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -2011,7 +2010,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -2030,7 +2029,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -2084,7 +2083,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -2103,6 +2102,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}
 
-		return null;
+		return;
 	}
 }

@@ -408,7 +408,7 @@ class KunenaModelSearch extends KunenaModel
 			'childforums' => $this->getState('query.childforums'),
 			'where'       => $this->buildWhere(),
 			'orderby'     => $this->buildOrderBy(),
-			'starttime'   => -1
+			'starttime'   => -1,
 		);
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
@@ -458,7 +458,7 @@ class KunenaModelSearch extends KunenaModel
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 						  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '');
+						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '', );
 
 		$url_params = '';
 		$state      = $this->getState();

@@ -23,7 +23,6 @@ class KunenaUploadHelper
 	protected static $_instances = array();
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	private function __construct()

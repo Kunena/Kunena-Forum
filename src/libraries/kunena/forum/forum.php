@@ -22,37 +22,30 @@ defined('_JEXEC') or die();
 abstract class KunenaForum
 {
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const PUBLISHED = 0;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const UNAPPROVED = 1;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const DELETED = 2;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const TOPIC_DELETED = 3;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const TOPIC_CREATION = 4;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const MODERATOR = 1;
 	/**
-	 *
 	 * @since Kunena
 	 */
 	const ADMINISTRATOR = 2;
@@ -443,7 +436,7 @@ abstract class KunenaForum
 			require_once $mpath;
 		}
 
-		$view = new $view (array('base_path' => KPATH_SITE));
+		$view = new $view(array('base_path' => KPATH_SITE));
 
 		// @var KunenaView $view
 

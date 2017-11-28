@@ -70,7 +70,6 @@ abstract class KunenaUserHelper
 	protected static $_me = null;
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function cleanup()
@@ -80,7 +79,6 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 *
 	 * @since Kunena
 	 */
 	public static function initialize()
@@ -316,7 +314,7 @@ abstract class KunenaUserHelper
 
 			try
 			{
-				list (self::$_total, self::$_lastid) = $db->loadRow();
+				list(self::$_total, self::$_lastid) = $db->loadRow();
 			}
 			catch (JDatabaseExceptionExecuting $e)
 			{

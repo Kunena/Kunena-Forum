@@ -254,6 +254,6 @@ class TableKunenaTopics extends KunenaTable
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
 		}
 
-		return ($this->getError() == '');
+		return $this->getError() == '';
 	}
 }

@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
  * KunenaLayoutWidgetFooter
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutWidgetFooter extends KunenaLayout
 {
@@ -32,7 +31,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 		if (!$config->time_to_create_page)
 		{
-			return null;
+			return;
 		}
 
 		$profiler = KunenaProfiler::instance('Kunena');
@@ -78,7 +77,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 		}
 		else
 		{
-			return null;
+			return;
 		}
 	}
 }

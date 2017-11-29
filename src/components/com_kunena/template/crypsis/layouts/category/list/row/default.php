@@ -42,7 +42,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 	?>
 			<td class="center">
 		<span class="hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
+			<?php echo $topic->getLastPostAuthor()->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 		</span>
 			</td>
 		<?php endif; ?>

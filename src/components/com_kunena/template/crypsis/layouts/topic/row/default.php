@@ -156,7 +156,7 @@ if (!empty($this->spacing)) : ?>
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
 				<div class="span3">
-					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, 1); ?>
+					<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
 				</div>
 				<div class="span9">
 			<?php else : ?>

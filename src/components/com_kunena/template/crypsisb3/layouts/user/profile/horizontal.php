@@ -51,7 +51,7 @@ if ($show)
 		:
 	?>
 			<li>
-				<?php echo $user->getLink($avatar, null, ''); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 			</li>
 			<?php if (isset($this->topic_starter) && $this->topic_starter)
 			:

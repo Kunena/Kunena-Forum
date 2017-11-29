@@ -44,7 +44,7 @@ if ($show)
 		<?php endif; ?>
 		<?php if ($user->exists() && $config->user_status) : ?>
 			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, 1); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
 				:

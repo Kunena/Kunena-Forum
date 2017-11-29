@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 		foreach ($this->onlineList as $user)
 		{
 			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-			$onlinelist[] = $user->getLink($avatar, null, '') . $user->getLink();
+			$onlinelist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit) . $user->getLink();
 		}
 		?>
 		<?php echo implode(', ', $onlinelist); ?>
@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 		foreach ($this->hiddenList as $user)
 		{
 			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-			$hiddenlist[] = $user->getLink($avatar, null, '') . $user->getLink();
+			$hiddenlist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit) . $user->getLink();
 		}
 		?>
 		<?php echo implode(', ', $hiddenlist); ?>

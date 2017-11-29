@@ -46,7 +46,7 @@ if ($show)
 		<?php endif; ?>
 		<?php if ($avatar) : ?>
 			<li>
-				<?php echo $user->getLink($avatar, null, ''); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 					<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;?>

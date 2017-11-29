@@ -209,7 +209,7 @@ foreach ($this->sections as $section) :
 										<div class="col-md-12">
 											<?php if ($avatar) : ?>
 												<div class="col-md-4">
-													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
 												</div>
 												<div class="col-md-8">
 											<?php else : ?>

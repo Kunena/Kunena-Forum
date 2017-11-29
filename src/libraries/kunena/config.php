@@ -1249,6 +1249,12 @@ class KunenaConfig extends JObject
 	public $quickreply = 1;
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $avataredit = 0;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

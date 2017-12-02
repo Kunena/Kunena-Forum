@@ -128,14 +128,14 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$find->filterByTime($filter);
+			$finder->filterByTime($filter);
 		}
 
 		$search = $this->getState('list.search');
 
 		if (!empty($search))
 		{
-			$finder->where('a.subject', 'LIKE', '%' .$search  . '%');
+			$finder->where('a.subject', 'LIKE', '%' . $search . '%');
 		}
 
 		$finder->where('a.parent', '=', 0);
@@ -317,7 +317,8 @@ class KunenaAdminModelTrash extends KunenaModel
 		$view_options[] = JHtml::_('select.option', 'topics', JText::_('COM_KUNENA_TRASH_TOPICS'));
 		$view_options[] = JHtml::_('select.option', 'messages', JText::_('COM_KUNENA_TRASH_MESSAGES'));
 
-		return JHtml::_('select.genericlist', $view_options, 'layout', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout'));
+		return JHtml::_('select.genericlist', $view_options, 'layout',
+			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout'));
 	}
 
 	/**
@@ -369,7 +370,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');
-		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'),
+			$this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}

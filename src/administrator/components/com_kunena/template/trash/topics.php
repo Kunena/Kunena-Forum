@@ -113,6 +113,9 @@ JHtml::_('dropdown.init');
 							<th width="10%" class="nowrap">
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
+							<th width="10%" class="nowrap">
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+							</th>
 							<th width="1%" class="nowrap">
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
@@ -173,7 +176,8 @@ JHtml::_('dropdown.init');
 									<td><?php echo $this->escape($row->subject); ?></td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
 									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
-									<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->last_post_time); ?></td>
+									<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->time); ?></td>
+									<td><?php echo $row->ip; ?></td>
 									<td><?php echo intval($row->id); ?></td>
 								</tr>
 								<?php

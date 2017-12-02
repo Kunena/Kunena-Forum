@@ -67,7 +67,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted topics.
 	 *
-	 * @return    array
+	 * @return    object
 	 *
 	 * @throws Exception
 	 * @throws null
@@ -75,122 +75,84 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	protected function _getTopics()
 	{
-		$db   = \Joomla\CMS\Factory::getDBO();
-		$join = array();
+		$finder = new KunenaForumMessageFinder;
+		$finder->filterByHold(array(2, 3));
 
-		$query = $db->getQuery(true)->select('a.id')->from('#__kunena_topics AS a');
-		$query->where('a.hold>=2');
+		$direction = strtoupper($this->getState('list.direction'));
+
+		switch ($this->getState('list.ordering'))
+		{
+			case 'title':
+				$finder->order('subject', $direction);
+				break;
+			/*case 'category':
+				$query->order('c.name ' . $direction);
+			case 'author':
+				$query->order('m.name ' . $direction);
+				break; */
+			case 'time':
+				$finder->order('time', $direction);
+				break;
+			default:
+				$finder->order('id', $direction);
+				$this->setState('list.ordering', 'id');
+		}
 
 		$filter = $this->getState('filter.title');
 
-		if (!empty($filter))
+		/*if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
-			$query->where('(a.subject LIKE ' . $like . ')');
+		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$query->where('(a.subject LIKE ' . $like . ')');
 		}
 
 		$filter = $this->getState('filter.category');
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
-			$query->where('(c.name LIKE ' . $like . ')');
-			$join['c'] = true;
+		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$query->where('(c.name LIKE ' . $like . ')');
+
 		}
 
 		$filter = $this->getState('filter.author');
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
-			$query->where('(m.name LIKE ' . $like . ')');
-			$join['m'] = true;
-		}
+		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$query->where('(m.name LIKE ' . $like . ')');
+
+		} */
 
 		$filter = $this->getState('filter.time');
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
-			$query->where('(a.first_post_time LIKE ' . $like . ')');
+			$find->filterByTime($filter);
 		}
 
 		$search = $this->getState('list.search');
 
 		if (!empty($search))
 		{
-			$like = $db->Quote('%' . $db->escape($search, true) . '%');
-			$query->where('( a.subject LIKE ' . $like . ' OR m.name LIKE ' . $like . ' OR a.id LIKE ' . $like . ' )');
-			$join['m'] = true;
+			$finder->where('a.subject', 'LIKE', '%' .$search  . '%');
 		}
 
-		// Add the list ordering clause.
-		$direction = strtoupper($this->getState('list.direction'));
+		$finder->where('a.parent', '=', 0);
 
-		switch ($this->getState('list.ordering'))
-		{
-			case 'title':
-				$query->order('a.subject ' . $direction);
-				break;
-			case 'category':
-				$query->order('c.name ' . $direction);
-				$join['c'] = true;
-				break;
-			case 'author':
-				$query->order('m.name ' . $direction);
-				$join['m'] = true;
-				break;
-			case 'time':
-				$query->order('a.first_post_time ' . $direction);
-				break;
-			default:
-				$query->order('a.id ' . $direction);
-				$this->setState('list.ordering', 'id');
-		}
+		$total = $finder->count();
 
-		if (isset($join['c']))
-		{
-			$query->innerJoin('#__kunena_categories AS c ON c.id=a.category_id');
-		}
+		$this->setState('list.total', $total);
 
-		if (isset($join['m']))
-		{
-			$query->innerJoin('#__kunena_messages AS m ON m.id=a.first_post_id');
-		}
-
-		// TODO: add authorization.
-
-		$cquery = clone $query;
-		$cquery->clear('SELECT')->clear('order')->select('COUNT(*)');
-		$db->setQuery($cquery);
-
-		try
-		{
-			$total = (int) $db->loadResult();
-			$this->setState('list.total', $total);
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
-
-			return array();
-		}
-
-		if (!$total)
-		{
-			return array();
-		}
-
-		// If out of range, use last page
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 		{
 			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 		}
 
-		$db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
-		$ids = $db->loadColumn();
-
-		return KunenaForumTopicHelper::getTopics($ids, 'none');
+		return $finder
+			->start($this->getState('list.start'))
+			->limit($this->getState('list.limit'))
+			->find();
 	}
 
 	/**

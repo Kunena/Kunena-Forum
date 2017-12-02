@@ -103,6 +103,9 @@ JHtml::_('dropdown.init');
 								<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>"
 								       onclick="Joomla.checkAll(this);"/>
 							</th>
+							<th width="1%" class="nowrap">
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+							</th>
 							<th>
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
@@ -112,20 +115,19 @@ JHtml::_('dropdown.init');
 							<th>
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
+							<th width="10%" class="nowrap">
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+							</th>
 							<th width="15%" class="nowrap">
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 							<th width="10%" class="nowrap">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-							</th>
-							<th width="10%" class="nowrap">
 								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-							</th>
-							<th width="1%" class="nowrap">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 						</tr>
 						<tr>
+							<td class="hidden-phone">
+							</td>
 							<td class="hidden-phone">
 							</td>
 							<td class="hidden-phone">
@@ -192,13 +194,13 @@ JHtml::_('dropdown.init');
 								?>
 								<tr>
 									<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
+									<td><?php echo intval($row->id); ?></td>
 									<td><?php echo $this->escape($row->subject); ?></td>
 									<td><?php echo $this->escape($row->getTopic()->subject); ?></td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
-									<td><?php echo $this->escape($row->ip); ?></td>
 									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
+									<td><?php echo $this->escape($row->ip); ?></td>
 									<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->time); ?></td>
-									<td><?php echo intval($row->id); ?></td>
 								</tr>
 								<?php
 							endforeach;

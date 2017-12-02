@@ -227,7 +227,19 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		try
 		{
-			$announcement->isAuthorised($id ? 'edit' : 'create') || $announcement->save();
+			$announcement->isAuthorised($id ? 'edit' : 'create');
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		try
+		{
+			$announcement->save();
 		}
 		catch (\Exception $e)
 		{

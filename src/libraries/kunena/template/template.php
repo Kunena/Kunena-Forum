@@ -1044,6 +1044,12 @@ HTML;
 				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
 			}
 
+			if ($topic->moved_id > 0)
+			{
+				$topic->icon_id = 500;
+				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+			}
+
 			if ($topicicontype == 'B2')
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';

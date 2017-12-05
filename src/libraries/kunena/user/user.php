@@ -1510,7 +1510,14 @@ class KunenaUser extends JObject
 		{
 			return true;
 		}
+	}
 
+	/**
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function bannedDate()
+	{
 		$ban = new \Joomla\CMS\Date\Date($this->banned);
 		$now = new \Joomla\CMS\Date\Date;
 

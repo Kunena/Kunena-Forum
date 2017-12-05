@@ -96,38 +96,38 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function removeinline()
 	{
-	    // Only support JSON requests.
-	    if ($this->input->getWord('format', 'html') != 'json')
-	    {
-	        throw new RuntimeException(JText::_('Bad Request'), 400);
-	    }
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
 
-	    if (!\Joomla\CMS\Session\Session::checkToken('request'))
-	    {
-	        throw new RuntimeException(JText::_('Forbidden'), 403);
-	    }
+		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
 
-	    $attach_id         = $this->input->getInt('file_id', 0);
+		$attach_id = $this->input->getInt('file_id', 0);
 
-	    $success           = array();
-	    $instance          = KunenaAttachmentHelper::get($attach_id);
-	    $success['result'] = $instance->setInline(0);
-	    unset($instance);
+		$success           = array();
+		$instance          = KunenaAttachmentHelper::get($attach_id);
+		$success['result'] = $instance->setInline(0);
+		unset($instance);
 
-	    header('Content-type: application/json');
-	    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-	    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-	    header("Cache-Control: no-store, no-cache, must-revalidate");
-	    header("Cache-Control: post-check=0, pre-check=0", false);
-	    header("Pragma: no-cache");
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
 
-	    while (@ob_end_clean())
-	    {
-	    }
+		while (@ob_end_clean())
+		{
+		}
 
-	    echo json_encode($success);
+		echo json_encode($success);
 
-	    jexit();
+		jexit();
 	}
 
 	/**
@@ -405,7 +405,7 @@ class KunenaControllerTopic extends KunenaController
 				$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
 				$params = new \Joomla\Registry\Registry($plugin[0]->params);
 
-				$captcha_pubkey = $params->get('public_key');
+				$captcha_pubkey  = $params->get('public_key');
 				$captcha_privkey = $params->get('private_key');
 
 				if (!empty($captcha_pubkey) && !empty($captcha_privkey))

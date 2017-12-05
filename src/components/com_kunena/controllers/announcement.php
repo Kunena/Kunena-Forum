@@ -61,11 +61,23 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			try
 			{
-				$announcement->isAuthorised('edit') || $announcement->save();
+				$announcement->isAuthorised('edit');
 			}
 			catch (\Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+			try
+			{
+				$announcement->save();
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+				$this->setRedirectBack();
+
+				return;
 			}
 
 			if ($announcement->isAuthorised('edit') || $announcement->save())
@@ -114,11 +126,23 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			try
 			{
-				$announcement->isAuthorised('edit') || $announcement->save();
+				$announcement->isAuthorised('edit');
 			}
 			catch (\Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+			try
+			{
+				$announcement->save();
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+				$this->setRedirectBack();
+
+				return;
 			}
 
 			if ($announcement->isAuthorised('edit') || !$announcement->save())
@@ -174,11 +198,23 @@ class KunenaControllerAnnouncement extends KunenaController
 
 			try
 			{
-				$announcement->isAuthorised('delete') || $announcement->delete();
+				$announcement->isAuthorised('delete');
 			}
 			catch (\Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
+			}
+
+			try
+			{
+				$announcement->delete();
+			}
+			catch (\Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
+				$this->setRedirectBack();
+
+				return;
 			}
 
 			if ($announcement->isAuthorised('delete') || $announcement->delete())

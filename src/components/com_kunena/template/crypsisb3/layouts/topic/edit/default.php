@@ -277,7 +277,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					}
 else
 {
-	echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->poll);
+    echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
 } ?>
 
 					<?php if ($this->message->exists() && $this->config->editmarkup)

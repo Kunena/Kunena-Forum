@@ -22,11 +22,23 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="jcontentevent_target" type="list" multiple="true" default="body"
+                <field name="jcontentevent_target" type="list" multiple="true" default=""
                        label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET"
                        description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC" class="inputbox">
                     <option value="title">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TITLES</option>
                     <option value="body">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_BODIES</option>
+                    <option value="announcement_title">announcement_title</option>
+                    <option value="announcement_sdescription">announcement_sdescription</option>
+                    <option value="announcement_description">announcement_description</option>
+                    <option value="category_headerdesc">category_headerdesc</option>
+                    <option value="section_headerdesc">section_headerdesc</option>
+                    <option value="index_top">index_top</option>
+                    <option value="topic_top">topic_top</option>
+                    <option value="topic_list_default">topic_list_default</option>
+                </field>
+                <field name="jcontentevent_plugins" type="list" multiple="true" default=""
+                       label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_PLUGINS"
+                       description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_PLUGINS_DESC" class="inputbox">
                 </field>
             </fieldset>
         </fields>

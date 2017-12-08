@@ -210,11 +210,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'title':
-				return KunenaHtmlParser::parseText($this->title);
+				return KunenaHtmlParser::parseText($this->title, '', 'announcement_title');
 			case 'sdescription':
-				return KunenaHtmlParser::parseBBCode($this->sdescription);
+				return KunenaHtmlParser::parseBBCode($this->sdescription, '', '', '', 'announcement_sdescription');
 			case 'description':
-				return KunenaHtmlParser::parseBBCode($this->description);
+				return KunenaHtmlParser::parseBBCode($this->description, '', '', '', 'announcement_description');
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':

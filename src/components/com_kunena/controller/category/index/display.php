@@ -301,6 +301,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 			}
 		}
+
+		KunenaHtmlParser::prepareContent($content, 'index_top');
 	}
 
 	/**

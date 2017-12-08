@@ -431,7 +431,6 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			if ($vFormat == 'html')
 			{
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-
 				\JFactory::getApplication()->triggerEvent('onKunenaDisplay', array('start', $view));
 				$view->displayAll();
 				\JFactory::getApplication()->triggerEvent('onKunenaDisplay', array('end', $view));

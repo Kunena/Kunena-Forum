@@ -78,14 +78,16 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param       $txt
-	 * @param   int $len
+	 * @param        $txt
+	 * @param   int  $len
+	 *
+	 * @param string $target
 	 *
 	 * @return mixed|string|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function parseText($txt, $len = 0)
+	public static function parseText($txt, $len = 0, $target = 'title')
 	{
 		if (!$txt)
 		{
@@ -99,7 +101,7 @@ abstract class KunenaHtmlParser
 
 		$txt = self::escape($txt);
 		$txt = preg_replace('/(\S{30})/u', '\1', $txt);
-		$txt = self::prepareContent($txt, 'title');
+		$txt = self::prepareContent($txt, $target);
 
 		return $txt;
 	}
@@ -125,9 +127,18 @@ abstract class KunenaHtmlParser
 	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
-		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-		$events       = (int) $config->get('jcontentevents', false);
-		$event_target = (array) $config->get('jcontentevent_target', array('body'));
+		$config        = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events        = (int) $config->get('jcontentevents', false);
+		$event_target  = (array) $config->get('jcontentevent_target', array());
+		$event_plugins = (array) $config->get('jcontentevent_plugins', array());
+
+		$name = '';
+		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
+
+		foreach ($plugin as $key => $value)
+		{
+			$name = is_array($value->name);
+		}
 
 		if ($events && in_array($target, $event_target))
 		{
@@ -139,7 +150,7 @@ abstract class KunenaHtmlParser
 			$params->set('ksource', 'kunena');
 
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-			\JFactory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
+			\JFactory::getApplication()->triggerEvent('onContentPrepare', array($name, &$row, &$params, 0));
 			$content = $row->text;
 		}
 
@@ -153,11 +164,13 @@ abstract class KunenaHtmlParser
 	 *
 	 * @param   string $context
 	 *
+	 * @param string   $target
+	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
+	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
 	{
 		if (!$txt)
 		{
@@ -172,7 +185,7 @@ abstract class KunenaHtmlParser
 		$bbcode->context = $context;
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent($txt);
+		$txt = self::prepareContent($txt, $target);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -180,14 +193,16 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param       $txt
-	 * @param   int $len
+	 * @param        $txt
+	 * @param   int  $len
+	 *
+	 * @param string $target
 	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function plainBBCode($txt, $len = 0)
+	public static function plainBBCode($txt, $len = 0, $target = 'message')
 	{
 		if (!$txt)
 		{
@@ -198,7 +213,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent($txt);
+		$txt = self::prepareContent($txt, $target);
 
 		return $txt;
 	}
@@ -212,7 +227,7 @@ abstract class KunenaHtmlParser
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function stripBBCode($txt, $len = 0, $html = true)
+	public static function stripBBCode($txt, $len = 0, $html = true, $target = 'message')
 	{
 		if (!$txt)
 		{
@@ -250,7 +265,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent($txt);
+		$txt = self::prepareContent($txt, $target);
 		$txt = strip_tags($txt);
 
 		if (!$html)

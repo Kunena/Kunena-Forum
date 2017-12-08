@@ -47,6 +47,7 @@ defined('_JEXEC') or die();
  * @property int    $last_post_time
  * @property string $params
  * @property string $topictemplate
+ * @property string $sectionheaderdesc
  * @since Kunena
  */
 class KunenaForumCategory extends KunenaDatabaseObject
@@ -175,6 +176,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	protected $_table = 'KunenaCategories';
 
 	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	protected $sectionheaderdesc;
+
+	/**
 	 * @param   mixed|array $properties
 	 *
 	 * @since Kunena
@@ -205,6 +212,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		}
 
 		$this->_alias = $this->get('alias', '');
+
+		if (!empty($this->description))
+		{
+			$this->sectionheaderdesc = $this->description;
+		}
+		else
+		{
+			$this->sectionheaderdesc = '';
+		}
 	}
 
 	/**
@@ -668,12 +684,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'name':
+				return KunenaHtmlParser::parseText($this->name, '', 'category_name');
 			case 'icon':
-				return KunenaHtmlParser::parseText($this->name);
+				return KunenaHtmlParser::parseText($this->name, '', 'category_icon');
 			case 'description':
+				return KunenaHtmlParser::parseBBCode($this->$field, '', '', '', 'category_description');
 			case 'topictemplate':
+				return KunenaHtmlParser::parseBBCode($this->$field, '', '', '', 'category_topictemplate');
 			case 'headerdesc':
-				return KunenaHtmlParser::parseBBCode($this->$field);
+				return KunenaHtmlParser::parseBBCode($this->$field, '', '', '', 'category_headerdesc');
 		}
 
 		return '';

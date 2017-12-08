@@ -185,7 +185,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$params->set('kunena_layout', 'default');
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-
+		KunenaHtmlParser::prepareContent($content, 'topic_top');
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 

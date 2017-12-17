@@ -180,7 +180,7 @@ $this->getBBcodesEnabled();
 					<div class="input-group col-md-12" style="padding: 0;">
 					<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 					<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
-						maxlength="100" size="40"
+						maxlength="150" size="40"
 						value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
 					</div>

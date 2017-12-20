@@ -2000,7 +2000,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @param $count
 	 *
-	 * @return int
+	 * @return integer
 	 *
 	 * @since Kunena 5.0.13
 	 */

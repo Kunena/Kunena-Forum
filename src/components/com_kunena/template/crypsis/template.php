@@ -44,6 +44,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
+
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
 			JHtml::_('bootstrap.renderModal');

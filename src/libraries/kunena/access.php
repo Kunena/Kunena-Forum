@@ -124,6 +124,7 @@ class KunenaAccess
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @return mixed
 	 */
 	public function clearCache()
 	{
@@ -179,9 +180,10 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   array $list
+	 * @param   array $list list
 	 *
 	 * @since Kunena
+	 * @return mixed
 	 */
 	protected function storeRoles(array $list = null)
 	{
@@ -232,7 +234,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return array
 	 * @since Kunena
@@ -267,7 +269,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return string
 	 * @since Kunena
@@ -410,7 +412,7 @@ window.addEvent('domready', function(){
 	 * Get category administrators.
 	 *
 	 * @param   int  $catid Category Id
-	 * @param   bool $all
+	 * @param   bool $all   all
 	 *
 	 * @return array
 	 * @since Kunena
@@ -430,8 +432,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get category moderators.
 	 *
-	 * @param   int  $catid Category Id
-	 * @param   bool $all
+	 * @param   int  $catid  Category Id
+	 * @param   bool $all    all
 	 *
 	 * @return array
 	 * @since Kunena
@@ -449,7 +451,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return array
 	 * @since Kunena
@@ -467,9 +469,9 @@ window.addEvent('domready', function(){
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @param   int   $category
-	 * @param   mixed $user
-	 * @param   bool  $status
+	 * @param   int   $category category
+	 * @param   mixed $user     user
+	 * @param   bool  $status   status
 	 *
 	 * @return boolean
 	 *
@@ -524,7 +526,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return array
 	 * @since Kunena
@@ -540,7 +542,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -615,8 +617,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
-	 * @param   int   $catid
+	 * @param   mixed $user   user
+	 * @param   int   $catid  catid
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -660,8 +662,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
-	 * @param   int   $catid
+	 * @param   mixed $user  user
+	 * @param   int   $catid catid
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -706,8 +708,8 @@ window.addEvent('domready', function(){
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   KunenaForumCategory $category
-	 * @param   int                 $userid
+	 * @param   KunenaForumCategory $category category
+	 * @param   int                 $userid   user id
 	 *
 	 * @return array
 	 * @since Kunena
@@ -740,9 +742,9 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user
-	 * @param   int   $catid
-	 * @param   bool  $string
+	 * @param   mixed $user   user
+	 * @param   int   $catid  catid
+	 * @param   bool  $string string
 	 *
 	 * @return string|array
 	 * @since Kunena
@@ -750,9 +752,12 @@ window.addEvent('domready', function(){
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
 	{
-		// Hold = 0: normal
-		// hold = 1: unapproved
-		// hold = 2: deleted
+		/**
+		 * Hold = 0: normal
+		 * Hold = 1: unapproved
+		 * Hold = 2: deleted
+		 */
+
 		if (!($user instanceof KunenaUser))
 		{
 			$user = KunenaFactory::getUser($user);
@@ -784,12 +789,12 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   int   $catid
-	 * @param   mixed $topic
-	 * @param   mixed $type
-	 * @param   bool  $moderators
-	 * @param   bool  $admins
-	 * @param   mixed $excludeList
+	 * @param   int   $catid       catid
+	 * @param   mixed $topic       topic
+	 * @param   mixed $type        type
+	 * @param   bool  $moderators  moderators
+	 * @param   bool  $admins      admins
+	 * @param   mixed $excludeList exclude list
 	 *
 	 * @return array
 	 * @since Kunena
@@ -961,8 +966,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   KunenaForumTopic $topic
-	 * @param   bool             $type
+	 * @param   KunenaForumTopic $topic loadSubscribers
+	 * @param   bool             $type  type
 	 *
 	 * @return array
 	 * @since Kunena

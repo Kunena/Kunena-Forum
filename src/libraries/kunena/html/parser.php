@@ -81,7 +81,7 @@ abstract class KunenaHtmlParser
 	 * @param        $txt
 	 * @param   int  $len
 	 *
-	 * @param string $target
+	 * @param   string $target
 	 *
 	 * @return mixed|string|void
 	 * @throws Exception
@@ -164,7 +164,7 @@ abstract class KunenaHtmlParser
 	 *
 	 * @param   string $context
 	 *
-	 * @param string   $target
+	 * @param   string   $target
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -196,7 +196,7 @@ abstract class KunenaHtmlParser
 	 * @param        $txt
 	 * @param   int  $len
 	 *
-	 * @param string $target
+	 * @param   string $target
 	 *
 	 * @return mixed|void
 	 * @throws Exception

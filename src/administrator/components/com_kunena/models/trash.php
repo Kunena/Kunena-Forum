@@ -85,7 +85,9 @@ class KunenaAdminModelTrash extends KunenaModel
 			case 'title':
 				$finder->order('subject', $direction);
 				break;
-			/*case 'category':
+
+			/*
+			case 'category':
 				$query->order('c.name ' . $direction);
 			case 'author':
 				$query->order('m.name ' . $direction);
@@ -100,7 +102,8 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		$filter = $this->getState('filter.title');
 
-		/*if (!empty($filter))
+		/*
+		if (!empty($filter))
 		{
 		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
 		$query->where('(a.subject LIKE ' . $like . ')');
@@ -318,7 +321,8 @@ class KunenaAdminModelTrash extends KunenaModel
 		$view_options[] = JHtml::_('select.option', 'messages', JText::_('COM_KUNENA_TRASH_MESSAGES'));
 
 		return JHtml::_('select.genericlist', $view_options, 'layout',
-			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout'));
+			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
+		);
 	}
 
 	/**
@@ -371,7 +375,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	{
 		jimport('joomla.html.pagination');
 		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'),
-			$this->getState('list.start'), $this->getState('list.limit'));
+			$this->getState('list.start'), $this->getState('list.limit')
+		);
 
 		return $navigation;
 	}

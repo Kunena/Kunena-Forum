@@ -197,7 +197,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			return false;
 		}
 
-		if($this->message->userid!=$this->me->userid && $this->me->isModerator())
+		if ($this->message->userid != $this->me->userid && $this->me->isModerator())
 		{
 			return false;
 		}

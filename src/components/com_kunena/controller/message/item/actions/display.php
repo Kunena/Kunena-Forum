@@ -326,7 +326,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				}
 
 				$this->messageButtons->set('report',
-					$this->getButton(sprintf($layout, '#report' . $mesid . ''), 'report', 'message', 'user', 'btn_report', $button, $icon));
+					$this->getButton(sprintf($layout, '#report' . $mesid . ''), 'report', 'message', 'user', 'btn_report', $button, $icon)
+				);
 			}
 		}
 

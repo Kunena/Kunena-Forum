@@ -468,6 +468,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['user_status'] = JHtml::_('select.genericlist', $yesno, 'cfg_user_status', 'class="inputbox" size="1"', 'value', 'text', $this->config->user_status);
 
 		$lists ['plain_email'] = JHtml::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
+		$lists ['moderator_permdelete'] = JHtml::_('select.genericlist', $yesno, 'cfg_moderator_permdelete', 'class="inputbox" size="1"', 'value', 'text', $this->config->moderator_permdelete);
 		return $lists;
 	}
 }

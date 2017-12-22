@@ -80,7 +80,9 @@ class KunenaPrivateCommunity extends KunenaPrivate
 			// PM popup requires JomSocial css to be loaded from selected template
 			$config   = CFactory::getConfig();
 			$document = \Joomla\CMS\Factory::getDocument();
+			/** @noinspection PhpDeprecationInspection */
 			$document->addStyleSheet('components/com_community/assets/window.css');
+			/** @noinspection PhpDeprecationInspection */
 			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/assets/css/style.css');
 			$this->loaded = true;
 		}

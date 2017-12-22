@@ -19,6 +19,7 @@ JHtml::_('behavior.tabstate');
 
 JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
+/** @noinspection PhpDeprecationInspection */
 \Joomla\CMS\Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
 ?>
 

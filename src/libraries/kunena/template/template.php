@@ -752,6 +752,7 @@ HTML;
 			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
 		}
 
+		/** @noinspection PhpDeprecationInspection */
 		return \Joomla\CMS\Factory::getDocument()->addStyleSheet($filename);
 	}
 
@@ -867,6 +868,7 @@ HTML;
 			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
 		}
 
+		/** @noinspection PhpDeprecationInspection */
 		return \Joomla\CMS\Factory::getDocument()->addScript($filename);
 	}
 

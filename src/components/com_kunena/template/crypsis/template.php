@@ -89,12 +89,16 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($bootstrap)
 		{
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
 			if ($this->ktemplate->params->get('icomoon'))
 			{
+				/** @noinspection PhpDeprecationInspection */
 				$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
@@ -103,6 +107,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 		}
 
@@ -153,6 +158,7 @@ EOF;
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
+		/** @noinspection PhpDeprecationInspection */
 		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 }

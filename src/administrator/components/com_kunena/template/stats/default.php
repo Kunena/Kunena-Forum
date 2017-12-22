@@ -13,10 +13,12 @@ defined('_JEXEC') or die();
 // @var KunenaAdminViewStats $this
 
 $document = \Joomla\CMS\Factory::getDocument();
+/** @noinspection PhpDeprecationInspection */
 $document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
 if (\Joomla\CMS\Factory::getLanguage()->isRTL())
 {
+	/** @noinspection PhpDeprecationInspection */
 	$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }
 ?>

@@ -141,6 +141,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		if ($fontawesome)
 		{
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 		}
 
@@ -148,6 +149,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		if ($icons)
 		{
+			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
@@ -197,6 +199,7 @@ EOF;
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
+		/** @noinspection PhpDeprecationInspection */
 		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 

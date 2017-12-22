@@ -244,6 +244,16 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 				switch ($action)
 				{
+					case 'permdelete':
+						if (!KunenaUser::getInstance()->isModerator() && !KunenaConfig::getInstance()->moderator_permdelete)
+						{
+							$actions[$action] = false;
+						}
+						else
+						{
+							$actions[$action] = isset($options[$action]) && $topic->isAuthorised($action) ? $options[$action] : false;
+						}
+						break;
 					case 'unsubscribe':
 					case 'unfavorite':
 						$actions[$action] = isset($options[$action]) ? $options[$action] : false;
@@ -304,7 +314,21 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 					continue;
 				}
 
-				$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+				switch ($action)
+				{
+					case 'permdelete':
+						if (!KunenaUser::getInstance()->isModerator() && !KunenaConfig::getInstance()->moderator_permdelete)
+						{
+							$actions[$action] = false;
+						}
+						else
+						{
+							$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+						}
+						break;
+					default:
+						$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+				}
 			}
 		}
 

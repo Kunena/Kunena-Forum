@@ -721,6 +721,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->lists['url_subject_topic'] ?> </td>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_URL_SUBJECT_DESC') ?></td>
 												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE') ?></td>
+													<td><?php echo $this->lists['moderator_permdelete'] ?> </td>
+													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

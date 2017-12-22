@@ -426,7 +426,14 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			if (!$permdelete && $topic->isAuthorised('permdelete'))
 			{
-				$permdelete = true;
+				if (!$this->me->isModerator() && !KunenaConfig::getInstance()->moderator_permdelete)
+				{
+					$permdelete = false;
+				}
+				else
+				{
+					$permdelete = true;
+				}
 			}
 		}
 

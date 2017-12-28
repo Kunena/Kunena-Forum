@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls` (
 	`id` int(11) NOT NULL auto_increment,
-	`title` varchar(100) NOT NULL,
+	`title` varchar(150) NOT NULL,
 	`threadid` int(11) NOT NULL,
 	`polltimetolive` datetime NULL,
 	PRIMARY KEY (id),

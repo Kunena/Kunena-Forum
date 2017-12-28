@@ -291,7 +291,7 @@ if (!empty($codeTypes)) : ?>
 					<div id="kbbcode-poll-options">
 						<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 						<input type="text" class="inputbox form-control" name="poll_title" id="kpoll-title"
-						       maxlength="100" size="40"
+						       maxlength="150" size="40"
 						       value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
 						<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"

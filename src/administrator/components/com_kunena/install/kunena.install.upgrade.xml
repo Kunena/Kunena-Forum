@@ -752,6 +752,11 @@
                  versionname="Internal">
             <phpfile name="5.0.5-2016-12-20_userlist"/>
         </version>
+        <version version="5.0.13"
+                 versiondate="2017-12-17"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `title` `title` VARCHAR(150);</query>
+        </version>
         <version version="5.1.0-ALPHA2"
                  versiondate="2017-06-30"
                  versionname="Internal">

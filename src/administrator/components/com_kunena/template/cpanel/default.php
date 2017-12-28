@@ -107,7 +107,7 @@ defined('_JEXEC') or die();
 							<dd><a href="https://www.kunena.org/team" target="_blank" rel="noopener noreferrer">Kunena Team</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
-							<dd>&copy; 2008 - 2017 Kunena, All rights reserved.</dd>
+							<dd>&copy; 2008 - 2018 Kunena, All rights reserved.</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>
 							<dd>GNU General Public License</dd>

@@ -36,8 +36,8 @@ abstract class KunenaModule
 	protected $params = null;
 
 	/**
-	 * @param   stdClass                  $module
-	 * @param   \Joomla\Registry\Registry $params
+	 * @param   stdClass                  $module module
+	 * @param   \Joomla\Registry\Registry $params params
 	 *
 	 * @since Kunena
 	 */
@@ -52,6 +52,7 @@ abstract class KunenaModule
 	 * Display module contents.
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	final public function display()
 	{
@@ -96,6 +97,7 @@ abstract class KunenaModule
 	/**
 	 * Internal module function to display module contents.
 	 * @since Kunena
+	 * @return void
 	 */
 	abstract protected function _display();
 }

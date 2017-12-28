@@ -24,12 +24,12 @@ class KunenaLogEntry
 	public $data;
 
 	/**
-	 * @param                       $type
-	 * @param                       $operation
-	 * @param                       $data
-	 * @param   KunenaForumCategory $category
-	 * @param   KunenaForumTopic    $topic
-	 * @param   KunenaUser          $user
+	 * @param   mixed               $type      type
+	 * @param   mixed               $operation operation
+	 * @param   mixed               $data      data
+	 * @param   KunenaForumCategory $category  category
+	 * @param   KunenaForumTopic    $topic     topic
+	 * @param   KunenaUser          $user      user
 	 *
 	 * @throws Exception
 	 * @since Kunena

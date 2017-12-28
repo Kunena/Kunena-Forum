@@ -20,16 +20,16 @@ define('MIME_PNG', 'image/png');
 class KunenaImage extends \Joomla\Image\Image
 {
 	/**
-	 * @param $dst_image
-	 * @param $src_image
-	 * @param $dst_x
-	 * @param $dst_y
-	 * @param $src_x
-	 * @param $src_y
-	 * @param $dst_w
-	 * @param $dst_h
-	 * @param $src_w
-	 * @param $src_h
+	 * @param   mixed $dst_image dst image
+	 * @param   mixed $src_image src image
+	 * @param   mixed $dst_x     dst x
+	 * @param   mixed $dst_y     dst y
+	 * @param   mixed $src_x     src x
+	 * @param   mixed $src_y     src y
+	 * @param   mixed $dst_w     dst w
+	 * @param   mixed $dst_h     dst h
+	 * @param   mixed $src_w     src w
+	 * @param   mixed $src_h     src h
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -89,7 +89,8 @@ class KunenaImage extends \Joomla\Image\Image
 	 *
 	 * @since  K5.0
 	 *
-	 * @param   $filename
+	 * @param   string  $filename filename
+	 * @return void
 	 */
 	public static function correctImageOrientation($filename)
 	{

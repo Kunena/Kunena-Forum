@@ -23,6 +23,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	 * @since Kunena
 	 */
 	const ANY = 0;
+
 	/**
 	 * @since Kunena
 	 */
@@ -117,8 +118,8 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param       $userid
-	 * @param   int $mode
+	 * @param   integer $userid userid
+	 * @param   int     $mode   mode
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -171,10 +172,10 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   mixed $data
-	 * @param   array $ignore
+	 * @param   mixed $data   data
+	 * @param   array $ignore ignore
 	 *
-	 * @return boolean|void
+	 * @return void
 	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
@@ -193,8 +194,8 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param       $ip
-	 * @param   int $mode
+	 * @param   integer $ip   ip
+	 * @param   int     $mode mode
 	 *
 	 * @return boolean
 	 * @throws Exception

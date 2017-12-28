@@ -31,9 +31,9 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * Returns KunenaForumTopicUser object.
 	 *
-	 * @param   KunenaForumTopic|int|null $topic
-	 * @param   mixed                     $user
-	 * @param   bool                      $reload
+	 * @param   KunenaForumTopic|int|null $topic  topic
+	 * @param   mixed                     $user   user
+	 * @param   bool                      $reload reload
 	 *
 	 * @return KunenaForumTopicUser
 	 * @throws Exception
@@ -64,8 +64,8 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   bool|array $ids
-	 * @param   mixed      $user
+	 * @param   bool|array $ids  ids
+	 * @param   mixed      $user user
 	 *
 	 * @return KunenaForumTopicUser[]
 	 * @throws Exception
@@ -110,11 +110,12 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   array      $ids
-	 * @param   KunenaUser $user
+	 * @param   array      $ids  ids
+	 * @param   KunenaUser $user user
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
@@ -168,8 +169,8 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * Get all user ids who have participated to the given topics.
 	 *
-	 * @param   array|KunenaForumTopic[] $topics
-	 * @param   string                   $value Row to pick up as value.
+	 * @param   array|KunenaForumTopic[] $topics topics
+	 * @param   string                   $value  Row to pick up as value.
 	 *
 	 * @return array List of [topic][userid] = value.
 	 * @throws Exception
@@ -225,8 +226,8 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
+	 * @param   KunenaForumTopic $old old
+	 * @param   KunenaForumTopic $new new
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -270,8 +271,8 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
+	 * @param   KunenaForumTopic $old old
+	 * @param   KunenaForumTopic $new new
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -325,10 +326,11 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   int $id
+	 * @param   int $id id
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function reloadTopic($id)
 	{
@@ -368,11 +370,10 @@ abstract class KunenaForumTopicUserHelper
 		unset($results);
 	}
 
-	// Internal functions
-
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -381,9 +382,9 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   bool|array|int $topicids
-	 * @param   int            $start
-	 * @param   int            $end
+	 * @param   bool|array|int $topicids topicids
+	 * @param   int            $start    start
+	 * @param   int            $end      end
 	 *
 	 * @return boolean|integer
 	 * @throws Exception

@@ -142,7 +142,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Returns KunenaForumMessage object.
 	 *
 	 * @param   int  $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumMessage
 	 * @since Kunena
@@ -152,6 +152,10 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		return KunenaForumMessageHelper::get($identifier, $reload);
 	}
 
+	/**
+	 * Destruct
+	 * @since Kunena
+	 */
 	public function __destruct()
 	{
 		unset($this->_db);
@@ -159,7 +163,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -222,9 +226,10 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaForumTopic $topic
+	 * @param   KunenaForumTopic $topic topic
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setTopic(KunenaForumTopic $topic)
 	{
@@ -261,7 +266,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
-	 * @param   bool                     $xhtml
+	 * @param   bool                     $xhtml    xhtml
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -287,9 +292,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   array      $fields
-	 * @param   mixed      $user
-	 * @param   null|array $safefields
+	 * @param   array      $fields     fields
+	 * @param   mixed      $user       user
+	 * @param   null|array $safefields safefields
 	 *
 	 * @return array
 	 * @throws null
@@ -355,7 +360,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Send email notifications from the message.
 	 *
-	 * @param   null|string $url
+	 * @param   null|string $url url
 	 *
 	 * @return boolean|null
 	 * @throws Exception
@@ -368,12 +373,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$config->get('send_emails'))
 		{
-			return;
+			return false;
 		}
 
 		if ($this->hold > 1)
 		{
-			return;
+			return false;
 		}
 		elseif ($this->hold == 1)
 		{
@@ -521,7 +526,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
-	 * @param   bool                     $xhtml
+	 * @param   bool                     $xhtml    xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -536,7 +541,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   null|KunenaForumCategory $category
+	 * @param   null|KunenaForumCategory $category category
 	 *
 	 * @return \Joomla\CMS\Uri\Uri
 	 * @since Kunena
@@ -547,7 +552,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$this->exists() || !$category->exists())
 		{
-			return;
+			return false;
 		}
 
 		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
@@ -556,11 +561,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   \Joomla\CMS\Mail\Mail $mail
-	 * @param   int                   $subscription
-	 * @param   string                $subject
-	 * @param   string                $url
-	 * @param   bool                  $once
+	 * @param   \Joomla\CMS\Mail\Mail $mail         mail
+	 * @param   int                   $subscription subscription
+	 * @param   string                $subject      subject
+	 * @param   string                $url          url
+	 * @param   bool                  $once         once
 	 *
 	 * @return void
 	 * @throws Exception
@@ -586,7 +591,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   int $value
+	 * @param   int $value value
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -848,8 +853,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   bool|array $ids
-	 * @param   string     $action
+	 * @param   bool|array $ids    ids
+	 * @param   string     $action action
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception
@@ -879,10 +884,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   bool $newTopic
+	 * @param   bool $newTopic new topic
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function update($newTopic = false)
 	{
@@ -964,7 +970,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return KunenaForumTopicUser
 	 * @throws Exception
@@ -1033,9 +1039,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Display required field from message table
 	 *
-	 * @param   string  $field
-	 * @param   boolean $html
-	 * @param   string  $context
+	 * @param   string  $field   field
+	 * @param   boolean $html    html
+	 * @param   string  $context context
 	 *
 	 * @return integer|string
 	 * @throws Exception
@@ -1059,8 +1065,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
 	 *
 	 * @return boolean
 	 *
@@ -1075,7 +1081,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Special case to ignore authorisation.
 			if ($action != 'read')
 			{
-				return;
+				return false;
 			}
 		}
 
@@ -1085,11 +1091,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
-	 * @param   bool       $throw
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
+	 * @param   bool       $throw  trow
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return mixed
 	 * @throws null
 	 * @since  K4.0
 	 */
@@ -1098,7 +1104,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return;
+			return false;
 		}
 
 		// Load user if not given.
@@ -1156,11 +1162,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   array $fields
-	 * @param   mixed $user
+	 * @param   array $fields fields
+	 * @param   mixed $user   user
 	 *
 	 * @throws null
 	 * @since Kunena
+	 * @return void
 	 */
 	public function edit($fields = array(), $user = null)
 	{
@@ -1176,9 +1183,10 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function makeAnonymous($user = null)
 	{
@@ -1206,9 +1214,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   int    $tmpid
-	 * @param   string $postvar
-	 * @param   null   $catid
+	 * @param   int    $tmpid   tmpid
+	 * @param   string $postvar postvar
+	 * @param   null   $catid   catid
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -1230,11 +1238,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * If attachment is already pointing to the message, this function has no effect.
 	 * Currently only orphan attachments can be added.
 	 *
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @since  K4.0
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	public function addAttachments(array $ids)
 	{
@@ -1244,12 +1253,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
-	 * @param   bool|int|array $ids
+	 * @param   bool|int|array $ids ids
 	 *
 	 * @deprecated K4.0
 	 * @since      Kunena
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	public function removeAttachment($ids)
 	{
@@ -1268,18 +1278,17 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @since  K4.0
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	public function removeAttachments(array $ids)
 	{
 		$this->_attachments_del += $this->getAttachments($ids, 'none');
 	}
-
-	// Internal functions
 
 	/**
 	 * Get the number of attachments into a message
@@ -1487,9 +1496,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Get the substring
 	 *
-	 * @param $string
-	 * @param $start
-	 * @param $length
+	 * @param   string  $string string
+	 * @param   integer $start  start
+	 * @param   integer $length length
 	 *
 	 * @return string
 	 * @since K5.0.2
@@ -1518,7 +1527,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws Exception
@@ -1547,7 +1556,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @since Kunena
@@ -1564,7 +1573,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws Exception
@@ -1589,7 +1598,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws Exception
@@ -1621,7 +1630,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * This function check the edit time from the author of the post and return if the user is allowed to edit his post.
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws Exception
@@ -1632,7 +1641,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->getCategory()))
 		{
-			return;
+			return false;
 		}
 
 		// User is only allowed to edit post within time specified in the configuration
@@ -1663,7 +1672,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws Exception
@@ -1687,7 +1696,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Check if user has the right to upload image attachment
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
 	 * @throws Exception
@@ -1732,7 +1741,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Check if user has the right to upload file attachment
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
 	 * @throws Exception

@@ -26,7 +26,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * isDefault
 	 *
-	 * @param $template
+	 * @param   string $template template
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -41,9 +41,9 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
-	 *  parseXmlFiles
+	 * parseXmlFiles
 	 *
-	 * @param   null $templateBaseDir
+	 * @param   null $templateBaseDir template
 	 *
 	 * @return array
 	 * @since Kunena
@@ -92,8 +92,8 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
-	 * @param        $templateDir
-	 * @param   null $templateBaseDir
+	 * @param   string $templateDir     template dir
+	 * @param   string $templateBaseDir template basedir
 	 *
 	 * @return boolean|stdClass
 	 * @since Kunena
@@ -127,7 +127,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * parseKunenaInstallFile
 	 *
-	 * @param   $path
+	 * @param   string $path path
 	 *
 	 * @return boolean|stdClass
 	 * @since Kunena

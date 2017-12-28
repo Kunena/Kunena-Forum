@@ -23,9 +23,10 @@ class KunenaFolder extends JFolder
 	/**
 	 * Create index.html file into the given folder, if it doesn't exist.
 	 *
-	 * @param $folder
+	 * @param   string $folder folder
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function createIndex($folder)
 	{

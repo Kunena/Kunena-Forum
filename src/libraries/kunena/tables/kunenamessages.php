@@ -156,8 +156,8 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id
-	 * @param   bool $reset
+	 * @param   null $id    id
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -220,6 +220,7 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function reset()
 	{

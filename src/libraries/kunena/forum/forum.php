@@ -162,7 +162,7 @@ abstract class KunenaForum
 	 */
 	public static function isDev()
 	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		if ('@kunenaversion@' == '@kunenaversion@')
 		{
 			return true;
 		}
@@ -196,6 +196,7 @@ abstract class KunenaForum
 	 *
 	 * @since 2.0.0-BETA2
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function setup()
 	{
@@ -285,9 +286,14 @@ abstract class KunenaForum
 		return self::$version;
 	}
 
+	/**
+	 * @return void
+	 *
+	 * @since version
+	 */
 	protected static function buildVersion()
 	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		if ('@kunenaversion@' == '@kunenaversion@')
 		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
 
@@ -307,8 +313,8 @@ abstract class KunenaForum
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? \Joomla\CMS\Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
-		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+		self::$version_date  = ('@kunenaversiondate@' == '@kunenaversiondate@') ? \Joomla\CMS\Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
+		self::$version_name  = ('@kunenaversionname@' == '@kunenaversionname@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 
 	/**
@@ -376,8 +382,6 @@ abstract class KunenaForum
 		return self::$version_name;
 	}
 
-	// Internal functions
-
 	/**
 	 * Displays Kunena Forum view/layout inside your extension.
 	 *
@@ -392,6 +396,7 @@ abstract class KunenaForum
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())
 	{

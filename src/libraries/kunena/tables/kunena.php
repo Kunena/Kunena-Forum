@@ -23,8 +23,8 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	protected $_exists = false;
 
 	/**
-	 * @param   null $keys
-	 * @param   bool $reset
+	 * @param   null $keys  keys
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -134,7 +134,7 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   bool $updateNulls
+	 * @param   bool $updateNulls update
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -181,7 +181,7 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   null $exists
+	 * @param   null $exists exists
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -336,7 +336,7 @@ abstract class KunenaTable extends \Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   null $pk
+	 * @param   null $pk pk
 	 *
 	 * @return boolean
 	 * @since Kunena

@@ -131,6 +131,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save()
 	{
@@ -271,6 +272,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * @return    boolean    True on success.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete()
 	{

@@ -609,7 +609,7 @@ class KunenaIcons
 
 		if (!KunenaUserHelper::getMyself()->isModerator())
 		{
-			return;
+			return false;
 		}
 
 		if ($topicicontype == 'fa')
@@ -891,7 +891,7 @@ class KunenaIcons
 	/**
 	 * Return the rss icon
 	 *
-	 * @param   null $text
+	 * @param   null $text text
 	 *
 	 * @return string
 	 *
@@ -1186,9 +1186,9 @@ class KunenaIcons
 	/**
 	 * Return the category icon
 	 *
-	 * @param        $categoryicon
-	 * @param   null $new
-	 * @param   bool $big
+	 * @param   string $categoryicon icon
+	 * @param   null   $new          new
+	 * @param   bool   $big          big
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1830,6 +1830,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	public static function report()
@@ -1864,6 +1865,7 @@ class KunenaIcons
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since K5.0
 	 */
 	public static function reportname()

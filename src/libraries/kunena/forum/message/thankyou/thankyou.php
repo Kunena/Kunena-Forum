@@ -34,7 +34,7 @@ class KunenaForumMessageThankyou extends JObject
 	protected $users = array();
 
 	/**
-	 * @param   int $id
+	 * @param   int $id id
 	 *
 	 * @internal
 	 * @since Kunena
@@ -45,8 +45,8 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param   null $identifier
-	 * @param   bool $reload
+	 * @param   null $identifier identifier
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumMessageThankyou
 	 * @throws Exception
@@ -58,10 +58,11 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param   int    $userid
-	 * @param   string $time
+	 * @param   int    $userid userid
+	 * @param   string $time   time
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function _add($userid, $time)
 	{
@@ -71,7 +72,7 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Save thank you.
 	 *
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -127,7 +128,7 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Check if the user has already said thank you.
 	 *
-	 * @param   int $userid
+	 * @param   int $userid userid
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -138,7 +139,7 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param   KunenaForumMessage $message
+	 * @param   KunenaForumMessage $message message
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -176,9 +177,9 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * Detele thank you from the database.
+	 * Delete thank you from the database.
 	 *
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return boolean
 	 * @throws Exception

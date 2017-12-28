@@ -22,7 +22,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 	public $code = 200;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $location;

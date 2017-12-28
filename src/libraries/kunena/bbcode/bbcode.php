@@ -26,7 +26,7 @@ jimport('joomla.utilities.string');
 class KunenaBbcode extends NBBC_BBCode
 {
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
 	 */
 	public $autolink_disable = 0;
@@ -40,10 +40,11 @@ class KunenaBbcode extends NBBC_BBCode
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
-	 * @param   bool $relative
+	 * @param   bool $relative relative
 	 *
 	 * @internal
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($relative = true)
 	{
@@ -71,10 +72,11 @@ class KunenaBbcode extends NBBC_BBCode
 	/**
 	 * Get global instance from BBCode parser.
 	 *
-	 * @param   bool $relative
+	 * @param   bool $relative relative
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($relative = true)
 	{
@@ -91,7 +93,7 @@ class KunenaBbcode extends NBBC_BBCode
 	}
 
 	/**
-	 * @param $params
+	 * @param   mixed $params params
 	 *
 	 * @return string
 	 * @throws Exception
@@ -291,14 +293,13 @@ class KunenaBbcode extends NBBC_BBCode
 	}
 
 	/**
-	 * @param $params
+	 * @param   mixed $params params
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
 	public function canCloakEmail(&$params)
 	{
-
 		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
 			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
@@ -313,6 +314,13 @@ class KunenaBbcode extends NBBC_BBCode
 		return false;
 	}
 
+	/**
+	 * @param   string $url url
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function get_title($url)
 	{
 		try
@@ -326,15 +334,18 @@ class KunenaBbcode extends NBBC_BBCode
 
 		if (strlen($str) > 0)
 		{
-			$str = trim(preg_replace('/\s+/', ' ', $str)); // supports line breaks inside <title>
-			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title); // ignore case
+			// Supports line breaks inside <title>
+			$str = trim(preg_replace('/\s+/', ' ', $str));
+
+			// Ignore case
+			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
 
 			return $title[1];
 		}
 	}
 
 	/**
-	 * @param $string
+	 * @param   string $string string
 	 *
 	 * @return array
 	 * @since Kunena
@@ -429,9 +440,9 @@ class KunenaBbcode extends NBBC_BBCode
 	 * @see   BBCode::IsValidURL()
 	 * Regular expression taken from https://gist.github.com/729294
 	 *
-	 * @param        $string
-	 * @param   bool $email_too
-	 * @param   bool $local_too
+	 * @param   string $string    string
+	 * @param   bool   $email_too email
+	 * @param   bool   $local_too local
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -485,7 +496,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	public $default_smileys = array();
 
 	/**
-	 * @var int
+	 * @var integer
 	 * @since Kunena
 	 */
 	public $mapid = 0;
@@ -1146,12 +1157,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaBbcode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|mixed|string
 	 * @throws Exception
@@ -1195,12 +1206,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * Format a [url] tag by producing an <a>...</a> element.
 	 * The URL only allows http, https, mailto, and ftp protocols for safety.
 	 *
-	 * @param   KunenaBbcode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1209,7 +1220,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	public function DoURL($bbcode, $action, $name, $default, $params, $content)
 	{
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
-		// has been processed.
+		// Has been processed.
 		if ($action == BBCODE_CHECK)
 		{
 			$bbcode->autolink_disable++;
@@ -1266,12 +1277,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1311,12 +1322,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1400,12 +1411,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1446,12 +1457,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1496,12 +1507,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1563,14 +1574,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @return KunenaForumMessage|null
+	 * @return mixed
 	 * @since Kunena
 	 */
 	protected function getMessage()
 	{
 		if (empty($this->parent))
 		{
-			return;
+			return false;
 		}
 		elseif ($this->parent instanceof KunenaForumMessage)
 		{
@@ -1582,18 +1593,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return $this->parent->message;
 		}
 
-		return;
+		return false;
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
-	 * @return boolean|string
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1610,7 +1621,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			echo '<div class="alert alert-error">' . JText::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
 
-			return;
+			return false;
 		}
 
 		$config = KunenaFactory::getTemplate()->params;
@@ -1642,12 +1653,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1681,7 +1692,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	/**
 	 * Render eBay layout from template
 	 *
-	 * @param $ItemID
+	 * @param   integer $ItemID id
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1745,12 +1756,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1771,8 +1782,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$config = KunenaFactory::getConfig();
 		$user   = \Joomla\CMS\Factory::getUser();
 		$db     = \Joomla\CMS\Factory::getDBO();
-		/** @var JSite $site */
-		$site = \Joomla\CMS\Factory::getApplication('site');
+		$site   = \Joomla\CMS\Factory::getApplication('site');
 
 		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
 			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
@@ -1843,7 +1853,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 						break;
 					}
 					break;
-				// Continue to intro if fulltext is empty
+
+					// Continue to intro if fulltext is empty
 				case 'intro':
 					if (!empty($article->introtext))
 					{
@@ -1859,7 +1870,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 						}
 					}
 					break;
-				// Continue to link if introtext is empty
+
+					// Continue to link if introtext is empty
 				case 'link':
 				default:
 					$link = '<a href="' . $url . '" class="readon">' . $article->title . '</a>';
@@ -1889,12 +1901,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1914,18 +1926,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$wrote = $user . " " . JText::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html .= '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
+		$html = '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
 
 		return $html;
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -1988,12 +2000,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2050,12 +2062,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2332,12 +2344,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2493,12 +2505,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2585,12 +2597,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2679,12 +2691,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2708,12 +2720,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaBBCode $bbcode
-	 * @param                $action
-	 * @param                $name
-	 * @param                $default
-	 * @param                $params
-	 * @param                $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -2994,12 +3006,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -3039,12 +3051,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	}
 
 	/**
-	 * @param $bbcode
-	 * @param $action
-	 * @param $name
-	 * @param $default
-	 * @param $params
-	 * @param $content
+	 * @param   mixed $bbcode  bbcode
+	 * @param   mixed $action  action
+	 * @param   mixed $name    name
+	 * @param   mixed $default default
+	 * @param   mixed $params  params
+	 * @param   mixed $content content
 	 *
 	 * @return boolean|string
 	 * @since Kunena

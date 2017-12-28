@@ -127,7 +127,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to render the view.
 	 *
-	 * @param   string  Layout.
+	 * @param   string  $layout layout
 	 *
 	 * @return  string  The rendered view.
 	 *
@@ -369,7 +369,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Set/override debug mode.
 	 *
-	 * @param   array $data
+	 * @param   array $data data
 	 *
 	 * @return KunenaLayoutBase Instance of $this to allow chaining.
 	 * @internal param bool $value
@@ -387,7 +387,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add stylesheet to the document.
 	 *
-	 * @param $filename
+	 * @param   string $filename filename
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -401,7 +401,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add script to the document.
 	 *
-	 * @param $filename
+	 * @param   string $filename filename
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -415,8 +415,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add script declaration to the document.
 	 *
-	 * @param          $content
-	 * @param   string $type
+	 * @param   string $content content
+	 * @param   string $type    type
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -471,7 +471,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Property overloading.
 	 *
-	 * @param $property
+	 * @param   mixed $property property
 	 *
 	 * @return mixed
 	 * @throws InvalidArgumentException
@@ -497,10 +497,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Property overloading.
 	 *
-	 * @param $property
-	 * @param $value
+	 * @param   mixed   $property property
+	 * @param   integer $value    value
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function __set($property, $value)
 	{
@@ -533,8 +534,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
-	 * @param $name
-	 * @param $arguments
+	 * @param   string $name      name
+	 * @param   mixed  $arguments arguments
 	 *
 	 * @return mixed
 	 * @throws InvalidArgumentException
@@ -548,7 +549,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Property overloading.
 	 *
-	 * @param $property
+	 * @param   mixed $property properties
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -616,7 +617,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
 	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
 	 *
-	 * @param   $path
+	 * @param   string $path path
 	 *
 	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @throws Exception
@@ -718,9 +719,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
+	 * @param   string $path    path
+	 * @param   string $input   input
+	 * @param   mixed  $options options
 	 *
 	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena

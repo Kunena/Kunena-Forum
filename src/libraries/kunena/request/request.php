@@ -35,9 +35,9 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string              $path Controller path.
-	 * @param   \Joomla\Input\Input $input
-	 * @param   mixed               $options
+	 * @param   string              $path    Controller path.
+	 * @param   \Joomla\Input\Input $input   input
+	 * @param   mixed               $options options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @since Kunena

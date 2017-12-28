@@ -61,7 +61,7 @@ class KunenaForumTopicRate extends JObject
 	protected $users = array();
 
 	/**
-	 * @param   int $identifier
+	 * @param   int $identifier identifier
 	 *
 	 * @since Kunena
 	 */
@@ -124,7 +124,7 @@ class KunenaForumTopicRate extends JObject
 	 * @access    public
 	 *
 	 * @param   int  $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumMessage|KunenaForumTopicRate
 	 * @since     Kunena
@@ -137,7 +137,7 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * Perform insert the rate into table
 	 *
-	 * @param $user
+	 * @param   string $user user
 	 *
 	 * @return boolean|\Joomla\CMS\Response\JsonResponse
 	 * @throws Exception
@@ -203,8 +203,8 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * Get the users to check which one are already rated the topic
 	 *
-	 * @param   int $start
-	 * @param   int $limit
+	 * @param   int $start start
+	 * @param   int $limit limit
 	 *
 	 * @return void
 	 * @throws Exception
@@ -239,10 +239,11 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param $userid
-	 * @param $time
+	 * @param   integer $userid userid
+	 * @param   integer $time   time
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function _add($userid, $time)
 	{
@@ -250,7 +251,7 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
-	 * @param   int $userid
+	 * @param   int $userid userid
 	 *
 	 * @return bool userid if hes in table else empty
 	 * @internal param int $pid
@@ -264,6 +265,7 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * Get rate for the specified topic and user
 	 * @since Kunena
+	 * @return mixed
 	 */
 	public function getTopicUserRate()
 	{

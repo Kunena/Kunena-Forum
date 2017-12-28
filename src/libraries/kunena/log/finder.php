@@ -60,7 +60,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param $condition
+	 * @param   mixed $condition condition
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -73,7 +73,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param $columns
+	 * @param   mixed $columns columns
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -86,7 +86,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param $columns
+	 * @param   mixed $columns columns
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -130,9 +130,10 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query query
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

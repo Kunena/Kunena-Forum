@@ -29,8 +29,8 @@ abstract class KunenaHtmlParser
 	public static $relative = true;
 
 	/**
-	 * @param   bool $grayscale
-	 * @param   bool $emoticonbar
+	 * @param   bool $grayscale   grayscale
+	 * @param   bool $emoticonbar emoticonbar
 	 *
 	 * @return array
 	 * @throws Exception
@@ -78,10 +78,9 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param        $txt
-	 * @param   int  $len
-	 *
-	 * @param   string $target
+	 * @param   string $txt    text
+	 * @param   int    $len    len
+	 * @param   string $target target
 	 *
 	 * @return mixed|string|void
 	 * @throws Exception
@@ -91,7 +90,7 @@ abstract class KunenaHtmlParser
 	{
 		if (!$txt)
 		{
-			return;
+			return false;
 		}
 
 		if ($len && Joomla\String\StringHelper::strlen($txt) > $len)
@@ -107,7 +106,7 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param $string
+	 * @param   string $string string
 	 *
 	 * @return string
 	 * @since Kunena
@@ -118,8 +117,8 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param          $content
-	 * @param   string $target
+	 * @param   string $content content
+	 * @param   string $target  target
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -158,13 +157,11 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param          $txt
-	 * @param   null   $parent
-	 * @param   int    $len
-	 *
-	 * @param   string $context
-	 *
-	 * @param   string   $target
+	 * @param   string  $txt     text
+	 * @param   null    $parent  parent
+	 * @param   int     $len     len
+	 * @param   string  $context context
+	 * @param   string  $target  target
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -174,7 +171,7 @@ abstract class KunenaHtmlParser
 	{
 		if (!$txt)
 		{
-			return;
+			return false;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -193,10 +190,9 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param        $txt
-	 * @param   int  $len
-	 *
-	 * @param   string $target
+	 * @param   string $txt    text
+	 * @param   int    $len    len
+	 * @param   string $target target
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -206,7 +202,7 @@ abstract class KunenaHtmlParser
 	{
 		if (!$txt)
 		{
-			return;
+			return false;
 		}
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
@@ -219,9 +215,10 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param        $txt
-	 * @param   int  $len
-	 * @param   bool $html
+	 * @param   string $txt    text
+	 * @param   int    $len    len
+	 * @param   bool   $html   html
+	 * @param   string $target target
 	 *
 	 * @return string|void
 	 * @throws Exception
@@ -231,7 +228,7 @@ abstract class KunenaHtmlParser
 	{
 		if (!$txt)
 		{
-			return;
+			return false;
 		}
 
 		$txt = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $txt);

@@ -21,6 +21,7 @@ abstract class KunenaCacheHelper
 	 * when user wants to do it manually.
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function clearAll()
 	{
@@ -37,6 +38,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear Kunena cache.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearKunena()
 	{
@@ -49,6 +51,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear Joomla system cache.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearSystem()
 	{
@@ -61,6 +64,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear Joomla menu cache.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearMenu()
 	{
@@ -71,6 +75,7 @@ abstract class KunenaCacheHelper
 	 * Clear Kunena access cache.
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function clearAccess()
 	{
@@ -80,6 +85,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear cached files from Kunena.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearCacheFiles()
 	{
@@ -97,6 +103,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear cached template files.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearTemplateFiles()
 	{
@@ -114,6 +121,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear PHP statcache (contains file size etc).
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearStatCache()
 	{
@@ -123,6 +131,7 @@ abstract class KunenaCacheHelper
 	/**
 	 * Clear compiled PHP files, handy during installation when PHP files change.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearCompiledPHP()
 	{
@@ -142,23 +151,22 @@ abstract class KunenaCacheHelper
 	/**
 	 * Perform normal cache cleanup.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clear()
 	{
 		self::clearKunena();
 		self::clearSystem();
 		self::clearMenu();
-
 	}
 
 	/**
 	 * Clear Category cache.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function clearCategories()
 	{
-		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
-
 		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->remove('categories', 'com_kunena');
 	}

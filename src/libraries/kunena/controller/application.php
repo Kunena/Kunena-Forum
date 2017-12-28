@@ -17,13 +17,13 @@ defined('_JEXEC') or die();
 abstract class KunenaControllerApplication extends KunenaControllerDisplay
 {
 	/**
-	 * @param $view
-	 * @param $subview
-	 * @param $task
-	 * @param $input
-	 * @param $app
+	 * @param   mixed $view    view
+	 * @param   mixed $subview subview
+	 * @param   mixed $task    task
+	 * @param   mixed $input   input
+	 * @param   mixed $app     app
 	 *
-	 * @return KunenaControllerApplicationDisplay|null
+	 * @return mixed
 	 * @since Kunena
 	 */
 	public static function getInstance($view, $subview, $task, $input, $app)

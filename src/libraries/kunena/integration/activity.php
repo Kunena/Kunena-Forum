@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaIntegrationActivity
 {
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected static $instance;
@@ -36,7 +36,7 @@ class KunenaIntegrationActivity
 	{
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetActivity');
+		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetActivity');
 
 		foreach ($classes as $class)
 		{

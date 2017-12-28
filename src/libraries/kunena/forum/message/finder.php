@@ -47,9 +47,9 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param $field
-	 * @param $operation
-	 * @param $value
+	 * @param   mixed $field     field
+	 * @param   mixed $operation operation
+	 * @param   mixed $value     value
 	 *
 	 * @return $this
 	 * @deprecated Use where() instead.
@@ -66,7 +66,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be
 	 * included to the search results.
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return $this
 	 * @throws Exception
@@ -89,7 +89,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $messages->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param   array $categories
+	 * @param   array $categories categories
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -151,7 +151,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * posted = User has posted the message.
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user   user
 	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
@@ -228,9 +228,10 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query query
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

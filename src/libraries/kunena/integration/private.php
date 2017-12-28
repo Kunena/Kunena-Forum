@@ -23,9 +23,10 @@ class KunenaPrivate
 	protected static $instance = false;
 
 	/**
-	 * @param   null $integration
+	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaPrivate
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getInstance($integration = null)
@@ -57,7 +58,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @return string
 	 * @throws Exception
@@ -108,7 +109,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @return string
 	 * @since Kunena
@@ -119,7 +120,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @return string
 	 * @since Kunena
@@ -130,9 +131,9 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $class
-	 * @param   string $icon
+	 * @param   integer $userid userid
+	 * @param   string  $class  class
+	 * @param   string  $icon   icon
 	 *
 	 * @return string
 	 * @throws Exception
@@ -189,7 +190,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -209,7 +210,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $text
+	 * @param   string $text text
 	 *
 	 * @return string
 	 * @since Kunena

@@ -29,7 +29,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Object KunenaView
 	 *
-	 * @var unknown
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected $legacy;
@@ -39,6 +39,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param   string $content content
 	 * @since Kunena
+	 * @return void
 	 */
 	public function appendAfter($content)
 	{
@@ -46,7 +47,7 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param $key
+	 * @param   mixed $key key
 	 *
 	 * @return string
 	 * @since Kunena
@@ -59,7 +60,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Method to render the view.
 	 *
-	 * @param   string  Layout.
+	 * @param   string  $layout layout
 	 *
 	 * @return  string  The rendered view.
 	 *
@@ -91,11 +92,11 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param        $link
-	 * @param        $name
-	 * @param        $scope
-	 * @param        $type
-	 * @param   null $id
+	 * @param   string $link  link
+	 * @param   string $name  name
+	 * @param   string $scope scope
+	 * @param   string $type  type
+	 * @param   null   $id    id
 	 *
 	 * @return string
 	 * @throws Exception
@@ -108,8 +109,8 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param          $name
-	 * @param   string $title
+	 * @param   string $name  name
+	 * @param   string $title title
 	 *
 	 * @return string
 	 * @throws Exception
@@ -159,13 +160,12 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
-	 * @param   null                $content
-	 * @param   null                $title
-	 * @param   null                $class
-	 *
-	 * @param   bool                $follow
-	 * @param   null                $canonical
+	 * @param   KunenaForumCategory $category  category
+	 * @param   null                $content   content
+	 * @param   null                $title     title
+	 * @param   null                $class     class
+	 * @param   bool                $follow    follow
+	 * @param   null                $canonical canonical
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -223,15 +223,14 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   KunenaForumTopic    $topic
-	 * @param   null                $action
-	 * @param   null                $content
-	 * @param   null                $title
-	 * @param   null                $class
-	 * @param   KunenaForumCategory $category
-	 *
-	 * @param   bool                $follow
-	 * @param   bool                $canonical
+	 * @param   KunenaForumTopic    $topic     topic
+	 * @param   null                $action    action
+	 * @param   null                $content   content
+	 * @param   null                $title     title
+	 * @param   null                $class     class
+	 * @param   KunenaForumCategory $category  category
+	 * @param   bool                $follow    follow
+	 * @param   bool                $canonical canonical
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -311,14 +310,13 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param        $category
-	 * @param   null $content
-	 * @param   null $title
-	 * @param   null $class
-	 * @param   int  $length
-	 *
-	 * @param   bool $follow
-	 * @param   null $canonical
+	 * @param   mixed $category  category
+	 * @param   null  $content   content
+	 * @param   null  $title     title
+	 * @param   null  $class     class
+	 * @param   int   $length    length
+	 * @param   bool  $follow    follow
+	 * @param   null  $canonical canonical
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -382,7 +380,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
 	 *
-	 * @param   KunenaView $view
+	 * @param   KunenaView $view view
 	 *
 	 * @since      4.0
 	 *

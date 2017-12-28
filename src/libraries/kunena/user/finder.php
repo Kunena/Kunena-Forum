@@ -74,7 +74,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   array $ignore
+	 * @param   array $ignore ignore
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -104,7 +104,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param $search
+	 * @param   string $search search
 	 *
 	 * @return $this
 	 * @since Kunena

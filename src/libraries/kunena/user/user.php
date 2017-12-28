@@ -95,37 +95,37 @@ class KunenaUser extends JObject
 	protected $_link = array();
 
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected $_time;
 
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected $_pm;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $_email;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $_website;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $_personalText;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $_signature;
@@ -143,7 +143,7 @@ class KunenaUser extends JObject
 	protected $_db = null;
 
 	/**
-	 * @param   int $identifier
+	 * @param   int $identifier identifier
 	 *
 	 * @throws Exception
 	 * @internal
@@ -230,6 +230,7 @@ class KunenaUser extends JObject
 	 * @param   bool     $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -240,8 +241,8 @@ class KunenaUser extends JObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
 	 *
 	 * @return boolean
 	 *
@@ -256,9 +257,9 @@ class KunenaUser extends JObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
-	 * @param   bool       $throw
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
+	 * @param   bool       $throw  throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws null
@@ -269,7 +270,7 @@ class KunenaUser extends JObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return;
+			return false;
 		}
 
 		// Load user if not given.
@@ -329,7 +330,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   null|bool $exists
+	 * @param   null|bool $exists exists
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -364,7 +365,7 @@ class KunenaUser extends JObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -380,7 +381,7 @@ class KunenaUser extends JObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -392,8 +393,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $visitorname
-	 * @param   bool   $escape
+	 * @param   string $visitorname visitor name
+	 * @param   bool   $escape      escape
 	 *
 	 * @return string
 	 * @since Kunena
@@ -418,10 +419,11 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   mixed $data
-	 * @param   array $ignore
+	 * @param   mixed $data   data
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function bind($data, array $ignore = array())
 	{
@@ -515,9 +517,9 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string     $class
-	 * @param   string|int $sizex
-	 * @param   int        $sizey
+	 * @param   string     $class class
+	 * @param   string|int $sizex sizex
+	 * @param   int        $sizey sizey
 	 *
 	 * @return string
 	 * @throws Exception
@@ -531,8 +533,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string|int $sizex
-	 * @param   int        $sizey
+	 * @param   string|int $sizex sizex
+	 * @param   int        $sizey sizey
 	 *
 	 * @return string
 	 * @throws Exception
@@ -548,9 +550,9 @@ class KunenaUser extends JObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @param   null $name
-	 * @param   null $title
-	 * @param   null $class
+	 * @param   null $name  name
+	 * @param   null $title title
+	 * @param   null $class class
 	 *
 	 * @return string
 	 * @throws Exception
@@ -565,7 +567,7 @@ class KunenaUser extends JObject
 
 		if ($optional_username == 0 || !$this->userid)
 		{
-			return;
+			return false;
 		}
 
 		if (!$name)
@@ -605,8 +607,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   bool   $xhtml
-	 * @param   string $task
+	 * @param   bool   $xhtml xhtml
+	 * @param   string $task  task
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -698,10 +700,11 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $layout
+	 * @param   string $layout layout
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setTopicLayout($layout = 'default')
 	{
@@ -720,7 +723,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   null|string $layout
+	 * @param   null|string $layout layout
 	 *
 	 * @return string
 	 * @since Kunena
@@ -888,7 +891,7 @@ class KunenaUser extends JObject
 	/**
 	 * Show email address if current user has permissions to see it.
 	 *
-	 * @param $profile
+	 * @param   mixed $profile profile
 	 *
 	 * @return bool Cloaked email address or empty string.
 	 *
@@ -1004,7 +1007,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $var
+	 * @param   string $var var
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1017,7 +1020,7 @@ class KunenaUser extends JObject
 	/**
 	 * Output gender.
 	 *
-	 * @param   bool $translate
+	 * @param   bool $translate translate
 	 *
 	 * @return string  One of: male, female or unknown.
 	 *
@@ -1120,7 +1123,7 @@ class KunenaUser extends JObject
 	/**
 	 * Render user sidebar.
 	 *
-	 * @param   KunenaLayout $layout
+	 * @param   KunenaLayout $layout layout
 	 *
 	 * @return void
 	 *
@@ -1524,6 +1527,13 @@ class KunenaUser extends JObject
 		return $ban->toUnix() > $now->toUnix();
 	}
 
+	/**
+	 * @param   integer $userid userid
+	 *
+	 * @return mixed|string
+	 *
+	 * @since version
+	 */
 	public function GetUserGroup($userid)
 	{
 		jimport('joomla.access.access');
@@ -1573,7 +1583,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $name
+	 * @param   string $name name
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1661,15 +1671,13 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   null|string $name
-	 * @param   null|string $title
-	 * @param   string      $rel
-	 * @param   string      $task
-	 * @param   string      $class
-	 *
-	 * @param   int         $catid
-	 *
-	 * @param   int         $avatarLink
+	 * @param   null|string $name       name
+	 * @param   null|string $title      title
+	 * @param   string      $rel        rel
+	 * @param   string      $task       task
+	 * @param   string      $class      class
+	 * @param   int         $catid      catid
+	 * @param   int         $avatarLink avatarlink
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1768,12 +1776,13 @@ class KunenaUser extends JObject
 	/**
 	 * Legacy method to prepare social buttons for the template
 	 *
-	 * @param   string $name
-	 * @param   bool   $gray
+	 * @param   string $name name
+	 * @param   bool   $gray gray
 	 *
 	 * @throws Exception
 	 * @deprecated 5.1.0
 	 * @since      K2.0
+	 * @return void
 	 */
 	public function socialButton($name, $gray = false)
 	{
@@ -1783,8 +1792,8 @@ class KunenaUser extends JObject
 	/**
 	 * Prepare social buttons for the template
 	 *
-	 * @param   string $name
-	 * @param   bool   $gray
+	 * @param   string $name name
+	 * @param   bool   $gray gray
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1796,7 +1805,7 @@ class KunenaUser extends JObject
 
 		if (!isset($social [$name]))
 		{
-			return;
+			return false;
 		}
 
 		$title = $social [$name] ['title'];
@@ -1867,9 +1876,9 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param   string $name
+	 * @param   string $name name
 	 *
-	 * @return integer|null
+	 * @return mixed
 	 * @since Kunena
 	 */
 	public function __get($name)

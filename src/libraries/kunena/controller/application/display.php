@@ -21,26 +21,31 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 */
 	public $config;
+
 	/**
 	 * @var KunenaLayout
 	 * @since Kunena
 	 */
 	protected $page;
+
 	/**
 	 * @var KunenaLayout
 	 * @since Kunena
 	 */
 	protected $content;
+
 	/**
 	 * @var \Joomla\CMS\Pathway\Pathway
 	 * @since Kunena
 	 */
 	protected $breadcrumb;
+
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
 	 */
 	protected $me;
+
 	/**
 	 * @var KunenaTemplate
 	 * @since Kunena
@@ -194,6 +199,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	protected function before()
 	{
@@ -291,10 +297,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @param   int $code
+	 * @param   int $code code
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setResponseStatus($code = 404)
 	{
@@ -342,6 +349,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	protected function after()
 	{

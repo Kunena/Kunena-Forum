@@ -58,7 +58,7 @@ class KunenaDatabaseQueryElement
 	/**
 	 * Appends element parts to the internal list.
 	 *
-	 * @param    mixed    String or array.
+	 * @param   mixed  $elements   String or array.
 	 *
 	 * @return    void
 	 * @since    1.6
@@ -329,7 +329,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string $conditions
+	 * @param   string $conditions conditions
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -342,8 +342,8 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string $type
-	 * @param   string $conditions
+	 * @param   string $type       type
+	 * @param   string $conditions conditions
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -361,7 +361,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string $conditions
+	 * @param   string $conditions conditions
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -374,7 +374,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string $conditions
+	 * @param   string $conditions conditions
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -387,7 +387,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param   string $conditions
+	 * @param   string $conditions conditions
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -401,7 +401,7 @@ class KunenaDatabaseQuery
 
 	/**
 	 * @param   mixed  $conditions A string or array of conditions.
-	 * @param   string $glue
+	 * @param   string $glue       qlue
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -423,7 +423,7 @@ class KunenaDatabaseQuery
 
 	/**
 	 * @param   mixed  $conditions A string or array of where conditions.
-	 * @param   string $glue
+	 * @param   string $glue       glue
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6
@@ -465,7 +465,7 @@ class KunenaDatabaseQuery
 
 	/**
 	 * @param   mixed  $conditions A string or array of columns.
-	 * @param   string $glue
+	 * @param   string $glue       glue
 	 *
 	 * @return    KunenaDatabaseQuery    Returns this object to allow chaining.
 	 * @since    1.6

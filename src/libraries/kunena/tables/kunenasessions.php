@@ -74,8 +74,8 @@ class TableKunenaSessions extends KunenaTable
 	}
 
 	/**
-	 * @param   null $oid
-	 * @param   bool $reset
+	 * @param   null $oid   oid
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean
 	 * @since Kunena

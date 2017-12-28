@@ -37,7 +37,7 @@ class KunenaInstaller
 	 */
 	public static function canDowngrade($version)
 	{
-		if ($version == '@' . 'kunenaversion' . '@')
+		if ($version == '@kunenaversion@')
 		{
 			return true;
 		}
@@ -69,7 +69,7 @@ class KunenaInstaller
 		// Check if Kunena can be found from the database.
 		if (!self::detectTable('kunena_version'))
 		{
-			return;
+			return false;
 		}
 
 		// Get installed version.

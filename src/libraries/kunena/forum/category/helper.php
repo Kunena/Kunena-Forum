@@ -23,13 +23,13 @@ abstract class KunenaForumCategoryHelper
 	public static $_instances;
 
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected static $_tree;
 
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	protected static $allowed;
@@ -38,6 +38,7 @@ abstract class KunenaForumCategoryHelper
 	 * Initialize class.
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function initialize()
 	{
@@ -110,9 +111,10 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   array $instances
+	 * @param   array $instances instances
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function buildTree(array &$instances)
 	{
@@ -133,10 +135,11 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   KunenaForumCategory $instance
+	 * @param   KunenaForumCategory $instance instance
 	 *
 	 * @internal
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function register($instance)
 	{
@@ -159,7 +162,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return KunenaForumCategory[]
 	 * @throws Exception
@@ -187,9 +190,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   bool|array $ids
-	 * @param   bool       $reverse
-	 * @param   string     $authorise
+	 * @param   bool|array $ids       ids
+	 * @param   bool       $reverse   reverse
+	 * @param   string     $authorise authorise
 	 *
 	 * @return array|KunenaForumCategory[]
 	 * @throws Exception
@@ -262,9 +265,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   array $ids
-	 * @param   bool  $value
-	 * @param   mixed $user
+	 * @param   array $ids   ids
+	 * @param   bool  $value value
+	 * @param   mixed $user  user
 	 *
 	 * @return integer
 	 *
@@ -295,10 +298,10 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * Get subscribed categories ordered by latest post or parameter.
 	 *
-	 * @param   mixed $user
-	 * @param   int   $limitstart
-	 * @param   int   $limit
-	 * @param   array $params
+	 * @param   mixed $user       user
+	 * @param   int   $limitstart limitstart
+	 * @param   int   $limit      limit
+	 * @param   array $params     params
 	 *
 	 * @return array (total, list)
 	 *
@@ -381,11 +384,12 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   int|array $catids
+	 * @param   int|array $catids catids
 	 *
 	 * @throws Exception
 	 * @throws null
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function getNewTopics($catids)
 	{
@@ -455,8 +459,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   string     $accesstype
-	 * @param   bool|array $groupids
+	 * @param   string     $accesstype accesstype
+	 * @param   bool|array $groupids   groupids
 	 *
 	 * @return KunenaForumCategory[]
 	 * @since Kunena
@@ -490,9 +494,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   int   $id
-	 * @param   int   $levels
-	 * @param   array $params
+	 * @param   int   $id     id
+	 * @param   int   $levels levels
+	 * @param   array $params params
 	 *
 	 * @return KunenaForumCategory[]
 	 * @throws null
@@ -542,8 +546,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   int   $levels
-	 * @param   array $params
+	 * @param   int   $levels levels
+	 * @param   array $params params
 	 *
 	 * @return KunenaForumCategory[]
 	 * @throws null
@@ -573,7 +577,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   int $parent
+	 * @param   int $parent parent
 	 *
 	 * @return array
 	 * @since Kunena
@@ -636,9 +640,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   int   $parents
-	 * @param   int   $levels
-	 * @param   array $params
+	 * @param   int   $parents parents
+	 * @param   int   $levels  levels
+	 * @param   array $params  params
 	 *
 	 * @return array|KunenaForumCategory[]
 	 * @throws null
@@ -678,10 +682,10 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   array $parents
-	 * @param   int   $levels
-	 * @param   array $params
-	 * @param   bool  $optimize
+	 * @param   array $parents  parents
+	 * @param   int   $levels   levels
+	 * @param   array $params   params
+	 * @param   bool  $optimize optimize
 	 *
 	 * @return array|KunenaForumCategory[]
 	 * @throws null
@@ -801,7 +805,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param $categories
+	 * @param   string|array $categories categories
 	 *
 	 * @return array
 	 * @since Kunena
@@ -814,7 +818,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param   string|array $categories
+	 * @param   string|array $categories categories
 	 *
 	 * @return boolean|integer
 	 * @throws Exception
@@ -905,8 +909,6 @@ abstract class KunenaForumCategoryHelper
 		return $rows;
 	}
 
-	// Internal functions:
-
 	/**
 	 * @return boolean|integer
 	 * @throws Exception
@@ -952,8 +954,8 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * Check in existing categories if the alias is already taken.
 	 *
-	 * @param $category_id
-	 * @param $alias
+	 * @param   mixed $category_id category
+	 * @param   mixed $alias       alias
 	 *
 	 * @return boolean|void
 	 * @throws Exception
@@ -974,7 +976,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
 
-			return;
+			return false;
 		}
 
 		if (is_array($category_items))
@@ -986,8 +988,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param $a
-	 * @param $b
+	 * @param   mixed $a a
+	 * @param   mixed $b b
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -1003,8 +1005,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param $a
-	 * @param $b
+	 * @param   mixed $a a
+	 * @param   mixed $b b
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -1020,8 +1022,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param $original
-	 * @param $strip
+	 * @param   mixed $original origin
+	 * @param   mixed $strip    strip
 	 *
 	 * @return mixed
 	 * @since Kunena

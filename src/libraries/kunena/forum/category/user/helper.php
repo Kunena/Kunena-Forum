@@ -109,11 +109,12 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Load categories for a specific user.
 	 *
-	 * @param   array      $ids The category ids to load.
-	 * @param   KunenaUser $user
+	 * @param   array      $ids  The category ids to load.
+	 * @param   KunenaUser $user user
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadCategories(array $ids, KunenaUser $user)
 	{
@@ -164,14 +165,13 @@ abstract class KunenaForumCategoryUserHelper
 		unset($results);
 	}
 
-	// Internal functions
-
 	/**
-	 * @param   array $ids
-	 * @param   null  $user
+	 * @param   array $ids  ids
+	 * @param   null  $user users
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function markRead(array $ids, $user = null)
 	{

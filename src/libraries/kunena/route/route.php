@@ -156,7 +156,7 @@ abstract class KunenaRoute
 	protected static $filtered = array();
 
 	/**
-	 * @param   bool $object
+	 * @param   bool $object object
 	 *
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null|string
 	 * @throws Exception
@@ -185,7 +185,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri
+	 * @param   null $uri uri
 	 *
 	 * @return boolean|\Joomla\CMS\Uri\Uri|null
 	 * @throws Exception
@@ -310,7 +310,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   \Joomla\CMS\Uri\Uri $uri
+	 * @param   \Joomla\CMS\Uri\Uri $uri uri
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -407,6 +407,7 @@ abstract class KunenaRoute
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	protected static function build()
 	{
@@ -486,7 +487,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param $item
+	 * @param   mixed $item item
 	 *
 	 * @return null
 	 * @since Kunena
@@ -495,7 +496,7 @@ abstract class KunenaRoute
 	{
 		if (!$item)
 		{
-			return;
+			return false;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -521,8 +522,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param $item
-	 * @param $catid
+	 * @param   mixed   $item  item
+	 * @param   integer $catid catid
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -559,8 +560,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param                       $item
-	 * @param   \Joomla\CMS\Uri\Uri $uri
+	 * @param   mixed               $item  item
+	 * @param   \Joomla\CMS\Uri\Uri $uri   uri
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -601,8 +602,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param                       $item
-	 * @param   \Joomla\CMS\Uri\Uri $uri
+	 * @param   mixed               $item item
+	 * @param   \Joomla\CMS\Uri\Uri $uri  url
 	 *
 	 * @return integer
 	 * @throws null
@@ -634,8 +635,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param                       $item
-	 * @param   \Joomla\CMS\Uri\Uri $uri
+	 * @param   mixed               $item item
+	 * @param   \Joomla\CMS\Uri\Uri $uri  uri
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -716,9 +717,9 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri
-	 * @param   bool $xhtml
-	 * @param   int  $ssl
+	 * @param   null $uri   uri
+	 * @param   bool $xhtml xhtml
+	 * @param   int  $ssl   ssl
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -786,8 +787,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   \Joomla\CMS\Uri\Uri $uri
-	 * @param   bool                $object
+	 * @param   \Joomla\CMS\Uri\Uri $uri    uri
+	 * @param   bool                $object object
 	 *
 	 * @return \Joomla\CMS\Uri\Uri|string
 	 * @throws Exception
@@ -834,6 +835,7 @@ abstract class KunenaRoute
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function cacheLoad()
 	{
@@ -860,6 +862,7 @@ abstract class KunenaRoute
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public static function cacheStore()
 	{
@@ -884,8 +887,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param        $string
-	 * @param   null $default
+	 * @param   string  $string  string
+	 * @param   null    $default default
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -913,7 +916,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param $alias
+	 * @param   string  $alias alias
 	 *
 	 * @return array
 	 * @since Kunena
@@ -952,6 +955,7 @@ abstract class KunenaRoute
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function initialize()
 	{
@@ -1043,6 +1047,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -1051,8 +1056,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
-	 * @param   bool                $xhtml
+	 * @param   KunenaForumCategory $category category
+	 * @param   bool                $xhtml    xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -1065,7 +1070,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return array|boolean|integer
 	 * @throws Exception
@@ -1078,7 +1083,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri
+	 * @param   null $uri uri
 	 *
 	 * @return array|boolean|integer
 	 * @throws Exception
@@ -1112,10 +1117,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumTopic    $topic
-	 * @param   bool                $xhtml
-	 * @param   null                $action
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumTopic    $topic    topic
+	 * @param   bool                $xhtml    xhtml
+	 * @param   null                $action   actions
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -1133,10 +1138,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumMessage  $message
-	 * @param   bool                $xhtml
-	 * @param   KunenaForumTopic    $topic
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumMessage  $message  message
+	 * @param   bool                $xhtml    xhtml
+	 * @param   KunenaForumTopic    $topic    topic
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -1160,8 +1165,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaUser $user
-	 * @param   bool       $xhtml
+	 * @param   KunenaUser $user  user
+	 * @param   bool       $xhtml xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception

@@ -69,32 +69,32 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected $_table = 'KunenaAttachments';
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $path;
 
 	/**
-	 * @var
+	 * @var integer
 	 * @since Kunena
 	 */
 	protected $width;
 
 	/**
-	 * @var
+	 * @var integer
 	 * @since Kunena
 	 */
 	protected $height;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $shortname;
 
 	/**
-	 * @param   mixed $identifier
-	 * @param   bool  $reload
+	 * @param   mixed $identifier identifier
+	 * @param   bool  $reload     reload
 	 *
 	 * @return KunenaAttachment
 	 *
@@ -121,6 +121,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @internal
 	 * @since  K4.0
+	 * @return void
 	 */
 	protected function deleteFile()
 	{
@@ -155,7 +156,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Getter function.
 	 *
-	 * @param   string $property
+	 * @param   string $property property
 	 *
 	 * @return integer
 	 * @since  K4.0
@@ -181,6 +182,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @internal
 	 * @since  K4.0
+	 * @return void
 	 */
 	protected function initialize()
 	{
@@ -199,7 +201,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get path for the file.
 	 *
-	 * @param   bool $thumb
+	 * @param   bool $thumb thumb
 	 *
 	 * @return string|false  Path to the file or false if file doesn't exist.
 	 *
@@ -272,7 +274,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get extension of file for output.
 	 *
-	 * @param   bool $escape
+	 * @param   bool $escape escape
 	 *
 	 * @return string
 	 *
@@ -291,10 +293,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * The first 8 characters of the filename, followed by three dots and the last 5 character of the filename.
 	 *
-	 * @param   int    $front
-	 * @param   int    $back
-	 * @param   string $filler
-	 * @param   bool   $escape
+	 * @param   int    $front   front
+	 * @param   int    $back    back
+	 * @param   string $filler  filler
+	 * @param   bool   $escape  escape
 	 *
 	 * @return string
 	 *
@@ -313,7 +315,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get filename for output.
 	 *
-	 * @param   bool $escape
+	 * @param   bool $escape escape
 	 *
 	 * @return string
 	 *
@@ -329,9 +331,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get URL pointing to the attachment.
 	 *
-	 * @param   bool $thumb
-	 * @param   bool $inline
-	 * @param   bool $escape
+	 * @param   bool $thumb  thumb
+	 * @param   bool $inline inline
+	 * @param   bool $escape escape
 	 *
 	 * @return string
 	 *
@@ -356,11 +358,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			$url = ($thumb ? $fileThumb : $file);
 
-			if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
-			{
-				$url = $url;
-			}
-			else
+			if (!\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
 			{
 				$url = \Joomla\CMS\Uri\Uri::base() . $url;
 			}
@@ -441,8 +439,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
 	 *
 	 * @return boolean
 	 *
@@ -457,11 +455,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string     $action
-	 * @param   KunenaUser $user
-	 * @param   bool       $throw
+	 * @param   string     $action action
+	 * @param   KunenaUser $user   user
+	 * @param   bool       $throw  throw
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return mixed
 	 * @throws null
 	 * @since  K4.0
 	 */
@@ -470,7 +468,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return;
+			return false;
 		}
 
 		// Load user if not given.
@@ -527,9 +525,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   mixed  $user
-	 * @param   bool   $silent
+	 * @param   string $action action
+	 * @param   mixed  $user   user
+	 * @param   bool   $silent silent
 	 *
 	 * @return boolean
 	 * @throws null
@@ -562,11 +560,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 		return $exception ? $exception->getMessage() : null;
 	}
 
-	// Internal functions
-
 	/**
-	 * @param   string   $key
-	 * @param   null|int $catid
+	 * @param   string   $key    key
+	 * @param   null|int $catid  catid
 	 *
 	 * @return boolean
 	 *
@@ -768,9 +764,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return mixed
 	 *
 	 * @since  K4.0
 	 */
@@ -782,13 +778,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return mixed
 	 *
 	 * @throws Exception
 	 * @since  K4.0
@@ -816,13 +812,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return mixed
 	 *
 	 * @throws Exception
 	 * @since  K4.0
@@ -835,7 +831,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**

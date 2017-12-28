@@ -19,11 +19,10 @@ abstract class KunenaMenuHelper
 {
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanCache()
 	{
-		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
-
 		$cache = \Joomla\CMS\Factory::getCache();
 		$cache->clean('mod_menu');
 	}

@@ -81,7 +81,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Set limitstart for the query.
 	 *
-	 * @param   int $limitstart
+	 * @param   int $limitstart limitstart
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -98,7 +98,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * If this function isn't used, RokClub will use threads per page configuration setting.
 	 *
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -118,9 +118,9 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param   string $by
-	 * @param   int    $direction
-	 * @param   string $alias
+	 * @param   string $by        by
+	 * @param   int    $direction direction
+	 * @param   string $alias     alias
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -230,7 +230,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query query
 	 *
 	 * @return void
 	 * @since Kunena

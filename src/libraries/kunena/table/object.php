@@ -198,15 +198,15 @@ abstract class KunenaTableObject
 	 * @param   bool $sqlFetch True only if properties were assigned before constructor was called.
 	 *
 	 * @since  K4.0
+	 * @return void
 	 */
 	protected function initialise($sqlFetch = false)
 	{
-
 	}
 
 	/**
-	 * @param   null $keys
-	 * @param   bool $reset
+	 * @param   null $keys  keys
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean|KunenaTableObject
 	 * @since Kunena
@@ -270,8 +270,8 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param   array|string $fields
-	 * @param   bool         $throw
+	 * @param   array|string $fields fields
+	 * @param   bool         $throw  throw
 	 *
 	 * @return array
 	 * @since  K4.0
@@ -519,7 +519,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param   array|string $fields
+	 * @param   array|string $fields fields
 	 *
 	 * @return array
 	 * @since  K4.0
@@ -585,9 +585,10 @@ abstract class KunenaTableObject
 	/**
 	 * Removes all or selected instances from the object cache.
 	 *
-	 * @param   null|int|array $ids
+	 * @param   null|int|array $ids ids
 	 *
 	 * @since  K4.0
+	 * @return void
 	 */
 	public static function freeInstances($ids = null)
 	{
@@ -612,6 +613,7 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 * @since Kunena
+	 * @return mixed
 	 */
 	public static function getQuery()
 	{
@@ -624,7 +626,7 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 *
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -716,6 +718,7 @@ abstract class KunenaTableObject
 	 *
 	 * New object will also return false on $new->exists() until it gets saved.
 	 * @since  K4.0
+	 * @return void
 	 */
 	public function __clone()
 	{
@@ -743,7 +746,7 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @param   bool $updateNulls
+	 * @param   bool $updateNulls update
 	 *
 	 * @return boolean
 	 * @since Kunena

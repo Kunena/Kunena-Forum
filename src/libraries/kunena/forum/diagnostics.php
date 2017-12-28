@@ -55,7 +55,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -81,7 +81,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return array
 	 * @since Kunena
@@ -111,7 +111,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -133,7 +133,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -151,7 +151,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -173,7 +173,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -191,7 +191,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param $function
+	 * @param   string $function function
 	 *
 	 * @return array
 	 * @since Kunena
@@ -216,7 +216,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   string $function
+	 * @param   string $function function
 	 *
 	 * @return string|null
 	 * @since Kunena
@@ -240,7 +240,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -280,7 +280,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -309,7 +309,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -338,7 +338,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -378,7 +378,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -418,7 +418,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -458,7 +458,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -514,7 +514,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -578,7 +578,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -618,7 +618,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -698,7 +698,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -738,7 +738,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -778,7 +778,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -818,7 +818,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -858,7 +858,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -898,7 +898,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -938,7 +938,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -978,7 +978,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1018,7 +1018,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1058,7 +1058,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1098,7 +1098,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1138,7 +1138,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1178,7 +1178,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1218,7 +1218,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1258,7 +1258,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1299,7 +1299,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1339,7 +1339,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -1379,7 +1379,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena

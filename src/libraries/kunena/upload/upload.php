@@ -24,7 +24,7 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $filename;
@@ -592,7 +592,7 @@ class KunenaUpload
 	/**
 	 * Return AJAX response in JSON.
 	 *
-	 * @param   mixed $content
+	 * @param   mixed $content content
 	 *
 	 * @return string
 	 * @since Kunena

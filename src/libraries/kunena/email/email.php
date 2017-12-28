@@ -17,8 +17,8 @@ defined('_JEXEC') or die();
 abstract class KunenaEmail
 {
 	/**
-	 * @param   \Joomla\CMS\Mail\Mail $mail
-	 * @param   array                 $receivers
+	 * @param   \Joomla\CMS\Mail\Mail $mail      mail
+	 * @param   array                 $receivers receivers
 	 *
 	 * @return boolean
 	 * @throws Exception

@@ -36,8 +36,8 @@ class KunenaForumCategoryUser extends JObject
 	protected $_db = null;
 
 	/**
-	 * @param   int   $category
-	 * @param   mixed $user
+	 * @param   int   $category category
+	 * @param   mixed $user     user
 	 *
 	 * @internal
 	 * @since Kunena
@@ -86,9 +86,9 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param   null|int $id
-	 * @param   mixed    $user
-	 * @param   bool     $reload
+	 * @param   null|int $id     id
+	 * @param   mixed    $user   user
+	 * @param   bool     $reload reload
 	 *
 	 * @return KunenaForumCategoryUser
 	 * @since Kunena
@@ -109,10 +109,11 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param   array $data
-	 * @param   array $ignore
+	 * @param   array $data   data
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function bind($data, $ignore = array())
 	{

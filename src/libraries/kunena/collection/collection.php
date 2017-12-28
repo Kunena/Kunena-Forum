@@ -72,7 +72,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a filter over each of the items.
 	 *
-	 * @param   Closure $callback
+	 * @param   Closure $callback callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -85,7 +85,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Execute a callback over each item.
 	 *
-	 * @param   Closure $callback
+	 * @param   Closure $callback callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -100,7 +100,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a map over each of the items.
 	 *
-	 * @param   Closure $callback
+	 * @param   Closure $callback callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -135,7 +135,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Determine if an item exists at an offset.
 	 *
-	 * @param   mixed $key
+	 * @param   mixed $key key
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -148,7 +148,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get an item at a given offset.
 	 *
-	 * @param   mixed $key
+	 * @param   mixed $key key
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -161,8 +161,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Set the item at a given offset.
 	 *
-	 * @param   mixed $key
-	 * @param   mixed $value
+	 * @param   mixed $key   key
+	 * @param   mixed $value value
 	 *
 	 * @return void
 	 * @since Kunena
@@ -182,7 +182,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Unset the item at a given offset.
 	 *
-	 * @param   string $key
+	 * @param   string $key key
 	 *
 	 * @return void
 	 * @since Kunena

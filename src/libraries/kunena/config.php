@@ -201,7 +201,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  User edit time Grace; input, number
 	 * @since  1.0.0
 	 */
-	public $useredittimegrace = 600; // Input, number, time
+	public $useredittimegrace = 600;
 
 	/**
 	 * @var    integer  Edit markup; select, boolean
@@ -316,7 +316,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Image width; input, number
 	 * @since  1.0.0
 	 */
-	public $imagewidth = 800; // Input, number
+	public $imagewidth = 800;
 
 	/**
 	 * @var    integer  Image size
@@ -970,7 +970,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Send emails; select, boolean
 	 * @since  2.0.0
 	 */
-	public $send_emails = 1; // Select, boolean
+	public $send_emails = 1;
 
 	/**
 	 * @var    integer  Fallback english; select, boolean
@@ -1219,7 +1219,8 @@ class KunenaConfig extends JObject
 	public $moderator_permdelete = 0;
 
 	/**
-	 *
+	 * @var string
+	 * @since  K5.0.4
 	 */
 	public $avatartypes = 'gif, jpeg, jpg, png';
 
@@ -1278,8 +1279,6 @@ class KunenaConfig extends JObject
 
 		if (!$instance)
 		{
-			// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
-
 			$cache    = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
@@ -1298,12 +1297,11 @@ class KunenaConfig extends JObject
 	/**
 	 * Load config settings from database table.
 	 *
-	 * @param   null $userinfo Not used.
-	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
-	public function load($userinfo = null)
+	public function load()
 	{
 		$db = \Joomla\CMS\Factory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
@@ -1345,9 +1343,10 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param   mixed $properties
+	 * @param   mixed $properties properties
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function bind($properties)
 	{
@@ -1357,6 +1356,7 @@ class KunenaConfig extends JObject
 	/**
 	 * Messages per page
 	 * @since Kunena
+	 * @return void
 	 */
 	public function check()
 	{
@@ -1371,6 +1371,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function save()
 	{
@@ -1400,6 +1401,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function reset()
 	{
@@ -1408,7 +1410,7 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param   string $name
+	 * @param   string $name Name of the plugin
 	 *
 	 * @return \Joomla\Registry\Registry
 	 *

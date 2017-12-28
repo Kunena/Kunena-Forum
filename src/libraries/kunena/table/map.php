@@ -373,6 +373,7 @@ class KunenaTableMap
 	 * @param   array $list Set array of mapped objects.
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setMapped(array $list)
 	{

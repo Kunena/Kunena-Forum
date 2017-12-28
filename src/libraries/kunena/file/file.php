@@ -21,7 +21,7 @@ jimport('joomla.filesystem.file');
 class KunenaFile extends JFile
 {
 	/**
-	 * @param $file
+	 * @param   string $file file
 	 *
 	 * @return boolean|mixed|string
 	 * @since Kunena

@@ -70,7 +70,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	protected $_row = 0;
 
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -119,6 +119,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function displayAll()
 	{
@@ -131,10 +132,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   null $layout
-	 * @param   null $tpl
+	 * @param   null $layout layout
+	 * @param   null $tpl    tmpl
 	 *
-	 * @return mixed|void
+	 * @return mixed|void|string
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -216,11 +217,12 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   array $messages
-	 * @param   int   $code
+	 * @param   array $messages messages
+	 * @param   int   $code     code
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function displayError($messages = array(), $code = 404)
 	{
@@ -281,6 +283,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setTitle($title)
 	{
@@ -319,10 +322,11 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   array $errors
+	 * @param   array $errors errors
 	 *
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -336,9 +340,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param $position
+	 * @param   mixed $position position
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function displayModulePosition($position)
 	{
@@ -346,7 +351,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param $position
+	 * @param   mixed $position position
 	 *
 	 * @return string
 	 * @since Kunena
@@ -369,7 +374,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param $position
+	 * @param   mixed $position position
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -382,9 +387,9 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param       $text
-	 * @param   int $len
-	 * @param       $parent
+	 * @param   string $text    text
+	 * @param   int    $len     len
+	 * @param   mixed  $parent  parent
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -407,13 +412,14 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
-	 * @param   string $layout
-	 * @param   string $tpl
-	 * @param   array  $hmvcParams
+	 * @param   string $layout     layout
+	 * @param   string $tpl        tmpl
+	 * @param   array  $hmvcParams params
 	 *
 	 * @throws LogicException
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
 	{
@@ -468,9 +474,9 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param        $view
-	 * @param        $layout
-	 * @param   null $template
+	 * @param   string $view     view
+	 * @param   string $layout   layout
+	 * @param   null   $template template
 	 *
 	 * @return KunenaLayout|KunenaView
 	 * @throws Exception
@@ -626,10 +632,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
-	 * @param   null                $content
-	 * @param   null                $title
-	 * @param   null                $class
+	 * @param   KunenaForumCategory $category category
+	 * @param   null                $content  content
+	 * @param   null                $title    title
+	 * @param   null                $class    class
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -650,12 +656,12 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   KunenaForumTopic         $topic
-	 * @param   null                     $action
-	 * @param   null                     $content
-	 * @param   null                     $title
-	 * @param   null                     $class
-	 * @param   KunenaForumCategory|null $category
+	 * @param   KunenaForumTopic         $topic    topic
+	 * @param   null                     $action   action
+	 * @param   null                     $content  content
+	 * @param   null                     $title    title
+	 * @param   null                     $class    class
+	 * @param   KunenaForumCategory|null $category category
 	 *
 	 * @return mixed
 	 * @throws Exception

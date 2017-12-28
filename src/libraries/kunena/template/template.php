@@ -43,16 +43,19 @@ class KunenaTemplate extends JObject
 	 * @since Kunena
 	 */
 	public $paramstime = false;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	public $topicIcons = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	public $categoryIcons = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -66,6 +69,7 @@ class KunenaTemplate extends JObject
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	);
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -81,6 +85,7 @@ class KunenaTemplate extends JObject
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	);
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -95,36 +100,43 @@ class KunenaTemplate extends JObject
 		'js'         => 'js',
 		'css'        => 'css',
 	);
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $default = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $paths = array();
+
 	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
 	protected $css_compile = true;
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $filecache = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $smileyPath = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
 	 */
 	protected $rankPath = array();
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -139,6 +151,7 @@ class KunenaTemplate extends JObject
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
 	);
+
 	/**
 	 * @var array
 	 * @since Kunena
@@ -170,13 +183,13 @@ class KunenaTemplate extends JObject
 	protected $xml = null;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $map;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	protected $hmvc;
@@ -192,7 +205,7 @@ class KunenaTemplate extends JObject
 	 *
 	 * @access    protected
 	 *
-	 * @param   null $name
+	 * @param   null $name name
 	 *
 	 * @throws Exception
 	 * @since     Kunena
@@ -406,6 +419,7 @@ class KunenaTemplate extends JObject
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function initialize()
 	{
@@ -445,6 +459,7 @@ class KunenaTemplate extends JObject
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function loadLanguage()
 	{
@@ -463,6 +478,7 @@ class KunenaTemplate extends JObject
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function initializeBackend()
 	{
@@ -479,11 +495,11 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
-	 * @param        $link
-	 * @param        $name
-	 * @param        $scope
-	 * @param        $type
-	 * @param   null $id
+	 * @param   string  $link  link
+	 * @param   string  $name  name
+	 * @param   string  $scope scope
+	 * @param   string  $type  type
+	 * @param   null    $id    id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -530,8 +546,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $name
-	 * @param   string $title
+	 * @param   string $name  name
+	 * @param   string $title title
 	 *
 	 * @return string
 	 * @since Kunena
@@ -542,8 +558,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $image
-	 * @param   string $alt
+	 * @param   string $image image
+	 * @param   string $alt   alt
 	 *
 	 * @return string
 	 * @since Kunena
@@ -554,8 +570,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
+	 * @param   string $filename filename
+	 * @param   bool   $url      url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -566,11 +582,11 @@ HTML;
 	}
 
 	/**
-	 * @param          $file
-	 * @param   bool   $url
-	 * @param   string $basepath
-	 * @param   null   $default
-	 * @param   null   $ignore
+	 * @param   string $file     file
+	 * @param   bool   $url      url
+	 * @param   string $basepath basepath
+	 * @param   null   $default  default
+	 * @param   null   $ignore   ignore
 	 *
 	 * @return string
 	 * @since Kunena
@@ -609,7 +625,7 @@ HTML;
 	}
 
 	/**
-	 * @param $list
+	 * @param   mixed $list list
 	 *
 	 * @return string
 	 * @since Kunena
@@ -627,7 +643,7 @@ HTML;
 	}
 
 	/**
-	 * @param $list
+	 * @param   mixed $list list
 	 *
 	 * @return string
 	 * @since Kunena
@@ -655,7 +671,7 @@ HTML;
 	}
 
 	/**
-	 * @param $item
+	 * @param   string $item item
 	 *
 	 * @return string
 	 * @since Kunena
@@ -666,7 +682,7 @@ HTML;
 	}
 
 	/**
-	 * @param $item
+	 * @param   string $item item
 	 *
 	 * @return string
 	 * @since Kunena
@@ -677,8 +693,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $class
-	 * @param   string $class_sfx
+	 * @param   string $class     class
+	 * @param   string $class_sfx class_sfx
 	 *
 	 * @return string
 	 * @since Kunena
@@ -698,8 +714,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $name
-	 * @param   string $default
+	 * @param   string $name    name
+	 * @param   string $default default
 	 *
 	 * @return string
 	 * @since Kunena
@@ -710,8 +726,8 @@ HTML;
 	}
 
 	/**
-	 * @param $name
-	 * @param $value
+	 * @param   string  $name  name
+	 * @param   integer $value value
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -724,8 +740,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $filename
-	 * @param   string $group
+	 * @param   string $filename filename
+	 * @param   string $group    group
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
@@ -757,10 +773,11 @@ HTML;
 	}
 
 	/**
-	 * @param          $filename
-	 * @param   string $condition
+	 * @param   string $filename  filename
+	 * @param   string $condition condition
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{
@@ -774,6 +791,7 @@ HTML;
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function clearCache()
 	{
@@ -786,7 +804,7 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
+	 * @param   string $filename filename
 	 *
 	 * @return string
 	 * @throws Exception
@@ -812,7 +830,7 @@ HTML;
 	}
 
 	/**
-	 * @param $matches
+	 * @param   mixed $matches matches
 	 *
 	 * @return string
 	 * @since Kunena
@@ -832,8 +850,8 @@ HTML;
 	/**
 	 * Wrapper to addScript
 	 *
-	 * @param          $content
-	 * @param   string $type
+	 * @param   string $content content
+	 * @param   string $type    type
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
@@ -846,7 +864,7 @@ HTML;
 	/**
 	 * Wrapper to addScript
 	 *
-	 * @param $filename
+	 * @param   string $filename filename
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
@@ -873,9 +891,10 @@ HTML;
 	}
 
 	/**
-	 * @param $path
+	 * @param   string $path path
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function addPath($path)
 	{
@@ -883,8 +902,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $path
-	 * @param   bool   $fullpath
+	 * @param   string $path     path
+	 * @param   bool   $fullpath fullpath
 	 *
 	 * @return array
 	 * @throws Exception
@@ -916,8 +935,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
+	 * @param   string $filename filename
+	 * @param   bool   $url      url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -928,8 +947,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
+	 * @param   string $filename filename
+	 * @param   bool   $url      url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -940,8 +959,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
+	 * @param   string $filename filename
+	 * @param   bool   $url      url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -952,8 +971,8 @@ HTML;
 	}
 
 	/**
-	 * @param        $index
-	 * @param   bool $url
+	 * @param   mixed $index index
+	 * @param   bool  $url   url
 	 *
 	 * @return string
 	 * @throws Exception
@@ -977,8 +996,8 @@ HTML;
 	}
 
 	/**
-	 * @param   bool $all
-	 * @param   int  $checked
+	 * @param   bool $all     all
+	 * @param   int  $checked checked
 	 *
 	 * @return array|SimpleXMLElement
 	 * @throws Exception
@@ -1071,8 +1090,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
+	 * @param   string $filename filename
+	 * @param   bool   $url      url
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1105,7 +1124,7 @@ HTML;
 	}
 
 	/**
-	 * @param   KunenaForumTopic $topic
+	 * @param   KunenaForumTopic $topic topic
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1283,9 +1302,9 @@ HTML;
 	}
 
 	/**
-	 * @param          $src
-	 * @param   int    $id
-	 * @param   string $style
+	 * @param   mixed  $src   src
+	 * @param   int    $id    id
+	 * @param   string $style style
 	 *
 	 * @return stdClass
 	 * @since Kunena
@@ -1316,9 +1335,9 @@ HTML;
 	}
 
 	/**
-	 * @param          $src
-	 * @param   int    $id
-	 * @param   string $style
+	 * @param   mixed  $src   src
+	 * @param   int    $id    id
+	 * @param   string $style style
 	 *
 	 * @return stdClass
 	 * @since Kunena
@@ -1354,7 +1373,7 @@ HTML;
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category category
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1381,8 +1400,8 @@ HTML;
 	}
 
 	/**
-	 * @param        $index
-	 * @param   bool $url
+	 * @param   mixed $index index
+	 * @param   bool  $url   url
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1406,8 +1425,8 @@ HTML;
 	}
 
 	/**
-	 * @param   bool $all
-	 * @param   int  $checked
+	 * @param   bool $all     all
+	 * @param   int  $checked checked
 	 *
 	 * @return array|SimpleXMLElement
 	 * @throws Exception
@@ -1494,9 +1513,9 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename
-	 * @param   bool   $url
-	 * @param          $category_iconset
+	 * @param   string $filename         filename
+	 * @param   bool   $url              url
+	 * @param   mixed  $category_iconset category
 	 *
 	 * @return string
 	 * @throws Exception
@@ -1514,7 +1533,7 @@ HTML;
 	}
 
 	/**
-	 * @param $filename
+	 * @param   string $filename filename
 	 *
 	 * @return string
 	 * @deprecated K4.0
@@ -1524,7 +1543,7 @@ HTML;
 	{
 		if (empty($filename))
 		{
-			return;
+			return false;
 		}
 
 		return "media/kunena/topicicons/{$filename}";
@@ -1542,10 +1561,11 @@ HTML;
 	}
 
 	/**
-	 * @param $inputFile
-	 * @param $outputFile
+	 * @param   string $inputFile  input
+	 * @param   string $outputFile output
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function compileLess($inputFile, $outputFile)
 	{
@@ -1605,7 +1625,7 @@ HTML;
 	/**
 	 * Legacy template support.
 	 *
-	 * @param $search
+	 * @param   string $search search
 	 *
 	 * @return array
 	 * @deprecated K4.0
@@ -1636,9 +1656,10 @@ HTML;
 	/**
 	 * Set the category iconset value
 	 *
-	 * @param   string $iconset
+	 * @param   string $iconset iconset
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setCategoryIconset($iconset = '/default')
 	{
@@ -1646,7 +1667,7 @@ HTML;
 	}
 
 	/**
-	 * @param $topic
+	 * @param   mixed $topic topic
 	 *
 	 * @return stdClass
 	 * @throws Exception
@@ -1686,9 +1707,9 @@ HTML;
 	}
 
 	/**
-	 * @param          $src
-	 * @param   int    $id
-	 * @param   string $style
+	 * @param   mixed  $src   src
+	 * @param   int    $id    id
+	 * @param   string $style style
 	 *
 	 * @return stdClass
 	 * @since Kunena
@@ -1739,6 +1760,14 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param   bool $class class
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function tooltips($class = false)
 	{
 		$ktemplate = KunenaFactory::getTemplate();

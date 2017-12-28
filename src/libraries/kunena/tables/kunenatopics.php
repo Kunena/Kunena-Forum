@@ -168,8 +168,8 @@ class TableKunenaTopics extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id
-	 * @param   bool $reset
+	 * @param   null $id    id
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean
 	 * @throws Exception

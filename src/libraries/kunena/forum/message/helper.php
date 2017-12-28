@@ -29,8 +29,8 @@ abstract class KunenaForumMessageHelper
 	protected static $_location = array();
 
 	/**
-	 * @param   bool|array|int $ids
-	 * @param   string         $authorise
+	 * @param   bool|array|int $ids       ids
+	 * @param   string         $authorise authorise
 	 *
 	 * @return KunenaForumMessage[]
 	 * @throws Exception
@@ -69,10 +69,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -123,12 +124,12 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   mixed  $topic
-	 * @param   int    $start
-	 * @param   int    $limit
-	 * @param   string $ordering
-	 * @param   int    $hold
-	 * @param   bool   $orderbyid
+	 * @param   mixed  $topic     topic
+	 * @param   int    $start     start
+	 * @param   int    $limit     limit
+	 * @param   string $ordering  ordering
+	 * @param   int    $hold      hold
+	 * @param   bool   $orderbyid orderbyid
 	 *
 	 * @return KunenaForumMessage[]
 	 * @throws Exception
@@ -172,12 +173,12 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   int    $topic_id
-	 * @param   int    $start
-	 * @param   int    $limit
-	 * @param   string $ordering
-	 * @param   int    $hold
-	 * @param   bool   $orderbyid
+	 * @param   int    $topic_id  topic id
+	 * @param   int    $start     start
+	 * @param   int    $limit     limit
+	 * @param   string $ordering  ordering
+	 * @param   int    $hold      hold
+	 * @param   bool   $orderbyid orderbyid
 	 *
 	 * @return array
 	 * @throws Exception
@@ -220,10 +221,10 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   bool|array|int $categories
-	 * @param   int            $limitstart
-	 * @param   int            $limit
-	 * @param   array          $params
+	 * @param   bool|array|int $categories categories
+	 * @param   int            $limitstart limitstart
+	 * @param   int            $limit      limit
+	 * @param   array          $params     params
 	 *
 	 * @return array
 	 * @throws Exception
@@ -390,9 +391,9 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   int         $mesid
-	 * @param   null|string $direction
-	 * @param   null|array  $hold
+	 * @param   int         $mesid     mesid
+	 * @param   null|string $direction direction
+	 * @param   null|array  $hold      hold
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -440,7 +441,7 @@ abstract class KunenaForumMessageHelper
 	 * Returns KunenaForumMessage object.
 	 *
 	 * @param   null $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumMessage    The message object.
 	 * @since Kunena
@@ -477,10 +478,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array|string $mesids
+	 * @param   array|string $mesids mesid
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -553,11 +555,10 @@ abstract class KunenaForumMessageHelper
 		}
 	}
 
-	// Internal functions
-
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -566,7 +567,7 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   bool|array|int $topicids
+	 * @param   bool|array|int $topicids topicids
 	 *
 	 * @return boolean|integer
 	 * @throws Exception
@@ -610,7 +611,7 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @return array|void
 	 * @throws Exception
@@ -620,7 +621,7 @@ abstract class KunenaForumMessageHelper
 	{
 		if (empty($ids))
 		{
-			return;
+			return false;
 		}
 
 		$db = \Joomla\CMS\Factory::getDBO();

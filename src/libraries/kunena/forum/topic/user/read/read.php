@@ -35,8 +35,8 @@ class KunenaForumTopicUserRead extends JObject
 	protected $_db = null;
 
 	/**
-	 * @param   mixed $topic
-	 * @param   mixed $user
+	 * @param   mixed $topic topic
+	 * @param   mixed $user  user
 	 *
 	 * @internal
 	 * @since Kunena
@@ -84,9 +84,9 @@ class KunenaForumTopicUserRead extends JObject
 	}
 
 	/**
-	 * @param   mixed $id
-	 * @param   mixed $user
-	 * @param   bool  $reload
+	 * @param   mixed $id     id
+	 * @param   mixed $user   user
+	 * @param   bool  $reload reload
 	 *
 	 * @return KunenaForumTopicUserRead
 	 * @since Kunena
@@ -108,10 +108,11 @@ class KunenaForumTopicUserRead extends JObject
 	}
 
 	/**
-	 * @param   array $data
-	 * @param   array $ignore
+	 * @param   array $data   data
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function bind(array $data, array $ignore = array())
 	{
@@ -121,6 +122,7 @@ class KunenaForumTopicUserRead extends JObject
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function reset()
 	{
@@ -132,7 +134,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * Method to load a KunenaForumTopicUserRead object by id.
 	 *
 	 * @param   int   $topic_id Topic id to be loaded.
-	 * @param   mixed $user
+	 * @param   mixed $user     user
 	 *
 	 * @return bool    True on success.
 	 * @since Kunena
@@ -246,7 +248,7 @@ class KunenaForumTopicUserRead extends JObject
 	}
 
 	/**
-	 * @param   null|bool $exists
+	 * @param   null|bool $exists exists
 	 *
 	 * @return boolean
 	 * @since Kunena

@@ -36,7 +36,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	public $config = null;
 
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -64,8 +64,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param   string $prefix
-	 * @param   mixed  $config
+	 * @param   string $prefix prefix
+	 * @param   mixed  $config config
 	 *
 	 * @return KunenaController
 	 * @throws Exception
@@ -285,7 +285,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Execute task (slightly modified from Joomla).
 	 *
-	 * @param   string $task
+	 * @param   string $task task
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -492,12 +492,13 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * If there's no referrer or it's external, Kunena will return to the default page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param   string $default
-	 * @param   string $anchor
+	 * @param   string $default default
+	 * @param   string $anchor  anchor
 	 *
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

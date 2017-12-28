@@ -30,11 +30,11 @@ class KunenaUploadHelper
 	}
 
 	/**
-	 * @param $file
-	 * @param $uploadfolder
-	 * @param $format
+	 * @param   mixed  $file         file
+	 * @param   string $uploadfolder upload
+	 * @param   string $format       format
 	 *
-	 * @return boolean
+	 * @return mixed
 	 * @since Kunena
 	 */
 	public static function upload($file, $uploadfolder, $format)

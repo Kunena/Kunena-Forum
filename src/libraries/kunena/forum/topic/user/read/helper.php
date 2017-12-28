@@ -31,9 +31,9 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * Returns KunenaForumTopicUserRead object.
 	 *
-	 * @param   mixed $topic User topic to load.
-	 * @param   mixed $user
-	 * @param   bool  $reload
+	 * @param   mixed $topic  User topic to load.
+	 * @param   mixed $user   user
+	 * @param   bool  $reload reload
 	 *
 	 * @return KunenaForumTopicUserRead
 	 * @throws Exception
@@ -69,8 +69,8 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   bool|array $ids
-	 * @param   mixed      $user
+	 * @param   bool|array $ids  ids
+	 * @param   mixed      $user user
 	 *
 	 * @return KunenaForumTopicUserRead[]
 	 * @throws Exception
@@ -115,11 +115,12 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   array      $ids
-	 * @param   KunenaUser $user
+	 * @param   array      $ids  ids
+	 * @param   KunenaUser $user user
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
@@ -171,8 +172,8 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
+	 * @param   KunenaForumTopic $old old
+	 * @param   KunenaForumTopic $new new
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -216,8 +217,8 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old
-	 * @param   KunenaForumTopic $new
+	 * @param   KunenaForumTopic $old old
+	 * @param   KunenaForumTopic $new new
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -268,10 +269,11 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   int $id
+	 * @param   int $id id
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function reloadTopic($id)
 	{
@@ -311,8 +313,6 @@ abstract class KunenaForumTopicUserReadHelper
 		unset($results);
 	}
 
-	// Internal functions
-
 	/**
 	 * @return boolean
 	 * @throws Exception
@@ -341,7 +341,7 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   int $days
+	 * @param   int $days days
 	 *
 	 * @return boolean
 	 * @throws Exception

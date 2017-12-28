@@ -408,8 +408,8 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @param   null $userid
-	 * @param   bool $reset
+	 * @param   null $userid userid
+	 * @param   bool $reset  reset
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -479,6 +479,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function reset()
 	{
@@ -492,10 +493,10 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @param   mixed $data
-	 * @param   array $ignore
+	 * @param   mixed $data   data
+	 * @param   array $ignore ignore
 	 *
-	 * @return boolean|void
+	 * @return void
 	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())

@@ -22,6 +22,7 @@ class KunenaUserBan extends JObject
 	 * @since Kunena
 	 */
 	const ANY = 0;
+
 	/**
 	 * @since Kunena
 	 */
@@ -80,7 +81,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @access    protected
 	 *
-	 * @param   null $identifier
+	 * @param   null $identifier identifier
 	 *
 	 * @since     Kunena
 	 */
@@ -156,9 +157,10 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param $data
+	 * @param   mixed $data data
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function bind($data)
 	{
@@ -196,9 +198,10 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param   KunenaUserBan $instance
+	 * @param   KunenaUserBan $instance instance
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	private static function storeInstance($instance)
 	{
@@ -229,9 +232,10 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	private static function cacheUserid($userid)
 	{
@@ -277,7 +281,7 @@ class KunenaUserBan extends JObject
 	 * @access    public
 	 *
 	 * @param   int  $identifier The ban object to be loaded
-	 * @param   bool $create
+	 * @param   bool $create     create
 	 *
 	 * @return    KunenaUserBan            The ban object.
 	 * @since     1.6
@@ -307,7 +311,7 @@ class KunenaUserBan extends JObject
 	 * @access    public
 	 *
 	 * @param   int  $identifier The ban object to be loaded
-	 * @param   bool $create
+	 * @param   bool $create     create
 	 *
 	 * @return    KunenaUserBan            The ban object.
 	 * @since     1.6
@@ -332,8 +336,8 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param   int $start
-	 * @param   int $limit
+	 * @param   int $start start
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -377,7 +381,7 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param $userid
+	 * @param   integer $userid userid
 	 *
 	 * @return array
 	 * @throws Exception
@@ -521,7 +525,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param   string $ip
+	 * @param   string $ip   ip
 	 * @param   int    $mode KunenaUserBan::ANY or KunenaUserBan::ACTIVE
 	 *
 	 * @return    boolean            True on success
@@ -541,10 +545,11 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param   null $public
-	 * @param   null $private
+	 * @param   null $public  public
+	 * @param   null $private private
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setReason($public = null, $private = null)
 	{
@@ -570,15 +575,16 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param   null   $userid
-	 * @param   null   $ip
-	 * @param   int    $block
-	 * @param   null   $expiration
-	 * @param   string $reason_private
-	 * @param   string $reason_public
-	 * @param   string $comment
+	 * @param   null   $userid         userid
+	 * @param   null   $ip             ip
+	 * @param   int    $block          block
+	 * @param   null   $expiration     expiration
+	 * @param   string $reason_private private
+	 * @param   string $reason_public  public
+	 * @param   string $comment        comment
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
@@ -592,10 +598,11 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param          $expiration
-	 * @param   string $comment
+	 * @param   mixed  $expiration expiration
+	 * @param   string $comment    comment
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setExpiration($expiration, $comment = '')
 	{
@@ -625,9 +632,10 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param $comment
+	 * @param   string $comment comment
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function addComment($comment)
 	{
@@ -642,9 +650,10 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param   string $comment
+	 * @param   string $comment comment
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function unBan($comment = '')
 	{

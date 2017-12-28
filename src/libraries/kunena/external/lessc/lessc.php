@@ -10,7 +10,6 @@
  * @license   Licensed under MIT or GPLv3, see LICENSE
  */
 
-
 /**
  * The less compiler and parser.
  *
@@ -44,17 +43,17 @@ class lessc
 	 * @var string
 	 * @since LESSC
 	 */
-	static public $VERSION = "v0.4.0";
+	public static $VERSION = "v0.4.0";
 	/**
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $TRUE = array("keyword", "true");
+	protected static $TRUE = array("keyword", "true");
 	/**
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $FALSE = array("keyword", "false");
+	protected static $FALSE = array("keyword", "false");
 
 	/**
 	 * @var array
@@ -128,13 +127,13 @@ class lessc
 	 * @var array
 	 * @since LESSC
 	 */
-	static public $defaultValue = array("keyword", "");
+	public static $defaultValue = array("keyword", "");
 
 	/**
 	 * @var int
 	 * @since LESSC
 	 */
-	static protected $nextImportId = 0; // uniquely identify imports
+	protected static $nextImportId = 0; // uniquely identify imports
 
 	// attempts to find the path of an import url, returns null for css files
 	/**
@@ -155,7 +154,7 @@ class lessc
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -176,7 +175,7 @@ class lessc
 	 * @return array
 	 * @since LESSC
 	 */
-	static public function compressList($items, $delim)
+	public static function compressList($items, $delim)
 	{
 		if (!isset($items[1]) && isset($items[0]))
 		{
@@ -194,7 +193,7 @@ class lessc
 	 * @return string
 	 * @since LESSC
 	 */
-	static public function preg_quote($what)
+	public static function preg_quote($what)
 	{
 		return preg_quote($what, '/');
 	}
@@ -683,7 +682,6 @@ class lessc
 		return $selectors;
 	}
 
-
 	// multiply $selectors against the nearest selectors in env
 	/**
 	 * @param $selectors
@@ -933,12 +931,12 @@ class lessc
 	{
 		if ($searchIn == null)
 		{
-			return null;
+			return;
 		}
 
 		if (isset($seen[$searchIn->id]))
 		{
-			return null;
+			return;
 		}
 
 		$seen[$searchIn->id] = true;
@@ -982,7 +980,7 @@ class lessc
 
 		if ($searchIn->parent === $searchIn)
 		{
-			return null;
+			return;
 		}
 
 		return $this->findBlocks($searchIn->parent, $path, $orderedArgs, $keywordArgs, $seen);
@@ -1165,7 +1163,7 @@ class lessc
 						{
 							$subProp[2] = array(
 								'list', ' ',
-								array($subProp[2], array('keyword', $suffix))
+								array($subProp[2], array('keyword', $suffix)),
 							);
 						}
 
@@ -1729,7 +1727,7 @@ class lessc
 			list($number, $newUnit) = $arg[2];
 
 			return array("number", $this->assertNumber($number),
-				$this->compileValue($this->lib_e($newUnit)));
+				$this->compileValue($this->lib_e($newUnit)), );
 		}
 		else
 		{
@@ -2497,7 +2495,7 @@ class lessc
 					if (is_null($ret))
 					{
 						return array("string", "", array(
-							$name, "(", $args, ")"
+							$name, "(", $args, ")",
 						));
 					}
 
@@ -2556,7 +2554,6 @@ class lessc
 		return $value;
 	}
 
-
 	// coerce a value for use in color operation
 	/**
 	 * @param $value
@@ -2600,7 +2597,7 @@ class lessc
 					return array('color', $rgba[0], $rgba[1], $rgba[2]);
 				}
 
-				return null;
+				return;
 		}
 	}
 
@@ -2621,7 +2618,7 @@ class lessc
 				return array("string", "", array($value[1]));
 		}
 
-		return null;
+		return;
 	}
 
 	// turn list of length 1 into value type
@@ -2762,7 +2759,6 @@ class lessc
 		}
 	}
 
-
 	// make sure a color's components don't go out of bounds
 	/**
 	 * @param $c
@@ -2876,7 +2872,7 @@ class lessc
 	 * @throws Exception
 	 * @since LESSC
 	 */
-	function lib_red($color)
+	public function lib_red($color)
 	{
 		$color = $this->coerceColor($color);
 
@@ -2895,7 +2891,7 @@ class lessc
 	 * @throws Exception
 	 * @since LESSC
 	 */
-	function lib_green($color)
+	public function lib_green($color)
 	{
 		$color = $this->coerceColor($color);
 
@@ -2914,7 +2910,7 @@ class lessc
 	 * @throws Exception
 	 * @since LESSC
 	 */
-	function lib_blue($color)
+	public function lib_blue($color)
 	{
 		$color = $this->coerceColor($color);
 
@@ -2925,7 +2921,6 @@ class lessc
 
 		return $color[3];
 	}
-
 
 	// operator on two numbers
 
@@ -2975,7 +2970,6 @@ class lessc
 
 		return array("number", $value, $unit);
 	}
-
 
 	/* environment functions */
 
@@ -3041,7 +3035,6 @@ class lessc
 	{
 		$this->env->store[$name] = $value;
 	}
-
 
 	// get the highest occurrence entry for a name
 	/**
@@ -3276,7 +3269,7 @@ class lessc
 		{
 			// TODO: Throw an exception? We got neither a string nor something
 			// that looks like a compatible lessphp cache structure.
-			return null;
+			return;
 		}
 
 		if ($root !== null)
@@ -3536,7 +3529,7 @@ class lessc
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $cssColors = array(
+	protected static $cssColors = array(
 		'aliceblue'            => '240,248,255',
 		'antiquewhite'         => '250,235,215',
 		'aqua'                 => '0,255,255',
@@ -3684,7 +3677,7 @@ class lessc
 		'white'                => '255,255,255',
 		'whitesmoke'           => '245,245,245',
 		'yellow'               => '255,255,0',
-		'yellowgreen'          => '154,205,50'
+		'yellowgreen'          => '154,205,50',
 	);
 }
 
@@ -3700,13 +3693,13 @@ class lessc_parser
 	 * @var int
 	 * @since LESSC
 	 */
-	static protected $nextBlockId = 0; // used to uniquely identify blocks
+	protected static $nextBlockId = 0; // used to uniquely identify blocks
 
 	/**
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $precedence = array(
+	protected static $precedence = array(
 		'=<' => 0,
 		'>=' => 0,
 		'='  => 0,
@@ -3724,42 +3717,42 @@ class lessc_parser
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $whitePattern;
+	protected static $whitePattern;
 	/**
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $commentMulti;
+	protected static $commentMulti;
 
 	/**
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $commentSingle = "//";
+	protected static $commentSingle = "//";
 	/**
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $commentMultiLeft = "/*";
+	protected static $commentMultiLeft = "/*";
 	/**
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $commentMultiRight = "*/";
+	protected static $commentMultiRight = "*/";
 
 	// regex string to match any of the operators
 	/**
 	 * @var string
 	 * @since LESSC
 	 */
-	static protected $operatorString;
+	protected static $operatorString;
 
 	// these properties will supress division unless it's inside parenthases
 	/**
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $supressDivisionProps =
+	protected static $supressDivisionProps =
 		array('/border-radius$/i', '/^font$/i');
 
 	/**
@@ -3790,7 +3783,7 @@ class lessc_parser
 	 * @var array
 	 * @since LESSC
 	 */
-	static protected $literalCache = array();
+	protected static $literalCache = array();
 
 	/**
 	 * lessc_parser constructor.
@@ -3921,7 +3914,6 @@ class lessc_parser
 		{
 			$this->seek($s);
 		}
-
 
 		// look for special css blocks
 		if ($this->literal('@', false))
@@ -4183,7 +4175,7 @@ class lessc_parser
 				if ($this->literal("/") && $this->value($rhs))
 				{
 					$out = array("list", "",
-						array($out, array("keyword", "/"), $rhs));
+						array($out, array("keyword", "/"), $rhs), );
 				}
 				else
 				{
@@ -4233,7 +4225,6 @@ class lessc_parser
 						}
 					}
 				}
-
 
 				$whiteAfter = isset($this->buffer[$this->count - 1]) &&
 					ctype_space($this->buffer[$this->count - 1]);
@@ -4475,7 +4466,6 @@ class lessc_parser
 		{
 			$this->seek($s);
 		}
-
 
 		if (!empty($mediaType) && !$this->literal("and"))
 		{
@@ -4841,7 +4831,6 @@ class lessc_parser
 					$values[] = array("lit", $value);
 				}
 			}
-
 
 			if (!$this->literal($delim))
 			{
@@ -5458,7 +5447,6 @@ class lessc_parser
 		return true;
 	}
 
-
 	// advance counter to next occurrence of $what
 	// $until - don't include $what in advance
 	// $allowNewline, if string, will be used as valid char set
@@ -5688,7 +5676,7 @@ class lessc_parser
 	protected function removeComments($text)
 	{
 		$look = array(
-			'url(', '//', '/*', '"', "'"
+			'url(', '//', '/*', '"', "'",
 		);
 
 		$out = '';
@@ -6018,5 +6006,3 @@ class lessc_formatter_lessjs extends lessc_formatter_classic
 	 */
 	public $selectorSeparator = ",";
 }
-
-

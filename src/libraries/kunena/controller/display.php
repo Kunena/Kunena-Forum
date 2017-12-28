@@ -29,7 +29,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $layout = 'default';
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $config;
@@ -49,6 +49,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @internal
 	 * @since Kunena
+	 * @return mixed
 	 */
 	public function setPrimary()
 	{
@@ -153,6 +154,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Executed before display.
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	protected function before()
 	{
@@ -207,6 +209,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Executed after display.
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function after()
 	{
@@ -219,10 +222,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function prepareDocument()
 	{
-
 	}
 
 	/**
@@ -291,8 +294,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Shortcut for $this->input->set()
 	 *
-	 * @param $key
-	 * @param $value
+	 * @param   mixed $key   key
+	 * @param   mixed $value value
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -305,11 +308,12 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param        $title
-	 * @param   bool $replace
+	 * @param   mixed $title   title
+	 * @param   bool  $replace replace
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function setTitle($title, $replace = false)
 	{
@@ -342,9 +346,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param $keywords
+	 * @param   string $keywords keywords
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function setKeywords($keywords)
 	{
@@ -355,9 +360,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param $description
+	 * @param   string $description description
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function setDescription($description)
 	{
@@ -365,9 +371,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param $robots
+	 * @param   string $robots robots
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function setRobots($robots)
 	{

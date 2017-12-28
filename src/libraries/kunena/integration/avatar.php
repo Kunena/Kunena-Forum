@@ -35,9 +35,10 @@ class KunenaAvatar
 	protected $resize = false;
 
 	/**
-	 * @param   null $integration
+	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaAvatar
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getInstance($integration = null)
@@ -69,13 +70,13 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param $userlist
+	 * @param   string $userlist userlist
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function load($userlist)
 	{
-
 	}
 
 	/**
@@ -88,10 +89,10 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $class
-	 * @param   int    $sizex
-	 * @param   int    $sizey
+	 * @param   string $user  user
+	 * @param   string $class class
+	 * @param   int    $sizex sizex
+	 * @param   int    $sizey sizey
 	 *
 	 * @return string|void
 	 * @throws Exception
@@ -104,7 +105,7 @@ class KunenaAvatar
 
 		if (!$avatar)
 		{
-			return;
+			return false;
 		}
 
 		if ($class == 'none')
@@ -122,8 +123,8 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   int $sizex
-	 * @param   int $sizey
+	 * @param   int $sizex sizex
+	 * @param   int $sizey sizey
 	 *
 	 * @return StdClass
 	 * @throws Exception
@@ -147,9 +148,9 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param       $user
-	 * @param   int $sizex
-	 * @param   int $sizey
+	 * @param   string $user  user
+	 * @param   int    $sizex sizex
+	 * @param   int    $sizey sizey
 	 *
 	 * @return string|void
 	 * @throws Exception
@@ -162,7 +163,7 @@ class KunenaAvatar
 
 		if (!$size->x || !$size->y)
 		{
-			return;
+			return false;
 		}
 
 		$result = $this->_getURL($user, $size->x, $size->y);
@@ -172,9 +173,9 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   string  $user  user
+	 * @param   integer $sizex sizex
+	 * @param   integer $sizey sizey
 	 *
 	 * @return string
 	 * @since Kunena

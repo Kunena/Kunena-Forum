@@ -22,6 +22,12 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	protected static $_instances = array();
 
+	/**
+	 * Cleanup
+	 *
+	 * @since Kunena
+	 * @return void
+	 */
 	public static function cleanup()
 	{
 		self::$_instances = array();
@@ -29,7 +35,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 	/**
 	 * @param   int  $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumMessageThankyou|void
 	 * @throws Exception
@@ -62,10 +68,11 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Load users who have given thank you to listed messages.
 	 *
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -163,9 +170,9 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get users with most thank yous received / given.
 	 *
-	 * @param   bool $target
-	 * @param   int  $limitstart
-	 * @param   int  $limit
+	 * @param   bool $target     target
+	 * @param   int  $limitstart limitstart
+	 * @param   int  $limit      limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -204,8 +211,8 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get messages with most thank yous given.
 	 *
-	 * @param   int $limitstart
-	 * @param   int $limit
+	 * @param   int $limitstart limitstart
+	 * @param   int $limit      limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -241,10 +248,10 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get messages where a user received / gave thank you.
 	 *
-	 * @param   int  $userid
-	 * @param   bool $target
-	 * @param   int  $limitstart
-	 * @param   int  $limit
+	 * @param   int  $userid     userid
+	 * @param   bool $target     target
+	 * @param   int  $limitstart limitstart
+	 * @param   int  $limit      limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -354,7 +361,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Return thank yous for the given messages.
 	 *
-	 * @param   bool|array|int $ids
+	 * @param   bool|array|int $ids ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
 	 * @throws Exception

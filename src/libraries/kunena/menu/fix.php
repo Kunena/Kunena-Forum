@@ -135,6 +135,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function build()
 	{
@@ -193,7 +194,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @param   StdClass $item
+	 * @param   StdClass $item item
 	 *
 	 * @return object
 	 * @since Kunena
@@ -202,7 +203,7 @@ abstract class KunenaMenuFix
 	{
 		if (!$item)
 		{
-			return;
+			return false;
 		}
 
 		$id = $item->id;
@@ -271,7 +272,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @param $itemid
+	 * @param   integer $itemid itemid
 	 *
 	 * @return boolean
 	 * @since Kunena

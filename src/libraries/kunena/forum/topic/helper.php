@@ -26,7 +26,7 @@ abstract class KunenaForumTopicHelper
 	 * Returns KunenaForumTopic object.
 	 *
 	 * @param   int  $identifier The topic to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
@@ -63,9 +63,9 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids
-	 * @param   bool  $value
-	 * @param   mixed $user
+	 * @param   mixed $ids   ids
+	 * @param   bool  $value value
+	 * @param   mixed $user  user
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -94,9 +94,9 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids
-	 * @param   bool  $value
-	 * @param   mixed $user
+	 * @param   mixed $ids   ids
+	 * @param   bool  $value value
+	 * @param   mixed $user  user
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -125,8 +125,8 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed  $ids
-	 * @param   string $authorise
+	 * @param   mixed  $ids       ids
+	 * @param   string $authorise authorise
 	 *
 	 * @return KunenaForumTopic[]
 	 * @throws Exception
@@ -168,10 +168,11 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadTopics(array $ids)
 	{
@@ -222,8 +223,8 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids
-	 * @param   mixed $user
+	 * @param   mixed $ids  ids
+	 * @param   mixed $user user
 	 *
 	 * @return KunenaForumTopicUser[]
 	 * @throws Exception
@@ -240,10 +241,10 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $categories
-	 * @param   int   $limitstart
-	 * @param   int   $limit
-	 * @param   array $params
+	 * @param   mixed $categories categories
+	 * @param   int   $limitstart limitstart
+	 * @param   int   $limit      limit
+	 * @param   array $params     params
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @throws Exception
@@ -438,7 +439,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to delete selected topics.
 	 *
-	 * @param   array|int $ids
+	 * @param   array|int $ids ids
 	 *
 	 * @return int    Count of deleted topics.
 	 * @throws Exception
@@ -509,7 +510,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to trash topics. They will be marked as deleted, but still exist in database.
 	 *
-	 * @param   array|int $ids
+	 * @param   array|int $ids ids
 	 *
 	 * @return int    Count of trashed topics.
 	 * @throws Exception
@@ -557,6 +558,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -564,9 +566,9 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids
-	 * @param   int   $start
-	 * @param   int   $end
+	 * @param   mixed $ids   ids
+	 * @param   int   $start start
+	 * @param   int   $end   end
 	 *
 	 * @return boolean|integer
 	 * @throws Exception
@@ -700,8 +702,6 @@ abstract class KunenaForumTopicHelper
 
 		return $rows;
 	}
-
-	// Internal functions
 
 	/**
 	 * @param   array $topics Topics

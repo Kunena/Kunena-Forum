@@ -17,16 +17,16 @@ defined('_JEXEC') or die();
 abstract class JHtmlKunenaForum
 {
 	/**
-	 * @param          $name
-	 * @param          $parent
-	 * @param   array  $options
-	 * @param   array  $params
-	 * @param   null   $attribs
-	 * @param   string $key
-	 * @param   string $text
-	 * @param   array  $selected
-	 * @param   bool   $idtag
-	 * @param   bool   $translate
+	 * @param   string $name      name
+	 * @param   mixed  $parent    parent
+	 * @param   array  $options   options
+	 * @param   array  $params    params
+	 * @param   null   $attribs   attribs
+	 * @param   string $key       key
+	 * @param   string $text      text
+	 * @param   array  $selected  selected
+	 * @param   bool   $idtag     idtag
+	 * @param   bool   $translate translate
 	 *
 	 * @return string
 	 * @throws null
@@ -201,7 +201,7 @@ abstract class JHtmlKunenaForum
 	 * Creates link pointing to a Kunena page
 	 *
 	 * @param   mixed  $uri        Kunena URI, either as string, \Joomla\CMS\Uri\Uri or array
-	 * @param   string $content
+	 * @param   string $content    content
 	 * @param   string $title      Link title
 	 * @param   string $class      Link class
 	 * @param   string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
@@ -255,11 +255,10 @@ abstract class JHtmlKunenaForum
 	}
 
 	/**
-	 * @param         $name
-	 * @param         $options
-	 * @param   array $selected
-	 *
-	 * @param   null  $class_input
+	 * @param   string $name        name
+	 * @param   mixed  $options     options
+	 * @param   array  $selected    selected
+	 * @param   null   $class_input input
 	 *
 	 * @return string
 	 * @since Kunena

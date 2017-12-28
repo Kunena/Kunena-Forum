@@ -18,8 +18,8 @@ jimport('joomla.utilities.date');
 class KunenaDate extends \Joomla\CMS\Date\Date
 {
 	/**
-	 * @param   string $date
-	 * @param   null   $tz
+	 * @param   string $date date
+	 * @param   null   $tz   tz
 	 *
 	 * @return KunenaDate
 	 * @since Kunena
@@ -41,10 +41,10 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	}
 
 	/**
-	 * @param   string $mode
-	 * @param   string $title
-	 * @param   bool   $offset
-	 * @param   string $class
+	 * @param   string $mode   mode
+	 * @param   string $title  title
+	 * @param   bool   $offset offset
+	 * @param   string $class  class
 	 *
 	 * @return string
 	 * @throws Exception
@@ -56,8 +56,8 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	}
 
 	/**
-	 * @param   string $mode
-	 * @param   bool   $offset
+	 * @param   string $mode   mode
+	 * @param   bool   $offset offset
 	 *
 	 * @return string
 	 * @throws Exception

@@ -184,6 +184,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @return KunenaForumStatistics
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getInstance()
@@ -197,11 +198,12 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $force
+	 * @param   bool $force force
 	 *
 	 * @throws Exception
 	 * @throws null
 	 * @since Kunena
+	 * @return void
 	 */
 	public function loadAll($force = false)
 	{
@@ -212,8 +214,10 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $force
+	 * @param   bool $force force
 	 *
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function loadGeneral($force = false)
@@ -229,6 +233,12 @@ class KunenaForumStatistics
 		$this->loadLastDays();
 	}
 
+	/**
+	 * @return void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function loadMemberCount()
 	{
 		if ($this->memberCount === null)
@@ -237,6 +247,12 @@ class KunenaForumStatistics
 		}
 	}
 
+	/**
+	 * @return void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function loadLastUserId()
 	{
 		if ($this->lastUserId === null)
@@ -245,6 +261,12 @@ class KunenaForumStatistics
 		}
 	}
 
+	/**
+	 * @return void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function loadCategoryCount()
 	{
 		if ($this->sectionCount === null)
@@ -273,6 +295,12 @@ class KunenaForumStatistics
 		}
 	}
 
+	/**
+	 * @return void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function loadLastDays()
 	{
 		if ($this->todayTopicCount === null)
@@ -311,11 +339,12 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $override
+	 * @param   bool $override override
 	 *
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
+	 * @return void
 	 */
 	public function loadTopicStats($override = false)
 	{
@@ -338,11 +367,10 @@ class KunenaForumStatistics
 				array_pop($this->top);
 			}
 		}
-
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array|KunenaForumTopic[]
 	 * @throws Exception
@@ -382,7 +410,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -439,10 +467,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $override
+	 * @param   bool $override override
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public function loadUserStats($override = false)
 	{
@@ -472,11 +501,10 @@ class KunenaForumStatistics
 				array_pop($this->top);
 			}
 		}
-
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -513,7 +541,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -550,7 +578,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception

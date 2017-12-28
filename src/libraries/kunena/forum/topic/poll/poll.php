@@ -76,7 +76,7 @@ class KunenaForumTopicPoll extends JObject
 	protected $mytime = array();
 
 	/**
-	 * @param   int $identifier
+	 * @param   int $identifier identifier
 	 *
 	 * @since Kunena
 	 */
@@ -137,7 +137,7 @@ class KunenaForumTopicPoll extends JObject
 	 * Returns KunenaForumTopicPoll object.
 	 *
 	 * @param   mixed $identifier Poll to load - Can be only an integer.
-	 * @param   bool  $reset
+	 * @param   bool  $reset      reset
 	 *
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
@@ -202,6 +202,7 @@ class KunenaForumTopicPoll extends JObject
 	 * @param   array $options array(id=>name, id=>name)
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function setOptions($options)
 	{
@@ -254,8 +255,8 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   int $start
-	 * @param   int $limit
+	 * @param   int $start start
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -284,7 +285,7 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -315,9 +316,9 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   int   $option
-	 * @param   bool  $change
-	 * @param   mixed $user
+	 * @param   int   $option option
+	 * @param   bool  $change change
+	 * @param   mixed $user   user
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -438,7 +439,7 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   null|bool $exists
+	 * @param   null|bool $exists exists
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -456,7 +457,7 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -483,7 +484,7 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   mixed $user
+	 * @param   mixed $user user
 	 *
 	 * @return integer
 	 * @throws Exception
@@ -514,8 +515,8 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   int $option
-	 * @param   int $delta
+	 * @param   int $option option
+	 * @param   int $delta  delta
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -554,10 +555,11 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param   array $data
-	 * @param   array $allow
+	 * @param   array $data  data
+	 * @param   array $allow allow
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function bind(array $data, array $allow = array())
 	{

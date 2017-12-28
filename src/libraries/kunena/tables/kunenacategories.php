@@ -240,8 +240,8 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id
-	 * @param   bool $reset
+	 * @param   null $id    id
+	 * @param   bool $reset reset
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -303,8 +303,8 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   mixed  $array
-	 * @param   string $ignore
+	 * @param   mixed  $array  array
+	 * @param   string $ignore ignore
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -338,8 +338,6 @@ class TableKunenaCategories extends KunenaTable
 
 		return parent::bind($array, $ignore);
 	}
-
-	// Check for potential problems
 
 	/**
 	 * @return boolean
@@ -378,9 +376,9 @@ class TableKunenaCategories extends KunenaTable
 	// Check if given forum is one of its own childs
 
 	/**
-	 * @param $id
+	 * @param   integer $id id
 	 *
-	 * @return integer|void
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -400,7 +398,7 @@ class TableKunenaCategories extends KunenaTable
 			{
 				KunenaError::displayDatabaseError($e);
 
-				return;
+				return false;
 			}
 
 			$recurse = array();
@@ -436,7 +434,7 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   string $where
+	 * @param   string $where where
 	 *
 	 * @return boolean|mixed
 	 * @since Kunena
@@ -465,7 +463,7 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   bool $updateNulls
+	 * @param   bool $updateNulls update
 	 *
 	 * @return boolean
 	 * @since Kunena

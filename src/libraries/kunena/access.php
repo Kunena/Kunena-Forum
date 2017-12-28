@@ -218,6 +218,7 @@ class KunenaAccess
 	/**
 	 * @return KunenaAccess|null
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance()
 	{

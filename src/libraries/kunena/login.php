@@ -160,7 +160,7 @@ class KunenaLogin
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	/**
@@ -177,7 +177,7 @@ class KunenaLogin
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	/**
@@ -194,7 +194,7 @@ class KunenaLogin
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	/**
@@ -211,7 +211,7 @@ class KunenaLogin
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	/**
@@ -228,7 +228,7 @@ class KunenaLogin
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	/**

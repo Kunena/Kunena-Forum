@@ -32,7 +32,7 @@ abstract class KunenaAttachmentHelper
 	 * Returns KunenaAttachment object.
 	 *
 	 * @param   int  $identifier The attachment to load - Can be only an integer.
-	 * @param   bool $reload
+	 * @param   bool $reload     reloaded
 	 *
 	 * @return KunenaAttachment
 	 * @since Kunena
@@ -69,8 +69,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   bool|array|int $ids
-	 * @param   string         $authorise
+	 * @param   bool|array|int $ids       ids
+	 * @param   string         $authorise authorise
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception
@@ -113,10 +113,11 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadById(array $ids)
 	{
@@ -167,7 +168,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param   bool|string $ids
+	 * @param   bool|string $ids ids
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception
@@ -193,10 +194,11 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   array $ids
+	 * @param   array $ids ids
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	protected static function loadByMessage(array $ids)
 	{
@@ -247,8 +249,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   bool|array|int $ids
-	 * @param   string         $authorise
+	 * @param   bool|array|int $ids       ids
+	 * @param   string         $authorise authorise
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception
@@ -368,8 +370,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category
-	 * @param   null  $user
+	 * @param   mixed $category category
+	 * @param   null  $user     user
 	 *
 	 * @return array|boolean
 	 * @throws Exception
@@ -389,8 +391,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category
-	 * @param   mixed $user
+	 * @param   mixed $category category
+	 * @param   mixed $user     user
 	 *
 	 * @return array|boolean
 	 * @throws Exception
@@ -465,8 +467,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category
-	 * @param   mixed $user
+	 * @param   mixed $category category
+	 * @param   mixed $user     user
 	 *
 	 * @return array|boolean
 	 * @throws Exception
@@ -589,14 +591,14 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * This function shortens long filenames for display purposes.
+	 * This function shortens long file names for display purposes.
 	 * The first 8 characters of the filename, followed by three dots
 	 * and the last 5 character of the filename.
 	 *
 	 * @param   string $filename Filename to be shortened.
-	 * @param   int    $front
-	 * @param   int    $back
-	 * @param   string $filler
+	 * @param   int    $front    front
+	 * @param   int    $back     back
+	 * @param   string $filler   filler
 	 *
 	 * @return string
 	 * @since Kunena
@@ -617,11 +619,9 @@ abstract class KunenaAttachmentHelper
 		return $output;
 	}
 
-	// Internal functions
-
 	/**
-	 * @param   mixed $user
-	 * @param   array $params
+	 * @param   mixed $user   user
+	 * @param   array $params params
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception
@@ -715,7 +715,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Check if mime type is image.
 	 *
-	 * @param   string $mime
+	 * @param   string $mime mime
 	 *
 	 * @return  bool  True if mime is image.
 	 * @since Kunena

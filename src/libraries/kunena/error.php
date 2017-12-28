@@ -40,7 +40,7 @@ abstract class KunenaError
 	public static $admin = false;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public static $format;
@@ -48,6 +48,7 @@ abstract class KunenaError
 	/**
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function initialize()
 	{
@@ -83,6 +84,7 @@ abstract class KunenaError
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -97,11 +99,12 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param          $msg
-	 * @param   string $where
+	 * @param   string $msg   msg
+	 * @param   string $where where
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function error($msg, $where = 'default')
 	{
@@ -113,11 +116,12 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param          $msg
-	 * @param   string $where
+	 * @param   string $msg   msg
+	 * @param   string $where where
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function warning($msg, $where = 'default')
 	{
@@ -131,7 +135,7 @@ abstract class KunenaError
 	/**
 	 * Return different error if it's an admin or a simple user
 	 *
-	 * @param $exception
+	 * @param   void $exception exception
 	 *
 	 * @return void
 	 * @throws Exception
@@ -148,7 +152,8 @@ abstract class KunenaError
 		}
 		elseif (self::$debug || self::$admin)
 		{
-			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
+			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
+					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
 		}
 		else
 		{
@@ -157,10 +162,10 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
-	 * @param $errfile
-	 * @param $errline
+	 * @param   string $errno   errorno
+	 * @param   string $errstr  errorstr
+	 * @param   string $errfile errorfile
+	 * @param   string $errline errorline
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -218,9 +223,10 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param $debug
+	 * @param   mixed $debug debug
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function shutdownHandler($debug)
 	{

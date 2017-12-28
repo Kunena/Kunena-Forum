@@ -104,9 +104,9 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Execute main MVC triad to get the current layout.
 	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
+	 * @param   mixed $path    path
+	 * @param   mixed $input   input
+	 * @param   mixed $options options
 	 *
 	 * @return  KunenaLayout
 	 * @since Kunena
@@ -120,9 +120,9 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Get main MVC triad from current layout.
 	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
+	 * @param   mixed $path    path
+	 * @param   mixed $input   input
+	 * @param   mixed $options options
 	 *
 	 * @return  KunenaControllerDisplay
 	 * @since Kunena
@@ -136,9 +136,9 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Add path to breadcrumbs.
 	 *
-	 * @param        $text
-	 * @param        $uri
-	 * @param   bool $ignore
+	 * @param   string $text   text
+	 * @param   string $uri    uri
+	 * @param   bool   $ignore ignore
 	 *
 	 * @return $this
 	 * @throws Exception

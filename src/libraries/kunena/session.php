@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 class KunenaSession extends JObject
 {
 	/**
-	 * @var
+	 * @var mixed
 	 * @since Kunena
 	 */
 	private static $_instance;
@@ -40,7 +40,7 @@ class KunenaSession extends JObject
 	protected $allreadtime;
 
 	/**
-	 * @param   mixed|null $identifier
+	 * @param   mixed|null $identifier identifier
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -53,14 +53,16 @@ class KunenaSession extends JObject
 		{
 			// For new users new indication displays 14 days
 			$now               = \Joomla\CMS\Factory::getDate()->toUnix();
-			$this->lasttime    = $now - 14 * 24 * 60 * 60; // 14 days ago
+
+			// 14 days ago
+			$this->lasttime    = $now - 14 * 24 * 60 * 60;
 			$this->allreadtime = $this->lasttime;
 			$this->currvisit   = $now;
 			$this->readtopics  = 0;
 		}
 		else
 		{
-			// Deal with users who do not (yet) have all readtime set.
+			// Deal with users who do not (yet) have all read time set.
 			$userCategory      = KunenaForumCategoryUserHelper::get(0, (int) $identifier);
 			$this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
 		}
@@ -125,8 +127,8 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @param   bool $update
-	 * @param   null $userid
+	 * @param   bool $update update
+	 * @param   null $userid userid
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
@@ -151,6 +153,7 @@ class KunenaSession extends JObject
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	public function updateSessionInfo()
 	{
@@ -292,6 +295,7 @@ class KunenaSession extends JObject
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public function markAllCategoriesRead()
 	{

@@ -29,8 +29,8 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param   null $identifier
-	 * @param   bool $reload
+	 * @param   null $identifier identifier
+	 * @param   bool $reload     reload
 	 *
 	 * @return KunenaForumTopicRate The rate object.
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
@@ -62,7 +62,7 @@ abstract class KunenaForumTopicRateHelper
 	/**
 	 * Return sum of all rates gived to a topics by all users
 	 *
-	 * @param $id
+	 * @param   integer $id id
 	 *
 	 * @return float
 	 * @since Kunena

@@ -657,6 +657,7 @@ class KunenaPagination
 	/**
 	 * @since Kunena
 	 * @throws Exception
+	 * @return void
 	 */
 	protected function setChrome()
 	{

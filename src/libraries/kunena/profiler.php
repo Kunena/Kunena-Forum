@@ -119,7 +119,7 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 
 	/**
 	 * @param   array  $array    array
-	 * @param   string $property properrty
+	 * @param   string $property property
 	 *
 	 * @return boolean
 	 * @since Kunena

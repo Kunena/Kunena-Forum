@@ -52,7 +52,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * It is very important to use this or category filter. Otherwise topics from unauthorized categories will be
 	 * included to the search results.
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user user
 	 *
 	 * @return $this
 	 * @throws Exception
@@ -75,7 +75,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $topics->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param   array $categories
+	 * @param   array $categories categories
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -150,7 +150,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * favorited = User has favorited the topic.
 	 * subscribed = User has subscribed to the topic.
 	 *
-	 * @param   KunenaUser $user
+	 * @param   KunenaUser $user   user
 	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
@@ -219,8 +219,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter topics where group of people have (not) posted after the topic owner.
 	 *
-	 * @param   array $users
-	 * @param   bool  $negate
+	 * @param   array $users  users
+	 * @param   bool  $negate negate
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -343,9 +343,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query query
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

@@ -70,7 +70,7 @@ abstract class KunenaRouteLegacy
 	);
 
 	/**
-	 * @param $view
+	 * @param   string $view view
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -86,10 +86,11 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
-	 * @param $item
+	 * @param   mixed $item item
 	 *
 	 * @throws Exception
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function convertMenuItem($item)
 	{
@@ -135,8 +136,8 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
-	 * @param       $uri
-	 * @param   int $showstart
+	 * @param   string $uri       uri
+	 * @param   int    $showstart showstart
 	 *
 	 * @return boolean|void
 	 * @throws Exception
@@ -147,7 +148,7 @@ abstract class KunenaRouteLegacy
 		// Make sure that input is \Joomla\CMS\Uri\Uri to legacy Kunena func=xxx
 		if (!($uri instanceof \Joomla\CMS\Uri\Uri))
 		{
-			return;
+			return false;
 		}
 
 		if ($uri->getVar('option') != 'com_kunena')

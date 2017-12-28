@@ -23,9 +23,10 @@ class KunenaProfile
 	protected static $instance = false;
 
 	/**
-	 * @param   null $integration
+	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaProfile
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getInstance($integration = null)
@@ -57,7 +58,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -74,7 +75,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @since Kunena
@@ -85,8 +86,8 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -107,47 +108,47 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
-
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $task
-	 * @param   bool   $xhtml
+	 * @param   string $user  user
+	 * @param   string $task  task
+	 * @param   bool   $xhtml xhtml
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
-
 	}
 
 	/**
-	 * @param $view
-	 * @param $params
+	 * @param   int   $view   view
+	 * @param   mixed $params params
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function showProfile($view, &$params)
 	{
-
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @since Kunena
+	 * @return void
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
-
 	}
 }

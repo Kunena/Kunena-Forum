@@ -71,6 +71,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @since Kunena
+	 * @return void
 	 */
 	public static function cleanup()
 	{
@@ -80,6 +81,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @since Kunena
+	 * @return void
+	 * @throws Exception
 	 */
 	public static function initialize()
 	{
@@ -92,8 +95,8 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int    $id
-	 * @param   string $name
+	 * @param   int    $id   id
+	 * @param   string $name name
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
@@ -132,6 +135,7 @@ abstract class KunenaUserHelper
 	 * @param   bool  $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -190,7 +194,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   array $userids
+	 * @param   array $userids userids
 	 *
 	 * @return array
 	 * @throws Exception
@@ -326,7 +330,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception

@@ -65,7 +65,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'edit'=>array('Read','Own','EditTime'),
 		'move'=>array('Read'),
 		'approve'=>array('Read'),
-		'delete'=>array('Read','Own','EditTime', 'Delete'),
+		'delete'=>array('Read','Own', 'Delete'),
 		'thankyou'=>array('Read', 'Thankyou'),
 		'unthankyou'=>array('Read'),
 		'undelete'=>array('Read'),
@@ -1431,7 +1431,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
-		if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
+		if ($this->getTopic()->getReplies() && $this->getTopic()->last_post_id > $this->id)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
@@ -1459,13 +1459,23 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$user->isModerator($this->getCategory())
-				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id || ($config->userdeletetmessage == '3' && $this->id==$this->getTopic()->first_post_id)))
+		if (!$user->isModerator($this->getCategory()) && $config->userdeletetmessage != '2')
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-		}
+			if ($config->userdeletetmessage == '0')
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+			}
 
-		return null;
+			if ($config->userdeletetmessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+			}
+
+			if ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+			}
+		}
 	}
 
 	/**

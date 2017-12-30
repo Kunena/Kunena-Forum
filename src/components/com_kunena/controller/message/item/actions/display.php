@@ -508,31 +508,31 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				if ($topicicontype == 'B2' && !$fullactions)
 				{
 					$this->messageButtons->set('permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'icon icon-notification-circle')
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'icon icon-notification-circle')
 					);
 				}
 				elseif ($topicicontype == 'B3' && !$fullactions)
 				{
 					$this->messageButtons->set('permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
 					);
 				}
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'fa fa-exclamation')
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'fa fa-exclamation')
 					);
 				}
 				elseif ($topicicontype == 'image' && !$fullactions)
 				{
 					$this->messageButtons->set('permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'kicon-permdelete')
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'kicon-permdelete')
 					);
 				}
 				else
 				{
 					$this->messageButtons->set('permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button)
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button)
 					);
 				}
 			}

@@ -278,9 +278,19 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			}
 			elseif ($this->topic->hold == 2 || $this->topic->hold == 3)
 			{
-				$this->topicButtons->set('undelete',
-					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
-				);
+				if ($this->topic->isAuthorised('permdelete'))
+				{
+					$this->topicButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, $button)
+					);
+				}
+
+				if ($this->topic->isAuthorised('undelete'))
+				{
+					$this->topicButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
+					);
+				}
 			}
 		}
 

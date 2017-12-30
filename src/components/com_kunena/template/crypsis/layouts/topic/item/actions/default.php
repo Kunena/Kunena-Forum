@@ -26,6 +26,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 		<?php endif ?>
 
 		<?php if ($this->topicButtons->get('delete')
+			|| $this->topicButtons->get('permdelete')
 			|| $this->topicButtons->get('undelete')
 			|| $this->topicButtons->get('moderate')
 			|| $this->topicButtons->get('sticky')
@@ -37,6 +38,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><?php echo $this->topicButtons->get('delete') ?></li>
+					<li><?php echo $this->topicButtons->get('permdelete') ?></li>
 					<li><?php echo $this->topicButtons->get('undelete') ?></li>
 					<li><?php echo $this->topicButtons->get('moderate') ?></li>
 					<li><?php echo $this->topicButtons->get('sticky') ?></li>
@@ -69,6 +71,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			<?php endif ?>
 
 			<?php if ($this->topicButtons->get('delete')
+				|| $this->topicButtons->get('permdelete')
 				|| $this->topicButtons->get('undelete')
 				|| $this->topicButtons->get('moderate')
 				|| $this->topicButtons->get('sticky')
@@ -80,6 +83,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 					<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><?php echo $this->topicButtons->get('delete') ?></li>
+						<li><?php echo $this->topicButtons->get('permdelete') ?></li>
 						<li><?php echo $this->topicButtons->get('undelete') ?></li>
 						<li><?php echo $this->topicButtons->get('moderate') ?></li>
 						<li><?php echo $this->topicButtons->get('sticky') ?></li>

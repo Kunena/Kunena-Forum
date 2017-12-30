@@ -1431,6 +1431,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
+		if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+		}
+
 		if ($this->getTopic()->getReplies() && $this->getTopic()->last_post_id > $this->id)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);

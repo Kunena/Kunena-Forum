@@ -466,7 +466,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				}
 			}
 
-			if ($this->message->isAuthorised('permdelete'))
+			if ($this->message->getTopic()->isAuthorised('permdelete'))
 			{
 				if ($topicicontype == 'B2' && !$fullactions)
 				{

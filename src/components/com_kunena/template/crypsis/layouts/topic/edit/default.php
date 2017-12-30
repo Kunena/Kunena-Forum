@@ -141,9 +141,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<?php if ($this->message->userid) : ?>
-							<div class="control-group" id="kanynomous-check" <?php if ($this->me->userid || !$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+							<div class="control-group" id="kanynomous-check" <?php if (!$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
-
 								<div class="controls">
 									<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
 									{
@@ -154,7 +153,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
-							<?php if ($this->me->userid || !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
+							<?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
@@ -162,10 +161,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>"/>
 						<!-- Encourage guest user to login or register -->
 						<?php
-			            $login =  '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
-			            $register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
-						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register) ;
-			            ?>
+						$login = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string)JUri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
+						$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
+						echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
+						?>
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>

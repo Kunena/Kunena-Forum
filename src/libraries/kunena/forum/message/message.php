@@ -69,7 +69,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'thankyou'=>array('Read', 'Thankyou'),
 		'unthankyou'=>array('Read'),
 		'undelete'=>array('Read'),
-		'permdelete'=>array('Read'),
+		'permdelete'=>array('Read', 'Permdelete'),
 		'attachment.read'=>array('Read'),
 		'attachment.createimage'=>array('Read','AttachmentsImage'),
 		'attachment.createfile'=>array('Read','AttachmentsFile'),
@@ -1481,6 +1481,23 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 		}
+	}
+
+	/**
+	 * @param   KunenaUser $user
+	 *
+	 * @return null|string
+	 */
+	protected function authorisePermdelete(KunenaUser $user)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+		}
+
+		return null;
 	}
 
 	/**

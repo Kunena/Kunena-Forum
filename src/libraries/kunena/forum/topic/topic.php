@@ -2104,4 +2104,28 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		return;
 	}
+
+	/**
+	 * @param   KunenaUser $user user
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function authorisePermdelete(KunenaUser $user)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ($user->isAdmin() || $user->isModerator())
+		{
+			return null;
+		}
+
+		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+		}
+
+		return null;
+	}
 }

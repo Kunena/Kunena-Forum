@@ -1706,15 +1706,24 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user
+	 * Check if user has the right to perm delete the message
 	 *
-	 * @return null|string
+	 * @param   KunenaUser $user user
+	 *
+	 * @return KunenaExceptionAuthorise|NULL
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function authorisePermdelete(KunenaUser $user)
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
+		if ($user->isAdmin() || $user->isModerator())
+		{
+			return null;
+		}
+
+		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getTopic()->getCategory()))
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}

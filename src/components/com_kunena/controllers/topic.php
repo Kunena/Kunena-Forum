@@ -134,6 +134,7 @@ class KunenaControllerTopic extends KunenaController
 	 * Remove files with AJAX.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function removeattachments()

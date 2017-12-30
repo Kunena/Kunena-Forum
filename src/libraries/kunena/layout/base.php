@@ -719,9 +719,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
-	 * @param   string $path    path
-	 * @param   string $input   input
-	 * @param   mixed  $options options
+	 * @param   string              $path    path
+	 * @param   \Joomla\Input\Input $input   input
+	 * @param   mixed               $options options
 	 *
 	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena

@@ -53,7 +53,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		'approve'                     => array('Read', 'NotMoved'),
 		'delete'                      => array('Read'),
 		'undelete'                    => array('Read'),
-		'permdelete'                  => array('Read', 'Permdelete'),
+		'permdelete'                  => array('Read'),
 		'favorite'                    => array('Read'),
 		'subscribe'                   => array('Read'),
 		'sticky'                      => array('Read'),
@@ -73,7 +73,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		'post.approve'                => array('Read'),
 		'post.delete'                 => array('Read', 'Unlocked'),
 		'post.undelete'               => array('Read'),
-		'post.permdelete'             => array('Read', 'Permdelete'),
+		'post.permdelete'             => array('Read'),
 		'post.attachment.read'        => array('Read'),
 		'post.attachment.createimage' => array('Unlocked'),
 		'post.attachment.createfile'  => array('Unlocked'),
@@ -1347,7 +1347,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser $user   user
 	 * @param   bool       $throw  throw
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return boolean
 	 * @throws null
 	 * @since  K4.0
 	 */
@@ -2103,29 +2103,5 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		return;
-	}
-
-	/**
-	 * @param   KunenaUser $user user
-	 *
-	 * @return KunenaExceptionAuthorise|null
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	protected function authorisePermdelete(KunenaUser $user)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if ($user->isAdmin() || $user->isModerator())
-		{
-			return null;
-		}
-
-		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
-		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-		}
-
-		return null;
 	}
 }

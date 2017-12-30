@@ -63,6 +63,7 @@ abstract class KunenaFactory
 	 * @param   bool $reload reload
 	 *
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getUser($id = null, $reload = false)
@@ -109,6 +110,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaAvatar
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getAvatarIntegration()
@@ -122,6 +124,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaPrivate
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getPrivateMessaging()
@@ -148,6 +151,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaProfile
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getProfile()

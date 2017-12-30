@@ -206,10 +206,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
-	 * @param   array $topics
-	 * @param   array $actions
+	 * @param   array $topics  topics
+	 * @param   array $actions actions
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
@@ -244,6 +245,16 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 				switch ($action)
 				{
+					case 'permdelete':
+						if (!KunenaUser::getInstance()->isModerator() && !KunenaConfig::getInstance()->moderator_permdelete)
+						{
+							$actions[$action] = false;
+						}
+						else
+						{
+							$actions[$action] = isset($options[$action]) && $topic->isAuthorised($action) ? $options[$action] : false;
+						}
+						break;
 					case 'unsubscribe':
 					case 'unfavorite':
 						$actions[$action] = isset($options[$action]) ? $options[$action] : false;
@@ -270,10 +281,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
-	 * @param   array $messages
-	 * @param   array $actions
+	 * @param   array $messages messages
+	 * @param   array $actions  actions
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
@@ -304,7 +316,21 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 					continue;
 				}
 
-				$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+				switch ($action)
+				{
+					case 'permdelete':
+						if (!KunenaUser::getInstance()->isModerator() && !KunenaConfig::getInstance()->moderator_permdelete)
+						{
+							$actions[$action] = false;
+						}
+						else
+						{
+							$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+						}
+						break;
+					default:
+						$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+				}
 			}
 		}
 

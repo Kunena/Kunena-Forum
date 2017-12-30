@@ -200,6 +200,7 @@ EOF;
 	 * @param   int    $page   An integer holding page number
 	 *
 	 * @return object KunenaForumMessage
+	 * @throws Exception
 	 */
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{

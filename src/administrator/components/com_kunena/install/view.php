@@ -73,7 +73,9 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 
 	/**
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws KunenaSchemaException
+	 * @return void
 	 */
 	public function displaySchema()
 	{
@@ -99,7 +101,9 @@ class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
 
 	/**
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws KunenaSchemaException
+	 * @return void
 	 */
 	public function displaySchemaDiff()
 	{

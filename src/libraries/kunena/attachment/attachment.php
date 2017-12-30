@@ -429,6 +429,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return KunenaUser
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getAuthor()
@@ -840,6 +841,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   int $inline inline
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function setInline($inline)

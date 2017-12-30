@@ -129,6 +129,7 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return array
+	 * @throws ReflectionException
 	 * @since  Kunena
 	 */
 	protected function getFilterOperationFields()

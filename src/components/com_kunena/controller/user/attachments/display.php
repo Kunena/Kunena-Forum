@@ -42,7 +42,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	public $attachments;
 
 	/**
-	 * @var
+	 * @var string
 	 * @since Kunena
 	 */
 	public $headerText;
@@ -53,6 +53,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 * @return void
 	 * @throws Exception
 	 * @throws null
+	 * @throws void
 	 * @since Kunena
 	 */
 	protected function before()

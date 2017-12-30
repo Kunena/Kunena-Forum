@@ -225,8 +225,9 @@ abstract class KunenaError
 	/**
 	 * @param   mixed $debug debug
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function shutdownHandler($debug)
 	{

@@ -42,6 +42,7 @@ class KunenaForumTopicUser extends JObject
 	 * @param   mixed $topic topic
 	 * @param   mixed $user  user
 	 *
+	 * @throws Exception
 	 * @internal
 	 * @since Kunena
 	 */
@@ -118,6 +119,7 @@ class KunenaForumTopicUser extends JObject
 	 * @param   mixed $user     user
 	 *
 	 * @return bool    True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($topic_id = null, $user = null)

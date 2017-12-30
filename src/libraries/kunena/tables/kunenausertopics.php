@@ -85,6 +85,7 @@ class TableKunenaUserTopics extends KunenaTable
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function check()

@@ -249,6 +249,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 
 	/**
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function check()

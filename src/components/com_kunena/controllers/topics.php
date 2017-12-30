@@ -22,6 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
+	 * @return void
 	 */
 	public function none()
 	{
@@ -33,6 +34,7 @@ class KunenaControllerTopics extends KunenaController
 	 * @return boolean|void
 	 * @throws Exception
 	 * @throws null
+	 * @throws void
 	 * @since Kunena
 	 */
 	public function permdel()

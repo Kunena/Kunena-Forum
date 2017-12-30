@@ -22,6 +22,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to get tabs for user profile
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getTabs()

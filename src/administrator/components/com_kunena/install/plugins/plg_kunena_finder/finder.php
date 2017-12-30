@@ -25,7 +25,9 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object $table   A Table object containing the message
 	 * @param   bool   $isNew   If the message has just been created
 	 *
+	 * @throws Exception
 	 * @since    2.5
+	 * @return void
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
@@ -51,7 +53,9 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object $table   A Table object containing the message
 	 * @param   bool   $isNew   If the message is just about to be created
 	 *
+	 * @throws Exception
 	 * @since   2.5
+	 * @return void
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
@@ -75,7 +79,9 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   string $context The context of the content passed to the plugin (added in 1.6)
 	 * @param   object $table   A Table object containing the message
 	 *
+	 * @throws Exception
 	 * @since   2.5
+	 * @return void
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
@@ -97,7 +103,9 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   string $context The context of the content passed to the plugin (added in 1.6)
 	 * @param   object $table   A Table object containing the message
 	 *
+	 * @throws Exception
 	 * @since   2.5
+	 * @return void
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{

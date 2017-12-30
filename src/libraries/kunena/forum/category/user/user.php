@@ -39,6 +39,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   int   $category category
 	 * @param   mixed $user     user
 	 *
+	 * @throws Exception
 	 * @internal
 	 * @since Kunena
 	 */
@@ -175,6 +176,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   mixed    $user        The user to be loaded.
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($category_id = null, $user = null)

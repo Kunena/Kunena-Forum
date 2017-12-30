@@ -99,6 +99,7 @@ abstract class KunenaUserHelper
 	 * @param   string $name name
 	 *
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function getAuthor($id, $name)

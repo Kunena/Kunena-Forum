@@ -261,10 +261,10 @@ abstract class KunenaBbcodeEditorElement
 	 * @static
 	 * @abstract
 	 *
-	 * @param   string $xml xml
+	 * @param   SimpleXMLElement $xml xml
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{

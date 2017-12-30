@@ -52,7 +52,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'thankyou'               => array('Read', 'Thankyou'),
 		'unthankyou'             => array('Read'),
 		'undelete'               => array('Read'),
-		'permdelete'             => array('Read', 'Permdelete'),
+		'permdelete'             => array('Read'),
 		'attachment.read'        => array('Read'),
 		'attachment.createimage' => array('Read', 'AttachmentsImage'),
 		'attachment.createfile'  => array('Read', 'AttachmentsFile'),
@@ -126,7 +126,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
-	 * @param   mixed $properties properties
+	 * @param   mixed $properties
 	 *
 	 * @internal
 	 * @since Kunena
@@ -1553,7 +1553,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1570,7 +1570,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1595,7 +1595,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1625,7 +1625,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1642,7 +1642,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->getCategory()))
 		{
-			return null;
+			return false;
 		}
 
 		// User is only allowed to edit post within time specified in the configuration
@@ -1674,7 +1674,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1705,32 +1705,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 		}
-	}
-
-	/**
-	 * Check if user has the right to perm delete the message
-	 *
-	 * @param   KunenaUser $user user
-	 *
-	 * @return KunenaExceptionAuthorise|NULL
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	protected function authorisePermdelete(KunenaUser $user)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if ($user->isAdmin() || $user->isModerator())
-		{
-			return null;
-		}
-
-		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getTopic()->getCategory()))
-		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1775,7 +1749,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -1820,6 +1794,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 }

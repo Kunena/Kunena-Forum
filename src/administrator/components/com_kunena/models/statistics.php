@@ -98,9 +98,10 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @param   string $field
+	 * @param   string $field field
 	 *
 	 * @return KunenaLogFinder
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getFinder($field = 'user_id')

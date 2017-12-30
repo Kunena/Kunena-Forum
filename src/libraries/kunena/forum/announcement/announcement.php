@@ -245,6 +245,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAuthor()

@@ -56,6 +56,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @return    array    List of tables without prefix
 	 *
+	 * @throws Exception
 	 * @since    1.6.4
 	 */
 	protected function getCopyTables()

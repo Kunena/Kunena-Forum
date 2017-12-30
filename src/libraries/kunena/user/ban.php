@@ -429,6 +429,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUser()
@@ -438,6 +439,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getCreator()
@@ -447,6 +449,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModifier()

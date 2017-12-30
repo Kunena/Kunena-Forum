@@ -116,6 +116,7 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 	 * Build a finder query to load the list data.
 	 *
 	 * @return    KunenaLogFinder
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function getFinder()

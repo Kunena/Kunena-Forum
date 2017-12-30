@@ -126,7 +126,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
-	 * @param   mixed $properties
+	 * @param   mixed $properties properties
 	 *
 	 * @internal
 	 * @since Kunena
@@ -1019,6 +1019,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModifier()
@@ -1184,8 +1185,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   mixed $user user
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function makeAnonymous($user = null)
 	{
@@ -1551,7 +1553,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1568,7 +1570,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1593,7 +1595,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1623,7 +1625,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1640,7 +1642,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->getCategory()))
 		{
-			return false;
+			return null;
 		}
 
 		// User is only allowed to edit post within time specified in the configuration
@@ -1672,7 +1674,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1773,7 +1775,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return null;
 	}
 
 	/**
@@ -1818,6 +1820,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return null;
 	}
 }

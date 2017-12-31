@@ -37,7 +37,7 @@ class KunenaInstaller
 	 */
 	public static function canDowngrade($version)
 	{
-		if ($version == '@kunenaversion@')
+		if ($version == '@' . 'kunenaversion' . '@')
 		{
 			return true;
 		}
@@ -55,7 +55,7 @@ class KunenaInstaller
 			}
 		}
 
-		return false;
+		return;
 	}
 
 	/**

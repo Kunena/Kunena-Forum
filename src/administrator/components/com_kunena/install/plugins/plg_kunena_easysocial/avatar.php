@@ -67,6 +67,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)

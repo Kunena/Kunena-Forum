@@ -52,6 +52,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function _getURL($user, $sizex, $sizey)

@@ -177,6 +177,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int $target
 	 * @param   int $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)

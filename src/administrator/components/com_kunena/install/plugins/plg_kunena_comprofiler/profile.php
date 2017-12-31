@@ -93,6 +93,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   bool   $xhtml
 	 *
 	 * @return boolean|string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)

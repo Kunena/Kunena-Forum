@@ -124,6 +124,7 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * @since Kunena
 	 * @return void
+	 * @throws Exception
 	 */
 	public function reset()
 	{
@@ -180,6 +181,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new entry.
 	 *
 	 * @return bool    True on success.
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($updateOnly = false)

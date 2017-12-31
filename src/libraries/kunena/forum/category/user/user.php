@@ -128,6 +128,7 @@ class KunenaForumCategoryUser extends JObject
 	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
 	 * @return bool    True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function save($updateOnly = false)

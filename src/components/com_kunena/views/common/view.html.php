@@ -610,6 +610,7 @@ class KunenaViewCommon extends KunenaView
 	 * @param   string $action
 	 * @param   bool   $xhtml
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserlistURL($action = '', $xhtml = true)

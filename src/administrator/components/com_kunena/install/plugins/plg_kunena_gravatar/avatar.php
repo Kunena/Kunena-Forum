@@ -53,6 +53,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function _getURL($user, $sizex, $sizey)

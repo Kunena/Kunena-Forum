@@ -765,6 +765,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAuthor()
@@ -994,6 +995,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getFirstPostAuthor()
@@ -1003,6 +1005,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaUser
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getLastPostAuthor()

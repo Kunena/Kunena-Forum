@@ -816,6 +816,7 @@ class KunenaUser extends JObject
 	 * Get the URL to private messages
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPrivateMsgURL()
@@ -829,6 +830,7 @@ class KunenaUser extends JObject
 	 * Get the label for URL to private messages
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getPrivateMsgLabel()
@@ -859,6 +861,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  URL.
 	 *
+	 * @throws Exception
 	 * @since  K4.0
 	 */
 	public function getPrivateMsgLink()

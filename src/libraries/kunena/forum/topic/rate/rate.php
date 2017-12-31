@@ -266,6 +266,7 @@ class KunenaForumTopicRate extends JObject
 	 * Get rate for the specified topic and user
 	 * @since Kunena
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public function getTopicUserRate()
 	{

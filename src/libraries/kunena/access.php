@@ -455,6 +455,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user user
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getAdminStatus($user = null)
@@ -530,6 +531,7 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user user
 	 *
 	 * @return array
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getModeratorStatus($user = null)

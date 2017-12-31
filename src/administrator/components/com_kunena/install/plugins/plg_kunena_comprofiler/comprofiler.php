@@ -72,6 +72,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param   null $view
 	 * @param   null $params
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
@@ -99,6 +100,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param       $params
 	 * @param   int $page
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)

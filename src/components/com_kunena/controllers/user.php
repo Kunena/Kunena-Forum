@@ -1008,6 +1008,7 @@ class KunenaControllerUser extends KunenaController
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function deleteOldAvatars()

@@ -92,6 +92,7 @@ class KunenaControllerTopic extends KunenaController
 	 * Set inline to 0 on the attachment object.
 	 *
 	 * @return void
+	 * @throws Exception
 	 * @since Kunena 5.1
 	 */
 	public function removeinline()

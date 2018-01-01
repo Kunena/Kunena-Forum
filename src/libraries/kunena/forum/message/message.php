@@ -1669,7 +1669,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Check whether edit is in time
 			$modtime = $this->modified_time ? $this->modified_time : $this->time;
 
-			if ($modtime + intval($config->useredittime) < \Joomla\CMS\Factory::getDate()->toUnix())
+			if ($modtime + intval($config->useredittime) < \Joomla\CMS\Factory::getDate()->toUnix() && intval($config->useredittimegrace) == 0)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			}
+			elseif (intval($config->useredittimegrace) != 0 && $modtime + intval($config->useredittime) + intval($config->useredittimegrace) < \Joomla\CMS\Factory::getDate()->toUnix())
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}

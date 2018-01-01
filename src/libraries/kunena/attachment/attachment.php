@@ -469,7 +469,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return false;
+			return;
 		}
 
 		// Load user if not given.
@@ -779,7 +779,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
@@ -813,7 +813,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 		}
 
-		return true;
+		return;
 	}
 
 	/**
@@ -832,7 +832,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**

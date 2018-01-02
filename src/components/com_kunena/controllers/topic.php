@@ -1687,7 +1687,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$category = $topic->getCategory();
 
-		if ($target->isAuthorised('permdelete') && $target->delete())
+		if ($topic->isAuthorised('permdelete') && $target->delete())
 		{
 			if ($this->config->log_moderation)
 			{

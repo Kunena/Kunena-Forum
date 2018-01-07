@@ -33,8 +33,9 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 * Prepare announcement display.
 	 *
 	 * @return void
-	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	protected function before()
 	{
@@ -44,6 +45,16 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 
 		$this->announcement = KunenaForumAnnouncementHelper::get($id);
 		$this->announcement->tryAuthorise();
+
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
 	}
 
 	/**

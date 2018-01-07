@@ -45,6 +45,25 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$catid = $this->input->getInt('catid', 0);
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
+		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+
+			if ($catid)
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemid}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemid}", false));
+			}
+
+			$controller->redirect();
+		}
+
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 

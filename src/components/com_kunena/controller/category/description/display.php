@@ -41,5 +41,13 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
+
+		$app = JFactory::getApplication()->getMenu()->getActive();
+		$Itemid = $app->getVars('Itemid');
+
+		if (!$Itemid)
+		{
+			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search", false));
+		}
 	}
 }

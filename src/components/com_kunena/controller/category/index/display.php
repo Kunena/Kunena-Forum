@@ -68,7 +68,27 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Get sections to display.
-		$catid = $this->input->getInt('catid', 0);
+		$catid  = $this->input->getInt('catid', 0);
+		$view = $this->input->getInt('view');
+		$Itemid = $this->input->getInt('Itemid');
+		$defaultmenu = $this->input->getInt('defaultmenu');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+
+			if ($view == 'home')
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemid}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemid}", false));
+			}
+
+			$controller->redirect();
+		}
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 

@@ -123,6 +123,31 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 		}
 
+		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+		$view = JFactory::getApplication()->input->getCmd('view');
+		$layout = JFactory::getApplication()->input->getCmd('layout');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+
+			if ($view == 'user' && $layout == 'default')
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemid}", false));
+			}
+			elseif ($view == 'topics' && $layout == 'user')
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+			}
+
+			$controller->redirect();
+		}
+
 		if ($categoryIds !== null)
 		{
 			$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);

@@ -57,6 +57,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Load user list.
 	 *
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -80,6 +81,16 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
+
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&layout=list&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
 
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)

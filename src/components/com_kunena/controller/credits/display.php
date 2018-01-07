@@ -65,6 +65,16 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 		}
 
+		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
+
 		$this->logo = KunenaFactory::getTemplate()->getImagePath('icons/kunena-logo-48-white.png');
 
 		$this->intro = JText::sprintf('COM_KUNENA_CREDITS_INTRO', 'https://www.kunena.org/team');

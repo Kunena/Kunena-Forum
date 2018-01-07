@@ -34,6 +34,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -44,6 +45,16 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->model = new KunenaModelSearch(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
+
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
 
 		$this->me = KunenaUserHelper::getMyself();
 

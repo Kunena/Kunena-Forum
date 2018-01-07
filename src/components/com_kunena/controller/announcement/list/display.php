@@ -40,6 +40,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @throws null
 	 * @since Kunena
 	 */
 	protected function before()
@@ -47,6 +48,16 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 		parent::before();
 
 		$limit = $this->input->getInt('limit', 0);
+
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
 
 		if ($limit < 1 || $limit > 100)
 		{

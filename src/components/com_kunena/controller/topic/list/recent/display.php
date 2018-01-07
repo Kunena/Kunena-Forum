@@ -41,6 +41,16 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
 
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
+
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
 

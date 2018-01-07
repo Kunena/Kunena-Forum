@@ -66,11 +66,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$catid = $this->input->getInt('catid', 0);
-		$id    = $this->input->getInt('id', 0);
-		$mesid = $this->input->getInt('mesid', 0);
-		$start = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
+		$catid  = $this->input->getInt('catid', 0);
+		$id     = $this->input->getInt('id', 0);
+		$mesid  = $this->input->getInt('mesid', 0);
+		$start  = $this->input->getInt('limitstart', 0);
+		$limit  = $this->input->getInt('limit', 0);
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
 
 		if ($limit < 1 || $limit > 100)
 		{

@@ -93,6 +93,16 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$this->profile->save();
 		}
 
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
+
 		$this->headerText = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 	}
 

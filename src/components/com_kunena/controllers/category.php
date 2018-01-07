@@ -31,6 +31,15 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		parent::__construct($config);
 		$this->baseurl  = 'index.php?option=com_kunena&view=category&layout=manage';
 		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
+
+		$app = JFactory::getApplication()->getMenu()->getActive();
+		$Itemid = $app->getVars('Itemid');
+
+		if (!$Itemid)
+		{
+			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search", false));
+		}
+
 	}
 
 	/**

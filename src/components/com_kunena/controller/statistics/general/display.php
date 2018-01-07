@@ -38,6 +38,16 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 
 		$this->config = KunenaConfig::getInstance();
 
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			$itemid = KunenaRoute::fixMissingItemID();
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=statistics&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
+
 		if (!$this->config->get('showstats'))
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');

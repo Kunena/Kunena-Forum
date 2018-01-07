@@ -1066,7 +1066,9 @@ abstract class KunenaRoute
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
-		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
+		$itemid = self::getItemID();
+
+		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}&Itemid={$itemid}", $xhtml);
 	}
 
 	/**
@@ -1079,7 +1081,9 @@ abstract class KunenaRoute
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
 	{
-		return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
+		$itemid = self::getItemID();
+
+		return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}&Itemid={$itemid}");
 	}
 
 	/**
@@ -1098,13 +1102,13 @@ abstract class KunenaRoute
 			return 0;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$uri = self::prepare($uri);
-
 		if (!$uri)
 		{
-			return false;
+			return self::fixMissingItemID();
 		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		$uri = self::prepare($uri);
 
 		if (!$uri->getVar('Itemid'))
 		{
@@ -1114,6 +1118,29 @@ abstract class KunenaRoute
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $uri->getVar('Itemid');
+	}
+
+	/**
+	 * Fix itemid when there is no item id.
+	 *
+	 * @return array|boolean|integer
+	 * @throws Exception
+	 * @throws null
+	 * @since Kunena 5.1
+	 */
+	public static function fixMissingItemID()
+	{
+		$component = JComponentHelper::getComponent('com_kunena');
+		$items     = JFactory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
+
+		if ($items)
+		{
+			return $items[0]->id;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	/**
@@ -1161,7 +1188,9 @@ abstract class KunenaRoute
 			$topic = $message->getTopic();
 		}
 
-		return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
+		$itemid = self::getItemID();
+
+		return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}&Itemid={$itemid}", $xhtml);
 	}
 
 	/**
@@ -1175,7 +1204,9 @@ abstract class KunenaRoute
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
-		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
+		$itemid = self::getItemID();
+
+		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}&Itemid={$itemid}", $xhtml);
 	}
 
 	/**

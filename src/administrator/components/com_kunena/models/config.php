@@ -501,6 +501,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['avataredit']        = JHtml::_('select.genericlist', $yesno, 'cfg_avataredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->avataredit);
 
 		$lists ['moderator_permdelete'] = JHtml::_('select.genericlist', $yesno, 'cfg_moderator_permdelete', 'class="inputbox" size="1"', 'value', 'text', $this->config->moderator_permdelete);
+
 		return $lists;
 	}
 }

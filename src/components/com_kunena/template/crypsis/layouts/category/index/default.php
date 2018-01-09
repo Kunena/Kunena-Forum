@@ -218,6 +218,7 @@ foreach ($this->sections as $section) :
 												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
 										</div>
+									</div>
 								</td>
 							<?php else : ?>
 								<td class="span3 hidden-phone">

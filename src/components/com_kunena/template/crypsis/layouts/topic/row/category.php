@@ -172,6 +172,7 @@ if (!empty($this->spacing)) : ?>
 					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

@@ -51,18 +51,13 @@ else
 </small>
 <div class="clear-fix"></div>
 <div class="horizontal-message">
-	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator())
-	:
-	?> badger-moderator <?php
-													  endif;?>"
+	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) :	?> badger-moderator <?php endif;?>"
 		data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
 			</div>
-			<?php if ($signature)
-			:
-	?>
+			<?php if ($signature) :	?>
 				<div class="ksig">
 					<hr>
 					<span class="ksignature"><?php echo $signature; ?></span>
@@ -98,68 +93,69 @@ else
 							<?php echo $attachment->getLayout()->render('textlink'); ?>
 						</div>
 					</li>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		</ul>
-	</div>
+				<?php endforeach; ?>
+			</ul>
+		</div>
 	<div class="clearfix"></div>
-<?php elseif ($attachs->total > 0 && !$this->me->exists())
-:
-	if ($attachs->image > 0 && !$this->config->showimgforguest)
-	{
-		if ($attachs->image > 1)
+	<?php elseif ($attachs->total > 0 && !$this->me->exists())
+	:
+		if ($attachs->image > 0 && !$this->config->showimgforguest)
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			if ($attachs->image > 1)
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			}
 		}
-		else
-		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-		}
-	}
 
-	if ($attachs->file > 0 && !$this->config->showfileforguest)
-	{
-		if ($attachs->file > 1)
+		if ($attachs->file > 0 && !$this->config->showfileforguest)
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			if ($attachs->file > 1)
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			}
 		}
-		else
-		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-		}
-	}
-endif; ?>
-<?php
-if ($message->modified_by && $this->config->editmarkup)
-:
-	$dateshown = $datehover = '';
+	endif; ?>
 
-	if ($message->modified_time)
-	{
-		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
-	} ?>
-	<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink(null, null, '', '', null, $this->category->id) . '.'; ?>
-		<?php
-		if ($message->modified_reason)
+	<?php
+	if ($message->modified_by && $this->config->editmarkup)
+	:
+		$dateshown = $datehover = '';
+
+		if ($message->modified_time)
 		{
-			echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
+			$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
+			$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
 		} ?>
-	</div>
-<?php endif; ?>
+		<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
+			<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink(null, null, '', '', null, $this->category->id) . '.'; ?>
+			<?php
+			if ($message->modified_reason)
+			{
+				echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
+			} ?>
+		</div>
+	<?php endif; ?>
 
-<?php if (!empty($this->thankyou))
-:
-	?>
-	<div class="kmessage-thankyou">
-		<?php
-		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-
-		if ($this->more_thankyou)
-		{
-			echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
-		}
+	<?php if (!empty($this->thankyou))
+	:
 		?>
-	</div>
-<?php endif;
+		<div class="kmessage-thankyou">
+			<?php
+			echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+
+			if ($this->more_thankyou)
+			{
+				echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+			}
+			?>
+		</div>
+	<?php endif;?>
+</div>

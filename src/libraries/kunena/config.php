@@ -1261,6 +1261,12 @@ class KunenaConfig extends JObject
 	public $avataredit = 0;
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $activemenuitem = '';
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

@@ -15,6 +15,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
 $status         = $config->user_status;
 ?>
+
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="visible-desktop">
-	<?php echo $this->subRequest('Widget/Menu'); ?>
 	<?php
 	if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
 		:

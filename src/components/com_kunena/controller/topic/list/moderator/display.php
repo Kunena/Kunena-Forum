@@ -36,6 +36,29 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$params = $this->app->getParams('com_kunena');
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 0);
+		$Itemid = $this->input->getInt('Itemid');
+
+		if (!$Itemid)
+		{
+			if (KunenaConfig::getInstance()->moderator_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->moderator_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=moderator&Itemid={$itemidfix}", false));
+			$controller->redirect();
+		}
 
 		if ($limit < 1 || $limit > 100)
 		{

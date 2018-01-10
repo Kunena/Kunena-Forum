@@ -72,6 +72,9 @@ JHtml::_('behavior.tabstate');
 									<li>
 										<a href="#tab_extra" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a>
 									</li>
+									<li>
+										<a href="#tab_menu" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_MENU_SETTINGS'); ?></a>
+									</li>
 								</ul>
 
 								<div class="tab-content">
@@ -1503,6 +1506,87 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC') ?></td>
 												</tr>
 												</tbody>
+											</table>
+										</fieldset>
+									</div>
+									<div class="tab-pane" id="tab_menu">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_ADMIN_MENU_SETTINGS_DESC') ?></legend>
+											<table class="table table-striped">
+												<thead>
+												<tr>
+													<td align="left" valign="top"
+													    width="5%"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_activemenuitem"
+													                      value="<?php echo $this->escape($this->config->activemenuitem); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													width="5%"><?php echo JText::_('COM_KUNENA_A_MAINMENU') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_mainmenu_id"
+													           value="<?php echo $this->escape($this->config->mainmenu_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAINMENU_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="5%"><?php echo JText::_('COM_KUNENA_A_HOMEID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_home_id"
+													           value="<?php echo $this->escape($this->config->home_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOMEID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_INDEXID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_index_id"
+													                      value="<?php echo $this->escape($this->config->index_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_INDEXID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_MODERATORSID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_moderators_id"
+													                      value="<?php echo $this->escape($this->config->moderators_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MODERATORSID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_topiclist_id"
+													                      value="<?php echo $this->escape($this->config->topiclist_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_MISCID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_misc_id"
+													                      value="<?php echo $this->escape($this->config->misc_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MISCID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_PROFILEID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_profile_id"
+													                      value="<?php echo $this->escape($this->config->profile_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PROFILEID_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td align="left" valign="top"
+													    width="15%"><?php echo JText::_('COM_KUNENA_A_SEARCHID') ?></td>
+													<td align="left" valign="top"
+													    width="5%"><input type="text" name="cfg_search_id"
+													                      value="<?php echo $this->escape($this->config->search_id); ?>"/></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SEARCHID_DESC'); ?></td>
+												</tr>
+												</thead>
 											</table>
 										</fieldset>
 									</div>

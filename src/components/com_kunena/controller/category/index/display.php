@@ -68,23 +68,53 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Get sections to display.
-		$catid  = $this->input->getInt('catid', 0);
-		$view = $this->input->getInt('view');
-		$Itemid = $this->input->getInt('Itemid');
+		$catid       = $this->input->getInt('catid', 0);
+		$view        = $this->input->getInt('view');
+		$Itemid      = $this->input->getInt('Itemid');
 		$defaultmenu = $this->input->getInt('defaultmenu');
+		$layout      = $this->input->getInt('layout');
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 
-			if ($view == 'home')
+			if (KunenaConfig::getInstance()->index_id)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemid}", false));
+				$itemidfix = KunenaConfig::getInstance()->index_id;
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemid}", false));
+				$menu = $this->app->getMenu();
+
+				if ($view == 'home')
+				{
+					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
+				}
+				else
+				{
+					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+				}
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
+			if ($view == 'home')
+			{
+				if ($defaultmenu)
+				{
+					$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemidfix}", false));
+				}
+				else
+				{
+					$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
+				}
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();

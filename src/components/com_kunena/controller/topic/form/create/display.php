@@ -49,16 +49,30 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			if (KunenaConfig::getInstance()->search_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->search_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
 			$controller = JControllerLegacy::getInstance("kunena");
 
 			if ($catid)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemid}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemid}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();

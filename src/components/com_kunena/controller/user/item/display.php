@@ -97,9 +97,32 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemid}", false));
+
+			if (KunenaConfig::getInstance()->profile_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->profile_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
+			if (!$userid)
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
+			}
+
 			$controller->redirect();
 		}
 

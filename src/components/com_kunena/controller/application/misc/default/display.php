@@ -133,14 +133,27 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 
 		$params       = $this->app->getParams('com_kunena');
 		$this->header = $params->get('page_title');
-
-		$Itemid = $this->input->getInt('Itemid');
+		$Itemid       = $this->input->getInt('Itemid');
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			if (KunenaConfig::getInstance()->custom_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->custom_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
 			$controller = JControllerLegacy::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

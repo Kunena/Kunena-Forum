@@ -45,9 +45,23 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			if (KunenaConfig::getInstance()->topiclist_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->topiclist_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
 			$controller = JControllerLegacy::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

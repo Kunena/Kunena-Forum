@@ -1267,6 +1267,54 @@ class KunenaConfig extends JObject
 	public $activemenuitem = '';
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $mainmenu_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $home_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $index_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $moderators_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $topiclist_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $misc_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $profile_id = '';
+
+	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $search_id = '';
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

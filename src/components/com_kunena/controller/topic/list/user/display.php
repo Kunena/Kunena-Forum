@@ -129,20 +129,46 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 
-			if ($view == 'user' && $layout == 'default')
+			if (KunenaConfig::getInstance()->profile_id)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemid}", false));
-			}
-			elseif ($view == 'topics' && $layout == 'user')
-			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+				$itemidfix = KunenaConfig::getInstance()->profile_id;
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}&Itemid={$itemid}", false));
+				$menu = $this->app->getMenu();
+
+				if ($view == 'user' && $layout == 'default')
+				{
+					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				}
+				elseif ($view == 'topics' && $layout == 'user')
+				{
+					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
+				}
+				else
+				{
+					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
+				}
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
+			if ($view == 'user' && $layout == 'default')
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
+			}
+			elseif ($view == 'topics' && $layout == 'user')
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();

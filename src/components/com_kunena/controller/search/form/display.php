@@ -46,13 +46,27 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$Itemid = $this->input->getInt('Itemid');
+		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			if (KunenaConfig::getInstance()->search_id)
+			{
+				$itemidfix = KunenaConfig::getInstance()->search_id;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
 			$controller = JControllerLegacy::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

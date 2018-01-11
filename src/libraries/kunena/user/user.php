@@ -407,7 +407,33 @@ class KunenaUser extends JObject
 		}
 		else
 		{
-			$name = $this->_config->username ? $this->username : $this->name;
+			$usersConfig = \Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler');
+
+			if ($usersConfig)
+			{
+				global $ueConfig;
+
+				if ($ueConfig['name_format'] == 1)
+				{
+					return $this->name;
+				}
+				elseif ($ueConfig['name_format'] == 2)
+				{
+					return $this->name . ' (' . $this->username . ')';
+				}
+				elseif ($ueConfig['name_format'] == 3)
+				{
+					return $this->username;
+				}
+				elseif ($ueConfig['name_format'] == 4)
+				{
+					return $this->username . ' (' . $this->name . ')';
+				}
+			}
+			else
+			{
+				$name = $this->_config->username ? $this->username : $this->name;
+			}
 		}
 
 		if ($escape)

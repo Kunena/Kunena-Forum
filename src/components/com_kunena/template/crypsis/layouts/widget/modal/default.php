@@ -21,7 +21,7 @@ $description = $this->description;
 $data        = $this->data;
 $form        = $this->form;
 ?>
-<div <?php echo $class . $id ?> data-backdrop="false">
+<div <?php echo $class . $id?> data-backdrop="false" style="display: none;">
 	<div class="modal-header">
 		<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
 		<h3><?php echo $label ?></h3>

@@ -70,7 +70,7 @@ else
 	</div>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false" style="display: none;">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">

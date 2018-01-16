@@ -42,7 +42,7 @@ $this->getBBcodesEnabled();
 </div>
 
 <!-- Bootstrap modal to be used with bbcode editor -->
-<div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -81,7 +81,7 @@ $this->getBBcodesEnabled();
 </div>
 <?php $codeTypes = $this->getCodeTypes();
 if (!empty($codeTypes)) : ?>
-	<div id="modal-code" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="modal-code" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -102,7 +102,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 <?php endif; ?>
-<div id="modal-picture" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-picture" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -139,7 +139,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 </div>
-<div id="modal-link" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-link" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -164,7 +164,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 </div>
-<div id="modal-video-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-video-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -208,7 +208,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 </div>
-<div id="modal-video-urlprovider" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-video-urlprovider" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -231,7 +231,7 @@ if (!empty($codeTypes)) : ?>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
-	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -292,7 +292,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 <?php endif; ?>
-<div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

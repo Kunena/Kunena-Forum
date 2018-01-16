@@ -18,7 +18,7 @@ $description = $this->description;
 $data        = $this->data;
 $form        = $this->form;
 ?>
-<div <?php echo $class . $id ?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div <?php echo $class . $id?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

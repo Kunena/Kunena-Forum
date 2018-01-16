@@ -61,7 +61,7 @@ $pollcheck = isset($this->poll);
 
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_MAP_SETTINGS') ?></h3>
@@ -103,7 +103,7 @@ if (!empty($codeTypes))
 	:
 	?>
 	<div id="modal-code" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	     aria-hidden="true">
+	     aria-hidden="true" style="display: none;">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
@@ -122,7 +122,7 @@ if (!empty($codeTypes))
 	</div>
 <?php endif; ?>
 <div id="modal-picture" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
@@ -160,7 +160,7 @@ if (!empty($codeTypes))
 	</div>
 </div>
 <div id="modal-link" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
@@ -183,7 +183,7 @@ if (!empty($codeTypes))
 	</div>
 </div>
 <div id="modal-video-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_SETTINGS') ?></h3>
@@ -230,7 +230,7 @@ if (!empty($codeTypes))
 	</div>
 </div>
 <div id="modal-video-urlprovider" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
@@ -250,7 +250,7 @@ if (!empty($codeTypes))
 </div>
 <?php if ($pollcheck) : ?>
 	<div id="modal-poll-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	     aria-hidden="true" data-backdrop="false">
+	     aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
@@ -313,7 +313,7 @@ if (!empty($codeTypes))
 	</div>
 <?php endif; ?>
 <div id="modal-emoticons" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" style="display: none;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel">Emoticons</h3>

@@ -1,6 +1,10 @@
 jQuery(document).ready(function($) {
 	var input_alias = $("#jform_aliases");
 	var box = $("#aliascheck");
+	var apply = $(".button-apply");
+	var save = $(".button-save");
+	var savenew = $(".button-save-new");
+	var savecopy = $(".button-save-copy");
 
 	input_alias.on('input', function() {
 		$.ajax({
@@ -12,15 +16,28 @@ jQuery(document).ready(function($) {
 
 				if (box.length)
 				{
-					box.removeClass("valid icon-ok");
-					box.addClass("invalid icon icon-remove");
-					box.html(Joomla.JText._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS'));
+					apply.prop('disabled', true);
+					save.prop('disabled', true);
+					savenew.prop('disabled', true);
+					savecopy.prop('disabled', true);
 				}
+
+				box.removeClass("valid icon-ok");
+				box.addClass("invalid icon icon-remove");
+				box.html(Joomla.JText._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS'));
 			}
 			else
 			{
 				input_alias.addClass("inputbox");
 				input_alias.removeClass("invalid-border");
+
+				if (box.length)
+				{
+					apply.prop('disabled', false);
+					save.prop('disabled', false);
+					savenew.prop('disabled', false);
+					savecopy.prop('disabled', false);
+				}
 
 				if (box.length)
 				{

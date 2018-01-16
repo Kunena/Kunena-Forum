@@ -333,27 +333,20 @@ else
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php
-						if ($this->canSubscribe)
-:
-	?>
+
+						<?php if ($this->canSubscribe):?>
 							<div class="control-group" id="kpost-subscribe">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe"
-										   value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
-	{
-												echo 'checked="checked"';
-} ?> />
+										   value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1){echo 'checked="checked"';} ?> />
 									<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php
-						if (!empty($this->captchaEnabled))
-:
-	?>
+
+						<?php if (!empty($this->captchaEnabled)):?>
 							<div class="control-group">
 								<?php echo $this->captchaDisplay; ?>
 							</div>
@@ -364,16 +357,11 @@ else
 			</div>
 		</div>
 		<div class="center">
-			<?php if ($editor == 1)
-:
-	?>
+			<?php if ($editor == 1):?>
 				<input type="submit" class="btn btn-success" name="submit"
 					   value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 					   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
-			<?php else
-
-:
-	?>
+			<?php else :?>
 				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
 					<?php echo KunenaIcons::save(); ?>
 					<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
@@ -385,8 +373,7 @@ else
 				<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
-		<?php
-		if (!$this->message->name)
+		<?php if (!$this->message->name)
 {
 			echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
 		}

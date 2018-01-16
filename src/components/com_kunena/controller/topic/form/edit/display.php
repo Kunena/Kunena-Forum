@@ -202,6 +202,6 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			return false;
 		}
 
-		return !$this->topic->getUserTopic()->subscribed;
+		return true;
 	}
 }

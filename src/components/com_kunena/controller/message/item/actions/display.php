@@ -338,7 +338,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($me->userid == $this->message->userid && KunenaConfig::getInstance()->useredit)
 			{
-				// User is not allowed to write a post.
+				// Allow edit message when enabled.
 				$this->message_closed = null;
 			}
 

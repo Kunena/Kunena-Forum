@@ -176,7 +176,7 @@ JHtml::_('dropdown.init');
 								<tr>
 									<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
 									<td><?php echo intval($row->id); ?></td>
-									<td><?php echo $this->escape($row->subject); ?></td>
+									<td><a href="<?php echo $row->getPermaUrl();?>" target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
 									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
 									<td><?php echo $row->ip; ?></td>

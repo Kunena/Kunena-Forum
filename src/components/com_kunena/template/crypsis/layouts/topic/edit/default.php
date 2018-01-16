@@ -340,7 +340,7 @@ else
 
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe"
-										   value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1){echo 'checked="checked"';} ?> />
+										   value="1" <?php if ($this->subscriptionschecked){echo 'checked="checked"';} ?> />
 									<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 								</div>
 							</div>

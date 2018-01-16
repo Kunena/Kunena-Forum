@@ -343,30 +343,20 @@ else
 						</div>
 					<?php endif; ?>
 
-					<?php if ($this->canSubscribe)
-					:
-	?>
+					<?php if ($this->canSubscribe):?>
 						<div class="control-group" id="kpost-subscribe">
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 							<div class="controls">
 								<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe"
-									   value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
-										{
-											echo 'checked="checked"';
-												 } ?> />
+									   value="1" <?php if ($this->subscriptionschecked){echo 'checked="checked"';} ?> />
 								<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 							</div>
 						</div>
 					<?php endif; ?>
 
-					<?php if ($this->message->userid)
-					:
-	?>
+					<?php if ($this->message->userid):?>
 						<div class="control-group" id="kanynomous-check"
-								<?php if (!$this->category->allow_anonymous)
-								:
-	?>style="display:none;"<?php
-								endif; ?>>
+								<?php if (!$this->category->allow_anonymous):?>style="display:none;"<?php endif; ?>>
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 							<div class="controls">
 								<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
@@ -379,9 +369,7 @@ else
 						<div class="clearfix"></div>
 					<?php endif; ?>
 
-					<?php if (!empty($this->captchaEnabled))
-					:
-	?>
+					<?php if (!empty($this->captchaEnabled)):?>
 						<div class="control-group">
 							<div class="controls">
 								<?php echo $this->captchaDisplay; ?>

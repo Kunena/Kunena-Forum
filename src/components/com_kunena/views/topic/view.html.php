@@ -173,22 +173,6 @@ class KunenaViewTopic extends KunenaView
 		// Mark topic read
 		$this->topic->hit();
 
-		// Check is subscriptions have been sent and reset the value
-		if ($this->topic->isAuthorised('subscribe'))
-		{
-			$usertopic = $this->topic->getUserTopic();
-
-			if ($usertopic->subscribed == 2)
-			{
-				$usertopic->subscribed = 1;
-				$usertopic->save();
-			}
-		}
-
-		// Get keywords, captcha & quick reply
-		/*
-		$this->captcha    = KunenaSpamRecaptcha::getInstance();
-		$this->quickreply = ($this->topic->isAuthorised('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());     */
 		$this->keywords = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');

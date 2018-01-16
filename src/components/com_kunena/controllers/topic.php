@@ -720,6 +720,7 @@ class KunenaControllerTopic extends KunenaController
 			'poll_title'        => \Joomla\CMS\Factory::getApplication()->input->getString('poll_title', null),
 			'poll_options'      => \Joomla\CMS\Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => \Joomla\CMS\Factory::getApplication()->input->getString('poll_time_to_live', 0),
+			'subscribe'         => \Joomla\CMS\Factory::getApplication()->input->getInt('subscribeMe', 0),
 		);
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
@@ -893,6 +894,23 @@ class KunenaControllerTopic extends KunenaController
 		foreach ($message->getErrors() as $warning)
 		{
 			$this->app->enqueueMessage($warning, 'notice');
+		}
+
+		$subscribe = \Joomla\CMS\Factory::getApplication()->input->getInt('subscribeMe');
+		$usertopic = $topic->getUserTopic();
+
+		if ($topic->isAuthorised('subscribe'))
+		{
+			if ($subscribe)
+			{
+				$usertopic->subscribed = 1;
+			}
+			else
+			{
+				$usertopic->subscribed = 0;
+			}
+
+			$usertopic->save();
 		}
 
 		$poll_title = $fields['poll_title'];

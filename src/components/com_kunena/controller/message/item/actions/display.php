@@ -76,16 +76,18 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$button = $fullactions ? true : false;
 
+		$this->quickreply = null;
+
 		if ($config->read_only)
 		{
 			return false;
 		}
 
-		$this->quickreply = KunenaConfig::getInstance()->quickreply;
-
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
+			$this->quickreply = KunenaConfig::getInstance()->quickreply;
+
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->messageButtons->set('reply',
@@ -334,6 +336,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Moderation and own post actions.
 		if ($this->message->isAuthorised('edit'))
 		{
+			if ($me->userid == $this->message->userid && KunenaConfig::getInstance()->useredit)
+			{
+				// User is not allowed to write a post.
+				$this->message_closed = null;
+			}
+
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->messageButtons->set('edit',

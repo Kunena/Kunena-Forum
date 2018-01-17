@@ -127,6 +127,13 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
+		if ($limitstart > 1 && !$this->topics)
+		{
+			$controller = JControllerLegacy::getInstance("kunena");
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->redirect();
+		}
+
 		if ($this->total > 0)
 		{
 			// Collect user ids for avatar prefetch when integrated.

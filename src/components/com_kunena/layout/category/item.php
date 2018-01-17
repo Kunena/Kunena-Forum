@@ -123,68 +123,68 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
 				}
 			}
+		}
 
-			// Is user allowed to subscribe category?
-			if ($category->isAuthorised('subscribe'))
+		// Is user allowed to subscribe category?
+		if ($category->isAuthorised('subscribe'))
+		{
+			$subscribed = $category->getSubscribed($this->me->userid);
+
+			if ($url && $topicicontype == 'B3')
 			{
-				$subscribed = $category->getSubscribed($this->me->userid);
-
-				if ($url && $topicicontype == 'B3')
+				if (!$subscribed)
 				{
-					if (!$subscribed)
-					{
-						$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-						$actions['subscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'glyphicon glyphicon-bookmark', )
-							);
-					}
-					else
-					{
-						$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-						$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'glyphicon glyphicon-bookmark', )
-							);
-					}
-				}
-				elseif ($url && $topicicontype == 'fa')
-				{
-					if (!$subscribed)
-					{
-						$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-						$actions['subscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'fa fa-bookmark', )
-							);
-					}
-					else
-					{
-						$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-						$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'fa fa-bookmark-o', )
-							);
-					}
+					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+					$actions['subscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'glyphicon glyphicon-bookmark', )
+						);
 				}
 				else
 				{
-					if (!$subscribed)
-					{
-						$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-						$actions['subscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'icon-bookmark', )
-							);
-					}
-					else
-					{
-						$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-						$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-							->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-								'icon' => 'icon-bookmark', )
-							);
-					}
+					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'glyphicon glyphicon-bookmark', )
+						);
+				}
+			}
+			elseif ($url && $topicicontype == 'fa')
+			{
+				if (!$subscribed)
+				{
+					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+					$actions['subscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'fa fa-bookmark', )
+						);
+				}
+				else
+				{
+					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'fa fa-bookmark-o', )
+						);
+				}
+			}
+			else
+			{
+				if (!$subscribed)
+				{
+					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+					$actions['subscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'icon-bookmark', )
+						);
+				}
+				else
+				{
+					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'icon-bookmark', )
+						);
 				}
 			}
 		}

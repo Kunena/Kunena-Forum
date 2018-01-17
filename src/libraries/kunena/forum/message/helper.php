@@ -241,13 +241,12 @@ abstract class KunenaForumMessageHelper
 		$where       = isset($params['where']) ? (string) $params['where'] : '';
 		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
 
-		$db = \Joomla\CMS\Factory::getDBO();
-
-		// FIXME: use right config setting
-		if ($limit < 1 && empty($params['nolimit']))
+		if ($limit != 0)
 		{
-			$limit = KunenaFactory::getConfig()->threads_per_page;
+			$limit = isset($params['nolimit']) ? $params['nolimit'] : KunenaFactory::getConfig()->threads_per_page;
 		}
+
+		$db = \Joomla\CMS\Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')

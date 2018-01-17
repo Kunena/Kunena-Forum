@@ -134,7 +134,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							:
 							?>
 							<th class="nowrap center">
-								Data
+								Error
 							</th>
 						<?php endif; ?>
 					</tr>
@@ -251,13 +251,28 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									:
 									?>
 									<td>
-										<a class="btn hasPopover" title="Data" data-content="<?php echo
-										$this->escape("<pre>{$this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))}</pre>"); ?>"
-										   data-placement="left" href="#">Data</a>
-
+										<a href="#kerror<?php echo $item->id;?>_form" role="button" class="btn openmodal"
+										   data-toggle="modal" data-target="#kerror<?php echo $item->id;?>_form" rel="nofollow">
+											<span class="icon-warning" aria-hidden="true"></span>Error
+										</a>
 									</td>
 								<?php endif; ?>
 							</tr>
+							<div class="modal fade" id="kerror<?php echo $item->id;?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;" data-backdrop="false">
+								<div class="modal-header">
+									<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h3>
+										<span class="icon-warning" aria-hidden="true"></span> Kunena Error ID:<?php echo $item->id;?>
+									</h3>
+								</div>
+								<div class="modal-body">
+									<pre><?php echo $this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));?></pre></textarea>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-danger" data-dismiss="modal"
+									        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+								</div>
+							</div>
 							<?php
 							$i++;
 						endforeach;

@@ -126,7 +126,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework, $ueConfig;
 
-		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_comprofiler');
+		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
 			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))

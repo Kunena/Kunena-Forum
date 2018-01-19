@@ -34,4 +34,3 @@ else
 {
 	echo $this->render('file');
 }
-

@@ -142,7 +142,7 @@ foreach ($this->sections as $section) :
 													<?php $totaltopics = KunenaForumCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
 
 													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
-														<?php echo $this->getCategoryLink($subcategory,  $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
+														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
 															. $totaltopics . ')</small>';
 													else : ?>
 														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
@@ -215,7 +215,7 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="col-md-12">
 											<?php endif; ?>
-												<span class="lastpostlink"><?php echo $this->getLastPostLink($category,null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
 												<span class="lastpostby"><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>

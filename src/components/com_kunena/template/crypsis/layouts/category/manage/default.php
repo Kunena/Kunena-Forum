@@ -98,8 +98,8 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 									<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo intval($category->ordering); ?>" class="text_area center" />
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un' : '') . 'lock'; ?>')">
-										<?php echo($category->locked == 1 ? $img_yes : $img_no); ?>
+									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->locked ? 'un' : '') . 'lock'; ?>')">
+										<?php echo $category->locked == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td colspan="3" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
@@ -114,23 +114,23 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 									<?php endif; ?>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un' : '') . 'lock'; ?>')">
-										<?php echo($category->locked == 1 ? $img_yes : $img_no); ?>
+									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->locked ? 'un' : '') . 'lock'; ?>')">
+										<?php echo $category->locked == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->review ? 'un' : '') . 'review'; ?>')">
-										<?php echo($category->review == 1 ? $img_yes : $img_no); ?>
+									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->review ? 'un' : '') . 'review'; ?>')">
+										<?php echo $category->review == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
-										<?php echo($category->allow_anonymous == 1 ? $img_yes : $img_no); ?>
+									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+										<?php echo $category->allow_anonymous == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
-										<?php echo($category->allow_polls == 1 ? $img_yes : $img_no); ?>
+									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
+										<?php echo $category->allow_polls == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 

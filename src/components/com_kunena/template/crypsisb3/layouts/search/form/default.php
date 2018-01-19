@@ -220,10 +220,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-primary">
-				<?php echo KunenaIcons::search(); ?><?php echo (' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+				<?php echo KunenaIcons::search(); ?><?php echo ' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
 			</button>
 			<button type="reset" class="btn btn-default" onclick="window.history.back();">
-				<?php echo KunenaIcons::cancel(); ?><?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>
 	</div>

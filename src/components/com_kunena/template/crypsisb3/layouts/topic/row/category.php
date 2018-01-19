@@ -47,7 +47,6 @@ if ($this->topic->moved_id > 0)
 	$txt .= ' ' . 'moved';
 }
 
-
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
 		<td colspan="<?php echo $cols; ?>">&nbsp;</td>

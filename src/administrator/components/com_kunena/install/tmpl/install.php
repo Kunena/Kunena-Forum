@@ -27,5 +27,5 @@ $colors  = array(-1 => '#cf7f00', 0 => 'red', 1 => 'green');
 				<td><?php echo $status['msg']; ?></td>
 			</tr>
 		<?php endforeach;
-	}; ?>
+	} ?>
 </table>

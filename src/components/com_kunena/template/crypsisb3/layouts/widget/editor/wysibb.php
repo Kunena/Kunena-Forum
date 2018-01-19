@@ -93,7 +93,7 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 </script>
 
 <div class="control-group">
-	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
+	<label class="control-label"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<textarea class="col-md-12" name="message" id="editor" rows="12" tabindex="7"
 				  required="required"

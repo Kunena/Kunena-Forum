@@ -27,7 +27,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 $userTopic = $topic->getUserTopic();
 
-
 if ($topic->ordering)
 {
 	if ($topic->getCategory()->class_sfx)

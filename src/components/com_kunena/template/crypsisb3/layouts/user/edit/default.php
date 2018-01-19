@@ -65,7 +65,7 @@ $tabs          = $this->getTabsEdit();
 				<?php echo KunenaIcons::save(); ?><?php echo JText::_('COM_KUNENA_SAVE'); ?>
 			</button>
 			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
-					title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
+					title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo JText::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>

@@ -54,7 +54,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 
 			$result                    = \JFactory::getApplication()->triggerEvent('onInit', 'dynamic_recaptcha_' . $this->message->id);
 			$output                    = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
-				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"')
+				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"', )
 			);
 			$this->quickcaptchaDisplay = $output[0];
 			$this->quickcaptchaEnabled = $result[0];
@@ -187,12 +187,12 @@ else
 			<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
 			<input type="submit" class="btn btn-primary kreply-submit" name="submit"
 				   value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
-				   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));
+				   title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
 ?>"/>
 			<?php // TODO: remove data on cancel. ?>
 			<input type="reset" name="reset" class="btn"
-				   value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
-				   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" data-dismiss="modal" aria-hidden="true"/>
+				   value="<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>"
+				   title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal" aria-hidden="true"/>
 		</div>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>

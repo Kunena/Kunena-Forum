@@ -81,7 +81,7 @@ $status         = $config->user_status;
 						<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
 						<label for="status-busy" class="btn btn-link">
 							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . \Joomla\CMS\Session\Session::getFormToken() . '=1');
-							; ?>"
+							 ?>"
 							   class="btn btn-link">
 								<?php echo KunenaIcons::busy(); ?>
 								<?php echo JText::_('COM_KUNENA_BUSY') ?>

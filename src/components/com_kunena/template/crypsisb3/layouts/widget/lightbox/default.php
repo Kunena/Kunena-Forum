@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-
 $template = KunenaTemplate::getInstance();
 
 if ($template->params->get('lightboxColor') == 'white')
@@ -24,4 +23,3 @@ else
 
 $this->addScript('assets/js/fancybox.js');
 $this->addScript('assets/js/fancybox.settings.js');
-

@@ -180,7 +180,7 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 															<td><?php echo $accessinput['desc'] ?></td>
 														</tr>
 													<?php endforeach;
-												}; ?>
+												} ?>
 											</table>
 										</fieldset>
 									</div>

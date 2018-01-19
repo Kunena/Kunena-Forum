@@ -27,7 +27,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 $this->getBBcodesEnabled();
 ?>
 <div class="form-group">
-	<label class="control-label col-md-4"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
+	<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs">
 			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
@@ -119,7 +119,7 @@ if (!empty($codeTypes)) : ?>
 						foreach ($vid_provider as $vid_type)
 						{
 							$vid_type = explode(',', $vid_type);
-							echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+							echo '<option value = "' . (!empty($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 						}
 						?>
 					</select>

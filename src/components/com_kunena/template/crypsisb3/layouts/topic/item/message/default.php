@@ -20,7 +20,7 @@ if ($direction === "left")
 	?>
 	<div class="row message">
 		<div class="col-md-2 hidden-xs">
-			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 		<div class="col-md-10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
@@ -48,7 +48,7 @@ if ($direction === "left")
 			<?php endif; ?>
 		</div>
 		<div class="col-md-2 hidden-xs">
-			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top")

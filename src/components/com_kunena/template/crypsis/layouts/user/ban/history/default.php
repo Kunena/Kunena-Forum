@@ -131,7 +131,7 @@ defined('_JEXEC') or die;
 						</td>
 					</tr>
 				<?php endforeach;
-			}; ?>
+			} ?>
 
 		<?php endforeach; ?>
 

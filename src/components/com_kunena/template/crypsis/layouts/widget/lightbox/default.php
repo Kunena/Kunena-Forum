@@ -28,4 +28,3 @@ else
 
 $this->addScript('assets/js/fancybox.js');
 $this->addScript('assets/js/fancybox.settings.js');
-

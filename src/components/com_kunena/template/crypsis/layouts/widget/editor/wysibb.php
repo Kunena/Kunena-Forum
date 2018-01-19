@@ -94,7 +94,7 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 </script>
 
 <div class="control-group">
-	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
+	<label class="control-label"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7"
 		          required="required"
@@ -213,7 +213,7 @@ if (!empty($codeTypes)) : ?>
 				foreach ($vid_provider as $vid_type)
 				{
 					$vid_type = explode(',', $vid_type);
-					echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+					echo '<option value = "' . (!empty($vid_type [1]) ? $this->escape($vid_type [1]) : Joomla\String\StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 				}
 				?>
 			</select>

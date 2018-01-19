@@ -382,10 +382,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits      .= JHtml::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
-			array('style' => 'display: inline; visibility: visible; text-decoration: none;')
+			array('style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;')
 		);
 		$credits      .= ' <a href="https://www.kunena.org"
-			target="_blank" rel="noopener noreferrer" style="display: inline; visibility: visible; text-decoration: none;">'
+			target="_blank" rel="noopener noreferrer" style="display: inline !important; visibility: visible !important; text-decoration: none !important;">'
 			. JText::_('COM_KUNENA') . '</a>';
 
 		if (trim($templateText))

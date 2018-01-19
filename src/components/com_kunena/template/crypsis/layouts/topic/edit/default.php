@@ -67,7 +67,6 @@ if ($this->config->pollenabled)
 
 $this->addScript('assets/js/pollcheck.js');
 
-
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
@@ -276,7 +275,7 @@ else
 :
 	?>
 							<div class="control-group" id="modified_reason">
-								<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+								<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITING_REASON') ?></label>
 
 								<div class="controls">
 									<input class="input-xxlarge" name="modified_reason" maxlength="200" type="text"
@@ -360,17 +359,17 @@ else
 			<?php if ($editor == 1):?>
 				<input type="submit" class="btn btn-success" name="submit"
 					   value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
-					   title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>"/>
+					   title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
 			<?php else :?>
 				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
 					<?php echo KunenaIcons::save(); ?>
-					<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+					<?php echo ' ' . JText::_('COM_KUNENA_SUBMIT') . ' '; ?>
 				</button>
 			<?php endif;?>
 
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<?php echo KunenaIcons::cancel(); ?>
-				<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>
 		<?php if (!$this->message->name)

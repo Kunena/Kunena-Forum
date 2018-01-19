@@ -224,7 +224,7 @@ JHtml::_('dropdown.init');
 									   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->getRank(0, 'title')); ?></a>
 								</td>
 								<td class="center hidden-phone hidden-tablet">
-									<span class="editlinktip <?php echo($user->signature ? 'hasTip' : ''); ?>"
+									<span class="editlinktip <?php echo $user->signature ? 'hasTip' : ''; ?>"
 									      title="<?php echo $this->escape($user->signature); ?> ">
 										<?php
 										if ($user->signature)
@@ -242,20 +242,20 @@ JHtml::_('dropdown.init');
 									</span>
 								</td>
 								<td class="center hidden-phone">
-									<a class="btn btn-micro <?php echo(!$user->isBlocked() ? 'active' : ''); ?>" href="javascript: void(0);"
+									<a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>" href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
-										<?php echo(!$user->isBlocked() ? $img_yes : $img_no); ?>
+										<?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="center hidden-phone">
-									<a class="btn btn-micro <?php echo($user->isBanned() ? 'active' : ''); ?>" href="javascript: void(0);"
+									<a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>" href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
-										<?php echo($user->isBanned() ? $img_yes : $img_no); ?>
+										<?php echo $user->isBanned() ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="center hidden-phone hidden-tablet">
-									<span class="btn btn-micro <?php echo($user->moderator ? 'active' : ''); ?>">
-										<?php echo($user->moderator ? $img_yes : $img_no); ?>
+									<span class="btn btn-micro <?php echo $user->moderator ? 'active' : ''; ?>">
+										<?php echo $user->moderator ? $img_yes : $img_no; ?>
 									</span>
 								</td>
 								<td class="center"><?php echo $this->escape($user->userid); ?></td>

@@ -52,7 +52,7 @@ if ($show)
 					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
 					{
 						echo 'topic-starter-circle';
-															}; ?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+															} ?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;
 		?>
 				<?php // If (!$this->topic_starter && $user->isModerator()) :

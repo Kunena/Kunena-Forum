@@ -38,7 +38,7 @@ $pollcheck = isset($this->poll);
 	}
 </script>
 <div class="control-group">
-	<label class="control-label"><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></label>
+	<label class="control-label"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs span12">
 			<li><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>

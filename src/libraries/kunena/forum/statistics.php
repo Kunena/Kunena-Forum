@@ -122,7 +122,7 @@ class KunenaForumStatistics
 	 * @var boolean
 	 * @since Kunena
 	 */
-	public $showgenstats = false;
+	public $showgenstats = true;
 
 	/**
 	 * @var boolean
@@ -169,17 +169,13 @@ class KunenaForumStatistics
 		$this->_db     = \Joomla\CMS\Factory::getDBO();
 		$this->_config = KunenaFactory::getConfig();
 
-		$show = $this->_config->showstats;
-		$show = ($this->_config->statslink_allowed) ? $show : (KunenaUserHelper::get()->exists() ? $show : false);
+		$this->showstats            = (bool) $this->_config->showstats;
+		$this->showgenstats         = (bool) $this->_config->showgenstats;
+		$this->showpopuserstats     = (bool) $this->_config->showpopuserstats;
+		$this->showpopsubjectstats  = (bool) $this->_config->showpopsubjectstats;
+		$this->showpoppollstats     = (bool) $this->_config->showpoppollstats;
+		$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
 
-		if ($show)
-		{
-			$this->showgenstats         = (bool) $this->_config->showgenstats;
-			$this->showpopuserstats     = (bool) $this->_config->showpopuserstats;
-			$this->showpopsubjectstats  = (bool) $this->_config->showpopsubjectstats;
-			$this->showpoppollstats     = (bool) $this->_config->showpoppollstats;
-			$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
-		}
 	}
 
 	/**
@@ -222,7 +218,7 @@ class KunenaForumStatistics
 	 */
 	public function loadGeneral($force = false)
 	{
-		if (!$this->showgenstats && !$force)
+		if (!$this->showstats && !$force)
 		{
 			return;
 		}

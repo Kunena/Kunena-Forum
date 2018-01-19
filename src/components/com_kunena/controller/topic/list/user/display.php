@@ -126,8 +126,9 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
 		$view = JFactory::getApplication()->input->getCmd('view');
 		$layout = JFactory::getApplication()->input->getCmd('layout');
+		$format = JFactory::getApplication()->input->getCmd('format');
 
-		if (!$Itemid)
+		if (!$Itemid && $format != 'feed')
 		{
 			$controller = JControllerLegacy::getInstance("kunena");
 
@@ -141,16 +142,18 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 				if ($view == 'user' && $layout == 'default')
 				{
-					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
 				}
 				elseif ($view == 'topics' && $layout == 'user')
 				{
-					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
 				}
 				else
 				{
-					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
 				}
+
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

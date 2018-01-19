@@ -42,8 +42,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$limit = $this->state->get('list.limit');
 
 		$Itemid = $this->input->getInt('Itemid');
+		$format = $this->input->getCmd('format');
 
-		if (!$Itemid)
+		if (!$Itemid && $format != 'feed')
 		{
 			if (KunenaConfig::getInstance()->topiclist_id)
 			{
@@ -52,7 +53,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

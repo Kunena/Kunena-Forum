@@ -47,7 +47,8 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

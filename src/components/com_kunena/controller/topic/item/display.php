@@ -72,8 +72,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
+		$format = $this->input->getInt('format');
 
-		if (!$Itemid)
+		if (!$Itemid && $format != 'feed')
 		{
 			$itemid = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");

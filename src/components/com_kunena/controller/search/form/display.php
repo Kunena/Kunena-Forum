@@ -57,7 +57,8 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

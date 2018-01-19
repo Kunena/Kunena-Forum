@@ -83,8 +83,10 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$limit = $this->state->get('list.limit');
 
 		$Itemid = $this->input->getInt('Itemid');
+		$format = $this->input->getCmd('format');
 
-		if (!$Itemid)
+
+		if (!$Itemid && $format != 'feed')
 		{
 			$itemid = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");

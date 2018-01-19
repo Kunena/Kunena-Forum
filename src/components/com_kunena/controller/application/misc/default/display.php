@@ -144,7 +144,8 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

@@ -46,8 +46,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
 		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+		$format = JFactory::getApplication()->input->getCmd('format');
 
-		if (!$Itemid)
+		if (!$Itemid && $format != 'feed')
 		{
 			if (KunenaConfig::getInstance()->search_id)
 			{
@@ -56,7 +57,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

@@ -94,8 +94,9 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		}
 
 		$Itemid = $this->input->getInt('Itemid');
+		$format = $this->input->getCmd('format');
 
-		if (!$Itemid)
+		if (!$Itemid && $format != 'feed')
 		{
 			$controller = JControllerLegacy::getInstance("kunena");
 
@@ -106,7 +107,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

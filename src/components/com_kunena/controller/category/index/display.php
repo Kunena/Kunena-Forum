@@ -88,12 +88,14 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 				if ($view == 'home')
 				{
-					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
 				}
 				else
 				{
-					$itemidfix = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
 				}
+
+				$itemidfix = $getid->id;
 			}
 
 			if (!$itemidfix)

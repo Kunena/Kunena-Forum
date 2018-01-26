@@ -262,7 +262,7 @@ function KunenaBuildRoute(&$query)
 		}
 	}
 
-	if (isset($query['start']) && $query['start'] != 0)
+	if (isset($query['start']) && $query['start'] == '@' && $query['start'] !== 0)
 	{
 		$query['start'] = '%' . ++$pos . '$d';
 	}

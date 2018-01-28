@@ -458,9 +458,11 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
 
 		$useredit          = array();
-		$useredit[]        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
-		$useredit[]        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+		$useredit[]        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_EDIT_ALLOWED_NEVER'));
+		$useredit[]        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_EDIT_ALLOWED_ALWAYS'));
 		$useredit[]        = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
+		$useredit[]        = JHtml::_('select.option', '3', JText::_('COM_KUNENA_EDIT_ALLOWED_ONLY_LAST_MESSAGE'));
+		$useredit[]        = JHtml::_('select.option', '4', JText::_('COM_KUNENA_EDIT_ALLOWED_ONLY_FIRST_MESSAGE'));
 		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
 
 		$lists ['allow_change_subject'] = JHtml::_('select.genericlist', $yesno, 'cfg_allow_change_subject', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_change_subject);

@@ -387,7 +387,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		parent::after();
 
 		$this->topic->hit();
-		$this->topic->markRead();
+
+		$read = KunenaForumTopicUserReadHelper::get($this->topic->id);
+
+		if (!$read->time)
+		{
+			$this->topic->markRead();
+		}
 
 		// Check if subscriptions have been sent and reset the value.
 		if ($this->topic->isAuthorised('subscribe') && $this->userTopic->subscribed == 2)

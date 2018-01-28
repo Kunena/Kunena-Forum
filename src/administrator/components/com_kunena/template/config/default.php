@@ -545,11 +545,6 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->lists ['social'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_SOCIAL_DESC') ?></td>
 												</tr>
-												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_AVATAREDIT') ?></td>
-													<td><?php echo $this->lists ['avataredit'] ?></td>
-													<td><?php echo JText::_('COM_KUNENA_A_AVATAREDIT_DESC') ?></td>
-												</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -836,6 +831,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_AVATAR_CROP') ?></td>
 													<td><?php echo $this->lists ['avatarcrop'] ?></td>
 													<td></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAREDIT') ?></td>
+													<td><?php echo $this->lists ['avataredit'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATAREDIT_DESC') ?></td>
 												</tr>
 												</tbody>
 											</table>

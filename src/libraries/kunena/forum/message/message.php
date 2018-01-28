@@ -1710,13 +1710,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// All except the first message of the topic
 			if ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id)
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_FIRST_MESSAGE'), 403);
 			}
 
 			// Only the last message
 			if ($config->userdeletetmessage == '4' && $this->id != $this->getTopic()->last_post_id)
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_LAST_MESSAGE'), 403);
 			}
 		}
 	}

@@ -1649,19 +1649,31 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// User is only allowed to edit post within time specified in the configuration
 		$config = KunenaFactory::getConfig();
 
-		if (intval($config->useredit) == 0)
+		if (intval($config->useredit) != 1)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-		}
+			// Edit never allowed
+			if (intval($config->useredit) == 0)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			}
 
-		if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
-		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
-		}
+			// Edit allowed if replies
+			if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			}
 
-		if ($this->getTopic()->getReplies() && $this->getTopic()->last_post_id > $this->id)
-		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			// Edit allowed for the first message of the topic
+			if (intval($config->useredit) == 4 && $this->id != $this->getTopic()->first_post_id)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			}
+
+			// Edit allowed for the last message of the topic
+			if (intval($config->useredit) == 3 && $this->id != $this->getTopic()->last_post_id)
+    		{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+			}
 		}
 
 		if (intval($config->useredittime) != 0)

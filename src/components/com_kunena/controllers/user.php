@@ -1279,14 +1279,14 @@ class KunenaControllerUser extends KunenaController
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'));
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'), 'error');
 				$this->setRedirectBack();
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'));
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
 		$this->setRedirectBack();
 	}
 

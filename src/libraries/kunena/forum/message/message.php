@@ -1695,17 +1695,26 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$user->isModerator($this->getCategory()) && $config->userdeletetmessage != '2')
 		{
-			if ($config->userdeletetmessage == '0')
+			// Never
+		    if ($config->userdeletetmessage == '0')
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
+			// when no replies
 			if ($config->userdeletetmessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
+			// All except the first message of the topic
 			if ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+			}
+
+			// Only the last message
+			if ($config->userdeletetmessage == '4' && $this->id != $this->getTopic()->last_post_id)
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}

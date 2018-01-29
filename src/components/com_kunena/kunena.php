@@ -126,6 +126,12 @@ else
 	}
 }
 
+// Prepare and display the output.
+JPluginHelper::importPlugin('content');
+$params = new stdClass;
+$contents->text = $contents->content;
+\JFactory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$contents, &$params, 0));
+$contents->content = $contents->text;
 \JFactory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
 \JFactory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));

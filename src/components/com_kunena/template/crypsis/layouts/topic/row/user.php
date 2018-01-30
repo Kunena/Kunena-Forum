@@ -10,10 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-/*
-  @var KunenaLayout $this */
-// @var KunenaForumTopic $topic
-
 $topic      = $this->topic;
 $template   = KunenaFactory::getTemplate();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
@@ -23,29 +19,7 @@ $avatar     = $author->getAvatarImage($template->params->get('avatarType'), 'pos
 $cols       = empty($this->checkbox) ? 5 : 6;
 $category   = $this->topic->getCategory();
 $config     = KunenaConfig::getInstance();
-$txt        = '';
-
-if ($this->topic->ordering)
-{
-	$txt = $this->topic->getCategory()->class_sfx ? $txt . '' : $txt . '-stickymsg';
-}
-
-if ($this->topic->hold == 1)
-{
-	$txt .= ' ' . 'unapproved';
-}
-else
-{
-	if ($this->topic->hold)
-	{
-		$txt .= ' ' . 'deleted';
-	}
-}
-
-if ($this->topic->moved_id > 0)
-{
-	$txt .= ' ' . 'moved';
-}
+$txt        = $this->topic->getActions();
 
 if (!empty($this->spacing)) : ?>
 	<tr>

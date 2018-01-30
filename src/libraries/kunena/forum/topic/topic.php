@@ -348,6 +348,44 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
+	 * @return KunenaForumCategory
+	 * @since Kunena
+	 */
+	public function getActions()
+	{
+		$txt        = '';
+
+		if ($this->ordering)
+		{
+			$txt = $this->getCategory()->class_sfx ? $txt . '' : $txt . '-stickymsg';
+		}
+
+		if ($this->hold == 1)
+		{
+			$txt .= ' unapproved';
+		}
+		else
+		{
+			if ($this->hold)
+			{
+				$txt .= ' deleted';
+			}
+		}
+
+		if ($this->moved_id > 0)
+		{
+			$txt .= ' moved';
+		}
+
+		if ($this->locked)
+		{
+			$txt .= ' locked';
+		}
+
+		return $txt;
+	}
+
+	/**
 	 * @param   int $value value
 	 *
 	 * @return boolean

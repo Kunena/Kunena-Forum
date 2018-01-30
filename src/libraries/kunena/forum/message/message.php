@@ -1660,19 +1660,19 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Edit allowed if replies
 			if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_ALLOWED_IF_REPLIES'), 403);
 			}
 
 			// Edit allowed for the first message of the topic
 			if (intval($config->useredit) == 4 && $this->id != $this->getTopic()->first_post_id)
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_FIRST_MESSAGE_OF_TOPIC'), 403);
 			}
 
 			// Edit allowed for the last message of the topic
 			if (intval($config->useredit) == 3 && $this->id != $this->getTopic()->last_post_id)
     		{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
 			}
 		}
 

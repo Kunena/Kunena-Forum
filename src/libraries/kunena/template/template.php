@@ -296,7 +296,11 @@ class KunenaTemplate extends JObject
 		{
 			$Itemid = KunenaRoute::fixMissingItemID();
 			$items  = JFactory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
-			$id = '.item-' . $items[0]->id;
+
+			if ($items)
+			{
+				$id = '.item-' . $items[0]->id;
+			}
 		}
 
 		JFactory::getDocument()->addScriptDeclaration("

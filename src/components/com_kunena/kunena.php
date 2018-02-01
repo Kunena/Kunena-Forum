@@ -126,9 +126,13 @@ else
 	}
 }
 
-$params = new JObject;
+// Prepare and display the output.
+$params = new stdClass;
+$params->text = '';
+$topics = new stdClass;
+$topics->text = '';
 JPluginHelper::importPlugin('content');
-\JFactory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$contents, &$params, 0));
+\JFactory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
 \JFactory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
 \JFactory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));

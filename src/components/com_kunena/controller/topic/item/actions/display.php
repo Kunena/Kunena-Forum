@@ -113,19 +113,19 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'icon icon-bookmark')
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'icon icon-envelope-opened')
 				);
 			}
 			elseif ($topicicontype == 'B3' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-bookmark')
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-envelope')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-bookmark')
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-envelope')
 				);
 			}
 			elseif ($topicicontype == 'image' && !$fullactions)
@@ -147,19 +147,19 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-bookmark-2')
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-envelope')
 				);
 			}
 			elseif ($topicicontype == 'B3' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-bookmark')
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-envelope')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-bookmark-o')
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-envelope-o')
 				);
 			}
 			elseif ($topicicontype == 'image' && !$fullactions)

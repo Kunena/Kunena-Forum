@@ -483,14 +483,11 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		// Set other information.
 		$item->published = intval($message->hold == 0);
-
-		// TODO: add topic state
-		// $item->state = intval($message->getCategory()->published == 1);
-		$item->state    = $item->published;
-		$item->language = '*';
+		$item->state     = intval($message->getCategory()->published == 1);
+		$item->language  = '*';
 
 		// TODO: add access control
-		$item->access = $this->getAccessLevel($item);
+		$item->access = $this->getAccessLevel($item->catid);
 
 		// Set the item type.
 		$item->type_id = $this->type_id;
@@ -617,33 +614,38 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 */
 	protected function getAccessLevel($item)
 	{
-		if (($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages))
+		$category = KunenaForumCategoryHelper::get($item);
+		$user     = \Joomla\CMS\Factory::getUser(0);
+
+		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
+		if (!($user instanceof \Joomla\CMS\User\User))
 		{
-			if (!$item->catid)
-			{
-				return 0;
-			}
-
-			$category = KunenaForumCategoryHelper::get($item->catid);
-
-			// TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
-			if ($category->accesstype != 'joomla.level')
-			{
-				return 0;
-			}
-
-			return $category->access;
+			$user = \Joomla\CMS\User\User::getInstance();
 		}
-		elseif (($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory))
+
+		$accesslevels = (array) $user->getAuthorisedViewLevels();
+		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
+		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
+
+		$catlist = array();
+
+		// Check against Joomla access level
+		if ($category->accesstype == 'joomla.level')
 		{
-			$category = KunenaForumCategoryHelper::get($item->id);
-
-			if ($category->accesstype != 'joomla.level')
+			if (in_array($category->access, $accesslevels))
 			{
-				return 0;
+				return 1;
 			}
+		}
+		// Check against Joomla user group
+		elseif ($category->accesstype == 'joomla.group')
+		{
+			$pub_access   = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
 
-			return $category->access;
+			if ($pub_access)
+			{
+				return 1;
+			}
 		}
 
 		return 0;

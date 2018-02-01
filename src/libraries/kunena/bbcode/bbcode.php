@@ -2847,7 +2847,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			);
 
 			$data     = "grant_type=client_credentials";
-			$response = $http->post($url, $data, $headers);
+			$response = $http->post($url, $data, $headers, '10');
 
 			if ($response->code == 200)
 			{
@@ -2885,7 +2885,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			);
 
 			$data     = array();
-			$response = $http->get($url, $headers);
+			$response = $http->get($url, $headers, '10');
 
 			if ($response->code == 200)
 			{

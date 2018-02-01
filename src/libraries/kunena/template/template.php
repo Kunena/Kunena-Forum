@@ -291,6 +291,8 @@ class KunenaTemplate extends JObject
 		if (KunenaConfig::getInstance()->activemenuitem)
 		{
 			$id = KunenaConfig::getInstance()->activemenuitem;
+			JFactory::getDocument()->addScriptDeclaration("
+		jQuery(function($){ $(\"$id\").addClass('active')});");
 		}
 		else
 		{
@@ -300,11 +302,10 @@ class KunenaTemplate extends JObject
 			if ($items)
 			{
 				$id = '.item-' . $items[0]->id;
+				JFactory::getDocument()->addScriptDeclaration("
+		jQuery(function($){ $(\"$id\").addClass('active')});");
 			}
 		}
-
-		JFactory::getDocument()->addScriptDeclaration("
-		jQuery(function($){ $(\"$id\").addClass('active')});");
 	}
 
 	/**

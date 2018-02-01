@@ -137,7 +137,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'glyphicon glyphicon-bookmark', )
+							'icon' => 'glyphicon glyphicon-envelope', )
 						);
 				}
 				else
@@ -145,7 +145,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'glyphicon glyphicon-bookmark', )
+							'icon' => 'glyphicon glyphicon-envelope', )
 						);
 				}
 			}
@@ -156,7 +156,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'fa fa-bookmark', )
+							'icon' => 'fa fa-envelope', )
 						);
 				}
 				else
@@ -164,7 +164,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'fa fa-bookmark-o', )
+							'icon' => 'fa fa-envelope-o', )
 						);
 				}
 			}
@@ -175,7 +175,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'icon-bookmark', )
+							'icon' => 'icon-envelope', )
 						);
 				}
 				else
@@ -183,7 +183,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							'icon' => 'icon-bookmark', )
+							'icon' => 'icon-envelope-opened', )
 						);
 				}
 			}

@@ -384,6 +384,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				$this->setTitle($headerText);
 			}
 
+			$doc->setMetaData('og:type', 'article', 'property');
+			$doc->setMetaData('og:description', $headerText, 'property');
+			$doc->setMetaData('og:title', $headerText, 'property');
+
 			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');

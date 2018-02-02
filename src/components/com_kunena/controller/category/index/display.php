@@ -415,6 +415,10 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				$this->setTitle($title);
 			}
 
+			$doc->setMetaData('og:type', 'article', 'property');
+			$doc->setMetaData('og:description', $title, 'property');
+			$doc->setMetaData('og:title', $title, 'property');
+
 			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');

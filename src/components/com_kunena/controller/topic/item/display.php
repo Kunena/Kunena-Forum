@@ -482,6 +482,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 		}
 
+		$doc->setMetaData('og:description', $this->topic->first_post_message, 'property');
 		$doc->setMetaData('og:image', $image, 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toKunena('config_post_dateformat'), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');

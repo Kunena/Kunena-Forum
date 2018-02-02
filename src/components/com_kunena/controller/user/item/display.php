@@ -222,6 +222,9 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 				$this->setTitle($title);
 			}
 
+			$doc->setMetaData('og:description', $title, 'property');
+			$doc->setMetaData('og:title',  $this->profile->getName(), 'property');
+
 			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');

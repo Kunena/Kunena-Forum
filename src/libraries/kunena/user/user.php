@@ -555,16 +555,58 @@ class KunenaUser extends JObject
 	{
 		if (!$this->avatar && KunenaConfig::getInstance()->avatar_type)
 		{
+			$ktemplate     = KunenaFactory::getTemplate();
+			$topicicontype = $ktemplate->params->get('topicicontype');
+
 			if ($sizex == 20)
 			{
-				return '<i class="fas fa-user-circle"></i>';
+				if ($topicicontype == 'fa')
+				{
+					return '<i class="fas fa-user-circle" aria-hidden="true"></i>';
+				}
+
+				if ($topicicontype == 'B2')
+				{
+					return '<span class="icon icon-user user-circle user-default" aria-hidden="true"></span>';
+				}
+
+				if ($topicicontype == 'B3')
+				{
+					return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+				}
 			}
 			elseif ($sizex == 'logout' || $sizex == 'profile')
 			{
-				return '<i class="fas fa-user-circle fa-7x"></i>';
+				if ($topicicontype == 'fa')
+				{
+					return '<i class="fas fa-user-circle fa-7x"></i>';
+				}
+
+				if ($topicicontype == 'B2')
+				{
+					return '<span class="icon icon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
+				}
+
+				if ($topicicontype == 'B3')
+				{
+					return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+				}
 			}
 
-			return '<i class="fas fa-user-circle fa-3x"></i>';
+			if ($topicicontype == 'fa')
+			{
+				return '<i class="fas fa-user-circle fa-3x"></i>';
+			}
+
+			if ($topicicontype == 'B2')
+			{
+				return '<span class="icon icon-user user-circle user-default" aria-hidden="true"></span>';
+			}
+
+			if ($topicicontype == 'B3')
+			{
+				return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+			}
 		}
 
 		$avatars = KunenaFactory::getAvatarIntegration();

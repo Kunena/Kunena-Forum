@@ -162,6 +162,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$doc = \Joomla\CMS\Factory::getDocument();
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
+		$image  = '';
 
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 		$doc->setMetaData('og:type', 'profile', 'property');
@@ -171,7 +172,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		{
 			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
-		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && $this->profile->avatar)
+		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
 		{
 			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{

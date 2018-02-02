@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
 $tabs          = $this->getTabsEdit();
+$avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>

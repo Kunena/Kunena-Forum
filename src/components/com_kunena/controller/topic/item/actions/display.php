@@ -125,7 +125,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fa fa-envelope')
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fas fa-envelope-open')
 				);
 			}
 			elseif ($topicicontype == 'image' && !$fullactions)
@@ -159,7 +159,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fa fa-envelope-o')
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fas fa-envelope')
 				);
 			}
 			elseif ($topicicontype == 'image' && !$fullactions)
@@ -228,7 +228,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->topicButtons->set('favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'fa fa-star-o')
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'far fa-star')
 				);
 			}
 			elseif ($topicicontype == 'image' && !$fullactions)

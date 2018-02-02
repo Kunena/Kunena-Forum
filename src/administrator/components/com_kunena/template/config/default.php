@@ -779,6 +779,11 @@ JHtml::_('behavior.tabstate');
 												</thead>
 												<tbody>
 												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATARTYPE') ?></td>
+													<td><?php echo $this->lists ['avatar_type'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_AVATARTYPE_DESC') ?></td>
+												</tr>
+												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT') ?></td>
 													<td><input type="text" name="cfg_defaultavatar"
 															   value="<?php echo $this->escape($this->config->defaultavatar) ?>"/></td>

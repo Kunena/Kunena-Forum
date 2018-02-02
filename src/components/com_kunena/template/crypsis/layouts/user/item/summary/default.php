@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 
 $profile             = $this->profile;
 $me                  = KunenaUserHelper::getMyself();
-$avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 $banInfo             = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;

@@ -553,6 +553,20 @@ class KunenaUser extends JObject
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90)
 	{
+		if (!$this->avatar && KunenaConfig::getInstance()->avatar_type)
+		{
+			if ($sizex == 20)
+			{
+				return '<i class="fas fa-user-circle"></i>';
+			}
+			elseif ($sizex == 'logout' || $sizex == 'profile')
+			{
+				return '<i class="fas fa-user-circle fa-7x"></i>';
+			}
+
+			return '<i class="fas fa-user-circle fa-3x"></i>';
+		}
+
 		$avatars = KunenaFactory::getAvatarIntegration();
 
 		return $avatars->getLink($this, $class, $sizex, $sizey);
@@ -1435,6 +1449,49 @@ class KunenaUser extends JObject
 
 			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
+		}
+		elseif ($config->rankimages == 4)
+		{
+			if ($rank->rank_title == 'New Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Junior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Senior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Premium Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Elite Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Platinum Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
+			</li>';
+			}
+
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
+			</li>';
 		}
 
 		return $rank;

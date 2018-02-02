@@ -496,6 +496,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$rankimages[]         = JHtml::_('select.option', '1', JText::_('COM_KUNENA_RANK_IMAGE'));
 		$rankimages[]         = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RANK_USERGROUP'));
 		$rankimages[]         = JHtml::_('select.option', '3', JText::_('COM_KUNENA_RANK_BOTH'));
+		$rankimages[]         = JHtml::_('select.option', '4', JText::_('COM_KUNENA_RANK_FONTAWESOMEICONS'));
 		$lists ['rankimages'] = JHtml::_('select.genericlist', $rankimages, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages);
 
 		$lists['defaultavatar']      = JHtml::_('select.genericlist', $yesno, 'cfg_defaultavatar', 'class="inputbox" size="1"', 'value', 'text', $this->config->defaultavatar);
@@ -504,6 +505,11 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['avataredit']        = JHtml::_('select.genericlist', $yesno, 'cfg_avataredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->avataredit);
 
 		$lists ['moderator_permdelete'] = JHtml::_('select.genericlist', $yesno, 'cfg_moderator_permdelete', 'class="inputbox" size="1"', 'value', 'text', $this->config->moderator_permdelete);
+
+		$avatar_type           = array();
+		$avatar_type[]         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_AVATAR_IMAGE'));
+		$avatar_type[]         = JHtml::_('select.option', '1', JText::_('COM_KUNENA_AVATAR_ICONTYPE'));
+		$lists ['avatar_type'] = JHtml::_('select.genericlist', $avatar_type, 'cfg_avatar_type', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatar_type);
 
 		return $lists;
 	}

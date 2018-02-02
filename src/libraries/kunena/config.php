@@ -1315,6 +1315,12 @@ class KunenaConfig extends JObject
 	public $search_id = '';
 
 	/**
+	 * @var string
+	 * @since  K5.1.0
+	 */
+	public $avatar_type = 1;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

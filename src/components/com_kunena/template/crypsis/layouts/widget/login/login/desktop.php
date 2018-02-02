@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
-			<?php echo KunenaIcons::user(); ?>
+			<span class="kwho-guest"><?php echo KunenaIcons::user(); ?></span>
 			<span class="login-text"><?php echo JText::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>

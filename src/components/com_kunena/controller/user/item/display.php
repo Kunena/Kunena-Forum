@@ -171,7 +171,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		{
 			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
-		elseif ($this->profile->avatar == null)
+		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && $this->profile->avatar)
 		{
 			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{

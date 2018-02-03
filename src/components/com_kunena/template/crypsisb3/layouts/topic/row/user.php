@@ -161,7 +161,8 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="col-md-2 hidden-xs">
 		<div class="container-fluid">
-				<?php if ($config->avataroncat) : ?>
+			<div class="row-fluid">
+			<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
 						<?php echo $author->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 					</div>
@@ -176,6 +177,7 @@ if (!empty($this->spacing)) : ?>
 					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

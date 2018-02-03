@@ -130,17 +130,18 @@ if ($topic->moved_id > 0)
 			</div>
 		</div>
 	</td>
+
 	<td class="col-md-2 hidden-xs">
 		<div class="replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:<span
 				class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>:<span
 				class="viewsnum"><?php echo $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
+
 	<td class="col-md-2">
 		<div class="container-fluid">
-			<?php if ($config->avataroncat)
-			:
-	?>
+			<div class="row-fluid">
+			<?php if ($config->avataroncat) : ?>
 				<div class="col-md-3">
 					<?php echo $topic->getLastPostAuthor()->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 				</div>
@@ -152,6 +153,7 @@ if ($topic->moved_id > 0)
 					<br />
 					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
+			</div>
 		</div>
 	</td>
 

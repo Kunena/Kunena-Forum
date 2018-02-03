@@ -206,21 +206,22 @@ foreach ($this->sections as $section) :
 								?>
 
 								<td class="col-md-3 hidden-xs">
-										<div class="col-md-12">
+									<div class="container-fluid">
+										<div class="row-fluid">
 											<?php if ($avatar) : ?>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
 												</div>
-												<div class="col-md-8">
+												<div class="col-md-9">
 											<?php else : ?>
 												<div class="col-md-12">
 											<?php endif; ?>
-												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
-												<br>
-												<span class="lastpostby"><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
-												<br>
-												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
-											</div>
+													<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+													<br>
+													<span class="lastpostby"><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+													<br>
+													<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
+												</div>
 										</div>
 									</div>
 								</td>

@@ -19,6 +19,7 @@ $status         = $config->user_status;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<span class="kwho-<?php echo $this->me->getType(0, true);?>">
 			<?php if ($this->me->getStatus() == 0 && $status)
 			:
 	?>
@@ -42,6 +43,7 @@ $status         = $config->user_status;
 				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>
+				</span>
 		</a>
 
 		<div class="dropdown-menu" id="nav-menu">

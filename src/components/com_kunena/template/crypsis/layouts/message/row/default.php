@@ -150,18 +150,18 @@ if ($topic->moved_id > 0)
 			</div>
 		</div>
 	</td>
+
 	<td class="span2 hidden-phone">
 		<div class="replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:<span
 				class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>:<span
 				class="viewsnum"><?php echo $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
+
 	<td class="span2">
 		<div class="container-fluid">
 			<div class="row-fluid">
-			<?php if ($config->avataroncat)
-			:
-	?>
+			<?php if ($config->avataroncat) : ?>
 				<div class="span3">
 					<?php echo $topic->getLastPostAuthor()->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 				</div>
@@ -178,9 +178,7 @@ if ($topic->moved_id > 0)
 		</div>
 	</td>
 
-	<?php if (!empty($this->checkbox))
-	:
-	?>
+	<?php if (!empty($this->checkbox)) : ?>
 		<td class="span1 center">
 			<input class="kcheck" type="checkbox" name="posts[<?php echo $message->id ?>]" value="1"/>
 		</td>

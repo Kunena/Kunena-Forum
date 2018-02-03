@@ -37,9 +37,7 @@ if ($this->config->showuserstats)
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<?php if ($avatar)
-			:
-	?>
+			<?php if ($avatar) : ?>
 				<div class="col-md-2">
 					<div class="center"> <?php echo $avatar; ?> </div>
 					<?php if($this->config->user_status): ?>
@@ -57,17 +55,13 @@ if ($this->config->showuserstats)
 								<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
 								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
 							</li>
-							<?php if ($banInfo && $banInfo->reason_public)
-							:
-	?>
+							<?php if ($banInfo && $banInfo->reason_public) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
 									<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
 								</li>
 							<?php endif ?>
-							<?php if ($this->config->showuserstats && $this->config->showranking)
-							:
-	?>
+							<?php if ($this->config->showuserstats && $this->config->showranking) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
@@ -78,9 +72,7 @@ if ($this->config->showuserstats)
 							<?php endif; ?>
 						</ul>
 						<ul class="list-unstyled col-md-3">
-							<?php if ($this->config->userlist_joindate || $me->isModerator())
-							:
-	?>
+							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
 									<span

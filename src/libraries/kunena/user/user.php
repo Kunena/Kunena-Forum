@@ -572,7 +572,7 @@ class KunenaUser extends JObject
 
 				if ($topicicontype == 'B3')
 				{
-					return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 				}
 			}
 			elseif ($sizex == 'logout' || $sizex == 'profile')
@@ -589,7 +589,7 @@ class KunenaUser extends JObject
 
 				if ($topicicontype == 'B3')
 				{
-					return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+					return '<span class="glyphicon glyphicon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
 				}
 			}
 
@@ -605,7 +605,7 @@ class KunenaUser extends JObject
 
 			if ($topicicontype == 'B3')
 			{
-				return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+				return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 			}
 		}
 
@@ -1494,6 +1494,30 @@ class KunenaUser extends JObject
 		}
 		elseif ($config->rankimages == 4)
 		{
+			return self::rankCss($rank, $catid);
+		}
+
+		return $rank;
+	}
+
+	/**
+	 * Get users type as a string inside the specified category.
+	 *
+	 * @param $rank
+	 *
+	 * @param $catid
+	 *
+	 * @return string
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function rankCss($rank, $catid)
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
 			if ($rank->rank_title == 'New Member')
 			{
 				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
@@ -1535,8 +1559,92 @@ class KunenaUser extends JObject
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
 			</li>';
 		}
+		elseif ($topicicontype == 'B2')
+		{
+			if ($rank->rank_title == 'New Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Junior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Senior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Premium Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Elite Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Platinum Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
+			</li>';
+			}
 
-		return $rank;
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
+			</li>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			if ($rank->rank_title == 'New Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Junior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Senior Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Premium Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Elite Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
+			</li>';
+			}
+			elseif ($rank->rank_title == 'Platinum Member')
+			{
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
+			</li>';
+			}
+
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
+			</li>';
+		}
 	}
 
 	/**

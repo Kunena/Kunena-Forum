@@ -1258,7 +1258,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$smart = KunenaConfig::getInstance()->smartlinking;
 
-		if ($smart)
+		if ($smart && $bbcode->get_title($url))
 		{
 			$content = $bbcode->get_title($url);
 		}

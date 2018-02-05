@@ -197,7 +197,7 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post') : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 								?>
 
 								<td class="span3 hidden-phone">

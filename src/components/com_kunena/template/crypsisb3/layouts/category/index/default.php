@@ -202,7 +202,7 @@ foreach ($this->sections as $section) :
 								$author = $last->getLastPostAuthor();
 								$time = $last->getLastPostTime();
 								$this->ktemplate = KunenaFactory::getTemplate();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post') : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 								?>
 
 								<td class="col-md-3 hidden-xs">

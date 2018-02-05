@@ -52,11 +52,14 @@ class KunenaLayoutUserEdit extends KunenaLayout
 
 		if ($myProfile)
 		{
-			$tab           = new stdClass;
-			$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
-			$tab->content  = $this->subRequest('User/Edit/Avatar');
-			$tab->active   = false;
-			$tabs['avatar'] = $tab;
+			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
+			{
+				$tab           = new stdClass;
+				$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
+				$tab->content  = $this->subRequest('User/Edit/Avatar');
+				$tab->active   = false;
+				$tabs['avatar'] = $tab;
+			}
 		}
 
 		if ($myProfile)

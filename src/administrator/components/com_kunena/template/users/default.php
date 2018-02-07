@@ -201,9 +201,9 @@ JHtml::_('dropdown.init');
 									<?php echo JHtml::_('grid.id', $i, intval($user->userid)) ?>
 								</td>
 								<td>
-									<span class="editlinktip hasTip"
-									      title="<?php echo $this->escape($user->username . '::' . $user->getAvatarImage('kavatar', 128, 128)); ?> ">
-										<?php echo $user->getAvatarImage('kavatar', 24, 24); ?>
+									<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true);?>"
+									      title="<?php echo $this->escape($user->username); ?> ">
+										<?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
 										<a href="#edit"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
 										<small>

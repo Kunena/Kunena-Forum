@@ -20,6 +20,7 @@ $this->addScript('assets/js/profile.js');
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
+	<?php if ($this->config->personal) : ?>
 	<tr>
 		<td class="span3">
 			<label for="personaltext">
@@ -31,6 +32,7 @@ $this->addScript('assets/js/profile.js');
 				   name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"/>
 		</td>
 	</tr>
+	<?php endif; ?>
 	<tr>
 		<td>
 			<label for="birthdate">
@@ -107,12 +109,8 @@ $this->addScript('assets/js/profile.js');
 		</td>
 	</tr>
 
-	<?php if ($this->config->social)
-	:
-	?>
-		<?php foreach ($this->social as $key => $social)
-		:
-	?>
+	<?php if ($this->config->social) : ?>
+		<?php foreach ($this->social as $key => $social) : ?>
 		<tr>
 			<td>
 				<label for="social-<?php echo $key; ?>">
@@ -120,9 +118,7 @@ $this->addScript('assets/js/profile.js');
 				</label>
 			</td>
 			<td>
-				<?php if ($social != 'qq')
-				:
-?>
+				<?php if ($social != 'qq') : ?>
 				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
 					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>" >
 				<?php endif; ?>
@@ -134,6 +130,7 @@ $this->addScript('assets/js/profile.js');
 		<?php endforeach; ?>
 	<?php endif; ?>
 
+	<?php if ($this->config->signature) : ?>
 	<tr>
 		<td>
 			<label for="signature">
@@ -149,5 +146,6 @@ $this->addScript('assets/js/profile.js');
 				</span>
 		</td>
 	</tr>
+	<?php endif; ?>
 	</tbody>
 </table>

@@ -20,7 +20,8 @@ $this->addScript('assets/js/profile.js');
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
-	<tr>
+	<?php if ($this->config->personal) : ?>
+		<tr>
 		<td class="col-md-3">
 			<label for="personaltext">
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
@@ -31,6 +32,7 @@ $this->addScript('assets/js/profile.js');
 				   name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"/>
 		</td>
 	</tr>
+	<?php endif; ?>
 	<tr>
 		<td>
 			<label for="birthdate">
@@ -107,33 +109,28 @@ $this->addScript('assets/js/profile.js');
 		</td>
 	</tr>
 
-	<?php if ($this->config->social)
-	:
-	?>
-		<?php foreach ($this->social as $key => $social)
-		:
-	?>
-		<tr>
-			<td>
-				<label for="social-<?php echo $key; ?>">
-					<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $key); ?>
-				</label>
-			</td>
-			<td>
-				<?php if ($social != 'qq')
-				:
-?>
-				<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
-				. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>" >
+	<?php if ($this->config->social) : ?>
+		<?php foreach ($this->social as $key => $social) : ?>
+			<tr>
+				<td>
+					<label for="social-<?php echo $key; ?>">
+						<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $key); ?>
+					</label>
+				</td>
+				<td>
+					<?php if ($social != 'qq') : ?>
+					<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
+						. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>" >
 				<?php endif; ?>
-					<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>" class="form-control"
-						   value="<?php echo $this->escape($this->profile->$key); ?>" />
+						<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
+						       value="<?php echo $this->escape($this->profile->$key); ?>" />
 				</span>
-			</td>
-		</tr>
+				</td>
+			</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>
 
+	<?php if ($this->config->signature) : ?>
 	<tr>
 		<td>
 			<label for="signature">
@@ -141,13 +138,14 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
-					. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
-					<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
-							  name="signature" id="signature" rows="10"
-							  cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
-				</span>
+			<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
+				. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
+				<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
+						  name="signature" id="signature" rows="10"
+						  cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
+			</span>
 		</td>
 	</tr>
+	<?php endif; ?>
 	</tbody>
 </table>

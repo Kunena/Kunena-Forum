@@ -102,27 +102,28 @@ $status         = $config->user_status;
 					<?php echo JHtml::_('form.token'); ?>
 				</form>
 				<div class="divider"></div>
-			<?php endif; ?>
 
-			<div id="statustext">
-				<?php
-				if (version_compare(JVERSION, '4.0', '>'))
-				{
-					JHtml::_('bootstrap.renderModal', 'statusText');
-				}
-				else
-				{
-					JHtml::_('bootstrap.modal', 'statusText');
-				}
-				?>
-				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
-					<?php echo KunenaIcons::edit(); ?>
-					<?php echo JText::_('COM_KUNENA_STATUS') ?>
-				</a>
-			</div>
-			<div class="divider"></div>
+				<div id="statustext">
+					<?php
+					if (version_compare(JVERSION, '4.0', '>'))
+					{
+						JHtml::_('bootstrap.renderModal', 'statusText');
+					}
+					else
+					{
+						JHtml::_('bootstrap.modal', 'statusText');
+					}
+					?>
+					<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
+						<?php echo KunenaIcons::edit(); ?>
+						<?php echo JText::_('COM_KUNENA_STATUS') ?>
+					</a>
+				</div>
+				<div class="divider"></div>
+				<?php endif; ?>
 
-			<?php if (!empty($this->announcementsUrl))
+
+				<?php if (!empty($this->announcementsUrl))
 			:
 	?>
 				<div id="announcement">

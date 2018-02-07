@@ -86,11 +86,11 @@ jQuery(function($) {
 									<div class="tab-pane active" id="tab1">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></legend>
-											<div><?php echo $this->avatar; ?></div>
+											<div class="kwho-<?php echo $this->user->getType(0, true); ?>">
+												<?php echo $this->avatar; ?>
+											</div>
 											<?php
-											if ($this->editavatar)
-												:
-												?>
+											if ($this->editavatar) : ?>
 												<div>
 													<label><input type="checkbox" value="1"
 													              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>

@@ -12,3 +12,29 @@
 	border-color: transparent;
 	box-shadow: none;
 }
+
+.kwho-guest {
+	color: #666666;
+}
+
+.kwho-user {
+	color: #5388B4;
+}
+
+.kwho-moderator {
+	color: #0000FF;
+}
+
+.kwho-globalmod,
+.kwho-globalmoderator {
+	color: #800000;
+}
+
+.kwho-admin {
+	color: #FF0000;
+}
+
+.kwho-blocked,
+.kwho-banned {
+	color: #A39D49;
+}

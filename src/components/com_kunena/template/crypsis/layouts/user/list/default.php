@@ -155,7 +155,7 @@ $this->addScript('assets/js/search.js');
 
 				<?php if ($avatar) : ?>
 					<td class="span1 center hidden-phone">
-						<div class="post-image">
+						<div class="post-image kwho-<?php echo $user->getType(0, true);?>">
 							<?php echo $avatar; ?>
 						</div>
 					</td>

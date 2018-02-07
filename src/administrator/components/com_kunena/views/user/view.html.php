@@ -31,8 +31,13 @@ class KunenaAdminViewUser extends KunenaView
 		$this->ipslist      = $this->get('IPlist');
 
 		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
-		$this->avatar     = $avatarint->getLink($this->user, '', 'users');
+		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) && $this->user->avatar ? true : false;
+		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+
+		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
+		{
+			\Joomla\CMS\Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.0.6/js/all.js', array(), array('defer' => true));
+		}
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));

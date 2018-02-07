@@ -1490,7 +1490,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (!\Joomla\CMS\Factory::getUser()->guest)
 		{
-			$layout = KunenaLayout::factory('BBCode/Hidden');
+			$layout = KunenaLayout::factory('BBCode/Hide');
 
 			if ($layout->getPath())
 			{

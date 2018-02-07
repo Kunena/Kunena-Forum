@@ -36,9 +36,7 @@ $status         = $config->user_status;
 		</a>
 
 		<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
-			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
-			:
-?>
+			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) : ?>
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
@@ -52,9 +50,7 @@ $status         = $config->user_status;
 			</div>
 			<div class="divider"></div>
 
-			<?php if ($status)
-			:
-	?>
+			<?php if ($status) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
 					<div>
 						<input id="status-online" class="hide" type="radio" value="0" name="status"/>

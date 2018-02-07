@@ -20,36 +20,26 @@ $status         = $config->user_status;
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<span class="kwho-<?php echo $this->me->getType(0, true);?>">
-			<?php if ($this->me->getStatus() == 0 && $status)
-			:
-	?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 1 && $status)
-:
-	?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 2 && $status)
-:
-	?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
-			<?php elseif ($this->me->getStatus() == 3 && $status)
-:
-	?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
-			<?php else
+			<?php
+			$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
 
-:
-	?>
-				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
-			<?php endif; ?>
+			if ($this->me->getStatus() == 0 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20);
+			elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20);
+			elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20);
+			elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus) :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20);
+			else :
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20);
+			endif; ?>
 			<b class="caret"></b>
 				</span>
 		</a>
 
 		<div class="dropdown-menu" id="nav-menu">
-			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
-			:
-?>
+			<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) : ?>
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong></p>
 				<a class="kwho-<?php echo $this->me->getType(0, true);?>" href="<?php echo $this->me->getURL(); ?>">
@@ -63,9 +53,7 @@ $status         = $config->user_status;
 			</div>
 			<div class="divider"></div>
 
-			<?php if ($status)
-			:
-	?>
+			<?php if ($status) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
 					<div>
 						<input id="status-online" class="hide" type="radio" value="0" name="status"/>

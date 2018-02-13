@@ -266,7 +266,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @param   bool $cascade cascade
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -707,7 +707,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @param   bool $recount recount
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1459,7 +1459,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @param   null $id The topic id to be loaded.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @since Kunena
 	 */
 	public function load($id = null)
@@ -1844,7 +1844,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Method to put the KunenaForumTopic object on trash this is still present in database.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */

@@ -441,7 +441,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @param   array|int $ids ids
 	 *
-	 * @return int    Count of deleted topics.
+	 * @return integer    Count of deleted topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -512,7 +512,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @param   array|int $ids ids
 	 *
-	 * @return int    Count of trashed topics.
+	 * @return integer    Count of trashed topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */

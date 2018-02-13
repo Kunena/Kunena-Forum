@@ -788,7 +788,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Method to delete the KunenaForumMessage object from the database.
 	 *
-	 * @return bool    True on success
+	 * @return boolean    True on success
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -1330,7 +1330,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   mixed $id The message id to be loaded
 	 *
-	 * @return bool    True on success
+	 * @return boolean    True on success
 	 * @since Kunena
 	 */
 	public function load($id = null)
@@ -1671,7 +1671,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 			// Edit allowed for the last message of the topic
 			if (intval($config->useredit) == 3 && $this->id != $this->getTopic()->last_post_id)
-    		{
+			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
 			}
 		}
@@ -1708,12 +1708,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if (!$user->isModerator($this->getCategory()) && $config->userdeletetmessage != '2')
 		{
 			// Never
-		    if ($config->userdeletetmessage == '0')
+			if ($config->userdeletetmessage == '0')
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
-			// when no replies
+			// When no replies
 			if ($config->userdeletetmessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);

@@ -226,7 +226,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is image.
 	 *
-	 * @return  bool  True if attachment is image.
+	 * @return  boolean  True if attachment is image.
 	 *
 	 * @since  K4.0
 	 */
@@ -238,7 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is audio.
 	 *
-	 * @return  bool  True if attachment is image.
+	 * @return  boolean  True if attachment is image.
 	 *
 	 * @since  K5.1
 	 */
@@ -250,7 +250,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is audio.
 	 *
-	 * @return  bool  True if attachment is image.
+	 * @return  boolean  True if attachment is image.
 	 *
 	 * @since  K5.1
 	 */
@@ -262,7 +262,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is pdf.
 	 *
-	 * @return  bool  True if attachment is pdf.
+	 * @return  boolean  True if attachment is pdf.
 	 *
 	 * @since  K5.1
 	 */

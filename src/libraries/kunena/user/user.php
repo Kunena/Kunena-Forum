@@ -978,7 +978,7 @@ class KunenaUser extends JObject
 	 *
 	 * @param   mixed $profile profile
 	 *
-	 * @return bool Cloaked email address or empty string.
+	 * @return boolean Cloaked email address or empty string.
 	 *
 	 * @throws Exception
 	 * @since  K5.1

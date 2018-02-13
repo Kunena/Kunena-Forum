@@ -291,7 +291,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous is null.
 	 *
-	 * @return boolean|int    Number of rows is successful, false on error.
+	 * @return boolean|integer    Number of rows is successful, false on error.
 	 *
 	 * @throws Exception
 	 * @since K2.0
@@ -326,7 +326,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous.
 	 *
-	 * @return boolean|int    Number of rows is successful, false on error.
+	 * @return boolean|integer    Number of rows is successful, false on error.
 	 * @throws Exception
 	 * @since K2.0
 	 */

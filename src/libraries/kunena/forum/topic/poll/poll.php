@@ -574,7 +574,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -658,7 +658,7 @@ class KunenaForumTopicPoll extends JObject
 	 *
 	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */

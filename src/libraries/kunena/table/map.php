@@ -192,7 +192,7 @@ class KunenaTableMap
 	/**
 	 * Method to get the primary key.
 	 *
-	 * @return  int  Get value for the primary key.
+	 * @return  integer  Get value for the primary key.
 	 * @since Kunena
 	 */
 	public function getKey()

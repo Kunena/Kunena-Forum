@@ -138,7 +138,7 @@ class KunenaForumTopicUserRead extends JObject
 	 * @param   int   $topic_id Topic id to be loaded.
 	 * @param   mixed $user     user
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -180,7 +180,7 @@ class KunenaForumTopicUserRead extends JObject
 	 *
 	 * @param   bool $updateOnly Save the object only if not a new entry.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -226,7 +226,7 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * Method to delete the KunenaForumTopicUserRead object from the database.
 	 *
-	 * @return bool    True on success.
+	 * @return boolean    True on success.
 	 * @since Kunena
 	 */
 	public function delete()

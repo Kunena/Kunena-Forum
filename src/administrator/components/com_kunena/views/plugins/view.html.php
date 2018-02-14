@@ -22,7 +22,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	/**
 	 * Display the view
 	 *
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return mixed
 	 * @since Kunena

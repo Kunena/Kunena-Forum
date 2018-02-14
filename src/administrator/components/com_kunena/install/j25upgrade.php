@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 	/**
-	 * @param   null $step
+	 * @param   null $step step
 	 *
 	 * @since Kunena
 	 */
@@ -79,7 +79,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param   string $table
+	 * @param   string $table table
 	 *
 	 * @return    boolean Ready (true/false)
 	 *

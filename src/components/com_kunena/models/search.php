@@ -490,11 +490,11 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @param          $view
-	 * @param   string $searchword
-	 * @param   int    $limitstart
-	 * @param   int    $limit
-	 * @param   string $params
-	 * @param   bool   $xhtml
+	 * @param   string $searchword searchword
+	 * @param   int    $limitstart limitstart
+	 * @param   int    $limit      limit
+	 * @param   string $params     params
+	 * @param   bool   $xhtml      xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception

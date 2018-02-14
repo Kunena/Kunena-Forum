@@ -37,7 +37,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -58,8 +58,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param          $userid
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param   string $task  task
+	 * @param   bool   $xhtml xhtml
 	 *
 	 * @return string
 	 * @since Kunena

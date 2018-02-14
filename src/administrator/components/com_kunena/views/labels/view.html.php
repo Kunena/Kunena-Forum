@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewLabels extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @since Kunena
 	 */

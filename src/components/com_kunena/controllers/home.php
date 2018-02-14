@@ -25,8 +25,8 @@ class KunenaControllerHome extends KunenaController
 	public $home = 1;
 
 	/**
-	 * @param   bool $cachable
-	 * @param   bool $urlparams
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @throws Exception
@@ -100,7 +100,7 @@ class KunenaControllerHome extends KunenaController
 	/**
 	 * @param         $menu
 	 * @param         $active
-	 * @param   array $visited
+	 * @param   array $visited visited
 	 *
 	 * @return null
 	 * @throws Exception

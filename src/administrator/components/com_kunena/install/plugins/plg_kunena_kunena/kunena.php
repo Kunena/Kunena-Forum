@@ -20,7 +20,7 @@ class PlgKunenaKunena extends \Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * @param   object &$subject $subject
 	 *
-	 * @param   array $config config
+	 * @param   array  $config   config
 	 *
 	 * @since Kunena
 	 */

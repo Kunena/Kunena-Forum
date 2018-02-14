@@ -21,7 +21,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 * @since Kunena

@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return void
 	 * @throws Exception
@@ -91,7 +91,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return void
 	 * @throws Exception
@@ -136,7 +136,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return void
 	 * @throws Exception

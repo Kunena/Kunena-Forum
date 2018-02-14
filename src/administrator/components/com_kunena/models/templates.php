@@ -22,7 +22,7 @@ jimport('joomla.html.pagination');
 class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -38,8 +38,8 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
-	 * @param   array $data
-	 * @param   bool  $loadData
+	 * @param   array $data     data
+	 * @param   bool  $loadData loadData
 	 *
 	 * @return boolean|mixed
 	 * @throws Exception
@@ -187,7 +187,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @param   string $id
+	 * @param   string $id id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -258,9 +258,9 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @param          $key
 	 * @param          $request
-	 * @param   null   $default
-	 * @param   string $type
-	 * @param   bool   $resetPage
+	 * @param   null   $default   default
+	 * @param   string $type      type
+	 * @param   bool   $resetPage resetPage
 	 *
 	 * @return mixed|null
 	 *

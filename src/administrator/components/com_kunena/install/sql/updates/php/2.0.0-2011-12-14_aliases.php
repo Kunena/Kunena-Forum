@@ -115,7 +115,7 @@ function kunena_200_2011_12_14_aliases($parent)
  * @param       $type
  * @param       $item
  * @param       $alias
- * @param   int $state
+ * @param   int $state state
  *
  * @return boolean
  * @since Kunena
@@ -142,7 +142,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 /**
  * @param       $category
  * @param       $alias
- * @param   int $state
+ * @param   int $state state
  *
  * @return boolean
  * @since Kunena

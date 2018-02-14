@@ -33,8 +33,8 @@ class KunenaViewCommon extends KunenaView
 	public $offline = false;
 
 	/**
-	 * @param   null $layout
-	 * @param   null $tpl
+	 * @param   null $layout layout
+	 * @param   null $tpl    tpl
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -58,7 +58,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -78,7 +78,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -139,7 +139,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -172,7 +172,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @throws null
@@ -280,7 +280,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -364,7 +364,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -402,7 +402,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -447,7 +447,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -501,7 +501,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -607,8 +607,8 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -660,8 +660,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param          $name
-	 * @param   string $rel
-	 * @param   string $params
+	 * @param   string $rel    rel
+	 * @param   string $params params
 	 *
 	 * @return string
 	 * @throws Exception
@@ -675,8 +675,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param          $name
-	 * @param   string $class
-	 * @param   string $rel
+	 * @param   string $class class
+	 * @param   string $rel   rel
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -698,8 +698,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param          $action
 	 * @param          $name
-	 * @param   string $rel
-	 * @param   string $class
+	 * @param   string $rel   rel
+	 * @param   string $class class
 	 *
 	 * @return boolean|string
 	 * @throws Exception

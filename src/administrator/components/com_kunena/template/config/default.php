@@ -33,7 +33,7 @@ JHtml::_('behavior.tabstate');
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-			      id="adminForm" name="adminForm">
+				  id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="config"/>
 				<input type="hidden" name="task" value=""/>
 				<?php echo JHtml::_('form.token') ?>
@@ -107,7 +107,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?></td>
 													<td>
 														<input type="text" name="cfg_board_title"
-														       value="<?php echo $this->escape($this->config->board_title) ?>"/>
+															   value="<?php echo $this->escape($this->config->board_title) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?></td>
 												</tr>
@@ -115,7 +115,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
 													<td>
 														<input type="text" name="cfg_email"
-														       value="<?php echo $this->escape($this->config->email) ?>"/>
+															   value="<?php echo $this->escape($this->config->email) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
 												</tr>
@@ -133,7 +133,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
 													<td>
 														<textarea name="cfg_offline_message" rows="3"
-														          cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
+																  cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES_DESC') ?></td>
 												</tr>
@@ -146,9 +146,9 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 													</td>
 													<td><input type="text"
-													           name="cfg_sessiontimeout"
-													           value="<?php echo $this->escape($this->config->sessiontimeout);
-													           ?>"/></td>
+															   name="cfg_sessiontimeout"
+															   value="<?php echo $this->escape($this->config->sessiontimeout);
+																?>"/></td>
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 													</td>
 												</tr>
@@ -248,7 +248,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_THREADS') ?></td>
 													<td>
 														<input type="text" name="cfg_threads_per_page"
-														       value="<?php echo $this->escape($this->config->threads_per_page) ?>"/>
+															   value="<?php echo $this->escape($this->config->threads_per_page) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
 												</tr>
@@ -256,7 +256,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
 													<td>
 														<input type="text" name="cfg_messages_per_page"
-														       value="<?php echo $this->escape($this->config->messages_per_page) ?>"/>
+															   value="<?php echo $this->escape($this->config->messages_per_page) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?></td>
 												</tr>
@@ -264,7 +264,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_SEARCH') ?></td>
 													<td>
 														<input type="text" name="cfg_messages_per_page_search"
-														       value="<?php echo $this->escape($this->config->messages_per_page_search) ?>"/>
+															   value="<?php echo $this->escape($this->config->messages_per_page_search) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
 												</tr>
@@ -277,7 +277,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
 													<td>
 														<input type="text" name="cfg_historylimit"
-														       value="<?php echo $this->escape($this->config->historylimit) ?>"/>
+															   value="<?php echo $this->escape($this->config->historylimit) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
 												</tr>
@@ -315,7 +315,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_LEGACY') ?></td>
 													<td>
 														<input type="text" name="cfg_catimagepath"
-														       value="<?php echo $this->escape($this->config->catimagepath) ?>"/>
+															   value="<?php echo $this->escape($this->config->catimagepath) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_LEGACY_DESC') ?></td>
 												</tr>
@@ -401,17 +401,17 @@ JHtml::_('behavior.tabstate');
 												</tr>
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"
-													    width="25%"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_ENABLED') ?></td>
+														width="25%"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_ENABLED') ?></td>
 													<td align="left" valign="top"
-													    width="25%"><?php echo $this->lists ['ratingenabled'] ?></td>
+														width="25%"><?php echo $this->lists ['ratingenabled'] ?></td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START') ?></td>
 													<td>
 														<input type="text" name="cfg_attach_start" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->attach_start) ?>"/>
+															   value="<?php echo $this->escape($this->config->attach_start) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC') ?></td>
 												</tr>
@@ -419,7 +419,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END') ?></td>
 													<td>
 														<input type="text" name="cfg_attach_end" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->attach_end) ?>"/>
+															   value="<?php echo $this->escape($this->config->attach_end) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
 												</tr>
@@ -479,7 +479,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
 													<td>
 														<input type="text" name="cfg_thankyou_max" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->thankyou_max) ?>"/>
+															   value="<?php echo $this->escape($this->config->thankyou_max) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
 												</tr>
@@ -492,7 +492,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME') ?></td>
 													<td>
 														<input type="text" name="cfg_useredittime"
-														       value="<?php echo $this->escape($this->config->useredittime) ?>"/>
+															   value="<?php echo $this->escape($this->config->useredittime) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME_DESC') ?></td>
 												</tr>
@@ -500,7 +500,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE') ?></td>
 													<td>
 														<input type="text" name="cfg_useredittimegrace"
-														       value="<?php echo $this->escape($this->config->useredittimegrace) ?>"/>
+															   value="<?php echo $this->escape($this->config->useredittimegrace) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC') ?></td>
 												</tr>
@@ -576,7 +576,7 @@ JHtml::_('behavior.tabstate');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_EMAIL_HEADER') ?></td>
 													<td><input name="cfg_emailheader" type="text"
-													           value="<?php echo $this->escape($this->config->emailheader) ?>">
+															   value="<?php echo $this->escape($this->config->emailheader) ?>">
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_EMAIL_HEADER_DESC') ?></td>
 												</tr>
@@ -624,7 +624,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS') ?></td>
 													<td>
 														<input type="text" name="cfg_email_visible_address"
-														       value="<?php echo $this->escape($this->config->email_visible_address) ?>"/>
+															   value="<?php echo $this->escape($this->config->email_visible_address) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC') ?></td>
 												</tr>
@@ -674,8 +674,8 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS') ?></td>
 													<td>
 														<input type="text" name="cfg_hold_newusers_posts"
-														       class="ksm-field"
-														       value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>"/>
+															   class="ksm-field"
+															   value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC') ?></td>
 												</tr>
@@ -693,7 +693,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 													<td>
 														<input type="text" name="cfg_floodprotection"
-														       value="<?php echo $this->escape($this->config->floodprotection) ?>"/>
+															   value="<?php echo $this->escape($this->config->floodprotection) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
 												</tr>
@@ -721,7 +721,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
 													<td>
 														<input type="text" name="cfg_max_links"
-														       value="<?php echo $this->escape($this->config->max_links) ?>"/>
+															   value="<?php echo $this->escape($this->config->max_links) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
 												</tr>
@@ -763,8 +763,8 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
 													<td>
 														<input type="text" name="cfg_captcha_post_limit"
-														       class="ksm-field"
-														       value="<?php echo $this->escape($this->config->captcha_post_limit) ?>"/>
+															   class="ksm-field"
+															   value="<?php echo $this->escape($this->config->captcha_post_limit) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC') ?></td>
 												</tr>
@@ -776,14 +776,14 @@ JHtml::_('behavior.tabstate');
 											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"
-													    width="25%"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
+														width="25%"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
 													<td align="left" valign="top" width="25%"><input type="text"
-													                                                 name="cfg_stopforumspam_key"
-													                                                 class="ksm-field-large"
-													                                                 value="<?php echo $this->escape($this->config->stopforumspam_key); ?>"/>
+																									 name="cfg_stopforumspam_key"
+																									 class="ksm-field-large"
+																									 value="<?php echo $this->escape($this->config->stopforumspam_key); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
 												</tr>
 											</table>
 										</fieldset>
@@ -809,21 +809,21 @@ JHtml::_('behavior.tabstate');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT') ?></td>
 													<td><input type="text" name="cfg_defaultavatar"
-													           value="<?php echo $this->escape($this->config->defaultavatar) ?>"/>
+															   value="<?php echo $this->escape($this->config->defaultavatar) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL') ?></td>
 													<td><input type="text" name="cfg_defaultavatarsmall"
-													           value="<?php echo $this->escape($this->config->defaultavatarsmall) ?>"/>
+															   value="<?php echo $this->escape($this->config->defaultavatarsmall) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
 													<td><input type="text" name="cfg_avatarypes"
-													           value="<?php echo $this->escape($this->config->avatartypes) ?>"/>
+															   value="<?php echo $this->escape($this->config->avatartypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>
 												</tr>
@@ -841,7 +841,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 													<td>
 														<input type="text" name="cfg_avatarsize" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->avatarsize) ?>"/>
+															   value="<?php echo $this->escape($this->config->avatarsize) ?>"/>
 														kB
 													</td>
 													<td></td>
@@ -850,7 +850,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 													<td class="nowrap">
 														<input type="text" name="cfg_avatarquality" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->avatarquality) ?>"/>
+															   value="<?php echo $this->escape($this->config->avatarquality) ?>"/>
 														%
 													</td>
 													<td></td>
@@ -891,7 +891,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
 													<td>
 														<input type="text" name="cfg_attachment_limit"
-														       value="<?php echo $this->escape($this->config->attachment_limit) ?>"/>
+															   value="<?php echo $this->escape($this->config->attachment_limit) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
 												</tr>
@@ -933,7 +933,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?></td>
 													<td>
 														<input type="text" name="cfg_imagetypes"
-														       value="<?php echo $this->escape($this->config->imagetypes) ?>"/>
+															   value="<?php echo $this->escape($this->config->imagetypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?></td>
 												</tr>
@@ -946,7 +946,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?></td>
 													<td>
 														<input type="text" name="cfg_imagemimetypes"
-														       value="<?php echo $this->escape($this->config->imagemimetypes) ?>"/>
+															   value="<?php echo $this->escape($this->config->imagemimetypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?></td>
 												</tr>
@@ -954,7 +954,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
 													<td>
 														<input type="text" name="cfg_imagesize" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->imagesize) ?>"/>
+															   value="<?php echo $this->escape($this->config->imagesize) ?>"/>
 														kB
 													</td>
 													<td>
@@ -970,7 +970,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 													<td>
 														<input type="text" name="cfg_imagewidth" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->imagewidth) ?>"/>
+															   value="<?php echo $this->escape($this->config->imagewidth) ?>"/>
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGWIDTH_DESC') ?></td>
@@ -979,7 +979,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 													<td>
 														<input type="text" name="cfg_imageheight" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->imageheight) ?>"/>
+															   value="<?php echo $this->escape($this->config->imageheight) ?>"/>
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT_DESC') ?></td>
@@ -988,7 +988,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
 													<td>
 														<input type="text" name="cfg_thumbwidth" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->thumbwidth) ?>"/>
+															   value="<?php echo $this->escape($this->config->thumbwidth) ?>"/>
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH_DESC') ?></td>
@@ -997,7 +997,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
 													<td>
 														<input type="text" class="ksm-field" name="cfg_thumbheight"
-														       value="<?php echo $this->escape($this->config->thumbheight) ?>"/>
+															   value="<?php echo $this->escape($this->config->thumbheight) ?>"/>
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT_DESC') ?></td>
@@ -1006,7 +1006,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 													<td>
 														<input type="text" name="cfg_imagequality" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->imagequality) ?>"/>
+															   value="<?php echo $this->escape($this->config->imagequality) ?>"/>
 														%
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
@@ -1044,7 +1044,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES') ?></td>
 													<td>
 														<input type="text" name="cfg_filetypes"
-														       value="<?php echo $this->escape($this->config->filetypes) ?>"/>
+															   value="<?php echo $this->escape($this->config->filetypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC') ?></td>
 												</tr>
@@ -1052,7 +1052,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_FILESIZE') ?></td>
 													<td>
 														<input type="text" name="cfg_filesize" class="ksm-field"
-														       value="<?php echo $this->escape($this->config->filesize) ?>"/> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?>
+															   value="<?php echo $this->escape($this->config->filesize) ?>"/> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?>
 													</td>
 													<td>
 														<?php
@@ -1136,7 +1136,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT') ?></td>
 													<td>
 														<input type="text" name="cfg_trimlongurlsfront"
-														       value="<?php echo $this->escape($this->config->trimlongurlsfront) ?>"/>
+															   value="<?php echo $this->escape($this->config->trimlongurlsfront) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC') ?></td>
 												</tr>
@@ -1144,7 +1144,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK') ?></td>
 													<td>
 														<input type="text" name="cfg_trimlongurlsback"
-														       value="<?php echo $this->escape($this->config->trimlongurlsback) ?>"/>
+															   value="<?php echo $this->escape($this->config->trimlongurlsback) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?></td>
 												</tr>
@@ -1192,7 +1192,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID') ?></td>
 													<td>
 														<input type="text" name="cfg_ebay_affiliate_id"
-														       value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>"/>
+															   value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
 												</tr>
@@ -1200,7 +1200,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL') ?></td>
 													<td>
 														<input type="text" name="cfg_ebay_api_key"
-														       value="<?php echo $this->escape($this->config->ebay_api_key) ?>"/>
+															   value="<?php echo $this->escape($this->config->ebay_api_key) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 												</tr>
@@ -1208,7 +1208,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
 													<td>
 														<input type="text" name="cfg_twitter_consumer_key"
-														       value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>"/>
+															   value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
 												</tr>
@@ -1216,7 +1216,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
 													<td>
 														<input type="text" name="cfg_twitter_consumer_secret"
-														       value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>"/>
+															   value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
 												</tr>
@@ -1224,7 +1224,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY') ?></td>
 													<td>
 														<input type="text" name="cfg_google_map_api_key"
-														       value="<?php echo $this->escape($this->config->google_map_api_key) ?>"/>
+															   value="<?php echo $this->escape($this->config->google_map_api_key) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC') ?></td>
 												</tr>
@@ -1264,7 +1264,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT') ?></td>
 													<td>
 														<input type="text" name="cfg_rss_limit"
-														       value="<?php echo $this->escape($this->config->rss_limit) ?>"/>
+															   value="<?php echo $this->escape($this->config->rss_limit) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC') ?></td>
 												</tr>
@@ -1272,7 +1272,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
 													<td>
 														<input type="text" name="cfg_rss_included_categories"
-														       value="<?php echo $this->escape($this->config->rss_included_categories) ?>"/>
+															   value="<?php echo $this->escape($this->config->rss_included_categories) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
 												</tr>
@@ -1280,7 +1280,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
 													<td>
 														<input type="text" name="cfg_rss_excluded_categories"
-														       value="<?php echo $this->escape($this->config->rss_excluded_categories) ?>"/>
+															   value="<?php echo $this->escape($this->config->rss_excluded_categories) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
 												</tr>
@@ -1318,8 +1318,8 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL') ?></td>
 													<td>
 														<input type="text" class="ksm-field-large"
-														       name="cfg_rss_feedburner_url"
-														       value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>"/>
+															   name="cfg_rss_feedburner_url"
+															   value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL_DESC') ?></td>
 												</tr>
@@ -1344,7 +1344,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 													<td>
 														<input type="text" name="cfg_userlist_rows"
-														       value="<?php echo $this->escape($this->config->userlist_rows) ?>"/>
+															   value="<?php echo $this->escape($this->config->userlist_rows) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
 												</tr>
@@ -1402,7 +1402,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
 													<td>
 														<input type="text" name="cfg_show_session_starttime"
-														       value="<?php echo $this->escape($this->config->show_session_starttime) ?>"/>
+															   value="<?php echo $this->escape($this->config->show_session_starttime) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
 												</tr>
@@ -1444,7 +1444,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_USERNUM') ?></td>
 													<td>
 														<input type="text" name="cfg_popusercount"
-														       value="<?php echo $this->escape($this->config->popusercount) ?>"/>
+															   value="<?php echo $this->escape($this->config->popusercount) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_USERNUM') ?></td>
 												</tr>
@@ -1457,7 +1457,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_NUMPOP') ?></td>
 													<td>
 														<input type="text" name="cfg_popsubjectcount"
-														       value="<?php echo $this->escape($this->config->popsubjectcount) ?>"/>
+															   value="<?php echo $this->escape($this->config->popsubjectcount) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_NUMPOP') ?></td>
 												</tr>
@@ -1470,7 +1470,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_POLLSPOP') ?></td>
 													<td>
 														<input type="text" name="cfg_poppollscount"
-														       value="<?php echo $this->escape($this->config->poppollscount) ?>"/>
+															   value="<?php echo $this->escape($this->config->poppollscount) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_POLLSPOP') ?></td>
 												</tr>
@@ -1483,7 +1483,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_THANKSPOP') ?></td>
 													<td>
 														<input type="text" name="cfg_popthankscount"
-														       value="<?php echo $this->escape($this->config->popthankscount) ?>"/>
+															   value="<?php echo $this->escape($this->config->popthankscount) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_THANKSPOP') ?></td>
 												</tr>
@@ -1515,7 +1515,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS') ?></td>
 													<td>
 														<input type="text" name="cfg_pollnboptions"
-														       value="<?php echo $this->escape($this->config->pollnboptions) ?>"/>
+															   value="<?php echo $this->escape($this->config->pollnboptions) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC') ?></td>
 												</tr>
@@ -1523,7 +1523,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES') ?></td>
 													<td>
 														<input type="text" name="cfg_polltimebtvotes"
-														       value="<?php echo $this->escape($this->config->polltimebtvotes) ?>"/>
+															   value="<?php echo $this->escape($this->config->polltimebtvotes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC') ?></td>
 												</tr>
@@ -1531,7 +1531,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER') ?></td>
 													<td>
 														<input type="text" name="cfg_pollnbvotesbyuser"
-														       value="<?php echo $this->escape($this->config->pollnbvotesbyuser) ?>"/>
+															   value="<?php echo $this->escape($this->config->pollnbvotesbyuser) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC') ?></td>
 												</tr>
@@ -1556,93 +1556,93 @@ JHtml::_('behavior.tabstate');
 												<thead>
 												<tr>
 													<td align="left" valign="top"
-													    width="5%"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU') ?></td>
+														width="5%"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_activemenuitem"
-													                      value="<?php echo $this->escape($this->config->activemenuitem); ?>"/>
+														width="5%"><input type="text" name="cfg_activemenuitem"
+																		  value="<?php echo $this->escape($this->config->activemenuitem); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_ACTIVEMENU_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="5%"><?php echo JText::_('COM_KUNENA_A_MAINMENU') ?></td>
+														width="5%"><?php echo JText::_('COM_KUNENA_A_MAINMENU') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_mainmenu_id"
-													                      value="<?php echo $this->escape($this->config->mainmenu_id); ?>"/>
+														width="5%"><input type="text" name="cfg_mainmenu_id"
+																		  value="<?php echo $this->escape($this->config->mainmenu_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_MAINMENU_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_MAINMENU_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="5%"><?php echo JText::_('COM_KUNENA_A_HOMEID') ?></td>
+														width="5%"><?php echo JText::_('COM_KUNENA_A_HOMEID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_home_id"
-													                      value="<?php echo $this->escape($this->config->home_id); ?>"/>
+														width="5%"><input type="text" name="cfg_home_id"
+																		  value="<?php echo $this->escape($this->config->home_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_HOMEID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_HOMEID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_INDEXID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_INDEXID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_index_id"
-													                      value="<?php echo $this->escape($this->config->index_id); ?>"/>
+														width="5%"><input type="text" name="cfg_index_id"
+																		  value="<?php echo $this->escape($this->config->index_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_INDEXID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_INDEXID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_MODERATORSID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_MODERATORSID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_moderators_id"
-													                      value="<?php echo $this->escape($this->config->moderators_id); ?>"/>
+														width="5%"><input type="text" name="cfg_moderators_id"
+																		  value="<?php echo $this->escape($this->config->moderators_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_MODERATORSID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_MODERATORSID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_topiclist_id"
-													                      value="<?php echo $this->escape($this->config->topiclist_id); ?>"/>
+														width="5%"><input type="text" name="cfg_topiclist_id"
+																		  value="<?php echo $this->escape($this->config->topiclist_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_TOPICLISTID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_MISCID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_MISCID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_misc_id"
-													                      value="<?php echo $this->escape($this->config->misc_id); ?>"/>
+														width="5%"><input type="text" name="cfg_misc_id"
+																		  value="<?php echo $this->escape($this->config->misc_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_MISCID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_MISCID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_PROFILEID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_PROFILEID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_profile_id"
-													                      value="<?php echo $this->escape($this->config->profile_id); ?>"/>
+														width="5%"><input type="text" name="cfg_profile_id"
+																		  value="<?php echo $this->escape($this->config->profile_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_PROFILEID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_PROFILEID_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td align="left" valign="top"
-													    width="15%"><?php echo JText::_('COM_KUNENA_A_SEARCHID') ?></td>
+														width="15%"><?php echo JText::_('COM_KUNENA_A_SEARCHID') ?></td>
 													<td align="left" valign="top"
-													    width="5%"><input type="text" name="cfg_search_id"
-													                      value="<?php echo $this->escape($this->config->search_id); ?>"/>
+														width="5%"><input type="text" name="cfg_search_id"
+																		  value="<?php echo $this->escape($this->config->search_id); ?>"/>
 													</td>
 													<td align="left"
-													    valign="top"><?php echo JText::_('COM_KUNENA_A_SEARCHID_DESC'); ?></td>
+														valign="top"><?php echo JText::_('COM_KUNENA_A_SEARCHID_DESC'); ?></td>
 												</tr>
 												</thead>
 											</table>

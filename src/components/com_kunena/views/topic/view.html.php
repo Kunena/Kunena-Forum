@@ -62,7 +62,7 @@ class KunenaViewTopic extends KunenaView
 	public $cache = true;
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -182,7 +182,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -204,7 +204,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -218,7 +218,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -232,7 +232,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -246,7 +246,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @throws null
@@ -341,7 +341,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @throws null
@@ -425,7 +425,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -791,7 +791,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param        $id
 	 * @param        $message
-	 * @param   null $template
+	 * @param   null $template template
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -999,7 +999,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $template
+	 * @param   null $template template
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -1105,7 +1105,7 @@ class KunenaViewTopic extends KunenaView
 	 * If there's no referrer or it's external, Kunena will return to forum home page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param   string $anchor
+	 * @param   string $anchor anchor
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -1387,8 +1387,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param          $anker
 	 * @param          $name
-	 * @param   string $rel
-	 * @param   string $class
+	 * @param   string $rel   rel
+	 * @param   string $class class
 	 *
 	 * @return string
 	 * @since Kunena

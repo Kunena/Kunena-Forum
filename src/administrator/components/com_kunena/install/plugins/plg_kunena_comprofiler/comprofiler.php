@@ -69,8 +69,8 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 
 	/**
 	 * @param        $type
-	 * @param   null $view
-	 * @param   null $params
+	 * @param   null $view view
+	 * @param   null $params params
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -98,7 +98,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 	 * @param       $context
 	 * @param       $item
 	 * @param       $params
-	 * @param   int $page
+	 * @param   int $page page
 	 *
 	 * @throws Exception
 	 * @since Kunena

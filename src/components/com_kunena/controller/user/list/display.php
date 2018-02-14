@@ -85,7 +85,6 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-
 		if (!$Itemid && $format != 'feed')
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();

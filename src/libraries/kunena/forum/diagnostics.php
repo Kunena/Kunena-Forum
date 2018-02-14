@@ -474,7 +474,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena
@@ -658,7 +658,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query
+	 * @param   KunenaDatabaseQuery $query query
 	 *
 	 * @return array
 	 * @since Kunena

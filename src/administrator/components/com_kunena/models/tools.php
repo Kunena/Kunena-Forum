@@ -721,8 +721,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param   string $extension
-	 * @param   string $name
+	 * @param   string $extension extension
+	 * @param   string $name      name
 	 *
 	 * @return    string
 	 *

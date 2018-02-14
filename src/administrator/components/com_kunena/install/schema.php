@@ -133,7 +133,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $input
+	 * @param   string $input input
 	 *
 	 * @return null
 	 *
@@ -150,7 +150,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $input
+	 * @param   string $input input
 	 *
 	 * @return DOMDocument|null
 	 *
@@ -168,9 +168,9 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   null $from
-	 * @param   null $to
-	 * @param   null $using
+	 * @param   null $from  from
+	 * @param   null $to    to
+	 * @param   null $using using
 	 *
 	 * @return DOMDocument|null
 	 *
@@ -247,7 +247,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   null $prefix
+	 * @param   null $prefix prefix
 	 *
 	 * @return array
 	 *
@@ -343,7 +343,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @param        $prefix
-	 * @param   bool $reload
+	 * @param   bool $reload reload
 	 *
 	 * @return mixed
 	 *
@@ -395,7 +395,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @param        $filename
-	 * @param   bool $reload
+	 * @param   bool $reload reload
 	 *
 	 * @return mixed
 	 *
@@ -420,7 +420,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   bool $reload
+	 * @param   bool $reload reload
 	 *
 	 * @return boolean|DOMDocument
 	 * @throws KunenaSchemaException
@@ -818,7 +818,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @param        $schema
-	 * @param   bool $drop
+	 * @param   bool $drop drop
 	 *
 	 * @return array
 	 *
@@ -967,7 +967,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @param          $field
-	 * @param   string $after
+	 * @param   string $after after
 	 *
 	 * @return string
 	 *
@@ -1052,7 +1052,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param          $dbschema
 	 * @param          $node
-	 * @param   string $table
+	 * @param   string $table table
 	 *
 	 * @since Kunena
 	 */
@@ -1117,7 +1117,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param          $schema
 	 * @param          $type
 	 * @param          $table
-	 * @param   string $field
+	 * @param   string $field field
 	 *
 	 * @return null
 	 * @since Kunena
@@ -1161,7 +1161,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param          $dbschema
 	 * @param          $node
-	 * @param   string $table
+	 * @param   string $table table
 	 *
 	 * @since Kunena
 	 */

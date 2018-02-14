@@ -37,8 +37,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -58,7 +58,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -98,7 +98,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param   bool $xhtml
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -110,8 +110,8 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param          $userid
-	 * @param   string $task
-	 * @param   bool   $xhtml
+	 * @param   string $task task
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @since Kunena

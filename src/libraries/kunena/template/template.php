@@ -456,9 +456,9 @@ class KunenaTemplate extends JObject
 		}
 		?>
 
-        <script>
-            jQuery(document).ready(function ($) {
-                var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
+		<script>
+			jQuery(document).ready(function ($) {
+				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
 				{
 					echo "true";
 				}
@@ -467,12 +467,12 @@ class KunenaTemplate extends JObject
 					echo "false";
 				}?>;
 
-                if (isForumActive) {
-                    $('.current').addClass("active alias-parent-active");
-                    $('.alias-parent-active').addClass("active alias-parent-active");
-                }
-            });
-        </script>
+				if (isForumActive) {
+					$('.current').addClass("active alias-parent-active");
+					$('.alias-parent-active').addClass("active alias-parent-active");
+				}
+			});
+		</script>
 		<?php
 	}
 
@@ -515,11 +515,11 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
-	 * @param   string  $link  link
-	 * @param   string  $name  name
-	 * @param   string  $scope scope
-	 * @param   string  $type  type
-	 * @param   null    $id    id
+	 * @param   string $link  link
+	 * @param   string $name  name
+	 * @param   string $scope scope
+	 * @param   string $type  type
+	 * @param   null   $id    id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -528,7 +528,7 @@ class KunenaTemplate extends JObject
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod');
 		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', );
+		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',);
 
 		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1203,22 +1203,22 @@ HTML;
 			if ($topic->moved_id > 0)
 			{
 				$topic->icon_id = 500;
-				$icon = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topicicontype == 'B2')
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
 			}
-            elseif ($topicicontype == 'B3')
+			elseif ($topicicontype == 'B3')
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-            elseif ($topicicontype == 'fa')
+			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
 			}
-            elseif ($topicicontype == 'image')
+			elseif ($topicicontype == 'image')
 			{
 				return '<img src="' . \Joomla\CMS\Uri\Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
@@ -1287,11 +1287,11 @@ HTML;
 			{
 				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
 			}
-            elseif ($topicicontype == 'B3')
+			elseif ($topicicontype == 'B3')
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-            elseif ($topicicontype == 'fa')
+			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
 			}

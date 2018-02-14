@@ -582,7 +582,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
 	 */
@@ -604,7 +604,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
 	 */
@@ -626,7 +626,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param         $path
-	 * @param   array $ignore
+	 * @param   array $ignore ignore
 	 *
 	 * @since Kunena
 	 */

@@ -50,7 +50,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	protected $event_before_save = 'onExtensionBeforeSave';
 
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @since Kunena
 	 */
@@ -248,7 +248,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @param   string $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
-	 * @param   string $group
+	 * @param   string $group   group
 	 *
 	 * @throws Exception
 	 * @since   Joomla 3.1
@@ -397,9 +397,9 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @since   1.6
 	 *
-	 * @param   null $group
+	 * @param   null $group     group
 	 *
-	 * @param   int  $client_id
+	 * @param   int  $client_id client_id
 	 *
 	 * @since   Kunena
 	 */

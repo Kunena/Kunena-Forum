@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewBlockips extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @since Kunena
 	 */

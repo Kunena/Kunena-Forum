@@ -48,8 +48,8 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @param   bool $cachable
-	 * @param   bool $urlparams
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 *

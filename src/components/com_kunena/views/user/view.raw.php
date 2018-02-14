@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaViewUser extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena

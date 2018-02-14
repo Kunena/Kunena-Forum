@@ -258,8 +258,8 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @param   int   $parent
-	 * @param   array $indent
+	 * @param   int   $parent parent
+	 * @param   array $indent indent
 	 *
 	 * @return array
 	 * @throws Exception

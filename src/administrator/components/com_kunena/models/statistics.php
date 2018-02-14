@@ -279,8 +279,8 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null $ordering
-	 * @param   null $direction
+	 * @param   null $ordering  ordering
+	 * @param   null $direction direction
 	 *
 	 * @throws Exception
 	 * @since Kunena

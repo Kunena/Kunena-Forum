@@ -149,7 +149,7 @@ EOF;
 
 	/**
 	 * @param          $filename
-	 * @param   string $group
+	 * @param   string $group group
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena

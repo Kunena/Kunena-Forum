@@ -234,8 +234,8 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @param   null $pks
-	 * @param   null $order
+	 * @param   null $pks   pks
+	 * @param   null $order order
 	 *
 	 * @return boolean
 	 * @throws Exception

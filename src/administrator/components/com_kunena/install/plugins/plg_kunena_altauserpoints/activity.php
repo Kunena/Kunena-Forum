@@ -114,7 +114,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @param          $plugin_function
-	 * @param   string $spc
+	 * @param   string $spc spc
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -173,9 +173,9 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor
-	 * @param   int $target
-	 * @param   int $message
+	 * @param   int $actor actor
+	 * @param   int $target target
+	 * @param   int $message message
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -268,7 +268,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $userid
+	 * @param   int $userid userid
 	 *
 	 * @return boolean
 	 * @throws Exception

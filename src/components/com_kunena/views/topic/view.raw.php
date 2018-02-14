@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaViewTopic extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -47,7 +47,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 *    Return JSON results of smilies available
 	 *
-	 * @param   string $tpl
+	 * @param   string $tpl tpl
 	 *
 	 * @return void
 	 * @throws Exception
@@ -211,7 +211,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Save rate for user logged in by JSON call
 	 *
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -248,7 +248,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Return the template text corresponding to the category selected
 	 *
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws Exception
 	 * @since Kunena 5.1

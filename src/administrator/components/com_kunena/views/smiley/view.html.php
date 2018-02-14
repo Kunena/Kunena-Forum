@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewSmiley extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return mixed|void
 	 * @since Kunena

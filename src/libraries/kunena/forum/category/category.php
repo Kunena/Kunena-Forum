@@ -295,7 +295,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @param   mixed $count Internal parameter to set new count.
 	 *
-	 * @return int    New topics count.
+	 * @return integer    New topics count.
 	 * @since Kunena
 	 */
 	public function getNewCount($count = null)
@@ -1235,7 +1235,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $params params
 	 * @param   int   $limit  limit
 	 *
-	 * @return int    Number of purged topics.
+	 * @return integer    Number of purged topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1283,7 +1283,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $params params
 	 * @param   int   $limit  limit
 	 *
-	 * @return int    Number of trashed topics.
+	 * @return integer    Number of trashed topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1326,7 +1326,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * Delete this category and all related information from the database.
 	 *
-	 * @return bool    True on success
+	 * @return boolean    True on success
 	 * @throws Exception
 	 * @since Kunena
 	 */

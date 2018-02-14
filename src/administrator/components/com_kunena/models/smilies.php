@@ -21,7 +21,7 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelSmilies extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @since Kunena
 	 */
@@ -44,8 +44,8 @@ class KunenaAdminModelSmilies extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   string $ordering
-	 * @param   string $direction
+	 * @param   string $ordering  ordering
+	 * @param   string $direction direction
 	 *
 	 * @return    void
 	 * @throws Exception
@@ -84,7 +84,7 @@ class KunenaAdminModelSmilies extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $id
+	 * @param   string $id id
 	 *
 	 * @return string
 	 * @since Kunena

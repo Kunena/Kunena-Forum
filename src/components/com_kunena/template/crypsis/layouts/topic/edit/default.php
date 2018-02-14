@@ -366,7 +366,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
 									       id="subscribeMe"
-									       value="1" <?php if ($this->subscriptionschecked) {
+									       value="1" <?php if ($this->subscriptionschecked)
+									{
 										echo 'checked="checked"';
 									} ?> />
 									<label class="string optional"

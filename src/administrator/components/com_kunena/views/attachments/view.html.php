@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewAttachments extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return mixed
 	 * @since Kunena

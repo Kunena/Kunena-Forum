@@ -21,7 +21,7 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 {
 	/**
-	 * @param   array $config
+	 * @param   array $config config
 	 *
 	 * @since Kunena
 	 */
@@ -46,8 +46,8 @@ class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   string $ordering
-	 * @param   string $direction
+	 * @param   string $ordering  ordering
+	 * @param   string $direction direction
 	 *
 	 * @return    void
 	 * @throws Exception
@@ -98,7 +98,7 @@ class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $id
+	 * @param   string $id id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -117,9 +117,9 @@ class KunenaAdminModelAttachments extends \Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $query
-	 * @param   int    $limitstart
-	 * @param   int    $limit
+	 * @param   string $query      query
+	 * @param   int    $limitstart limitstart
+	 * @param   int    $limit      limit
 	 *
 	 * @return KunenaAttachment[]
 	 * @throws Exception

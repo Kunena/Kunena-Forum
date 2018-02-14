@@ -66,7 +66,7 @@ class KunenaGravatar
 	protected $extra = "";
 
 	/**
-	 * @param   string $email
+	 * @param   string $email email
 	 *
 	 * @since Kunena
 	 */
@@ -76,7 +76,7 @@ class KunenaGravatar
 	}
 
 	/**
-	 * @param   string $email
+	 * @param   string $email email
 	 *
 	 * @return void $email
 	 * @since Kunena
@@ -89,7 +89,7 @@ class KunenaGravatar
 	/**
 	 * Define extras html attributes to be added into the HTML
 	 *
-	 * @param   string $extra
+	 * @param   string $extra extra
 	 *
 	 * @since Kunena
 	 */

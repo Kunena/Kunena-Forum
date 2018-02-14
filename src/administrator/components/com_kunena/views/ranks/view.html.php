@@ -35,7 +35,7 @@ class KunenaAdminViewRanks extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @return mixed
 	 * @since Kunena

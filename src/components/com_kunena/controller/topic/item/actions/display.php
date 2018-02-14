@@ -335,7 +335,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   string $type    Type of the button.
 	 * @param   bool   $primary True if primary button.
 	 * @param   bool   $normal  Define if the button will have the class btn or btn-small
-	 * @param   string $icon
+	 * @param   string $icon icon
 	 *
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
@@ -346,7 +346,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'   => KunenaRoute::_($url), 'name' => $name,
-			                      'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,)
+								  'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,)
 			);
 	}
 }

@@ -126,7 +126,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
-	 * @param   mixed $properties
+	 * @param   mixed $properties properties
 	 *
 	 * @internal
 	 * @since Kunena
@@ -788,7 +788,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Method to delete the KunenaForumMessage object from the database.
 	 *
-	 * @return bool    True on success
+	 * @return boolean    True on success
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -1330,7 +1330,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   mixed $id The message id to be loaded
 	 *
-	 * @return bool    True on success
+	 * @return boolean    True on success
 	 * @since Kunena
 	 */
 	public function load($id = null)
@@ -1713,7 +1713,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
-			// when no replies
+			// When no replies
 			if ($config->userdeletetmessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);

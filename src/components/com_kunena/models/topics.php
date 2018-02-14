@@ -475,8 +475,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @param   array $userlist
-	 * @param   array $postlist
+	 * @param   array $userlist userlist
+	 * @param   array $postlist postlist
 	 *
 	 * @throws Exception
 	 * @since Kunena

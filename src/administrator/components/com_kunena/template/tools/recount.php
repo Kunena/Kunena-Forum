@@ -34,8 +34,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-		      method="post" id="adminForm"
-		      name="adminForm">
+			  method="post" id="adminForm"
+			  name="adminForm">
 			<input type="hidden" name="task" value="recount"/>
 			<?php echo JHtml::_('form.token'); ?>
 
@@ -74,8 +74,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
 <!-- Modal -->
 <div id="recountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
-     aria-hidden="true"
-     data-backdrop="static" data-keyboard="false">
+	 aria-hidden="true"
+	 data-backdrop="static" data-keyboard="false">
 	<div class="modal-header">
 		<button type="button" class="close recount-close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3></h3>
@@ -89,7 +89,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div class="modal-footer">
 		<button class="btn recount-close" data-dismiss="modal"
-		        aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
+				aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
 	</div>
 </div>
 

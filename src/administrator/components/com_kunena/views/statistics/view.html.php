@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewStatistics extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null $tpl tpl
 	 *
 	 * @throws ReflectionException
 	 * @since Kunena

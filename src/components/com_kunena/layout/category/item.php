@@ -195,15 +195,15 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to get the last post link
 	 *
-	 * @param   KunenaForumCategory $category The KunenaCategory object
-	 * @param   string              $content  The content of last topic subject
-	 * @param   string              $title    The title of the link
-	 * @param   string              $class    The class attribute of the link
+	 * @param   KunenaForumCategory $category  The KunenaCategory object
+	 * @param   string              $content   The content of last topic subject
+	 * @param   string              $title     The title of the link
+	 * @param   string              $class     The class attribute of the link
 	 *
-	 * @param   int                 $length
+	 * @param   int                 $length    length
 	 *
-	 * @param   bool                $follow
-	 * @param   bool                $canonical
+	 * @param   bool                $follow    follow
+	 * @param   bool                $canonical canonical
 	 *
 	 * @return string
 	 * @throws Exception

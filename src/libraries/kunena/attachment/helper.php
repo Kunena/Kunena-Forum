@@ -716,7 +716,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @param   string $mime mime
 	 *
-	 * @return  bool  True if mime is image.
+	 * @return  boolean  True if mime is image.
 	 * @since Kunena
 	 */
 	public function isImageMime($mime)

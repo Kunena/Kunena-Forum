@@ -19,8 +19,8 @@ defined('_JEXEC') or die();
 class KunenaControllerUser extends KunenaController
 {
 	/**
-	 * @param   bool $cachable
-	 * @param   bool $urlparams
+	 * @param   bool $cachable  cachable
+	 * @param   bool $urlparams urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
 	 * @throws Exception

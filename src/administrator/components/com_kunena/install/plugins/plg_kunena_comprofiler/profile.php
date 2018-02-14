@@ -65,8 +65,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action
-	 * @param   bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -89,8 +89,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param          $user
-	 * @param   string $task
-	 * @param   bool   $xhtml
+	 * @param   string $task task
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -133,14 +133,14 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-			'forumSideProfile', array('kunena', $view, $view->profile->userid,
+				'forumSideProfile', array('kunena', $view, $view->profile->userid,
 				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params),)
-		)
+			)
 		);
 	}
 
 	/**
-	 * @param   int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array
 	 * @throws Exception
@@ -170,7 +170,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param   bool $xhtml
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return string
 	 * @since Kunena

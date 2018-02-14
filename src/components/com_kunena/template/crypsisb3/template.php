@@ -190,7 +190,7 @@ EOF;
 
 	/**
 	 * @param          $filename
-	 * @param   string $group
+	 * @param   string $group group
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
@@ -208,7 +208,7 @@ EOF;
 	 * @param        $name
 	 * @param        $scope
 	 * @param        $type
-	 * @param   null $id
+	 * @param   null $id id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -255,7 +255,7 @@ HTML;
 
 	/**
 	 * @param          $name
-	 * @param   string $title
+	 * @param   string $title title
 	 *
 	 * @return string
 	 * @since Kunena
@@ -267,7 +267,7 @@ HTML;
 
 	/**
 	 * @param          $image
-	 * @param   string $alt
+	 * @param   string $alt alt
 	 *
 	 * @return string
 	 * @since Kunena

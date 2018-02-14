@@ -594,7 +594,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @param   int    $id     Id of the button.
 	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
-	 * @param   string $icon
+	 * @param   string $icon icon
 	 *
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception
@@ -605,7 +605,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                      'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,)
+								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,)
 			);
 	}
 }

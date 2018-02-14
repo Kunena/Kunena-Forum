@@ -46,7 +46,8 @@ if ($show)
 			<li>
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {
+					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
+					{
 						echo 'topic-starter-circle';
 					} ?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif; ?>

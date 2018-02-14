@@ -77,7 +77,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to instantiate the layout.
 	 *
-	 * @param   string $name
+	 * @param   string $name  name
 	 * @param   array  $paths The paths queue.
 	 *
 	 * @throws Exception

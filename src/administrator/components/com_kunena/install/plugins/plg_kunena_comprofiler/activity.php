@@ -38,7 +38,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $userid
+	 * @param   int $userid userid
 	 *
 	 * @return null
 	 * @since Kunena
@@ -143,9 +143,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor
-	 * @param   int $target
-	 * @param   int $message
+	 * @param   int $actor actor
+	 * @param   int $target target
+	 * @param   int $message message
 	 *
 	 * @since Kunena
 	 */
@@ -156,8 +156,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $topic
-	 * @param   int $action
+	 * @param   int $topic topic
+	 * @param   int $action action
 	 *
 	 * @since Kunena
 	 */
@@ -169,8 +169,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $topic
-	 * @param   int $action
+	 * @param   int $topic topic
+	 * @param   int $action action
 	 *
 	 * @since Kunena
 	 */
@@ -182,8 +182,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $topic
-	 * @param   int $action
+	 * @param   int $topic topic
+	 * @param   int $action action
 	 *
 	 * @since Kunena
 	 */
@@ -195,8 +195,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $topic
-	 * @param   int $action
+	 * @param   int $topic topic
+	 * @param   int $action action
 	 *
 	 * @since Kunena
 	 */
@@ -208,9 +208,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $target
-	 * @param   int $actor
-	 * @param   int $delta
+	 * @param   int $target target
+	 * @param   int $actor actor
+	 * @param   int $delta delta
 	 *
 	 * @since Kunena
 	 */

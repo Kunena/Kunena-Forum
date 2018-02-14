@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $data = $this->pagination->getData();
 
-if (count($data->pages) <= 1)
+if ($data->pages && count($data->pages) <= 1)
 {
 	return;
 }

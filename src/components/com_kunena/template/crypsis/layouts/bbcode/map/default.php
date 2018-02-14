@@ -95,7 +95,8 @@ if (!empty($this->config->google_map_api_key))
 	);
 	?>
 
-	<div id="<?php echo $mapid; ?>" class="kgooglemap"><?php echo JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
+	<div id="<?php echo $mapid; ?>"
+	     class="kgooglemap"><?php echo JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
 
 	<?php
 }

@@ -32,10 +32,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state   = $this->model->getState();
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->moreUri = null;
-		$holding       = $this->getOptions()->get('topics_deletedtopics');
+		$this->state    = $this->model->getState();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->moreUri  = null;
+		$holding        = $this->getOptions()->get('topics_deletedtopics');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$start = $this->state->get('list.start');
@@ -334,10 +334,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$config = \Joomla\CMS\Factory::getConfig();
-		$robots = $config->get('robots');
-		$doc = \Joomla\CMS\Factory::getDocument();
-		$app = \Joomla\CMS\Factory::getApplication();
+		$config    = \Joomla\CMS\Factory::getConfig();
+		$robots    = $config->get('robots');
+		$doc       = \Joomla\CMS\Factory::getDocument();
+		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');

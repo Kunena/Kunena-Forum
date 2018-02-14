@@ -34,19 +34,19 @@ class KunenaLayoutUserEdit extends KunenaLayout
 
 		if ($myProfile)
 		{
-			$tab           = new stdClass;
-			$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_USER');
-			$tab->content  = $this->subRequest('User/Edit/User');
-			$tab->active   = true;
+			$tab          = new stdClass;
+			$tab->title   = JText::_('COM_KUNENA_PROFILE_EDIT_USER');
+			$tab->content = $this->subRequest('User/Edit/User');
+			$tab->active  = true;
 			$tabs['User'] = $tab;
 		}
 
 		if ($myProfile)
 		{
-			$tab           = new stdClass;
-			$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
-			$tab->content  = $this->subRequest('User/Edit/Profile');
-			$tab->active   = false;
+			$tab             = new stdClass;
+			$tab->title      = JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
+			$tab->content    = $this->subRequest('User/Edit/Profile');
+			$tab->active     = false;
 			$tabs['profile'] = $tab;
 		}
 
@@ -54,20 +54,20 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		{
 			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
 			{
-				$tab           = new stdClass;
-				$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
-				$tab->content  = $this->subRequest('User/Edit/Avatar');
-				$tab->active   = false;
+				$tab            = new stdClass;
+				$tab->title     = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
+				$tab->content   = $this->subRequest('User/Edit/Avatar');
+				$tab->active    = false;
 				$tabs['avatar'] = $tab;
 			}
 		}
 
 		if ($myProfile)
 		{
-			$tab           = new stdClass;
-			$tab->title    = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
-			$tab->content  = $this->subRequest('User/Edit/Settings');
-			$tab->active   = false;
+			$tab              = new stdClass;
+			$tab->title       = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
+			$tab->content     = $this->subRequest('User/Edit/Settings');
+			$tab->active      = false;
 			$tabs['settings'] = $tab;
 		}
 

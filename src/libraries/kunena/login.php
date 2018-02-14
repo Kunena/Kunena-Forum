@@ -35,7 +35,7 @@ class KunenaLogin
 	{
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetLogin');
+		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetLogin');
 
 		foreach ($classes as $class)
 		{

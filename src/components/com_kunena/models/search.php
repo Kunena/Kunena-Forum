@@ -312,7 +312,7 @@ class KunenaModelSearch extends KunenaModel
 	public function getTotal()
 	{
 		$text = $this->getState('searchwords');
-		$q = strlen($text);
+		$q    = strlen($text);
 
 		if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums'))
 		{
@@ -376,7 +376,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 
 		$text = $this->getState('searchwords');
-		$q = strlen($text);
+		$q    = strlen($text);
 
 		if (!$this->getState('query.searchuser'))
 		{
@@ -457,8 +457,8 @@ class KunenaModelSearch extends KunenaModel
 	{
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-						  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '', );
+		                  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '',);
 
 		$url_params = '';
 		$state      = $this->getState();

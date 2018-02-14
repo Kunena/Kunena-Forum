@@ -24,7 +24,8 @@ JHtml::_('dropdown.init');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>" method="post" id="adminForm"
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
+		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
@@ -43,22 +44,26 @@ JHtml::_('dropdown.init');
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 									</li>
 									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
-										<?php if ($fieldset->name != 'template') : ;?>
+										<?php if ($fieldset->name != 'template') : ; ?>
 											<li>
-												<a href="#tab_<?php echo $fieldset->name;?>" data-toggle="tab"><?php echo ucfirst($fieldset->name);?></a>
+												<a href="#tab_<?php echo $fieldset->name; ?>"
+												   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
 											</li>
-										<?php endif;?>
-									<?php endforeach;?>
+										<?php endif; ?>
+									<?php endforeach; ?>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_info">
 										<table class="table table-bordered table-striped">
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?>:</td>
-												<td><strong><?php echo JText::_($this->details->author); ?></strong></td>
+												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?>:
+												</td>
+												<td><strong><?php echo JText::_($this->details->author); ?></strong>
+												</td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>:</td>
+												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>:
+												</td>
 												<td><?php echo JText::_($this->details->version); ?></td>
 											</tr>
 											<tr>
@@ -66,16 +71,19 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_($this->details->creationdate); ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>:</td>
+												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>
+													:
+												</td>
 												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 
-												if (is_file($path))
-:
-													?>
-													<div><img
-														src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
-														alt="<?php echo $this->escape($this->templatename); ?>"/></div>
-													<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif; ?>
+													if (is_file($path))
+														:
+														?>
+														<div><img
+																	src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
+																	alt="<?php echo $this->escape($this->templatename); ?>"/>
+														</div>
+													<?php endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>
 											</tr>
@@ -83,27 +91,28 @@ JHtml::_('dropdown.init');
 									</div>
 
 									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
-									<div class="tab-pane" id="tab_<?php echo $fieldset->name;?>">
-										<table class="table table-bordered table-striped">
-											<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
-												:
-												if (!$field->hidden)
+										<div class="tab-pane" id="tab_<?php echo $fieldset->name; ?>">
+											<table class="table table-bordered table-striped">
+												<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
 													:
-													?>
-													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
-													</tr>
-												<?php                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     endif;
-											endforeach; ?>
-										</table>
-									</div>
+													if (!$field->hidden)
+														:
+														?>
+														<tr>
+															<td width="40%"
+															    class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php endif;
+												endforeach; ?>
+											</table>
+										</div>
 									<?php endforeach; ?>
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
-			</div>
 		</form>
 	</div>
 	<div class="pull-right small">

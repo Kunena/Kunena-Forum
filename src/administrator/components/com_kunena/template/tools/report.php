@@ -56,37 +56,45 @@ JHtml::_('behavior.multiselect');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="boxchecked" value="1" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+		      method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value=""/>
+			<input type="hidden" name="boxchecked" value="1"/>
 			<fieldset>
-				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?></legend>
+				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
+				</legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
 							<p>
-								<a href="#" id="link_sel_all" name="link_sel_all" type="button" class="btn btn-small btn-primary"><i
-										class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+								<a href="#" id="link_sel_all" name="link_sel_all" type="button"
+								   class="btn btn-small btn-primary"><i
+											class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+								</a>
 							</p>
 							<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
-									  rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+							          rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 						</td>
 					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
-				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?></legend>
+				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
+				</legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
 							<p>
-								<a href="#" id="link_sel_all_complete" name="link_sel_all_complete" type="button" class="btn btn-small btn-primary"><i
-										class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+								<a href="#" id="link_sel_all_complete" name="link_sel_all_complete" type="button"
+								   class="btn btn-small btn-primary"><i
+											class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+								</a>
 							</p>
-							<textarea id="report_final_anonymous" class="input-block-level" name="report_final_anonymous" cols="80"
-									  rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+							<textarea id="report_final_anonymous" class="input-block-level"
+							          name="report_final_anonymous" cols="80"
+							          rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
 						</td>
 					</tr>
 				</table>

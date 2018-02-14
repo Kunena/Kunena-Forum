@@ -198,7 +198,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$me->userid && !$this->message->hold && !$config->read_only
 		)
 		{
-			$loginurl = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance()));
+			$loginurl  = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance()));
 			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())
@@ -303,7 +303,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			if ($me->isModerator($this->topic->getCategory()) || KunenaFactory::getConfig()->user_report
 				|| !KunenaFactory::getConfig()->user_report && $me->userid != $this->message->userid)
 			{
-				$ktemplate = KunenaFactory::getTemplate();
+				$ktemplate     = KunenaFactory::getTemplate();
 				$topicicontype = $ktemplate->params->get('topicicontype');
 
 				if ($topicicontype == 'B2')
@@ -605,7 +605,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, )
+			                      'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,)
 			);
 	}
 }

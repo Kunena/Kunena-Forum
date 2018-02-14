@@ -27,12 +27,13 @@ $normal  = !empty($this->normal) ? 'btn-sm' : 'btn';
 $icon    = $this->icon;
 ?>
 
-<a <?php echo $id; ?> class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name; ?>" href="<?php echo $this->url; ?>" rel="nofollow"
-					  title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
+<a <?php echo $id; ?> class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name; ?>"
+                      href="<?php echo $this->url; ?>" rel="nofollow"
+                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
 	<?php
 	if (!empty($icon))
-	:
-	?>
+		:
+		?>
 		<i class="<?php echo $icon; ?>"></i>
 	<?php endif; ?>
 	<?php echo $label; ?>

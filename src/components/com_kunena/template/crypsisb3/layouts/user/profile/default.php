@@ -12,15 +12,15 @@ defined('_JEXEC') or die;
 
 // @var KunenaUser $user
 
-$user = $this->user;
+$user            = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
-$avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$config = KunenaConfig::getInstance();
-$show = $config->showuserstats;
+$avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
+$config          = KunenaConfig::getInstance();
+$show            = $config->showuserstats;
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points = $activityIntegration->getUserPoints($user->userid);
-$medals = $activityIntegration->getUserMedals($user->userid);
+$points              = $activityIntegration->getUserPoints($user->userid);
+$medals              = $activityIntegration->getUserMedals($user->userid);
 $optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
@@ -49,10 +49,10 @@ if ($show)
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 					<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-				<?php endif;?>
-				<?php /*if (!$this->topic_starter && $user->isModerator()) : */?><!--
-			<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */?></span>
-		--><?php /*endif;*/?>
+				<?php endif; ?>
+				<?php /*if (!$this->topic_starter && $user->isModerator()) : */ ?><!--
+			<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */ ?></span>
+		--><?php /*endif;*/ ?>
 			</li>
 		<?php endif; ?>
 
@@ -86,8 +86,9 @@ if ($show)
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">
-		<span class="heading btn btn-default btn-xs heading-less" style="display:none;"><?php echo KunenaIcons::arrowup();?> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-default btn-xs"><?php echo KunenaIcons::arrowdown();?> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+		<span class="heading btn btn-default btn-xs heading-less"
+		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+		<span class="heading btn btn-default btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1) : ?>
@@ -120,37 +121,37 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->gender) :?>
+				<?php if ($user->gender) : ?>
 					<li>
 						<?php echo $user->profileIcon('gender'); ?>
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->birthdate) :?>
+				<?php if ($user->birthdate) : ?>
 					<li>
 						<?php echo $user->profileIcon('birthdate'); ?>
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->location) :?>
+				<?php if ($user->location) : ?>
 					<li>
 						<?php echo $user->profileIcon('location'); ?>
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->websiteurl) :?>
+				<?php if ($user->websiteurl) : ?>
 					<li>
 						<?php echo $user->profileIcon('website'); ?>
 					</li>
 				<?php endif; ?>
 
-				<?php if (KunenaFactory::getPrivateMessaging()) :?>
+				<?php if (KunenaFactory::getPrivateMessaging()) : ?>
 					<li>
 						<?php echo $user->profileIcon('private'); ?>
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->email && !$user->hideEmail && $config->showemail) :?>
+				<?php if ($user->email && !$user->hideEmail && $config->showemail) : ?>
 					<li>
 						<?php echo $user->profileIcon('email'); ?>
 					</li>

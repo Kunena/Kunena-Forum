@@ -127,7 +127,7 @@ class KunenaForumCategoryUser extends JObject
 	 *
 	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
-	 * @return boolean    True on success
+	 * @return bool    True on success
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -209,7 +209,7 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
-	 * @return boolean    True on success
+	 * @return bool    True on success
 	 * @since Kunena
 	 */
 	public function delete()

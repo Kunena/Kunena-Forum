@@ -189,7 +189,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 
 		// List state information
-		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
+		$value        = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
 		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
 
 		if ($value < 1 || $value > 100)
@@ -353,7 +353,7 @@ class KunenaModelTopics extends KunenaModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where, );
+			'where'     => $where,);
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -413,7 +413,7 @@ class KunenaModelTopics extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions, );
+			'subscribed' => $subscriptions,);
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 

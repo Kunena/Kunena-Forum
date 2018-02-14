@@ -199,7 +199,7 @@ class KunenaModelUser extends KunenaModel
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}");

@@ -24,7 +24,7 @@ if (empty($this->results))
 	</h2>
 
 <?php if ($this->error)
-:
+	:
 	?>
 	<div class="alert alert-error">
 		<?php echo $this->error; ?>

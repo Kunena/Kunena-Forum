@@ -97,7 +97,8 @@ $attachments = $this->attachments;
 					<td class="center">
 
 						<?php if ($canDelete) : ?>
-							<a class="center" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
+							<a class="center" href="javascript:void(0);"
+							   onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
 								<?php echo KunenaIcons::delete(); ?>
 							</a>
 						<?php endif; ?>

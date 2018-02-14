@@ -18,8 +18,8 @@ defined('_JEXEC') or die();
 class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
-	 * @param   object $subject
-	 * @param   array  $config
+	 * @param   object $subject subject
+	 * @param   array $config config
 	 *
 	 * @throws Exception
 	 * @since Kunena

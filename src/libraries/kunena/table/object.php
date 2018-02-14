@@ -951,7 +951,7 @@ abstract class KunenaTableObject
 	/**
 	 * Method to increment the hits for a row if the necessary property/field exists.
 	 *
-	 * @return boolean True on success.
+	 * @return bool True on success.
 	 *
 	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is
 	 *           used.

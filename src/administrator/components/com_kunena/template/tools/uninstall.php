@@ -29,7 +29,8 @@ defined('_JEXEC') or die();
 
 	<div id="j-main-container" class="span10">
 
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm"
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value="uninstall"/>
 			<?php echo JHtml::_('form.token'); ?>
@@ -71,9 +72,11 @@ defined('_JEXEC') or die();
 					<tr>
 						<td></td>
 						<td>
-							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+							     aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+									</button>
 									<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h3>
 								</div>
 								<div class="modal-body">

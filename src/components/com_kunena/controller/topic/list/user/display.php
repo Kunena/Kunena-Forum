@@ -124,7 +124,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		}
 
 		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
-		$view = JFactory::getApplication()->input->getCmd('view');
+		$view   = JFactory::getApplication()->input->getCmd('view');
 		$layout = JFactory::getApplication()->input->getCmd('layout');
 		$format = JFactory::getApplication()->input->getCmd('format');
 
@@ -244,7 +244,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;
@@ -277,7 +277,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = KunenaRoute::_();
+						$canonicalUrl               = KunenaRoute::_();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

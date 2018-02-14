@@ -42,7 +42,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 			</td>
 			<td>
 					<span class="btn btn-primary fileinput-button">
-						<?php echo KunenaIcons::plus();?>
+						<?php echo KunenaIcons::plus(); ?>
 						<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
 						<!-- The file input field used as target for the file upload widget -->
 						<input id="fileupload" type="file" name="file" multiple>
@@ -58,7 +58,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 					</div>
 				</div>
 				<div id="kattach-list"></div>
-				<input id="kunena_userid" type="hidden" value="<?php echo $this->user->id; ?>" />
+				<input id="kunena_userid" type="hidden" value="<?php echo $this->user->id; ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -70,7 +70,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 			<td class="col-md-3">
 				<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
-					   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 			</td>
 			<td>
 
@@ -95,7 +95,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 							?>
 							<li class="col-md-2">
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
-									   value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
+								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
 									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
 								</label>

@@ -68,7 +68,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 
 			$result                    = \JFactory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $this->message->id));
 			$output                    = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
-				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"', ));
+				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"',));
 			$this->quickcaptchaDisplay = $output[0];
 			$this->quickcaptchaEnabled = $result[0];
 		}
@@ -82,7 +82,8 @@ $editor   = $template->params->get('editor');
 ?>
 
 <?php if ($quick == 1) : ?>
-<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog"
+     aria-labelledby="myLargeModalLabel"
      aria-hidden="true" style="display:none;">
 	<?php elseif ($quick == 0) : ?>
 	<div class="kreply-form span12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false"
@@ -104,7 +105,8 @@ $editor   = $template->params->get('editor');
 				<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
 			<?php endif; ?>
 			<?php if ($me->exists()) : ?>
-				<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+				<input type="hidden" id="kurl_users" name="kurl_users"
+				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 			<?php endif; ?>
 			<?php echo JHtml::_('form.token'); ?>
 
@@ -123,7 +125,8 @@ $editor   = $template->params->get('editor');
 				<?php if ($config->askemail && !$me->exists()): ?>
 					<div class="controls">
 						<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-						<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
+						<input type="text" id="email" name="email"
+						       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
 						       class="inputbox span12" maxlength="45" value="" required/>
 					</div>
 				<?php endif; ?>
@@ -154,17 +157,21 @@ $editor   = $template->params->get('editor');
 				<?php if ($topic->isAuthorised('subscribe')) : ?>
 					<div class="control-group">
 						<div class="controls">
-							<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe"
+							<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
+							       id="subscribeMe"
 							       value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
 							{
 								echo 'checked="checked"';
 							} ?> />
-							<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+							<label class="string optional"
+							       for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 						</div>
 						<?php if ($me->exists() && $category->allow_anonymous) : ?>
 							<div class="controls">
-								<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
-								       value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
+								<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>"
+								       name="anonymous"
+								       value="1"
+								       class="kinputbox postinput" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
 								<label for="kanonymous<?php echo intval($message->id); ?>">
 									<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
 								</label>
@@ -173,7 +180,8 @@ $editor   = $template->params->get('editor');
 					</div>
 				<?php endif; ?>
 				<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
-				   role="button" id="gotoeditor" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+				   role="button" id="gotoeditor" class="btn btn-small btn-link pull-right"
+				   rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 			</div>
 			<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 				<div class="control-group">
@@ -188,10 +196,12 @@ $editor   = $template->params->get('editor');
 				<?php //TODO: remove data on cancel. ?>
 				<input type="reset" name="reset" class="btn"
 				       value="<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>"
-				       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal" aria-hidden="true"/>
+				       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal"
+				       aria-hidden="true"/>
 			</div>
 			<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-			<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ? 0 : 1 ?>"/>
+			<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
+			       value="<?php echo $config->disemoticons ? 0 : 1 ?>"/>
 		</form>
 	</div>

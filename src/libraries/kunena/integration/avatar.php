@@ -47,7 +47,7 @@ class KunenaAvatar
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetAvatar');
+			$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetAvatar');
 
 			foreach ($classes as $class)
 			{

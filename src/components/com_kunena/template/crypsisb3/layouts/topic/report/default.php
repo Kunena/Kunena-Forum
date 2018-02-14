@@ -22,8 +22,8 @@ defined('_JEXEC') or die;
 	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>"/>
 
 	<?php if ($this->message)
-	:
-	?>
+		:
+		?>
 		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>"/>
 	<?php endif; ?>
 
@@ -43,14 +43,15 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE'); ?>
 			</label>
 			<div class="controls">
-				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
+				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40"
+				          rows="10"></textarea>
 			</div>
 		</div>
 		<br>
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
-					   value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
+				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
 				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
 					<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>

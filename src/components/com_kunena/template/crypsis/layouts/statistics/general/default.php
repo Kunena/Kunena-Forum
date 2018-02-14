@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 <div>
 
 	<?php foreach ($this->top as $top)
-	:
-	?>
+		:
+		?>
 		<h3>
 			<?php echo $top[0]->title; ?>
 		</h3>
@@ -30,8 +30,8 @@ defined('_JEXEC') or die;
 			<tbody>
 
 			<?php foreach ($top as $id => $item)
-			:
-	?>
+				:
+				?>
 				<tr>
 					<td class="center">
 						<?php echo $id + 1; ?>
@@ -41,7 +41,8 @@ defined('_JEXEC') or die;
 					</td>
 					<td>
 						<div class="progress progress-info">
-							<div class="bar" style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
+							<div class="bar"
+							     style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
 						</div>
 					</td>
 				</tr>
@@ -52,8 +53,8 @@ defined('_JEXEC') or die;
 	<?php endforeach; ?>
 	<?php
 	if ($this->config->showgenstats)
-	:
-	?>
+		:
+		?>
 		<h2>
 			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 		</h2>
@@ -63,12 +64,12 @@ defined('_JEXEC') or die;
 			<b>
 
 				<?php if ($this->userlistUrl)
-				:
-	?>
+					:
+					?>
 					<a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a>
 				<?php else
-:
-	?>
+					:
+					?>
 					<?php echo $this->memberCount; ?>
 				<?php endif; ?>
 

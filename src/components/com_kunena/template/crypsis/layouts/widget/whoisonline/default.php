@@ -20,15 +20,15 @@ defined('_JEXEC') or die;
 	</div>
 	<h2 class="btn-link">
 		<?php if ($this->usersUrl)
-		:
-	?>
+			:
+			?>
 			<a href="<?php echo $this->usersUrl; ?>">
 				<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
 			</a>
 		<?php else
 
-:
-	?>
+			:
+			?>
 			<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
 		<?php endif; ?>
 	</h2>
@@ -47,26 +47,26 @@ defined('_JEXEC') or die;
 				$direction = $template->params->get('whoisonlineName');
 
 				if ($direction == 'both')
-				:
-	?>
+					:
+					?>
 					<div><?php echo $this->setLayout('both'); ?></div>
-					<?php
+				<?php
 				elseif ($direction == 'avatar')
-				:
-	?>
+					:
+					?>
 					<div><?php echo $this->setLayout('avatar'); ?></div>
 				<?php else
 
-:
-	?>
+					:
+					?>
 					<div><?php echo $this->setLayout('name'); ?></div>
-					<?php
+				<?php
 				endif;
 				?>
 
 				<?php if (!empty($this->onlineList))
-				:
-	?>
+					:
+					?>
 					<div>
 						<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 						<span class="kwho-admin">

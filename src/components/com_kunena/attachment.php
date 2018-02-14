@@ -86,9 +86,9 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	protected $userstate = array();
 
 	/**
-	 * @param   \Joomla\Input\Input                $input  input
-	 * @param   \Joomla\Registry\Registry          $config config
-	 * @param   \Joomla\Application\Web\WebClient  $client client
+	 * @param   \Joomla\Input\Input               $input  input
+	 * @param   \Joomla\Registry\Registry         $config config
+	 * @param   \Joomla\Application\Web\WebClient $client client
 	 *
 	 * @since Kunena
 	 */
@@ -228,8 +228,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   string    $name   name
-	 * @param   boolean   $value  value
+	 * @param   string  $name  name
+	 * @param   boolean $value value
 	 *
 	 * @return void
 	 * @since Kunena
@@ -240,8 +240,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   string  $name     name
-	 * @param   null    $default  default
+	 * @param   string $name    name
+	 * @param   null   $default default
 	 *
 	 * @return null
 	 * @since Kunena

@@ -34,7 +34,7 @@ defined('_JEXEC') or die;
 								</label>
 							</span>
 							<input id="kmobile-username" type="text" name="username" class="input-small" tabindex="1"
-								   size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"/>
+							       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 								</label>
 							</span>
 							<input id="kmobile-passwd" type="password" name="password" class="input-small" tabindex="2"
-								   size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"/>
+							       size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -57,8 +57,8 @@ defined('_JEXEC') or die;
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php
 				if ($login->getTwoFactorMethods() > 1)
-				:
-	?>
+					:
+					?>
 					<div id="kmobile-form-login-tfa" class="control-group center">
 						<div class="controls">
 							<div class="input-prepend input-append">
@@ -68,21 +68,23 @@ defined('_JEXEC') or die;
 									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>
 						  </span>
-								<input id="kmobile-secretkey" type="text" name="secretkey" class="input-small" tabindex="3"
-									   size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
+								<input id="kmobile-secretkey" type="text" name="secretkey" class="input-small"
+								       tabindex="3"
+								       size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
 							</div>
 						</div>
 					</div>
 				<?php endif; ?>
 
 				<?php if ($this->rememberMe)
-				:
-	?>
+					:
+					?>
 					<div id="kmobile-form-login-remember" class="control-group center">
 						<div class="controls">
 							<div class="input-prepend input-append">
 								<div class="add-on">
-									<input id="kmobile-remember" type="checkbox" name="remember" class="inputbox" value="yes"/>
+									<input id="kmobile-remember" type="checkbox" name="remember" class="inputbox"
+									       value="yes"/>
 									<label for="kmobile-remember" class="control-label">
 										<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 									</label>
@@ -101,8 +103,8 @@ defined('_JEXEC') or die;
 
 					<p>
 						<?php if ($this->resetPasswordUrl)
-						:
-	?>
+							:
+							?>
 							<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 							</a>
@@ -110,8 +112,8 @@ defined('_JEXEC') or die;
 						<?php endif ?>
 
 						<?php if ($this->remindUsernameUrl)
-						:
-	?>
+							:
+							?>
 							<a href="<?php echo $this->remindUsernameUrl; ?>" rel="nofollow">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 							</a>
@@ -119,8 +121,8 @@ defined('_JEXEC') or die;
 						<?php endif ?>
 
 						<?php if ($this->registrationUrl)
-						:
-	?>
+							:
+							?>
 							<a href="<?php echo $this->registrationUrl; ?>" rel="nofollow">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
 							</a>

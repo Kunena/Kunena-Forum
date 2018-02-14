@@ -17,8 +17,8 @@ $actions      = $this->getActions();
 	<?php echo $announcement->displayField('title'); ?>
 
 	<?php if ($announcement->showdate)
-	:
-	?>
+		:
+		?>
 		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
@@ -26,7 +26,7 @@ $actions      = $this->getActions();
 </h3>
 
 <?php if (!empty($actions))
-:
+	:
 	?>
 	<div>
 		<?php echo implode(' ', $actions); ?>

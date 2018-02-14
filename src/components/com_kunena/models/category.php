@@ -191,7 +191,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 					{
 						// Get list of moderators
 						$subcat->moderators = $subcat->getModerators(false, false);
-						$userlist += $subcat->moderators;
+						$userlist           += $subcat->moderators;
 					}
 
 					if ($this->me->isModerator($subcat))
@@ -316,7 +316,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'  => $hold,
-				'moved' => $moved, );
+				'moved' => $moved,);
 
 			switch ($topic_ordering)
 			{

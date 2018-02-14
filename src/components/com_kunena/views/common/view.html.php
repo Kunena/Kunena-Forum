@@ -327,7 +327,7 @@ class KunenaViewCommon extends KunenaView
 			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$who                 .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
 		$this->onlineList = array();

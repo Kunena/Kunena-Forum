@@ -30,7 +30,8 @@ JHtml::_('behavior.multiselect');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
+		      id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="smilies"/>
 			<input type="hidden" name="task" value="save"/>
 			<?php if ($this->state->get('item.id'))
@@ -52,7 +53,8 @@ JHtml::_('behavior.multiselect');
 							       value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
 							<img name="smiley_image"
 							     src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
-							     border="0" alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
+							     border="0"
+							     alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
 						</td>
 					</tr>
 					<tr>

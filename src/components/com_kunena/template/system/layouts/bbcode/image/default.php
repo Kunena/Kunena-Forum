@@ -28,34 +28,36 @@ $config = KunenaConfig::getInstance();
 $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
-$attributesImg .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
+$attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 
 if ($config->lazyload)
 {
 	?>
 	<a href="<?php echo $this->escape($url); ?>"
-		<?php echo $attributesLink;?>>
-		<img class="lazy" src="<?php echo $this->escape($url); ?>" data-original="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
-			 alt="test"/>
+		<?php echo $attributesLink; ?>>
+		<img class="lazy" src="<?php echo $this->escape($url); ?>"
+		     data-original="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?>
+		     width="<?php echo $width; ?>"
+		     alt="test"/>
 	</a>
 	<?php
 }
 else
 {
-?>
-<div class="kmsgimage">
-	<?php if ($canLink)
-	:
 	?>
-	<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
-	<?php endif; ?>
-
-		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> />
-
+	<div class="kmsgimage">
 		<?php if ($canLink)
-	:
-	?>
-	</a>
-		<?php endif; ?>
-</div>
+		:
+		?>
+		<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
+			<?php endif; ?>
+
+			<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> />
+
+			<?php if ($canLink)
+			:
+			?>
+		</a>
+	<?php endif; ?>
+	</div>
 <?php }

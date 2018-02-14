@@ -52,7 +52,7 @@ class KunenaSession extends JObject
 		if (!$this->currvisit)
 		{
 			// For new users new indication displays 14 days
-			$now               = \Joomla\CMS\Factory::getDate()->toUnix();
+			$now = \Joomla\CMS\Factory::getDate()->toUnix();
 
 			// 14 days ago
 			$this->lasttime    = $now - 14 * 24 * 60 * 60;

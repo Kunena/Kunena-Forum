@@ -36,7 +36,8 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 				: <?php echo $this->escape($this->category->name); ?></div>
 			<hr class="hr-condensed">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm"
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+			      method="post" id="adminForm"
 			      name="adminForm">
 				<input type="hidden" name="task" value="save"/>
 				<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
@@ -102,7 +103,8 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 													<td>
-														<input class="inputbox" id="jform_aliases" type="text" name="alias" size="80"
+														<input class="inputbox" id="jform_aliases" type="text"
+														       name="alias" size="80"
 														       value="<?php echo $this->escape($this->category->alias); ?>"/>
 														<?php
 														if ($this->options ['aliases'])
@@ -127,7 +129,8 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
 													<td>
-														<input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20"
+														<input class="inputbox" type="text" name="class_sfx" size="20"
+														       maxlength="20"
 														       value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
 														<p><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
 													</td>
@@ -135,7 +138,8 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 													<td>
-														<textarea class="inputbox" cols="50" rows="6" name="description" id="description"
+														<textarea class="inputbox" cols="50" rows="6" name="description"
+														          id="description"
 														          style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
 														<p><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
 													</td>
@@ -143,14 +147,16 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 													<td>
-														<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc"
+														<textarea class="inputbox" cols="50" rows="6" name="headerdesc"
+														          id="headerdesc"
 														          style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 													</td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('Topic Template'); ?></td>
 													<td>
-														<textarea class="inputbox" cols="50" rows="6" name="topictemplate" id="topictemplate"
+														<textarea class="inputbox" cols="50" rows="6"
+														          name="topictemplate" id="topictemplate"
 														          style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
 													</td>
 												</tr>
@@ -202,37 +208,50 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 														<td><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['allow_anonymous']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['post_anonymous']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['allow_polls']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:
+														</td>
 														<td><?php echo $this->options ['channels']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['topic_ordering']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['category_iconset']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>:</td>
+														<td><?php echo JText::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>
+															:
+														</td>
 														<td><?php echo $this->options ['allow_ratings']; ?></td>
 														<td><?php echo JText::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED_DESC'); ?></td>
 													</tr>
@@ -280,7 +299,8 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 														:
 														?>
 														<tr>
-															<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
+															<td colspan="5"
+															    align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
 														</tr>
 													<?php else
 														:

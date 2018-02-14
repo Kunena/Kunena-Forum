@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Category
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Category
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
 defined('_JEXEC') or die;
@@ -19,18 +19,19 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" id="adminForm" name="adminForm">
-				<input type="hidden" name="view" value="category" />
-				<input type="hidden" name="task" value="" />
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>"
+			      method="post" id="adminForm" name="adminForm">
+				<input type="hidden" name="view" value="category"/>
+				<input type="hidden" name="task" value=""/>
 
-				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>" />
-				<input type="hidden" name="boxchecked" value="0" />
+				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>"/>
+				<input type="hidden" name="boxchecked" value="0"/>
 				<?php echo JHtml::_('form.token'); ?>
 				<table class="adminlist table table-striped">
 					<thead>
 					<tr>
 						<th class="kcenter" width="5">#</th>
-						<th width="5"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+						<th width="5"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 						</th>
 						<th class="kcenter">
 							<small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small>
@@ -79,7 +80,8 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 
 								<td><?php echo JHtml::_('grid.id', ++$i, intval($category->id)) ?></td>
 								<td class="kleft" width="70%">
-									<a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat('...', $category->level) . ' ' . $category->name; ?></a>
+									<a href="#edit"
+									   onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat('...', $category->level) . ' ' . $category->name; ?></a>
 								</td>
 
 							<?php endif; ?>
@@ -95,10 +97,12 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 								<td class="right nowrap">
 									<span><?php echo $this->navigation->orderUpIcon($i, $category->up, 'orderup', 'Move Up', 1); ?></span>
 									<span><?php echo $this->navigation->orderDownIcon($i, $n, $category->down, 'orderdown', 'Move Down', 1); ?></span>
-									<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo intval($category->ordering); ?>" class="text_area center" />
+									<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5"
+									       value="<?php echo intval($category->ordering); ?>" class="text_area center"/>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->locked ? 'un' : '') . 'lock'; ?>')">
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un' : '') . 'lock'; ?>')">
 										<?php echo $category->locked == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
@@ -110,26 +114,32 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 									<span><?php echo $this->navigation->orderUpIcon($i, $category->up, 'orderup', 'Move Up', 1); ?></span>
 									<span><?php echo $this->navigation->orderDownIcon($i, $n, $category->down, 'orderdown', 'Move Down', 1); ?></span>
 									<?php if ($category->reorder) : ?>
-										<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo $this->escape($category->ordering); ?>" class="text_area" style="text-align: center;" />
+										<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5"
+										       value="<?php echo $this->escape($category->ordering); ?>"
+										       class="text_area" style="text-align: center;"/>
 									<?php endif; ?>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->locked ? 'un' : '') . 'lock'; ?>')">
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un' : '') . 'lock'; ?>')">
 										<?php echo $category->locked == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->review ? 'un' : '') . 'review'; ?>')">
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->review ? 'un' : '') . 'review'; ?>')">
 										<?php echo $category->review == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
 										<?php echo $category->allow_anonymous == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="kcenter">
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo($category->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
 										<?php echo $category->allow_polls == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>

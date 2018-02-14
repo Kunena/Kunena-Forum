@@ -133,7 +133,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc    = \Joomla\CMS\Factory::getDocument();
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
@@ -255,8 +255,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter($actions, function ($item)
-		{
+		$actions = array_filter($actions, function ($item) {
 			return !empty($item);
 		});
 
@@ -310,8 +309,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter($actions, function ($item)
-		{
+		$actions = array_filter($actions, function ($item) {
 			return !empty($item);
 		});
 

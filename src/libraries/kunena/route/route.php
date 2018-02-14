@@ -560,8 +560,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item  item
-	 * @param   \Joomla\CMS\Uri\Uri $uri   uri
+	 * @param   mixed               $item item
+	 * @param   \Joomla\CMS\Uri\Uri $uri  uri
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -887,8 +887,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   string  $string  string
-	 * @param   null    $default default
+	 * @param   string $string  string
+	 * @param   null   $default default
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -916,7 +916,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   string  $alias alias
+	 * @param   string $alias alias
 	 *
 	 * @return array
 	 * @since Kunena

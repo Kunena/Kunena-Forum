@@ -41,36 +41,38 @@ $list = array();
 		<?php endif; ?>
 		<?php echo KunenaIcons::clock(); ?>
 		<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-		<?php if ($message->modified_time) :?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); endif;?>
-		<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+		<?php if ($message->modified_time) : ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); endif; ?>
+		<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
+		   rel="canonical">#<?php echo $this->numLink; ?></a>
 		<span class="visible-xs"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 	</small>
 
-<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
-	data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
-	<div class="kmessage">
-		<div class="kmsg">
-			<?php  if (!$this->me->userid && !$isReply) :
-				echo $message->displayField('message');
-			else:
-				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-			endif;?>
+	<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
+	     data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+		<div class="kmessage">
+			<div class="kmsg">
+				<?php if (!$this->me->userid && !$isReply) :
+					echo $message->displayField('message');
+				else:
+					echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+				endif; ?>
+			</div>
 		</div>
+		<?php if ($signature) : ?>
+			<div class="ksig">
+				<hr>
+				<span class="ksignature"><?php echo $signature; ?></span>
+			</div>
+		<?php endif ?>
 	</div>
-	<?php if ($signature) : ?>
-		<div class="ksig">
-			<hr>
-			<span class="ksignature"><?php echo $signature; ?></span>
-		</div>
-	<?php endif ?>
-</div>
 <?php if ($this->config->reportmsg && $this->me->exists()) :
 	echo KunenaLayout::factory('Widget/Button')
-		->setProperties(array('url' => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-		                      'type' => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-		                      'modal' => 'modal', 'pullright' => 'pullright', ));
+		->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+		                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
+		                      'modal' => 'modal', 'pullright' => 'pullright',));
 	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false" style="display: none;">
+		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
+		     aria-hidden="true" data-backdrop="false" style="display: none;">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

@@ -42,7 +42,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		try
 		{
-			$showBanHistory = $showBanManager  = $banInfo->canBan();
+			$showBanHistory = $showBanManager = $banInfo->canBan();
 		}
 		catch (Exception $e)
 		{
@@ -84,7 +84,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			if ($this->config->category_subscriptions != 'disabled')
 			{
-				$params = array(
+				$params       = array(
 					'embedded' => 1,
 
 					'userid'           => $this->profile->userid,
@@ -98,7 +98,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			if ($this->config->topic_subscriptions != 'disabled')
 			{
-				$params = array(
+				$params       = array(
 					'embedded'            => 1,
 					'topics_categories'   => 0,
 					'topics_catselection' => 1,
@@ -151,7 +151,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tab->title   = JText::_('COM_KUNENA_THANK_YOU');
 			$tab->content = '';
 
-			$params = array(
+			$params       = array(
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -166,7 +166,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			);
 			$tab->content .= $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
 
-			$params = array(
+			$params       = array(
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,

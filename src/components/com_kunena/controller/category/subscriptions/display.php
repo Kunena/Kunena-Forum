@@ -144,7 +144,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc    = \Joomla\CMS\Factory::getDocument();
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 

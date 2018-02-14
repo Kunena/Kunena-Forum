@@ -10,10 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
-$label = $this->label;
-$link = ' href="' . $this->link . '"';
+$label       = $this->label;
+$link        = ' href="' . $this->link . '"';
 $description = isset($this->description) ? ' title="' . $this->description . '"' : '';
-$class = ' class="label label-' . $this->state . ' ' . KunenaTemplate::getInstance()->tooltips() . '"';
+$class       = ' class="label label-' . $this->state . ' ' . KunenaTemplate::getInstance()->tooltips() . '"';
 ?>
 <a <?php echo $link . $description . $class; ?>>
 	<?php echo $label; ?>

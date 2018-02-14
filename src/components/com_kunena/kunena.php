@@ -127,9 +127,9 @@ else
 }
 
 // Prepare and display the output.
-$params = new stdClass;
+$params       = new stdClass;
 $params->text = '';
-$topics = new stdClass;
+$topics       = new stdClass;
 $topics->text = '';
 JPluginHelper::importPlugin('content');
 \JFactory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));

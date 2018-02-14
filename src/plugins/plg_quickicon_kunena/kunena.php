@@ -33,7 +33,7 @@ class plgQuickiconKunena extends JPlugin
 	/**
 	 * Display Kunena backend icon in Joomla 2.5+
 	 *
-	 * @param   string $context
+	 * @param   string $context context
 	 *
 	 * @return array|null
 	 * @since Kunena

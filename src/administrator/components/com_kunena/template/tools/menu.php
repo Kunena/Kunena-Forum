@@ -21,7 +21,8 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm"
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<?php echo JHtml::_('form.token'); ?>

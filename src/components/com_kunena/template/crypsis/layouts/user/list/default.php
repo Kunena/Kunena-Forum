@@ -42,13 +42,13 @@ $this->addScript('assets/js/search.js');
 
 	<table class="table table-bordered table-striped">
 		<thead>
-			<tr>
-				<th class="span1 center hidden-phone">
-					<a id="forumtop"> </a>
-					<a href="#forumbottom" rel="nofollow">
-						<?php echo KunenaIcons::arrowdown();?>
-					</a>
-				</th>
+		<tr>
+			<th class="span1 center hidden-phone">
+				<a id="forumtop"> </a>
+				<a href="#forumbottom" rel="nofollow">
+					<?php echo KunenaIcons::arrowdown(); ?>
+				</a>
+			</th>
 
 			<?php if ($config->userlist_online) : $cols++; ?>
 				<th class="span1 center hidden-phone">
@@ -155,7 +155,7 @@ $this->addScript('assets/js/search.js');
 
 				<?php if ($avatar) : ?>
 					<td class="span1 center hidden-phone">
-						<div class="post-image kwho-<?php echo $user->getType(0, true);?>">
+						<div class="post-image kwho-<?php echo $user->getType(0, true); ?>">
 							<?php echo $avatar; ?>
 						</div>
 					</td>
@@ -204,16 +204,16 @@ $this->addScript('assets/js/search.js');
 		<?php endforeach; ?>
 		</tbody>
 		<tfoot>
-			<tr>
-				<td class="span1 center hidden-phone">
-					<a id="forumbottom"> </a>
-					<a href="#forumtop" rel="nofollow">
-						<?php echo KunenaIcons::arrowup();?>
-					</a>
-				</td>
-				<td colspan="8" class="hidden-phone">
-				</td>
-			</tr>
+		<tr>
+			<td class="span1 center hidden-phone">
+				<a id="forumbottom"> </a>
+				<a href="#forumtop" rel="nofollow">
+					<?php echo KunenaIcons::arrowup(); ?>
+				</a>
+			</td>
+			<td colspan="8" class="hidden-phone">
+			</td>
+		</tr>
 		</tfoot>
 	</table>
 

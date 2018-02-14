@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 class pkg_kunena_languagesInstallerScript
 {
 	/**
-	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent
+	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent parent
 	 *
 	 * @since Kunena
 	 */
@@ -32,8 +32,8 @@ class pkg_kunena_languagesInstallerScript
 	}
 
 	/**
-	 * @param   string                                    $type
-	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent
+	 * @param   string $type type
+	 * @param   \Joomla\CMS\Installer\Adapter\FileAdapter $parent parent
 	 *
 	 * @return boolean
 	 * @throws Exception

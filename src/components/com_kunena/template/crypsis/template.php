@@ -58,7 +58,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->addScript('assets/js/main.js');
 
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$storage = $this->ktemplate->params->get('storage');
+		$storage         = $this->ktemplate->params->get('storage');
 
 		if ($storage)
 		{
@@ -85,7 +85,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		}
 
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc       = \Joomla\CMS\Factory::getDocument();
 
 		if ($bootstrap)
 		{

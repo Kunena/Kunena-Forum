@@ -12,14 +12,14 @@ defined('_JEXEC') or die();
 ?>
 <ul class="thumbnails">
 	<?php foreach ($this->attachments as $attachment)
-	:
-	?>
+		:
+		?>
 		<li class="span6">
 			<div class="thumbnail">
 				<input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
-					   value="<?php echo $attachment->getFilename() ?>"/>
+				       value="<?php echo $attachment->getFilename() ?>"/>
 				<input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked"
-					   value="<?php echo $attachment->id ?>"/>
+				       value="<?php echo $attachment->id ?>"/>
 				<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 				<span>
 				<?php echo $attachment->getFilename(); ?>

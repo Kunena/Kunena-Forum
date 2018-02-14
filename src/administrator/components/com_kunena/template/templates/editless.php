@@ -20,8 +20,9 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
-			  name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
+		      method="post" id="adminForm"
+		      name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
 			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
@@ -39,7 +40,8 @@ defined('_JEXEC') or die();
 					</tr>
 					<tr>
 						<td>
-							<textarea class="input-xxlarge" cols="110" rows="25" name="filecontent"><?php echo $this->content; ?></textarea>
+							<textarea class="input-xxlarge" cols="110" rows="25"
+							          name="filecontent"><?php echo $this->content; ?></textarea>
 						</td>
 					</tr>
 				</table>

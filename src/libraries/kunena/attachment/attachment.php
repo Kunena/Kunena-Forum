@@ -226,7 +226,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is image.
 	 *
-	 * @return  boolean  True if attachment is image.
+	 * @return  bool  True if attachment is image.
 	 *
 	 * @since  K4.0
 	 */
@@ -238,7 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is audio.
 	 *
-	 * @return  boolean  True if attachment is image.
+	 * @return  bool  True if attachment is image.
 	 *
 	 * @since  K5.1
 	 */
@@ -250,7 +250,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is audio.
 	 *
-	 * @return  boolean  True if attachment is image.
+	 * @return  bool  True if attachment is image.
 	 *
 	 * @since  K5.1
 	 */
@@ -262,7 +262,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check if attachment is pdf.
 	 *
-	 * @return  boolean  True if attachment is pdf.
+	 * @return  bool  True if attachment is pdf.
 	 *
 	 * @since  K5.1
 	 */
@@ -293,10 +293,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * The first 8 characters of the filename, followed by three dots and the last 5 character of the filename.
 	 *
-	 * @param   int    $front   front
-	 * @param   int    $back    back
-	 * @param   string $filler  filler
-	 * @param   bool   $escape  escape
+	 * @param   int    $front  front
+	 * @param   int    $back   back
+	 * @param   string $filler filler
+	 * @param   bool   $escape escape
 	 *
 	 * @return string
 	 *
@@ -562,8 +562,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string   $key    key
-	 * @param   null|int $catid  catid
+	 * @param   string   $key   key
+	 * @param   null|int $catid catid
 	 *
 	 * @return boolean
 	 *

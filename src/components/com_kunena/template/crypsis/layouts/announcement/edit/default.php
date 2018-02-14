@@ -20,7 +20,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 <div class="well well-small">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-		  name="editform" class="form-horizontal" id="editform">
+	      name="editform" class="form-horizontal" id="editform">
 		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -106,9 +106,9 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 		<div class="control-group">
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
-					   value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
+				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
 				<input onclick="window.history.back();" name="cancel" class="btn" type="button"
-					   value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
+				       value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>
 	</form>

@@ -19,8 +19,8 @@ JText::script('COM_KUNENA_CLEARED');
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
 	<?php foreach ($this->settings as $field)
-	:
-	?>
+		:
+		?>
 		<tr>
 			<td class="col-md-3">
 				<?php echo $field->label; ?>
@@ -34,7 +34,7 @@ JText::script('COM_KUNENA_CLEARED');
 		<td class="col-md-3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></td>
 		<td>
 			<button type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()"
-					data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
+			        data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
 		</td>
 	</tr>
 	</tbody>

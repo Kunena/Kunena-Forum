@@ -20,7 +20,8 @@ defined('_JEXEC') or die;
 		<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif"/>
 		<div style="margin:10px 0;"></div>
 	</div>
-	<div style="text-align: center;"><a href="<?php echo $this->naturalurl; ?>" target="_blank" rel="noopener noreferrer"> <img src="<?php echo $this->pictureurl; ?>"/></a>
+	<div style="text-align: center;"><a href="<?php echo $this->naturalurl; ?>" target="_blank"
+	                                    rel="noopener noreferrer"> <img src="<?php echo $this->pictureurl; ?>"/></a>
 	</div>
 	<div style="margin:10px 0;"/></div>
 	<a href="<?php echo $this->naturalurl; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->title; ?></a>

@@ -32,7 +32,8 @@ $count = count($this->purgeitems);
 					</div>
 				</div>
 				<div id="j-main-container" class="span10">
-					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" method="post" id="adminForm"
+					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>"
+					      method="post" id="adminForm"
 					      name="adminForm">
 						<input type="hidden" name="task" value="purge"/>
 						<input type="hidden" name="boxchecked" value="1"/>

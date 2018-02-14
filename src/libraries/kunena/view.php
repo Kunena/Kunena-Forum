@@ -387,9 +387,9 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @param   string $text    text
-	 * @param   int    $len     len
-	 * @param   mixed  $parent  parent
+	 * @param   string $text   text
+	 * @param   int    $len    len
+	 * @param   mixed  $parent parent
 	 *
 	 * @return mixed|void
 	 * @throws Exception

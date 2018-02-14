@@ -29,8 +29,8 @@ $this->fieldsets = $this->form->getFieldsets('params');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form
-			action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id=' . (int) $this->item->extension_id); ?>"
-			method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
+				action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id=' . (int) $this->item->extension_id); ?>"
+				method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
 			<fieldset>
 				<div class="tabbable-panel">
 					<div class="tabbable-line">
@@ -46,7 +46,8 @@ $this->fieldsets = $this->form->getFieldsets('params');
 								?>
 								<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
 								<li>
-									<a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a>
+									<a href="#options-<?php echo $fieldset->name; ?>"
+									   data-toggle="tab"><?php echo $label ?></a>
 								</li>
 							<?php endforeach; ?>
 							<?php endif; ?>

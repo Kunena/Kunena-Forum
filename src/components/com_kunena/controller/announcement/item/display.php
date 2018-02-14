@@ -50,7 +50,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
 			$controller->redirect();

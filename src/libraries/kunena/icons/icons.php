@@ -1835,7 +1835,7 @@ class KunenaIcons
 	 */
 	public static function report()
 	{
-		$ktemplate = KunenaFactory::getTemplate();
+		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
@@ -1870,7 +1870,7 @@ class KunenaIcons
 	 */
 	public static function reportname()
 	{
-		$ktemplate = KunenaFactory::getTemplate();
+		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'B2')

@@ -21,7 +21,7 @@ $description = $this->description;
 $data        = $this->data;
 $form        = $this->form;
 ?>
-<div <?php echo $class . $id?> data-backdrop="false" style="display: none;">
+<div <?php echo $class . $id ?> data-backdrop="false" style="display: none;">
 	<div class="modal-header">
 		<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
 		<h3><?php echo $label ?></h3>
@@ -31,7 +31,7 @@ $form        = $this->form;
 		<div class="control-group">
 			<div class="controls">
 				<textarea <?php echo $name ?> style="resize: none; text-align: left;" class="input-block-level" rows="3"
-											  maxlength="255"><?php echo $data; ?></textarea>
+				                              maxlength="255"><?php echo $data; ?></textarea>
 			</div>
 		</div>
 	</div>

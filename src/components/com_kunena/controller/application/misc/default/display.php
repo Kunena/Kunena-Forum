@@ -169,16 +169,14 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		}
 		elseif ($format == 'text')
 		{
-			$this->body = function () use ($body)
-			{
+			$this->body = function () use ($body) {
 
 				return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
 			};
 		}
 		else
 		{
-			$this->body = function () use ($body)
-			{
+			$this->body = function () use ($body) {
 
 				// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheControllerCallback $cache
 

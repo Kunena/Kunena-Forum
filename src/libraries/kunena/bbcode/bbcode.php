@@ -1854,7 +1854,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					}
 					break;
 
-					// Continue to intro if fulltext is empty
+				// Continue to intro if fulltext is empty
 				case 'intro':
 					if (!empty($article->introtext))
 					{
@@ -1871,7 +1871,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					}
 					break;
 
-					// Continue to link if introtext is empty
+				// Continue to link if introtext is empty
 				case 'link':
 				default:
 					$link = '<a href="' . $url . '" class="readon">' . $article->title . '</a>';

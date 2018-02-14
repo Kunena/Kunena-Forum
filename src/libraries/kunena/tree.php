@@ -244,9 +244,9 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   int   $parent_id   parent id
-	 * @param   array $itemIndent  itemindent
-	 * @param   bool  $gap         gap
+	 * @param   int   $parent_id  parent id
+	 * @param   array $itemIndent itemindent
+	 * @param   bool  $gap        gap
 	 *
 	 * @return array
 	 * @since Kunena

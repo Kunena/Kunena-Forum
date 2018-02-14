@@ -114,7 +114,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->addStyleSheet('kunena.css');
 
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$storage = $this->ktemplate->params->get('storage');
+		$storage         = $this->ktemplate->params->get('storage');
 
 		if ($storage)
 		{
@@ -137,7 +137,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc         = \Joomla\CMS\Factory::getDocument();
 
 		if ($fontawesome)
 		{

@@ -30,7 +30,8 @@ JHtml::_('behavior.multiselect');
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
+		      id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks"/>
 			<input type="hidden" name="task" value="save"/>
 			<?php if ($this->state->get('item.id'))
@@ -63,13 +64,15 @@ JHtml::_('behavior.multiselect');
 							if (!$this->state->get('item.id'))
 								:
 								?>
-								<img name="rank_image" src="" border="0" alt="<?php echo $this->rank_selected->title; ?>"/>
+								<img name="rank_image" src="" border="0"
+								     alt="<?php echo $this->rank_selected->title; ?>"/>
 							<?php else
 								:
 								?>
 								<img name="rank_image"
 								     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
-								     border="0" alt="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : 'rank' ?>"/>
+								     border="0"
+								     alt="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : 'rank' ?>"/>
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -88,8 +91,8 @@ JHtml::_('behavior.multiselect');
 						</td>
 						<td>
 							<input
-								type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?>
-								name="rank_special" value="1"/>
+									type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?>
+									name="rank_special" value="1"/>
 						</td>
 					</tr>
 				</table>

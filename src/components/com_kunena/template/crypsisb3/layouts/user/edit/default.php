@@ -15,7 +15,7 @@ $tabs          = $this->getTabsEdit();
 $avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?><?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . JText::_('COM_KUNENA_BACK'),
@@ -23,8 +23,9 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 	); ?>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" enctype="multipart/form-data" name="kuserform"
-	  class="form-validate" id="kuserform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post"
+      enctype="multipart/form-data" name="kuserform"
+      class="form-validate" id="kuserform">
 	<input type="hidden" name="task" value="save"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
@@ -33,29 +34,29 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 		<ul id="KunenaUserEdit" class="nav nav-tabs">
 
 			<?php foreach ($tabs as $name => $tab)
-			:
-	?>
-			<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
+				:
+				?>
+				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
-			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-				<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
-			</li>
-			<?php endif;?>
+				<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
+					<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+				</li>
+			<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>
 		<div class="tab-content">
 
 			<?php foreach ($tabs as $name => $tab)
-			:
-	?>
-			<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
+				:
+				?>
+				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
 				<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="edit<?php echo $name; ?>">
 					<div>
 						<?php echo $tab->content; ?>
 					</div>
 				</div>
-			<?php endif;?>
+			<?php endif; ?>
 			<?php endforeach; ?>
 
 		</div>
@@ -66,7 +67,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				<?php echo KunenaIcons::save(); ?><?php echo JText::_('COM_KUNENA_SAVE'); ?>
 			</button>
 			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
-					title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
+			        title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo JText::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>

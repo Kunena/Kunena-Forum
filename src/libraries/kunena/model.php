@@ -65,8 +65,8 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	protected $embedded = false;
 
 	/**
-	 * @param   array                $config config
-	 * @param   \Joomla\Input\Input  $input  input
+	 * @param   array               $config config
+	 * @param   \Joomla\Input\Input $input  input
 	 *
 	 * @throws Exception
 	 * @since Kunena

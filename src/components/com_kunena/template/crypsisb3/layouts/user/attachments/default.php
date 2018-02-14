@@ -97,7 +97,8 @@ $attachments = $this->attachments;
 					<td class="center">
 
 						<?php if ($canDelete) : ?>
-							<a class="center" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
+							<a class="center" href="javascript:void(0);"
+							   onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
 								<?php echo KunenaIcons::delete(); ?>
 							</a>
 						<?php endif; ?>
@@ -114,6 +115,7 @@ $attachments = $this->attachments;
 			->set('display', true); ?>
 	</div>
 	<?php if ($attachments) : ?>
-		<input class="btn btn-default pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>"/>
+		<input class="btn btn-default pull-right" type="submit"
+		       value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>"/>
 	<?php endif; ?>
 </form>

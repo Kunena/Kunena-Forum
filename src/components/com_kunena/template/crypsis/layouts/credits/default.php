@@ -28,15 +28,16 @@ defined('_JEXEC') or die;
 
 		<dl class="dl-horizontal">
 			<?php foreach ($this->memberList as $member)
-			:
-	?>
-			<dt>
-				<a href="<?php echo $member['url']; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
-			</dt>
-			<dd>
-				<?php echo $member['title']; ?>
-			</dd>
-			<hr class="hr-condensed">
+				:
+				?>
+				<dt>
+					<a href="<?php echo $member['url']; ?>" target="_blank"
+					   rel="noopener noreferrer"><?php echo $this->escape($member['name']); ?></a>
+				</dt>
+				<dd>
+					<?php echo $member['title']; ?>
+				</dd>
+				<hr class="hr-condensed">
 			<?php endforeach ?>
 			<dt><a><?php echo JText::_('COM_KUNENA_DONATE'); ?></a></dt>
 			<dd>
@@ -44,8 +45,9 @@ defined('_JEXEC') or die;
 					<input name="cmd" type="hidden" value="_s-xclick">
 					<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
 					<input name="submit" type="image" alt="PayPal - The safer, easier way to pay online!"
-						   src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
-					<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
+					       src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
+					<img width="1" height="1" alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
+					     border="0">
 				</form>
 			</dd>
 			<hr class="hr-condensed">
@@ -63,8 +65,10 @@ defined('_JEXEC') or die;
 		</p>
 
 		<p class="center">
-			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2018 <a href="https://www.kunena.org" target="_blank">Kunena</a>,
-			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href="https://www.gnu.org/copyleft/gpl.html" target="_blank">GNU GPL</a>
+			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2018 <a href="https://www.kunena.org"
+			                                                                      target="_blank">Kunena</a>,
+			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href="https://www.gnu.org/copyleft/gpl.html"
+			                                                  target="_blank">GNU GPL</a>
 		</p>
 	</div>
 </div>

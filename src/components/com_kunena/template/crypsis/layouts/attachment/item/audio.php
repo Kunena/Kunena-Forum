@@ -26,5 +26,6 @@ if (!$attachment->isAudio())
 <audio src="<?php echo $location; ?>" controls>
 	Your browser does not support the <code>audio</code> element.
 </audio>
-<p><?php echo $attachment->getShortName(); ?><a href="<?php echo $location; ?>" title="Download" download> <i class="icon icon-download"></i></a></p>
+<p><?php echo $attachment->getShortName(); ?><a href="<?php echo $location; ?>" title="Download" download> <i
+				class="icon icon-download"></i></a></p>
 <div class="clearfix"></div>

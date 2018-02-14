@@ -75,9 +75,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * This event is fired before the data is actually saved so we are going
 	 * to queue the item to be indexed later.
 	 *
-	 * @param   string  $context The context of the content passed to the plugin.
-	 * @param   \Joomla\CMS\Table\Table  $row     A \Joomla\CMS\Table\Table object
-	 * @param   boolean $isNew   If the content is just about to be created
+	 * @param   string                  $context The context of the content passed to the plugin.
+	 * @param   \Joomla\CMS\Table\Table $row     A \Joomla\CMS\Table\Table object
+	 * @param   boolean                 $isNew   If the content is just about to be created
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -195,7 +195,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to remove the link information for items that have been deleted.
 	 *
-	 * @param   string $context The context of the action being performed.
+	 * @param   string                  $context The context of the action being performed.
 	 * @param   \Joomla\CMS\Table\Table $table   A \Joomla\CMS\Table\Table object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
@@ -262,7 +262,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		{
 			// Adjust the offsets.
 			$iState->batchOffset = $iState->batchSize;
-			$iState->totalItems -= $item->id - $offset;
+			$iState->totalItems  -= $item->id - $offset;
 
 			// Update the indexer state.
 			$aState['offset']                    = $item->id;
@@ -640,7 +640,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		// Check against Joomla user group
 		elseif ($category->accesstype == 'joomla.group')
 		{
-			$pub_access   = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
+			$pub_access = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
 
 			if ($pub_access)
 			{

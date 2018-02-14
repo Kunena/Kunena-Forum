@@ -44,9 +44,9 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 * Method to get anchor link on the same page
 	 *
 	 * @param   int    $anchor The anchor number
-	 * @param   string $name  The name for the link
-	 * @param   string $rel   The rel attribute for the link
-	 * @param   string $class The class attribute for the link
+	 * @param   string $name   The name for the link
+	 * @param   string $rel    The rel attribute for the link
+	 * @param   string $class  The class attribute for the link
 	 *
 	 * @return string
 	 * @since Kunena

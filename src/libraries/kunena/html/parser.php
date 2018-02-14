@@ -131,7 +131,7 @@ abstract class KunenaHtmlParser
 		$event_target  = (array) $config->get('jcontentevent_target', array());
 		$event_plugins = (array) $config->get('jcontentevent_plugins', array());
 
-		$name = '';
+		$name   = '';
 		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
 
 		foreach ($plugin as $key => $value)
@@ -157,11 +157,11 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string  $txt     text
-	 * @param   null    $parent  parent
-	 * @param   int     $len     len
-	 * @param   string  $context context
-	 * @param   string  $target  target
+	 * @param   string $txt     text
+	 * @param   null   $parent  parent
+	 * @param   int    $len     len
+	 * @param   string $context context
+	 * @param   string $target  target
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -256,7 +256,7 @@ abstract class KunenaHtmlParser
 			$txt         = preg_replace($pattern, $replacement, $txt);
 		}
 
-		$bbcode = KunenaBbcode::getInstance(self::$relative);
+		$bbcode                   = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->autolink_disable = 1;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);

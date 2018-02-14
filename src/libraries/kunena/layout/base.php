@@ -127,7 +127,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to render the view.
 	 *
-	 * @param   string  $layout layout
+	 * @param   string $layout layout
 	 *
 	 * @return  string  The rendered view.
 	 *

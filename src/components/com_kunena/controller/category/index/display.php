@@ -344,8 +344,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl = KunenaRoute::_();
-						$canonicalUrl = str_replace('?limitstart=0', '', $canonicalUrl);
+						$canonicalUrl               = KunenaRoute::_();
+						$canonicalUrl               = str_replace('?limitstart=0', '', $canonicalUrl);
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

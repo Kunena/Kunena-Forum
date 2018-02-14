@@ -273,7 +273,7 @@ abstract class KunenaForum
 	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return boolean Version number.
+	 * @return bool Version number.
 	 * @since Kunena
 	 */
 	public static function version()
@@ -313,8 +313,8 @@ abstract class KunenaForum
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
-		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
+		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 
 	/**
@@ -337,7 +337,7 @@ abstract class KunenaForum
 	/**
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
-	 * @return boolean Major version in xxx.yyy format.
+	 * @return bool Major version in xxx.yyy format.
 	 * @since Kunena
 	 */
 	public static function versionMajor()
@@ -353,7 +353,7 @@ abstract class KunenaForum
 	/**
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
-	 * @return boolean Date in yyyy-mm-dd format.
+	 * @return bool Date in yyyy-mm-dd format.
 	 * @since Kunena
 	 */
 	public static function versionDate()
@@ -369,7 +369,7 @@ abstract class KunenaForum
 	/**
 	 * Returns codename from Kunena release.
 	 *
-	 * @return boolean Codename.
+	 * @return bool Codename.
 	 * @since Kunena
 	 */
 	public static function versionName()

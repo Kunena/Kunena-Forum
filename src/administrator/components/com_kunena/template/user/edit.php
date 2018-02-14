@@ -50,7 +50,8 @@ jQuery(function($) {
 				<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>
 				: <?php echo $this->escape($this->user->name); ?></div>
 			<hr class="hr-condensed">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm"
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
+			      method="post" id="adminForm"
 			      name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="boxchecked" value="1"/>
@@ -63,23 +64,30 @@ jQuery(function($) {
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+										<a href="#tab1"
+										   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
 									</li>
 									<li>
-										<a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_INFO'); ?></a>
+										<a href="#tab2"
+										   data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_INFO'); ?></a>
 									</li>
-									<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
-									</li>
-									<li>
-										<a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
-									</li>
-									<li>
-										<a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
-									</li>
-									<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
+									<li><a href="#tab3"
+									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
 									</li>
 									<li>
-										<a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+										<a href="#tab4"
+										   data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+									</li>
+									<li>
+										<a href="#tab5"
+										   data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+									</li>
+									<li><a href="#tab6"
+									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
+									</li>
+									<li>
+										<a href="#tab7"
+										   data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
 									</li>
 								</ul>
 								<div class="tab-content">
@@ -101,7 +109,8 @@ jQuery(function($) {
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 											<div>
-													<textarea id="user-signature" class="input-xxlarge" name="signature" cols="4" rows="6"
+													<textarea id="user-signature" class="input-xxlarge" name="signature"
+													          cols="4" rows="6"
 													><?php echo $this->escape($this->user->signature); ?></textarea>
 											</div>
 											<div>
@@ -130,7 +139,8 @@ jQuery(function($) {
 													<td>
 														<input id="personaltext" type="text"
 														       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-														       name="personaltext" value="<?php echo $this->escape($this->user->personalText); ?>"/>
+														       name="personaltext"
+														       value="<?php echo $this->escape($this->user->personalText); ?>"/>
 													</td>
 												</tr>
 												<tr>
@@ -142,9 +152,11 @@ jQuery(function($) {
 													<td>
 														<div id="birthdate">
 															<div class="input-append date">
-																<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
+																<input type="text" name="birthdate"
+																       data-date-format="mm/dd/yyyy"
 																       value="<?php echo $this->user->birthdate == '0001-01-01' ? \Joomla\CMS\Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
-																<span class="add-on"><i class="icon-grid-view-2 "></i></span>
+																<span class="add-on"><i
+																			class="icon-grid-view-2 "></i></span>
 															</div>
 														</div>
 													</td>
@@ -186,8 +198,9 @@ jQuery(function($) {
 														</label>
 													</td>
 													<td>
-														<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-															. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+														<span class="hasTooltip"
+														      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+															      . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 															<input id="social-site" type="text" name="websitename"
 															       value="<?php echo $this->escape($this->user->websitename); ?>"/>
 														</span>
@@ -218,10 +231,12 @@ jQuery(function($) {
 															</td>
 															<td>
 																<?php if ($key != 'qq') : ?>
-																<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
-																. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
+																<span class="hasTooltip"
+																      title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
+																	      . '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																<?php endif; ?>
-																	<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
+																	<input id="social-<?php echo $key; ?>" type="text"
+																	       name="<?php echo $key ?>"
 																	       value="<?php echo $this->escape($this->user->$key); ?>"/>
 																</span>
 															</td>
@@ -353,7 +368,8 @@ jQuery(function($) {
 													?>
 													<tr>
 														<td width="30"><?php echo ++$i; ?></td>
-														<td width="60"><strong><?php echo $this->escape($ip); ?></strong>
+														<td width="60">
+															<strong><?php echo $this->escape($ip); ?></strong>
 														</td>
 														<td>
 															(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>

@@ -11,12 +11,13 @@
 
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post" name="settingFormModal"
-	  id="settingFormModal">
+<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
+      name="settingFormModal"
+      id="settingFormModal">
 	<div class="modal hide fade" id="settingModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<input type="hidden" name="task" value="setdefault" />
+				<input type="hidden" name="task" value="setdefault"/>
 				<?php echo JHtml::_('form.token') ?>
 
 				<div class="modal-header">
@@ -30,7 +31,8 @@ defined('_JEXEC') or die;
 					<button class="btn" type="button" data-dismiss="modal">
 						<?php echo JText::_('JCANCEL'); ?>
 					</button>
-					<button class="btn btn-primary" type="submit" onclick="document.getElementById('settingFormModal').submit();">
+					<button class="btn btn-primary" type="submit"
+					        onclick="document.getElementById('settingFormModal').submit();">
 						<?php echo JText::_('JSUBMIT'); ?>
 					</button>
 				</div>

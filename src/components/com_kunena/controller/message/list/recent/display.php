@@ -143,7 +143,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;
@@ -180,7 +180,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;
@@ -245,7 +245,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-				$actions = array('approve', 'delete', 'move', 'permdelete');
+				$actions          = array('approve', 'delete', 'move', 'permdelete');
 		}
 
 		$this->actions = $this->getMessageActions($this->messages, $actions);
@@ -261,17 +261,17 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 */
 	protected function prepareDocument()
 	{
-		$page = $this->pagination->pagesCurrent;
+		$page  = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
-		$user = KunenaUserHelper::get($this->state->get('user'));
+		$user  = KunenaUserHelper::get($this->state->get('user'));
 
-		$headerText = $this->headerText . ' ' . JText::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
-		$doc = \Joomla\CMS\Factory::getDocument();
-		$app = \Joomla\CMS\Factory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
-		$config = \Joomla\CMS\Factory::getApplication('site');
+		$headerText      = $this->headerText . ' ' . JText::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$doc             = \Joomla\CMS\Factory::getDocument();
+		$app             = \Joomla\CMS\Factory::getApplication();
+		$menu_item       = $app->getMenu()->getActive();
+		$config          = \Joomla\CMS\Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
-		$robots = $componentParams->get('robots');
+		$robots          = $componentParams->get('robots');
 
 		if ($menu_item)
 		{

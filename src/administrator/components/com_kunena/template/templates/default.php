@@ -30,13 +30,15 @@ JHtml::_('dropdown.init');
 				<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
 			</div>
 			<hr class="hr-condensed">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm" name="adminForm">
-				<input type="hidden" name="task" value="" />
-				<input type="hidden" name="boxchecked" value="0" />
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
+			      method="post" id="adminForm" name="adminForm">
+				<input type="hidden" name="task" value=""/>
+				<input type="hidden" name="boxchecked" value="0"/>
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="btn-group pull-right hidden-phone">
-					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+					<label for="limit"
+					       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 
@@ -61,29 +63,36 @@ JHtml::_('dropdown.init');
 					</tfoot>
 					<tbody>
 					<?php foreach ($this->templates as $id => $row)
-					:
-	?>
+						:
+						?>
 						<tr>
 							<td>
-								<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
+								<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>" name="cid[]"
+								       value="<?php echo $this->escape($row->directory); ?>"
+								       onclick="Joomla.isChecked(this.checked);"/>
 							</td>
 							<td>
 								<?php $img_path = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
-								<span class="editlinktip hasTip" title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-							<a href="#edit" onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name);?></a>
+								<span class="editlinktip hasTip"
+								      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+							<a href="#edit"
+							   onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
 						</span>
 							</td>
 							<td class="center">
 								<?php if ($row->published == 1)
-								:
-	?>
-									<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
+									:
+									?>
+									<i class="icon-star"
+									   alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
 								<?php else
 
-	:
-	?>
-									<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
-										<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
+									:
+									?>
+									<a href="javascript: void(0);"
+									   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
+										<i class="icon-star-empty"
+										   alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
 									</a>
 								<?php endif; ?>
 							</td>
@@ -97,7 +106,8 @@ JHtml::_('dropdown.init');
 								<?php echo $this->escape($row->creationdate); ?>
 							</td>
 							<td>
-								<a href="<?php echo $this->escape($row->authorUrl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorUrl); ?></a>
+								<a href="<?php echo $this->escape($row->authorUrl); ?>" target="_blank"
+								   rel="noopener noreferrer"><?php echo $this->escape($row->authorUrl); ?></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -106,7 +116,8 @@ JHtml::_('dropdown.init');
 				<table class="table table-striped" style="padding-top: 200px;">
 					<thead>
 					<tr>
-						<td colspan="7"><strong><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PREMIUM'); ?></strong></td>
+						<td colspan="7">
+							<strong><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PREMIUM'); ?></strong></td>
 					</tr>
 					</thead>
 					<tbody>
@@ -125,8 +136,10 @@ JHtml::_('dropdown.init');
 						</td>
 						<td style="width: 7%;">
 							<?php $img_path = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
-							<span class="editlinktip hasTip" title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank" rel="noopener noreferrer">Blue Eagle 5</a>
+							<span class="editlinktip hasTip"
+							      title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank"
+								   rel="noopener noreferrer">Blue Eagle 5</a>
 							</span>
 						</td>
 						<td style="width: 7%;">
@@ -136,7 +149,8 @@ JHtml::_('dropdown.init');
 							K5.0.X
 						</td>
 						<td style="width: 5%;">
-							<a href="https://www.kunena.org/download/templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+							<a href="https://www.kunena.org/download/templates" target="_blank"
+							   rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 						</td>
 						<td style="width: 25%;">
 							<a href="https://www.kunena.org" target="_blank" rel="noopener noreferrer">https://www.kunena.org</a>
@@ -148,8 +162,10 @@ JHtml::_('dropdown.init');
 						<td style="width: 5%;">$8.99 - $20.00
 						</td>
 						<td style="width: 7%;">
-							<span class="editlinktip hasTip" title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="http://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">9themestore.com</a>
+							<span class="editlinktip hasTip"
+							      title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="http://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates"
+								   target="_blank" rel="noopener noreferrer">9themestore.com</a>
 							</span>
 						</td>
 						<td style="width: 7%;">
@@ -159,10 +175,12 @@ JHtml::_('dropdown.init');
 							K5.0.X
 						</td>
 						<td style="width: 5%;">
-							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+							   rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 						</td>
 						<td style="width: 25%;">
-							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank" rel="noopener noreferrer">http://www.9themestore.com</a>
+							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+							   rel="noopener noreferrer">http://www.9themestore.com</a>
 						</td>
 						<td style="width: 30%;">
 						</td>

@@ -34,30 +34,31 @@ else
 
 <small class="text-muted pull-right">
 	<?php if ($this->ipLink && !empty($this->message->ip))
-	:
-	?>
-		<?php echo KunenaIcons::ip();?>
+		:
+		?>
+		<?php echo KunenaIcons::ip(); ?>
 		<span class="ip"> <?php echo $this->ipLink; ?> </span>
-	<?php endif;?>
-	<?php echo KunenaIcons::clock();?>
+	<?php endif; ?>
+	<?php echo KunenaIcons::clock(); ?>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<?php
 	if ($message->modified_time)
-	:
-?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
-	endif;?>
-	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
-	<span class="visible-xs"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink();?></span>
+		:
+		?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+	endif; ?>
+	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
+	   rel="canonical">#<?php echo $this->numLink; ?></a>
+	<span class="visible-xs"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 </small>
 <div class="clear-fix"></div>
 <div class="horizontal-message">
-	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) :	?> badger-moderator <?php endif;?>"
-		data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?>"
+	     data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
 			</div>
-			<?php if ($signature) :	?>
+			<?php if ($signature) : ?>
 				<div class="ksig">
 					<hr>
 					<span class="ksignature"><?php echo $signature; ?></span>
@@ -70,7 +71,8 @@ else
 	</div>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
-			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false" style="display: none;">
+			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
+			     data-backdrop="false" style="display: none;">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -96,9 +98,9 @@ else
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<div class="clearfix"></div>
+		<div class="clearfix"></div>
 	<?php elseif ($attachs->total > 0 && !$this->me->exists())
-	:
+		:
 		if ($attachs->image > 0 && !$this->config->showimgforguest)
 		{
 			if ($attachs->image > 1)
@@ -126,7 +128,7 @@ else
 
 	<?php
 	if ($message->modified_by && $this->config->editmarkup)
-	:
+		:
 		$dateshown = $datehover = '';
 
 		if ($message->modified_time)
@@ -145,7 +147,7 @@ else
 	<?php endif; ?>
 
 	<?php if (!empty($this->thankyou))
-	:
+		:
 		?>
 		<div class="kmessage-thankyou">
 			<?php
@@ -157,5 +159,5 @@ else
 			}
 			?>
 		</div>
-	<?php endif;?>
+	<?php endif; ?>
 </div>

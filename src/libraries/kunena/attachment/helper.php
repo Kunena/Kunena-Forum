@@ -337,8 +337,7 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			}
-			while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -717,7 +716,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @param   string $mime mime
 	 *
-	 * @return  boolean  True if mime is image.
+	 * @return  bool  True if mime is image.
 	 * @since Kunena
 	 */
 	public function isImageMime($mime)

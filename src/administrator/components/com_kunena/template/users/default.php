@@ -47,42 +47,55 @@ JHtml::_('dropdown.init');
 				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 			</div>
 			<hr class="hr-condensed">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm"
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
+			      method="post" id="adminForm"
 			      name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="type" value="list"/>
-				<input type="hidden" name="filter_order" value="<?php echo $this->escape($this->state->get('list.ordering')) ?>"/>
-				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape($this->state->get('list.direction')) ?>"/>
+				<input type="hidden" name="filter_order"
+				       value="<?php echo $this->escape($this->state->get('list.ordering')) ?>"/>
+				<input type="hidden" name="filter_order_Dir"
+				       value="<?php echo $this->escape($this->state->get('list.direction')) ?>"/>
 				<input type="hidden" name="boxchecked" value="0"/>
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="filter-search btn-group pull-left">
-						<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH') ?></label>
+						<label for="filter_search"
+						       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH') ?></label>
 						<input type="text" name="filter_search" id="filter_search" class="filter"
-						       placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" value="<?php echo $this->filterSearch; ?>"
+						       placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>"
+						       value="<?php echo $this->filterSearch; ?>"
 						       title="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>"/>
 					</div>
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
-								class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?></button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+						<button class="btn tip" type="submit"
+						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
+									class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
+						</button>
+						<button class="btn tip" type="button"
+						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 						        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
-								class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
+									class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
+						</button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
-						<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+						<label for="limit"
+						       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
-						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
-						<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+						<label for="directionTable"
+						       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+						<select name="directionTable" id="directionTable" class="input-medium"
+						        onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
 							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
-						<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+						<label for="sortTable"
+						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 							<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
@@ -94,7 +107,8 @@ JHtml::_('dropdown.init');
 				<table class="table table-striped" id="userList">
 					<thead>
 					<tr>
-						<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/></th>
+						<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value=""
+						                                            onclick="Joomla.checkAll(this)"/></th>
 						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 						<th class="hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 						<th width="5%"
@@ -118,56 +132,71 @@ JHtml::_('dropdown.init');
 						<td class="nowrap">
 							<label for="filter_username"
 							       class="element-invisible"><?php echo JText::_('COM_KUNENA_USERS_FIELD_INPUT_SEARCHUSERS'); ?></label>
-							<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username"
+							<input class="input-block-level input-filter filter" type="text" name="filter_username"
+							       id="filter_username"
 							       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-							       value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+							       value="<?php echo $this->filterUsername; ?>"
+							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<td class="nowrap">
 							<label for="filter_email"
 							       class="element-invisible"><?php echo JText::_('COM_KUNENA_USERS_FIELD_INPUT_SEARCHUSERS'); ?></label>
-							<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email"
+							<input class="input-block-level input-filter filter" type="text" name="filter_email"
+							       id="filter_email"
 							       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-							       value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+							       value="<?php echo $this->filterEmail; ?>"
+							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<td class="nowrap">
 							<label for="filter_ip"
 							       class="element-invisible"><?php echo JText::_('COM_KUNENA_USERS_FIELD_INPUT_SEARCHUSERS'); ?></label>
-							<input class="input-block-level input-filter filter" type="text" name="filter_ip" id="filter_ip"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterIp; ?>"
+							<input class="input-block-level input-filter filter" type="text" name="filter_ip"
+							       id="filter_ip"
+							       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+							       value="<?php echo $this->filterIp; ?>"
 							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<td class="nowrap">
 							<label for="filter_rank"
 							       class="element-invisible"><?php echo JText::_('COM_KUNENA_USERS_FIELD_INPUT_SEARCHUSERS'); ?></label>
-							<select name="filter_rank" id="filter_rank" class="select-filter filter" onchange="Joomla.orderTable()">
+							<select name="filter_rank" id="filter_rank" class="select-filter filter"
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></option>
 								<?php echo JHtml::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filterRank); ?>
 							</select>
 						</td>
 						<td class="nowrap center hidden-phone">
-							<label for="filter_signature" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-							<select name="filter_signature" id="filter_signature" class="select-filter filter" onchange="Joomla.orderTable()">
+							<label for="filter_signature"
+							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							<select name="filter_signature" id="filter_signature" class="select-filter filter"
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
-							<label for="filter_block" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-							<select name="filter_block" id="filter_block" class="select-filter filter" onchange="Joomla.orderTable()">
+							<label for="filter_block"
+							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							<select name="filter_block" id="filter_block" class="select-filter filter"
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
-							<label for="filter_banned" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-							<select name="filter_banned" id="filter_banned" class="select-filter filter" onchange="Joomla.orderTable()">
+							<label for="filter_banned"
+							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							<select name="filter_banned" id="filter_banned" class="select-filter filter"
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
-							<label for="filter_moderator" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-							<select name="filter_moderator" id="filter_moderator" class="select-filter filter" onchange="Joomla.orderTable()">
+							<label for="filter_moderator"
+							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							<select name="filter_moderator" id="filter_moderator" class="select-filter filter"
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
 							</select>
@@ -201,13 +230,14 @@ JHtml::_('dropdown.init');
 									<?php echo JHtml::_('grid.id', $i, intval($user->userid)) ?>
 								</td>
 								<td>
-									<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true);?>"
+									<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true); ?>"
 									      title="<?php echo $this->escape($user->username); ?> ">
 										<?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
 										<a href="#edit"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
 										<small>
-											(<?php echo JText::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>)
+											(<?php echo JText::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>
+											)
 										</small>
 									</span>
 								</td>
@@ -242,13 +272,15 @@ JHtml::_('dropdown.init');
 									</span>
 								</td>
 								<td class="center hidden-phone">
-									<a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>" href="javascript: void(0);"
+									<a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>"
+									   href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
 										<?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
 									</a>
 								</td>
 								<td class="center hidden-phone">
-									<a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>" href="javascript: void(0);"
+									<a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>"
+									   href="javascript: void(0);"
 									   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
 										<?php echo $user->isBanned() ? $img_yes : $img_no; ?>
 									</a>

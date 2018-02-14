@@ -31,8 +31,8 @@ else
 <span <?php echo $class; ?> >
 	<?php
 	if ($topicicontype !== 0)
-	:
-	?>
+		:
+		?>
 		<?php echo $icons ?>
 	<?php endif; ?>
 	<span class="sr-only"></span><?php echo JText::_($icon->name); ?>

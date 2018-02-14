@@ -89,7 +89,8 @@ class KunenaImage extends \Joomla\Image\Image
 	 *
 	 * @since  K5.0
 	 *
-	 * @param   string  $filename filename
+	 * @param   string $filename filename
+	 *
 	 * @return void
 	 */
 	public static function correctImageOrientation($filename)
@@ -309,7 +310,7 @@ class KunenaImage extends \Joomla\Image\Image
 		else
 		{
 			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
-					$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
+					$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(),)
 			);
 		}
 

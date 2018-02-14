@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<input type="text" name="username" id="username"
-					   value="<?php echo $this->escape($this->user->get('username')); ?>"
+				       value="<?php echo $this->escape($this->user->get('username')); ?>"
 					<?php
 					if (!$this->changeUsername)
 					{
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<input class="required" type="text" id="name" name="name"
-					   value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
+				       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
 			</td>
 		</tr>
 		<tr>
@@ -45,19 +45,19 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<input class="required validate-email" type="text" id="email" name="email"
-					   value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
+				       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
 			</td>
 		</tr>
 		<?php if ($this->user->get('password'))
-		:
-	?>
+			:
+			?>
 			<tr>
 				<td>
 					<label for="password"><?php echo JText::_('COM_KUNENA_PASS'); ?></label>
 				</td>
 				<td>
 					<input class="validate-password" type="password" id="password" name="password"
-						   value="" size="40"/>
+					       value="" size="40"/>
 				</td>
 			</tr>
 			<tr>
@@ -66,7 +66,7 @@ defined('_JEXEC') or die;
 				</td>
 				<td>
 					<input class="validate-passverify" type="password" id="password2" name="password2"
-						   value="" size="40"/>
+					       value="" size="40"/>
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -74,7 +74,7 @@ defined('_JEXEC') or die;
 	</table>
 
 <?php if (!empty($this->frontendForm))
-:
+	:
 	?>
 	<h3>
 		<?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?>
@@ -84,8 +84,8 @@ defined('_JEXEC') or die;
 		<tbody>
 
 		<?php foreach ($this->frontendForm as $field)
-		:
-	?>
+			:
+			?>
 			<tr>
 				<td class="span3">
 					<?php echo $field->label; ?>

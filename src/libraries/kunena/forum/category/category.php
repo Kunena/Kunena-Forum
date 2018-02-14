@@ -269,7 +269,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * Subscribe / Unsubscribe user to this category.
 	 *
 	 * @param   boolean $value True for subscribe, false for unsubscribe.
-	 * @param   mixed   $user user
+	 * @param   mixed   $user  user
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -295,7 +295,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @param   mixed $count Internal parameter to set new count.
 	 *
-	 * @return integer    New topics count.
+	 * @return int    New topics count.
 	 * @since Kunena
 	 */
 	public function getNewCount($count = null)
@@ -1035,8 +1035,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * Add or remove moderator from this category.
 	 *
-	 * @param   mixed $user   user
-	 * @param   bool  $value  value
+	 * @param   mixed $user  user
+	 * @param   bool  $value value
 	 *
 	 * @return boolean
 	 *
@@ -1235,7 +1235,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $params params
 	 * @param   int   $limit  limit
 	 *
-	 * @return integer    Number of purged topics.
+	 * @return int    Number of purged topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1283,7 +1283,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array $params params
 	 * @param   int   $limit  limit
 	 *
-	 * @return integer    Number of trashed topics.
+	 * @return int    Number of trashed topics.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1326,7 +1326,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * Delete this category and all related information from the database.
 	 *
-	 * @return boolean    True on success
+	 * @return bool    True on success
 	 * @throws Exception
 	 * @since Kunena
 	 */

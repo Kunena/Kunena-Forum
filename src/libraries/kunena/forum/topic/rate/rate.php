@@ -253,7 +253,7 @@ class KunenaForumTopicRate extends JObject
 	/**
 	 * @param   int $userid userid
 	 *
-	 * @return boolean userid if hes in table else empty
+	 * @return bool userid if hes in table else empty
 	 * @internal param int $pid
 	 * @since    2.0
 	 */

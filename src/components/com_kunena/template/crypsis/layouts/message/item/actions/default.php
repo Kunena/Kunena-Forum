@@ -18,14 +18,16 @@ $quick           = $this->ktemplate->params->get('quick');
 
 <?php if (!$fullactions) : ?>
 
-<?php if (empty($this->message_closed)) : ?>
-<div class="kmessagepadding">
-	<?php if($this->quickreply && $quick != 2) : ?>
-		<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-			data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow">
-				<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-		</a>
-	<?php endif; ?>
+	<?php if (empty($this->message_closed)) : ?>
+		<div class="kmessagepadding">
+			<?php if ($this->quickreply && $quick != 2) : ?>
+				<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
+				   class="btn openmodal"
+				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
+				   rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				</a>
+			<?php endif; ?>
 
 			<?php echo $this->messageButtons->get('reply'); ?>
 			<?php echo $this->messageButtons->get('quote'); ?>
@@ -59,9 +61,10 @@ endif; ?>
 
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if($this->quickreply  && $quick != 2) : ?>
-				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-					data-toggle="modal" rel="nofollow">
+			<?php if ($this->quickreply && $quick != 2) : ?>
+				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
+				   class="btn openmodal"
+				   data-toggle="modal" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>

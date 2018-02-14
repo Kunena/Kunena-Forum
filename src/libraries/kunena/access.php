@@ -77,7 +77,7 @@ class KunenaAccess
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes    = \JFactory::getApplication()->triggerEvent('onKunenaGetAccessControl');
+		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetAccessControl');
 
 		foreach ($classes as $class)
 		{
@@ -373,7 +373,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name, );
+			                                     'title' => $name,);
 		}
 
 		return $list;
@@ -433,8 +433,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get category moderators.
 	 *
-	 * @param   int  $catid  Category Id
-	 * @param   bool $all    all
+	 * @param   int  $catid Category Id
+	 * @param   bool $all   all
 	 *
 	 * @return array
 	 * @since Kunena
@@ -620,8 +620,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user   user
-	 * @param   int   $catid  catid
+	 * @param   mixed $user  user
+	 * @param   int   $catid catid
 	 *
 	 * @return boolean
 	 * @since Kunena

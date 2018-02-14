@@ -53,9 +53,9 @@ $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
 ?>
 <div itemscope itemtype="http://schema.org/Article">
-	<meta itemprop="name" content="<?php echo $topic->displayField('subject'); ?>" />
-	<meta itemprop="author" content="<?php echo $topic->getAuthor()->username; ?>" />
-	<meta itemprop="datePublished" content="<?php echo new KunenaDate($topic->first_post_time); ?>" />
+	<meta itemprop="name" content="<?php echo $topic->displayField('subject'); ?>"/>
+	<meta itemprop="author" content="<?php echo $topic->getAuthor()->username; ?>"/>
+	<meta itemprop="datePublished" content="<?php echo new KunenaDate($topic->first_post_time); ?>"/>
 
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
@@ -93,11 +93,11 @@ $quick           = $this->ktemplate->params->get('quick');
 	<div class="clearfix"></div>
 
 	<?php if ($social == 1) : ?>
-			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 	<?php endif; ?>
 
 	<?php if ($social == 2) : ?>
-			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
+		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 
 	<?php

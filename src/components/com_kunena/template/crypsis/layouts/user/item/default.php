@@ -20,12 +20,12 @@ $tabs = $this->getTabs();
 
 <h2 class="pull-right">
 	<?php if ($this->profile->isAuthorised('edit'))
-	:
-	?>
+		:
+		?>
 		<?php echo $this->profile->getLink(
-			KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
-			JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
-		); ?>
+		KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
+		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
+	); ?>
 	<?php endif; ?>
 </h2>
 
@@ -35,17 +35,17 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary');?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-<br />
-<br />
+	<br/>
+	<br/>
 
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab)
-		:
-	?>
+			:
+			?>
 			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
 				<a href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
@@ -55,8 +55,8 @@ echo $this->subLayout('User/Item/Summary')
 	<div class="tab-content">
 
 		<?php foreach ($tabs as $name => $tab)
-		:
-	?>
+			:
+			?>
 			<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
 				<div>
 					<?php echo $tab->content; ?>

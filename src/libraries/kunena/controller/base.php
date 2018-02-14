@@ -43,9 +43,9 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \Joomla\Input\Input                       $input   The input object.
-	 * @param   \Joomla\CMS\Application\BaseApplication   $app     The application object.
-	 * @param   \Joomla\Registry\Registry|array           $options Array \Joomla\Registry\Registry object with the
+	 * @param   \Joomla\Input\Input                     $input   The input object.
+	 * @param   \Joomla\CMS\Application\BaseApplication $app     The application object.
+	 * @param   \Joomla\Registry\Registry|array         $options Array \Joomla\Registry\Registry object with the
 	 *                                                           options to load.
 	 *
 	 * @throws Exception

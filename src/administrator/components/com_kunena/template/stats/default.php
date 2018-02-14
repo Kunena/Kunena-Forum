@@ -64,7 +64,8 @@ if (\Joomla\CMS\Factory::getLanguage()->isRTL())
 					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_TOPICS'); ?></td>
 					<td><strong><?php echo $this->topicCount; ?></strong></td>
 					<td><?php echo JText::_('COM_KUNENA_STATS_LATEST_MEMBER'); ?> </td>
-					<td><strong><?php echo KunenaFactory::getUser(intval($this->lastUserId))->getName(); ?></strong></td>
+					<td><strong><?php echo KunenaFactory::getUser(intval($this->lastUserId))->getName(); ?></strong>
+					</td>
 				</tr>
 				<tr>
 					<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
@@ -106,7 +107,9 @@ if (\Joomla\CMS\Factory::getLanguage()->isRTL())
 								<?php echo $item->link ?>
 							</td>
 							<td>
-								<img class="kstats-bar" src="<?php echo \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/bar.png' ?>" alt="stats" height="15"
+								<img class="kstats-bar"
+								     src="<?php echo \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/bar.png' ?>"
+								     alt="stats" height="15"
 								     width="<?php echo $item->percent ?>%"/>
 							</td>
 							<td>

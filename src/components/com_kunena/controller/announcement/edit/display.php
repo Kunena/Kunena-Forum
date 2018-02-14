@@ -50,7 +50,7 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 
 		if (!$Itemid)
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 
 			if ($id)

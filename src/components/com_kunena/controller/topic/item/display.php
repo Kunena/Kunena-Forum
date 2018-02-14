@@ -76,7 +76,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		if (!$Itemid && $format != 'feed')
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&Itemid={$itemid}", false));
 			$controller->redirect();
@@ -178,7 +178,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = $this->topic->getUrl();
+							$canonicalUrl               = $this->topic->getUrl();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;
@@ -414,7 +414,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$image = '';
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc   = \Joomla\CMS\Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 		$doc->setMetaData('og:type', 'article', 'property');
 		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
@@ -441,7 +441,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		if ($matches)
 		{
-			$image  = substr($title[0], 0, -6);
+			$image = substr($title[0], 0, -6);
 		}
 
 		if ($this->topic->attachments > 0)
@@ -538,7 +538,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;

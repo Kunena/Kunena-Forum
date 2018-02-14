@@ -16,7 +16,7 @@ $sideProfile  = $this->profile->getSideProfile($this);
 $quick        = $template->params->get('quick');
 
 if ($direction === "left")
-:
+	:
 	?>
 	<div class="row-fluid message">
 		<div class="span2 hidden-phone">
@@ -27,14 +27,14 @@ if ($direction === "left")
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
 			if ($quick != 2)
-			:
-	?>
+				:
+				?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
 	</div>
 <?php elseif ($direction === "right")
-:
+	:
 	?>
 	<div class="row-fluid message">
 		<div class="span10 message-<?php echo $this->message->getState(); ?>">
@@ -42,8 +42,8 @@ if ($direction === "left")
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
 			if ($quick != 2)
-			:
-	?>
+				:
+				?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
@@ -52,7 +52,7 @@ if ($direction === "left")
 		</div>
 	</div>
 <?php elseif ($direction === "top")
-:
+	:
 	?>
 	<div class="row-fluid message">
 		<div class="span12  message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
@@ -60,14 +60,14 @@ if ($direction === "left")
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
 			if ($quick != 2)
-			:
-	?>
+				:
+				?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
 	</div>
 <?php elseif ($direction === "bottom")
-:
+	:
 	?>
 	<div class="row-fluid message">
 		<div class="span12 message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
@@ -75,8 +75,8 @@ if ($direction === "left")
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
 			if ($quick != 2)
-			:
-	?>
+				:
+				?>
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>

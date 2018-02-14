@@ -63,7 +63,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			<td class="span1 center hidden-phone">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom" rel="nofollow">
-					<?php echo KunenaIcons::arrowdown();?>
+					<?php echo KunenaIcons::arrowdown(); ?>
 				</a>
 			</td>
 			<td class="span<?php echo $cols ?>">
@@ -134,7 +134,8 @@ $this->addStyleSheet('assets/css/rating.css');
 									'kchecktarget'
 								);
 								?>
-								<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+								<button class="btn" name="kcheckgo"
+								        type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
 							<?php endif; ?>
 						<?php endif; ?>
 					</div>

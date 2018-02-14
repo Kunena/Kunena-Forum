@@ -84,7 +84,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		if (!$Itemid && $format != 'feed')
 		{
-			$itemid = KunenaRoute::fixMissingItemID();
+			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");
 			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
 			$controller->redirect();
@@ -175,7 +175,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc  = \Joomla\CMS\Factory::getDocument();
 		$page = $this->pagination->pagesCurrent;
 
 		if ($page > 1)
@@ -188,7 +188,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = $this->category->getUrl();
+							$canonicalUrl               = $this->category->getUrl();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;
@@ -220,7 +220,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc    = \Joomla\CMS\Factory::getDocument();
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 
@@ -270,7 +270,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl = KunenaRoute::_();
+							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;

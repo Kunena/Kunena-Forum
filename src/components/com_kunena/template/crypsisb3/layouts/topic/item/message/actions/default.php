@@ -25,8 +25,8 @@ if ($this->config->editmarkup && $this->message->modified_time)
 	<div>
 
 		<?php if ($this->config->editmarkup && $this->message->modified_by)
-		:
-	?>
+			:
+			?>
 			<span class="alert" <?php echo $dateTitle; ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateText . JText::_('COM_KUNENA_BY')
 			. ' ' . $this->message->getModifier()->getLink() . '.'; ?>
@@ -41,8 +41,8 @@ if ($this->config->editmarkup && $this->message->modified_time)
 		<?php endif ?>
 
 		<?php if (!empty($this->thankyou))
-		:
-	?>
+			:
+			?>
 			<div>
 				<?php
 				echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';

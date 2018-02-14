@@ -14,20 +14,20 @@ $cols            = !empty($this->actions) ? 6 : 5;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
-$social = $this->ktemplate->params->get('socialshare');
+$social          = $this->ktemplate->params->get('socialshare');
 
 if (KunenaConfig::getInstance()->ratingenabled)
 {
 	$this->addStyleSheet('assets/css/rating.css');
-}?>
+} ?>
 <div class="row-fluid">
 	<div class="span12">
-	<?php if ($social == 1) : ?>
-		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
-	<?php endif; ?>
-	<?php if ($social == 2) : ?>
-		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
-	<?php endif; ?>
+		<?php if ($social == 1) : ?>
+			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+		<?php endif; ?>
+		<?php if ($social == 2) : ?>
+			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
+		<?php endif; ?>
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
@@ -42,7 +42,8 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		<?php if ($view != 'user') : ?>
 			<div class="filter-time pull-right">
 				<h2 class="filter-sel">
-					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-phone">
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
@@ -70,7 +71,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 		->set('display', true); ?>
 </div>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
+      id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
@@ -124,7 +126,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 								$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
-							<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+							<input type="submit" name="kcheckgo" class="btn"
+							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>

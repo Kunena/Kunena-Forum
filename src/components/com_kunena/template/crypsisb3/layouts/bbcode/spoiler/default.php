@@ -23,23 +23,23 @@ $hidden = !empty($this->hidden);
 			<?php echo $this->title; ?>
 		</span>
 		<span class="kspoiler-expand"<?php if (!$hidden)
-{
+		{
 			echo $hide;
-} ?>>
+		} ?>>
 			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>
 		</span>
 		<span class="kspoiler-hide"<?php if ($hidden)
-{
+		{
 			echo $hide;
-} ?>>
+		} ?>>
 			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'); ?>
 		</span>
 	</div>
 	<div class="kspoiler-wrapper">
 		<div class="kspoiler-content"<?php if ($hidden)
-{
+		{
 			echo $hide;
-} ?>>
+		} ?>>
 			<?php echo $this->content; ?>
 		</div>
 	</div>

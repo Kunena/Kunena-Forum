@@ -159,7 +159,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$app       = \Joomla\CMS\Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc    = \Joomla\CMS\Factory::getDocument();
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');
 		$image  = '';
@@ -223,7 +223,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 
 			$doc->setMetaData('og:description', $title, 'property');
-			$doc->setMetaData('og:title',  $this->profile->getName(), 'property');
+			$doc->setMetaData('og:title', $this->profile->getName(), 'property');
 
 			if (!empty($params_keywords))
 			{

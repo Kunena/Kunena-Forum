@@ -67,8 +67,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+			} while (JDEBUG && $e);
 
 			// Create response data on exceptions.
 			$this->data = array('exceptions' => $exceptions);

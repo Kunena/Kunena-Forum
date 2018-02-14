@@ -43,8 +43,10 @@ if ($config->lightbox == 1)
 		?>
 		<a href="<?php echo $attachment->getUrl(); ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>" data-src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
-				 alt="<?php echo $attachment->getFilename(); ?>"/>
+			<img class="lazy" src="<?php echo $attachment->getUrl(); ?>"
+			     data-src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
+			     height="<?php echo $height; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}
@@ -53,8 +55,9 @@ if ($config->lightbox == 1)
 		?>
 		<a href="<?php echo $attachment->getUrl(); ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>" height="<?php echo $height; ?>"
-				 alt="<?php echo $attachment->getFilename(); ?>"/>
+			<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
+			     height="<?php echo $height; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}
@@ -64,9 +67,11 @@ else
 	if ($config->lazyload)
 	{
 		?>
-		<a title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>" href="<?php echo $name; ?>">
+		<a title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"
+		   href="<?php echo $name; ?>">
 			<img width="<?php echo $config->thumbwidth; ?>"
-				 height="<?php echo $config->thumbheight; ?>" class="lazy" data-src="<?php echo $name; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+			     height="<?php echo $config->thumbheight; ?>" class="lazy" data-src="<?php echo $name; ?>"
+			     alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}
@@ -75,8 +80,9 @@ else
 		?>
 		<a href="<?php echo $name; ?>"
 		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img class="kmsimage" src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
-				 height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+			<img class="kmsimage" src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
+			     width="<?php echo $config->thumbwidth; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 		</a>
 		<?php
 	}

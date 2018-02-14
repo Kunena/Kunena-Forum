@@ -33,6 +33,7 @@ $pollcheck = isset($this->poll);
 	function localstorage() {
 		localStorage.getItem("copyKunenaeditor");
 	}
+
 	function localstorageremove() {
 		localStorage.removeItem("copyKunenaeditor");
 	}

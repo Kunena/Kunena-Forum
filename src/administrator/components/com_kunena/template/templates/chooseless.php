@@ -20,7 +20,8 @@ defined('_JEXEC') or die();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm"
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
+		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
@@ -47,7 +48,8 @@ defined('_JEXEC') or die();
 						?>
 						<tr>
 							<td>
-								<input type="radio" id="cb<?php echo $id; ?>" name="filename" value="<?php echo $this->escape($file); ?>"
+								<input type="radio" id="cb<?php echo $id; ?>" name="filename"
+								       value="<?php echo $this->escape($file); ?>"
 								       onclick="Joomla.isChecked(this.checked);"/>
 							</td>
 							<td>

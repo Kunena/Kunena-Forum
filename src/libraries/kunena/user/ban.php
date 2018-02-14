@@ -679,7 +679,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @param   boolean $updateOnly Save the object only if not a new ban
 	 *
-	 * @return boolean True on success
+	 * @return bool True on success
 	 * @throws Exception
 	 * @since     1.6
 	 */

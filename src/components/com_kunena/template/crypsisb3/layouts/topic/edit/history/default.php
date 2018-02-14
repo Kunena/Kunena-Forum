@@ -26,8 +26,8 @@ $k = 0;
 		<?php echo JText::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
 	</p>
 	<?php foreach ($this->history as $this->message)
-	:
-	?>
+		:
+		?>
 
 		<div class="row">
 			<div class="col-md-2 center">
@@ -41,7 +41,7 @@ $k = 0;
 						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 
 						if ($useravatar)
-						:
+							:
 							echo $this->message->getAuthor()->getLink($useravatar, null, '', '', null, $this->topic->getcategory()->id);
 						endif;
 						?>
@@ -52,7 +52,8 @@ $k = 0;
 				<small class="text-muted pull-right hidden-xs" style="margin-top:-5px;">
 					<?php echo KunenaIcons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
-				<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+				<div class="badger-left badger-info khistory"
+				     data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">
 						<p class="kmsg"><?php echo KunenaHtmlParser::parseBBCode($this->message->message, $this) ?></p>
 					</div>
@@ -60,14 +61,14 @@ $k = 0;
 					$attachments = $this->message->getAttachments();
 
 					if (!empty($attachments))
-					:
-	?>
+						:
+						?>
 						<div class="kattach col-md-12">
 							<h4><?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
 							<ul class="thumbnails">
 								<?php foreach ($attachments as $attachment)
-								:
-	?>
+									:
+									?>
 									<li class="col-md-4">
 										<div class="thumbnail">
 											<?php echo $attachment->getLayout()->render('thumbnail'); ?>

@@ -18,7 +18,7 @@ foreach ($this->fieldsets as $name => $fieldset)
 		:
 		?>
 		<p class="tip"><?php echo $this->escape(JText::_($fieldset->description)) ?></p>;
-		<?php
+	<?php
 	endif;
 	?>
 	<?php $hidden_fields = ''; ?>

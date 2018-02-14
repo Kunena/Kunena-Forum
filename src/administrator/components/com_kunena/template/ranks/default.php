@@ -52,17 +52,20 @@ JHtml::_('behavior.tabstate');
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></a></li>
-						<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></a></li>
+						<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></a>
+						</li>
 					</ul>
 
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab1">
-							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>" method="post"
+							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>"
+							      method="post"
 							      id="adminForm" name="adminForm">
 								<input type="hidden" name="task" value=""/>
 								<input type="hidden" name="boxchecked" value="0"/>
 								<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
-								<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
+								<input type="hidden" name="filter_order_Dir"
+								       value="<?php echo $this->listDirection; ?>"/>
 								<?php echo JHtml::_('form.token'); ?>
 
 								<div id="filter-bar" class="btn-toolbar">
@@ -75,10 +78,12 @@ JHtml::_('behavior.tabstate');
 										       title="<?php echo JText::_('COM_KUNENA_RANKS_FIELD_INPUT_SEARCHRANKS'); ?>"/>
 									</div>
 									<div class="btn-group pull-left">
-										<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
+										<button class="btn tip" type="submit"
+										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
 											<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 										</button>
-										<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+										<button class="btn tip" type="button"
+										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 										        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
 											<i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 										</button>
@@ -87,15 +92,19 @@ JHtml::_('behavior.tabstate');
 										<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 									</div>
 									<div class="btn-group pull-right hidden-phone">
-										<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
-										<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+										<label for="directionTable"
+										       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+										<select name="directionTable" id="directionTable" class="input-medium"
+										        onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
 											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 										</select>
 									</div>
 									<div class="btn-group pull-right">
-										<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
-										<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+										<label for="sortTable"
+										       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+										<select name="sortTable" id="sortTable" class="input-medium"
+										        onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 											<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 										</select>
@@ -107,7 +116,8 @@ JHtml::_('behavior.tabstate');
 									<thead>
 									<tr>
 										<th width="1%">
-											<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
+											<input type="checkbox" name="toggle" value=""
+											       onclick="Joomla.checkAll(this)"/>
 										</th>
 										<th width="10%">
 											<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
@@ -133,7 +143,8 @@ JHtml::_('behavior.tabstate');
 										<td class="nowrap">
 											<label for="filter_title"
 											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-											<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title"
+											<input class="input-block-level input-filter filter" type="text"
+											       name="filter_title" id="filter_title"
 											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterTitle; ?>"
 											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
@@ -141,7 +152,8 @@ JHtml::_('behavior.tabstate');
 										<td class="nowrap center">
 											<label for="filter_special"
 											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-											<select name="filter_special" id="filter_special" class="select-filter filter"
+											<select name="filter_special" id="filter_special"
+											        class="select-filter filter"
 											        onchange="Joomla.orderTable()">
 												<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 												<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
@@ -150,7 +162,8 @@ JHtml::_('behavior.tabstate');
 										<td class="nowrap center">
 											<label for="filter_min"
 											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-											<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min"
+											<input class="input-block-level input-filter filter" type="text"
+											       name="filter_min" id="filter_min"
 											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterMinPostCount; ?>"
 											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
@@ -182,13 +195,15 @@ JHtml::_('behavior.tabstate');
 													       onclick="Joomla.isChecked(this.checked);"/>
 												</td>
 												<td>
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+													<a href="#edit"
+													   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 														<img src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
 														     alt="<?php echo $this->escape($row->rank_image); ?>"/>
 													</a>
 												</td>
 												<td class="nowrap">
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+													<a href="#edit"
+													   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 														<?php echo $this->escape($row->rank_title); ?>
 													</a>
 												</td>
@@ -202,7 +217,7 @@ JHtml::_('behavior.tabstate');
 													<?php echo $this->escape($row->rank_id); ?>
 												</td>
 											</tr>
-											<?php
+										<?php
 										endforeach;
 									else
 										:
@@ -234,7 +249,8 @@ JHtml::_('behavior.tabstate');
 						</div>
 
 						<div class="tab-pane" id="tab2">
-							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post"
+							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
+							      id="uploadForm" method="post"
 							      enctype="multipart/form-data">
 								<input type="hidden" name="view" value="ranks"/>
 								<input type="hidden" name="task" value="rankupload"/>

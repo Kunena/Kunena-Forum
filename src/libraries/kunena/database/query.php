@@ -58,7 +58,7 @@ class KunenaDatabaseQueryElement
 	/**
 	 * Appends element parts to the internal list.
 	 *
-	 * @param   mixed  $elements   String or array.
+	 * @param   mixed $elements String or array.
 	 *
 	 * @return    void
 	 * @since    1.6

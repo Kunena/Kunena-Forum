@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="kcategoryform" id="kcategoryform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
+      name="kcategoryform" id="kcategoryform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<h3>

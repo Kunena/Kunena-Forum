@@ -182,8 +182,8 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db) {
-							$item = $db->quote($item);
-						}
+						$item = $db->quote($item);
+					}
 					);
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");

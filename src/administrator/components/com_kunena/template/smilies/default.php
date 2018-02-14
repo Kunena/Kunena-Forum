@@ -54,18 +54,21 @@ JHtml::_('behavior.tabstate');
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></a></li>
-						<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
+						<li><a href="#tab2"
+						       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
 						</li>
 					</ul>
 					<div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						<div class="tab-pane  active" id="tab1">
 
-							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>" method="post"
+							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>"
+							      method="post"
 							      id="adminForm" name="adminForm">
 								<input type="hidden" name="task" value=""/>
 								<input type="hidden" name="boxchecked" value="0"/>
 								<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
-								<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
+								<input type="hidden" name="filter_order_Dir"
+								       value="<?php echo $this->listDirection; ?>"/>
 								<?php echo JHtml::_('form.token'); ?>
 
 								<div id="filter-bar" class="btn-toolbar">
@@ -78,10 +81,12 @@ JHtml::_('behavior.tabstate');
 										       title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>"/>
 									</div>
 									<div class="btn-group pull-left">
-										<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
+										<button class="btn tip" type="submit"
+										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
 											<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 										</button>
-										<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+										<button class="btn tip" type="button"
+										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 										        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
 											<i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 										</button>
@@ -90,15 +95,19 @@ JHtml::_('behavior.tabstate');
 										<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 									</div>
 									<div class="btn-group pull-right hidden-phone">
-										<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
-										<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+										<label for="directionTable"
+										       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+										<select name="directionTable" id="directionTable" class="input-medium"
+										        onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
 											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 										</select>
 									</div>
 									<div class="btn-group pull-right">
-										<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
-										<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+										<label for="sortTable"
+										       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+										<select name="sortTable" id="sortTable" class="input-medium"
+										        onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 											<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 										</select>
@@ -109,9 +118,11 @@ JHtml::_('behavior.tabstate');
 									<thead>
 									<tr>
 										<th width="1%" class="center">
-											<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
+											<input type="checkbox" name="toggle" value=""
+											       onclick="Joomla.checkAll(this)"/>
 										</th>
-										<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
+										<th width="5%"
+										    class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
 										<th width="8%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
 										<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering); ?></th>
 										<th width="1%" class="nowrap center hidden-phone">
@@ -126,7 +137,8 @@ JHtml::_('behavior.tabstate');
 										<td class="nowrap center">
 											<label for="filter_code"
 											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-											<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code"
+											<input class="input-block-level input-filter filter" type="text"
+											       name="filter_code" id="filter_code"
 											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterCode; ?>"
 											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
@@ -134,8 +146,10 @@ JHtml::_('behavior.tabstate');
 										<td class="nowrap center">
 											<label for="filter_location"
 											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-											<input class="input-block-level input-filter filter" type="text" name="filter_location"
-											       id="filter_location" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											<input class="input-block-level input-filter filter" type="text"
+											       name="filter_location"
+											       id="filter_location"
+											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterLocation; ?>"
 											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 										</td>
@@ -162,10 +176,12 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td class="hidden-phone center">
 													<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-													       value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);"/>
+													       value="<?php echo $this->escape($row->id); ?>"
+													       onclick="Joomla.isChecked(this.checked);"/>
 												</td>
 												<td class="hidden-phone center">
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+													<a href="#edit"
+													   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 														<img src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
 														     alt="<?php echo $this->escape($row->location); ?>"/>
 													</a>
@@ -180,7 +196,7 @@ JHtml::_('behavior.tabstate');
 													<?php echo $this->escape($row->id); ?>
 												</td>
 											</tr>
-											<?php
+										<?php
 										endforeach;
 									else
 										:
@@ -212,7 +228,8 @@ JHtml::_('behavior.tabstate');
 						</div>
 
 						<div class="tab-pane" id="tab2">
-							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post"
+							<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
+							      id="uploadForm" method="post"
 							      enctype="multipart/form-data">
 								<input type="hidden" name="view" value="smilies"/>
 								<input type="hidden" name="task" value="smileyupload"/>

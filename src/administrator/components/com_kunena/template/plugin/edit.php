@@ -38,7 +38,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 							<li class="active">
 								<a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS'); ?></a></li>
 							<?php
-							if (count($this->fieldsets))
+							if ($this->fieldsets)
 								:
 								?>
 								<?php foreach ($this->fieldsets as $fieldset)

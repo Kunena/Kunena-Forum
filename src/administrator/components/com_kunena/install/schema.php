@@ -731,7 +731,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		if (count($childNodes) || $action)
+		if ($childNodes || $action)
 		{
 			$node = $schema->importNode($loc['new'], false);
 
@@ -912,7 +912,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 						}
 					}
 
-					if (count($fields))
+					if ($fields)
 					{
 						$str .= implode(",\n", $fields) . ';';
 					}

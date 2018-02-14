@@ -44,7 +44,7 @@ defined('_JEXEC') or die;
 		{
 			$aliasToId = $item->params->get('aliasoptions');
 
-			if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
+			if ($this->path > 0 && $aliasToId == $this->path[$this->path - 1])
 			{
 				$class .= ' active';
 			}

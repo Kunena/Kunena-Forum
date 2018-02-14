@@ -61,7 +61,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		$html        = '<a href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
-		if (count($resultArray) > 0)
+		if ($resultArray > 0)
 		{
 			$linkItem = '<span class="pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '" />';
 

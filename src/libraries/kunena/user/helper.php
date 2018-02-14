@@ -341,7 +341,7 @@ abstract class KunenaUserHelper
 	{
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 
-		if (count(self::$_topposters) < $limit)
+		if (self::$_topposters < $limit)
 		{
 			$db    = \Joomla\CMS\Factory::getDBO();
 			$query = $db->getQuery(true);

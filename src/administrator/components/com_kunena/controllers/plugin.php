@@ -79,7 +79,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 		}
 
 		// Get the previous record id (if any) and the current record id.
-		$recordId = (int) (count($cid) ? $cid[0] : $this->input->getInt($urlVar));
+		$recordId = (int) ($cid ? $cid[0] : $this->input->getInt($urlVar));
 		$checkin  = property_exists($table, 'checked_out');
 
 		// Access check.

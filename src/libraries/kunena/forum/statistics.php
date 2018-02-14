@@ -377,7 +377,7 @@ class KunenaForumStatistics
 	{
 		$limit = $limit ? $limit : $this->_config->popsubjectcount;
 
-		if (count($this->topTopics) < $limit)
+		if ($this->topTopics < $limit)
 		{
 			$params = array('orderby' => 'posts DESC');
 			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
@@ -417,7 +417,7 @@ class KunenaForumStatistics
 	{
 		$limit = $limit ? $limit : $this->_config->poppollscount;
 
-		if (count($this->topPolls) < $limit)
+		if ($this->topPolls < $limit)
 		{
 			$query = "SELECT poll.threadid AS id, SUM(opt.votes) AS count
 					FROM #__kunena_polls_options AS opt
@@ -510,7 +510,7 @@ class KunenaForumStatistics
 	{
 		$limit = $limit ? $limit : $this->_config->popusercount;
 
-		if (count($this->topPosters) < $limit)
+		if ($this->topPosters < $limit)
 		{
 			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
 
@@ -547,7 +547,7 @@ class KunenaForumStatistics
 	{
 		$limit = $limit ? $limit : $this->_config->popusercount;
 
-		if (count($this->topProfiles) < $limit)
+		if ($this->topProfiles < $limit)
 		{
 			$this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
 
@@ -584,7 +584,7 @@ class KunenaForumStatistics
 	{
 		$limit = $limit ? $limit : $this->_config->popthankscount;
 
-		if (count($this->topThanks) < $limit)
+		if ($this->topThanks < $limit)
 		{
 			$query = $this->_db->getQuery(true);
 			$query->select($this->_db->quoteName(array('t.targetuserid'), array('id')));

@@ -496,7 +496,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$rankimages[]         = JHtml::_('select.option', '1', JText::_('COM_KUNENA_RANK_IMAGE'));
 		$rankimages[]         = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RANK_USERGROUP'));
 		$rankimages[]         = JHtml::_('select.option', '3', JText::_('COM_KUNENA_RANK_BOTH'));
-		$rankimages[]         = JHtml::_('select.option', '4', JText::_('COM_KUNENA_RANK_FONTAWESOMEICONS'));
+		$rankimages[]         = JHtml::_('select.option', '4', JText::_('COM_KUNENA_RANK_CSS'));
 		$lists ['rankimages'] = JHtml::_('select.genericlist', $rankimages, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages);
 
 		$lists['defaultavatar']      = JHtml::_('select.genericlist', $yesno, 'cfg_defaultavatar', 'class="inputbox" size="1"', 'value', 'text', $this->config->defaultavatar);

@@ -392,7 +392,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+			return '<i class="fa fa-chart-bar" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

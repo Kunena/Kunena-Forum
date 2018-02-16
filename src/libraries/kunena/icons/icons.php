@@ -325,7 +325,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-shield" aria-hidden="true"></i>';
+			return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

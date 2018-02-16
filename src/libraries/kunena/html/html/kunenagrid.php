@@ -334,7 +334,7 @@ abstract class JHtmlKunenaGrid
 
 			if ($class == 'edit')
 			{
-				$class = 'pencil';
+				$class = 'pencil-alt';
 			}
 
 			if ($class == 'delete')

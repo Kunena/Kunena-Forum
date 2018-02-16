@@ -86,7 +86,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
 					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-					                      'icon' => 'fa fa-pencil',)
+					                      'icon' => 'fa fa-pencil-alt',)
 					);
 			}
 			else

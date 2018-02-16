@@ -164,7 +164,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-						                      'icon' => 'fa fa-envelope-o',)
+						                      'icon' => 'fas fa-envelope-open',)
 						);
 				}
 			}

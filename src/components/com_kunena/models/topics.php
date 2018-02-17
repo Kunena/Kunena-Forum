@@ -168,6 +168,13 @@ class KunenaModelTopics extends KunenaModel
 		// Selection time.
 		if (\Joomla\CMS\Factory::getDocument()->getType() != 'feed')
 		{
+		    if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		    {
+		        //throw new RuntimeException(JText::_('Forbidden'), 403);
+
+		        return;
+		    }
+
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)
 			{

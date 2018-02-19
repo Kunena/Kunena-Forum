@@ -27,7 +27,7 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $pollcheck = isset($this->poll);
-// Kunena bbcode editor
+$this->getBBcodesEnabled();
 ?>
 <script>
 	function localstorage() {

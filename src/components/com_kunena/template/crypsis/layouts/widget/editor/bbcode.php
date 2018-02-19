@@ -270,9 +270,9 @@ if (!empty($codeTypes))
 				<div>
 					<label class="kpoll-term-lbl"
 					       for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-					<div id="datepoll-container" class="span5 col-md-5">
+					<div id="datepoll-container">
 						<div class="input-append date">
-							<input type="text" class="span12 kpoll-time-to-live-input" id="poll_time_to_live"
+							<input type="text" class="kpoll-time-to-live-input" id="poll_time_to_live"
 							       data-date-format="mm/dd/yyyy"
 							       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span
 									class="add-on"><?php echo KunenaIcons::grid(); ?></span>
@@ -280,7 +280,7 @@ if (!empty($codeTypes))
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="kpoll-alert-error" class="alert" style="display:none;">
+				<div id="kpoll-alert-error" class="alert" style="display:none;margin-top:10px;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>

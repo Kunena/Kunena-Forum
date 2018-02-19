@@ -29,15 +29,19 @@ $view = JFactory::getApplication()->input->getWord('view');
 			</h1>
 		</div>
 
-		<?php if ($view != 'user') : ?>
-		<h2 class="filter-time pull-right" id="filter-time">
-			<div class="filter-sel pull-right">
-				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					method="post" target="_self" class="form-inline hidden-xs">
-					<?php $this->displayTimeFilter('sel'); ?>
-				</form>
-			</div>
-		</h2>
+		<?php if ($view != 'user')
+			:
+			?>
+			<h2 class="filter-time pull-right" id="filter-time">
+				<div class="filter-sel pull-right">
+					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					      id="timeselect" name="timeselect"
+					      method="post" target="_self" class="form-inline hidden-xs">
+						<?php $this->displayTimeFilter('sel'); ?>
+						<?php echo JHtml::_( 'form.token' ); ?>
+					</form>
+				</div>
+			</h2>
 		<?php endif; ?>
 	</div>
 </div>

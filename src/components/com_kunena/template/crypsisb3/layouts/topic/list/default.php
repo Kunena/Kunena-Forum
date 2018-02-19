@@ -44,9 +44,10 @@ $this->addStyleSheet('assets/css/rating.css');
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
-				</form>
-			</h2>
-		</div>
+						<?php echo JHtml::_( 'form.token' ); ?>
+					</form>
+				</h2>
+			</div>
 		<?php endif; ?>
 	</div>
 </div>

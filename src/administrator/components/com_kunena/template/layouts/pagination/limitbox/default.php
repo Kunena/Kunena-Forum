@@ -21,6 +21,8 @@ for ($i = 5; $i <= 30; $i += 5)
 
 $limits[] = JHtml::_('select.option', '50', JText::_('J50'));
 $limits[] = JHtml::_('select.option', '100', JText::_('J100'));
+$limits[] = JHtml::_('select.option', '500', JText::_('J500'));
+$limits[] = JHtml::_('select.option', '1000', JText::_('J1000'));
 $limits[] = JHtml::_('select.option', '0', JText::_('JALL'));
 
 $selected = $this->pagination->limit == $this->pagination->total ? 0 : $this->pagination->limit;

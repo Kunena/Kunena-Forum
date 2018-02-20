@@ -39,16 +39,18 @@ $this->addStyleSheet('assets/css/rating.css');
 		</div>
 
 		<?php if ($view != 'user') : ?>
-		<div class="filter-time pull-right">
-			<h2 class="filter-sel">
-				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					method="post" target="_self" class="form-inline hidden-phone">
-					<div>
-						<?php $this->displayTimeFilter('sel'); ?>
-					</div>
-				</form>
-			</h2>
-		</div>
+			<div class="filter-time pull-right">
+				<h2 class="filter-sel">
+					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					      id="timeselect" name="timeselect"
+					      method="post" target="_self" class="form-inline hidden-phone">
+						<div>
+							<?php $this->displayTimeFilter('sel'); ?>
+						</div>
+						<?php echo JHtml::_( 'form.token' ); ?>
+					</form>
+				</h2>
+			</div>
 		<?php endif; ?>
 	</div>
 </div>

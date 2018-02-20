@@ -57,16 +57,6 @@ $this->k = 0;
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
-
-if ($this->config->pollenabled)
-{
-	JText::script('COM_KUNENA_POLL_OPTION_NAME');
-	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('assets/js/poll.js');
-}
-
-$this->addScript('assets/js/pollcheck.js');
-
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
@@ -77,6 +67,15 @@ if ($editor == 0)
 	$this->addScript('assets/js/markitup.editor.js');
 	$this->addScript('assets/js/markitup.set.js');
 }
+
+if ($this->config->pollenabled)
+{
+	JText::script('COM_KUNENA_POLL_OPTION_NAME');
+	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	$this->addScript('assets/js/poll.js');
+}
+
+$this->addScript('assets/js/pollcheck.js');
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 

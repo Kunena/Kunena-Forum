@@ -56,6 +56,17 @@ $this->k = 0;
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
+$this->ktemplate = KunenaFactory::getTemplate();
+$topicicontype   = $this->ktemplate->params->get('topicicontype');
+$editor          = $this->ktemplate->params->get('editor');
+
+if ($editor == 0)
+{
+	$this->addScript('assets/js/markitup.js');
+	$this->addScript('assets/js/markitup.editor.js');
+	$this->addScript('assets/js/markitup.set.js');
+}
+
 // If polls are enabled, load also poll JavaScript.
 $this->addScript('assets/js/pollcheck.js');
 
@@ -66,22 +77,10 @@ if ($this->config->pollenabled)
 	$this->addScript('assets/js/poll.js');
 }
 
-$this->ktemplate = KunenaFactory::getTemplate();
-$topicicontype   = $this->ktemplate->params->get('topicicontype');
-$editor          = $this->ktemplate->params->get('editor');
-
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
-
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
-
-if ($editor == 0)
-{
-	$this->addScript('assets/js/markitup.js');
-	$this->addScript('assets/js/markitup.editor.js');
-	$this->addScript('assets/js/markitup.set.js');
-}
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

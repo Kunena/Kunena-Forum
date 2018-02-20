@@ -10,12 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-$this->addScript('assets/js/markitup.js');
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize();
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
-
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');

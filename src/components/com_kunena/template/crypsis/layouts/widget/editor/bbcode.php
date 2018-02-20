@@ -20,6 +20,7 @@ $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $pollcheck = isset($this->poll);
 $this->getBBcodesEnabled();
+$topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <script>
 	function localstorage() {
@@ -38,7 +39,7 @@ $this->getBBcodesEnabled();
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id)
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 			{
 				echo $this->message->getCategory()->topictemplate;
 			}

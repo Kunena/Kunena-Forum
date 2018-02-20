@@ -10,12 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-$this->addScript('assets/js/markitup.js');
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize();
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
-
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
@@ -23,8 +17,8 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
-
 $this->getBBcodesEnabled();
+$topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <div class="form-group">
 	<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
@@ -35,7 +29,14 @@ $this->getBBcodesEnabled();
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="form-control" name="message" id="editor" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+			{
+				echo $this->message->getCategory()->topictemplate;
+			}
+			else
+			{
+				echo $this->escape($this->message->message);
+			} ?></textarea>
 	</div>
 
 	<!-- Hidden preview placeholder -->

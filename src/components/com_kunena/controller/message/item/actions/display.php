@@ -427,7 +427,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('publish',
-						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'fa fa-check-circle-o')
+						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'far fa-check-circle')
 					);
 				}
 				elseif ($topicicontype == 'image' && !$fullactions)
@@ -494,7 +494,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('undelete',
-						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'fa fa-check-circle-o')
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'far fa-check-circle')
 					);
 				}
 				elseif ($topicicontype == 'image' && !$fullactions)

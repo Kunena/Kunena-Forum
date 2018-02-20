@@ -133,7 +133,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->canSubscribe = $this->canSubscribe();
+		$this->canSubscribe = false;
 
 		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}

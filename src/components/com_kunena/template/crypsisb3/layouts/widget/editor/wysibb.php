@@ -82,6 +82,8 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM6');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM7');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
+
+$topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <script>
 	var wbbOpt = {
@@ -95,9 +97,9 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 <div class="control-group">
 	<label class="control-label"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
-		<textarea class="col-md-12" name="message" id="editor" rows="12" tabindex="7"
+		<textarea class="form-control" name="message" id="editor" rows="12" tabindex="7"
 		          required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id)
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 			{
 				echo $this->message->getCategory()->topictemplate;
 			}

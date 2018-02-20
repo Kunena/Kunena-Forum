@@ -15,7 +15,7 @@
         <label id="0" name="COM_KUNENA_LABELS_QUESTION" b2="question-sign" b3="question-sign" fa="question-circle" labeltype="primary"/>
         <label id="1" name="COM_KUNENA_LABELS_IMPORTANT" b2="notification-circle" b3="exclamation-sign" fa="exclamation-circle" labeltype="primary"/>
         <label id="2" name="COM_KUNENA_LABELS_QUESTION" b2="question-sign" b3="question-sign" fa="question-circle" labeltype="primary"/>
-        <label id="3" name="COM_KUNENA_LABELS_IDEA" b2="lamp" b3="lamp" fa="lightbulb-o" labeltype="primary"/>
+        <label id="3" name="COM_KUNENA_LABELS_IDEA" b2="lamp" b3="lamp" fa="lightbulb" labeltype="primary"/>
         <label id="4" name="COM_KUNENA_LABELS_LOVED" b2="heart" b3="heart" fa="heart" labeltype="danger label-important"/>
         <!-- <label id="5" name="Bug" b2="file" b3="file" fa="file" labeltype="primary"/> -->
         <!-- <label id="6" name="Bug" b2="file" b3="file" fa="file" labeltype="primary"/> -->

@@ -325,7 +325,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-shield" aria-hidden="true"></i>';
+			return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
@@ -392,7 +392,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bar-chart" aria-hidden="true"></i>';
+			return '<i class="fa fa-chart-bar" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
@@ -1061,8 +1061,8 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i id="kbutton-poll-add" class="fa fa-plus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
+			return '<span id="kbutton-poll-add"><i class="fa fa-plus btn btn-xs btn-small btn-default"
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
 		}
 
 		if ($topicicontype == 'B2')
@@ -1096,8 +1096,8 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
-						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
+			return '<span id="kbutton-poll-rem"><i class="fa fa-minus btn btn-xs btn-small btn-default"
+						alt="' . JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
 		}
 
 		if ($topicicontype == 'B2')

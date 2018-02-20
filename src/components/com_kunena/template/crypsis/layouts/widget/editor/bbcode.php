@@ -11,14 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-$this->addScript('assets/js/markitup.js');
-
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize();
-
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
-
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 
@@ -27,7 +19,8 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $pollcheck = isset($this->poll);
-// Kunena bbcode editor
+$this->getBBcodesEnabled();
+$topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <script>
 	function localstorage() {
@@ -46,7 +39,7 @@ $pollcheck = isset($this->poll);
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id)
+		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 			{
 				echo $this->message->getCategory()->topictemplate;
 			}
@@ -270,9 +263,9 @@ if (!empty($codeTypes))
 				<div>
 					<label class="kpoll-term-lbl"
 					       for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-					<div id="datepoll-container" class="span5 col-md-5">
+					<div id="datepoll-container">
 						<div class="input-append date">
-							<input type="text" class="span12 kpoll-time-to-live-input" id="poll_time_to_live"
+							<input type="text" class="kpoll-time-to-live-input" id="poll_time_to_live"
 							       data-date-format="mm/dd/yyyy"
 							       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>"><span
 									class="add-on"><?php echo KunenaIcons::grid(); ?></span>
@@ -280,7 +273,7 @@ if (!empty($codeTypes))
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div id="kpoll-alert-error" class="alert" style="display:none;">
+				<div id="kpoll-alert-error" class="alert" style="display:none;margin-top:10px;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>

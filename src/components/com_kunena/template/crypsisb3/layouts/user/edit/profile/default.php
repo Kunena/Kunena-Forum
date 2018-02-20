@@ -91,7 +91,7 @@ $this->addScript('assets/js/profile.js');
 		<td>
 				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
-					<input id="social-site" type="text" name="websitename" class="form-control"
+					<input id="social-site" type="text" maxlength="25" name="websitename" class="form-control"
 					       value="<?php echo $this->escape($this->profile->websitename); ?>"/>
 				</span>
 		</td>

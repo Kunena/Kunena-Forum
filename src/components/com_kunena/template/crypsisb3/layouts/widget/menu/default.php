@@ -23,6 +23,12 @@ defined('_JEXEC') or die;
 
 	foreach ($this->list as $i => &$item)
 	{
+		// Exclude item with menu item option set to exclude from menu modules
+		if ($item->params->get('menu_show', 1) == 0)
+		{
+			continue;
+		}
+
 		// The next item is deeper.
 		if (($item->level == 2) && ($lastlevel == 1))
 		{

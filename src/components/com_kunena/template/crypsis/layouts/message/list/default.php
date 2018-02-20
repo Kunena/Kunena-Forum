@@ -42,6 +42,7 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
 						</div>
+						<?php echo JHtml::_( 'form.token' ); ?>
 					</form>
 				</div>
 			</h2>

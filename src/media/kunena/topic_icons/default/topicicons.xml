@@ -17,7 +17,7 @@
               title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png"/>
         <icon id="2" name="question" published="1" b2="question-sign" b3="question-sign" fa="question-circle" title="COM_KUNENA_ICON_QUESTION"
               src="user/question.png"/>
-        <icon id="3" name="idea" published="1" b2="lamp" b3="lamp" fa="lightbulb-o" title="COM_KUNENA_ICON_IDEA" src="user/idea.png"/>
+        <icon id="3" name="idea" published="1" b2="lamp" b3="lamp" fa="lightbulb" title="COM_KUNENA_ICON_IDEA" src="user/idea.png"/>
         <icon id="4" name="love" published="1" b2="heart" b3="heart" fa="heart" title="COM_KUNENA_ICON_LOVE" src="user/love.png"/>
         <!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
         <!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
@@ -29,8 +29,8 @@
 
 	<icons type="system" width="48" height="48">
 		<icon id="500" name="moved" published="1" b2="contract" b3="contract" fa="compress" src="system/moved.png" />
-		<icon id="501" name="deleted" published="1" b2="trash" b3="trash" fa="trash-o" src="system/deleted.png" />
-		<icon id="502" name="unapproved" published="1" b2="comments" b3="comment" fa="comment-o" src="system/unapproved.png" />
+		<icon id="501" name="deleted" published="1" b2="trash" b3="trash" fa="trash" src="system/deleted.png" />
+		<icon id="502" name="unapproved" published="1" b2="comments" b3="comment" fa="comment" src="system/unapproved.png" />
 		<icon id="503" name="sticky_locked" published="1" b2="lock" b3="file" fa="lock" src="system/sticky_locked.png" />
 		<icon id="504" name="sticky" published="1" b2="pin" b3="pushpin" fa="map-pin" src="system/sticky.png" />
 		<icon id="505" name="locked" published="1" b2="lock" b3="file" fa="lock" src="system/locked.png" />

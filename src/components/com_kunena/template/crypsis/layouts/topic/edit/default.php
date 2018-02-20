@@ -40,9 +40,9 @@ JText::script('COM_KUNENA_EDITOR_TWEET');
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
+$this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
 $this->addScript('assets/js/jquery.fileupload-process.js');
-$this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/jquery.fileupload-audio.js');
 $this->addScript('assets/js/jquery.fileupload-video.js');
@@ -57,6 +57,16 @@ $this->k = 0;
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
+$this->ktemplate = KunenaFactory::getTemplate();
+$topicicontype   = $this->ktemplate->params->get('topicicontype');
+$editor          = $this->ktemplate->params->get('editor');
+
+if ($editor == 0)
+{
+	$this->addScript('assets/js/markitup.js');
+	$this->addScript('assets/js/markitup.editor.js');
+	$this->addScript('assets/js/markitup.set.js');
+}
 
 if ($this->config->pollenabled)
 {
@@ -66,10 +76,6 @@ if ($this->config->pollenabled)
 }
 
 $this->addScript('assets/js/pollcheck.js');
-
-$this->ktemplate = KunenaFactory::getTemplate();
-$topicicontype   = $this->ktemplate->params->get('topicicontype');
-$editor          = $this->ktemplate->params->get('editor');
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 

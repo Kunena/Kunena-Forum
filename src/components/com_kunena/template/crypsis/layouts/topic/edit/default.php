@@ -49,10 +49,6 @@ $this->addScript('assets/js/jquery.fileupload-video.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
-$this->addScript('assets/js/markitup.js');
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
-
 $this->k = 0;
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
@@ -74,6 +70,13 @@ $this->addScript('assets/js/pollcheck.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
+
+if ($editor == 0)
+{
+	$this->addScript('assets/js/markitup.js');
+	$this->addScript('assets/js/markitup.editor.js');
+	$this->addScript('assets/js/markitup.set.js');
+}
 
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 

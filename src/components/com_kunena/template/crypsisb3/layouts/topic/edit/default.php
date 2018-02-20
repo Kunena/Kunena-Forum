@@ -75,9 +75,13 @@ $editor          = $this->ktemplate->params->get('editor');
 \Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
-$this->addScript('assets/js/markitup.js');
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
+
+if ($editor == 0)
+{
+	$this->addScript('assets/js/markitup.js');
+	$this->addScript('assets/js/markitup.editor.js');
+	$this->addScript('assets/js/markitup.set.js');
+}
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

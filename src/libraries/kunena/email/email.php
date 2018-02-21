@@ -58,19 +58,16 @@ abstract class KunenaEmail
 		{
 			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')
 			{
-				echo 'TO ';
 				$mail->ClearAddresses();
 				$mail->addRecipient($emails);
 			}
 			elseif ($email_recipient_privacy == 'cc')
 			{
-				echo 'CC ';
 				$mail->ClearCCs();
 				$mail->addCC($emails);
 			}
 			else
 			{
-				echo 'BCC ';
 				$mail->ClearBCCs();
 				$mail->addBCC($emails);
 			}

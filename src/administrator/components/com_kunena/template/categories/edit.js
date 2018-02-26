@@ -47,18 +47,4 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-
-	$('.category_aliases').change(function() {
-		if(!$(this).is(':checked')){
-			var alias_name = $(this).attr('value');
-
-			$.ajax({
-				dataType: "json",
-				url: "index.php?option=com_kunena&view=categories&format=raw&layout=DeleteAlias&alias="+alias_name
-			}).done(function(response) {
-				$('#checklist_aliases_'+alias_name).parent().remove();
-			});
-
-		}
-	});
 });

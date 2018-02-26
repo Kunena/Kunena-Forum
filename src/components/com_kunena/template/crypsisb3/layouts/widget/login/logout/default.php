@@ -14,7 +14,10 @@ defined('_JEXEC') or die;
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
 $status         = $config->user_status;
+$config         = KunenaFactory::getTemplate()->params;
 ?>
+
+<?php if ($config->get('displayDropdownMenu')) : ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -182,9 +185,11 @@ $status         = $config->user_status;
 	</li>
 </ul>
 <?php
+endif;
 /*
-  Note these have to be outsize the dropdown as z-index stack context is different
-from the parent forcing the dropsown to take over z-index calculation */
+ * Note these have to be outsize the dropdown as z-index stack context is different
+ * from the parent forcing the dropsown to take over z-index calculation
+ */
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form"
       class="form-inline">

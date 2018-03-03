@@ -989,7 +989,7 @@
                null="1"
                default="0"/>
         <field name="ip"
-               type="varchar(13)"
+               type="varchar(128)"
                null="0"
                default=""/>
         <key name="PRIMARY"

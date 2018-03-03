@@ -587,6 +587,13 @@ class KunenaControllerTopic extends KunenaController
 		// Save message
 		$success = $message->save();
 
+		// Save IP address of user
+		if ($this->config->iptracking)
+		{
+			$this->me->ip = $message->ip;
+			$this->me->save();
+		}
+
 		if ($this->me->isModerator($category) && $this->config->log_moderation)
 		{
 			KunenaLog::log(

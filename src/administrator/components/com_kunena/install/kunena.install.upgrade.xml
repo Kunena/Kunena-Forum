@@ -790,6 +790,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` DROP `aim`;</query>
         </version>
+        <version version="5.1.0-RC4"
+                 versiondate="2018-03-03"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` VARCHAR(128);</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

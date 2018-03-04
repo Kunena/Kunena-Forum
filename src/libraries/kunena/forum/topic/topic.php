@@ -291,14 +291,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$category = $this->getCategory();
 
-			// Todo: fix the issue on the right location.
-			$mod = KunenaUserHelper::getMyself()->isModerator($category);
-
-			if ($category->review && !$mod)
-			{
-				$postDelta = 0;
-			}
-
 			if (!$category->update($this, $topicDelta, $postDelta))
 			{
 				$this->setError($category->getError());

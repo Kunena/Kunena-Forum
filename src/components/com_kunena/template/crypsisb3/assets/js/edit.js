@@ -242,8 +242,12 @@ jQuery(document).ready(function ($) {
 					if(data.length > 1) {
 						if( $('#editor').val().length > 1 ) {
 							$('#modal_confirm_template_category').modal('show');
-							tmp = data;
 						}
+						else
+						{
+							$('#editor').val(data);
+						}
+						tmp = data;
 					}
 				}
 			});

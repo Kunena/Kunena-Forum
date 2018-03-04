@@ -2107,6 +2107,8 @@ class KunenaUser extends JObject
 		                'telegram'   => array('url' => 'https://t.me/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
 		                'apple'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'),
 		                'whatsapp'   => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'),
+		                'youtube'    => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => JText::_(' COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
+		                'ok'         => array('url' => 'https://ok.ru/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
 		);
 
 		return $social;

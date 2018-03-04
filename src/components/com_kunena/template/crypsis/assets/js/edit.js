@@ -226,9 +226,10 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid},
 				success: function (data) {
 					if(data.length > 1) {
-						$('#modal_confirm_template_category').modal('show');
-
-						 tmp = data;
+						if( $('#editor').val().length > 1 ) {
+							$('#modal_confirm_template_category').modal('show');
+							tmp = data;
+						}
 					}
 				}
 			});

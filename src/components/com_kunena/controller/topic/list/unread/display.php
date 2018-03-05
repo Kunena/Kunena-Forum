@@ -37,6 +37,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		if (!$Itemid)
 		{

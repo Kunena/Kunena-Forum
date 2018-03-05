@@ -68,6 +68,24 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
+	 * Filter by list of unread messages.
+	 *
+	 * @param   KunenaUser $user user
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
+	public function unreadTopics(KunenaUser $user)
+	{
+		$this->query->innerJoin('#__kunena_user_read AS ur ON a.id = ur.topic_id');
+		$this->query->where("ur.user_id != {$this->db->quote($user->userid)}");
+		$this->query->where("a.category_id > 1");
+
+		return $this;
+	}
+
+	/**
 	 * Filter by list of categories.
 	 *
 	 * It is very important to use this or user access filter. Otherwise topics from unauthorized categories will be

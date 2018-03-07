@@ -90,8 +90,8 @@ $this->addScript('assets/js/poll.js');
 					:
 					?>
 
-					<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
-						<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
+					<a class="btn" href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>">
+						<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGE_VOTE'); ?>
 					</a>
 				<?php endif; ?>
 

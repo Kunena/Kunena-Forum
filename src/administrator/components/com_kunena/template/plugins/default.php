@@ -204,7 +204,6 @@ $user = \Joomla\CMS\Factory::getUser();
 												'width'       => '800px',
 												'bodyHeight'  => '70',
 												'modalWidth'  => '80',
-												'modalWidth'  => '60',
 												'closeButton' => false,
 												'backdrop'    => 'static',
 												'keyboard'    => false,

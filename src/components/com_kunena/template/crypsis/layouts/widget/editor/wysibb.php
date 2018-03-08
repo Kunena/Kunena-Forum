@@ -91,7 +91,7 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 		lang: "kunena"
 	};
 	jQuery(function ($) {
-		$("#editor").wysibb();
+		$("#editor").wysibb(wbbOpt);
 	})
 </script>
 

@@ -13,7 +13,9 @@ defined('_JEXEC') or die;
 
 <nav class="navbar navbar-default" itemscope itemtype="http://schema.org/SiteNavigationElement">
 	<div class="navbar-inner">
-		<?php echo $this->subRequest('Widget/Menu'); ?>
+		<div class="hidden-xs">
+			<?php echo $this->subRequest('Widget/Menu'); ?>
+		</div>
 		<?php echo $this->subRequest('Widget/Login'); ?>
 	</div>
 </nav>

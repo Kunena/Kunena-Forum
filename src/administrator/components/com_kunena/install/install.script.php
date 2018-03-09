@@ -334,6 +334,14 @@ class Com_KunenaInstallerScript
 			$db->execute();
 		}
 
+		// K5.1 Remove files
+		if (is_file(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin/edit.php'))
+		{
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin');
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/views/plugin');
+			$this->deleteFile(JPATH_ROOT . '/administrator/components/com_kunena/controllers/plugin.php');
+		}
+
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 

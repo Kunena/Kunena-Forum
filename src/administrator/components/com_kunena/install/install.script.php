@@ -342,6 +342,20 @@ class Com_KunenaInstallerScript
 			$this->deleteFile(JPATH_ROOT . '/administrator/components/com_kunena/controllers/plugin.php');
 		}
 
+		if (is_file(JPATH_ROOT . '/media/kunena/js/debug.js'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/media/kunena/js/debug.js');
+		}
+
+		if (is_file(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php');
+			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsis/layouts/topic/edit/editor');
+			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/layouts/topic/edit/editor');
+			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
+		}
+
+
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 

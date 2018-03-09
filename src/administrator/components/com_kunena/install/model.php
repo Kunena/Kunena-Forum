@@ -1043,6 +1043,11 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 10);
 		$this->installPlugin('plugins/plg_kunena_finder', 'kunena', 'finder', false, 11);
 
+		if (is_file(JPATH_ROOT . '/plugins/kunena/alphauserpoints/avatar.php'))
+		{
+			$this->uninstallPlugin('kunena','alphauserpoints');
+		}
+
 		if (function_exists('apc_clear_cache'))
 		{
 			@apc_clear_cache('system');

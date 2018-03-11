@@ -62,11 +62,6 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$controller->redirect();
 		}
 
-		if ($limit < 1 || $limit > 100)
-		{
-			$limit = $this->config->threads_per_page;
-		}
-
 		// Get configuration from menu item.
 		$categoryIds = $params->get('topics_categories', array());
 		$reverse     = !$params->get('topics_catselection', 1);

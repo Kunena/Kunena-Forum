@@ -62,29 +62,11 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$controller->redirect();
 		}
 
-		// Get configuration from menu item.
-		$categoryIds = $params->get('topics_categories', array());
-		$reverse     = !$params->get('topics_catselection', 1);
-
-		// Make sure that category list is an array.
-		if (!is_array($categoryIds))
-		{
-			$categoryIds = explode(',', $categoryIds);
-		}
-
-		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds))
-		{
-			$categoryIds = false;
-		}
-
-		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse);
-
 		$finder = new KunenaForumTopicFinder;
 
 		$this->topics = $finder
 			->start($start)
 			->limit($limit)
-			->filterByCategories($categories)
 			->filterByUserAccess($this->me)
 			->find();
 
@@ -94,7 +76,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 
 		$list = array();
 
-		foreach($this->topics as $topic)
+		foreach ($this->topics as $topic)
 		{
 			if ($topic->unread)
 			{

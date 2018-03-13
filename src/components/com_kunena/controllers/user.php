@@ -920,17 +920,17 @@ class KunenaControllerUser extends KunenaController
 			return false;
 		}
 
-		if ($this->user->id == $this->me->userid)
+		// Reload the user.
+		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
 		{
-			// Reload the user.
 			$this->user->load($this->user->id);
-			$session = \Joomla\CMS\Factory::getSession();
+			$session = JFactory::getSession();
 			$session->set('user', $this->user);
 
 			// Update session if username has been changed
 			if ($username && $username != $this->user->username)
 			{
-				$table = \Joomla\CMS\Table\Table::getInstance('session', 'JTable');
+				$table = JTable::getInstance('session', 'JTable');
 				$table->load($session->getId());
 
 				$table->username = $this->user->username;

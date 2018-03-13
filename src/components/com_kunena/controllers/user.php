@@ -890,18 +890,21 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Reload the user.
-		$this->user->load($this->user->id);
-		$session = JFactory::getSession();
-		$session->set('user', $this->user);
-
-		// Update session if username has been changed
-		if ($username && $username != $this->user->username)
+		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
 		{
-			$table = JTable::getInstance('session', 'JTable');
-			$table->load($session->getId());
+			$this->user->load($this->user->id);
+			$session = JFactory::getSession();
+			$session->set('user', $this->user);
 
-			$table->username = $this->user->username;
-			$table->store();
+			// Update session if username has been changed
+			if ($username && $username != $this->user->username)
+			{
+				$table = JTable::getInstance('session', 'JTable');
+				$table->load($session->getId());
+
+				$table->username = $this->user->username;
+				$table->store();
+			}
 		}
 
 		return true;

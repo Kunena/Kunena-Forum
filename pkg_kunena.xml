@@ -3,8 +3,8 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.0.14-dev</version>
-	<versionname>internal</versionname>
+	<version>5.0.14</version>
+	<versionname>Stephen Hawking</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

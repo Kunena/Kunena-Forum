@@ -62,46 +62,36 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$controller->redirect();
 		}
 
-		if ($limit < 1 || $limit > 100)
-		{
-			$limit = $this->config->threads_per_page;
-		}
-
-		// Get configuration from menu item.
-		$categoryIds = $params->get('topics_categories', array());
-		$reverse     = !$params->get('topics_catselection', 1);
-
-		// Make sure that category list is an array.
-		if (!is_array($categoryIds))
-		{
-			$categoryIds = explode(',', $categoryIds);
-		}
-
-		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds))
-		{
-			$categoryIds = false;
-		}
-
-		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse);
-
 		$finder = new KunenaForumTopicFinder;
-		$finder
-			->filterByCategories($categories)
-			->filterByUserAccess($this->me)
-			->unreadTopics($this->me);
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$this->topics = $finder
+			->start($start)
+			->limit($limit)
+			->filterByUserAccess($this->me)
+			->find();
+
+		$mesIds = array();
+
+		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+
+		$list = array();
+
+		foreach ($this->topics as $topic)
+		{
+			if ($topic->unread)
+			{
+				$list[] = $topic;
+			}
+		}
+
+		$this->topics = $list;
+
+		$this->pagination = new KunenaPagination(count($list), $start, $limit);
 
 		if ($this->moreUri)
 		{
 			$this->pagination->setUri($this->moreUri);
 		}
-
-		$this->topics = $finder
-			->order('last_post_time', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
-			->find();
 
 		if ($this->topics)
 		{

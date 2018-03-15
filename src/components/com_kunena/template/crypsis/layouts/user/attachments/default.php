@@ -125,8 +125,9 @@ $attachments = $this->attachments;
 			->set('pagination', $this->pagination->setDisplayedPages(4))
 			->set('display', true); ?>
 	</div>
+
 	<?php if ($attachments) : ?>
-		<a href="#modaldeleteall" class="btn pull-right" data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?><a/>
+		<a href="#modaldeleteall" class="btn pull-right" data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
 		<div id="modaldeleteall" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modaldeleteallLabel" aria-hidden="true">
 			<div class="modal-header">

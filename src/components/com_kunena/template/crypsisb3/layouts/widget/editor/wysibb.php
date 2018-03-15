@@ -89,10 +89,9 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 $settings = $templatesettings->get('wysibb');
 ?>
 <script>
-	var settingsbuttons = "<?php echo $settings;?>";
 	var wbbOpt = {
 		lang: "kunena",
-		buttons: settingsbuttons
+		buttons: "<?php echo $settings;?>"
 	};
 	jQuery(function ($) {
 		$("#editor").wysibb(wbbOpt);

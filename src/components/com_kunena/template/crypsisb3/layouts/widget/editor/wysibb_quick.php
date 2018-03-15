@@ -87,10 +87,9 @@ $templatesettings = $this->ktemplate->params;
 $settings = $templatesettings->get('wysibb');
 ?>
 <script>
-	var settingsbuttons = "<?php echo $settings;?>";
 	var wbbOpt = {
 		lang: "kunena",
-		buttons: settingsbuttons
+		buttons: "<?php echo $settings;?>"
 	};
 	jQuery(function ($) {
 		$('[id^=editor-]').wysibb(wbbOpt);

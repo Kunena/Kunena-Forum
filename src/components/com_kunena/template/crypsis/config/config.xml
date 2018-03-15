@@ -305,7 +305,7 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		<field name="wysibb" type="text" default="bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,table,removeFormat" label="COM_KUNENA_TEMPLATE_DISPLAY_WYSIBB" description="COM_KUNENA_TEMPLATE_DISPLAY_WYSIBB_DESC" />
+		<field name="wysibb" type="hidden" default="" />
 	</fieldset>
 
 	<fieldset name="avatar">

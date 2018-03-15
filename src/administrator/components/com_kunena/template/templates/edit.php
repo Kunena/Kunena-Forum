@@ -25,8 +25,8 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
-		      method="post" id="adminForm"
-		      name="adminForm">
+				method="post" id="adminForm"
+				name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 			<?php echo JHtml::_('form.token'); ?>
@@ -44,7 +44,7 @@ JHtml::_('dropdown.init');
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 									</li>
 									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
-										<?php if ($fieldset->name != 'template') : ; ?>
+										<?php if ($fieldset->name != 'template') : ?>
 											<li>
 												<a href="#tab_<?php echo $fieldset->name; ?>"
 												   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
@@ -76,10 +76,9 @@ JHtml::_('dropdown.init');
 												</td>
 												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 
-													if (is_file($path))
-														:
-														?>
-														<div><img
+													if (is_file($path)) : ?>
+														<div>
+															<img
 																	src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
 																	alt="<?php echo $this->escape($this->templatename); ?>"/>
 														</div>
@@ -93,18 +92,20 @@ JHtml::_('dropdown.init');
 									<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 										<div class="tab-pane" id="tab_<?php echo $fieldset->name; ?>">
 											<table class="table table-bordered table-striped">
-												<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
-													:
-													if (!$field->hidden)
-														:
-														?>
-														<tr>
-															<td width="40%"
-															    class="paramlist_key"><?php echo $field->label; ?></td>
-															<td class="paramlist_value"><?php echo $field->input; ?></td>
+												<?php foreach ($this->form->getFieldset($fieldset->name) as $field) :?>
+													<?php if ($field->hidden) :?>
+														<tr style="display: none">
+															<td class="paramlist_key"><?php echo $field->label;?></td>
+															<td class="paramlist_value"><?php echo $field->input;?></td>
 														</tr>
-													<?php endif;
-												endforeach; ?>
+													<?php else :?>
+													<tr>
+														<td width="40%"
+															class="paramlist_key"><?php echo $field->label;?></td>
+														<td class="paramlist_value"><?php echo $field->input;?></td>
+													</tr>
+												<?php endif;?>
+												<?php endforeach; ?>
 											</table>
 										</div>
 									<?php endforeach; ?>

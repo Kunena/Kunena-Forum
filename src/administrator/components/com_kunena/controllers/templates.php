@@ -684,6 +684,133 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$params = $this->app->input->get('jform', array(), 'post', 'array');
 
+		$params['wysibb'] = '';
+
+		if ($params['bold'])
+		{
+			$params['wysibb'] .= 'bold,';
+		}
+
+		if ($params['italic'])
+		{
+			$params['wysibb'] .= 'italic,';
+		}
+
+		if ($params['underline'])
+		{
+			$params['wysibb'] .= 'underline,';
+		}
+
+		if ($params['strike'])
+		{
+			$params['wysibb'] .= 'strike,';
+		}
+
+		if ($params['sup'])
+		{
+			$params['wysibb'] .= 'sup,';
+		}
+
+		if ($params['sub'])
+		{
+			$params['wysibb'] .= 'sub,';
+		}
+
+		if ($params['alignleft'])
+		{
+			$params['wysibb'] .= 'justifyleft,';
+		}
+
+		if ($params['center'])
+		{
+			$params['wysibb'] .= 'justifycenter,';
+		}
+
+		if ($params['alignright'])
+		{
+			$params['wysibb'] .= 'justifyright,';
+		}
+
+		if ($params['divider'])
+		{
+			$params['wysibb'] .= '|,';
+		}
+
+		if ($params['picture'])
+		{
+			$params['wysibb'] .= 'img,';
+		}
+
+		if ($params['video'])
+		{
+			$params['wysibb'] .= 'video,';
+		}
+
+		if ($params['link'])
+		{
+			$params['wysibb'] .= 'link,';
+		}
+
+		if ($params['divider'])
+		{
+			$params['wysibb'] .= '|,';
+		}
+
+		if ($params['bulletedlist'])
+		{
+			$params['wysibb'] .= 'bullist,';
+		}
+
+		if ($params['numericlist'])
+		{
+			$params['wysibb'] .= 'numlist,';
+		}
+
+		if ($params['divider'])
+		{
+			$params['wysibb'] .= '|,';
+		}
+
+		if ($params['fontcolor'])
+		{
+			$params['wysibb'] .= 'fontcolor,';
+		}
+
+		if ($params['wysibb'])
+		{
+			$params['wysibb'] .= 'fontsize,';
+		}
+
+		if ($params['wysibb'])
+		{
+			$params['wysibb'] .= 'fontfamily,';
+		}
+
+		if ($params['divider'])
+		{
+			$params['wysibb'] .= '|,';
+		}
+
+		if ($params['quote'])
+		{
+			$params['wysibb'] .= 'quote,';
+		}
+
+		if ($params['code'])
+		{
+			$params['wysibb'] .= 'code,';
+		}
+
+		if ($params['table'])
+		{
+			$params['wysibb'] .= 'table,';
+		}
+
+		if ($params['wysibb'])
+		{
+			$params['wysibb'] .= 'removeFormat';
+		}
+
 		// Set FTP credentials, if given
 		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');

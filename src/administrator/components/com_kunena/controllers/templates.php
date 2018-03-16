@@ -701,17 +701,17 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$params['wysibb'] .= 'underline,';
 		}
 
-		if ($params['strike'])
+		if ($params['wysibb'])
 		{
 			$params['wysibb'] .= 'strike,';
 		}
 
-		if ($params['sup'])
+		if ($params['supscript'])
 		{
 			$params['wysibb'] .= 'sup,';
 		}
 
-		if ($params['sub'])
+		if ($params['subscript'])
 		{
 			$params['wysibb'] .= 'sub,';
 		}
@@ -771,7 +771,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$params['wysibb'] .= '|,';
 		}
 
-		if ($params['fontcolor'])
+		if ($params['colors'])
 		{
 			$params['wysibb'] .= 'fontcolor,';
 		}

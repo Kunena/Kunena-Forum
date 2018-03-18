@@ -2073,6 +2073,7 @@ class KunenaControllerTopic extends KunenaController
 				$mail = \Joomla\CMS\Mail\Mail::getInstance();
 				$mail->setSender(array($this->me->username, $this->me->email));
 				$mail->setSubject($mailsubject);
+				$mail->addReplyTo($this->me->email, $this->me->username);
 
 				// Render the email.
 				$layout = KunenaLayout::factory('Email/Report')->debug(false)

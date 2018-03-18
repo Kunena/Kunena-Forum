@@ -2055,7 +2055,7 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($emailToList))
 			{
-				$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ' ' . JText::_('COM_KUNENA_FORUM') . ': ' . $this->me->getName());
+				$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->board_title . " " . JText::_('COM_KUNENA_FORUM') . "] " . JText::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
@@ -2071,7 +2071,7 @@ class KunenaControllerTopic extends KunenaController
 				$msglink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
 				$mail = \Joomla\CMS\Mail\Mail::getInstance();
-				$mail->setSender(array($this->me->username, $this->me->email));
+				$mail->setSender(array($this->config->getEmail(), $mailsender));
 				$mail->setSubject($mailsubject);
 				$mail->addReplyTo($this->me->email, $this->me->username);
 

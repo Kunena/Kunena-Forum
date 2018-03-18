@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 // @var KunenaUser $profile
 
 $profile             = $this->profile;
+$socials             = $this->profile->socialButtons();
+$socials             = Joomla\Utilities\ArrayHelper::toObject($socials);
 $me                  = KunenaUserHelper::getMyself();
 $avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 $banInfo             = $this->config->showbannedreason
@@ -203,7 +205,7 @@ if ($this->config->showuserstats)
 					</div>
 					<div class="span12">
 						<div class="span9">
-							<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile); ?>
+							<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('socials', $socials); ?>
 						</div>
 						<div class="span3 pull-right">
 							<?php if ($private)

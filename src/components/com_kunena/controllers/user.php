@@ -966,7 +966,7 @@ class KunenaControllerUser extends KunenaController
 		$user->location    = trim($input->$method->get('location', '', 'string'));
 		$user->gender      = $input->$method->get('gender', 0, 'int');
 		$user->icq         = str_replace(' ','',trim($input->$method->get('icq', '', 'string')));
-		$user->yim         = str_replace(' ','',rim($input->$method->get('yim', '', 'string')));
+		$user->yim         = str_replace(' ','',trim($input->$method->get('yim', '', 'string')));
 		$user->microsoft   = str_replace(' ','',trim($input->$method->get('microsoft', '', 'string')));
 		$user->skype       = str_replace(' ','',trim($input->$method->get('skype', '', 'string')));
 		$user->google      = str_replace(' ','',trim($input->$method->get('google', '', 'string')));

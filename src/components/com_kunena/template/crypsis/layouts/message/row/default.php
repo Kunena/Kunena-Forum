@@ -26,35 +26,7 @@ $avatar    = $config->avataroncat ? $topic->getLastPostAuthor()->getAvatarImage(
 $cols      = empty($this->checkbox) ? 5 : 6;
 $txt       = '';
 $userTopic = $topic->getUserTopic();
-
-if ($topic->ordering)
-{
-	if ($topic->getCategory()->class_sfx)
-	{
-		$txt .= '';
-	}
-	else
-	{
-		$txt .= '-stickymsg';
-	}
-}
-
-if ($topic->hold == 1 || $message->hold == 1)
-{
-	$txt .= ' ' . 'unapproved';
-}
-else
-{
-	if ($topic->hold)
-	{
-		$txt .= ' ' . 'deleted';
-	}
-}
-
-if ($topic->moved_id > 0)
-{
-	$txt .= ' ' . 'moved';
-}
+$txt       = $topic->getActions();
 ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">

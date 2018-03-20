@@ -25,29 +25,8 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $config          = KunenaFactory::getConfig();
 $avatar          = $config->avataroncat ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 $cols            = empty($this->checkbox) ? 5 : 6;
-$txt             = '';
+$txt             = $topic->getActions();
 
-if ($topic->ordering)
-{
-	$txt .= '-stickymsg';
-}
-
-if ($topic->hold == 1 || $message->hold == 1)
-{
-	$txt .= ' ' . 'unapproved';
-}
-else
-{
-	if ($topic->hold)
-	{
-		$txt .= ' ' . 'deleted';
-	}
-}
-
-if ($topic->moved_id > 0)
-{
-	$txt .= ' ' . 'moved';
-}
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php

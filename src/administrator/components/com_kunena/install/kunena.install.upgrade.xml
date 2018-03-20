@@ -778,10 +778,6 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `inline` tinyint(4) NOT NULL default '0'
                 AFTER `caption`;
             </query>
-        </version>
-        <version version="5.1.0-ALPHA4"
-                 versiondate="2017-07-29"
-                 versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `youtube` VARCHAR(50) NULL AFTER `yim`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ok` VARCHAR(50) NULL AFTER `youtube`;</query>
         </version>

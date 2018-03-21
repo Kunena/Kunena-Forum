@@ -188,8 +188,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection = array();
-
+		$sortDirection   = array();
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 

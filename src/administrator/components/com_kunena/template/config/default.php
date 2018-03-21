@@ -559,6 +559,11 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->lists ['social'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_SOCIAL_DESC') ?></td>
 												</tr>
+												<tr align="center" valign="middle">
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
+													<td align="left" valign="top"><input type="text" name="cfg_maxsig" value="<?php echo $this->escape($this->config->maxsig) ?>" /></td>
+													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

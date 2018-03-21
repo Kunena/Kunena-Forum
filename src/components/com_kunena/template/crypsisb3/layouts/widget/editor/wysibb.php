@@ -83,15 +83,19 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM7');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
+$this->ktemplate  = KunenaFactory::getTemplate();
+$templatesettings = $this->ktemplate->params;
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
+$settings = $templatesettings->get('wysibb');
 ?>
 <script>
 	var wbbOpt = {
-		lang: "kunena"
+		lang: "kunena",
+		buttons: "<?php echo $settings;?>"
 	};
 	jQuery(function ($) {
-		$("#editor").wysibb();
-	})
+		$("#editor").wysibb(wbbOpt);
+	});
 </script>
 
 <div class="control-group">

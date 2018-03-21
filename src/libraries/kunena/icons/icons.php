@@ -1422,7 +1422,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-bars fa-large" aria-hidden="true"></i> <b class="caret"></b>';
+			return '<i class="fas fa-bars" aria-hidden="true"></i> <b class="caret"></b>';
 		}
 
 		if ($topicicontype == 'B2')

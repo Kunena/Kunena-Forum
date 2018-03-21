@@ -332,8 +332,7 @@ class TableKunenaCategories extends KunenaTable
 				$registry = new \Joomla\Registry\Registry;
 			}
 
-			// TODO: convert to J!2.5: (string) $registry
-			$array['params'] = $registry->toString();
+			$array['params'] = (string) $registry;
 		}
 
 		return parent::bind($array, $ignore);

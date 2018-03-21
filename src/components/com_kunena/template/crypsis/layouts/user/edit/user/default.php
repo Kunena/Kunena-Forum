@@ -99,3 +99,7 @@ defined('_JEXEC') or die;
 		</tbody>
 	</table>
 <?php endif;
+
+if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
+	<a class="btn" href="<?php echo \Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit');?>" data-toggle="modal" id="2fa_settings"><?php echo JText::_('COM_KUNENA_2FA_SETTINGS');?></a>
+<?php endif;

@@ -84,6 +84,8 @@ defined('_JEXEC') or die;
 
 		echo '<li' . $class . ' >';
 
+		$item->menu_image = $item->params->get('menu_image');
+
 		// Render the menu item.
 		if ($item->type == 'separator')
 		{

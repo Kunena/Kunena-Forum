@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+$this->ktemplate  = KunenaFactory::getTemplate();
+$templatesettings = $this->ktemplate->params;
+
 $this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
 $this->addScript('assets/js/wysibb.lang.js');
@@ -85,14 +88,50 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
+$settings = $templatesettings->get('wysibb');
 ?>
+
 <script>
 	var wbbOpt = {
-		lang: "kunena"
+		lang: "kunena",
+		buttons: "<?php echo $settings;?>",
+		// Todo More Support
+		traceTextarea: true,
+		smileList: [
+			{title:CURLANG.sm1, img: '<img src="media/kunena/emoticons/blink.png">', bbcode:":)"}
+		],
+		allButtons: {
+			custom: {
+				title: 'Maps',
+				buttonText: 'Maps',
+				modal: {
+					title: "Maps",
+					width: "600px",
+					tabs: [
+						{
+							input: [ //List of form fields
+								{param: "SELTEXT",title:"Enter City",type:"div"},
+								{param: "ZOOM",title:"Zoom Level",type:"div"}
+							]
+						}
+					],
+					onLoad: function() {
+						//Callback function that will be called after the display of a modal window
+					},
+					onSubmit: function() {
+						//Callback function that will be called by pressing the "Save"
+						//If function return false, it means sending data WysiBB not be made
+					}
+				},
+				transform: {
+					'<span>{SELTEXT}</span>': '[map zoom="{ZOOM}"]{SELTEXT}[/map]'
+				}
+			}
+		}
 	};
 	jQuery(function ($) {
-		$("#editor").wysibb();
-	})
+		$("#editor").wysibb(wbbOpt);
+	});
 </script>
 
 <div class="control-group">

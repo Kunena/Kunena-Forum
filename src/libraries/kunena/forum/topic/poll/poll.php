@@ -351,7 +351,7 @@ class KunenaForumTopicPoll extends JObject
 			return false;
 		}
 
-		$lastVoteId = $this->getLastVoteId($user->userid);
+		$lastVoteId = $this->getLastVoteId($user);
 		$myvotes    = $this->getMyVotes($user);
 
 		if (!$myvotes)
@@ -382,8 +382,12 @@ class KunenaForumTopicPoll extends JObject
 			$votes      = new StdClass;
 			$votes->new = false;
 
-			// Add a vote to the user
-			$votes->votes = ++$myvotes;
+			// Change vote: decrease votes in the last option
+			if (!$this->changeOptionVotes($lastVoteId, -1))
+			{
+				// Add a vote to the user
+				$votes->votes++;
+			}
 		}
 
 		$votes->lasttime = \Joomla\CMS\Factory::getDate()->toSql();
@@ -465,7 +469,7 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function getLastVoteId($user = null)
 	{
-		$user  = KunenaFactory::getUser($user);
+			$user = KunenaFactory::getUser($user);
 		$query = "SELECT lastvote
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";

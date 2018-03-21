@@ -66,7 +66,7 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
       name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
-	<table class="table table-bordered table-condensed">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<?php if (empty($this->messages))
 			:

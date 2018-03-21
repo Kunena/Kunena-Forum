@@ -305,27 +305,28 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="wysibb" type="hidden" default="" />
 	</fieldset>
 
 	<fieldset name="avatar">
-		<field name="avatarSizeX" default="40"/>
-		<field name="avatarSizeY" default="90"/>
+		<field name="avatarSizeX" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_DESC" default="40"/>
+		<field name="avatarSizeY" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_DESC" default="90"/>
 		<!-- Required avatar sizes -->
-		<field name="avatarSizeXThumb" default="36"/>
-		<field name="avatarSizeYThumb" default="36"/>
-		<field name="avatarSizeXWelcome" default="72"/>
-		<field name="avatarSizeYWelcome" default="72"/>
-		<field name="avatarSizeXList" default="36"/>
-		<field name="avatarSizeYList" default="36"/>
-		<field name="avatarSizeXPost" default="144"/>
-		<field name="avatarSizeYPost" default="144"/>
-		<field name="avatarSizeXProfile" default="200"/>
-		<field name="avatarSizeYProfile" default="200"/>
+		<field name="avatarSizeXThumb" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_THUMB_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_THUMB_DESC" default="36"/>
+		<field name="avatarSizeYThumb" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_THUMB_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_THUMB_DESC" default="36"/>
+		<field name="avatarSizeXWelcome" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_WELCOME_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_WELCOME_DESC" default="72"/>
+		<field name="avatarSizeYWelcome" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_WELCOME_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_WELCOME_DESC" default="72"/>
+		<field name="avatarSizeXList" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_LIST_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_LIST_DESC" default="36"/>
+		<field name="avatarSizeYList" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_LIST_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_LIST_DESC" default="36"/>
+		<field name="avatarSizeXPost" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_POST_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_POST_DESC" default="144"/>
+		<field name="avatarSizeYPost" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_POST_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_POST_DESC" default="144"/>
+		<field name="avatarSizeXProfile" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_PROFILE_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_PROFILE_DESC" default="200"/>
+		<field name="avatarSizeYProfile" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_PROFILE_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_PROFILE_DESC" default="200"/>
 	</fieldset>
 
 	<fieldset name="template">
-		<field name="templatebyText" default=""/>
-		<field name="templatebyName" default=""/>
-		<field name="templatebyLink" default=""/>
+		<field name="templatebyText" label="COM_KUNENA_TEMPLATE_AVATAR_TEXT_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_TEXT_DESC" default=""/>
+		<field name="templatebyName" label="COM_KUNENA_TEMPLATE_AVATAR_NAME_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_TEXT_DESC" default=""/>
+		<field name="templatebyLink" label="COM_KUNENA_TEMPLATE_AVATAR_LINK_LABEL" description="COM_KUNENA_TEMPLATE_AVATAR_TEXT_DESC" default=""/>
 	</fieldset>
 </config>

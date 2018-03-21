@@ -32,12 +32,18 @@ $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 if ($config->lazyload)
 {
 	?>
-	<a href="<?php echo $this->escape($url); ?>"
-		<?php echo $attributesLink; ?>>
-		<img class="lazy" src="<?php echo $this->escape($url); ?>"
-		     data-src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
-		     alt="test"/>
-	</a>
+	<?php if ($canLink) : ?>
+		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $title;?>" <?php echo $attributesLink; ?>>
+	<?php endif; ?>
+
+	<img class="lazy" src="<?php echo $this->escape($url); ?>"
+	     data-src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
+	     alt="<?php echo $title;?>"/>
+
+	<?php if ($canLink) : ?>
+		</a>
+	<?php endif; ?>
+
 	<?php
 }
 else
@@ -45,10 +51,10 @@ else
 	?>
 	<div class="kmsgimage">
 		<?php if ($canLink) : ?>
-		<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
+		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $title;?>" <?php echo $attributesLink; ?>>
 			<?php endif; ?>
 
-			<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> />
+			<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $title;?>"/>
 
 			<?php if ($canLink) : ?>
 		</a>

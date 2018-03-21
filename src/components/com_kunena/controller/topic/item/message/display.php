@@ -182,7 +182,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if (!empty($this->message->ip))
 			{
-				$this->ipLink = '<a href="https://www.whois.com/whois/' . $this->message->ip
+				$this->ipLink = '<a href="https://www.geoiptool.com/en/?ip=' . $this->message->ip
 					. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 			}
 			else

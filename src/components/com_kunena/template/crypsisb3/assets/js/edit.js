@@ -239,9 +239,14 @@ jQuery(document).ready(function ($) {
 				dataType: 'json',
 				data: {catid: catid},
 				success: function (data) {
-					if (data.length > 1) {
-						$('#modal_confirm_template_category').modal('show');
-
+					if(data.length > 1) {
+						if( $('#editor').val().length > 1 ) {
+							$('#modal_confirm_template_category').modal('show');
+						}
+						else
+						{
+							$('#editor').val(data);
+						}
 						tmp = data;
 					}
 				}

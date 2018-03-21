@@ -37,7 +37,7 @@ class Com_KunenaInstallerScript
 			'0'   => '5.5', // Preferred version
 		),
 		'Joomla!' => array(
-			'3.8' => '3.8.0-beta1',
+			'3.8' => '3.8.0',
 			'3.9' => '3.9.0',
 			'4.0' => '4.0.0',
 			'0'   => '3.8.0', // Preferred version
@@ -333,6 +333,28 @@ class Com_KunenaInstallerScript
 			$db->setQuery($query);
 			$db->execute();
 		}
+
+		// K5.1 Remove files
+		if (is_file(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin/edit.php'))
+		{
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin');
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/views/plugin');
+			$this->deleteFile(JPATH_ROOT . '/administrator/components/com_kunena/controllers/plugin.php');
+		}
+
+		if (is_file(JPATH_ROOT . '/media/kunena/js/debug.js'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/media/kunena/js/debug.js');
+		}
+
+		if (is_file(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php');
+			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsis/layouts/topic/edit/editor');
+			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/layouts/topic/edit/editor');
+			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
+		}
+
 
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";

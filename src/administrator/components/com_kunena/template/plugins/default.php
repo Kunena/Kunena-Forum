@@ -172,11 +172,8 @@ $user = \Joomla\CMS\Factory::getUser();
 					<?php
 					$i                  = 0;
 					$k                  = 0;
-
-					if ($this->pagination->total > 0)
-						:
-						foreach ($this->items as $i => $item)
-							:
+					if ($this->pagination->total > 0) :
+						foreach ($this->items as $i => $item) :
 							$canEdit = $user->authorise('core.edit', 'com_plugins');
 							$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
 							$canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
@@ -189,22 +186,39 @@ $user = \Joomla\CMS\Factory::getUser();
 									<?php echo JHtml::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
 								</td>
 								<td>
-									<?php if ($item->checked_out)
-										:
-										?>
+									<?php if ($item->checked_out) : ?>
 										<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
 									<?php endif; ?>
-									<?php
-									if ($canEdit)
-										:
-										?>
-										<a href="#edit"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','plugin.edit')">
-											<?php echo $this->escape($item->name); ?>
+									<?php if ($canEdit) : ?>
+										<a href="#plugin<?php echo $item->extension_id; ?>Modal" data-toggle="modal"
+										   id="title-><?php echo $item->extension_id; ?>">
+											<?php echo $item->name; ?>
 										</a>
-									<?php else
-										:
-										?>
+										<?php echo \Joomla\CMS\HTML\HTMLHelper::_(
+											'bootstrap.renderModal',
+											'plugin' . $item->extension_id . 'Modal',
+											array(
+												'url'         => \Joomla\CMS\Router\Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
+												'title'       => $item->name,
+												'height'      => '400',
+												'width'       => '800px',
+												'bodyHeight'  => '70',
+												'modalWidth'  => '80',
+												'closeButton' => false,
+												'backdrop'    => 'static',
+												'keyboard'    => false,
+												'footer'      => '<button type="button" class="btn" data-dismiss="modal" aria-hidden="true"'
+													. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#closeBtn\').click();">'
+													. \Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+													. '<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"'
+													. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#saveBtn\').click();">'
+													. \Joomla\CMS\Language\Text::_("JSAVE") . '</button>'
+													. '<button type="button" class="btn btn-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
+													. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
+													. \Joomla\CMS\Language\Text::_("JAPPLY") . '</button>'
+											)
+										); ?>
+									<?php else : ?>
 										<?php echo $item->name; ?>
 									<?php endif; ?>
 								</td>
@@ -222,21 +236,16 @@ $user = \Joomla\CMS\Factory::getUser();
 							$i++;
 							$k = 1 - $k;
 						endforeach;
-					else
-						:
-						?>
+					else : ?>
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
-											<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-												<?php
-												if ($this->filterActive || $this->pagination->total > 0)
-													:
-													?>
-													<button class="btn" type="button"
-													        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-												<?php endif; ?>
-											</span>
+									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+										<?php if ($this->filterActive || $this->pagination->total > 0) : ?>
+											<button class="btn" type="button"
+											        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										<?php endif; ?>
+									</span>
 								</div>
 							</td>
 						</tr>
@@ -244,10 +253,8 @@ $user = \Joomla\CMS\Factory::getUser();
 					</tbody>
 				</table>
 			</form>
-			<div class="clearfix"></div>
+		</div>
+		<div class="pull-right small">
+			<?php echo KunenaVersion::getLongVersionHTML(); ?>
 		</div>
 	</div>
-	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
-	</div>
-</div>

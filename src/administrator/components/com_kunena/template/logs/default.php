@@ -243,6 +243,22 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							$category = KunenaForumCategoryHelper::get($item->category_id);
 							$topic    = KunenaForumTopicHelper::get($item->topic_id);
 							$target   = KunenaUserHelper::get($item->target_user);
+
+							$document = \Joomla\CMS\Factory::getDocument();
+							$document->addScriptDeclaration("window.addEvent('domready', function(){
+									$('link_sel_all" . $item->id . "').addEvent('click', function(e){
+										$('report_final" . $item->id . "').select();
+										try {
+											var successful = document.execCommand('copy');
+											var msg = successful ? 'successful' : 'unsuccessful';
+											console.log('Copying text command was ' + msg);
+										}
+										catch (err)
+										{
+											console.log('Oops, unable to copy');
+										}
+									});
+								});");
 							?>
 							<tr>
 								<td class="center">
@@ -272,9 +288,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<td class="center">
 									<?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
 								</td>
-								<?php if (!$this->group)
-									:
-									?>
+								<?php if (!$this->group) : ?>
 									<td>
 										<a href="#kerror<?php echo $item->id; ?>_form" role="button"
 										   class="btn openmodal"
@@ -297,10 +311,16 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									</h3>
 								</div>
 								<div class="modal-body">
-									<pre><?php echo $this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)); ?></pre>
-									</textarea>
+									<div>
+										<textarea style="margin-top: -3000px" id="report_final<?php echo $item->id; ?>" for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data);?></textarea>
+										<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
+									</div>
 								</div>
 								<div class="modal-footer">
+									<a href="#" id="link_sel_all<?php echo $item->id; ?>" name="link_sel_all<?php echo $item->id; ?>" type="button"
+									   class="btn btn-small btn-primary"><i
+												class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+									</a>
 									<button class="btn btn-danger" data-dismiss="modal"
 									        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 								</div>

@@ -217,7 +217,7 @@ foreach ($this->sections as $section) :
 
 								<td class="span3 hidden-phone">
 									<div class="container-fluid">
-										<div class="row">
+										<div class="row-fluid">
 											<?php if ($avatar) : ?>
 											<div class="span3">
 												<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>

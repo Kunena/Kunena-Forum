@@ -61,7 +61,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		'rate'                        => array('Read', 'Unlocked'),
 		'poll.read'                   => array('Read', 'Poll'),
 		'poll.create'                 => array('Own'),
-		'poll.edit'                   => array('Read', 'Own', 'NoVotes'),
+		'poll.edit'                   => array('Read', 'NoVotes'),
 		'poll.delete'                 => array('Read', 'Own', 'Poll'),
 		'poll.vote'                   => array('Read', 'Poll', 'Vote'),
 		'post.read'                   => array('Read'),
@@ -290,14 +290,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		if ($cascade)
 		{
 			$category = $this->getCategory();
-
-			// Todo: fix the issue on the right location.
-			$mod = KunenaUserHelper::getMyself()->isModerator($category);
-
-			if ($category->review && !$mod)
-			{
-				$postDelta = 0;
-			}
 
 			if (!$category->update($this, $topicDelta, $postDelta))
 			{
@@ -2112,7 +2104,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
 		}
 
-		if ($votes >= $config->pollnbvotesbyuser)
+		if ($votes >= $config->pollnbvotesbyuser && $config->pollallowvoteone)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
@@ -2145,8 +2137,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	protected function authoriseNoVotes(KunenaUser $user)
 	{
 		$poll = $this->getPoll();
+		$config = KunenaFactory::getConfig();
 
-		if ($poll->exists() && $poll->getUserCount())
+		if ($poll->exists() && $poll->getUserCount() && $config->pollallowvoteone)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}

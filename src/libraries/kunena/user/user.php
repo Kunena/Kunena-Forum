@@ -1749,6 +1749,14 @@ class KunenaUser extends JObject
 		{
 			return true;
 		}
+
+		$expiration = new \Joomla\CMS\Date\Date($this->banned);
+		$now        = new \Joomla\CMS\Date\Date;
+
+		if ($expiration->toUnix() > $now->toUnix())
+		{
+			return true;
+		}
 	}
 
 	/**

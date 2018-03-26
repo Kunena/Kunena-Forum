@@ -277,7 +277,6 @@ if (!empty($codeTypes))
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>
-				<div>
 					<?php
 					if ($this->poll->exists())
 					{
@@ -289,7 +288,6 @@ if (!empty($codeTypes))
 							$x++;
 						}
 					} ?>
-				</div>
 				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
 				       value="<?php echo $this->config->pollnboptions; ?>"/>
 				<input type="hidden" name="number_total_options" id="numbertotal"

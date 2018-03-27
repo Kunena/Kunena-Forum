@@ -49,11 +49,11 @@
 	margin-bottom: 0;
 }
 
-#kunena.admin.override #categoryList .btn i.icon-cancel{
+#kunena.admin.override .btn i.icon-cancel {
 	color: #942a25;
 }
 
-#kunena.admin.override #categoryList .btn i.icon-checkmark{
+#kunena.admin.override .btn i.icon-checkmark {
 	color: #46a546;
 }
 

@@ -49,6 +49,14 @@
 	margin-bottom: 0;
 }
 
+#kunena.admin.override .btn i.icon-cancel {
+	color: #942a25;
+}
+
+#kunena.admin.override .btn i.icon-checkmark {
+	color: #46a546;
+}
+
 #kunena.admin.override #dashboard-icons.btn-group {
 	white-space: normal;
 }

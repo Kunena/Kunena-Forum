@@ -436,12 +436,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
 		}
 
-		$message = $this->topic->first_post_message;
-		$matches = preg_match("/http(s?):\/\/.*\/\img]/iu", $message, $title);
+		$message = KunenaHtmlParser::parseText($this->topic->first_post_message);
+		$matches = preg_match("/\[img]http(s?):\/\/.*\/\img]/iu", $message, $title);
 
 		if ($matches)
 		{
-			$image = substr($title[0], 0, -6);
+			$image = substr($title[0], 5, -6);
 		}
 
 		if ($this->topic->attachments > 0)
@@ -482,14 +482,21 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$doc->setMetaData('og:description', KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160), 'property');
+		$first = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160);
+
+		if (!$first)
+		{
+			$first = $this->topic->subject;
+		}
+
+		$doc->setMetaData('og:description', $first, 'property');
 		$doc->setMetaData('og:image', $image, 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toKunena('config_post_dateformat'), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
-		$doc->setMetaData('twitter:card', KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160), 'name');
+		$doc->setMetaData('twitter:card', $first, 'name');
 		$doc->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
 		$doc->setMetaData('twitter:image', $image, 'property');
-		$doc->setMetaData('twitter:description', KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 160));
+		$doc->setMetaData('twitter:description', $first);
 
 		$config = \Joomla\CMS\Factory::getConfig();
 		$robots = $config->get('robots');

@@ -6,13 +6,14 @@
         "php": ">=5.5.13"
     },
     "require-dev": {
-        "codeception/codeception": "~2.2",
-        "joomla-projects/joomla-browser": "v3.6.5.1",
+        "codeception/codeception": "~2.3",
+        "consolidation/robo": "^1.0.0",
+        "joomla-projects/joomla-testing-robo": "dev-container-test",
+        "joomla-projects/joomla-testing": "dev-container-test",
+        "joomla-projects/jorobo": "^0.7.0",
+        "joomla-projects/joomla-browser": "dev-develop",
         "joomla-projects/selenium-server-standalone": "dev-master",
-        "codegyre/robo": "~0.6",
-        "joomla-projects/robo": "dev-master",
-        "fzaninotto/faker": "^1.5",
-        "joomla-projects/jorobo": "0.6.4",
+        "Behat/Gherkin": "^4.4.1",
         "phing/phing": "2.*"
     }
 }

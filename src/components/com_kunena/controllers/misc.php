@@ -49,11 +49,11 @@ class KunenaControllerMisc extends KunenaController
 				$name = 'crypsis';
 			}
 
-			setcookie('kunena_template', $name, 0, \Joomla\CMS\Uri\Uri::root(true) . '/');
+			setcookie('kunena_template', $name, 0, \Joomla\CMS\Uri\Uri::root(true) . '/', '', true);
 		}
 		else
 		{
-			setcookie('kunena_template', null, time() - 3600, \Joomla\CMS\Uri\Uri::root(true) . '/');
+			setcookie('kunena_template', null, time() - 3600, \Joomla\CMS\Uri\Uri::root(true) . '/', '', true);
 		}
 
 		$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));

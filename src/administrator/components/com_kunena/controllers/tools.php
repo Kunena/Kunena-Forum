@@ -829,6 +829,28 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$count = $db->getAffectedRows();
 
+		$deleteipusers = $this->app->input->getBool('deleteipusers', 0);
+
+		if ($deleteipusers)
+		{
+			$db    = \Joomla\CMS\Factory::getDbo();
+			$query = "UPDATE #__kunena_users SET ip = NULL;";
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				$this->app->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_DONE', $count));
+		}
+
 		if ($count > 0)
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count));

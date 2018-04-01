@@ -138,6 +138,7 @@ EOF;
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread svg { color: {$iconcolornew} !important;}
 EOF;
 		}
 

@@ -105,7 +105,7 @@ defined('_JEXEC') or die;
 						<?php if ($this->resetPasswordUrl)
 							:
 							?>
-							<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
+							<a href="<?php echo $this->resetPasswordUrl; ?>">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 							</a>
 							<br/>
@@ -114,7 +114,7 @@ defined('_JEXEC') or die;
 						<?php if ($this->remindUsernameUrl)
 							:
 							?>
-							<a href="<?php echo $this->remindUsernameUrl; ?>" rel="nofollow">
+							<a href="<?php echo $this->remindUsernameUrl; ?>">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 							</a>
 							<br/>
@@ -123,7 +123,7 @@ defined('_JEXEC') or die;
 						<?php if ($this->registrationUrl)
 							:
 							?>
-							<a href="<?php echo $this->registrationUrl; ?>" rel="nofollow">
+							<a href="<?php echo $this->registrationUrl; ?>">
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
 							</a>
 						<?php endif ?>

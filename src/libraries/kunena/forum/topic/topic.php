@@ -1342,7 +1342,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	{
 		$user = KunenaUserHelper::get($user);
 
-		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
+		if (!KunenaFactory::getConfig()->shownew || !$user->exists() || JFactory::getUser()->guest)
 		{
 			return false;
 		}

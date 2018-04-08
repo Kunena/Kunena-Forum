@@ -850,6 +850,9 @@
         <field name="avatar"
                type="varchar(255)"
                null="1"/>
+        <field name="timestamp"
+               type="int(11)"
+               null="1"/>
         <field name="karma"
                type="int(11)"
                null="1"

@@ -1087,8 +1087,9 @@ class KunenaControllerUser extends KunenaController
 				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
 				// Save in the table KunenaUser
-				$kuser         = $user;
-				$kuser->avatar = 'users/avatar' . $user->userid . '.' . $extension;
+				$kuser            = $user;
+				$kuser->avatar    = 'users/avatar' . $user->userid . '.' . $extension;
+				$kuser->timestamp = round(microtime(true));
 				$kuser->save();
 			}
 		}

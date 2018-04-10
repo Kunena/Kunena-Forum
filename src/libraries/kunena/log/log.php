@@ -19,289 +19,289 @@ class KunenaLog
 {
 	// Log types.
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const TYPE_ADMINISTRATION = 0;
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const TYPE_MODERATION = 1;
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const TYPE_ACTION = 2;
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const TYPE_ERROR = 3;
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const TYPE_REPORT = 4;
 
 	// Log operations.
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ANNOUNCEMENT_CREATE = 'LOG_ANNOUNCEMENT_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ANNOUNCEMENT_EDIT = 'LOG_ANNOUNCEMENT_EDIT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ANNOUNCEMENT_DELETE = 'LOG_ANNOUNCEMENT_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ANNOUNCEMENT_PUBLISH = 'LOG_ANNOUNCEMENT_PUBLISH';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ANNOUNCEMENT_UNPUBLISH = 'LOG_ANNOUNCEMENT_UNPUBLISH';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ATTACHMENT_CREATE = 'LOG_ATTACHMENT_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ATTACHMENT_DELETE = 'LOG_ATTACHMENT_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_CREATE = 'LOG_POST_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_EDIT = 'LOG_POST_EDIT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_DELETE = 'LOG_POST_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_UNDELETE = 'LOG_POST_UNDELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_DESTROY = 'LOG_POST_DESTROY';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_MODERATE = 'LOG_POST_MODERATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_APPROVE = 'LOG_POST_APPROVE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_REPORT = 'LOG_POST_REPORT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_THANKYOU = 'LOG_POST_THANKYOU';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POST_UNTHANKYOU = 'LOG_POST_UNTHANKYOU';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
+	//const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
+	//const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
+	//const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_ICON = 'LOG_TOPIC_ICON';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_CREATE = 'LOG_TOPIC_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_EDIT = 'LOG_TOPIC_EDIT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_FAVORITE = 'LOG_TOPIC_FAVORITE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_LOCK = 'LOG_TOPIC_LOCK';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_UNLOCK = 'LOG_TOPIC_UNLOCK';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_STICKY = 'LOG_TOPIC_STICKY';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_UNFAVORITE = 'LOG_TOPIC_UNFAVORITE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_UNSTICKY = 'LOG_TOPIC_UNSTICKY';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_MODERATE = 'LOG_TOPIC_MODERATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_DELETE = 'LOG_TOPIC_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_UNDELETE = 'LOG_TOPIC_UNDELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_DESTROY = 'LOG_TOPIC_DESTROY';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_APPROVE = 'LOG_TOPIC_APPROVE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_TOPIC_REPORT = 'LOG_TOPIC_REPORT';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
+	//const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
+	//const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_USER_EDIT = 'LOG_USER_EDIT';
+	//const LOG_USER_EDIT = 'LOG_USER_EDIT';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
+	//const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
+	//const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_USER_BAN = 'LOG_USER_BAN';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
+	//const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_USER_WARNING = 'LOG_USER_WARNING';
+	//const LOG_USER_WARNING = 'LOG_USER_WARNING';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
+	// const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
 
 	/**
 	 * @since Kunena
 	 */
-	const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';
+	// const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ERROR_GENERAL = 'LOG_ERROR_GENERAL';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ERROR_CRITICAL = 'LOG_ERROR_CRITICAL';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ERROR_ALERT = 'LOG_ERROR_ALERT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ERROR_EMERGENCY = 'LOG_ERROR_EMERGENCY';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
 
 	/**
 	 * @var array|KunenaLogEntry[]
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	protected static $entries = array();
 
@@ -311,7 +311,7 @@ class KunenaLog
 	 * Should only be called as a shutdown function in order to make sure all items are logged.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	public static function flush()
 	{
@@ -346,7 +346,7 @@ class KunenaLog
 	 * Clear out the log entries.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	public static function clear()
 	{
@@ -365,7 +365,7 @@ class KunenaLog
 	 *
 	 * @return void
 	 * @throws Exception
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	public static function log(
 		$type,
@@ -385,7 +385,7 @@ class KunenaLog
 	 * @param   KunenaLogEntry $entry An instance of an entry to be logged.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
 	public static function addEntry(KunenaLogEntry $entry)
 	{

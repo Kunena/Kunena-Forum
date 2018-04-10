@@ -33,7 +33,7 @@ function kunena_200_2012_06_10_newindication($parent)
 	{
 		$db->execute();
 	}
-	catch (JDatabaseExceptionExecuting $e)
+	catch (Exception $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
@@ -52,7 +52,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		{
 			$sessions = $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -101,7 +101,7 @@ function kunena_200_2012_06_10_newindication($parent)
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -121,7 +121,7 @@ function kunena_200_2012_06_10_newindication($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -142,7 +142,7 @@ function kunena_200_2012_06_10_newindication($parent)
 	{
 		$db->execute();
 	}
-	catch (JDatabaseExceptionExecuting $e)
+	catch (Exception $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}

@@ -295,7 +295,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
@@ -330,7 +330,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$this->db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
@@ -363,7 +363,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$list = $this->db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
@@ -458,7 +458,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$fields = $this->db->loadObjectList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}
@@ -494,7 +494,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$keys = $this->db->loadObjectList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 			}

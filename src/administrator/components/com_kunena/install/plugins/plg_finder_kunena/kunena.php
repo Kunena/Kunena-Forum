@@ -370,7 +370,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		{
 			$return = (int) $this->db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -433,7 +433,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		{
 			$ids = $this->db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

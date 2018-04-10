@@ -726,7 +726,8 @@
                default="0"/>
         <field name="params"
                type="text"
-               null="0"/>
+               null="0"
+               default="0"/>
         <key name="PRIMARY"
              unique="1"
              columns="user_id,category_id"/>
@@ -824,7 +825,8 @@
                default="0"/>
         <field name="status_text"
                type="varchar(255)"
-               null="0"/>
+               null="0"
+               default="0"/>
         <field name="view"
                type="varchar(8)"
                null="0"
@@ -1099,7 +1101,8 @@
                null="0"/>
         <field name="build"
                type="varchar(20)"
-               null="0"/>
+               null="0"
+               default="0"/>
         <field name="versionname"
                type="varchar(40)"
                null="1"/>

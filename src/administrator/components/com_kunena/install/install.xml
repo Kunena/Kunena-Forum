@@ -824,7 +824,8 @@
                default="0"/>
         <field name="status_text"
                type="varchar(255)"
-               null="0"/>
+               null="0"
+               default="0"/>
         <field name="view"
                type="varchar(8)"
                null="0"
@@ -849,6 +850,9 @@
                default="0"/>
         <field name="avatar"
                type="varchar(255)"
+               null="1"/>
+        <field name="timestamp"
+               type="int(11)"
                null="1"/>
         <field name="karma"
                type="int(11)"
@@ -1096,7 +1100,8 @@
                null="0"/>
         <field name="build"
                type="varchar(20)"
-               null="0"/>
+               null="0"
+               default="0"/>
         <field name="versionname"
                type="varchar(40)"
                null="1"/>

@@ -108,7 +108,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		if ($fontawesome)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$doc->addScript('https://use.fontawesome.com/releases/v5.0.8/js/all.js', array(), array('defer' => true));
+			$doc->addScript('https://use.fontawesome.com/releases/v5.0.9/js/all.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings
@@ -138,6 +138,7 @@ EOF;
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread svg { color: {$iconcolornew} !important;}
 EOF;
 		}
 

@@ -44,7 +44,7 @@ function kunena_160_2010_05_30_polls($parent)
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -61,7 +61,7 @@ function kunena_160_2010_05_30_polls($parent)
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -78,7 +78,7 @@ function kunena_160_2010_05_30_polls($parent)
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -96,7 +96,7 @@ function kunena_160_2010_05_30_polls($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -108,7 +108,7 @@ function kunena_160_2010_05_30_polls($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -120,7 +120,7 @@ function kunena_160_2010_05_30_polls($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -132,7 +132,7 @@ function kunena_160_2010_05_30_polls($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -150,7 +150,7 @@ function kunena_160_2010_05_30_polls($parent)
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -169,7 +169,7 @@ function kunena_160_2010_05_30_polls($parent)
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}

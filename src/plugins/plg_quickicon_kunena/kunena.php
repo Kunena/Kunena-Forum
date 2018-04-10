@@ -51,7 +51,7 @@ class plgQuickiconKunena extends JPlugin
 
 		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer'))
 		{
-			$updateSite = 'http://update.kunena.org/%';
+			$updateSite = 'https://update.kunena.org/%';
 			$db         = JFactory::getDbo();
 
 			$query = $db->getQuery(true)
@@ -135,8 +135,14 @@ class plgQuickiconKunena extends JPlugin
 		}
 		else
 		{
-			// Already in the latest release
-			$img  = $useIcons ? 'comments' : 'kunena/icons/icon-48-kupdate-good-white.png';
+			$icon = 'comments';
+
+			if (version_compare(JVERSION, '4.0', '>'))
+			{
+				$icon = 'fa fa-comments';
+			}
+
+			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-good-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-good-white.png';
 			$text = JText::_('COM_KUNENA');
 		}

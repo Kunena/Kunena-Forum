@@ -791,6 +791,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` VARCHAR(128);</query>
         </version>
+        <version version="5.1.0-RC5"
+                 versiondate="2018-04-08"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `timestamp` int(11) NULL AFTER `avatar`;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

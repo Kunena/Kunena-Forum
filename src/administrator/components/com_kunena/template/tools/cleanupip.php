@@ -40,6 +40,11 @@ defined('_JEXEC') or die();
 							</div>
 						</td>
 					</tr>
+					<tr>
+						<td width="20%"><?php echo JText::_('COM_KUNENA_DELETE_USERS_IP') ?></td>
+						<td width="10%"><input type="checkbox" name="deleteipusers" value="1"/></td>
+						<td width="79%"><?php echo JText::_('COM_KUNENA_DELETE_USERS_IP_DESC'); ?></td>
+					</tr>
 				</table>
 			</fieldset>
 		</form>

@@ -1397,7 +1397,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		// Allow queries to fail
-		$this->db->setDebug(false);
+		//$this->db->setDebug(false);
 
 		foreach ($xml->upgrade[0] as $version)
 		{
@@ -1604,7 +1604,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$count = $this->db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -1622,7 +1622,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$users = $this->db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -1702,7 +1702,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 				{
 					$this->db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -1871,7 +1871,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$count = $this->db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -1912,7 +1912,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$attachments = $this->db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2005,7 +2005,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 				{
 					$this->db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -2033,7 +2033,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$this->db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -2328,7 +2328,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$version = $this->db->loadObject();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -2410,7 +2410,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2556,7 +2556,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 				{
 					$result = $this->db->loadResult();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (Exception $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -2580,7 +2580,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 					{
 						$result = $this->db->loadObjectList('Field');
 					}
-					catch (JDatabaseExceptionExecuting $e)
+					catch (Exception $e)
 					{
 						throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 					}
@@ -2668,7 +2668,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2683,7 +2683,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2752,9 +2752,9 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		`version` varchar(20) NOT NULL,
 		`versiondate` date NOT NULL,
 		`installdate` date NOT NULL,
-		`build` varchar(20) NOT NULL,
+		`build` varchar(20) DEFAULT NULL,
 		`versionname` varchar(40) DEFAULT NULL,
-		`state` varchar(32) NOT NULL,
+		`state` text DEFAULT NULL,
 		PRIMARY KEY (`id`)
 		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
 		$this->db->setQuery($query);
@@ -2763,7 +2763,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2786,18 +2786,19 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
 	{
-		$this->db->setQuery("INSERT INTO `#__kunena_version` SET
+		$this->db->setQuery("INSERT INTO `" . $this->db->getPrefix() . "kunena_version` SET
 			`version` = {$this->db->quote($version)},
 			`versiondate` = {$this->db->quote($versiondate)},
 			`installdate` = CURDATE(),
 			`versionname` = {$this->db->quote($versionname)},
+			`build` = {$this->db->quote($version)},
 			`state` = {$this->db->quote($state)}");
 
 		try
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2825,7 +2826,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$list = (array) $this->db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
@@ -2859,7 +2860,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				$this->db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (Exception $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -2902,11 +2903,11 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// Disable language debugging while creating menu items.
 		$lang  = \Joomla\CMS\Factory::getLanguage();
-		$debug = $lang->setDebug(false);
+		//$debug = $lang->setDebug(false);
 
 		$this->createMenuJ25($menu, $submenu);
 		KunenaMenuHelper::cleanCache();
-		$lang->setDebug($debug);
+		//$lang->setDebug($debug);
 	}
 
 	/**
@@ -2936,7 +2937,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}

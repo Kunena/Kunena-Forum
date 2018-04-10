@@ -316,9 +316,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$message->ip      = $_SERVER ["REMOTE_ADDR"];
 
 		// Add IP to user.
-		if (empty($user->ip))
+		if (KunenaConfig::getInstance()->iptracking)
 		{
-			$user->ip = $_SERVER ["REMOTE_ADDR"];
+			if (empty($user->ip))
+			{
+				$user->ip = $_SERVER ["REMOTE_ADDR"];
+			}
 		}
 
 		if ($topic->hold)

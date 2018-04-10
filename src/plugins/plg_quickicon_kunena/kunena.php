@@ -135,8 +135,14 @@ class plgQuickiconKunena extends JPlugin
 		}
 		else
 		{
-			// Already in the latest release
-			$img  = $useIcons ? 'comments' : 'kunena/icons/icon-48-kupdate-good-white.png';
+			$icon = 'comments';
+
+			if (version_compare(JVERSION, '4.0', '>'))
+			{
+				$icon = 'fa fa-comments';
+			}
+
+			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-good-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-good-white.png';
 			$text = JText::_('COM_KUNENA');
 		}

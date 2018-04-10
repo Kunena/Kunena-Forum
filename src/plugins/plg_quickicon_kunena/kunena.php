@@ -51,7 +51,7 @@ class plgQuickiconKunena extends JPlugin
 
 		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer'))
 		{
-			$updateSite = 'http://update.kunena.org/%';
+			$updateSite = 'https://update.kunena.org/%';
 			$db         = JFactory::getDbo();
 
 			$query = $db->getQuery(true)

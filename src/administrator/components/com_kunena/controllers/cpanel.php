@@ -55,7 +55,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 
 		if (KunenaForum::installed() && \Joomla\CMS\Factory::getUser()->authorise('core.manage', 'com_installer'))
 		{
-			$updateSite = 'http://update.kunena.org/%';
+			$updateSite = 'https://update.kunena.org/%';
 			$db         = \Joomla\CMS\Factory::getDbo();
 
 			$query = $db->getQuery(true)

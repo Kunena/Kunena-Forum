@@ -1397,7 +1397,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		// Allow queries to fail
-		$this->db->setDebug(false);
+		//$this->db->setDebug(false);
 
 		foreach ($xml->upgrade[0] as $version)
 		{
@@ -1534,7 +1534,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (installSampleData())
 		{
-		$this->addStatus(JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true);
+			$this->addStatus(JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true);
 		}
 
 		return true;
@@ -2903,11 +2903,11 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// Disable language debugging while creating menu items.
 		$lang  = \Joomla\CMS\Factory::getLanguage();
-		$debug = $lang->setDebug(false);
+		//$debug = $lang->setDebug(false);
 
 		$this->createMenuJ25($menu, $submenu);
 		KunenaMenuHelper::cleanCache();
-		$lang->setDebug($debug);
+		//$lang->setDebug($debug);
 	}
 
 	/**

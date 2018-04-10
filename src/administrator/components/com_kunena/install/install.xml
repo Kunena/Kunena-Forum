@@ -726,8 +726,7 @@
                default="0"/>
         <field name="params"
                type="text"
-               null="0"
-               default="0"/>
+               null="0"/>
         <key name="PRIMARY"
              unique="1"
              columns="user_id,category_id"/>

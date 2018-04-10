@@ -245,7 +245,15 @@ class KunenaLogin
 	{
 		// Include the necessary user model and helper
 		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
+
+		if (version_compare(JVERSION, '4.0.0-dev', '>='))
+		{
+			require_once JPATH_ADMINISTRATOR . '/components/com_users/Model/UserModel.php';
+		}
+		else
+		{
+			require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
+		}
 
 		// Is TFA globally turned off?
 		$twoFactorMethods = UsersHelper::getTwoFactorMethods();

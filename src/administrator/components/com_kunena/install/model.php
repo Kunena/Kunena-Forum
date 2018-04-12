@@ -2098,7 +2098,11 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 					break;
 				case 3:
 					// Update category statistics
-					KunenaForumCategoryHelper::recount();
+					// Fixme J4
+					if (version_compare(JVERSION, '4.0', '<'))
+					{
+						KunenaForumCategoryHelper::recount();
+					}
 					$this->addStatus(JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
 					break;
 				default:

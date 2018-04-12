@@ -120,11 +120,19 @@ class Pkg_KunenaInstallerScript
 		$this->enablePlugin('system', 'kunena');
 		$this->enablePlugin('quickicon', 'kunena');
 
-		$app   = JFactory::getApplication();
-		$modal = <<<EOS
+		if (version_compare(JVERSION, '4.0', '<'))
+		{
+			$app   = JFactory::getApplication();
+			$modal = <<<EOS
 			<div id="kunena-modal" class="modal hide fade" style="width:auto;min-width:32%;margin-left:-13%;top:25%;padding:10px;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
-		$app->enqueueMessage('Installing Kunena... ' . $modal);
+			$app->enqueueMessage('Installing Kunena... ' . $modal);
+		}
+		else
+		{
+			$app = \Joomla\CMS\Factory::getApplication();
+			$app->redirect(JRoute::_('index.php?option=com_kunena&view=install', false));
+		}
 
 		return true;
 	}

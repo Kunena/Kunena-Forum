@@ -81,6 +81,8 @@ defined('_JEXEC') or die();
 						kunenaInstall.find('h2').text('<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
 						kunenaProgress.parent().removeClass('active');
 						kunenaProgress.addClass('bar-success');
+						jQuery('#kunena-component').addClass('btn-success');
+						window.location.href = '<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
 					}
 					jQuery('.kunena-close').removeAttr('disabled');
 				} else {

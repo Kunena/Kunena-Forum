@@ -40,6 +40,9 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function __construct()
 	{
+		// Disable error_reporting improves more successfully install.
+		error_reporting(0);
+
 		parent::__construct();
 		require_once __DIR__ . '/model.php';
 		$this->model = $this->getModel('Install');

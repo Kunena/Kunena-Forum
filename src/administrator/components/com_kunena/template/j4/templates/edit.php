@@ -1,0 +1,124 @@
+<?php
+/**
+ * Kunena Component
+ *
+ * @package         Kunena.Administrator.Template
+ * @subpackage      Templates
+ *
+ * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+defined('_JEXEC') or die();
+
+// @var KunenaAdminViewTemplates $this
+
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+?>
+
+<div id="kunena" class="container-fluid">
+	<div class="row">
+		<div class="col-md-2 d-none d-md-block sidebar">
+			<div id="sidebar">
+				<nav class="sidebar-nav"><?php include KPATH_ADMIN . '/template/j4/common/menu.php'; ?></nav>
+			</div>
+		</div>
+		<div id="j-main-container" class="col-md-10" role="main">
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
+					method="post" id="adminForm"
+					name="adminForm">
+				<input type="hidden" name="task" value=""/>
+				<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
+				<?php echo JHtml::_('form.token'); ?>
+
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<h1 style="text-transform: capitalize;"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>
+								: <?php echo $this->escape($this->templatename); ?></h1>
+							<div class="tabbable-panel">
+								<div class="tabbable-line">
+									<ul class="nav nav-tabs ">
+										<li class="active">
+											<a href="#tab_info" data-toggle="tab">
+												<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
+										</li>
+										<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
+											<?php if ($fieldset->name != 'template') : ?>
+												<li>
+													<a href="#tab_<?php echo $fieldset->name; ?>"
+													   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
+												</li>
+											<?php endif; ?>
+										<?php endforeach; ?>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="tab_info">
+											<table class="table table-bordered table-striped">
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?>:
+													</td>
+													<td><strong><?php echo JText::_($this->details->author); ?></strong>
+													</td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>:
+													</td>
+													<td><?php echo JText::_($this->details->version); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?>:</td>
+													<td><?php echo JText::_($this->details->creationdate); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>
+														:
+													</td>
+													<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
+
+														if (is_file($path)) : ?>
+															<div>
+																<img
+																		src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
+																		alt="<?php echo $this->escape($this->templatename); ?>"/>
+															</div>
+														<?php endif; ?>
+														<div><?php echo JText::_($this->details->description); ?></div>
+													</td>
+												</tr>
+											</table>
+										</div>
+
+										<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
+											<div class="tab-pane" id="tab_<?php echo $fieldset->name; ?>">
+												<table class="table table-bordered table-striped">
+													<?php foreach ($this->form->getFieldset($fieldset->name) as $field) :?>
+														<?php if ($field->hidden) :?>
+															<tr style="display: none">
+																<td class="paramlist_key"><?php echo $field->label;?></td>
+																<td class="paramlist_value"><?php echo $field->input;?></td>
+															</tr>
+														<?php else :?>
+														<tr>
+															<td width="40%"
+																class="paramlist_key"><?php echo $field->label;?></td>
+															<td class="paramlist_value"><?php echo $field->input;?></td>
+														</tr>
+													<?php endif;?>
+													<?php endforeach; ?>
+												</table>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</form>
+		</div>
+	</div>
+	<div class="pull-right small">
+		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+	</div>
+</div>

@@ -143,6 +143,11 @@ abstract class KunenaError
 	 */
 	public static function displayDatabaseError($exception)
 	{
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			return false;
+		}
+
 		$app = \Joomla\CMS\Factory::getApplication();
 		$db  = \Joomla\CMS\Factory::getDBO();
 

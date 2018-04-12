@@ -2,7 +2,6 @@
 
 INSERT INTO `#__kunena_aliases`
 	(`alias`,				`type`,		`item`,			`state`) VALUES
-
 	('announcement',		'view',		'announcement',		1),
 	('category',			'view',		'category',			1),
 	('common',				'view',		'common',			1),

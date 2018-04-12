@@ -2,7 +2,6 @@
 
 INSERT INTO `#__kunena_smileys`
 	(`id`,	`code`,		`location`,	`greylocation`,	`emoticonbar`) VALUES
-
 	( 1,	'B)',		'cool.png',		'cool-grey.png',	1),
 	( 2,	'8)',		'cool.png',		'cool-grey.png',	0),
 	( 3,	'8-)',		'cool.png',		'cool-grey.png',	0),

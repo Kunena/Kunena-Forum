@@ -8,14 +8,14 @@ ALTER TABLE	`#__kunena_user_read`		MODIFY `time` int(11) NOT NULL AFTER `message
 ALTER TABLE	`#__kunena_user_read`		ADD KEY `time` (time);
 
 
-UPDATE #__kunena_polls_options AS a
-	`INNER` JOIN #__kunena_topics AS t ON t.id=a.pollid
-	`LEFT` JOIN #__kunena_polls AS p ON p.id=a.pollid
-	`SET` a.pollid=t.poll_id
+UPDATE `#__kunena_polls_options` AS a
+	INNER JOIN `#__kunena_topics` AS t ON t.id=a.pollid
+	LEFT JOIN `#__kunena_polls` AS p ON p.id=a.pollid
+	SET a.pollid=t.poll_id
 	WHERE t.poll_id>0 AND p.id IS NULL;
 
-UPDATE #__kunena_polls_users AS a
-	`INNER` JOIN #__kunena_topics AS t ON t.id=a.pollid
-	`LEFT` JOIN #__kunena_polls AS p ON p.id=a.pollid
-	`SET` a.pollid=t.poll_id
+UPDATE `#__kunena_polls_users` AS a
+	INNER JOIN `#__kunena_topics` AS t ON t.id=a.pollid
+	LEFT JOIN `#__kunena_polls` AS p ON p.id=a.pollid
+	SET a.pollid=t.poll_id
 	WHERE t.poll_id>0 AND p.id IS NULL;

@@ -2,7 +2,6 @@
 
 INSERT INTO `#__kunena_ranks`
 	(`rank_id`,	`rank_title`,				`rank_min`,	`rank_special`,	`rank_image`) VALUES
-	
 	(	1,		'COM_KUNENA_SAMPLEDATA_RANK1',			0,		0,	'rank1.gif'),
 	(	2,		'COM_KUNENA_SAMPLEDATA_RANK2',			20,		0,	'rank2.gif'),
 	(	3,		'COM_KUNENA_SAMPLEDATA_RANK3',			40,		0,	'rank3.gif'),

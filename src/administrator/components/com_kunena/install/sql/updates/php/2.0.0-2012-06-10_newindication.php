@@ -26,7 +26,7 @@ function kunena_200_2012_06_10_newindication($parent)
 
 	// First remove old session information (not used anyway, speeds up conversion)
 	$lasttime = $now - max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
-	$query    = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
+	$query    = "UPDATE `#__kunena_sessions` SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
 
 	try
@@ -45,7 +45,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		unset($sessions);
 
 		// Then look at users who have read the thread
-		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics != '0'";
+		$query = "SELECT userid, readtopics FROM `#__kunena_sessions` WHERE readtopics != '0'";
 		$db->setQuery($query, 0, $limit);
 
 		try
@@ -94,7 +94,7 @@ function kunena_200_2012_06_10_newindication($parent)
 			foreach ($chunks as &$chunk)
 			{
 				$values = implode(',', $chunk);
-				$query  = "REPLACE INTO #__kunena_user_read (`user_id`, `topic_id`, `category_id`, `message_id`, `time`) VALUES {$values}";
+				$query  = "REPLACE INTO `#__kunena_user_read` (`user_id`, `topic_id`, `category_id`, `message_id`, `time`) VALUES {$values}";
 				$db->setQuery($query);
 
 				try
@@ -114,7 +114,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		if ($users)
 		{
 			$users = implode(',', $users);
-			$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE userid IN ({$users})";
+			$query = "UPDATE `#__kunena_sessions` SET readtopics='0' WHERE userid IN ({$users})";
 			$db->setQuery($query);
 
 			try
@@ -132,8 +132,8 @@ function kunena_200_2012_06_10_newindication($parent)
 	while ($sessions);
 
 	// Update missing information
-	$query = "UPDATE #__kunena_user_read AS ur
-		INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
+	$query = "UPDATE `#__kunena_user_read` AS ur
+		INNER JOIN `#__kunena_topics` AS t ON t.id=ur.topic_id
 		SET ur.category_id=t.category_id,
 			ur.message_id=t.last_post_id";
 	$db->setQuery($query);

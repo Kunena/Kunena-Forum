@@ -727,7 +727,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function uninstallModule($name)
 	{
-		$query = "SELECT extension_id FROM #__extensions WHERE type='module' AND element='{$name}'";
+		$query = "SELECT extension_id FROM `#__extensions` WHERE type='module' AND element='{$name}'";
 		$this->db->setQuery($query);
 		$moduleid = $this->db->loadResult();
 
@@ -746,7 +746,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function uninstallPlugin($folder, $name)
 	{
-		$query = "SELECT extension_id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+		$query = "SELECT extension_id FROM `#__extensions` WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
 		$this->db->setQuery($query);
 		$pluginid = $this->db->loadResult();
 
@@ -1596,7 +1596,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			'components/com_fireboard/avatars',
 		);
 
-		$query = "SELECT COUNT(*) FROM #__kunena_users
+		$query = "SELECT COUNT(*) FROM `#__kunena_users`
 			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
 		$this->db->setQuery($query);
 
@@ -1614,7 +1614,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			return true;
 		}
 
-		$query = "SELECT userid, avatar FROM #__kunena_users
+		$query = "SELECT userid, avatar FROM `#__kunena_users`
 			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
 		$this->db->setQuery($query, 0, 1023);
 
@@ -1695,7 +1695,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if ($success)
 			{
-				$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
+				$query = "UPDATE `#__kunena_users` SET avatar={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
 				$this->db->setQuery($query);
 
 				try
@@ -1863,7 +1863,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			'media/kunena/attachments/legacy',
 		);
 
-		$query = "SELECT COUNT(*) FROM #__kunena_attachments
+		$query = "SELECT COUNT(*) FROM `#__kunena_attachments`
 			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
 		$this->db->setQuery($query);
 
@@ -1904,7 +1904,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		$query = "SELECT * FROM #__kunena_attachments
+		$query = "SELECT * FROM `#__kunena_attachments`
 			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
 		$this->db->setQuery($query, 0, 251);
 
@@ -1997,7 +1997,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 				$stat  = stat($destfile);
 				$size  = (int) $stat['size'];
 				$hash  = md5_file($destfile);
-				$query = "UPDATE #__kunena_attachments SET folder='media/kunena/attachments/legacy/{$lastpath}', size={$this->db->quote($size)}, hash={$this->db->quote($hash)}, filetype={$this->db->quote($attachment->filetype)}
+				$query = "UPDATE `#__kunena_attachments` SET folder='media/kunena/attachments/legacy/{$lastpath}', size={$this->db->quote($size)}, hash={$this->db->quote($hash)}, filetype={$this->db->quote($attachment->filetype)}
 					WHERE id={$this->db->quote($attachment->id)}";
 				$this->db->setQuery($query);
 
@@ -2026,7 +2026,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		else
 		{
 			// Note: com_fireboard has been replaced by com_kunena during 1.0.8 upgrade, use it instead
-			$query = "UPDATE #__kunena_messages_text SET message = REPLACE(REPLACE(message, '/images/fbfiles', '/media/kunena/attachments/legacy'), '/components/com_kunena/uploaded', '/media/kunena/attachments/legacy');";
+			$query = "UPDATE `#__kunena_messages_text` SET message = REPLACE(REPLACE(message, '/images/fbfiles', '/media/kunena/attachments/legacy'), '/components/com_kunena/uploaded', '/media/kunena/attachments/legacy');";
 			$this->db->setQuery($query);
 
 			try
@@ -2066,7 +2066,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		if ($state === null)
 		{
 			// First run
-			$query = "SELECT MAX(id) FROM #__kunena_messages";
+			$query = "SELECT MAX(id) FROM `#__kunena_messages`";
 			$this->db->setQuery($query);
 			$state        = new stdClass;
 			$state->step  = 0;

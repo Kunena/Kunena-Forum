@@ -26,7 +26,7 @@ function kunena_200_2012_06_10_pubwrite($parent)
 	{
 		$db     = \Joomla\CMS\Factory::getDbo();
 		$params = '{"access_post":["1"],"access_reply":["1"]}';
-		$query  = "UPDATE #__kunena_categories SET params={$db->quote($params)} WHERE accesstype LIKE 'joomla.%' AND params=''";
+		$query  = "UPDATE `#__kunena_categories` SET params={$db->quote($params)} WHERE accesstype LIKE 'joomla.%' AND params=''";
 		$db->setQuery($query);
 		$success = (bool) $db->execute();
 

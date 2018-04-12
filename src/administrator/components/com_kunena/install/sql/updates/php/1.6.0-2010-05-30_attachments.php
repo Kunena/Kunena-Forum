@@ -102,13 +102,13 @@ function kunena_160_2010_05_30_attachments($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
+	$query = "INSERT INTO `#__kunena_attachments` (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,
 					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
-				FROM #__kunena_attachments_bak AS a
-				JOIN #__kunena_messages AS m ON a.mesid = m.id";
+				FROM `#__kunena_attachments_bak` AS a
+				JOIN `#__kunena_messages` AS m ON a.mesid = m.id";
 	$db->setQuery($query);
 
 	try

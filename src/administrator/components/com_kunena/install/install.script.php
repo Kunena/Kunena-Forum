@@ -550,7 +550,7 @@ class Com_KunenaInstallerScript
 		}
 
 		// Get installed Kunena version
-		$db->setQuery("SELECT version FROM {$db->quoteName($table)} ORDER BY `id` DESC", 0, 1);
+		$db->setQuery("SELECT version FROM `{$db->quoteName($table)}` ORDER BY `id` DESC", 0, 1);
 		$installed = $db->loadResult();
 
 		if (!$installed)
@@ -694,7 +694,7 @@ class Com_KunenaInstallerScript
 			return;
 		}
 
-		$db->setQuery('SELECT default_character_set_name FROM ' . $db->quoteName('#__kunena_version'));
+		$db->setQuery('SELECT default_character_set_name FROM `' . $db->quoteName('#__kunena_version') . '`');
 
 		// Nothing to do, saved conversion status from DB is equal to required
 		if ($db->getCollation() == 'utf8mb4_unicode_ci')

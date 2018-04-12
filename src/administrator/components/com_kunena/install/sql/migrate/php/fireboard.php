@@ -57,7 +57,7 @@ class KunenaMigratorFireboard
 		{
 			// Get installed version.
 			$db = \Joomla\CMS\Factory::getDBO();
-			$db->setQuery("SELECT version, versiondate AS date FROM #__fb_version ORDER BY id DESC", 0, 1);
+			$db->setQuery("SELECT version, versiondate AS date FROM `#__fb_version` ORDER BY id DESC", 0, 1);
 			$version = $db->loadRow();
 
 			// Do not detect Kunena 1.x.

@@ -17,7 +17,7 @@ if ($data->pages && count($data->pages) <= 1)
 	return;
 }
 
-$template = new KunenaAdminTemplate;
+$template = new KunenaAdminTemplate3;
 ?>
 <ul class="pagination-list">
 	<?php echo $template->paginationItem($data->start); ?>

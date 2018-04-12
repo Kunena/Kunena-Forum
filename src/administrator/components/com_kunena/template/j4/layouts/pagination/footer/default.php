@@ -10,8 +10,7 @@
  **/
 defined('_JEXEC') or die();
 ?>
-<div class="pagination pagination-toolbar">
-	<?php echo KunenaLayout::factory('pagination/list')->set('pagination', $this->pagination); ?>
-	<input type="hidden" name="<?php echo $this->pagination->prefix ?>limitstart"
-	       value="<?php echo $this->pagination->limitstart; ?>"/>
-</div>
+
+<?php echo KunenaLayout::factory('pagination/list')->set('pagination', $this->pagination); ?>
+<input type="hidden" name="<?php echo $this->pagination->prefix ?>limitstart"
+       value="<?php echo $this->pagination->limitstart; ?>"/>

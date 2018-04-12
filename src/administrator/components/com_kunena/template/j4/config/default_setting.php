@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 					<p><?php echo JText::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn" type="button" data-dismiss="modal">
+					<button class="btn btn-default" type="button" data-dismiss="modal">
 						<?php echo JText::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-primary" type="submit"

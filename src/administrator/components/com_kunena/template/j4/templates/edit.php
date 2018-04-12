@@ -9,12 +9,14 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die();
 
-// @var KunenaAdminViewTemplates $this
-
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('behavior.tabstate');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -40,14 +42,14 @@ JHtml::_('dropdown.init');
 							<div class="tabbable-panel">
 								<div class="tabbable-line">
 									<ul class="nav nav-tabs ">
-										<li class="active">
-											<a href="#tab_info" data-toggle="tab">
+										<li class="nav-item">
+											<a class="nav-link active" href="#tab_info" data-toggle="tab">
 												<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 										</li>
 										<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 											<?php if ($fieldset->name != 'template') : ?>
-												<li>
-													<a href="#tab_<?php echo $fieldset->name; ?>"
+												<li class="nav-item">
+													<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
 													   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
 												</li>
 											<?php endif; ?>
@@ -117,8 +119,8 @@ JHtml::_('dropdown.init');
 					</div>
 			</form>
 		</div>
-	</div>
-	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<div class="pull-right small">
+			<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		</div>
 	</div>
 </div>

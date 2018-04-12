@@ -208,7 +208,7 @@ $user = \Joomla\CMS\Factory::getUser();
 													'closeButton' => false,
 													'backdrop'    => 'static',
 													'keyboard'    => false,
-													'footer'      => '<button type="button" class="btn" data-dismiss="modal" aria-hidden="true"'
+													'footer'      => '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#closeBtn\').click();">'
 														. \Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
 														. '<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"'
@@ -240,10 +240,10 @@ $user = \Joomla\CMS\Factory::getUser();
 						else : ?>
 							<tr>
 								<td colspan="10">
-									<div class="well center filter-state">
+									<div class="card card-block bg-faded p-2 center filter-state">
 										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 											<?php if ($this->filterActive || $this->pagination->total > 0) : ?>
-												<button class="btn" type="button"
+												<button class="btn btn-default" type="button"
 												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 											<?php endif; ?>
 										</span>

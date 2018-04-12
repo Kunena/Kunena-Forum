@@ -22,51 +22,53 @@ defined('_JEXEC') or die();
 			</div>
 		</div>
 		<div id="j-main-container" class="col-md-10" role="main">
-			<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
-			<table class="adminform">
-				<tr>
-					<th><?php echo JText::_('Active Category Subscriptions'); ?></th>
-				</tr>
-				<?php
-				foreach ($this->cat_subscribers_users as $user)
-					:
-					?>
+			<div class="card card-block bg-faded p-2">
+				<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
+				<table class="adminform">
 					<tr>
-						<td><?php echo $user->id ?></td>
-						<td><?php echo $user->username ?></td>
-						<td><?php echo $user->email ?></td>
+						<th><?php echo JText::_('Active Category Subscriptions'); ?></th>
 					</tr>
-				<?php endforeach ?>
-				<tr>
-					<th><?php echo JText::_('Active Topic Subscriptions'); ?></th>
-				</tr>
-				<?php
-				foreach ($this->topic_subscribers_users as $user)
-					:
-					?>
+					<?php
+					foreach ($this->cat_subscribers_users as $user)
+						:
+						?>
+						<tr>
+							<td><?php echo $user->id ?></td>
+							<td><?php echo $user->username ?></td>
+							<td><?php echo $user->email ?></td>
+						</tr>
+					<?php endforeach ?>
 					<tr>
-						<td><?php echo $user->id ?></td>
-						<td><?php echo $user->username ?></td>
-						<td><?php echo $user->email ?></td>
+						<th><?php echo JText::_('Active Topic Subscriptions'); ?></th>
 					</tr>
-				<?php endforeach ?>
-				<tr>
-					<th><?php echo JText::_('E-mails sent to'); ?></th>
-				</tr>
-				<?php
-				foreach ($this->cat_topic_subscribers as $sub)
-					:
-					?>
+					<?php
+					foreach ($this->topic_subscribers_users as $user)
+						:
+						?>
+						<tr>
+							<td><?php echo $user->id ?></td>
+							<td><?php echo $user->username ?></td>
+							<td><?php echo $user->email ?></td>
+						</tr>
+					<?php endforeach ?>
 					<tr>
-						<td><?php echo $sub->id ?></td>
-						<td><?php echo $sub->username ?></td>
-						<td><?php echo $sub->email ?></td>
-						<td><?php echo intval($sub->subscription) ?></td>
-						<td><?php echo intval($sub->moderator) ?></td>
-						<td><?php echo intval($sub->admin) ?></td>
+						<th><?php echo JText::_('E-mails sent to'); ?></th>
 					</tr>
-				<?php endforeach ?>
-			</table>
+					<?php
+					foreach ($this->cat_topic_subscribers as $sub)
+						:
+						?>
+						<tr>
+							<td><?php echo $sub->id ?></td>
+							<td><?php echo $sub->username ?></td>
+							<td><?php echo $sub->email ?></td>
+							<td><?php echo intval($sub->subscription) ?></td>
+							<td><?php echo intval($sub->moderator) ?></td>
+							<td><?php echo intval($sub->admin) ?></td>
+						</tr>
+					<?php endforeach ?>
+				</table>
+			</div>
 		</div>
 	</div>
 	<div class="pull-right small">

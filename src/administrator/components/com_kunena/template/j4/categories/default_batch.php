@@ -41,7 +41,7 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" type="button"
+				<button class="btn btn-default" type="button"
 						onclick="document.id('batch-category-id').value='';document.id('batch-access').value='';document.id('batch-language-id').value=''"
 						data-dismiss="modal">
 					<?php echo JText::_('JCANCEL'); ?>

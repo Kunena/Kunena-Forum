@@ -22,24 +22,26 @@ defined('_JEXEC') or die();
 			</div>
 		</div>
 		<div id="j-main-container" class="col-md-10" role="main">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				  method="post" id="adminForm"
-				  name="adminForm">
-				<input type="hidden" name="task" value="purgeReStatements"/>
-				<?php echo JHtml::_('form.token'); ?>
+			<div class="card card-block bg-faded p-2">
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+					  method="post" id="adminForm"
+					  name="adminForm">
+					<input type="hidden" name="task" value="purgeReStatements"/>
+					<?php echo JHtml::_('form.token'); ?>
 
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
-					<table class="table table-bordered table-striped">
-						<tr>
-							<td>
-								<p><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
-								<input type="text" name="re_string" value=""/>
-							</td>
-						</tr>
-					</table>
-				</fieldset>
-			</form>
+					<fieldset>
+						<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
+						<table class="table table-bordered table-striped">
+							<tr>
+								<td>
+									<p><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
+									<input type="text" name="re_string" value=""/>
+								</td>
+							</tr>
+						</table>
+					</fieldset>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="pull-right small">

@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" type="button" onclick="document.id('catid').value='';" data-dismiss="modal">
+				<button class="btn btn-default" type="button" onclick="document.id('catid').value='';" data-dismiss="modal">
 					<?php echo JText::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('batch_moderators');">

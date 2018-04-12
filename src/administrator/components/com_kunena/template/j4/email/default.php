@@ -31,19 +31,19 @@ JHtml::_('bootstrap.popover');
 				</div>
 				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
-					<a class="btn" href="#">
+					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-user"></i><br/>
 						<span><?php echo JText::_('Subscription') ?></span>
 					</a>
-					<a class="btn" href="#">
+					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-shield"></i><br/>
 						<span><?php echo JText::_('Moderator') ?></span>
 					</a>
-					<a class="btn" href="#">
+					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-checkmark"></i><br/>
 						<span><?php echo JText::_('Approved') ?></span>
 					</a>
-					<a class="btn" href="#">
+					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-notification-circle"></i><br/>
 						<span><?php echo JText::_('Report') ?></span>
 					</a>

@@ -9,14 +9,14 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die();
 
-// @var KunenaAdminViewRanks $this
-
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('behavior.tabstate');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('behavior.tabstate');
 
 ?>
 
@@ -51,9 +51,9 @@ JHtml::_('behavior.tabstate');
 				<div class="tabbable-panel">
 					<div class="tabbable-line">
 						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></a></li>
-							<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></a>
+							<li class="nav-item">
+								<a class="nav-link active" href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></a></li>
+							<li><a class="nav-link" href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></a>
 							</li>
 						</ul>
 
@@ -225,13 +225,13 @@ JHtml::_('behavior.tabstate');
 											?>
 											<tr>
 												<td colspan="10">
-													<div class="well center filter-state">
+													<div class="card card-block bg-faded p-2 center filter-state">
 															<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 																<?php
 																if ($this->filterActive)
 																	:
 																	?>
-																	<button class="btn" type="button"
+																	<button class="btn btn-default" type="button"
 																	        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 																<?php else
 																	:
@@ -258,7 +258,7 @@ JHtml::_('behavior.tabstate');
 									<input type="hidden" name="boxchecked" value="0"/>
 									<?php echo JHtml::_('form.token'); ?>
 
-									<input type="file" id="file-upload" class="btn" name="Filedata"/>
+									<input type="file" id="file-upload" class="btn btn-default" name="Filedata"/>
 									<input type="submit" id="file-upload-submit" class="btn btn-primary"
 									       value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>"/>
 								</form>

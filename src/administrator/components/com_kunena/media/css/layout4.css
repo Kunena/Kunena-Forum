@@ -1,0 +1,177 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator
+ *
+ * @copyright     Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link https://www.kunena.org
+ **/
+
+#kunena.admin.override {
+	font-size: 13px;
+}
+
+#kunena.admin.override select,
+#kunena.admin.override input[type="file"] {
+	height: auto;
+	line-height: 30px;
+}
+
+#kunena.admin.override li {
+	line-height: 20px;
+}
+
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+	float: none;
+	margin: 0;
+}
+
+#kunena.admin.override label {
+	display: inline !important;
+}
+
+#kunena.admin.override .center {
+	float: none;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#kunena.admin.override .select-filter {
+	margin-bottom: 0;
+	width: auto;
+}
+
+#kunena.admin.override .input-filter {
+	margin-bottom: 0;
+}
+
+#kunena.admin.override .btn i.icon-cancel {
+	color: #942a25;
+}
+
+#kunena.admin.override .btn i.icon-checkmark {
+	color: #46a546;
+}
+
+#kunena.admin.override #dashboard-icons.btn-group {
+	white-space: normal;
+}
+
+#kunena.admin.override #dashboard-icons .btn {
+	border-radius: 3px;
+	min-height: 64px;
+	min-width: 72px;
+	overflow: hidden;
+	background-color: transparent;
+	border: 1px solid #e5e5e5;
+	outline: 0 !important;
+}
+
+#kunena.admin.override #dashboard-icons .btn:focus,
+#kunena.admin.override #dashboard-icons .btn:hover,
+#kunena.admin.override #dashboard-icons .btn:active {
+	outline: 0 !important;
+}
+
+#kunena.admin.override #dashboard-icons .btn:hover {
+	background-color: #EDEDED;
+}
+
+/*All wells in tables should not have margin*/
+#kunena.admin.override table .well {
+	margin-bottom: 0;
+}
+
+#kunena.admin.override .filter-state {
+	font-size: 150%;
+}
+
+#kunena.admin.override .filter-state .btn {
+	padding: 0 6px;
+	vertical-align: inherit;
+	font-size: inherit;
+	line-height: 150%;
+}
+
+/* Fix span1 width isis */
+#adminForm > fieldset > table > tbody > tr:nth-child(2) > td:nth-child(2) > div {
+	display: inline !important;
+}
+
+.well.well-small {
+	background-color: transparent !important;
+	min-height: 123px;
+}
+
+ul.pull-left li {
+	list-style: none;
+}
+
+.nav-header img {
+	padding-bottom: 10px;
+}
+
+div.span7 .module-title.nav-header,
+div.span10 .module-title.nav-header {
+	padding: 3px 0 0 5px;
+}
+
+.dl-horizontal {
+	margin-top: 0;
+}
+
+.dl-horizontal dt {
+	text-align: left !important;
+	margin-left: 10px;
+}
+
+.dl-horizontal dd {
+	margin-left: 120px !important;
+}
+
+dt {
+	font-weight: normal !important;
+}
+
+.dl-horizontal dt:nth-child(odd),
+.dl-horizontal dd:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.icon-big {
+	font-size: 32px;
+	margin-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+	color: rgba(85, 85, 85, 1);
+}
+
+.module-title {
+	color: rgba(85, 85, 85, 1) !important;
+}
+
+.nav.nav-tabs li:hover {
+	box-shadow: 0 1px #fff inset, 0 2px 3px -3px rgba(0,0,0,0.15), 0 -4px 0 #fbcdcf inset, 0 0 3px rgba(0,0,0,0.04) !important;
+}
+
+.nav.nav-tabs .nav-link.active::after {
+	background-color: #f3565d !important;
+}
+
+.valid {
+	color: green;
+	width: 300px !important;
+}
+
+.invalid {
+	color: red;
+	width: 300px !important;
+}
+
+.invalid-border {
+	border-color: red !important;
+}

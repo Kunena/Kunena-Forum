@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 			</div>
 		</div>
 		<div id="j-main-container" class="col-md-10" role="main">
-			<section class="content-block" >
+			<section class="content-block">
 				<div class="row">
 					<div class="col-md-7">
 						<div class="card card-block bg-faded p-2">

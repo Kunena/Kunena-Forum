@@ -9,14 +9,14 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die();
 
-// @var KunenaAdminViewConfig $this
-
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('behavior.tabstate');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('behavior.tabstate');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -33,7 +33,7 @@ JHtml::_('behavior.tabstate');
 					<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
 				</div>
 				<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena'); ?>" method="post"
 					  id="adminForm" name="adminForm">
 					<input type="hidden" name="view" value="config"/>
 					<input type="hidden" name="task" value=""/>
@@ -44,48 +44,48 @@ JHtml::_('behavior.tabstate');
 							<div class="tabbable-panel">
 								<div class="tabbable-line">
 									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#tab_basics"
+										<li class="nav-item">
+											<a class="nav-link active" href="#tab_basics"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_frontend"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_frontend"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_users"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_users"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_security"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_security"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_avatars"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_avatars"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_uploads"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_uploads"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_UPLOADS'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_ranking"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_ranking"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKING'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_bbcode"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_bbcode"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BBCODE'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_rss"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_rss"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_RSS'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_extra"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_extra"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a>
 										</li>
-										<li>
-											<a href="#tab_menu"
+										<li class="nav-item">
+											<a class="nav-link" href="#tab_menu"
 											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_MENU_SETTINGS'); ?></a>
 										</li>
 									</ul>

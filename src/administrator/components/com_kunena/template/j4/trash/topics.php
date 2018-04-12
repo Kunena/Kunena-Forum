@@ -209,13 +209,13 @@ JHtml::_('dropdown.init');
 								?>
 								<tr>
 									<td colspan="10">
-										<div class="well center filter-state">
+										<div class="card card-block bg-faded p-2 center filter-state">
 												<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 													<?php
 													if ($this->filterActive || $this->pagination->total > 0)
 														:
 														?>
-														<button class="btn" type="button"
+														<button class="btn btn-default" type="button"
 														        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 													<?php endif; ?>
 												</span>

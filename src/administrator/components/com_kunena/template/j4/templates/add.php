@@ -36,7 +36,7 @@ defined('_JEXEC') or die();
 						<label for="install_package"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
 							:</label>
 						<input class="input_box" name="install_package" type="file"/>
-						<input class="btn" type="submit" name="submit"
+						<input class="btn btn-default" type="submit" name="submit"
 							   value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
 					</div>
 				</fieldset>

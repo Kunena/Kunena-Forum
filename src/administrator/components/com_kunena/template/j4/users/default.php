@@ -48,7 +48,7 @@ JHtml::_('dropdown.init');
 					<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 				</div>
 				<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>"
 				      method="post" id="adminForm"
 				      name="adminForm">
 					<input type="hidden" name="task" value=""/>
@@ -301,9 +301,9 @@ JHtml::_('dropdown.init');
 							?>
 							<tr>
 								<td colspan="10">
-									<div class="well center filter-state">
+									<div class="card card-block bg-faded p-2 center filter-state">
 											<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-												<button class="btn" type="button"
+												<button class="btn btn-default" type="button"
 												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 											</span>
 									</div>

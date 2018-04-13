@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`ordering` smallint(6) NOT NULL default '0',
 	`published` tinyint(4) NOT NULL default '0',
 	`channels` text NULL,
-	`checked_out` tinyint(4) NOT NULL default '0',
+	`checked_out` int(11) NOT NULL default '0',
 	`checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
 	`review` tinyint(4) NOT NULL default '0',
 	`allow_anonymous` tinyint(4) NOT NULL default '0',

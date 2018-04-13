@@ -195,7 +195,7 @@
                type="text"
                null="1"/>
         <field name="checked_out"
-               type="tinyint(4)"
+               type="int(11)"
                null="0"
                default="0"/>
         <field name="checked_out_time"

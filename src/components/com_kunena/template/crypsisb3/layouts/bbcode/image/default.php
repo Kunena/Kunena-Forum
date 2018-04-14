@@ -33,7 +33,7 @@ if ($config->lazyload)
 {
 	?>
 	<?php if ($canLink) : ?>
-		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $title;?>" <?php echo $attributesLink; ?>>
+		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
 	<?php endif; ?>
 
 	<img class="lazy" src="<?php echo $this->escape($url); ?>"
@@ -51,7 +51,7 @@ else
 	?>
 	<div class="kmsgimage">
 		<?php if ($canLink) : ?>
-		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $title;?>" <?php echo $attributesLink; ?>>
+		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
 			<?php endif; ?>
 
 			<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $title;?>"/>

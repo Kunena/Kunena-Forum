@@ -218,7 +218,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 
 				case KunenaLog::LOG_TOPIC_EDIT:
 				case KunenaLog::LOG_POST_EDIT:
-				case KunenaLog::LOG_PRIVATE_POST_EDIT:
+				//case KunenaLog::LOG_PRIVATE_POST_EDIT:
 					if ($item->type == KunenaLog::TYPE_MODERATION)
 					{
 						$class->edits += $item->count;
@@ -226,7 +226,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 					break;
 
 				case KunenaLog::LOG_POST_DELETE:
-				case KunenaLog::LOG_PRIVATE_POST_DELETE:
+				//case KunenaLog::LOG_PRIVATE_POST_DELETE:
 					if ($item->type == KunenaLog::TYPE_MODERATION)
 					{
 						$class->deletes += $item->count;

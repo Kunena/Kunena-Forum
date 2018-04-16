@@ -165,8 +165,8 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 
 		$this->moderators = $this->get('Moderators');
 		$this->usertopic  = $this->topic->getUserTopic();
@@ -404,7 +404,7 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
@@ -471,7 +471,7 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		$this->_prepareDocument('edit');
 
 		$this->action = 'edit';
@@ -529,7 +529,7 @@ class KunenaViewTopic extends KunenaView
 
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
+			Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
 			// Karma points and buttons
 			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
@@ -596,7 +596,7 @@ class KunenaViewTopic extends KunenaView
 					$contents = (string) $this->loadTemplateFile('profile');
 				}
 
-				$contents .= implode(' ', \JFactory::getApplication()->triggerEvent('onKunenaDisplay', array('topic.profile', $this, $params)));
+				$contents .= implode(' ', Factory::getApplication()->triggerEvent('onKunenaDisplay', array('topic.profile', $this, $params)));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
 				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -706,7 +706,7 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
 		return (string) $this->loadTemplateFile('actions');
 	}
@@ -786,7 +786,7 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return (string) $this->loadTemplateFile("message_actions");
 	}
@@ -1097,7 +1097,7 @@ class KunenaViewTopic extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
 		echo $this->loadTemplateFile('history');
 	}

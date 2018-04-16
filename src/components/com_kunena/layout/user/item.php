@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * KunenaLayoutUserItem
  *
@@ -249,7 +251,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$plugins = \JFactory::getApplication()->triggerEvent('onKunenaUserTabs', array($tabs));
+		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabs', array($tabs));
 
 		$tabs = $tabs + $plugins;
 

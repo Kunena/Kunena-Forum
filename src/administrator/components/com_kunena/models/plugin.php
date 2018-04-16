@@ -208,7 +208,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 
 		$context    = $this->option . '.' . $this->name;
 		$table      = $this->getTable();
-		\JFactory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, true, $data));
+		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, true, $data));
 
 		return parent::save($data);
 	}
@@ -266,7 +266,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
-		$results = \JFactory::getApplication()->triggerEvent('onContentPrepareData', array($context, $data));
+		$results = Factory::getApplication()->triggerEvent('onContentPrepareData', array($context, $data));
 
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))

@@ -134,10 +134,10 @@ $params->text = '';
 $topics       = new stdClass;
 $topics->text = '';
 JPluginHelper::importPlugin('content');
-\JFactory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
-\JFactory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
+Factory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
+Factory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
-\JFactory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
+Factory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
 echo $contents;
 
 // Remove custom error handlers.

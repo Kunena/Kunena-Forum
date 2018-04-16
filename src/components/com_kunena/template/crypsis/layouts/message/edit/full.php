@@ -55,8 +55,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 
-			$result                    = \JFactory::getApplication()->triggerEvent('onInit', 'dynamic_recaptcha_' . $this->message->id);
-			$output                    = \JFactory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
+			$result                    = Factory::getApplication()->triggerEvent('onInit', 'dynamic_recaptcha_' . $this->message->id);
+			$output                    = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
 					'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"',)
 			);
 			$this->quickcaptchaDisplay = $output[0];

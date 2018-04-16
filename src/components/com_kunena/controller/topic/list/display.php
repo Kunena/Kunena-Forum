@@ -117,7 +117,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$params->set('kunena_layout', 'list');
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		KunenaHtmlParser::prepareContent($content, 'topic_list_default');
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic.list', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic.list', &$this->topic, &$params, 0));
 	}
 
 	/**

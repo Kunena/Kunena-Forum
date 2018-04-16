@@ -67,7 +67,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 			$form         = \Joomla\CMS\Form\Form::getInstance('com_users.profile', 'frontend');
 			$data         = new StdClass;
 			$data->params = $registry->toArray();
-			\JFactory::getApplication()->triggerEvent('onContentPrepareForm', array($form, $data));
+			Factory::getApplication()->triggerEvent('onContentPrepareForm', array($form, $data));
 
 			$form->bind($data);
 			$this->frontendForm = $form->getFieldset('params');

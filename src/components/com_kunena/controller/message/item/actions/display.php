@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
  *
@@ -581,7 +583,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}
 
 	/**

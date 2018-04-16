@@ -7,6 +7,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Finder Kunena Plugin
  *
@@ -41,7 +43,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
-		\JFactory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
+		Factory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
 
 	}
 
@@ -69,7 +71,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
-		\JFactory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
+		Factory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
 
 	}
 
@@ -94,7 +96,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		\JFactory::getApplication()->triggerEvent('onFinderAfterDelete', array($context, $table));
+		Factory::getApplication()->triggerEvent('onFinderAfterDelete', array($context, $table));
 	}
 
 	/**
@@ -118,6 +120,6 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		\JFactory::getApplication()->triggerEvent('onFinderBeforeDelete', array($context, $table));
+		Factory::getApplication()->triggerEvent('onFinderBeforeDelete', array($context, $table));
 	}
 }

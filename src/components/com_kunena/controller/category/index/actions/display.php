@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerCategoryIndexActionsDisplay
  *
@@ -97,7 +99,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
 	}
 
 	/**

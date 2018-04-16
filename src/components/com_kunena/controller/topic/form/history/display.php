@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerTopicFormHistoryDisplay
  *
@@ -63,7 +65,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
 		// FIXME: need to improve BBCode class on this...
 		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);

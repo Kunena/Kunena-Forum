@@ -212,7 +212,7 @@ EOF;
 		$row       = new stdClass;
 		$row->text = &$text;
 
-		\JFactory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
+		Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
 
 		$text = &$row->text;
 

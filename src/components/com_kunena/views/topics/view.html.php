@@ -153,7 +153,7 @@ class KunenaViewTopics extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ($this->topics as $this->topic)
 		{
@@ -256,7 +256,7 @@ class KunenaViewTopics extends KunenaView
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
 
 		foreach ($this->messages as $this->message)
 		{

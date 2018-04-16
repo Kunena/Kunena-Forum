@@ -40,7 +40,8 @@ class KText
 function installSampleData()
 {
 	$lang  = Factory::getLanguage();
-	//$debug = $lang->setDebug(false);
+
+	// $debug = $lang->setDebug(false);
 
 	jimport('joomla.utilities.date');
 
@@ -222,7 +223,6 @@ function installSampleData()
 
 			if ($query[0] == 'kunena_categories')
 			{
-
 				$db->setQuery("CREATE TABLE IF NOT EXISTS `#__kunena_aliases` (
 				`alias` varchar(255) NOT NULL,
 				`type` varchar(10) NOT NULL,
@@ -231,7 +231,8 @@ function installSampleData()
 				UNIQUE KEY `alias` (alias),
 				KEY `state` (state),
 				KEY `item` (item),
-				KEY `type` (type) ) DEFAULT CHARACTER SET utf8;");
+				KEY `type` (type) ) DEFAULT CHARACTER SET utf8;"
+				);
 
 				try
 				{
@@ -258,7 +259,7 @@ function installSampleData()
 		}
 	}
 
-	//$lang->setDebug($debug);
+	// $lang->setDebug($debug);
 
 	// Insert missing users
 	$query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";

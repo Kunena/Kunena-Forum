@@ -357,7 +357,6 @@ class Com_KunenaInstallerScript
 			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
 		}
 
-
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 

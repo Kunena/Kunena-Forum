@@ -970,31 +970,31 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	protected function cleanSocial(&$user, $app)
 	{
-	    $user->icq          = str_replace(' ','',trim($app->input->getString('icq', '')));
-	    $user->yim          = str_replace(' ','',trim($app->input->getString('yim', '')));
-	    $user->microsoft    = str_replace(' ','',trim($app->input->getString('microsoft', '')));
-	    $user->skype        = str_replace(' ','',trim($app->input->getString('skype', '')));
-	    $user->google       = str_replace(' ','',trim($app->input->getString('google', '')));
-	    $user->twitter      = str_replace(' ','',trim($app->input->getString('twitter', '')));
-	    $user->facebook     = str_replace(' ','',trim($app->input->getString('facebook', '')));
-	    $user->myspace      = str_replace(' ','',trim($app->input->getString('myspace', '')));
-	    $user->linkedin     = str_replace(' ','',trim($app->input->getString('linkedin', '')));
-	    $user->delicious    = str_replace(' ','',trim($app->input->getString('delicious', '')));
-	    $user->friendfeed   = str_replace(' ','',trim($app->input->getString('friendfeed', '')));
-	    $user->digg         = str_replace(' ','',trim($app->input->getString('digg', '')));
-	    $user->blogspot     = str_replace(' ','',trim($app->input->getString('blogspot', '')));
-	    $user->flickr       = str_replace(' ','',trim($app->input->getString('flickr', '')));
-	    $user->bebo         = str_replace(' ','',trim($app->input->getString('bebo', '')));
-	    $user->instagram    = str_replace(' ','',trim($app->input->getString('instagram', '')));
-	    $user->qq           = str_replace(' ','',trim($app->input->getString('qq', '')));
-	    $user->qzone        = str_replace(' ','',trim($app->input->getString('qzone', '')));
-	    $user->weibo        = str_replace(' ','',trim($app->input->getString('weibo', '')));
-	    $user->wechat       = str_replace(' ','',trim($app->input->getString('wechat', '')));
-	    $user->apple        = str_replace(' ','',trim($app->input->getString('apple', '')));
-	    $user->vk           = str_replace(' ','',trim($app->input->getString('vk', '')));
-	    $user->telegram     = str_replace(' ','',trim($app->input->getString('telegram', '')));
-	    $user->whatsapp     = str_replace(' ','',trim($app->input->getString('whatsapp', '')));
-	    $user->youtube      = str_replace(' ','',trim($app->input->getString('youtube', '')));
-	    $user->ok           = str_replace(' ','',trim($app->input->getString('ok', '')));
+		$user->icq          = str_replace(' ', '', trim($app->input->getString('icq', '')));
+		$user->yim          = str_replace(' ', '', trim($app->input->getString('yim', '')));
+		$user->microsoft    = str_replace(' ', '', trim($app->input->getString('microsoft', '')));
+		$user->skype        = str_replace(' ', '', trim($app->input->getString('skype', '')));
+		$user->google       = str_replace(' ', '', trim($app->input->getString('google', '')));
+		$user->twitter      = str_replace(' ', '', trim($app->input->getString('twitter', '')));
+		$user->facebook     = str_replace(' ', '', trim($app->input->getString('facebook', '')));
+		$user->myspace      = str_replace(' ', '', trim($app->input->getString('myspace', '')));
+		$user->linkedin     = str_replace(' ', '', trim($app->input->getString('linkedin', '')));
+		$user->delicious    = str_replace(' ', '', trim($app->input->getString('delicious', '')));
+		$user->friendfeed   = str_replace(' ', '', trim($app->input->getString('friendfeed', '')));
+		$user->digg         = str_replace(' ', '', trim($app->input->getString('digg', '')));
+		$user->blogspot     = str_replace(' ', '', trim($app->input->getString('blogspot', '')));
+		$user->flickr       = str_replace(' ', '', trim($app->input->getString('flickr', '')));
+		$user->bebo         = str_replace(' ', '', trim($app->input->getString('bebo', '')));
+		$user->instagram    = str_replace(' ', '', trim($app->input->getString('instagram', '')));
+		$user->qq           = str_replace(' ', '', trim($app->input->getString('qq', '')));
+		$user->qzone        = str_replace(' ', '', trim($app->input->getString('qzone', '')));
+		$user->weibo        = str_replace(' ', '', trim($app->input->getString('weibo', '')));
+		$user->wechat       = str_replace(' ', '', trim($app->input->getString('wechat', '')));
+		$user->apple        = str_replace(' ', '', trim($app->input->getString('apple', '')));
+		$user->vk           = str_replace(' ', '', trim($app->input->getString('vk', '')));
+		$user->telegram     = str_replace(' ', '', trim($app->input->getString('telegram', '')));
+		$user->whatsapp     = str_replace(' ', '', trim($app->input->getString('whatsapp', '')));
+		$user->youtube      = str_replace(' ', '', trim($app->input->getString('youtube', '')));
+		$user->ok           = str_replace(' ', '', trim($app->input->getString('ok', '')));
 	}
 }

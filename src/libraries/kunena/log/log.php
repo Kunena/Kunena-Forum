@@ -139,17 +139,17 @@ class KunenaLog
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
+	// Const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
+	// Const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
+	// Const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
 
 	/**
 	 * @since Kunena 5.0
@@ -229,27 +229,27 @@ class KunenaLog
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
+	// Const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
+	// Const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_USER_EDIT = 'LOG_USER_EDIT';
+	// Const LOG_USER_EDIT = 'LOG_USER_EDIT';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
+	// Const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
+	// Const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
 
 	/**
 	 * @since Kunena 5.0
@@ -259,22 +259,22 @@ class KunenaLog
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
+	// Const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
 	/**
 	 * @since Kunena
 	 */
-	//const LOG_USER_WARNING = 'LOG_USER_WARNING';
+	// Const LOG_USER_WARNING = 'LOG_USER_WARNING';
 
 	/**
 	 * @since Kunena
 	 */
-	// const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
+	// Const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
 
 	/**
 	 * @since Kunena
 	 */
-	// const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';
+	// Const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';
 
 	/**
 	 * @since Kunena 5.0

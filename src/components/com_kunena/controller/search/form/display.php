@@ -48,7 +48,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
 		if (!$Itemid)
 		{

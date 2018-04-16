@@ -440,7 +440,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$app        = JFactory::getApplication();
+		$app        = Factory::getApplication();
 		$input      = $app->input;
 		$post       = $app->input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');

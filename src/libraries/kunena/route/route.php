@@ -1133,7 +1133,7 @@ abstract class KunenaRoute
 	public static function fixMissingItemID()
 	{
 		$component = JComponentHelper::getComponent('com_kunena');
-		$items     = JFactory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
+		$items     = Factory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
 
 		if ($items)
 		{

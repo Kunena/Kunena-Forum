@@ -926,7 +926,7 @@ class KunenaControllerUser extends KunenaController
 		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
 		{
 			$this->user->load($this->user->id);
-			$session = JFactory::getSession();
+			$session = Factory::getSession();
 			$session->set('user', $this->user);
 
 			// Update session if username has been changed

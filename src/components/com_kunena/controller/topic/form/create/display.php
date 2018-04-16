@@ -48,8 +48,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$catid = $this->input->getInt('catid', 0);
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
-		$format = JFactory::getApplication()->input->getCmd('format');
+		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
+		$format = Factory::getApplication()->input->getCmd('format');
 
 		if (!$Itemid && $format != 'feed')
 		{

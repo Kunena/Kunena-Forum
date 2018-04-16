@@ -67,7 +67,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 		}
 
-		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
+		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
 		if (!$Itemid)
 		{

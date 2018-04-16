@@ -125,10 +125,10 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 		}
 
-		$Itemid = JFactory::getApplication()->input->getCmd('Itemid');
-		$view   = JFactory::getApplication()->input->getCmd('view');
-		$layout = JFactory::getApplication()->input->getCmd('layout');
-		$format = JFactory::getApplication()->input->getCmd('format');
+		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
+		$view   = Factory::getApplication()->input->getCmd('view');
+		$layout = Factory::getApplication()->input->getCmd('layout');
+		$format = Factory::getApplication()->input->getCmd('format');
 
 		if (!$Itemid && $format != 'feed')
 		{

@@ -289,7 +289,7 @@ class KunenaTemplate extends JObject
 		// Set lookup paths.
 		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
 
-		$view = JFactory::getApplication()->input->get('option');
+		$view = Factory::getApplication()->input->get('option');
 
 		if ($view == 'com_kunena')
 		{
@@ -297,18 +297,18 @@ class KunenaTemplate extends JObject
 			if (KunenaConfig::getInstance()->activemenuitem)
 			{
 				$id = KunenaConfig::getInstance()->activemenuitem;
-				JFactory::getDocument()->addScriptDeclaration("
+				Factory::getDocument()->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 			}
 			else
 			{
 				$Itemid = KunenaRoute::fixMissingItemID();
-				$items  = JFactory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
+				$items  = Factory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
 
 				if ($items)
 				{
 					$id = '.item-' . $items[0]->id;
-					JFactory::getDocument()->addScriptDeclaration("
+					Factory::getDocument()->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 				}
 			}

@@ -9,6 +9,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
+
 /**
  * Class pkg_kunena_languagesInstallerScript
  * @since Kunena
@@ -46,7 +49,7 @@ class pkg_kunena_languagesInstallerScript
 			return true;
 		}
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
 		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))

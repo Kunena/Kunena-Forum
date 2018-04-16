@@ -9,7 +9,10 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
-$view = \Joomla\CMS\Factory::getApplication()->input->getCmd('view', 'cpanel');
+
+use Joomla\CMS\Factory;
+
+$view = Factory::getApplication()->input->getCmd('view', 'cpanel');
 ?>
 <!-- Main navigation -->
 <ul class="nav nav-list">

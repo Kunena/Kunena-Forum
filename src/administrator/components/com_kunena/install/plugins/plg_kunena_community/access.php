@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaAccessCommunity
  * @since Kunena
@@ -104,7 +107,7 @@ class KunenaAccessCommunity
 	{
 		if ($this->groups === false)
 		{
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
 				FROM #__community_groups
 				ORDER BY categoryid, name";
@@ -154,13 +157,13 @@ class KunenaAccessCommunity
 					$selected = $item->id;
 				}
 
-				$options[] = JHtml::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
+				$options[] = HTMLHelper::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
 			}
 
 			$html ['jomsocial']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
 				'desc'  => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
-				'input' => JHtml::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected),
+				'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}
 
@@ -175,7 +178,7 @@ class KunenaAccessCommunity
 	{
 		if ($this->categories === false)
 		{
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
 				FROM #__community_groups_category
 				ORDER BY parent, name";
@@ -215,7 +218,7 @@ class KunenaAccessCommunity
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT g.memberid AS user_id, c.id AS category_id, " . KunenaForum::ADMINISTRATOR . " AS role
 			FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
@@ -255,7 +258,7 @@ class KunenaAccessCommunity
 
 		if (KunenaFactory::getUser($userid)->exists())
 		{
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "SELECT c.id FROM #__kunena_categories AS c
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
@@ -299,7 +302,7 @@ class KunenaAccessCommunity
 		$category = $topic->getCategory();
 		$userlist = implode(',', $userids);
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT c.id FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";

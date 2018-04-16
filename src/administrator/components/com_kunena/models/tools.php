@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.model');
 require_once __DIR__ . '/cpanel.php';
 
@@ -192,7 +195,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$cat_params['unpublished'] = 1;
 		$cat_params['action']      = 'admin';
 
-		$forum = JHtml::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $cat_params, 'class="inputbox" multiple="multiple"', 'value', 'text');
+		$forum = HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $cat_params, 'class="inputbox" multiple="multiple"', 'value', 'text');
 
 		return $forum;
 	}
@@ -205,10 +208,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
-		$trashdelete [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
-		$trashdelete [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_DELETE_PERMANENTLY'));
+		$trashdelete [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
+		$trashdelete [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
-		return JHtml::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
+		return HTMLHelper::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
 
 	/**
@@ -219,16 +222,16 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneControlOptions()
 	{
 		$contoloptions    = array();
-		$contoloptions [] = JHtml::_('select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL'));
-		$contoloptions [] = JHtml::_('select.option', 'normal', JText::_('COM_KUNENA_A_PRUNE_NORMAL'));
-		$contoloptions [] = JHtml::_('select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED'));
-		$contoloptions [] = JHtml::_('select.option', 'unanswered', JText::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
-		$contoloptions [] = JHtml::_('select.option', 'answered', JText::_('COM_KUNENA_A_PRUNE_ANSWERED'));
-		$contoloptions [] = JHtml::_('select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
-		$contoloptions [] = JHtml::_('select.option', 'deleted', JText::_('COM_KUNENA_A_PRUNE_DELETED'));
-		$contoloptions [] = JHtml::_('select.option', 'shadow', JText::_('COM_KUNENA_A_PRUNE_SHADOW'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'normal', JText::_('COM_KUNENA_A_PRUNE_NORMAL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unanswered', JText::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'answered', JText::_('COM_KUNENA_A_PRUNE_ANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', JText::_('COM_KUNENA_A_PRUNE_DELETED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', JText::_('COM_KUNENA_A_PRUNE_SHADOW'));
 
-		return JHtml::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
+		return HTMLHelper::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
 	}
 
 	/**
@@ -239,10 +242,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneKeepSticky()
 	{
 		$optionsticky    = array();
-		$optionsticky [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
-		$optionsticky [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
+		$optionsticky [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
+		$optionsticky [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
 
-		return JHtml::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
+		return HTMLHelper::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
 	}
 
 	/**
@@ -256,7 +259,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getSystemReportAnonymous()
 	{
-		$kunena_db = \Joomla\CMS\Factory::getDBO();
+		$kunena_db = Factory::getDBO();
 
 		$this->getReportData();
 
@@ -494,7 +497,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getJoomlaTemplate()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Get Joomla! frontend assigned template
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
@@ -507,7 +510,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
@@ -598,7 +601,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getTablesCollation()
 	{
-		$kunena_db = \Joomla\CMS\Factory::getDBO();
+		$kunena_db = Factory::getDBO();
 
 		// Check each table in the database if the collation is on utf8
 		$tableslist = $kunena_db->getTableList();
@@ -616,7 +619,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 				}
 				catch (RuntimeException $e)
 				{
-					\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+					Factory::getApplication()->enqueueMessage($e->getMessage());
 
 					return;
 				}
@@ -846,7 +849,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getSystemReport()
 	{
-		$kunena_db = \Joomla\CMS\Factory::getDBO();
+		$kunena_db = Factory::getDBO();
 
 		$this->getReportData();
 

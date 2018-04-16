@@ -10,12 +10,14 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /*
  ************************/
 /*
   KUNENA FORUM INSTALLER */
 
-$app  = \Joomla\CMS\Factory::getApplication();
+$app  = Factory::getApplication();
 $view = $app->input->getCmd('view');
 $task = $app->input->getCmd('task');
 
@@ -29,7 +31,7 @@ if ($view != 'install' && class_exists('KunenaForum') && KunenaForum::isDev())
 
 	if (!$kversion->checkVersion())
 	{
-		\Joomla\CMS\Factory::getApplication()->redirect(\Joomla\CMS\Uri\Uri::base(true) . '/index.php?option=com_kunena&view=install');
+		Factory::getApplication()->redirect(\Joomla\CMS\Uri\Uri::base(true) . '/index.php?option=com_kunena&view=install');
 	}
 
 	return;

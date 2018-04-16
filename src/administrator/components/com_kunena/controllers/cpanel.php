@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Cpanel Controller
  *
@@ -53,10 +55,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 	{
 		$updateInfo = null;
 
-		if (KunenaForum::installed() && \Joomla\CMS\Factory::getUser()->authorise('core.manage', 'com_installer'))
+		if (KunenaForum::installed() && Factory::getUser()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
-			$db         = \Joomla\CMS\Factory::getDbo();
+			$db         = Factory::getDbo();
 
 			$query = $db->getQuery(true)
 				->select('*')
@@ -99,14 +101,14 @@ class KunenaAdminControllerCpanel extends KunenaController
 		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			Factory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
 			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 		}
 		elseif (!empty($updateInfo->addons))
 		{
 			// Has updated add-ons
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			Factory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
 			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 		}
@@ -134,7 +136,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
 		$now       = time();

@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewUsers $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 
 ?>
 
@@ -58,7 +60,7 @@ JHtml::_('dropdown.init');
 					<input type="hidden" name="filter_order_Dir"
 					       value="<?php echo $this->escape($this->state->get('list.direction')) ?>"/>
 					<input type="hidden" name="boxchecked" value="0"/>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
@@ -91,7 +93,7 @@ JHtml::_('dropdown.init');
 							<select name="directionTable" id="directionTable" class="input-medium"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
@@ -99,7 +101,7 @@ JHtml::_('dropdown.init');
 							       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 							</select>
 						</div>
 						<div class="clearfix"></div>
@@ -110,22 +112,22 @@ JHtml::_('dropdown.init');
 						<tr>
 							<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value=""
 							                                            onclick="Joomla.checkAll(this)"/></th>
-							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
-							<th class="hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							<th class="hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="5%"
-							    class="hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="10%"
-							    class="nowrap hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="5%"
-							    class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap center hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="5%"
-							    class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap center hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="5%"
-							    class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap center hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="5%"
-							    class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap center hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 							<th width="1%"
-							    class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+							    class="nowrap center"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 						</tr>
 						<tr>
 							<td class="hidden-phone">
@@ -163,7 +165,7 @@ JHtml::_('dropdown.init');
 								<select name="filter_rank" id="filter_rank" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></option>
-									<?php echo JHtml::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filterRank); ?>
+									<?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filterRank); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -172,7 +174,7 @@ JHtml::_('dropdown.init');
 								<select name="filter_signature" id="filter_signature" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
+									<?php echo HTMLHelper::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -181,7 +183,7 @@ JHtml::_('dropdown.init');
 								<select name="filter_block" id="filter_block" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
+									<?php echo HTMLHelper::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -190,7 +192,7 @@ JHtml::_('dropdown.init');
 								<select name="filter_banned" id="filter_banned" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
+									<?php echo HTMLHelper::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -199,7 +201,7 @@ JHtml::_('dropdown.init');
 								<select name="filter_moderator" id="filter_moderator" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
+									<?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -228,7 +230,7 @@ JHtml::_('dropdown.init');
 								?>
 								<tr>
 									<td>
-										<?php echo JHtml::_('grid.id', $i, intval($user->userid)) ?>
+										<?php echo HTMLHelper::_('grid.id', $i, intval($user->userid)) ?>
 									</td>
 									<td>
 										<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true); ?>"

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Categories Controller
  *
@@ -922,7 +924,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$db  = \Joomla\CMS\Factory::getDbo();
+		$db  = Factory::getDbo();
 		$row = new TableKunenaCategories($db);
 		$row->load($id);
 
@@ -1026,7 +1028,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		if ($task == 'move')
 		{
-			$db = \Joomla\CMS\Factory::getDBO();
+			$db = Factory::getDBO();
 
 			foreach ($cid as $cat)
 			{

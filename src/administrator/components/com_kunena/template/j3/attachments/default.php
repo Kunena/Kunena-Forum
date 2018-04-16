@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewAttachments $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 ?>
 
 <script type="text/javascript">
@@ -51,7 +53,7 @@ JHtml::_('dropdown.init');
 				<input type="hidden" name="boxchecked" value="0"/>
 				<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="filter-search btn-group pull-left">
@@ -84,7 +86,7 @@ JHtml::_('dropdown.init');
 						<select name="directionTable" id="directionTable" class="input-medium"
 						        onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
@@ -92,7 +94,7 @@ JHtml::_('dropdown.init');
 						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 						</select>
 					</div>
 					<div class="clearfix"></div>
@@ -103,13 +105,13 @@ JHtml::_('dropdown.init');
 					<tr>
 						<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
 						</th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering); ?>
+						<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering); ?>
 						<th><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?></th>
 					</tr>
 					<tr>
 						<td class="hidden-phone">
@@ -187,7 +189,7 @@ JHtml::_('dropdown.init');
 							$message = $attachment->getMessage();
 							?>
 							<tr>
-								<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+								<td><?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id)) ?></td>
 								<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getFilename() ?></td>
 								<td><?php echo $this->escape($attachment->filetype); ?></td>
 								<td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>

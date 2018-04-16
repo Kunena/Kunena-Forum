@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaAdminTemplate
  * @since Kunena
@@ -21,7 +23,7 @@ class KunenaAdminTemplate3
 	 */
 	public function initialize()
 	{
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		/** @noinspection PhpDeprecationInspection */
 		$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/layout.css');
 		/** @noinspection PhpDeprecationInspection */

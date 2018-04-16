@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modellist');
 
 /**
@@ -56,10 +59,10 @@ class KunenaAdminModelSmiley extends KunenaModel
 
 		foreach ($smiley_images as $file => $path)
 		{
-			$smiley_list[] = JHtml::_('select.option', $path, $file);
+			$smiley_list[] = HTMLHelper::_('select.option', $path, $file);
 		}
 
-		$list = JHtml::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
+		$list = HTMLHelper::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
 
 		return $list;
 	}
@@ -72,7 +75,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 	 */
 	public function getSmiley()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$id = $this->getState($this->getName() . '.id');
 
@@ -86,7 +89,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -106,7 +109,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 	{
 		$this->context = 'com_kunena.admin.smiley';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -116,7 +119,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$this->context .= '.' . $layout;
 		}
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
+		$value = Factory::getApplication()->input->getInt('id');
 		$this->setState($this->getName() . '.id', $value);
 		$this->setState('item.id', $value);
 	}

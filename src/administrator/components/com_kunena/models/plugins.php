@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modellist');
 
 /**
@@ -119,7 +121,7 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 				}
 			}
 
-			$lang      = \Joomla\CMS\Factory::getLanguage();
+			$lang      = Factory::getLanguage();
 			$direction = ($this->getState('list.direction') == 'desc') ? -1 : 1;
 			Joomla\Utilities\ArrayHelper::sortObjects($result, $ordering, $direction, true, $lang->getLocale());
 
@@ -174,7 +176,7 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 	 */
 	protected function translate(&$items)
 	{
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 
 		foreach ($items as &$item)
 		{

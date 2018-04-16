@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena package installer script.
  */
@@ -130,7 +132,7 @@ EOS;
 		}
 		else
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$app->redirect(JRoute::_('index.php?option=com_kunena&view=install', false));
 		}
 

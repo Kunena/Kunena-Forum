@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewSmiley $this
 
 $iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
@@ -19,8 +21,8 @@ $this->document->addScriptDeclaration(
 }"
 );
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
 ?>
 
 <div id="kunena" class="admin override">
@@ -39,7 +41,7 @@ JHtml::_('behavior.multiselect');
 				?><input type="hidden" name="smileyid"
 				         value="<?php echo $this->state->get('item.id') ?>" /><?php
 			endif; ?>
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<fieldset>
 				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY') : JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></legend>

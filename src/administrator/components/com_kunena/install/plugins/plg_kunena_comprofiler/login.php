@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaLoginComprofiler
  * @since Kunena
@@ -86,7 +88,7 @@ class KunenaLoginComprofiler
 	 */
 	public function getRememberMe()
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		// TODO: test if works (see #1079)
 		$db->setQuery("SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1);

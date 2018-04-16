@@ -12,6 +12,8 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 class KunenaProfileEasyblog extends KunenaProfile
 {
 	protected $params = null;
@@ -40,7 +42,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{

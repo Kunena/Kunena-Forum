@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die('');
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.helper');
 
 // Load the base adapter.
@@ -559,7 +561,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		if (!$messages[$cat_id])
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.id');
 			$query->from('#__kunena_messages as m');
@@ -585,7 +587,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		if (!$messages[$topic_id])
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.*, t.message');
 			$query->from('#__kunena_messages AS m');
@@ -615,7 +617,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	protected function getAccessLevel($item)
 	{
 		$category = KunenaForumCategoryHelper::get($item);
-		$user     = \Joomla\CMS\Factory::getUser(0);
+		$user     = Factory::getUser(0);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
 		if (!($user instanceof \Joomla\CMS\User\User))

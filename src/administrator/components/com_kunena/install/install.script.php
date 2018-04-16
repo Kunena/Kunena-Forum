@@ -10,6 +10,8 @@ w<?php
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
@@ -328,7 +330,7 @@ class Com_KunenaInstallerScript
 				JFile::copy($file, $filenew);
 			}
 
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
 			$db->setQuery($query);
 			$db->execute();
@@ -392,7 +394,7 @@ class Com_KunenaInstallerScript
 	 */
 	public function checkRequirements($version)
 	{
-		$db   = \Joomla\CMS\Factory::getDbo();
+		$db   = Factory::getDbo();
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
@@ -429,7 +431,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkVersion($name, $version)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		$major = $minor = 0;
 
@@ -470,7 +472,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkDbo($name, $types)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if (in_array($name, $types))
 		{
@@ -492,7 +494,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkExtensions($extensions)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		$pass = 1;
 
@@ -518,7 +520,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected function checkKunena($version)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -538,7 +540,7 @@ class Com_KunenaInstallerScript
 			return false;
 		}
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Check if Kunena can be found from the database
 		$table = $db->getPrefix() . 'kunena_version';
@@ -678,7 +680,7 @@ class Com_KunenaInstallerScript
 	 */
 	public function convertTablesToUtf8mb4()
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		// This is only required for MySQL databases
 		$serverType = $db->getServerType();

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 2.0.0: Convert new indication into new format
 /**
  * @param $parent
@@ -21,11 +23,11 @@ defined('_JEXEC') or die();
  */
 function kunena_200_2012_06_10_newindication($parent)
 {
-	$db  = \Joomla\CMS\Factory::getDbo();
-	$now = \Joomla\CMS\Factory::getDate()->toUnix();
+	$db  = Factory::getDbo();
+	$now = Factory::getDate()->toUnix();
 
 	// First remove old session information (not used anyway, speeds up conversion)
-	$lasttime = $now - max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
+	$lasttime = $now - max(intval(Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
 	$query    = "UPDATE `#__kunena_sessions` SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
 

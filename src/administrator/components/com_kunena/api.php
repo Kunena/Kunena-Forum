@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 if (defined('KUNENA_LOADED'))
 {
 	return;
@@ -41,7 +43,7 @@ if (is_file($libraryFile))
 	require_once $libraryFile;
 }
 
-if (\Joomla\CMS\Factory::getApplication()->isClient('site'))
+if (Factory::getApplication()->isClient('site'))
 {
 	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE . '/controller');
 }

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * About view for Kunena smilies backend
  *
@@ -70,9 +72,9 @@ class KunenaAdminViewSmilies extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = JHtml::_('select.option', 'code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
-		$sortFields[] = JHtml::_('select.option', 'location', JText::_('COM_KUNENA_EMOTICONS_URL'));
-		$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
 
 		return $sortFields;
 	}
@@ -84,8 +86,8 @@ class KunenaAdminViewSmilies extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

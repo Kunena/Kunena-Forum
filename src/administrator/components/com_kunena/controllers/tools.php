@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Cpanel Controller
  *
@@ -118,7 +120,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		// Convert days to seconds for timestamp functions...
 		$prune_days = $this->app->input->getInt('prune_days', 36500);
-		$prune_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($prune_days * 86400);
+		$prune_date = Factory::getDate()->toUnix() - ($prune_days * 86400);
 
 		$trashdelete = $this->app->input->getInt('trashdelete', 0);
 
@@ -222,7 +224,7 @@ class KunenaAdminControllerTools extends KunenaController
 		$userrename  = $this->app->input->getBool('userrename', 0);
 		$userdellife = $this->app->input->getBool('userdellife', 0);
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -397,7 +399,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$state->current = 0;
 			$state->reload  = 0;
 
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('MAX(thread)')->from('#__kunena_messages');
 			$db->setQuery($query);
@@ -748,7 +750,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($re_string != null)
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string . '%')}";
 			$db->setQuery($query);
 
@@ -808,11 +810,11 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($cleanup_days)
 		{
-			$clean_date = \Joomla\CMS\Factory::getDate()->toUnix() - ($cleanup_days * 86400);
+			$clean_date = Factory::getDate()->toUnix() - ($cleanup_days * 86400);
 			$where      = 'WHERE time < ' . $clean_date;
 		}
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
 		$db->setQuery($query);
 
@@ -833,7 +835,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($deleteipusers)
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = "UPDATE #__kunena_users SET ip = NULL;";
 			$db->setQuery($query);
 
@@ -914,7 +916,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$error = $login->loginUser($username, $password, 0, null);
 
-		$user = \Joomla\CMS\Factory::getUser(\Joomla\CMS\User\UserHelper::getUserId($username));
+		$user = Factory::getUser(\Joomla\CMS\User\UserHelper::getUserId($username));
 
 		$isroot = $user->authorise('core.admin');
 

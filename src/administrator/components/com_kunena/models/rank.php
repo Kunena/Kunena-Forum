@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modellist');
 
 /**
@@ -57,10 +60,10 @@ class KunenaAdminModelRank extends KunenaModel
 
 		foreach ($rank_images as $file => $path)
 		{
-			$rank_list[] = JHtml::_('select.option', $path, $file);
+			$rank_list[] = HTMLHelper::_('select.option', $path, $file);
 		}
 
-		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rank_image) ? $rank_images[$selected->rank_image] : '');
+		$list = HTMLHelper::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rank_image) ? $rank_images[$selected->rank_image] : '');
 
 		return $list;
 	}
@@ -73,7 +76,7 @@ class KunenaAdminModelRank extends KunenaModel
 	 */
 	public function getRank()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$id = $this->getState($this->getName() . '.id');
 
@@ -87,7 +90,7 @@ class KunenaAdminModelRank extends KunenaModel
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -107,7 +110,7 @@ class KunenaAdminModelRank extends KunenaModel
 	{
 		$this->context = 'com_kunena.admin.rank';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -117,7 +120,7 @@ class KunenaAdminModelRank extends KunenaModel
 			$this->context .= '.' . $layout;
 		}
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('id');
+		$value = Factory::getApplication()->input->getInt('id');
 		$this->setState($this->getName() . '.id', $value);
 		$this->setState('item.id', $value);
 	}

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * About view for Kunena stats backend
  *
@@ -28,7 +30,7 @@ class KunenaAdminViewStats extends KunenaView
 	{
 		JToolbarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
 
 		$kunena_stats = KunenaForumStatistics::getInstance();

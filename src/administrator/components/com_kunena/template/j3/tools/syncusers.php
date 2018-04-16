@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTools $this
 
 ?>
@@ -25,7 +27,7 @@ defined('_JEXEC') or die();
 			  method="post" id="adminForm"
 			  name="adminForm">
 			<input type="hidden" name="task" value="syncusers"/>
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></legend>

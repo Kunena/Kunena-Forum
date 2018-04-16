@@ -11,10 +11,12 @@
  **/
 defined('_JEXEC') or die();
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('bootstrap.popover');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('bootstrap.popover');
 
 ?>
 

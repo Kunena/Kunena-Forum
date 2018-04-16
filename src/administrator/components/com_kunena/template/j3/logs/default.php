@@ -10,12 +10,15 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 /** @var KunenaAdminViewLogs $this */
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('bootstrap.popover');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('bootstrap.popover');
 
 $filterItem = $this->escape($this->state->get('item.id'));
 ?>
@@ -53,12 +56,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<input type="hidden" name="boxchecked" value="1"/>
 				<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE'))); ?>
-						<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
+						<?php echo HTMLHelper::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE'))); ?>
+						<?php echo HTMLHelper::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter wrapper', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
 					</div>
 					<div class="btn-group pull-left">
 						<button class="btn tip" type="submit"
@@ -82,7 +85,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<select name="directionTable" id="directionTable" class="input-medium"
 						        onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
@@ -90,7 +93,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
@@ -98,7 +101,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<select name="filter_usertypes" id="filter_usertypes" class="input-medium filter"
 						        onchange="Joomla.orderTable()">
 							<option value=""><?php echo 'All'; ?></option>
-							<?php echo JHtml::_('select.options', $this->filterUserFields, 'value', 'text', $this->filterUsertypes); ?>
+							<?php echo HTMLHelper::_('select.options', $this->filterUserFields, 'value', 'text', $this->filterUsertypes); ?>
 						</select>
 					</div>
 					<div class="clearfix"></div>
@@ -108,13 +111,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<thead>
 					<tr>
 						<th class="nowrap center" width="1%">
-							<?php echo !$this->group ? JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering) : 'Count'; ?>
+							<?php echo !$this->group ? HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering) : 'Count'; ?>
 						</th>
 						<th class="nowrap center" width="1%" style="width: 130px;">
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th class="nowrap" width="1%">
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->listDirection, $this->listOrdering); ?>
 							<?php echo $this->getGroupCheckbox('type'); ?>
 						</th>
 						<th class="nowrap center">
@@ -122,19 +125,19 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo $this->getGroupCheckbox('operation'); ?>
 						</th>
 						<th class="nowrap">
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->listDirection, $this->listOrdering); ?>
 							<?php echo $this->getGroupCheckbox('user'); ?>
 						</th>
 						<th class="nowrap">
-							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->listDirection, $this->listOrdering); ?>
 							<?php echo $this->getGroupCheckbox('category'); ?>
 						</th>
 						<th class="nowrap">
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->listDirection, $this->listOrdering); ?>
 							<?php echo $this->getGroupCheckbox('topic'); ?>
 						</th>
 						<th class="nowrap">
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->listDirection, $this->listOrdering); ?>
 							<?php echo $this->getGroupCheckbox('target_user'); ?>
 						</th>
 						<th class="nowrap center">
@@ -159,7 +162,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<select name="filter_type" id="filter_type" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-								<?php echo JHtml::_('select.options', $this->filterTypeFields, 'value', 'text', $this->filterType); ?>
+								<?php echo HTMLHelper::_('select.options', $this->filterTypeFields, 'value', 'text', $this->filterType); ?>
 							</select>
 						</td>
 						<td>
@@ -167,7 +170,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<select name="filter_operation" id="filter_operation" class="filter"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-								<?php echo JHtml::_('select.options', $this->filterOperationFields, 'value', 'text', $this->filterOperation); ?>
+								<?php echo HTMLHelper::_('select.options', $this->filterOperationFields, 'value', 'text', $this->filterOperation); ?>
 							</select>
 						</td>
 						<td>
@@ -244,7 +247,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							$topic    = KunenaForumTopicHelper::get($item->topic_id);
 							$target   = KunenaUserHelper::get($item->target_user);
 
-							$document = \Joomla\CMS\Factory::getDocument();
+							$document = Factory::getDocument();
 							$document->addScriptDeclaration("window.addEvent('domready', function(){
 									$('link_sel_all" . $item->id . "').addEvent('click', function(e){
 										$('report_final" . $item->id . "').select();

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * About view for Kunena config backend
  *
@@ -49,11 +51,11 @@ class KunenaAdminViewConfig extends KunenaView
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-			JHtml::_('bootstrap.renderModal', 'settingModal');
+			HTMLHelper::_('bootstrap.renderModal', 'settingModal');
 		}
 		else
 		{
-			JHtml::_('bootstrap.modal', 'settingModal');
+			HTMLHelper::_('bootstrap.modal', 'settingModal');
 		}
 
 		$title = JText::_('COM_KUNENA_RESET_CONFIG');

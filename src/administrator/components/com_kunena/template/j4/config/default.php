@@ -9,9 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-use Joomla\CMS\HTML\HTMLHelper;
-
 defined('_JEXEC') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -37,7 +37,7 @@ HTMLHelper::_('behavior.tabstate');
 					  id="adminForm" name="adminForm">
 					<input type="hidden" name="view" value="config"/>
 					<input type="hidden" name="task" value=""/>
-					<?php echo JHtml::_('form.token') ?>
+					<?php echo HTMLHelper::_('form.token') ?>
 
 					<article class="data-block">
 						<div class="data-container">
@@ -618,7 +618,7 @@ HTMLHelper::_('behavior.tabstate');
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT') ?></td>
-														<td><?php echo JHtml::_('select.integerlist', 0, 100, 5, 'cfg_email_recipient_count', null, $this->escape($this->config->email_recipient_count)) ?></td>
+														<td><?php echo HTMLHelper::_('select.integerlist', 0, 100, 5, 'cfg_email_recipient_count', null, $this->escape($this->config->email_recipient_count)) ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC') ?></td>
 													</tr>
 													<tr>

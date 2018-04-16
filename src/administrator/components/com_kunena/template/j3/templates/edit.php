@@ -11,10 +11,12 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTemplates $this
 
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 ?>
 
 <div id="edittemplates" class="admin override">
@@ -29,7 +31,7 @@ JHtml::_('dropdown.init');
 				name="adminForm">
 			<input type="hidden" name="task" value=""/>
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<div class="container-fluid">
 				<div class="row">

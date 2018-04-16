@@ -9,9 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-use Joomla\CMS\HTML\HTMLHelper;
-
 defined('_JEXEC') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -67,7 +67,7 @@ HTMLHelper::_('behavior.tabstate');
 									<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 									<input type="hidden" name="filter_order_Dir"
 									       value="<?php echo $this->listDirection; ?>"/>
-									<?php echo JHtml::_('form.token'); ?>
+									<?php echo HTMLHelper::_('form.token'); ?>
 
 									<div id="filter-bar" class="btn-toolbar">
 										<div class="filter-search btn-group pull-left">
@@ -98,7 +98,7 @@ HTMLHelper::_('behavior.tabstate');
 											<select name="directionTable" id="directionTable" class="input-medium"
 											        onchange="Joomla.orderTable()">
 												<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-												<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 											</select>
 										</div>
 										<div class="btn-group pull-right">
@@ -107,7 +107,7 @@ HTMLHelper::_('behavior.tabstate');
 											<select name="sortTable" id="sortTable" class="input-medium"
 											        onchange="Joomla.orderTable()">
 												<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-												<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 											</select>
 										</div>
 										<div class="clearfix"></div>
@@ -124,16 +124,16 @@ HTMLHelper::_('behavior.tabstate');
 												<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
 											</th>
 											<th width="58%">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering); ?>
 											</th>
 											<th width="10%" class="nowrap center">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering); ?>
 											</th>
 											<th width="10%" class="nowrap center">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering); ?>
 											</th>
 											<th width="1%" class="nowrap center hidden-phone">
-												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 											</th>
 										</tr>
 										<tr>
@@ -157,7 +157,7 @@ HTMLHelper::_('behavior.tabstate');
 												        class="select-filter filter"
 												        onchange="Joomla.orderTable()">
 													<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-													<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
+													<?php echo HTMLHelper::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
 												</select>
 											</td>
 											<td class="nowrap center">
@@ -256,7 +256,7 @@ HTMLHelper::_('behavior.tabstate');
 									<input type="hidden" name="view" value="ranks"/>
 									<input type="hidden" name="task" value="rankupload"/>
 									<input type="hidden" name="boxchecked" value="0"/>
-									<?php echo JHtml::_('form.token'); ?>
+									<?php echo HTMLHelper::_('form.token'); ?>
 
 									<input type="file" id="file-upload" class="btn btn-default" name="Filedata"/>
 									<input type="submit" id="file-upload-submit" class="btn btn-primary"

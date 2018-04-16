@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * The Kunena Installer Controller
  *
@@ -68,8 +70,8 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		{
 			$view->addTemplatePath(__DIR__ . '/tmpl');
 			$view->setModel($this->model, true);
-			$view->setLayout(\Joomla\CMS\Factory::getApplication()->input->getWord('layout', 'default'));
-			$view->document = \Joomla\CMS\Factory::getDocument();
+			$view->setLayout(Factory::getApplication()->input->getWord('layout', 'default'));
+			$view->document = Factory::getDocument();
 			$view->display();
 
 			// Display Toolbar. View must have setToolBar method
@@ -96,7 +98,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		set_exception_handler(array(__CLASS__, 'exceptionHandler'));
 		set_error_handler(array(__CLASS__, 'errorHandler'));
 
-		$session = \Joomla\CMS\Factory::getSession();
+		$session = Factory::getSession();
 
 		$this->model->checkTimeout();
 		$action = $this->model->getAction();
@@ -140,7 +142,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
 		$newqueue = array();
-		$app      = \Joomla\CMS\Factory::getApplication();
+		$app      = Factory::getApplication();
 
 		foreach ($app->getMessageQueue() as $item)
 		{
@@ -158,8 +160,8 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		$log = ob_get_contents();
 		ob_end_clean();
 
-		\Joomla\CMS\Factory::getDocument()->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition', 'attachment;filename="kunena-install.json"');
+		Factory::getDocument()->setMimeEncoding('application/json');
+		Factory::getApplication()->setHeader('Content-Disposition', 'attachment;filename="kunena-install.json"');
 
 		$percent = intval(99 * $this->step / count($this->steps));
 
@@ -177,7 +179,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 			echo json_encode(array('success' => true, 'status' => '100%', 'current' => JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log' => $log));
 		}
 
-		\Joomla\CMS\Factory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 
 	/**
@@ -195,7 +197,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 
 		$this->model->setAction('uninstall');
 		$this->model->deleteTables('kunena_');
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
 
 		if (class_exists('KunenaForum') && !KunenaForum::isDev())

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTemplates $this
 
 ?>
@@ -28,7 +30,7 @@ defined('_JEXEC') or die();
 				<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
 				<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
 				<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<?php // TODO: redo FTP protection fields ?>
 				<fieldset>

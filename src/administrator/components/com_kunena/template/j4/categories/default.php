@@ -10,15 +10,17 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewCategories $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 
 if ($this->saveOrder)
 {
-	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
+	HTMLHelper::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
 $filterItem = $this->escape($this->state->get('item.id'));
@@ -60,7 +62,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<input type="hidden" name="boxchecked" value="0"/>
 					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 					<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
@@ -93,7 +95,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<select name="directionTable" id="directionTable" class="input-medium"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
@@ -101,7 +103,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 							</select>
 						</div>
 						<!-- TODO: not implemented
@@ -109,7 +111,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<label for="sortTable" class="element-invisible"><?php // Echo JText::_('JGLOBAL_SORT_BY');?></label>
 								<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php // Echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
-									<?php // echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
+									<?php // echo HTMLHelper::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
 								</select>
 							</div>-->
 						<div class="clearfix"></div>
@@ -119,7 +121,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<thead>
 						<tr>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+								<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 							</th>
 							<th width="1%" class="hidden-phone">
 								<input type="checkbox" name="checkall-toggle" value=""
@@ -127,31 +129,31 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								       onclick="Joomla.checkAll(this)"/>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="1%" class="nowrap">
 								<?php echo JText::_('COM_KUNENA_GO'); ?>
 							</th>
 							<th width="51%" class="nowrap">
-								<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="20%" class="nowrap center hidden-phone">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="5%" class="center">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
 							</th>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
 							</th>
 						</tr>
 						<tr>
@@ -165,7 +167,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_published" id="filter_published" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
+									<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 								</select>
 							</td>
 							<td>
@@ -185,7 +187,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_access" id="filter_access" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
+									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -194,7 +196,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_locked" id="filter_locked" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
+									<?php echo HTMLHelper::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -203,7 +205,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_review" id="filter_review" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+									<?php echo HTMLHelper::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -212,7 +214,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
+									<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -221,7 +223,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
+									<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -309,10 +311,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php endif; ?>
 									</td>
 									<td class="center hidden-phone">
-										<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
+										<?php echo HTMLHelper::_('grid.id', $i, (int) $item->id); ?>
 									</td>
 									<td class="center">
-										<?php echo JHtml::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
+										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 									</td>
 									<td class="center">
 										<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id))
@@ -338,7 +340,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										{
 											$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
 											$editor     = KunenaFactory::getUser($item->editor)->getName();
-											echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
+											echo HTMLHelper::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 										}
 										?>
 										<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=categories&layout=edit&catid=' . (int) $item->id); ?>">

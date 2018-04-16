@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 1.6.0: Migrate polls data from K1.5
 /**
  * @param $parent
@@ -22,7 +24,7 @@ function kunena_160_2010_05_30_polls($parent)
 {
 	// Import filesystem libraries.
 	jimport('joomla.filesystem.folder');
-	$db = \Joomla\CMS\Factory::getDbo();
+	$db = Factory::getDbo();
 
 	$upgraded = false;
 

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
 /**
  * @param $parent
@@ -23,7 +25,7 @@ function kunena_160_2010_05_30_timezone($parent)
 {
 	$result = null;
 	$config = KunenaFactory::getConfig();
-	$db     = \Joomla\CMS\Factory::getDbo();
+	$db     = Factory::getDbo();
 
 	// We need to fix all timestamps to UTC (if not already done)
 	if ($config->get('board_ofset', '0.00') != '0.00')

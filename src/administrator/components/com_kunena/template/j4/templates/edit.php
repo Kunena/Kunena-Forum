@@ -9,9 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-use Joomla\CMS\HTML\HTMLHelper;
-
 defined('_JEXEC') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -32,7 +32,7 @@ HTMLHelper::_('behavior.tabstate');
 					name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div class="container-fluid">
 					<div class="row">

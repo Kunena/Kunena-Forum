@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * About view for Kunena cpanel
  *
@@ -29,7 +31,7 @@ class KunenaAdminViewCpanel extends KunenaView
 		JToolbarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));
 		JToolbarHelper::link('https://www.kunena.org/forum', JText::_('Get Support'));
 
-		if (\Joomla\CMS\Factory::getUser()->authorise('core.admin', 'com_kunena'))
+		if (Factory::getUser()->authorise('core.admin', 'com_kunena'))
 		{
 			JToolbarHelper::spacer();
 			JToolbarHelper::preferences('com_kunena');

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 2.0.0: Update menu items
 /**
  * @param $parent
@@ -24,7 +26,7 @@ function kunena_200_2012_06_10_pubwrite($parent)
 
 	if ($config->pubwrite)
 	{
-		$db     = \Joomla\CMS\Factory::getDbo();
+		$db     = Factory::getDbo();
 		$params = '{"access_post":["1"],"access_reply":["1"]}';
 		$query  = "UPDATE `#__kunena_categories` SET params={$db->quote($params)} WHERE accesstype LIKE 'joomla.%' AND params=''";
 		$db->setQuery($query);

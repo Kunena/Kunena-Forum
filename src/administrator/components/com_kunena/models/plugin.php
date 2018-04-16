@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modeladmin');
 
 /**
@@ -142,7 +144,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 			// Check for a table object error.
 			if ($return === false && $table->getError())
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError());
+				Factory::getApplication()->enqueueMessage($table->getError());
 
 				return $false;
 			}
@@ -234,7 +236,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
+		$data = Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
 
 		if (empty($data))
 		{
@@ -269,7 +271,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($results->getError());
+			Factory::getApplication()->enqueueMessage($results->getError());
 		}
 	}
 
@@ -290,7 +292,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		// Execute the parent method.
 		parent::populateState();
 
-		$app = \Joomla\CMS\Factory::getApplication('administrator');
+		$app = Factory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = $app->input->getInt('extension_id');
@@ -310,10 +312,10 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	{
 		$folder  = $this->getState('item.folder');
 		$element = $this->getState('item.element');
-		$lang    = \Joomla\CMS\Factory::getLanguage();
+		$lang    = Factory::getLanguage();
 
 		// Load the core and/or local language sys file(s) for the ordering field.
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = 'SELECT element' .
 			' FROM #__extensions' .
 			' WHERE (type =' . $db->Quote('plugin') . 'AND folder=' . $db->Quote($folder) . ')';
@@ -330,7 +332,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 
 		if (empty($folder) || empty($element))
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
 		}
 

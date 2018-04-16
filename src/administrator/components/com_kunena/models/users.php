@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modellist');
 
 /**
@@ -79,7 +82,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return false;
 		}
@@ -141,10 +144,10 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 
 		if ($this->me->isAdmin())
 		{
-			$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+			$options[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
-		return JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action' => 'admin'), 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action' => 'admin'), 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
 	}
 
 	/**
@@ -160,7 +163,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 	{
 		$this->context = 'com_kunena.admin.users';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout        = $app->input->get('layout');

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewUser $this
 
 ?>
@@ -27,7 +29,7 @@ defined('_JEXEC') or die();
 				<input type="hidden" name="view" value="users"/>
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="boxchecked" value="1"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></legend>

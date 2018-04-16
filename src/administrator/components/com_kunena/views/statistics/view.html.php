@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 /**
  * Statistics view for Kunena backend
  * @since Kunena
@@ -52,7 +55,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$document->setTitle(JText::_('Forum Logs'));
 
 		$this->setToolbar();
@@ -66,12 +69,12 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getFilterUserFields()
 	{
 		$filterFields   = array();
-		$filterFields[] = JHtml::_('select.option', 0, 'Guests');
-		$filterFields[] = JHtml::_('select.option', 1, 'Registered users');
-		$filterFields[] = JHtml::_('select.option', 2, 'Regular members');
-		$filterFields[] = JHtml::_('select.option', 3, 'Moderators');
-		$filterFields[] = JHtml::_('select.option', 4, 'Administrators');
-		$filterFields[] = JHtml::_('select.option', 5, 'Mods and Admins');
+		$filterFields[] = HTMLHelper::_('select.option', 0, 'Guests');
+		$filterFields[] = HTMLHelper::_('select.option', 1, 'Registered users');
+		$filterFields[] = HTMLHelper::_('select.option', 2, 'Regular members');
+		$filterFields[] = HTMLHelper::_('select.option', 3, 'Moderators');
+		$filterFields[] = HTMLHelper::_('select.option', 4, 'Administrators');
+		$filterFields[] = HTMLHelper::_('select.option', 5, 'Mods and Admins');
 
 		return $filterFields;
 	}
@@ -85,13 +88,13 @@ class KunenaAdminViewStatistics extends KunenaView
 		$sortFields = array();
 
 		// TODO: translate
-		$sortFields[] = JHtml::_('select.option', 'id', $this->group ? 'Count' : 'Id');
-		$sortFields[] = JHtml::_('select.option', 'type', 'Type (by id)');
-		$sortFields[] = JHtml::_('select.option', 'user', 'User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'category', 'Category (by id)');
-		$sortFields[] = JHtml::_('select.option', 'topic', 'Topic (by id)');
-		$sortFields[] = JHtml::_('select.option', 'target_user', 'Target User (by id)');
-		$sortFields[] = JHtml::_('select.option', 'time', 'Time (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'id', $this->group ? 'Count' : 'Id');
+		$sortFields[] = HTMLHelper::_('select.option', 'type', 'Type (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'user', 'User (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'category', 'Category (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'topic', 'Topic (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'target_user', 'Target User (by id)');
+		$sortFields[] = HTMLHelper::_('select.option', 'time', 'Time (by id)');
 
 		return $sortFields;
 	}
@@ -103,8 +106,8 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -116,10 +119,10 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getFilterTypeFields()
 	{
 		$filterFields   = array();
-		$filterFields[] = JHtml::_('select.option', 1, 'MOD');
-		$filterFields[] = JHtml::_('select.option', 2, 'ACT');
-		$filterFields[] = JHtml::_('select.option', 3, 'ERR');
-		$filterFields[] = JHtml::_('select.option', 4, 'REP');
+		$filterFields[] = HTMLHelper::_('select.option', 1, 'MOD');
+		$filterFields[] = HTMLHelper::_('select.option', 2, 'ACT');
+		$filterFields[] = HTMLHelper::_('select.option', 3, 'ERR');
+		$filterFields[] = HTMLHelper::_('select.option', 4, 'REP');
 
 		return $filterFields;
 	}
@@ -141,7 +144,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		{
 			if (strpos($key, 'LOG_') === 0)
 			{
-				$filterFields[] = JHtml::_('select.option', $key, JText::_("COM_KUNENA_{$value}"));
+				$filterFields[] = HTMLHelper::_('select.option', $key, JText::_("COM_KUNENA_{$value}"));
 			}
 		}
 

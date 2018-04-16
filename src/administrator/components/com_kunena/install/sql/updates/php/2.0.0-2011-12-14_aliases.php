@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 /**
  * @param $parent
@@ -123,7 +125,7 @@ function kunena_200_2011_12_14_aliases($parent)
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = \Joomla\CMS\Factory::getDbo();
+	$db    = Factory::getDbo();
 	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();
@@ -150,7 +152,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = \Joomla\CMS\Factory::getDbo();
+	$db    = Factory::getDbo();
 	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();

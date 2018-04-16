@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modeladmin');
 jimport('joomla.html.pagination');
 
@@ -30,7 +32,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
-		$this->app    = \Joomla\CMS\Factory::getApplication();
+		$this->app    = Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 	}
@@ -230,7 +232,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	{
 		$this->context = 'com_kunena.admin.templates';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
@@ -269,7 +271,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$input     = $app->input;
 		$old_state = $app->getUserState($key);
 		$cur_state = ($old_state !== null) ? $old_state : $default;
@@ -302,7 +304,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = \Joomla\CMS\Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
 
 		if (empty($data))
 		{

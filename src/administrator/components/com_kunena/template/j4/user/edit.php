@@ -9,16 +9,17 @@
  * @license           https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link              https://www.kunena.org
  **/
-use Joomla\CMS\HTML\HTMLHelper;
-
 defined('_JEXEC') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 HTMLHelper::_('behavior.tabstate');
 
-$document = \Joomla\CMS\Factory::getDocument();
+$document = Factory::getDocument();
 $document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxsig . '
 jQuery(function($) {
@@ -57,7 +58,7 @@ jQuery(function($) {
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="1"/>
 					<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<article class="data-block">
 						<div class="data-container">
@@ -157,7 +158,7 @@ jQuery(function($) {
 																<div class="input-append date">
 																	<input type="text" name="birthdate"
 																	       data-date-format="mm/dd/yyyy"
-																	       value="<?php echo $this->user->birthdate == '0001-01-01' ? \Joomla\CMS\Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
+																	       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
 																	<span class="add-on"><i
 																				class="icon-grid-view-2 "></i></span>
 																</div>
@@ -184,11 +185,11 @@ jQuery(function($) {
 														<td>
 															<?php
 															// Make the select list for the view type
-															$gender[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-															$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-															$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+															$gender[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+															$gender[] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+															$gender[] = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 															// Build the html select list
-															echo JHtml::_(
+															echo HTMLHelper::_(
 																'select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text',
 																$this->escape($this->user->gender), 'gender');
 															?>

@@ -9,9 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-use Joomla\CMS\HTML\HTMLHelper;
-
 defined('_JEXEC') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -69,7 +69,7 @@ HTMLHelper::_('behavior.tabstate');
 									<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 									<input type="hidden" name="filter_order_Dir"
 									       value="<?php echo $this->listDirection; ?>"/>
-									<?php echo JHtml::_('form.token'); ?>
+									<?php echo HTMLHelper::_('form.token'); ?>
 
 									<div id="filter-bar" class="btn-toolbar">
 										<div class="filter-search btn-group pull-left">
@@ -100,7 +100,7 @@ HTMLHelper::_('behavior.tabstate');
 											<select name="directionTable" id="directionTable" class="input-medium"
 											        onchange="Joomla.orderTable()">
 												<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-												<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 											</select>
 										</div>
 										<div class="btn-group pull-right">
@@ -109,7 +109,7 @@ HTMLHelper::_('behavior.tabstate');
 											<select name="sortTable" id="sortTable" class="input-medium"
 											        onchange="Joomla.orderTable()">
 												<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-												<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 											</select>
 										</div>
 									</div>
@@ -123,10 +123,10 @@ HTMLHelper::_('behavior.tabstate');
 											</th>
 											<th width="5%"
 											    class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-											<th width="8%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
-											<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering); ?></th>
+											<th width="8%"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
+											<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering); ?></th>
 											<th width="1%" class="nowrap center hidden-phone">
-												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 											</th>
 										</tr>
 										<tr>
@@ -234,7 +234,7 @@ HTMLHelper::_('behavior.tabstate');
 									<input type="hidden" name="view" value="smilies"/>
 									<input type="hidden" name="task" value="smileyupload"/>
 									<input type="hidden" name="boxchecked" value="0"/>
-									<?php echo JHtml::_('form.token'); ?>
+									<?php echo HTMLHelper::_('form.token'); ?>
 
 									<input type="file" id="file-upload" class="btn btn-default" name="Filedata"/>
 									<input type="submit" id="file-upload-submit" class="btn btn-primary"

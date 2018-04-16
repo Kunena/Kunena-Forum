@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class plgKunenaComprofiler
  * @since Kunena
@@ -42,7 +44,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 			return;
 		}
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Do not load if CommunityBuilder is not installed
 		if ((!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))

@@ -10,17 +10,20 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 // @var KunenaAdminViewCategories $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('behavior.tabstate');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+HTMLHelper::_('behavior.tabstate');
 
 JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
 /** @noinspection PhpDeprecationInspection */
-\Joomla\CMS\Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
+Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
 ?>
 
 <div id="kunena" class="admin override">
@@ -41,7 +44,7 @@ JText::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 			      name="adminForm">
 				<input type="hidden" name="task" value="save"/>
 				<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<article class="data-block">
 					<div class="data-container">

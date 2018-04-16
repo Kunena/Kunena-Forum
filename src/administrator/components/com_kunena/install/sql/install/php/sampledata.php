@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // This file contains initial sample data for the forum
 
 /**
@@ -37,14 +39,14 @@ class KText
  */
 function installSampleData()
 {
-	$lang  = \Joomla\CMS\Factory::getLanguage();
+	$lang  = Factory::getLanguage();
 	//$debug = $lang->setDebug(false);
 
 	jimport('joomla.utilities.date');
 
-	$db       = \Joomla\CMS\Factory::getDBO();
+	$db       = Factory::getDBO();
 	$posttime = new \Joomla\CMS\Date\Date;
-	$my       = \Joomla\CMS\Factory::getUser();
+	$my       = Factory::getUser();
 	$queries  = array();
 
 	$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES

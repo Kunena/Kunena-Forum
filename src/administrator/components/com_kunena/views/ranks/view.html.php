@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * About view for Kunena ranks backend
  *
@@ -28,8 +30,8 @@ class KunenaAdminViewRanks extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}
@@ -88,10 +90,10 @@ class KunenaAdminViewRanks extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
-		$sortFields[] = JHtml::_('select.option', 'min', JText::_('COM_KUNENA_RANKSMIN'));
-		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'min', JText::_('COM_KUNENA_RANKSMIN'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}
@@ -103,8 +105,8 @@ class KunenaAdminViewRanks extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

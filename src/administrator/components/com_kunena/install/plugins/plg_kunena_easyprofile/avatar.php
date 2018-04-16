@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaAvatarEasyprofile
  * @since Kunena
@@ -75,7 +77,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 		}
 		else
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('params')->from('#__jsn_fields')->where('alias=\'avatar\'');
 			$db->setQuery($query);

@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTrash $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 ?>
 
 <script type="text/javascript">
@@ -58,7 +60,7 @@ JHtml::_('dropdown.init');
 					       value="<?php echo $this->escape($this->state->get('list.direction')) ?>"/>
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
 						<legend><?php echo JText::_('COM_KUNENA_TRASH_VIEW') . ' ' . JText::_('COM_KUNENA_TRASH_TOPICS') ?>
@@ -96,7 +98,7 @@ JHtml::_('dropdown.init');
 								<select name="directionTable" id="directionTable" class="input-medium"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-									<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+									<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 								</select>
 							</div>
 							<div class="btn-group pull-right">
@@ -104,7 +106,7 @@ JHtml::_('dropdown.init');
 								       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+									<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 								</select>
 							</div>
 							<div class="clearfix"></div>
@@ -117,22 +119,22 @@ JHtml::_('dropdown.init');
 									<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
 								</th>
 								<th width="1%" class="nowrap">
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 								<th>
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 								<th>
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 								<th width="10%" class="nowrap">
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 								<th width="10%" class="nowrap">
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 								<th width="10%" class="nowrap">
-									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 								</th>
 							</tr>
 							<tr>
@@ -194,7 +196,7 @@ JHtml::_('dropdown.init');
 									:
 									?>
 									<tr>
-										<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
+										<td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->id)) ?></td>
 										<td><?php echo intval($row->id); ?></td>
 										<td><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
 										       target="_blank"><?php echo $this->escape($row->subject); ?></a></td>

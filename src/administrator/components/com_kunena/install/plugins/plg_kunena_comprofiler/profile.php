@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 require_once dirname(__FILE__) . '/integration.php';
 
 /**
@@ -77,7 +79,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		global $_CB_framework;
 
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -148,7 +150,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT cu.user_id AS id, cu.hits AS count
 			FROM #__comprofiler AS cu
 			INNER JOIN #__users AS u ON u.id=cu.user_id

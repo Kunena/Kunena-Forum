@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaProfileKunena
  * @since Kunena
@@ -45,7 +47,7 @@ class KunenaProfileKunena extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -64,7 +66,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('u.id', 'ku.uhits'), array(null, 'count')));
 		$query->from($db->quoteName(array('#__kunena_users'), array('ku')));

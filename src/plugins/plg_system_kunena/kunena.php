@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class plgSystemKunena
  * @since Kunena
@@ -60,13 +62,13 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		#kunena + div { display: block !important;}
 EOF;
 
-			$document = \Joomla\CMS\Factory::getDocument();
+			$document = Factory::getDocument();
 			$document->addStyleDeclaration($styles);
 		}
 
 		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
+			Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
 				'notice');
 		}
 
@@ -178,7 +180,7 @@ EOF;
 		}
 
 		// Old version detected: emulate failed installation
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.',
 			KunenaForum::version(), $manifest->version), 'warning');
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');

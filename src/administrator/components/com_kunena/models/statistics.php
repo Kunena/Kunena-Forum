@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.model');
 
 /**
@@ -287,7 +289,7 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');

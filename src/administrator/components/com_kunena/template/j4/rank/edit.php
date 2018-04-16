@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewRank $this
 
 $iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
@@ -19,8 +21,8 @@ $this->document->addScriptDeclaration(
 }"
 );
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -40,7 +42,7 @@ JHtml::_('behavior.multiselect');
 					?><input type="hidden" name="rankid"
 					         value="<?php echo $this->state->get('item.id') ?>" /><?php
 				endif; ?>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>
 					<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_NEW_RANK') : JText::_('COM_KUNENA_RANKS_EDIT'); ?></legend>

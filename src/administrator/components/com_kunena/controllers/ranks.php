@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Ranks Controller
  *
@@ -111,7 +113,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function save()
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -224,7 +226,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 */
 	public function remove()
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{

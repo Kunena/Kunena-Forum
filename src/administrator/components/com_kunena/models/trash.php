@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.model');
 
 /**
@@ -168,7 +171,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	protected function _getMessages()
 	{
-		$db   = \Joomla\CMS\Factory::getDBO();
+		$db   = Factory::getDBO();
 		$join = array();
 
 		$query = $db->getQuery(true)->select('a.id')->from('#__kunena_messages AS a');
@@ -285,7 +288,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return array();
 		}
@@ -317,10 +320,10 @@ class KunenaAdminModelTrash extends KunenaModel
 	public function getViewOptions()
 	{
 		$view_options   = array();
-		$view_options[] = JHtml::_('select.option', 'topics', JText::_('COM_KUNENA_TRASH_TOPICS'));
-		$view_options[] = JHtml::_('select.option', 'messages', JText::_('COM_KUNENA_TRASH_MESSAGES'));
+		$view_options[] = HTMLHelper::_('select.option', 'topics', JText::_('COM_KUNENA_TRASH_TOPICS'));
+		$view_options[] = HTMLHelper::_('select.option', 'messages', JText::_('COM_KUNENA_TRASH_MESSAGES'));
 
-		return JHtml::_('select.genericlist', $view_options, 'layout',
+		return HTMLHelper::_('select.genericlist', $view_options, 'layout',
 			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
 		);
 	}

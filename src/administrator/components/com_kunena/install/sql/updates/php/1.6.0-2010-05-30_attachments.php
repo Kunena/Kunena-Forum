@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
 /**
  * @param $parent
@@ -20,7 +22,7 @@ defined('_JEXEC') or die();
  */
 function kunena_160_2010_05_30_attachments($parent)
 {
-	$db = \Joomla\CMS\Factory::getDbo();
+	$db = Factory::getDbo();
 
 	// First check if attachments table has legacy field
 	$fields = $db->getTableColumns('#__kunena_attachments');

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
  *
@@ -47,7 +49,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -65,7 +67,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('u.*', 'ju.username', 'ju.email', 'ju.lastvisitDate'), array(null, null, 'last_login')))
 			->from('#__alpha_userpoints AS a')
@@ -128,7 +130,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		}
 
 		$user = KunenaFactory::getUser($user);
-		$my   = \Joomla\CMS\Factory::getUser();
+		$my   = Factory::getUser();
 
 		if ($user === false)
 		{

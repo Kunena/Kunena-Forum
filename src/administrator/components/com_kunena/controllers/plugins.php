@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Plugins Controller
  *
@@ -36,7 +38,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
-		$this->input  = \Joomla\CMS\Factory::getApplication()->input;
+		$this->input  = Factory::getApplication()->input;
 
 		parent::__construct($config);
 		$this->baseurl     = 'administrator/index.php?option=com_kunena&view=plugins';
@@ -58,7 +60,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		$this->registerTask('orderup', 'reorder');
 		$this->registerTask('orderdown', 'reorder');
 
-		\Joomla\CMS\Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
+		Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
 	/**
@@ -75,7 +77,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		\Joomla\CMS\Session\Session::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid   = \Joomla\CMS\Factory::getApplication()->input->get('cid', array(), 'array');
+		$cid   = Factory::getApplication()->input->get('cid', array(), 'array');
 		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task  = $this->getTask();
 		$value = Joomla\Utilities\ArrayHelper::getValue($data, $task, 0, 'int');
@@ -162,7 +164,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$ids = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
 		$model  = $this->getModel();
@@ -243,7 +245,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$ids = \Joomla\CMS\Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 
 		$model  = $this->getModel();
 		$return = $model->checkin($ids);

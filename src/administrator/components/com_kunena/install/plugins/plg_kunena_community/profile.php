@@ -12,6 +12,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaProfileCommunity
  * @since Kunena
@@ -47,7 +49,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{
@@ -66,7 +68,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 */
 	public function _getTopHits($limit = 0)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT cu.userid AS id, cu.view AS count
 			FROM #__community_users AS cu
 			INNER JOIN #__users AS u ON u.id=cu.userid

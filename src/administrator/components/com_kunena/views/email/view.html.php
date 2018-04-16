@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Email view for Kunena backend
  *
@@ -29,7 +31,7 @@ class KunenaAdminViewEmail extends KunenaView
 		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$document->setTitle(JText::_('COM_KUNENA_A_EMAIL_MANAGER'));
 
 		$this->setToolbar();

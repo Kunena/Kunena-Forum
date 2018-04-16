@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 require_once dirname(__FILE__) . '/integration.php';
 
 /**
@@ -150,19 +152,19 @@ class KunenaAccessComprofiler
 					$selected = $item->id;
 				}
 
-				$options[] = JHtml::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
+				$options[] = HTMLHelper::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
 			}
 
 			if (!$options)
 			{
 				$selected  = 0;
-				$options[] = JHtml::_('select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
+				$options[] = HTMLHelper::_('select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
 			}
 
 			$html ['communitybuilder']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
 				'desc'  => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
-				'input' => JHtml::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected),
+				'input' => HTMLHelper::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}
 

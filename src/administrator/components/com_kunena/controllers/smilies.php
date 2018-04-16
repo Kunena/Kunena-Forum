@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Smileys Controller
  *
@@ -108,7 +110,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 */
 	public function save()
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
@@ -219,7 +221,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	public function remove()
 	{
 		jimport('joomla.utilities.arrayhelper');
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{

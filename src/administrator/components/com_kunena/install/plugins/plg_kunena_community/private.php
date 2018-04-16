@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaPrivateCommunity
  * @since Kunena
@@ -79,7 +81,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 		{
 			// PM popup requires JomSocial css to be loaded from selected template
 			$config   = CFactory::getConfig();
-			$document = \Joomla\CMS\Factory::getDocument();
+			$document = Factory::getDocument();
 			/** @noinspection PhpDeprecationInspection */
 			$document->addStyleSheet('components/com_community/assets/window.css');
 			/** @noinspection PhpDeprecationInspection */

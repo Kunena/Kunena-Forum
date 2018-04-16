@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.modellist');
 
 /**
@@ -55,7 +57,7 @@ class KunenaAdminModelRanks extends \Joomla\CMS\MVC\Model\ListModel
 	{
 		$this->context = 'com_kunena.admin.ranks';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout        = $app->input->get('layout');

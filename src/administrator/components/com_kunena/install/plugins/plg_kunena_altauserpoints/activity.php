@@ -10,6 +10,9 @@
  * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
+
 jimport('joomla.utilities.string');
 
 /**
@@ -281,7 +284,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 			return false;
 		}
 
-		$_db = \Joomla\CMS\Factory::getDBO();
+		$_db = Factory::getDBO();
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
 
 		try

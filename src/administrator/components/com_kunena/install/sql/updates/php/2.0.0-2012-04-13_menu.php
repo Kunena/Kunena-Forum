@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Kunena 2.0.0: Update menu items
 /**
  * @param $parent
@@ -20,7 +22,7 @@ defined('_JEXEC') or die();
  */
 function kunena_200_2012_04_13_menu($parent)
 {
-	$app    = \Joomla\CMS\Factory::getApplication();
+	$app    = Factory::getApplication();
 	$legacy = KunenaMenuFix::getLegacy();
 	$errors = KunenaMenuFix::fixLegacy();
 

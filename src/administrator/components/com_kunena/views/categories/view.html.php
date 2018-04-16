@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 /**
  * About view for Kunena backend
  * @since Kunena
@@ -96,7 +99,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->user              = \Joomla\CMS\Factory::getUser();
+		$this->user              = Factory::getUser();
 		$this->me                = KunenaUserHelper::getMyself();
 		$this->userId            = $this->user->get('id');
 		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
@@ -144,11 +147,11 @@ class KunenaAdminViewCategories extends KunenaView
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-			JHtml::_('bootstrap.renderModal', 'collapseModal');
+			HTMLHelper::_('bootstrap.renderModal', 'collapseModal');
 		}
 		else
 		{
-			JHtml::_('bootstrap.modal', 'collapseModal');
+			HTMLHelper::_('bootstrap.modal', 'collapseModal');
 		}
 
 		$title = JText::_('JTOOLBAR_BATCH');
@@ -167,15 +170,15 @@ class KunenaAdminViewCategories extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = JHtml::_('select.option', 'ordering', JText::_('COM_KUNENA_REORDER'));
-		$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
-		$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
-		$sortFields[] = JHtml::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
-		$sortFields[] = JHtml::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
-		$sortFields[] = JHtml::_('select.option', 'p.allow_polls', JText::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
-		$sortFields[] = JHtml::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
-		$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'ordering', JText::_('COM_KUNENA_REORDER'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.published', JText::_('JSTATUS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.allow_polls', JText::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}
@@ -189,8 +192,8 @@ class KunenaAdminViewCategories extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -205,8 +208,8 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -221,8 +224,8 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -237,8 +240,8 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -253,8 +256,8 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -269,8 +272,8 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}

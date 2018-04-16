@@ -10,9 +10,12 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 // @var KunenaAdminViewReport $this
 
-$document = \Joomla\CMS\Factory::getDocument();
+$document = Factory::getDocument();
 $document->addScriptDeclaration(
 	"
 window.addEvent('domready', function(){
@@ -45,8 +48,8 @@ window.addEvent('domready', function(){
 "
 );
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
 ?>
 
 <div id="kunena" class="admin override">

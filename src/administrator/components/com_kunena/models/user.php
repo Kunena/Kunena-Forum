@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.model');
 
 /**
@@ -29,7 +32,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getSubscriptions()
 	{
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1");
@@ -40,7 +43,7 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
@@ -83,7 +86,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getIPlist()
 	{
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip");
@@ -94,7 +97,7 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
@@ -112,7 +115,7 @@ class KunenaAdminModelUser extends KunenaModel
 			}
 			catch (RuntimeException $e)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage());
 
 				return;
 			}
@@ -149,13 +152,13 @@ class KunenaAdminModelUser extends KunenaModel
 
 		if ($this->me->isAdmin())
 		{
-			$categoryList[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+			$categoryList[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
 		$params  = array(
 			'sections' => false,
 			'action'   => 'read',);
-		$modCats = JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
 	}
@@ -182,7 +185,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getListuserranks()
 	{
-		$db   = \Joomla\CMS\Factory::getDBO();
+		$db   = Factory::getDBO();
 		$user = $this->getUser();
 
 		// Grab all special ranks
@@ -194,20 +197,20 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
 
-		$yesnoRank [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED'));
+		$yesnoRank [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED'));
 
 		foreach ($specialRanks as $ranks)
 		{
-			$yesnoRank [] = JHtml::_('select.option', $ranks->rank_id, $ranks->rank_title);
+			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rank_id, $ranks->rank_title);
 		}
 
 		// Build special ranks select list
-		$selectRank = JHtml::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank);
+		$selectRank = HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank);
 
 		return $selectRank;
 	}
@@ -219,7 +222,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getMovecatslist()
 	{
-		return JHtml::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
 	}
 
 	/**
@@ -229,7 +232,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getMoveuser()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$userids = (array) $this->app->getUserState('kunena.usermove.userids');
 
@@ -247,7 +250,7 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return;
 		}
@@ -264,7 +267,7 @@ class KunenaAdminModelUser extends KunenaModel
 	{
 		$this->context = 'com_kunena.admin.user';
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout        = $app->input->get('layout');
@@ -275,7 +278,7 @@ class KunenaAdminModelUser extends KunenaModel
 			$this->context .= '.' . $layout;
 		}
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('userid');
+		$value = Factory::getApplication()->input->getInt('userid');
 		$this->setState($this->getName() . '.id', $value);
 	}
 }

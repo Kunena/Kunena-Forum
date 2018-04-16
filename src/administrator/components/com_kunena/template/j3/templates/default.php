@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTemplates $this
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 ?>
 
 <div id="kunena" class="admin override">
@@ -34,7 +36,7 @@ JHtml::_('dropdown.init');
 			      method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="boxchecked" value="0"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit"

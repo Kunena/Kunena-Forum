@@ -9,11 +9,14 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
-$user = \Joomla\CMS\Factory::getUser();
+HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
+
+$user = Factory::getUser();
 
 ?>
 
@@ -50,7 +53,7 @@ $user = \Joomla\CMS\Factory::getUser();
 				<input type="hidden" name="boxchecked" value="0"/>
 				<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="filter-search btn-group pull-left">
@@ -83,7 +86,7 @@ $user = \Joomla\CMS\Factory::getUser();
 						<select name="directionTable" id="directionTable" class="input-medium"
 						        onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
@@ -91,7 +94,7 @@ $user = \Joomla\CMS\Factory::getUser();
 						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
-							<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 						</select>
 					</div>
 					<div class="clearfix"></div>
@@ -105,19 +108,19 @@ $user = \Joomla\CMS\Factory::getUser();
 							       onclick="Joomla.checkAll(this)"/>
 						</th>
 						<th width="1%" class="nowrap center">
-							<?php echo JHtml::_('grid.sort', 'JSTATUS', 'enabled', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'enabled', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th class="title">
-							<?php echo JHtml::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="15%" class="nowrap hidden-phone">
-							<?php echo JHtml::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="10%" class="hidden-phone center">
-							<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="1%" class="nowrap center hidden-phone">
-							<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $this->listDirection, $this->listOrdering); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $this->listDirection, $this->listOrdering); ?>
 						</th>
 					</tr>
 					<tr>
@@ -128,7 +131,7 @@ $user = \Joomla\CMS\Factory::getUser();
 							<select name="filter_enabled" id="filter_enabled" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-								<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterEnabled, true); ?>
+								<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterEnabled, true); ?>
 							</select>
 						</td>
 						<td class="nowrap">
@@ -154,7 +157,7 @@ $user = \Joomla\CMS\Factory::getUser();
 							<select name="filter_access" id="filter_access" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-								<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->filterAccess, true); ?>
+								<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess, true); ?>
 							</select>
 						</td>
 						<td class="nowrap center hidden-phone">
@@ -180,14 +183,14 @@ $user = \Joomla\CMS\Factory::getUser();
 							?>
 							<tr>
 								<td class="center hidden-phone">
-									<?php echo JHtml::_('grid.id', $i, $item->extension_id); ?>
+									<?php echo HTMLHelper::_('grid.id', $i, $item->extension_id); ?>
 								</td>
 								<td class="center">
-									<?php echo JHtml::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
+									<?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
 								</td>
 								<td>
 									<?php if ($item->checked_out) : ?>
-										<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
+										<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
 									<?php endif; ?>
 									<?php if ($canEdit) : ?>
 										<a href="#plugin<?php echo $item->extension_id; ?>Modal" data-toggle="modal"

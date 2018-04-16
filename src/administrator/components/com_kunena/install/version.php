@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaVersion
  * @since Kunena
@@ -104,7 +106,7 @@ class KunenaVersion
 	 */
 	public function getDBVersion($prefix = 'kunena_')
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
 		$db->setQuery($query);
 

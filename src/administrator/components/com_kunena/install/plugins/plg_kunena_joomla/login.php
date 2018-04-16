@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaLoginJoomla
  * @since Kunena
@@ -56,7 +58,7 @@ class KunenaLoginJoomla
 		}
 
 		$options = array('remember' => $rememberme);
-		$error   = \Joomla\CMS\Factory::getApplication()->login($credentials, $options);
+		$error   = Factory::getApplication()->login($credentials, $options);
 
 		return is_bool($error) ? '' : $error;
 	}
@@ -68,7 +70,7 @@ class KunenaLoginJoomla
 	 */
 	public function logoutUser()
 	{
-		$error = \Joomla\CMS\Factory::getApplication()->logout();
+		$error = Factory::getApplication()->logout();
 
 		return is_bool($error) ? '' : $error;
 	}

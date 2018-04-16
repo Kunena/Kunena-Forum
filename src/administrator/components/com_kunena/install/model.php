@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\Archive\Archive;
+
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.path');
@@ -20,7 +23,6 @@ define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
 define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE . '/components/' . basename(KUNENA_INSTALLER_ADMINPATH));
 define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE . '/media/kunena');
 
-use Joomla\Archive\Archive;
 
 /**
  * Install Model for Kunena
@@ -92,14 +94,14 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function __construct()
 	{
 		// Load installer language file only from the component
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		$lang->load('com_kunena.install', KUNENA_INSTALLER_ADMINPATH, 'en-GB');
 		$lang->load('com_kunena.install', KUNENA_INSTALLER_ADMINPATH);
 		$lang->load('com_kunena.libraries', KUNENA_INSTALLER_ADMINPATH, 'en-GB');
 		$lang->load('com_kunena.libraries', KUNENA_INSTALLER_ADMINPATH);
 
 		parent::__construct();
-		$this->db = \Joomla\CMS\Factory::getDBO();
+		$this->db = Factory::getDBO();
 
 		if (function_exists('ignore_user_abort'))
 		{
@@ -243,7 +245,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// If the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false)
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$this->setState('action', $step = $app->getUserState('com_kunena.install.action', null));
 			$this->setState('step', $step = $app->getUserState('com_kunena.install.step', 0));
 			$this->setState('task', $task = $app->getUserState('com_kunena.install.task', 0));
@@ -331,7 +333,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function setAction($action)
 	{
 		$this->setState('action', $action);
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.action', $action);
 	}
 
@@ -344,7 +346,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function setStep($step)
 	{
 		$this->setState('step', (int) $step);
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.step', (int) $step);
 		$this->setTask(0);
 	}
@@ -358,7 +360,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function setTask($task)
 	{
 		$this->setState('task', (int) $task);
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.task', (int) $task);
 	}
 
@@ -371,7 +373,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function setVersion($version)
 	{
 		$this->setState('version', $version);
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.version', $version);
 	}
 
@@ -400,7 +402,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		$this->setState('status', $status);
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.status', $status);
 	}
 
@@ -1211,7 +1213,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		KunenaForum::setup();
 
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
 
 		$this->createMenu();
@@ -1222,7 +1224,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
 		/** @var \Joomla\CMS\Cache\Cache | \Joomla\CMS\Cache\CacheController $cache */
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 
 		// Delete installer file (only if not using GIT build).
@@ -1269,7 +1271,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			// Migrate all tables from old installation
 
-			$app   = \Joomla\CMS\Factory::getApplication();
+			$app   = Factory::getApplication();
 			$state = $app->getUserState('com_kunena.install.dbstate', null);
 
 			// First run: find tables that potentially need migration
@@ -1331,7 +1333,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$tables = $this->listTables('kunena_', true);
 		}
 
-		$app   = \Joomla\CMS\Factory::getApplication();
+		$app   = Factory::getApplication();
 		$state = $app->getUserState('com_kunena.install.dbstate', null);
 
 		// First run: get all tables
@@ -1448,7 +1450,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$this->addStatus(JText::_('COM_KUNENA_INSTALL_DB_UPGRADE_FAILED_XML'), false, '', 'upgrade');
 		}
 
-		$app   = \Joomla\CMS\Factory::getApplication();
+		$app   = Factory::getApplication();
 		$state = $app->getUserState('com_kunena.install.dbstate', null);
 
 		// First run: initialize state and migrate configuration
@@ -1620,7 +1622,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		}
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.avatars', $stats);
 	}
 
@@ -1633,7 +1635,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function getAvatarStatus()
 	{
-		$app            = \Joomla\CMS\Factory::getApplication();
+		$app            = Factory::getApplication();
 		$stats          = new stdClass;
 		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		$stats          = $app->getUserState('com_kunena.install.avatars', $stats);
@@ -1878,7 +1880,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		}
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 		$app->setUserState('com_kunena.install.attachments', $stats);
 	}
 
@@ -1892,7 +1894,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function getAttachmentStatus()
 	{
-		$app            = \Joomla\CMS\Factory::getApplication();
+		$app            = Factory::getApplication();
 		$stats          = new stdClass;
 		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		$stats          = $app->getUserState('com_kunena.install.attachments', $stats);
@@ -2116,7 +2118,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function recountCategories()
 	{
-		$app   = \Joomla\CMS\Factory::getApplication();
+		$app   = Factory::getApplication();
 		$state = $app->getUserState('com_kunena.install.recount', null);
 
 		// Only perform this stage if database needs recounting (upgrade from older version)
@@ -2970,7 +2972,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		);
 
 		// Disable language debugging while creating menu items.
-		$lang  = \Joomla\CMS\Factory::getLanguage();
+		$lang  = Factory::getLanguage();
 		//$debug = $lang->setDebug(false);
 
 		$this->createMenuJ25($menu, $submenu);
@@ -3135,7 +3137,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$data = array(
 				'menutype'     => $defaultmenu->menutype,
 				'title'        => JText::_('COM_KUNENA_MENU_ITEM_FORUM'),
-				'alias'        => 'kunena-' . \Joomla\CMS\Factory::getDate()->format('Y-m-d'),
+				'alias'        => 'kunena-' . Factory::getDate()->format('Y-m-d'),
 				'link'         => 'index.php?Itemid=' . $parent->id,
 				'type'         => 'alias',
 				'published'    => 0,
@@ -3152,7 +3154,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		else
 		{
 			$data = array(
-				'alias'  => 'kunena-' . \Joomla\CMS\Factory::getDate()->format('Y-m-d'),
+				'alias'  => 'kunena-' . Factory::getDate()->format('Y-m-d'),
 				'link'   => 'index.php?Itemid=' . $parent->id,
 				'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
 			);
@@ -3181,12 +3183,12 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if (!$success)
 			{
-				\Joomla\CMS\Factory::getApplication()->enqueueMessage($table->getError(), 'error');
+				Factory::getApplication()->enqueueMessage($table->getError(), 'error');
 			}
 		}
 
 		/** @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache */
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
 	}
 

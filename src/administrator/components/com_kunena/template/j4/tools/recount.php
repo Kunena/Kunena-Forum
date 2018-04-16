@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // @var KunenaAdminViewTools $this
 
 JText::script('COM_KUNENA_MODAL_CLOSE');
@@ -39,7 +41,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 					  method="post" id="adminForm"
 					  name="adminForm">
 					<input type="hidden" name="task" value="recount"/>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
 						<legend><?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?></legend>

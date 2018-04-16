@@ -11,6 +11,8 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaProfileEasySocial
  * @since Kunena
@@ -46,7 +48,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->guest)
 		{

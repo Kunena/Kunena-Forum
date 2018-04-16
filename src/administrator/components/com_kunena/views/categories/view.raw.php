@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Category View
  *
@@ -25,7 +27,7 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);
 		$result = $db->loadObject();
@@ -49,7 +51,7 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = 'DELETE FROM #__kunena_aliases WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);
 

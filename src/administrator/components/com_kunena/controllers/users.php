@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Users Controller
  *
@@ -125,7 +127,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 			if ($birthdate)
 			{
-				$date = \Joomla\CMS\Factory::getDate($birthdate);
+				$date = Factory::getDate($birthdate);
 
 				$birthdate = $date->format('Y-m-d');
 			}
@@ -224,7 +226,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 			if ($birthdate)
 			{
-				$date = \Joomla\CMS\Factory::getDate($birthdate);
+				$date = Factory::getDate($birthdate);
 
 				$birthdate = $date->format('Y-m-d');
 			}
@@ -500,7 +502,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$users = KunenaUserHelper::loadUsers($cid);
 
-		$my        = \Joomla\CMS\Factory::getUser();
+		$my        = Factory::getUser();
 		$usernames = array();
 
 		foreach ($users as $user)
@@ -891,7 +893,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db  = \Joomla\CMS\Factory::getDbo();
+		$db  = Factory::getDbo();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))
@@ -937,7 +939,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db  = \Joomla\CMS\Factory::getDBO();
+		$db  = Factory::getDBO();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))

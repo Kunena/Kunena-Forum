@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.cache.handler.output');
 jimport('joomla.document.html.html');
 
@@ -102,7 +105,7 @@ class KunenaViewCommon extends KunenaView
 				return;
 			}
 
-			$cache    = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache    = Factory::getCache('com_kunena', 'output');
 			$annCache = $cache->get('announcement', 'global');
 
 			if (!$annCache)
@@ -152,7 +155,7 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache   = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
@@ -160,9 +163,9 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$options            = array();
-		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
-		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
 
@@ -293,7 +296,7 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$moderator = intval($this->me->isModerator()) + intval($this->me->isAdmin());
-		$cache     = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache     = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template"))
 		{
@@ -377,7 +380,7 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template'))
 		{
@@ -435,7 +438,7 @@ class KunenaViewCommon extends KunenaView
 
 			if (isset($rss_params))
 			{
-				$document = \Joomla\CMS\Factory::getDocument();
+				$document = Factory::getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
 				$this->rss = $this->getRSSLink($this->getIcon('krss', JText::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
@@ -514,8 +517,8 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$my         = \Joomla\CMS\Factory::getUser();
-		$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$my         = Factory::getUser();
+		$cache      = Factory::getCache('com_kunena', 'output');
 		$cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
 
@@ -588,7 +591,7 @@ class KunenaViewCommon extends KunenaView
 			case 'RETURN_URL':
 				return base64_encode(\Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query', 'fragment')));
 			case 'TOKEN':
-				return JHtml::_('form.token');
+				return HTMLHelper::_('form.token');
 			case 'MODULE':
 				return $this->getModulePosition('kunena_profilebox');
 		}

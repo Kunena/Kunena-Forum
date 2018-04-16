@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Announcements Controller
  *
@@ -50,7 +52,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today   = \Joomla\CMS\Factory::getDate();
+			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
 			{
@@ -115,7 +117,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-			$date_today   = \Joomla\CMS\Factory::getDate();
+			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
 			{

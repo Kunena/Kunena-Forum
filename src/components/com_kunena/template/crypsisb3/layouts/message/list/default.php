@@ -11,9 +11,12 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
-$view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
+$view    = Factory::getApplication()->input->getWord('view');
 ?>
 
 <div class="row">
@@ -39,7 +42,7 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
-						<?php echo JHtml::_( 'form.token' ); ?>
+						<?php echo HTMLHelper::_( 'form.token' ); ?>
 					</form>
 				</div>
 			</h2>
@@ -61,7 +64,7 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
       name="ktopicsform" id="ktopicsform">
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
@@ -124,18 +127,18 @@ $view    = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
 							<div class="input-group-btn">
 								<?php if (!empty($this->moreUri))
 								{
-									echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
+									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
 								} ?>
 								<?php
 								if (!empty($this->actions))
 									:
 									?>
-									<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+									<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 									<?php
 									if (isset($this->actions['move']))
 										:
-										$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-										echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+										$options = array(HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+										echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 									endif; ?>
 									<input type="submit" name="kcheckgo" class="btn btn-default"
 									       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>

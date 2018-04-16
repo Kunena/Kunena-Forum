@@ -10,13 +10,16 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 // FIXME: change into JForm.
 
 // TODO: Add generic form version
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('dropdown.init');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
@@ -36,7 +39,7 @@ $this->addScript('assets/js/search.js');
 		<input type="hidden" id="kurl_users" name="kurl_users"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
@@ -62,7 +65,7 @@ $this->addScript('assets/js/search.js');
 					<?php $this->displayModeList('mode'); ?>
 				</fieldset>
 
-				<?php if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile)
+				<?php if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
 					:
 					?>
 					<fieldset class="span6">

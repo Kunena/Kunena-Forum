@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 
 <h2>
@@ -27,7 +29,7 @@ defined('_JEXEC') or die;
 		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>"/>
 	<?php endif; ?>
 
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="well well-small">
 		<div class="control-group">

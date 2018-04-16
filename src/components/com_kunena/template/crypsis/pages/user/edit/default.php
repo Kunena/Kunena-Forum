@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 $content = $this->execute('User/Edit');
 
 $avatartab = $this->input->getInt('avatartab');
 
-$document = \Joomla\CMS\Factory::getDocument();
+$document = Factory::getDocument();
 
 $document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
 

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationAttachmentDefaultDisplay
  *
@@ -206,6 +208,6 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 	}
 }

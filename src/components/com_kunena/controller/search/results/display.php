@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerSearchResultsDisplay
  *
@@ -68,7 +70,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
 
 		foreach ($doc->_links as $key => $value)
@@ -106,7 +108,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 $message  = $this->message;
 $template = KunenaTemplate::getInstance();
 
@@ -29,7 +32,7 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/edit.js');
 
@@ -87,7 +90,7 @@ $editor   = $template->params->get('editor');
 			<input type="hidden" id="kurl_users" name="kurl_users"
 			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<div class="modal-header">
 			<h3>

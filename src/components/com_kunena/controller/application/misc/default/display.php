@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
@@ -38,11 +40,11 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 */
 	protected function display()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc             = \Joomla\CMS\Factory::getDocument();
-		$config          = \Joomla\CMS\Factory::getApplication('site');
+		$doc             = Factory::getDocument();
+		$config          = Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
@@ -180,7 +182,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 
 				// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheControllerCallback $cache
 
-				$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'callback');
+				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
 				return $cache->call(array('KunenaHtmlParser', 'parseBBCode'), $body);

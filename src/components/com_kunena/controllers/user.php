@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena User Controller
  *
@@ -69,7 +71,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (!KunenaFactory::getConfig()->userlist_allowed && \Joomla\CMS\Factory::getUser()->guest)
+			if (!KunenaFactory::getConfig()->userlist_allowed && Factory::getUser()->guest)
 			{
 				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
@@ -177,11 +179,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$userid)
 		{
-			$this->user = \Joomla\CMS\Factory::getUser();
+			$this->user = Factory::getUser();
 		}
 		else
 		{
-			$this->user = \Joomla\CMS\Factory::getUser($userid);
+			$this->user = Factory::getUser($userid);
 		}
 
 		$success = $this->saveUser();
@@ -487,7 +489,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function login()
 	{
-		if (!\Joomla\CMS\Factory::getUser()->guest || !\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Factory::getUser()->guest || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -537,7 +539,7 @@ class KunenaControllerUser extends KunenaController
 
 		$login = KunenaLogin::getInstance();
 
-		if (!\Joomla\CMS\Factory::getUser()->guest)
+		if (!Factory::getUser()->guest)
 		{
 			$login->logoutUser();
 		}
@@ -668,7 +670,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$now = \Joomla\CMS\Factory::getDate()->toUnix();
+		$now = Factory::getDate()->toUnix();
 
 		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
 		{
@@ -805,7 +807,7 @@ class KunenaControllerUser extends KunenaController
 			$valueLength = strlen($value);
 
 			// Load language file of com_users component
-			\Joomla\CMS\Factory::getLanguage()->load('com_users');
+			Factory::getLanguage()->load('com_users');
 
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
@@ -957,7 +959,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($birthdate)
 		{
-			$date = \Joomla\CMS\Factory::getDate($birthdate);
+			$date = Factory::getDate($birthdate);
 
 			$birthdate = $date->format('Y-m-d');
 		}
@@ -1306,9 +1308,9 @@ class KunenaControllerUser extends KunenaController
 			return false;
 		}
 
-		$spammer = \Joomla\CMS\Factory::getUser($userid);
+		$spammer = Factory::getUser($userid);
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
 		$ip = $db->loadResult();
 

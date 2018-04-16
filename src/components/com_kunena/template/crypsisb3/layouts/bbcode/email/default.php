@@ -10,11 +10,13 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 // [email]john.doe@domain.com[/email]
 // [email=john.doe@domain.com]John Doe[/email]
 
 // Display email address (cloak it).
-echo JHtml::_(
+echo HTMLHelper::_(
 	'email.cloak',
 	$this->escape($this->email), $this->mailto,
 	$this->escape($this->text), $this->textCloak

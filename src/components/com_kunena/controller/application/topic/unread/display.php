@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationTopicUnreadDisplay
  *
@@ -67,7 +69,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 */
 	protected function prepareDocument()
 	{
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
 	}
 }

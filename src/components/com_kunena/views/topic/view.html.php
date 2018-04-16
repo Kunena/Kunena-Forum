@@ -12,6 +12,9 @@
 defined('_JEXEC') or die();
 
 use Joomla\String\StringHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 
 /**
  * Topic View
@@ -311,7 +314,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->pickup_category)
 		{
-			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
+			$options[] = HTMLHelper::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
 		}
 
@@ -320,7 +323,7 @@ class KunenaViewTopic extends KunenaView
 			$selected = $saved['catid'];
 		}
 
-		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 
@@ -537,8 +540,8 @@ class KunenaViewTopic extends KunenaView
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$this->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$this->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$this->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$this->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 
@@ -552,7 +555,7 @@ class KunenaViewTopic extends KunenaView
 			}
 
 			// TODO: add context (options) to caching
-			$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache      = Factory::getCache('com_kunena', 'output');
 			$cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
 			$cachegroup = 'com_kunena.messages';
 
@@ -867,7 +870,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// TODO: add context (options, template) to caching
-		$cache      = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache      = Factory::getCache('com_kunena', 'output');
 		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
@@ -879,7 +882,7 @@ class KunenaViewTopic extends KunenaView
 			}
 			else
 			{
-				$this->reportMessageLink = JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
+				$this->reportMessageLink = HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
 			}
 		}
 
@@ -1218,7 +1221,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function _prepareDocument($type)
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive(); // Get the active item
 
 		if ($menu_item)
@@ -1469,7 +1472,7 @@ class KunenaViewTopic extends KunenaView
 		if (!$this->state->get('embedded'))
 		{
 			// TODO: allow translations/overrides
-			$lang   = \Joomla\CMS\Factory::getLanguage();
+			$lang   = Factory::getLanguage();
 			$length = StringHelper::strlen($lang->getName());
 			$length = 137 - $length;
 

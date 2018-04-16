@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/profile.js');
@@ -43,7 +46,7 @@ $this->addScript('assets/js/profile.js');
 			<div id="birthdate">
 				<div class="input-append date">
 					<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? \Joomla\CMS\Factory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>" class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC')?>">
+					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>" class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC')?>">
 					<span class="add-on"><i class="icon-grid-view-2 "></i></span>
 				</div>
 			</div>
@@ -69,12 +72,12 @@ $this->addScript('assets/js/profile.js');
 		<td>
 			<?php
 			// Make the select list for the view type
-			$gender[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-			$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-			$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+			$gender[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+			$gender[] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+			$gender[] = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 			// Build the html select list
-			echo JHtml::_(
+			echo HTMLHelper::_(
 				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="'. JText::_('COM_KUNENA_MYPROFILE_GENDER') .'" size="1"', 'value', 'text',
 				$this->escape($this->profile->gender), 'gender'
 			);

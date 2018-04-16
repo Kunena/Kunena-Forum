@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
+
 /**
  * Class ComponentKunenaControllerTopicListRecentDisplay
  *
@@ -80,7 +83,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		}
 		else
 		{
-			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		if ($holding)
@@ -152,7 +155,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		$page = $this->pagination->pagesCurrent;
 
@@ -207,7 +210,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 
-		$params      = \Joomla\CMS\Factory::getApplication()->getMenu()->getActive()->params;
+		$params      = Factory::getApplication()->getMenu()->getActive()->params;
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
@@ -300,7 +303,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				break;
 		}
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -334,10 +337,10 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$config    = \Joomla\CMS\Factory::getConfig();
+		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
-		$doc       = \Joomla\CMS\Factory::getDocument();
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$doc       = Factory::getDocument();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');

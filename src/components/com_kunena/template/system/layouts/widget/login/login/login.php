@@ -9,13 +9,15 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
 <div class="kloginform center">
 	<h1><?php echo JText::_('COM_KUNENA_LOGIN_FORUM'); ?></h1>
 	<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 		<input type="hidden" name="view" value="user"/>
 		<input type="hidden" name="task" value="login"/>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<div id="kform-login-username" class="control-group center">
 			<div class="controls">

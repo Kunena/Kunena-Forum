@@ -10,9 +10,12 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 $cols            = !empty($this->actions) ? 6 : 5;
 $colspan         = !empty($this->actions) ? 4 : 3;
-$view            = \Joomla\CMS\Factory::getApplication()->input->getWord('view');
+$view            = Factory::getApplication()->input->getWord('view');
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 
@@ -48,7 +51,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
 						</div>
-						<?php echo JHtml::_( 'form.token' ); ?>
+						<?php echo HTMLHelper::_( 'form.token' ); ?>
 					</form>
 				</h2>
 			</div>
@@ -74,7 +77,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
       id="ktopicsform">
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<tr>
@@ -119,13 +122,13 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 					<div class="input-append">
 						<?php if (!empty($this->topics) && !empty($this->moreUri))
 						{
-							echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
+							echo HTMLHelper::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
 						} ?>
 						<?php if (!empty($this->actions)) : ?>
-							<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if (isset($this->actions['move'])) :
-								$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+								$options = array(HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+								echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
 							<input type="submit" name="kcheckgo" class="btn"
 							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>

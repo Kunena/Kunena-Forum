@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
  *
@@ -90,7 +93,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache   = Factory::getCache('com_kunena', 'output');
 
 		/*
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -99,9 +102,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		 }*/
 
 		$options            = array();
-		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
-		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Load topic and message.
 		if ($mesid)
@@ -161,7 +164,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			->find();
 
 		$this->prepareMessages($mesid);
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		if ($this->topic->unread)
 		{
@@ -409,7 +412,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$image = '';
-		$doc   = \Joomla\CMS\Factory::getDocument();
+		$doc   = Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 		$doc->setMetaData('og:type', 'article', 'property');
 		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
@@ -493,7 +496,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('twitter:image', $image, 'property');
 		$doc->setMetaData('twitter:description', $first);
 
-		$config = \Joomla\CMS\Factory::getConfig();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
@@ -550,7 +553,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

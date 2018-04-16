@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.core');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.core');
 
 // @var array|KunenaAttachment[] $attachments
 
@@ -24,7 +26,7 @@ $attachments = $this->attachments;
       name="adminForm">
 	<input type="hidden" name="task" value="delfile"/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped table-hover">
 		<thead>
@@ -76,7 +78,7 @@ $attachments = $this->attachments;
 					<td class="center">
 						<?php if ($canDelete)
 						{
-							echo JHtml::_('grid.id', $i, intval($attachment->id));
+							echo HTMLHelper::_('grid.id', $i, intval($attachment->id));
 						} ?>
 					</td>
 					<td class="center">

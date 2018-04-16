@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Topics Controller
  *
@@ -91,7 +93,7 @@ class KunenaControllerTopics extends KunenaController
 					unset($instance);
 				}
 
-				$db    = \Joomla\CMS\Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
 

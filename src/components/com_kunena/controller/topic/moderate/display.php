@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerTopicModerateDisplay
  *
@@ -114,7 +117,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			if ($user->exists())
 			{
 				$username       = $user->getName();
-				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link',
+				$this->userLink = $this->message->userid ? HTMLHelper::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
 					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')'
 				)
@@ -129,7 +132,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->me = KunenaFactory::getUser();
 
 			// Get thread and reply count from current message:
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
 				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time
@@ -148,7 +151,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$this->banInfo = KunenaUserBan::getInstanceByUserid(\Joomla\CMS\Factory::getUser()->id, true);
+		$this->banInfo = KunenaUserBan::getInstanceByUserid(Factory::getUser()->id, true);
 	}
 
 	/**
@@ -160,7 +163,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

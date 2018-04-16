@@ -10,10 +10,13 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 JText::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
-JHtml::_('jquery.ui');
+HTMLHelper::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
@@ -23,8 +26,8 @@ $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/upload.avatar.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+Factory::getDocument()->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+Factory::getDocument()->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 
 ?>
 <h3>
@@ -78,7 +81,7 @@ $this->addStyleSheet('assets/css/fileupload.css');
 					:
 					?>
 					<div>
-						<?php echo JHtml::_(
+						<?php echo HTMLHelper::_(
 							'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
 							$this->gallery, 'avatar_gallery_select'
 						); ?>

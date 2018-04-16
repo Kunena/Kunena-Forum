@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
@@ -22,7 +24,7 @@ defined('_JEXEC') or die;
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user"/>
 				<input type="hidden" name="task" value="login"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<div id="kform-login-username" class="control-group center">
 					<div class="controls">

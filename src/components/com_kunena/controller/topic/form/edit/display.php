@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerTopicFormEditDisplay
  *
@@ -60,7 +62,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		foreach ($doc->_links as $key => $value)
@@ -147,10 +149,10 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

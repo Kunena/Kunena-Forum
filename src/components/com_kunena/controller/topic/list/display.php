@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  *
@@ -94,7 +97,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache   = Factory::getCache('com_kunena', 'output');
 
 		/*
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -103,9 +106,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}*/
 
 		$options            = array();
-		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
-		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
 		$params = new \Joomla\Registry\Registry;
@@ -130,11 +133,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = \Joomla\CMS\Factory::getDocument();
-		$config = \Joomla\CMS\Factory::getConfig();
+		$doc    = Factory::getDocument();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
@@ -221,14 +224,14 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$options                = array();
-		$options['none']        = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options['unsubscribe'] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
-		$options['unfavorite']  = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		$options['move']        = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		$options['approve']     = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete']      = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['permdelete']  = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete']    = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['none']        = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['unsubscribe'] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options['unfavorite']  = HTMLHelper::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		$options['move']        = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['approve']     = HTMLHelper::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']      = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['permdelete']  = HTMLHelper::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete']    = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));
@@ -285,12 +288,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$options               = array();
-		$options['none']       = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options['approve']    = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete']     = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['move']       = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		$options['permdelete'] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete']   = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['none']       = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['approve']    = HTMLHelper::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']     = HTMLHelper::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['move']       = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['permdelete'] = HTMLHelper::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete']   = HTMLHelper::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));

@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Crypsis template.
  *
@@ -75,7 +78,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 */
 	public function loadLanguage()
 	{
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		KunenaFactory::loadLanguage('kunena_tmpl_crypsis');
 
 		foreach (array_reverse($this->default) as $template)
@@ -94,17 +97,17 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		JHtml::_('bootstrap.framework');
-		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
-		JHtml::_('jquery.framework');
+		HTMLHelper::_('bootstrap.framework');
+		HTMLHelper::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
+		HTMLHelper::_('jquery.framework');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-			JHtml::_('bootstrap.renderModal');
+			HTMLHelper::_('bootstrap.renderModal');
 		}
 		else
 		{
-			JHtml::_('bootstrap.modal');
+			HTMLHelper::_('bootstrap.modal');
 		}
 
 		$this->addScript('assets/js/main.js');
@@ -137,7 +140,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc         = \Joomla\CMS\Factory::getDocument();
+		$doc         = Factory::getDocument();
 
 		if ($fontawesome)
 		{
@@ -183,7 +186,7 @@ EOF;
 EOF;
 		}
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
@@ -201,7 +204,7 @@ EOF;
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
 		/** @noinspection PhpDeprecationInspection */
-		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

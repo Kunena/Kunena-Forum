@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationAjaxDefaultDisplay
  *
@@ -105,7 +107,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 	}
@@ -159,6 +161,6 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		echo json_encode($response);
 
 		// It's much faster and safer to exit now than let Joomla to send the response.
-		\Joomla\CMS\Factory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 }

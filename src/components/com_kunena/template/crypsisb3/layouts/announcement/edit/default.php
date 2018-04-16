@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 ?>
@@ -23,7 +25,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 	      name="editform" class="form-inline" id="editform">
 		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<div class="control-group">
 			<label class="control-label" for="ann-title">

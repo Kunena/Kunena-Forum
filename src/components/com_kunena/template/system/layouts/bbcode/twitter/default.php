@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 // [tweet]112233445566[/tweet]
 
 // Display individual tweet.
@@ -55,11 +57,11 @@ defined('_JEXEC') or die;
 				</p>
 				<div class="dateline collapsible-container">
 					<a class="u-url customisable-highlight long-permalink" data-scribe="element:full_timestamp"
-					   data-datetime="<?php echo \Joomla\CMS\Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
+					   data-datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
 					   href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
 						<time class="dt-updated"
 						      title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
-						      datetime="<?php echo \Joomla\CMS\Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
+						      datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
 						      pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
 					</a>
 				</div>

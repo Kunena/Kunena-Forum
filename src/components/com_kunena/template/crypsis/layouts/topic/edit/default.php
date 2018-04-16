@@ -11,8 +11,11 @@
  **/
 defined('_JEXEC') or die();
 
-JHtml::_('behavior.formvalidator');
-JHtml::_('behavior.keepalive');
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.formvalidator');
+HTMLHelper::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
 JText::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
@@ -34,10 +37,10 @@ JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
+Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
+Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
-JHtml::_('jquery.ui');
+HTMLHelper::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
@@ -51,10 +54,10 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 
 // If polls are enabled, load also poll JavaScript.
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -77,9 +80,9 @@ if ($this->config->pollenabled)
 
 $this->addScript('assets/js/pollcheck.js');
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 
-\Joomla\CMS\Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
 $this->addScript('assets/js/edit.js');
 
@@ -164,7 +167,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<input type="hidden" id="kurl_users" name="kurl_users"
 			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<h1>
 			<?php echo $this->escape($this->headerText) ?>

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerUserItemDisplay
  *
@@ -82,7 +84,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->state = $this->model->getState();
 
 		$this->me      = KunenaUserHelper::getMyself();
-		$this->user    = \Joomla\CMS\Factory::getUser($userid);
+		$this->user    = Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 
@@ -140,7 +142,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('profile:username', $this->profile->getName(), 'property');
 
 		if ($this->profile->getGender() == 1)
@@ -156,11 +158,11 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
 		}
 
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = \Joomla\CMS\Factory::getDocument();
-		$config = \Joomla\CMS\Factory::getConfig();
+		$doc    = Factory::getDocument();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 		$image  = '';
 

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Category View
  * @since Kunena
@@ -114,7 +116,7 @@ class KunenaViewCategory extends KunenaView
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name')
 		{
-			$item->authorEmail = \Joomla\CMS\Factory::getUser($userid)->email;
+			$item->authorEmail = Factory::getUser($userid)->email;
 		}
 
 		$item->category = $category;

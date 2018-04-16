@@ -10,14 +10,16 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // Display offline message if Kunena hasn't been fully installed.
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 {
-	$lang = \Joomla\CMS\Factory::getLanguage();
+	$lang = Factory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-	\Joomla\CMS\Factory::getApplication()->setHeader('status', 503, true);
-	\Joomla\CMS\Factory::getApplication()->sendHeaders();
+	Factory::getApplication()->setHeader('status', 503, true);
+	Factory::getApplication()->sendHeaders();
 	?>
 	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
 	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
@@ -33,7 +35,7 @@ KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 // Prevent direct access to the component if the option has been disabled.
 if (!KunenaConfig::getInstance()->get('access_component', 1))
 {
-	$active = \Joomla\CMS\Factory::getApplication()->getMenu()->getActive();
+	$active = Factory::getApplication()->getMenu()->getActive();
 
 	if (!$active)
 	{
@@ -74,12 +76,12 @@ if ($ksession->userid > 0)
 	// Save session
 	if (!$ksession->save())
 	{
-		\Joomla\CMS\Factory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
+		Factory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
 	}
 }
 
 // Support legacy urls (they need to be redirected).
-$app   = \Joomla\CMS\Factory::getApplication();
+$app   = Factory::getApplication();
 $input = $app->input;
 $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
 $view    = $input->getWord('func', $input->getWord('view', 'home'));
@@ -118,7 +120,7 @@ else
 	if ($uri)
 	{
 		// FIXME: using wrong Itemid
-		\Joomla\CMS\Factory::getApplication()->redirect(KunenaRoute::_($uri, false));
+		Factory::getApplication()->redirect(KunenaRoute::_($uri, false));
 	}
 	else
 	{

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
  *
@@ -74,7 +76,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 		else
 		{
-			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		$userid = $this->state->get('user');
@@ -131,7 +133,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		if (!$start)
 		{
@@ -266,10 +268,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$user  = KunenaUserHelper::get($this->state->get('user'));
 
 		$headerText      = $this->headerText . ' ' . JText::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
-		$doc             = \Joomla\CMS\Factory::getDocument();
-		$app             = \Joomla\CMS\Factory::getApplication();
+		$doc             = Factory::getDocument();
+		$app             = Factory::getApplication();
 		$menu_item       = $app->getMenu()->getActive();
-		$config          = \Joomla\CMS\Factory::getApplication('site');
+		$config          = Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
@@ -330,7 +332,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
 		{
-			$doc = \Joomla\CMS\Factory::getDocument();
+			$doc = Factory::getDocument();
 			$doc->setMetaData('robots', 'follow, noindex');
 		}
 		else

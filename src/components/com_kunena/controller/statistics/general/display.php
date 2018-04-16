@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerStatisticsGeneralDisplay
  *
@@ -53,7 +55,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		if (!$this->config->statslink_allowed && \Joomla\CMS\Factory::getUser()->guest)
+		if (!$this->config->statslink_allowed && Factory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -75,7 +77,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

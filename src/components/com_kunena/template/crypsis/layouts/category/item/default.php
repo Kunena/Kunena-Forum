@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $categoryActions = $this->getCategoryActions();
 $cols            = empty($this->checkbox) ? 7 : 6;
 $this->addStyleSheet('assets/css/rating.css');
@@ -46,7 +48,7 @@ $this->addStyleSheet('assets/css/rating.css');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="ktopicsform">
 	<input type="hidden" name="view" value="topics"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper:::_('form.token'); ?>
 	<div>
 		<ul class="inline">
 			<?php if ($categoryActions) : ?>
@@ -115,20 +117,20 @@ $this->addStyleSheet('assets/css/rating.css');
 
 						<?php if (!empty($this->moreUri))
 						{
-							echo JHtml::_(
+							echo HTMLHelper:::_(
 								'kunenaforum.link', $this->moreUri,
 								JText::_('COM_KUNENA_MORE'), null, null, 'follow');
 						} ?>
 
 						<?php if (!empty($this->topicActions)) : ?>
-							<?php echo JHtml::_(
+							<?php echo HTMLHelper:::_(
 								'select.genericlist', $this->topicActions, 'task',
 								'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 							<?php if ($this->actionMove) : ?>
 								<?php
-								$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-								echo JHtml::_(
+								$options = array(HTMLHelper:::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+								echo HTMLHelper:::_(
 									'kunenaforum.categorylist', 'target', 0, $options, array(),
 									' disabled="disabled"', 'value', 'text', 0,
 									'kchecktarget'

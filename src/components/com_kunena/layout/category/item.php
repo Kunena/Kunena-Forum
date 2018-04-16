@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * KunenaLayoutCategoryItem
  *
@@ -233,7 +235,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	/**

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Announcement Model for Kunena
  *
@@ -123,11 +125,11 @@ class KunenaModelAnnouncement extends KunenaModel
 
 		if ($user->isModerator())
 		{
-			$actions[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-			$actions[] = JHtml::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
-			$actions[] = JHtml::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
-			$actions[] = JHtml::_('select.option', 'edit', JText::_('COM_KUNENA_EDIT'));
-			$actions[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
+			$actions[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+			$actions[] = HTMLHelper::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
+			$actions[] = HTMLHelper::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
+			$actions[] = HTMLHelper::_('select.option', 'edit', JText::_('COM_KUNENA_EDIT'));
+			$actions[] = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
 		}
 
 		return $actions;

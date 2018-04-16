@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerUserEditProfileDisplay
  *
@@ -44,9 +47,9 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 			$this->birthdate["day"]   = $bd[2];
 		}
 
-		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-		$this->genders[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+		$this->genders[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+		$this->genders[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+		$this->genders[] = HTMLHelper::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$config = KunenaConfig::getInstance();
 
@@ -72,7 +75,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

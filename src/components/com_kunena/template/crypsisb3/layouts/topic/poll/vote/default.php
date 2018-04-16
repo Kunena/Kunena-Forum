@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $this->addScript('assets/js/poll.js');
 ?>
 	<div class="pull-right btn btn-default btn-small" data-toggle="collapse" data-target="#poll-vote">&times;</div>
@@ -22,7 +24,7 @@ $this->addScript('assets/js/poll.js');
 			<input type="hidden" name="task" value="vote"/>
 			<input type="hidden" name="catid" value="<?php echo $this->topic->category_id; ?>"/>
 			<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<div class="well">
 				<ul class="unstyled">

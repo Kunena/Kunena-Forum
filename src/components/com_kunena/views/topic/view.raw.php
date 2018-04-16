@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
+
 /**
  * Topic View
  * @since Kunena
@@ -25,7 +28,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayEdit($tpl = null)
 	{
-		$body     = \Joomla\CMS\Factory::getApplication()->input->post->get('body', '', 'raw');
+		$body     = Factory::getApplication()->input->post->get('body', '', 'raw');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->pubwrite)
@@ -36,10 +39,10 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader('Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
-		\Joomla\CMS\Factory::getApplication()->sendHeaders();
+		Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -63,7 +66,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$search = $this->app->input->get('search');
 
-			$db     = \Joomla\CMS\Factory::getDBO();
+			$db     = Factory::getDBO();
 			$kquery = new KunenaDatabaseQuery;
 			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
@@ -89,10 +92,10 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		\Joomla\CMS\Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader('Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
-		\Joomla\CMS\Factory::getApplication()->sendHeaders();
+		Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -112,7 +115,7 @@ class KunenaViewTopic extends KunenaView
 
 		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
-		$app              = \Joomla\CMS\Factory::getApplication();
+		$app              = Factory::getApplication();
 
 		if (empty($category_iconset))
 		{
@@ -184,11 +187,11 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayGetrate()
 	{
-		$user = \Joomla\CMS\Factory::getUser();
+		$user = Factory::getUser();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app      = \Joomla\CMS\Factory::getApplication();
+		$app      = Factory::getApplication();
 
 		if ($user->id == 0)
 		{
@@ -221,7 +224,7 @@ class KunenaViewTopic extends KunenaView
 		$starid   = $this->app->input->get('starid', 0, 'int');
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
-		$app      = \Joomla\CMS\Factory::getApplication();
+		$app      = Factory::getApplication();
 
 		if ($this->me->exists() || $this->config->ratingenabled)
 		{
@@ -255,7 +258,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayCategorytemplatetext($tpl = null)
 	{
-		$app      = \Joomla\CMS\Factory::getApplication();
+		$app      = Factory::getApplication();
 		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 

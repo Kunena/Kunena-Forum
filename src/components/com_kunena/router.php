@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.error.profiler');
 
 /**
@@ -54,7 +56,7 @@ function KunenaBuildRoute(&$query)
 
 		if (!isset($menuitems[$Itemid]))
 		{
-			$menuitems[$Itemid] = \Joomla\CMS\Factory::getApplication()->getMenu()->getItem($Itemid);
+			$menuitems[$Itemid] = Factory::getApplication()->getMenu()->getItem($Itemid);
 
 			if (!$menuitems[$Itemid])
 			{
@@ -292,7 +294,7 @@ function KunenaParseRoute($segments)
 	$starttime = microtime(true);
 
 	// Get current menu item and get query variables from it
-	$active = \Joomla\CMS\Factory::getApplication()->getMenu()->getActive();
+	$active = Factory::getApplication()->getMenu()->getActive();
 	$vars   = isset($active->query) ? $active->query : array('view' => 'home');
 
 	if (empty($vars['view']) || $vars['view'] == 'home' || $vars['view'] == 'entrypage')

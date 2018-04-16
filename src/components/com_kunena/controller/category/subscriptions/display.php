@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerCategorySubscriptionsDisplay
  *
@@ -126,8 +129,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	public function getActions()
 	{
 		$options   = array();
-		$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		return $options;
 	}
@@ -141,11 +144,11 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = \Joomla\CMS\Factory::getDocument();
-		$config = \Joomla\CMS\Factory::getConfig();
+		$doc    = Factory::getDocument();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')

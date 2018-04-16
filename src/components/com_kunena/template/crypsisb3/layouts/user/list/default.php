@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $config = $this->config;
 
 $cols = 1;
@@ -39,7 +41,7 @@ $this->addScript('assets/js/search.js');
       method="post" id="kuserlist-form" name="kuserlist-form">
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped">
 		<thead>
@@ -65,14 +67,14 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->username) : $cols++; ?>
 				<th class="col-md-2">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
 			<?php else : $cols++; ?>
 				<th class="col-md-3">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -81,7 +83,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_posts) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -90,7 +92,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_karma) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -99,7 +101,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_email) : $cols++; ?>
 				<th class="col-md-1 hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -108,7 +110,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_joindate) : $cols++; ?>
 				<th class="col-md-2 hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -117,7 +119,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
 				<th class="col-md-2 hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -126,7 +128,7 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_userhits) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
-					<?php echo JHtml::_(
+					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -180,7 +182,7 @@ $this->addScript('assets/js/search.js');
 
 				<?php if ($config->userlist_email) : ?>
 					<td class="col-md-1 hidden-xs">
-						<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
+						<?php echo $user->email ? HTMLHelper::_('email.cloak', $user->email) : '' ?>
 					</td>
 				<?php endif; ?>
 

@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -18,7 +20,7 @@ defined('_JEXEC') or die;
       id="kform-ban" name="kformban" method="post">
 	<input type="hidden" name="task" value="ban"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped table-hover">
 		<tbody>
@@ -45,11 +47,11 @@ defined('_JEXEC') or die;
 			<td>
 				<?php
 				// Make the select list for the view type
-				$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
-				$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+				$block[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
+				$block[] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 
 				// Build the html select list
-				echo JHtml::_(
+				echo HTMLHelper::_(
 					'select.genericlist', $block, 'block', '', 'value', 'text',
 					$this->escape($this->banInfo->blocked), 'ban-level'
 				);
@@ -62,7 +64,7 @@ defined('_JEXEC') or die;
 				<small><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></small>
 			</td>
 			<td>
-				<?php echo JHtml::_(
+				<?php echo HTMLHelper::_(
 					'calendar', $this->escape($this->banInfo->expiration), 'expiration',
 					'ban-expiration', '%Y-%m-%d %H:%M:%S'
 				); ?>

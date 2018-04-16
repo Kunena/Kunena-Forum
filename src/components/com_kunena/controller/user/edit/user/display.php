@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerUserEditUserDisplay
  *
@@ -54,7 +56,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 		// Check to see if Frontend User Params have been enabled.
 		if ($userParams->get('frontend_userparams', 0))
 		{
-			\Joomla\CMS\Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
+			Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
 			\Joomla\CMS\Form\Form::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
 			\Joomla\CMS\Form\Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
@@ -83,7 +85,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

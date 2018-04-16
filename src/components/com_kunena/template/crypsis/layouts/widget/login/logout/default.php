@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
 $status         = $config->user_status;
@@ -110,7 +112,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								</div>
 								<input type="hidden" name="view" value="user"/>
 								<input type="hidden" name="task" value="status"/>
-								<?php echo JHtml::_('form.token'); ?>
+								<?php echo HTMLHelper::_('form.token'); ?>
 							</form>
 							<div class="divider"></div>
 
@@ -118,11 +120,11 @@ $config         = KunenaFactory::getTemplate()->params;
 								<?php
 								if (version_compare(JVERSION, '4.0', '>'))
 								{
-									JHtml::_('bootstrap.renderModal', 'statusText');
+									HTMLHelper::_('bootstrap.renderModal', 'statusText');
 								}
 								else
 								{
-									JHtml::_('bootstrap.modal', 'statusText');
+									HTMLHelper::_('bootstrap.modal', 'statusText');
 								}
 								?>
 								<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
@@ -188,7 +190,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							</div>
 							<input type="hidden" name="view" value="user"/>
 							<input type="hidden" name="task" value="logout"/>
-							<?php echo JHtml::_('form.token'); ?>
+							<?php echo HTMLHelper::_('form.token'); ?>
 						</form>
 					<?php endif; ?>
 					<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
@@ -211,7 +213,7 @@ $config         = KunenaFactory::getTemplate()->params;
 		->set('form', 'statusText-form'); ?>
 	<input type="hidden" name="view" value="user"/>
 	<input type="hidden" name="task" value="statustext"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 <script type='text/javascript'>
 	jQuery(document).ready(function ($) {

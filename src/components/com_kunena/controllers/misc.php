@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Misc Controller
  *
@@ -36,8 +38,8 @@ class KunenaControllerMisc extends KunenaController
 	 */
 	public function template()
 	{
-		$name = \Joomla\CMS\Factory::getApplication()->input->getString('name',
-			\Joomla\CMS\Factory::getApplication()->input->cookie->getString('kunena_template', '')
+		$name = Factory::getApplication()->input->getString('name',
+			Factory::getApplication()->input->cookie->getString('kunena_template', '')
 		);
 
 		if ($name)

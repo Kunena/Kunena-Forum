@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $me    = KunenaUserHelper::getMyself();
 $state = $this->state;
 ?>
@@ -23,7 +25,7 @@ $state = $this->state;
 		<input type="hidden" id="kurl_users" name="kurl_users"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="search">
 		<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"

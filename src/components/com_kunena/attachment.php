@@ -23,6 +23,8 @@ if (version_compare(PHP_VERSION, '5.3.1', '<'))
  */
 define('_JEXEC', 1);
 
+use Joomla\CMS\Factory;
+
 // Set base directory. This should usually work even with symbolic linked Kunena.
 define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
 
@@ -99,8 +101,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		// Load and set the dispatcher
 		$this->loadDispatcher();
 
-		// Register the application to \Joomla\CMS\FactoryF
-		\Joomla\CMS\Factory::$application = $this;
+		// Register the application to FactoryF
+		Factory::$application = $this;
 
 		// Enable sessions by default.
 		if (is_null($this->config->get('session')))
@@ -119,8 +121,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		{
 			$this->loadSession();
 
-			// Register the session with \Joomla\CMS\Factory
-			\Joomla\CMS\Factory::$session = $this->getSession();
+			// Register the session with Factory
+			Factory::$session = $this->getSession();
 		}
 	}
 

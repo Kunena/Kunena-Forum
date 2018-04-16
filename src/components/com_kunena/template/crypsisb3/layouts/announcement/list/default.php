@@ -10,14 +10,16 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $options = $this->getOptions();
-JHtml::_('behavior.core');
+HTMLHelper::_('behavior.core');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
       id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="row">
 		<div class="col-md-7">
@@ -32,7 +34,7 @@ JHtml::_('behavior.core');
 				<div class="form-group">
 					<div class="input-group pull-right" role="group">
 						<div class="input-group-btn">
-							<?php echo JHtml::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-default"
 							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-primary"

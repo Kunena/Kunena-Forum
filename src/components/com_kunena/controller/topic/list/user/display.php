@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerTopicListUserDisplay
  *
@@ -62,7 +64,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		}
 		else
 		{
-			$time = new \Joomla\CMS\Date\Date(\Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600));
+			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		$holding = $this->getOptions()->get('topics_deletedtopics');
@@ -232,7 +234,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
 		}
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		if (!$start)
 		{
@@ -291,7 +293,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 	protected function prepareDocument()
 	{
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))

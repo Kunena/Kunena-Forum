@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * KunenaLayoutWidgetModule
  *
@@ -32,7 +34,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	 */
 	public function renderPosition()
 	{
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 
 		if ($this->position && $document->countModules($this->position))
 		{

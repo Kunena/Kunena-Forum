@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerTopicFormCreateDisplay
  *
@@ -109,7 +112,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		}
 
 		// FIXME: We need to proxy this...
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
@@ -160,7 +163,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->config->pickup_category)
 		{
-			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
+			$options[] = HTMLHelper::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
 		}
 
@@ -178,7 +181,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			'action'      => 'topic.create',
 		);
 
-		$this->selectcatlist = JHtml::_(
+		$this->selectcatlist = HTMLHelper::_(
 			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
 			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
@@ -211,10 +214,10 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

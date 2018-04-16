@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
@@ -175,7 +177,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
-		$doc  = \Joomla\CMS\Factory::getDocument();
+		$doc  = Factory::getDocument();
 		$page = $this->pagination->pagesCurrent;
 
 		if ($page > 1)
@@ -217,11 +219,11 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
 
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = \Joomla\CMS\Factory::getDocument();
-		$config = \Joomla\CMS\Factory::getConfig();
+		$doc    = Factory::getDocument();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerUserListDisplay
  *
@@ -66,7 +68,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$config = KunenaConfig::getInstance();
 
-		if (!$config->userlist_allowed && \Joomla\CMS\Factory::getUser()->guest)
+		if (!$config->userlist_allowed && Factory::getUser()->guest)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -139,7 +141,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$pages     = $this->pagination->pagesTotal;
 		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
 
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

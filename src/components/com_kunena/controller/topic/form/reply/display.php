@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerTopicFormReplyDisplay
  *
@@ -68,7 +70,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topic = $parent->getTopic();
 		}
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -158,10 +160,10 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

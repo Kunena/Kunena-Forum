@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Topics View
  * @since Kunena
@@ -161,7 +163,7 @@ class KunenaViewTopics extends KunenaView
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
-			$cache       = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache       = Factory::getCache('com_kunena', 'output');
 			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup  = 'com_kunena.topics';
 
@@ -265,7 +267,7 @@ class KunenaViewTopics extends KunenaView
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
-			$cache       = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache       = Factory::getCache('com_kunena', 'output');
 			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
 			$cachegroup  = 'com_kunena.posts';
 

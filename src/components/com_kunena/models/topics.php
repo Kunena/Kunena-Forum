@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Topics Model for Kunena
  *
@@ -113,7 +116,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 		else
 		{
-			if (\Joomla\CMS\Factory::getDocument()->getType() != 'feed')
+			if (Factory::getDocument()->getType() != 'feed')
 			{
 				// Get configuration from menu item.
 				$latestcategory    = $params->get('topics_categories', '');
@@ -166,7 +169,7 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.categories.in', $latestcategory_in);
 
 		// Selection time.
-		if (\Joomla\CMS\Factory::getDocument()->getType() != 'feed')
+		if (Factory::getDocument()->getType() != 'feed')
 		{
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)
@@ -290,7 +293,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 		else
 		{
-			$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($time * 3600);
+			$time = Factory::getDate()->toUnix() - ($time * 3600);
 		}
 
 		$latestcategory    = $this->getState('list.categories');
@@ -587,41 +590,41 @@ class KunenaModelTopics extends KunenaModel
 			}
 		}
 
-		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 
 		if ($this->getState('list.mode') == 'subscriptions')
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 		}
 
 		if ($this->getState('list.mode') == 'favorites')
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
 		}
 
 		if ($move)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		}
 
 		if ($approve)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		}
 
 		if ($delete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
 		}
 
 		if ($permdelete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 		}
 
 		if ($undelete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		if ($actionDropdown == 1)
@@ -670,26 +673,26 @@ class KunenaModelTopics extends KunenaModel
 			}
 		}
 
-		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 
 		if ($approve)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		}
 
 		if ($delete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
 		}
 
 		if ($permdelete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 		}
 
 		if ($undelete)
 		{
-			$actionDropdown[] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		if ($actionDropdown == 1)

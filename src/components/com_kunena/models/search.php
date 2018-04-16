@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Search Model for Kunena
  *
@@ -57,56 +59,56 @@ class KunenaModelSearch extends KunenaModel
 
 		$this->setState('searchwords', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('titleonly', 0);
+		$value = Factory::getApplication()->input->getInt('titleonly', 0);
 		$this->setState('query.titleonly', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getString('searchuser', '');
+		$value = Factory::getApplication()->input->getString('searchuser', '');
 		$this->setState('query.searchuser', rtrim($value));
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('starteronly', 0);
+		$value = Factory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);
 
-		if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile)
+		if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
 		{
-			$value = \Joomla\CMS\Factory::getApplication()->input->getInt('exactname', 0);
+			$value = Factory::getApplication()->input->getInt('exactname', 0);
 			$this->setState('query.exactname', $value);
 		}
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('replyless', 0);
+		$value = Factory::getApplication()->input->getInt('replyless', 0);
 		$this->setState('query.replyless', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('replylimit', 0);
+		$value = Factory::getApplication()->input->getInt('replylimit', 0);
 		$this->setState('query.replylimit', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getString('searchdate', $this->config->searchtime);
+		$value = Factory::getApplication()->input->getString('searchdate', $this->config->searchtime);
 		$this->setState('query.searchdate', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getString('searchatdate', null);
+		$value = Factory::getApplication()->input->getString('searchatdate', null);
 		$this->setState('query.searchatdate', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getWord('beforeafter', 'after');
+		$value = Factory::getApplication()->input->getWord('beforeafter', 'after');
 		$this->setState('query.beforeafter', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getWord('sortby', 'lastpost');
+		$value = Factory::getApplication()->input->getWord('sortby', 'lastpost');
 		$this->setState('query.sortby', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getWord('order', 'dec');
+		$value = Factory::getApplication()->input->getWord('order', 'dec');
 		$this->setState('query.order', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('childforums', 1);
+		$value = Factory::getApplication()->input->getInt('childforums', 1);
 		$this->setState('query.childforums', $value);
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('topic_id', 0);
+		$value = Factory::getApplication()->input->getInt('topic_id', 0);
 		$this->setState('query.topic_id', $value);
 
 		if (isset($_POST ['query']) || isset($_POST ['searchword']))
 		{
-			$value = \Joomla\CMS\Factory::getApplication()->input->get('catids', array(0), 'post', 'array');
+			$value = Factory::getApplication()->input->get('catids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 		}
 		else
 		{
-			$value = \Joomla\CMS\Factory::getApplication()->input->getString('catids', '0', 'get');
+			$value = Factory::getApplication()->input->getString('catids', '0', 'get');
 			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 		}
@@ -115,7 +117,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (isset($_POST ['q']) || isset($_POST ['searchword']))
 		{
-			$value = \Joomla\CMS\Factory::getApplication()->input->get('ids', array(0), 'post', 'array');
+			$value = Factory::getApplication()->input->get('ids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
@@ -125,7 +127,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 		else
 		{
-			$value = \Joomla\CMS\Factory::getApplication()->input->getString('ids', '0', 'get');
+			$value = Factory::getApplication()->input->getString('ids', '0', 'get');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
@@ -134,7 +136,7 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		$value = \Joomla\CMS\Factory::getApplication()->input->getInt('show', 0);
+		$value = Factory::getApplication()->input->getInt('show', 0);
 		$this->setState('query.show', $value);
 
 		$value = $this->getInt('limitstart', 0);
@@ -163,7 +165,7 @@ class KunenaModelSearch extends KunenaModel
 	 */
 	protected function buildWhere()
 	{
-		$db           = \Joomla\CMS\Factory::getDBO();
+		$db           = Factory::getDBO();
 		$querystrings = array();
 
 		foreach ($this->getSearchWords() as $searchword)
@@ -195,7 +197,7 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		if (!$this->config->pubprofile && !\Joomla\CMS\Factory::getUser()->guest || $this->config->pubprofile)
+		if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
 		{
 			// User searching
 			$username = $this->getState('query.searchuser');
@@ -216,7 +218,7 @@ class KunenaModelSearch extends KunenaModel
 		$time         = 0;
 		$searchatdate = $this->getState('query.searchatdate');
 
-		if (empty($searchatdate) || $searchatdate == \Joomla\CMS\Factory::getDate()->format('m/d/Y'))
+		if (empty($searchatdate) || $searchatdate == Factory::getDate()->format('m/d/Y'))
 		{
 			switch ($this->getState('query.searchdate'))
 			{
@@ -252,7 +254,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 		else
 		{
-			$time_start_day = \Joomla\CMS\Factory::getDate($this->getState('query.searchatdate'))->toUnix();
+			$time_start_day = Factory::getDate($this->getState('query.searchatdate'))->toUnix();
 			$time_end_day   = new DateTime($this->getState('query.searchatdate'));
 			$time_end_day->add(new DateInterval("PT23H59M59S"));
 

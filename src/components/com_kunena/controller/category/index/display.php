@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
@@ -125,7 +128,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		/*
-		$cache   = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache   = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
@@ -133,9 +136,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}*/
 
 		$options            = array();
-		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
-		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		if ($catid)
 		{
@@ -292,7 +295,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			{
 				// Get pending messages.
 				$catlist = implode(',', array_keys($moderate));
-				$db      = \Joomla\CMS\Factory::getDbo();
+				$db      = Factory::getDbo();
 				$db->setQuery(
 					"SELECT catid, COUNT(*) AS count
 					FROM #__kunena_messages
@@ -334,7 +337,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -366,11 +369,11 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$doc       = \Joomla\CMS\Factory::getDocument();
+		$doc       = Factory::getDocument();
 
-		$config = \Joomla\CMS\Factory::getConfig();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))

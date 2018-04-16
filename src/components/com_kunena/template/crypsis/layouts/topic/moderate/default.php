@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.tabstate');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.tabstate');
 
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
@@ -33,7 +35,7 @@ $labels          = $this->ktemplate->params->get('labels');
 	<?php if (isset($this->message)) : ?>
 		<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>"/>
 	<?php endif; ?>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 	<div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab1"
@@ -149,7 +151,7 @@ $labels          = $this->ktemplate->params->get('labels');
 					<label class="control-label"
 					       for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
-					<div class="controls" id="modtopicslist"> <?php echo JHtml::_(
+					<div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
 							'select.genericlist', $this->getTopicOptions(), 'targettopic', '', 'value', 'text', 0, 'kmod_topics'
 						); ?> </div>
 				</div>

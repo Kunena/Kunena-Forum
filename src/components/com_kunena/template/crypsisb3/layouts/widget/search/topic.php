@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
@@ -30,7 +32,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 	<?php endif; ?>
 
 	<input type="hidden" name="childforums" value="<?php echo $childforums; ?>"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 	<div class="search">
 		<input type="text" class="form-control input-sm" maxlength="64" name="query" value=""
 		       placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>"/>

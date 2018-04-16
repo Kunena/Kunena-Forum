@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerWidgetLoginDisplay
  *
@@ -117,7 +119,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 		$this->me   = KunenaUserHelper::getMyself();
 		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
-		$this->my = \Joomla\CMS\Factory::getUser();
+		$this->my = Factory::getUser();
 
 		if ($this->my->guest)
 		{

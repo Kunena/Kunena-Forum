@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerUserEditDisplay
  *
@@ -57,7 +59,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->user    = \Joomla\CMS\Factory::getUser($userid);
+		$this->user    = Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
@@ -73,7 +75,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
 		if ($menu_item)

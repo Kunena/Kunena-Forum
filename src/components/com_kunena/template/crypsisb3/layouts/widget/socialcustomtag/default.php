@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag  = $this->ktemplate->params->get('socialsharetag');
 
-echo JHtml::_('content.prepare', $socialsharetag);
+echo HTMLHelper::_('content.prepare', $socialsharetag);

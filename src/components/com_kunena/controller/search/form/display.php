@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerSearchFormDisplay
  *
@@ -86,11 +88,11 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = \Joomla\CMS\Factory::getDocument();
-		$config = \Joomla\CMS\Factory::getConfig();
+		$doc    = Factory::getDocument();
+		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')

@@ -11,6 +11,8 @@
  **/
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
 $this->document->addScript('includes/js/joomla.javascript.js');
 ?>
 <div class="kblock kmanage">
@@ -26,7 +28,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 
 				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>"/>
 				<input type="hidden" name="boxchecked" value="0"/>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper:::_('form.token'); ?>
 				<table class="adminlist table table-striped">
 					<thead>
 					<tr>
@@ -78,7 +80,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 
 							<?php else : ?>
 
-								<td><?php echo JHtml::_('grid.id', ++$i, intval($category->id)) ?></td>
+								<td><?php echo HTMLHelper:::_('grid.id', ++$i, intval($category->id)) ?></td>
 								<td class="kleft" width="70%">
 									<a href="#edit"
 									   onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat('...', $category->level) . ' ' . $category->name; ?></a>
@@ -150,7 +152,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 								<td></td>
 								<td></td>
 							<?php else: ?>
-								<td class="kcenter"><?php echo JHtml::_('grid.published', $category, $i) ?></td>
+								<td class="kcenter"><?php echo HTMLHelper:::_('grid.published', $category, $i) ?></td>
 								<td class="kcenter"><?php echo $this->escape($category->accessname); ?></td>
 								<td width="15%" class="kcenter"><?php echo $this->escape($category->editor); ?></td>
 

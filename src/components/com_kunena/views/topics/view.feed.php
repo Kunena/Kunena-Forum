@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Topics View
  * @since Kunena
@@ -33,7 +35,7 @@ class KunenaViewTopics extends KunenaView
 
 		KunenaHtmlParser::$relative = false;
 		$config                     = KunenaFactory::getConfig();
-		$cache                      = \Joomla\CMS\Factory::getCache('com_kunena_rss', 'output');
+		$cache                      = Factory::getCache('com_kunena_rss', 'output');
 
 		if (!$config->get('cache'))
 		{
@@ -309,7 +311,7 @@ class KunenaViewTopics extends KunenaView
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name')
 		{
-			$item->authorEmail = \Joomla\CMS\Factory::getUser($userid)->email;
+			$item->authorEmail = Factory::getUser($userid)->email;
 		}
 
 		$item->category = $category;

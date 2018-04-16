@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
@@ -72,7 +74,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$header           = JText::_('COM_KUNENA_ADMIN');
 		$this->header     = $header;
 		$this->ktemplate  = KunenaFactory::getTemplate();
-		$this->document   = \Joomla\CMS\Factory::getDocument();
+		$this->document   = Factory::getDocument();
 	}
 
 	/**
@@ -84,10 +86,10 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$app       = \Joomla\CMS\Factory::getApplication();
+		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = \Joomla\CMS\Factory::getDocument();
+		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)

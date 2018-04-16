@@ -9,6 +9,9 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
+
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
 $tabs          = $this->getTabsEdit();
@@ -28,7 +31,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
       class="form-validate" id="kuserform">
 	<input type="hidden" name="task" value="save"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="tabs">
 		<ul id="KunenaUserEdit" class="nav nav-tabs">

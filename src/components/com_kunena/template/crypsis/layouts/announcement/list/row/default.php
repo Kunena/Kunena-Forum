@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 $row          = $this->row;
 $announcement = $this->announcement;
 ?>
@@ -21,7 +23,7 @@ $announcement = $this->announcement;
 
 	<td class="nowrap">
 		<div class="overflow">
-			<?php echo JHtml::_(
+			<?php echo HTMLHelper::_(
 				'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
 				null, null, ''); ?>
 		</div>
@@ -31,13 +33,13 @@ $announcement = $this->announcement;
 		<td class="center">
 			<?php if ($this->canPublish())
 			{
-				echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true);
+				echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);
 			} ?>
 		</td>
 		<td class="center">
 			<?php if ($this->canEdit())
 			{
-				echo JHtml::_(
+				echo HTMLHelper::_(
 					'kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
 					'edit', '', true);
 			} ?>
@@ -45,7 +47,7 @@ $announcement = $this->announcement;
 		<td class="center">
 			<?php if ($this->canDelete())
 			{
-				echo JHtml::_(
+				echo HTMLHelper::_(
 					'kunenagrid.task', $row, 'publish_x.png',
 					JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true);
 			} ?>
@@ -65,7 +67,7 @@ $announcement = $this->announcement;
 
 	<?php if ($this->checkbox) : ?>
 		<td class="center">
-			<?php echo JHtml::_('kunenagrid.id', $row, $announcement->id); ?>
+			<?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
 		</td>
 	<?php endif; ?>
 

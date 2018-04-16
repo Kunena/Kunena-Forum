@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class ComponentKunenaControllerTopicItemMessageDisplay
  *
@@ -93,7 +96,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		if ($this->topic->unread)
 		{
-			$doc = \Joomla\CMS\Factory::getDocument();
+			$doc = Factory::getDocument();
 			$doc->setMetaData('robots', 'noindex, follow');
 		}
 
@@ -165,7 +168,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
 			{
-				$this->reportMessageLink = JHtml::_('kunenaforum.link',
+				$this->reportMessageLink = HTMLHelper::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
 					. '&mesid=' . intval($this->message->id),

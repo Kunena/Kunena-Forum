@@ -289,23 +289,28 @@ class KunenaTemplate extends JObject
 		// Set lookup paths.
 		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
 
-		// Set active class on menu item alias.
-		if (KunenaConfig::getInstance()->activemenuitem)
-		{
-			$id = KunenaConfig::getInstance()->activemenuitem;
-			JFactory::getDocument()->addScriptDeclaration("
-		jQuery(function($){ $(\"$id\").addClass('active')});");
-		}
-		else
-		{
-			$Itemid = KunenaRoute::fixMissingItemID();
-			$items  = JFactory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
+		$view = JFactory::getApplication()->input->get('option');
 
-			if ($items)
+		if ($view == 'com_kunena')
+		{
+			// Set active class on menu item alias.
+			if (KunenaConfig::getInstance()->activemenuitem)
 			{
-				$id = '.item-' . $items[0]->id;
+				$id = KunenaConfig::getInstance()->activemenuitem;
 				JFactory::getDocument()->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
+			}
+			else
+			{
+				$Itemid = KunenaRoute::fixMissingItemID();
+				$items  = JFactory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
+
+				if ($items)
+				{
+					$id = '.item-' . $items[0]->id;
+					JFactory::getDocument()->addScriptDeclaration("
+		jQuery(function($){ $(\"$id\").addClass('active')});");
+				}
 			}
 		}
 	}

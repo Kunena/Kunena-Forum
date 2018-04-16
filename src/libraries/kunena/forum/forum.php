@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * class KunenaForum
  *
@@ -206,7 +208,7 @@ abstract class KunenaForum
 		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
 
 		// Setup output caching.
-		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache = Factory::getCache('com_kunena', 'output');
 
 		if (!$config->get('cache'))
 		{

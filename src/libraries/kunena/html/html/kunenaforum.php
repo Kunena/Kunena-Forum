@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class JHtmlKunenaForum
  * @since Kunena
@@ -130,7 +132,7 @@ abstract class JHtmlKunenaForum
 		{
 			$me         = KunenaUserHelper::getMyself();
 			$disabled   = ($action == 'admin' && !$me->isAdmin());
-			$options [] = JHtml::_('select.option', '0', JText::_($topleveltxt), 'value', 'text', $disabled);
+			$options [] = HTMLHelper::_('select.option', '0', JText::_($topleveltxt), 'value', 'text', $disabled);
 
 			if ($preselect && empty($selected) && !$disabled)
 			{
@@ -153,7 +155,7 @@ abstract class JHtmlKunenaForum
 				$selected[] = $category->id;
 			}
 
-			$options [] = JHtml::_('select.option', $category->id, str_repeat('- ', $category->level + $toplevel) . ' ' . $category->name, 'value', 'text', $disabled);
+			$options [] = HTMLHelper::_('select.option', $category->id, str_repeat('- ', $category->level + $toplevel) . ' ' . $category->name, 'value', 'text', $disabled);
 		}
 
 		$disabled = false;
@@ -165,7 +167,7 @@ abstract class JHtmlKunenaForum
 				$selected[] = $category->id;
 			}
 
-			$options [] = JHtml::_('select.option', $category->id, '+ ' . $category->getParent()->name . ' / ' . $category->name, 'value', 'text', $disabled);
+			$options [] = HTMLHelper::_('select.option', $category->id, '+ ' . $category->getParent()->name . ' / ' . $category->name, 'value', 'text', $disabled);
 		}
 
 		reset($options);
@@ -190,7 +192,7 @@ abstract class JHtmlKunenaForum
 		if (!empty($options))
 		{
 			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
-			$html .= JHtml::_('select.options', $options, $key, $text, $selected, $translate);
+			$html .= HTMLHelper::_('select.options', $options, $key, $text, $selected, $translate);
 			$html .= '</select>';
 		}
 

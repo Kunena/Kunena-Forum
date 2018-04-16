@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumTopicUserReadHelper
  * @since Kunena
@@ -140,7 +142,7 @@ abstract class KunenaForumTopicUserReadHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -182,7 +184,7 @@ abstract class KunenaForumTopicUserReadHelper
 	public static function move($old, $new)
 	{
 		// Update database
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
 
@@ -226,7 +228,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 */
 	public static function merge($old, $new)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Move all user topics which do not exist in new topic
 		$queries[] = "UPDATE #__kunena_user_read AS ur
@@ -283,7 +285,7 @@ abstract class KunenaForumTopicUserReadHelper
 		}
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery($query);
 
@@ -320,7 +322,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 */
 	public static function recount()
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_user_read AS ur
 			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
 			SET ur.category_id=t.category_id";
@@ -350,8 +352,8 @@ abstract class KunenaForumTopicUserReadHelper
 	public static function purge($days = 365)
 	{
 		// Purge items that are older than x days (defaulting to a year)
-		$db        = \Joomla\CMS\Factory::getDBO();
-		$timestamp = \Joomla\CMS\Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
+		$db        = Factory::getDBO();
+		$timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
 		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
 		$db->setQuery($query);
 

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Forum Message Helper Class
  * @since Kunena
@@ -93,7 +95,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -186,7 +188,7 @@ abstract class KunenaForumMessageHelper
 	 */
 	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT m.*, t.message
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
@@ -246,7 +248,7 @@ abstract class KunenaForumMessageHelper
 			$limit = isset($params['nolimit']) ? $params['nolimit'] : KunenaFactory::getConfig()->threads_per_page;
 		}
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
@@ -322,7 +324,7 @@ abstract class KunenaForumMessageHelper
 		}
 		elseif ($starttime > 0)
 		{
-			$starttime = \Joomla\CMS\Factory::getDate()->toUnix() - ($starttime * 3600);
+			$starttime = Factory::getDate()->toUnix() - ($starttime * 3600);
 		}
 
 		if ($starttime > 0)
@@ -518,7 +520,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$db->setQuery(
 			"SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
@@ -574,7 +576,7 @@ abstract class KunenaForumMessageHelper
 	 */
 	public static function recount($topicids = false)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if (is_array($topicids))
 		{
@@ -623,7 +625,7 @@ abstract class KunenaForumMessageHelper
 			return false;
 		}
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$idlist = implode(',', $ids);
 		$query  = "SELECT m.*, t.message

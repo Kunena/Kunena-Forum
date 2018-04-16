@@ -9,6 +9,10 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die;
 
 /**
@@ -39,26 +43,26 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	public function initialize()
 	{
 		// Template requires Bootstrap javascript
-		JHtml::_('bootstrap.framework');
-		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
+		HTMLHelper::_('bootstrap.framework');
+		HTMLHelper::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 
 		// Template also requires jQuery framework.
-		JHtml::_('jquery.framework');
+		HTMLHelper::_('jquery.framework');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-			JHtml::_('bootstrap.renderModal');
+			HTMLHelper::_('bootstrap.renderModal');
 		}
 		else
 		{
-			JHtml::_('bootstrap.modal');
+			HTMLHelper::_('bootstrap.modal');
 		}
 
 		// Load JavaScript.
 		$this->addScript('assets/js/main.js');
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$storage         = $this->ktemplate->params->get('storage');
+		$ktemplate = KunenaFactory::getTemplate();
+		$storage   = $ktemplate->params->get('storage');
 
 		if ($storage)
 		{
@@ -84,30 +88,25 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$bootstrap = $this->ktemplate->params->get('bootstrap');
-		$doc       = \Joomla\CMS\Factory::getDocument();
+		$bootstrap = $ktemplate->params->get('bootstrap');
+		$doc       = Factory::getDocument();
 
 		if ($bootstrap)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
-			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
-			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
-			if ($this->ktemplate->params->get('icomoon'))
+			if ($ktemplate->params->get('icomoon'))
 			{
-				/** @noinspection PhpDeprecationInspection */
 				$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
 
-		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$fontawesome = $ktemplate->params->get('fontawesome');
 
 		if ($fontawesome)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$doc->addScript('https://use.fontawesome.com/releases/v5.0.10/js/all.js', array(), array('defer' => true));
 		}
 
@@ -115,7 +114,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
-		$iconcolor = $this->ktemplate->params->get('IconColor');
+		$iconcolor = $ktemplate->params->get('IconColor');
 
 		if ($iconcolor)
 		{
@@ -128,7 +127,7 @@ EOF;
 EOF;
 		}
 
-		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
+		$iconcolornew = $ktemplate->params->get('IconColorNew');
 
 		if ($iconcolornew)
 		{
@@ -142,15 +141,15 @@ EOF;
 EOF;
 		}
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
 	}
 
 	/**
-	 * @param          $filename
-	 * @param   string $group group
+	 * @param   string $filename filename
+	 * @param   string $group    group
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @since Kunena
@@ -159,7 +158,6 @@ EOF;
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
-		/** @noinspection PhpDeprecationInspection */
-		return \Joomla\CMS\Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 }

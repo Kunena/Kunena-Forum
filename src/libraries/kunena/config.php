@@ -12,9 +12,9 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           http://www.bestofjoomla.com
  **/
-
-// Do not allow direct linking
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
 
 /**
  * Class KunenaConfig
@@ -1339,7 +1339,7 @@ class KunenaConfig extends JObject
 
 		if (!$instance)
 		{
-			$cache    = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache    = Factory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
 			if (!$instance)
@@ -1363,7 +1363,7 @@ class KunenaConfig extends JObject
 	 */
 	public function load()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
 
 		try
@@ -1386,7 +1386,7 @@ class KunenaConfig extends JObject
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$plugins = array();
-		\JFactory::getApplication()->triggerEvent('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
+		Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 
 		foreach ($plugins as $name => $registry)
@@ -1435,7 +1435,7 @@ class KunenaConfig extends JObject
 	 */
 	public function save()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Perform custom validation of config data before we write it.
 		$this->check();
@@ -1493,6 +1493,6 @@ class KunenaConfig extends JObject
 	{
 		$email = $this->get('email');
 
-		return !empty($email) ? $email : \Joomla\CMS\Factory::getApplication()->get('mailfrom', '');
+		return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
 	}
 }

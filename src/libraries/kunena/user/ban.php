@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.utilities.date');
 
 /**
@@ -94,12 +96,12 @@ class KunenaUserBan extends JObject
 
 		if (self::$_my === null)
 		{
-			self::$_my = \Joomla\CMS\Factory::getUser();
+			self::$_my = Factory::getUser();
 		}
 
 		// Always load the data -- if item does not exist: fill empty data
 		$this->load($identifier);
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 	}
 
 	/**
@@ -346,7 +348,7 @@ class KunenaUserBan extends JObject
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
 		$c   = __CLASS__;
-		$db  = \Joomla\CMS\Factory::getDBO();
+		$db  = Factory::getDBO();
 		$now = new \Joomla\CMS\Date\Date;
 
 		$query = $db->getQuery(true);
@@ -395,7 +397,7 @@ class KunenaUserBan extends JObject
 		}
 
 		$c  = __CLASS__;
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('*')
@@ -694,8 +696,8 @@ class KunenaUserBan extends JObject
 			throw new Exception($e->getMessage());
 		}
 
-		$user = \Joomla\CMS\Factory::getUser($this->userid);
-		$app  = \Joomla\CMS\Factory::getApplication();
+		$user = Factory::getUser($this->userid);
+		$app  = Factory::getApplication();
 		$app->logout((int) $this->userid);
 
 		if (!$this->id)
@@ -709,7 +711,7 @@ class KunenaUserBan extends JObject
 
 			if (!$this->created_by)
 			{
-				$my               = \Joomla\CMS\Factory::getUser();
+				$my               = Factory::getUser();
 				$this->created_by = $my->id;
 			}
 		}

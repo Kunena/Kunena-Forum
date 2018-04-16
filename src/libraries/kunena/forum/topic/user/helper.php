@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Forum Topic User Helper Class
  * @since Kunena
@@ -135,7 +137,7 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -195,7 +197,7 @@ abstract class KunenaForumTopicUserHelper
 
 		$idlist = implode(',', $ids);
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('topic_id, user_id')
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -236,7 +238,7 @@ abstract class KunenaForumTopicUserHelper
 	public static function move($old, $new)
 	{
 		// Update database
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
 
@@ -280,7 +282,7 @@ abstract class KunenaForumTopicUserHelper
 	 */
 	public static function merge($old, $new)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Move all user topics which do not exist in new topic
 		$queries[] = "UPDATE #__kunena_user_topics AS ut
@@ -340,7 +342,7 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery($query);
 
@@ -392,7 +394,7 @@ abstract class KunenaForumTopicUserHelper
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if (is_array($topicids))
 		{

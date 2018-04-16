@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Implements Kunena layouts for the views.
  *
@@ -649,7 +651,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	{
 		$paths = (array) $paths;
 
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		// Add all paths for the template overrides.
 		if ($app->isClient('administrator'))

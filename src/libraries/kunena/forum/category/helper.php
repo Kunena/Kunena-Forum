@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumCategoryHelper
  * @since Kunena
@@ -46,7 +48,7 @@ abstract class KunenaForumCategoryHelper
 
 		if (KunenaConfig::getInstance()->get('cache_cat'))
 		{
-			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'callback');
+			$cache = Factory::getCache('com_kunena', 'callback');
 			$cache->setLifeTime(180);
 			self::$_instances = $cache->call(array('KunenaForumCategoryHelper', 'loadCategories'));
 		}
@@ -73,7 +75,7 @@ abstract class KunenaForumCategoryHelper
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery($query);
 
@@ -171,7 +173,7 @@ abstract class KunenaForumCategoryHelper
 	public static function getSubscriptions($user = null)
 	{
 		$user  = KunenaUserHelper::get($user);
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
 		$db->setQuery($query);
 
@@ -311,7 +313,7 @@ abstract class KunenaForumCategoryHelper
 	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$config = KunenaFactory::getConfig();
 
 		if ($limit < 1)
@@ -416,7 +418,7 @@ abstract class KunenaForumCategoryHelper
 		}
 
 		$catlist = implode(',', array_keys($catlist));
-		$db      = \Joomla\CMS\Factory::getDBO();
+		$db      = Factory::getDBO();
 		$query   = "SELECT t.category_id, COUNT(*) AS new
 			FROM #__kunena_topics AS t
 			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=t.category_id AND uc.user_id={$db->Quote($user->userid)}
@@ -826,7 +828,7 @@ abstract class KunenaForumCategoryHelper
 	 */
 	public static function recount($categories = '')
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if (is_array($categories))
 		{
@@ -916,7 +918,7 @@ abstract class KunenaForumCategoryHelper
 	 */
 	public static function fixAliases()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		$rows    = 0;
 		$queries = array();
@@ -963,7 +965,7 @@ abstract class KunenaForumCategoryHelper
 	 */
 	public static function getAlias($category_id, $alias)
 	{
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')->from($db->quoteName('#__kunena_categories'))->where($db->quoteName('alias') . " = " . $db->quote($alias));
 		$db->setQuery($query);
@@ -974,7 +976,7 @@ abstract class KunenaForumCategoryHelper
 		}
 		catch (RuntimeException $e)
 		{
-			\Joomla\CMS\Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage());
 
 			return false;
 		}

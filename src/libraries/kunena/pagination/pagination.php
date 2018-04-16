@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
  *
@@ -488,21 +491,21 @@ class KunenaPagination
 	 */
 	public function getLimitBox($all = false)
 	{
-		$app    = \Joomla\CMS\Factory::getApplication();
+		$app    = Factory::getApplication();
 		$limits = array();
 
 		// Make the option list.
 		for ($i = 5; $i <= 30; $i += 5)
 		{
-			$limits[] = JHtml::_('select.option', "$i");
+			$limits[] = HTMLHelper::_('select.option', "$i");
 		}
 
-		$limits[] = JHtml::_('select.option', '50', JText::_('J50'));
-		$limits[] = JHtml::_('select.option', '100', JText::_('J100'));
+		$limits[] = HTMLHelper::_('select.option', '50', JText::_('J50'));
+		$limits[] = HTMLHelper::_('select.option', '100', JText::_('J100'));
 
 		if ($all)
 		{
-			$limits[] = JHtml::_('select.option', '0', JText::_('JALL'));
+			$limits[] = HTMLHelper::_('select.option', '0', JText::_('JALL'));
 		}
 
 		$selected = $this->viewall ? 0 : $this->limit;
@@ -510,7 +513,7 @@ class KunenaPagination
 		// Build the select list.
 		if ($app->isClient('administrator'))
 		{
-			$html = JHtml::_(
+			$html = HTMLHelper::_(
 				'select.genericlist',
 				$limits,
 				$this->prefix . 'limit',
@@ -522,7 +525,7 @@ class KunenaPagination
 		}
 		else
 		{
-			$html = JHtml::_(
+			$html = HTMLHelper::_(
 				'select.genericlist',
 				$limits,
 				$this->prefix . 'limit',
@@ -686,7 +689,7 @@ class KunenaPagination
 	{
 		if (($i > 0 || ($i + $this->limitstart > 0)) && $condition)
 		{
-			return JHtml::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
+			return HTMLHelper::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
 		}
 		else
 		{
@@ -713,7 +716,7 @@ class KunenaPagination
 	{
 		if (($i < $n - 1 || $i + $this->limitstart < $this->total - 1) && $condition)
 		{
-			return JHtml::_('jgrid.orderDown', $i, $task, '', $alt, $enabled, $checkbox);
+			return HTMLHelper::_('jgrid.orderDown', $i, $task, '', $alt, $enabled, $checkbox);
 		}
 		else
 		{
@@ -784,7 +787,7 @@ class KunenaPagination
 	 */
 	protected function _item_active(\Joomla\CMS\Pagination\PaginationObject $item)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if ($app->isClient('administrator'))
 		{
@@ -817,7 +820,7 @@ class KunenaPagination
 	 */
 	protected function _item_inactive(\Joomla\CMS\Pagination\PaginationObject $item)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if ($app->isClient('administrator'))
 		{

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -442,7 +444,7 @@ class TableKunenaCategories extends KunenaTable
 	{
 		if (!$where)
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
 			$db->setQuery($query);
 			$parents = $db->loadColumn();

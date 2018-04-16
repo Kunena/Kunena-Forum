@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
  * @since Kunena
@@ -44,7 +46,7 @@ abstract class KunenaCacheHelper
 	{
 		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 	}
 
@@ -57,7 +59,7 @@ abstract class KunenaCacheHelper
 	{
 		// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache
 
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('_system');
 	}
 
@@ -167,7 +169,7 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearCategories()
 	{
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->remove('categories', 'com_kunena');
 	}
 }

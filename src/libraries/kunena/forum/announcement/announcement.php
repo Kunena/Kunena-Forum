@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumAnnouncement
  *
@@ -370,7 +372,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 */
 	protected function saveInternal()
 	{
-		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache = Factory::getCache('com_kunena', 'output');
 		$cache->remove('announcement', 'global');
 	}
 

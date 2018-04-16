@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaTableMap
  * @since Kunena
@@ -75,7 +77,7 @@ class KunenaTableMap
 		$this->_tbl_key    = $key;
 		$this->_tbl_mapped = $mapped;
 		$this->{$mapped}   = array();
-		$this->_db         = $db ? $db : \Joomla\CMS\Factory::getDbo();
+		$this->_db         = $db ? $db : Factory::getDbo();
 
 		// Initialise the table properties.
 		$fields = $this->getFields();

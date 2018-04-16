@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
  * @since Kunena
@@ -25,7 +27,7 @@ class KunenaTemplateLegacy
 	}
 }
 
-$app = \Joomla\CMS\Factory::getApplication('Site');
+$app = Factory::getApplication('Site');
 
 if (!defined('DS'))
 {

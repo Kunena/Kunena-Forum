@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaHtmlParser
  * @since Kunena
@@ -38,7 +40,7 @@ abstract class KunenaHtmlParser
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
 
@@ -149,7 +151,7 @@ abstract class KunenaHtmlParser
 			$params->set('ksource', 'kunena');
 
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-			\JFactory::getApplication()->triggerEvent('onContentPrepare', array($name, &$row, &$params, 0));
+			Factory::getApplication()->triggerEvent('onContentPrepare', array($name, &$row, &$params, 0));
 			$content = $row->text;
 		}
 

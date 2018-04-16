@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaLogin
  * @since Kunena
@@ -35,7 +37,7 @@ class KunenaLogin
 	{
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetLogin');
+		$classes = Factory::getApplication()->triggerEvent('onKunenaGetLogin');
 
 		foreach ($classes as $class)
 		{
@@ -266,7 +268,7 @@ class KunenaLogin
 		// Do we need to get the User ID?
 		if (empty($userId))
 		{
-			$userId = \Joomla\CMS\Factory::getUser()->id;
+			$userId = Factory::getUser()->id;
 		}
 
 		// Has this user turned on TFA on their account?

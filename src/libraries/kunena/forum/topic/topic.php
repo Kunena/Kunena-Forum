@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumTopic
  *
@@ -166,7 +168,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			parent::__construct($properties);
 		}
 
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 	}
 
 	/**
@@ -554,7 +556,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			if (!$exists || $this->first_post_id == $message->id)
 			{
 				// If message got deleted and was cached, we need to find new first post
-				$db    = \Joomla\CMS\Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
 				$db->setQuery($query, 0, 1);
@@ -582,7 +584,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			if (!$exists || $this->last_post_id == $message->id)
 			{
 				// If topic got deleted and was cached, we need to find new last post
-				$db    = \Joomla\CMS\Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
 					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
 				$db->setQuery($query, 0, 1);
@@ -729,7 +731,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
 		if ($this->moved_id == 0)
 		{
-			$db = \Joomla\CMS\Factory::getDBO();
+			$db = Factory::getDBO();
 
 			// Delete user topics
 			$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
@@ -828,7 +830,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public function hit()
 	{
-		$app     = \Joomla\CMS\Factory::getApplication();
+		$app     = Factory::getApplication();
 		$lasthit = $app->getUserState('com_kunena.topic.lasthit');
 
 		if ($lasthit == $this->id)
@@ -1348,7 +1350,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$read             = KunenaForumTopicUserReadHelper::get($this, $user);
-		$read->time       = \Joomla\CMS\Factory::getDate()->toUnix();
+		$read->time       = Factory::getDate()->toUnix();
 		$read->message_id = $this->last_post_id;
 		$read->save();
 
@@ -1858,7 +1860,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Clear authentication cache
 		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
-		$db        = \Joomla\CMS\Factory::getDBO();
+		$db        = Factory::getDBO();
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id={$db->quote($this->id)}";
 
@@ -2109,7 +2111,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
 
-		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > \Joomla\CMS\Factory::getDate()->toUnix())
+		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > Factory::getDate()->toUnix())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
 		}
@@ -2119,7 +2121,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED'), 403);
 		}
 
-		if ($poll->polltimetolive != '0000-00-00 00:00:00' && $poll->getTimeToLive() < \Joomla\CMS\Factory::getDate()->toUnix())
+		if ($poll->polltimetolive != '0000-00-00 00:00:00' && $poll->getTimeToLive() < Factory::getDate()->toUnix())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
 		}

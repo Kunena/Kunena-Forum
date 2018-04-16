@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.utilities.date');
 
 /**
@@ -162,8 +165,8 @@ class KunenaUser extends JObject
 			$this->userid = 0;
 		}
 
-		$this->_db     = \Joomla\CMS\Factory::getDBO();
-		$this->_app    = \Joomla\CMS\Factory::getApplication();
+		$this->_db     = Factory::getDBO();
+		$this->_app    = Factory::getApplication();
 		$this->_config = KunenaFactory::getConfig();
 	}
 
@@ -279,7 +282,7 @@ class KunenaUser extends JObject
 			$user = KunenaUserHelper::getMyself();
 		}
 
-		$input     = \Joomla\CMS\Factory::getApplication()->input;
+		$input     = Factory::getApplication()->input;
 		$method    = $input->getInt('userid');
 		$kuser     = KunenaFactory::getUser($method);
 		$config    = KunenaConfig::getInstance();
@@ -726,7 +729,7 @@ class KunenaUser extends JObject
 	{
 		if (!isset($this->_time))
 		{
-			$timezone = \Joomla\CMS\Factory::getApplication()->get('offset', null);
+			$timezone = Factory::getApplication()->get('offset', null);
 
 			if ($this->userid)
 			{
@@ -1028,7 +1031,7 @@ class KunenaUser extends JObject
 
 			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
 			{
-				$this->_email = JHtml::_('email.cloak', $this->email);
+				$this->_email = HTMLHelper::_('email.cloak', $this->email);
 			}
 		}
 
@@ -1197,8 +1200,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 
@@ -1252,8 +1255,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+				$view->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
+				$view->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 
@@ -1288,7 +1291,7 @@ class KunenaUser extends JObject
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		\JFactory::getApplication()->triggerEvent('onKunenaSidebar', array($this->userid));
+		Factory::getApplication()->triggerEvent('onKunenaSidebar', array($this->userid));
 
 		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}
@@ -1787,7 +1790,7 @@ class KunenaUser extends JObject
 
 		foreach ($groups as $groupId => $value)
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
 				->select('title')
 				->from('#__usergroups')
@@ -1970,7 +1973,7 @@ class KunenaUser extends JObject
 				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
 			}
 
-			if ($this->userid == \Joomla\CMS\Factory::getUser()->id && $avatarLink)
+			if ($this->userid == Factory::getUser()->id && $avatarLink)
 			{
 				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
 			}
@@ -1990,7 +1993,7 @@ class KunenaUser extends JObject
 
 			if ($rels == 'rel="canonical"')
 			{
-				$config          = \Joomla\CMS\Factory::getApplication('site');
+				$config          = Factory::getApplication('site');
 				$componentParams = $config->getParams('com_config');
 				$robots          = $componentParams->get('robots');
 

@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class KunenaForumStatistics
  * @since Kunena
@@ -166,7 +169,7 @@ class KunenaForumStatistics
 	 */
 	public function __construct()
 	{
-		$this->_db     = \Joomla\CMS\Factory::getDBO();
+		$this->_db     = Factory::getDBO();
 		$this->_config = KunenaFactory::getConfig();
 
 		$this->showstats            = (bool) $this->_config->showstats;
@@ -397,7 +400,7 @@ class KunenaForumStatistics
 			{
 				$item          = clone $item;
 				$item->count   = $item->posts;
-				$item->link    = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}
@@ -454,7 +457,7 @@ class KunenaForumStatistics
 			{
 				$item          = clone $item;
 				$item->count   = $polls[$item->id]->count;
-				$item->link    = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

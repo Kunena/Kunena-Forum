@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Forum Topic Rate Class
  *
@@ -68,7 +70,7 @@ class KunenaForumTopicRate extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if rate does not exist: fill empty data
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 		$this->load($identifier);
 	}
 
@@ -173,7 +175,7 @@ class KunenaForumTopicRate extends JObject
 			return new \Joomla\CMS\Response\JsonResponse($exception);
 		}
 
-		$time  = \Joomla\CMS\Factory::getDate();
+		$time  = Factory::getDate();
 		$query = $this->_db->getQuery(true);
 		$query->insert('#__kunena_rate')
 			->set('topic_id=' . $this->_db->quote($this->topic_id))

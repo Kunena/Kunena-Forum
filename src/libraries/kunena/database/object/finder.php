@@ -8,6 +8,7 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+use Joomla\CMS\Factory;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -73,7 +74,7 @@ abstract class KunenaDatabaseObjectFinder
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
-		$this->db    = \Joomla\CMS\Factory::getDbo();
+		$this->db    = Factory::getDbo();
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->table . ' AS a');
 	}

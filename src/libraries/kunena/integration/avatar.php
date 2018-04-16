@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaAvatar
  * @since Kunena
@@ -47,7 +49,7 @@ class KunenaAvatar
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetAvatar');
+			$classes = Factory::getApplication()->triggerEvent('onKunenaGetAvatar');
 
 			foreach ($classes as $class)
 			{

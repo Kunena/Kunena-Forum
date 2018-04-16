@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumMessage
  *
@@ -133,7 +135,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function __construct($properties = null)
 	{
-		$this->_db = \Joomla\CMS\Factory::getDbo();
+		$this->_db = Factory::getDbo();
 		parent::__construct($properties);
 	}
 
@@ -497,7 +499,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			if ($once && $sentusers)
 			{
 				$sentusers = implode(',', $sentusers);
-				$db        = \Joomla\CMS\Factory::getDbo();
+				$db        = Factory::getDbo();
 				$query     = $db->getQuery(true)
 					->update('#__kunena_user_topics')
 					->set('subscribed=2')
@@ -823,7 +825,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Delete thank yous
 		$queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)}";
@@ -933,7 +935,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($postDelta < 0)
 		{
-			\JFactory::getApplication()->triggerEvent('onDeleteKunenaPost', array(array($this->id)));
+			Factory::getApplication()->triggerEvent('onDeleteKunenaPost', array(array($this->id)));
 			$activity->onAfterDelete($this);
 		}
 		elseif ($postDelta > 0)
@@ -1183,7 +1185,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$category            = $this->getCategory();
 		$this->hold          = $category->review && !$category->isAuthorised('moderate', $user) ? 1 : $this->hold;
 		$this->modified_by   = $user->userid;
-		$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
+		$this->modified_time = Factory::getDate()->toUnix();
 	}
 
 	/**
@@ -1394,7 +1396,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Do not allow no posting date or dates from the future
-		$now = \Joomla\CMS\Factory::getDate()->toUnix();
+		$now = Factory::getDate()->toUnix();
 
 		if (!$this->time || $this->time > $now)
 		{
@@ -1435,7 +1437,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 			elseif (!$this->modified_time)
 			{
-				$this->modified_time = \Joomla\CMS\Factory::getDate()->toUnix();
+				$this->modified_time = Factory::getDate()->toUnix();
 			}
 		}
 
@@ -1457,7 +1459,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return false;
 			}
 
-			if ($lastPostTime + $config->floodprotection > \Joomla\CMS\Factory::getDate()->toUnix())
+			if ($lastPostTime + $config->floodprotection > Factory::getDate()->toUnix())
 			{
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodprotection));
 
@@ -1468,7 +1470,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if (!$this->exists() && !$this->getCategory()->isAuthorised('moderate'))
 		{
 			// Ignore identical messages (posted within 5 minutes)
-			$duplicatetimewindow = \Joomla\CMS\Factory::getDate()->toUnix() - 5 * 60;
+			$duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
 			$this->_db->setQuery("SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 				WHERE m.userid={$this->_db->quote($this->userid)}
 				AND m.ip={$this->_db->quote($this->ip)}
@@ -1684,11 +1686,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Check whether edit is in time
 			$modtime = $this->modified_time ? $this->modified_time : $this->time;
 
-			if ($modtime + intval($config->useredittime) < \Joomla\CMS\Factory::getDate()->toUnix() && intval($config->useredittimegrace) == 0)
+			if ($modtime + intval($config->useredittime) < Factory::getDate()->toUnix() && intval($config->useredittimegrace) == 0)
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
-			elseif (intval($config->useredittimegrace) != 0 && $modtime + intval($config->useredittime) + intval($config->useredittimegrace) < \Joomla\CMS\Factory::getDate()->toUnix())
+			elseif (intval($config->useredittimegrace) != 0 && $modtime + intval($config->useredittime) + intval($config->useredittimegrace) < Factory::getDate()->toUnix())
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaDatabaseObject
  * @since Kunena
@@ -162,7 +164,7 @@ abstract class KunenaDatabaseObject extends JObject
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
-		$result = \JFactory::getApplication()->triggerEvent('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
+		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
 		if (in_array(false, $result, true))
 		{
@@ -188,7 +190,7 @@ abstract class KunenaDatabaseObject extends JObject
 		$this->saveInternal();
 
 		// Trigger the onKunenaAfterSave event.
-		\JFactory::getApplication()->triggerEvent('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
+		Factory::getApplication()->triggerEvent('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
 		$this->_saving = false;
 
@@ -292,7 +294,7 @@ abstract class KunenaDatabaseObject extends JObject
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.
-		$result = \JFactory::getApplication()->triggerEvent('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));
+		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));
 
 		if (in_array(false, $result, true))
 		{
@@ -311,7 +313,7 @@ abstract class KunenaDatabaseObject extends JObject
 		$this->_exists = false;
 
 		// Trigger the onKunenaAfterDelete event.
-		\JFactory::getApplication()->triggerEvent('onKunenaAfterDelete', array("com_kunena.{$this->_name}", $table));
+		Factory::getApplication()->triggerEvent('onKunenaAfterDelete', array("com_kunena.{$this->_name}", $table));
 
 		return true;
 	}

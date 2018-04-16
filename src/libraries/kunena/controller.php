@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.application.component.helper');
 
 /**
@@ -45,7 +47,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->app      = \Joomla\CMS\Factory::getApplication();
+		$this->app      = Factory::getApplication();
 		$this->config   = KunenaFactory::getConfig();
 		$this->me       = KunenaUserHelper::getMyself();
 
@@ -85,9 +87,9 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			return $instance;
 		}
 
-		$input = \Joomla\CMS\Factory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 
-		$app     = \Joomla\CMS\Factory::getApplication();
+		$app     = Factory::getApplication();
 		$command = $input->get('task', 'display');
 
 		// Check for a controller.task command.
@@ -102,7 +104,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		else
 		{
 			// Base controller.
-			$view = strtolower(\Joomla\CMS\Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
+			$view = strtolower(Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
@@ -182,7 +184,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			$task = 'display';
 		}
 
-		$app          = \Joomla\CMS\Factory::getApplication();
+		$app          = Factory::getApplication();
 		$this->format = $this->input->getWord('format', 'html');
 
 		try
@@ -279,7 +281,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		echo json_encode($response);
 
 		// It's much faster and safer to exit now than let Joomla to send the response.
-		\Joomla\CMS\Factory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 
 	/**
@@ -337,11 +339,11 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Get the document object.
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName   = \Joomla\CMS\Factory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
-		$lName   = \Joomla\CMS\Factory::getApplication()->input->getWord('layout', 'default');
+		$vName   = Factory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
+		$lName   = Factory::getApplication()->input->getWord('layout', 'default');
 		$vFormat = $document->getType();
 
 		if ($this->app->isClient('administrator'))
@@ -392,7 +394,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			/*
 			// FIXME:
 			if (isset($active->language) && $active->language != '*') {
-				$language = \Joomla\CMS\Factory::getDocument()->getLanguage();
+				$language = Factory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
 					$route = KunenaRoute::_(null, false);
 					\Joomla\CMS\Log\Log::add("Language redirect from ".\Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query'))." to {$route}", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
@@ -431,9 +433,9 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			if ($vFormat == 'html')
 			{
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-				\JFactory::getApplication()->triggerEvent('onKunenaDisplay', array('start', $view));
+				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('start', $view));
 				$view->displayAll();
-				\JFactory::getApplication()->triggerEvent('onKunenaDisplay', array('end', $view));
+				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('end', $view));
 			}
 			else
 			{

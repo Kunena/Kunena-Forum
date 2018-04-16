@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class KunenaAccess
  * @since Kunena
@@ -77,7 +80,7 @@ class KunenaAccess
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetAccessControl');
+		$classes = Factory::getApplication()->triggerEvent('onKunenaGetAccessControl');
 
 		foreach ($classes as $class)
 		{
@@ -99,7 +102,7 @@ class KunenaAccess
 		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Load administrators and moderators from cache
-			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache = Factory::getCache('com_kunena', 'output');
 			$data  = $cache->get(self::$cacheKey, 'com_kunena');
 
 			if ($data)
@@ -135,7 +138,7 @@ class KunenaAccess
 
 		// Reset read access for the current session
 		$me = KunenaUserHelper::getMyself();
-		\Joomla\CMS\Factory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
+		Factory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
 
 		// @var KunenaAccess $access
 
@@ -148,7 +151,7 @@ class KunenaAccess
 		}
 
 		// Load native category moderators and administrators
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
 		$db->setQuery($query);
 
@@ -165,7 +168,7 @@ class KunenaAccess
 		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Store new data into cache
-			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache = Factory::getCache('com_kunena', 'output');
 			$cache->store(
 				serialize(
 					array(
@@ -282,7 +285,7 @@ class KunenaAccess
 		if (!$enabled)
 		{
 			$enabled = true;
-			\Joomla\CMS\Factory::getDocument()->addScriptDeclaration(
+			Factory::getDocument()->addScriptDeclaration(
 				"function kShowAccessType(htmlclass, el) {
 	var selected = el.getChildren().filter(function(option){ return option.selected; });
 	var name = selected[0].value;
@@ -318,7 +321,7 @@ window.addEvent('domready', function(){
 				if (method_exists($access, 'getAccessOptions'))
 				{
 					$string                = JText::_('COM_KUNENA_INTEGRATION_TYPE_' . preg_replace('/[^\w\d]/', '_', $type));
-					$accesstypes [$string] = JHtml::_('select.option', $type, $string);
+					$accesstypes [$string] = HTMLHelper::_('select.option', $type, $string);
 					$exists                |= $type == $category->accesstype;
 
 					break;
@@ -332,10 +335,10 @@ window.addEvent('domready', function(){
 		if (!$exists)
 		{
 			$string                = JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
-			$accesstypes [$string] = JHtml::_('select.option', $category->accesstype, $string);
+			$accesstypes [$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
 		}
 
-		return JHtml::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="' . count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
+		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="' . count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
 	}
 
 	/**
@@ -565,7 +568,7 @@ window.addEvent('domready', function(){
 		if (!isset($read[$user->userid]))
 		{
 			$id  = $user->userid;
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
@@ -686,7 +689,7 @@ window.addEvent('domready', function(){
 		}
 
 		// In backend every logged in user has global admin rights (for now)
-		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
+		if (Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
 		{
 			return true;
 		}
@@ -952,7 +955,7 @@ window.addEvent('domready', function(){
 		{
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
-			$db = \Joomla\CMS\Factory::getDBO();
+			$db = Factory::getDBO();
 			$db->setQuery($query);
 
 			try
@@ -979,7 +982,7 @@ window.addEvent('domready', function(){
 	public function loadSubscribers(KunenaForumTopic $topic, $type)
 	{
 		$category = $topic->getCategory();
-		$db       = \Joomla\CMS\Factory::getDBO();
+		$db       = Factory::getDBO();
 		$query    = array();
 
 		if ($type & self::TOPIC_SUBSCRIPTION)

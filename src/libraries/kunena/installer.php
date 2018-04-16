@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaInstaller
  * @since Kunena
@@ -73,7 +75,7 @@ class KunenaInstaller
 		}
 
 		// Get installed version.
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 		$db->setQuery("SELECT version FROM {$db->quoteName('#__kunena_version')} WHERE state='' ORDER BY id DESC", 0, 1);
 		$version = $db->loadResult();
 
@@ -92,7 +94,7 @@ class KunenaInstaller
 	 */
 	public static function detectTable($table, $prefix = '#__', $reload = false)
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if (self::$tables === null || $reload)
 		{
@@ -134,7 +136,7 @@ class KunenaInstaller
 			return false;
 		}
 
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		if ($prefix == '#__')
 		{

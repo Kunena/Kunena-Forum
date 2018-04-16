@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumAnnouncementHelper
  *
@@ -110,9 +112,9 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db       = \Joomla\CMS\Factory::getDBO();
+		$db       = Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(\Joomla\CMS\Factory::getDate()->toSql());
+		$nowDate  = $db->quote(Factory::getDate()->toSql());
 
 		if ($filter)
 		{
@@ -175,9 +177,9 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	public static function getCount($filter = true)
 	{
-		$db       = \Joomla\CMS\Factory::getDBO();
+		$db       = Factory::getDBO();
 		$nullDate = $db->quote($db->getNullDate());
-		$nowDate  = $db->quote(\Joomla\CMS\Factory::getDate()->toSql());
+		$nowDate  = $db->quote(Factory::getDate()->toSql());
 
 		if ($filter)
 		{

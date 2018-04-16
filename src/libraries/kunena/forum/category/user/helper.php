@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumCategoryUserHelper
  * @since Kunena
@@ -134,7 +136,7 @@ abstract class KunenaForumCategoryUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -181,8 +183,8 @@ abstract class KunenaForumCategoryUserHelper
 		$updateList = array();
 		$insertList = array();
 
-		$db   = \Joomla\CMS\Factory::getDbo();
-		$time = \Joomla\CMS\Factory::getDate()->toUnix();
+		$db   = Factory::getDbo();
+		$time = Factory::getDate()->toUnix();
 
 		foreach ($items as $item)
 		{

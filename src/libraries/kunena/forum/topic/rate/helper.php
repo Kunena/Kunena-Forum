@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Forum Topic Rate Helper Class
  *
@@ -69,7 +71,7 @@ abstract class KunenaForumTopicRateHelper
 	 */
 	public static function getSelected($id)
 	{
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select("(SUM(rate)/COUNT(rate)) AS selected")
 			->from('#__kunena_rate')

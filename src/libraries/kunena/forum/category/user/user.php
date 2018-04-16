@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumCategoryUser
  *
@@ -46,7 +48,7 @@ class KunenaForumCategoryUser extends JObject
 	public function __construct($category = 0, $user = null)
 	{
 		// Always fill empty data
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 
 		// Create the table object
 		$table = $this->getTable();

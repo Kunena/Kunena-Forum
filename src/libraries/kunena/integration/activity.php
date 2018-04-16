@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaIntegrationActivity
  *
@@ -36,7 +38,7 @@ class KunenaIntegrationActivity
 	{
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetActivity');
+		$classes = Factory::getApplication()->triggerEvent('onKunenaGetActivity');
 
 		foreach ($classes as $class)
 		{

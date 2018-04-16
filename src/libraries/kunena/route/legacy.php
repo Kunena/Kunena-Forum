@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 require_once KPATH_SITE . '/router.php';
 
 /**
@@ -180,7 +182,7 @@ abstract class KunenaRouteLegacy
 			$uri->delVar('do');
 		}
 
-		$app     = \Joomla\CMS\Factory::getApplication();
+		$app     = Factory::getApplication();
 		$config  = KunenaFactory::getConfig();
 		$changed = false;
 

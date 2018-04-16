@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumDiagnostics
  * @since Kunena
@@ -71,7 +73,7 @@ abstract class KunenaForumDiagnostics
 			// @var KunenaDatabaseQuery $query
 
 			$query->select("COUNT(*)");
-			$db = \Joomla\CMS\Factory::getDbo();
+			$db = Factory::getDbo();
 			$db->setQuery($query);
 
 			return (int) $db->loadResult();
@@ -101,7 +103,7 @@ abstract class KunenaForumDiagnostics
 			}
 
 			self::$fieldsFunction($query);
-			$db = \Joomla\CMS\Factory::getDbo();
+			$db = Factory::getDbo();
 			$db->setQuery($query);
 
 			return (array) $db->loadAssocList();
@@ -123,7 +125,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();
@@ -163,7 +165,7 @@ abstract class KunenaForumDiagnostics
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->execute();

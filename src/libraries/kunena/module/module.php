@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaModule
  * @since Kunena
@@ -45,7 +47,7 @@ abstract class KunenaModule
 	{
 		$this->module   = $module;
 		$this->params   = $params;
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 	}
 
 	/**
@@ -69,7 +71,7 @@ abstract class KunenaModule
 		{
 			// @var $cache \Joomla\CMS\Cache\CacheControllerOutput
 
-			$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+			$cache = Factory::getCache('com_kunena', 'output');
 
 			$me = KunenaFactory::getUser();
 			$cache->setLifeTime($this->params->get('cache_time', 180));

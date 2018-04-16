@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * @see   JController in Joomla! 3.0
  * @since Kunena
@@ -72,7 +74,7 @@ abstract class KunenaControllerBase implements Serializable
 	 */
 	protected function loadApplication()
 	{
-		return \Joomla\CMS\Factory::getApplication();
+		return Factory::getApplication();
 	}
 
 	/**

@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
@@ -66,7 +68,7 @@ class KunenaBbcode extends NBBC_BBCode
 		$this->SetURLTarget('_blank');
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		\JFactory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
 	}
 
 	/**
@@ -124,7 +126,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 				if ($this->canCloakEmail($params))
 				{
-					return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+					return HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
 				}
 				else
 				{
@@ -407,7 +409,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 					if ($this->canCloakEmail($params))
 					{
-						$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+						$output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
 					}
 					else
 					{
@@ -1104,7 +1106,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	{
 		if (!KunenaFactory::getConfig()->disemoticons)
 		{
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "SELECT code, location FROM #__kunena_smileys";
 			$db->setQuery($query);
 			$smileys = $db->loadObjectList();
@@ -1194,7 +1196,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if ($bbcode->canCloakEmail($params))
 		{
-			return JHtml::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
+			return HTMLHelper::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
 		}
 		else
 		{
@@ -1440,7 +1442,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return '[' . ($default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
 		}
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 		$title    = $default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER');
 		$hidden   = ($document instanceof \Joomla\CMS\Document\HtmlDocument);
 
@@ -1488,7 +1490,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$me = KunenaUserHelper::getMyself();
 
-		if (!\Joomla\CMS\Factory::getUser()->guest)
+		if (!Factory::getUser()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hide');
 
@@ -1626,7 +1628,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 
 		// Display only link in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof \Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
@@ -1747,7 +1749,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 */
 	public static function getEbayItemFromCache($ItemID)
 	{
-		$cache = \Joomla\CMS\Factory::getCache('Kunena_ebay_request');
+		$cache = Factory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
 		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
 		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
@@ -1774,15 +1776,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		$lang->load('com_content');
 
 		$articleid = intval($content);
 
 		$config = KunenaFactory::getConfig();
-		$user   = \Joomla\CMS\Factory::getUser();
-		$db     = \Joomla\CMS\Factory::getDBO();
-		$site   = \Joomla\CMS\Factory::getApplication('site');
+		$user   = Factory::getUser();
+		$db     = Factory::getDBO();
+		$site   = Factory::getApplication('site');
 
 		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
 			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
@@ -1885,8 +1887,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				$params->set('ksource', 'kunena');
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
-				\JFactory::getApplication()->triggerEvent('onContentPrepare', array('text', &$article, &$params, 0));
-				$article->text       = JHtml::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
+				Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$article, &$params, 0));
+				$article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
 				$html                = $article->text;
 			}
@@ -2412,7 +2414,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			if ($attachment->isImage())
 			{
-				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2421,7 +2423,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 			elseif ($attachment->isVideo())
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2430,7 +2432,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 			else
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && \Joomla\CMS\Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getUser()->id == 0;
 
 				if (!$hide)
 				{
@@ -2567,7 +2569,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			->set('size', 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (\Joomla\CMS\Factory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
+		if (Factory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
 		{
 			// Hide between content from non registered users
 			return (string) $layout
@@ -2658,7 +2660,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (\Joomla\CMS\Factory::getUser()->id == 0 && $config->showimgforguest == 0)
+		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
 			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');

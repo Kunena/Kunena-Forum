@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaPrivate
  * @since Kunena
@@ -35,7 +37,7 @@ class KunenaPrivate
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetPrivate');
+			$classes = Factory::getApplication()->triggerEvent('onKunenaGetPrivate');
 
 			foreach ($classes as $class)
 			{
@@ -66,7 +68,7 @@ class KunenaPrivate
 	 */
 	public function showIcon($userid)
 	{
-		$my = \Joomla\CMS\Factory::getUser();
+		$my = Factory::getUser();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
@@ -142,7 +144,7 @@ class KunenaPrivate
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
 	{
-		$my      = \Joomla\CMS\Factory::getUser();
+		$my      = Factory::getUser();
 		$url     = $this->getURL($userid);
 		$onclick = $this->getOnClick($userid);
 
@@ -178,9 +180,9 @@ class KunenaPrivate
 		// Don't send messages from/to anonymous and to yourself
 		if ($userid == $my->id)
 		{
-			$this->pmCount = $this->getUnreadCount($my->id);
-			$text          = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
-			$url           = $this->getInboxURL();
+			$pmCount = $this->getUnreadCount($my->id);
+			$text    = $pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$url     = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
 		}

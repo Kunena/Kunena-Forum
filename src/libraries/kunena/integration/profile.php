@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaProfile
  * @since Kunena
@@ -35,7 +37,7 @@ class KunenaProfile
 		{
 			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			$classes = \JFactory::getApplication()->triggerEvent('onKunenaGetProfile');
+			$classes = Factory::getApplication()->triggerEvent('onKunenaGetProfile');
 
 			foreach ($classes as $class)
 			{
@@ -97,7 +99,7 @@ class KunenaProfile
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = \Joomla\CMS\Factory::getUser();
+		$my     = Factory::getUser();
 
 		if ($config->statslink_allowed == 0 && $my->id == 0)
 		{

@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaError
  * @since Kunena
@@ -54,9 +56,9 @@ abstract class KunenaError
 	{
 		if (!self::$enabled)
 		{
-			self::$format = \Joomla\CMS\Factory::getApplication()->input->getWord('format', 'html');
+			self::$format = Factory::getApplication()->input->getWord('format', 'html');
 			self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
-			self::$admin  = \Joomla\CMS\Factory::getApplication()->isClient('administrator');
+			self::$admin  = Factory::getApplication()->isClient('administrator');
 
 			// Make sure we are able to log fatal errors.
 			class_exists('KunenaLog');
@@ -74,7 +76,7 @@ abstract class KunenaError
 			if (version_compare(JVERSION, '4.0', '<'))
 			{
 				@error_reporting(E_ALL | E_STRICT);
-				\Joomla\CMS\Factory::getDbo()->setDebug(true);
+				Factory::getDbo()->setDebug(true);
 				set_error_handler(array('KunenaError', 'errorHandler'));
 			}
 
@@ -110,7 +112,7 @@ abstract class KunenaError
 	{
 		if (self::$debug)
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
 		}
 	}
@@ -127,7 +129,7 @@ abstract class KunenaError
 	{
 		if (self::$debug)
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
@@ -148,10 +150,10 @@ abstract class KunenaError
 			return false;
 		}
 
-		$app = \Joomla\CMS\Factory::getApplication();
-		$db  = \Joomla\CMS\Factory::getDBO();
+		$app = Factory::getApplication();
+		$db  = Factory::getDBO();
 
-		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
+		if (Factory::getApplication()->isClient('administrator'))
 		{
 			$app->enqueueMessage($exception->getMessage(), 'error');
 		}

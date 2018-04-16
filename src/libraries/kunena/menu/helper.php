@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaMenuHelper
  * @since Kunena
@@ -23,7 +25,7 @@ abstract class KunenaMenuHelper
 	 */
 	public static function cleanCache()
 	{
-		$cache = \Joomla\CMS\Factory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
 	}
 
@@ -40,23 +42,23 @@ abstract class KunenaMenuHelper
 	 */
 	public static function getList(&$params)
 	{
-		$app  = \Joomla\CMS\Factory::getApplication();
+		$app  = Factory::getApplication();
 		$menu = $app->getMenu();
 
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
-		$user   = \Joomla\CMS\Factory::getUser();
+		$user   = Factory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
 		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
-		$cache = \Joomla\CMS\Factory::getCache('mod_menu', '');
+		$cache = Factory::getCache('mod_menu', '');
 
 		if (!($items = $cache->get($key)))
 		{
 			// Initialise variables.
 			$list = array();
-			$db   = \Joomla\CMS\Factory::getDbo();
+			$db   = Factory::getDbo();
 
 			$path    = $active->tree;
 			$start   = (int) $params->get('startLevel');

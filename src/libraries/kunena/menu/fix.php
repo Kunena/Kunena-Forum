@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 KunenaMenuFix::initialize();
 
 /**
@@ -87,7 +89,7 @@ abstract class KunenaMenuFix
 	protected static function load()
 	{
 		// Initialise variables.
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 
 		$query = $db->getQuery(true);
 		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');

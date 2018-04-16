@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumTopicUser
  *
@@ -51,7 +53,7 @@ class KunenaForumTopicUser extends JObject
 		$topic = KunenaForumTopicHelper::get($topic);
 
 		// Always fill empty data
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 
 		// Create the table object
 		$table = $this->getTable();

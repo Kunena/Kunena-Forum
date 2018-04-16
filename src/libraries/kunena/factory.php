@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaFactory
  * @since Kunena
@@ -200,7 +202,7 @@ abstract class KunenaFactory
 
 		if (empty($loaded["{$client}/{$file}"]))
 		{
-			$lang = \Joomla\CMS\Factory::getLanguage();
+			$lang = Factory::getLanguage();
 
 			$english = false;
 

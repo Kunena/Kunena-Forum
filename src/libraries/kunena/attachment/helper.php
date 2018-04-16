@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Attachment Helper Class
  * @since Kunena
@@ -135,7 +137,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -218,7 +220,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = \Joomla\CMS\Factory::getDBO();
+		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery($query);
 
@@ -544,7 +546,7 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function cleanup()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
@@ -654,7 +656,7 @@ abstract class KunenaAttachmentHelper
 			$orderby = ' ORDER BY id ASC';
 		}
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery($query, 0, $params['limit']);
 
@@ -694,14 +696,14 @@ abstract class KunenaAttachmentHelper
 	{
 		$attachments = null;
 
-		$_db = \Joomla\CMS\Factory::getDBO();
-		$_db->getQuery(true)
+		$db = Factory::getDBO();
+		$db->getQuery(true)
 			->select('*')
-			->from($_db->qn('#__kunena_attachments'));
+			->from($db->qn('#__kunena_attachments'));
 
 		try
 		{
-			$attachments = $_db->loadResult();
+			$attachments = $db->loadResult();
 		}
 		catch (RuntimeException $e)
 		{

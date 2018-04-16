@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
@@ -93,7 +95,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$idlist = implode(',', $ids);
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT *
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
@@ -133,7 +135,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function getTotal($starttime = null, $endtime = null)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$where = array();
 
 		if (!empty($starttime))
@@ -187,7 +189,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
 				FROM #__kunena_thankyou AS s
 				INNER JOIN #__users AS u
@@ -220,7 +222,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
-		$db         = \Joomla\CMS\Factory::getDBO();
+		$db         = Factory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
@@ -259,7 +261,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$field = 'targetuserid';
 
 		if (!$target)
@@ -298,7 +300,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function recountThankyou()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Users who have no thank yous, set thankyou count to 0
 		$query = "UPDATE #__kunena_users AS u
@@ -332,7 +334,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function recount()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Update user thankyou count
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)

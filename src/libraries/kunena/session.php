@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaSession
  * @since Kunena
@@ -52,7 +54,7 @@ class KunenaSession extends JObject
 		if (!$this->currvisit)
 		{
 			// For new users new indication displays 14 days
-			$now = \Joomla\CMS\Factory::getDate()->toUnix();
+			$now = Factory::getDate()->toUnix();
 
 			// 14 days ago
 			$this->lasttime    = $now - 14 * 24 * 60 * 60;
@@ -138,7 +140,7 @@ class KunenaSession extends JObject
 	{
 		if (!self::$_instance)
 		{
-			$my              = \Joomla\CMS\Factory::getUser();
+			$my              = Factory::getUser();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 
 			if ($update)
@@ -165,7 +167,7 @@ class KunenaSession extends JObject
 			$this->readtopics = 0;
 		}
 
-		$this->currvisit = \Joomla\CMS\Factory::getDate()->toUnix();
+		$this->currvisit = Factory::getDate()->toUnix();
 	}
 
 	/**
@@ -176,10 +178,10 @@ class KunenaSession extends JObject
 	public function isNewSession()
 	{
 		// Perform session timeout check
-		$lifetime              = max(intval(\Joomla\CMS\Factory::getConfig()->get('config.lifetime')) * 60,
+		$lifetime              = max(intval(Factory::getConfig()->get('config.lifetime')) * 60,
 			intval(KunenaFactory::getConfig()->sessiontimeout)
 		);
-		$this->_sessiontimeout = ($this->currvisit + $lifetime < \Joomla\CMS\Factory::getDate()->toUnix());
+		$this->_sessiontimeout = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());
 
 		return $this->_sessiontimeout;
 	}
@@ -287,7 +289,7 @@ class KunenaSession extends JObject
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months
-		$monthsAgo   = \Joomla\CMS\Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
+		$monthsAgo   = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
 		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
 
 		return $allreadtime;
@@ -299,7 +301,7 @@ class KunenaSession extends JObject
 	 */
 	public function markAllCategoriesRead()
 	{
-		$this->allreadtime = \Joomla\CMS\Factory::getDate()->toUnix();
+		$this->allreadtime = Factory::getDate()->toUnix();
 		$this->readtopics  = 0;
 	}
 }

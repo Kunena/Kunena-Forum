@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.html.parameter');
 
 /**
@@ -315,7 +317,7 @@ class KunenaTemplate extends JObject
 	 */
 	public function isHmvc()
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if (is_null($this->hmvc))
 		{
@@ -345,11 +347,11 @@ class KunenaTemplate extends JObject
 	 */
 	public static function getInstance($name = null)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if (!$name)
 		{
-			$name = \Joomla\CMS\Factory::getApplication()->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
+			$name = Factory::getApplication()->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
 		}
 
 		$name = KunenaPath::clean($name);
@@ -484,7 +486,7 @@ class KunenaTemplate extends JObject
 	public function loadLanguage()
 	{
 		// Loading language strings for the template
-		$lang = \Joomla\CMS\Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 
 		foreach (array_reverse($this->default) as $template)
@@ -789,7 +791,7 @@ HTML;
 		}
 
 		/** @noinspection PhpDeprecationInspection */
-		return \Joomla\CMS\Factory::getDocument()->addStyleSheet($filename);
+		return Factory::getDocument()->addStyleSheet($filename);
 	}
 
 	/**
@@ -806,7 +808,7 @@ HTML;
 		$stylelink = "<!--[if {$condition}]>\n";
 		$stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
 		$stylelink .= "<![endif]-->\n";
-		\Joomla\CMS\Factory::getDocument()->addCustomTag($stylelink);
+		Factory::getDocument()->addCustomTag($stylelink);
 	}
 
 	/**
@@ -878,7 +880,7 @@ HTML;
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
-		return \Joomla\CMS\Factory::getDocument()->addScriptDeclaration($content, $type);
+		return Factory::getDocument()->addScriptDeclaration($content, $type);
 	}
 
 	/**
@@ -907,7 +909,7 @@ HTML;
 		}
 
 		/** @noinspection PhpDeprecationInspection */
-		return \Joomla\CMS\Factory::getDocument()->addScript($filename);
+		return Factory::getDocument()->addScript($filename);
 	}
 
 	/**
@@ -931,7 +933,7 @@ HTML;
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		if ($path)
 		{

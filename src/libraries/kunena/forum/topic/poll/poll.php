@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumTopicPoll
  *
@@ -83,7 +85,7 @@ class KunenaForumTopicPoll extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if poll does not exist: fill empty data
-		$this->_db = \Joomla\CMS\Factory::getDBO();
+		$this->_db = Factory::getDBO();
 		$this->load($identifier);
 	}
 
@@ -390,7 +392,7 @@ class KunenaForumTopicPoll extends JObject
 			}
 		}
 
-		$votes->lasttime = \Joomla\CMS\Factory::getDate()->toSql();
+		$votes->lasttime = Factory::getDate()->toSql();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 
@@ -602,7 +604,7 @@ class KunenaForumTopicPoll extends JObject
 		$this->_exists = false;
 
 		// Delete options
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
 
@@ -654,7 +656,7 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function getTimeToLive()
 	{
-		return \Joomla\CMS\Factory::getDate($this->polltimetolive)->toUnix();
+		return Factory::getDate($this->polltimetolive)->toUnix();
 	}
 
 	/**

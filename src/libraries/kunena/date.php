@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.utilities.date');
 
 /**
@@ -103,8 +105,8 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 
 		if (!$offset)
 		{
-			$app = \Joomla\CMS\Factory::getApplication();
-			$my  = \Joomla\CMS\Factory::getUser();
+			$app = Factory::getApplication();
+			$my  = Factory::getUser();
 
 			if ($my->id)
 			{
@@ -129,7 +131,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 		// Today and Yesterday?
 		if (end($modearr) == 'today')
 		{
-			$now = \Joomla\CMS\Factory::getDate('now');
+			$now = Factory::getDate('now');
 
 			if ($offset)
 			{

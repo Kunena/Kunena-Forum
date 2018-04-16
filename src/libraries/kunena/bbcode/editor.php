@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
@@ -165,7 +167,7 @@ class KunenaBbcodeEditor
 		// Hook to manipulate the Editor XML like adding buttons
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		\JFactory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', array($this));
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', array($this));
 
 		$js = "bbcodeSettings = {
 		previewParserPath:	'',

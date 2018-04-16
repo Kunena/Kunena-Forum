@@ -14,6 +14,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Utility class for creating HTML Grids
  * @since Kunena
@@ -63,7 +66,7 @@ abstract class JHtmlKunenaGrid
 
 		if (!$loaded)
 		{
-			JHtml::_('behavior.tooltip');
+			HTMLHelper::_('behavior.tooltip');
 
 			// Build the behavior script.
 			$js = '
@@ -97,7 +100,7 @@ abstract class JHtmlKunenaGrid
 		});';
 
 			// Add the behavior to the document head.
-			$document = \Joomla\CMS\Factory::getDocument();
+			$document = Factory::getDocument();
 			$document->addScriptDeclaration($js);
 
 			$loaded = true;
@@ -152,7 +155,7 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
-		$userid = \Joomla\CMS\Factory::getUser()->get('id');
+		$userid = Factory::getUser()->get('id');
 
 		if ($row instanceof \Joomla\CMS\Table\Table)
 		{
@@ -191,13 +194,13 @@ abstract class JHtmlKunenaGrid
 		{
 			$text = addslashes(htmlspecialchars($row->editor, ENT_COMPAT, 'UTF-8'));
 
-			$date = JHtml::_('date', $row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
-			$time = JHtml::_('date', $row->checked_out_time, 'H:i');
+			$date = HTMLHelper::_('date', $row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
+			$time = HTMLHelper::_('date', $row->checked_out_time, 'H:i');
 
 			$hover = '<span class="editlinktip hasTip" title="' . JText::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
 		}
 
-		$checked = $hover . JHtml::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
+		$checked = $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
 
 		return $checked;
 	}

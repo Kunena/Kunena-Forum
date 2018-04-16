@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaAttachment
  *
@@ -358,7 +360,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			$url = ($thumb ? $fileThumb : $file);
 
-			if (!\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
+			if (!Factory::getApplication()->isClient('administrator'))
 			{
 				$url = \Joomla\CMS\Uri\Uri::base() . $url;
 			}
@@ -574,7 +576,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	{
 		jimport('joomla.filesystem.folder');
 		$config    = KunenaFactory::getConfig();
-		$input     = \Joomla\CMS\Factory::getApplication()->input;
+		$input     = Factory::getApplication()->input;
 		$fileInput = $input->files->get($key, null, 'raw');
 
 		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));

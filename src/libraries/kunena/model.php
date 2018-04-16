@@ -9,6 +9,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Model for Kunena
  *
@@ -76,7 +78,7 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$this->option = 'com_kunena';
 		parent::__construct($config);
 
-		$this->app    = \Joomla\CMS\Factory::getApplication();
+		$this->app    = Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->input  = $input ? $input : $this->app->input;

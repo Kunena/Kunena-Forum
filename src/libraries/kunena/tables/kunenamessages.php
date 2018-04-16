@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -262,7 +264,7 @@ class TableKunenaMessages extends KunenaTable
 
 		if (!$this->time)
 		{
-			$this->time = \Joomla\CMS\Factory::getDate()->toUnix();
+			$this->time = Factory::getDate()->toUnix();
 		}
 
 		$this->modified_reason = trim($this->modified_reason);

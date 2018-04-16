@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -118,7 +120,7 @@ class TableKunenaAnnouncements extends KunenaTable
 
 		if (!$this->created)
 		{
-			$this->created = \Joomla\CMS\Factory::getDate()->toSql();
+			$this->created = Factory::getDate()->toSql();
 		}
 
 		if (!$this->publish_up)

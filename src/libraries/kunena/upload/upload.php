@@ -8,6 +8,8 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die;
 
 /**
@@ -328,9 +330,9 @@ class KunenaUpload
 	{
 		$filename = $filename ? $filename : $this->filename;
 
-		$user    = \Joomla\CMS\Factory::getUser();
-		$session = \Joomla\CMS\Factory::getSession();
-		$token   = \Joomla\CMS\Factory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
+		$user    = Factory::getUser();
+		$session = Factory::getSession();
+		$token   = Factory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
 		list($name, $ext) = $this->splitFilename($filename);
 
 		return md5("{$name}.{$token}.{$ext}");

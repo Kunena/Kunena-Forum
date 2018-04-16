@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumCategory
  *
@@ -715,7 +717,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	{
 		if (!isset($this->_aliases))
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)}";
 			$db->setQuery($query);
 			$this->_aliases = (array) $db->loadObjectList('alias');
@@ -739,7 +741,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			return false;
 		}
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
 		$db->setQuery($query);
 
@@ -1249,7 +1251,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
 
@@ -1297,7 +1299,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
-		$db    = \Joomla\CMS\Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = "SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
 
@@ -1345,7 +1347,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
-		$db        = \Joomla\CMS\Factory::getDBO();
+		$db        = Factory::getDBO();
 		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
 
 		// Delete user topics
@@ -1454,7 +1456,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$this->setProperties($table->getProperties());
 		$this->params = $params;
 
-		$cache = \Joomla\CMS\Factory::getCache('com_kunena', 'output');
+		$cache = Factory::getCache('com_kunena', 'output');
 
 		// FIXME: enable caching after fixing the issues
 		// $cache->clean('categories');
@@ -1526,7 +1528,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		elseif ($this->last_topic_id == $topic->id)
 		{
 			// If last topic/post got moved or deleted, we need to find last post
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC, last_post_id DESC";
 			$db->setQuery($query, 0, 1);
 
@@ -1668,7 +1670,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			return true;
 		}
 
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
 		$db->setQuery($query);
 

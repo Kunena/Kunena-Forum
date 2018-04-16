@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Implements Kunena Log.
  *
@@ -317,7 +319,7 @@ class KunenaLog
 	{
 		if (!empty(static::$entries))
 		{
-			$db    = \Joomla\CMS\Factory::getDbo();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
 				->insert('#__kunena_logs')
 				->columns('type, user_id, category_id, topic_id, target_user, ip, time, operation, data');

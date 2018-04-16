@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Class KunenaControllerApplicationDisplay
  * @since Kunena
@@ -116,7 +119,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$banned = KunenaUserHelper::getMyself()->isBanned();
 				$userid = $this->input->getInt('userid');
 
-				if (\Joomla\CMS\Factory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
+				if (Factory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
@@ -219,7 +222,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 
@@ -264,7 +267,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$kinput     = \Joomla\CMS\Factory::getApplication()->input;
+		$kinput     = Factory::getApplication()->input;
 		$limitstart = $kinput->getInt('limitstart', 0);
 
 		if (!$limitstart)
@@ -308,26 +311,26 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		switch ((int) $code)
 		{
 			case 400:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '400 Bad Request', true);
+				Factory::getApplication()->setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '401 Unauthorized', true);
+				Factory::getApplication()->setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '404 Not Found', true);
+				Factory::getApplication()->setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '410 Gone', true);
+				Factory::getApplication()->setHeader('Status', '410 Gone', true);
 				break;
 			case 503:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			case 500:
 			default:
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
+				Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
 		}
 	}
 
@@ -356,10 +359,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Use our own browser side cache settings.
-		\Joomla\CMS\Factory::getApplication()->allowCache(false);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		Factory::getApplication()->allowCache(false);
+		Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 
 		if ($this->config->get('credits', 1))
 		{
@@ -379,7 +382,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
 		$credits      = '<div style="text-align:center;">';
-		$credits      .= JHtml::_(
+		$credits      .= HTMLHelper::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			array('style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;')

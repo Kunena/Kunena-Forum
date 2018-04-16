@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Implements Kunena specific functions for all layouts.
  *
@@ -216,7 +218,7 @@ class KunenaLayout extends KunenaLayoutBase
 			$class .= ' locked';
 		}
 
-		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
+		$link = HTMLHelper::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -303,7 +305,7 @@ class KunenaLayout extends KunenaLayoutBase
 			$class .= ' locked';
 		}
 
-		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
+		$link = HTMLHelper::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -375,7 +377,7 @@ class KunenaLayout extends KunenaLayoutBase
 			$class .= ' locked';
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);
+		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $con);
 	}
 
 	/**

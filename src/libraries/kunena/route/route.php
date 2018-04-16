@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
 jimport('joomla.filter.output');
@@ -416,7 +418,7 @@ abstract class KunenaRoute
 		if (self::$search === false)
 		{
 			$user         = KunenaUserHelper::getMyself();
-			$language     = strtolower(\Joomla\CMS\Factory::getDocument()->getLanguage());
+			$language     = strtolower(Factory::getDocument()->getLanguage());
 			self::$search = false;
 
 			if (KunenaConfig::getInstance()->get('cache_mid'))
@@ -483,7 +485,7 @@ abstract class KunenaRoute
 	 */
 	protected static function getCache()
 	{
-		return \Joomla\CMS\Factory::getCache('mod_menu', 'output');
+		return Factory::getCache('mod_menu', 'output');
 	}
 
 	/**
@@ -674,7 +676,7 @@ abstract class KunenaRoute
 	 */
 	public static function getReferrer($default = null, $anchor = null)
 	{
-		$app = \Joomla\CMS\Factory::getApplication();
+		$app = Factory::getApplication();
 
 		$referrer = $app->input->server->getString('HTTP_REFERER');
 
@@ -924,7 +926,7 @@ abstract class KunenaRoute
 	public static function resolveAlias($alias)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias . '%')}";
 		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
@@ -962,7 +964,7 @@ abstract class KunenaRoute
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		self::$config = KunenaFactory::getConfig();
 
-		if (\Joomla\CMS\Factory::getApplication()->isClient('administrator'))
+		if (Factory::getApplication()->isClient('administrator'))
 		{
 			self::$adminApp = true;
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -970,7 +972,7 @@ abstract class KunenaRoute
 			return;
 		}
 
-		self::$menus   = \Joomla\CMS\Factory::getApplication()->getMenu();
+		self::$menus   = Factory::getApplication()->getMenu();
 		self::$menu    = self::$menus->getMenu();
 		self::$default = self::$menus->getDefault();
 		$active        = self::$menus->getActive();
@@ -997,7 +999,7 @@ abstract class KunenaRoute
 		}
 
 		// If values are both in GET and POST, they are only stored in POST
-		$post = \Joomla\CMS\Factory::getApplication()->input->post->getArray(array());
+		$post = Factory::getApplication()->input->post->getArray(array());
 
 		foreach ($post as $key => $value)
 		{
@@ -1008,7 +1010,7 @@ abstract class KunenaRoute
 		}
 
 		// Make sure that request URI is not broken
-		$get = \Joomla\CMS\Factory::getApplication()->input->get->getArray(array());
+		$get = Factory::getApplication()->input->get->getArray(array());
 
 		foreach ($get as $key => $value)
 		{

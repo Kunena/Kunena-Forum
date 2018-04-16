@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 KunenaUserHelper::initialize();
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Factory;
 
 /**
  * Class KunenaUserHelper
@@ -86,7 +87,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function initialize()
 	{
-		$id        = \Joomla\CMS\Factory::getUser()->id;
+		$id        = Factory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser($id);
 
 		// Initialize avatar if configured.
@@ -221,7 +222,7 @@ abstract class KunenaUserHelper
 		{
 			$userlist = implode(',', $e_userids);
 
-			$db = \Joomla\CMS\Factory::getDBO();
+			$db = Factory::getDBO();
 
 			$query = $db->getQuery(true);
 			$query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
@@ -291,7 +292,7 @@ abstract class KunenaUserHelper
 	{
 		if (self::$_total === null)
 		{
-			$db     = \Joomla\CMS\Factory::getDBO();
+			$db     = Factory::getDBO();
 			$config = KunenaFactory::getConfig();
 
 			if ($config->userlist_count_users == '1')
@@ -343,7 +344,7 @@ abstract class KunenaUserHelper
 
 		if (self::$_topposters < $limit)
 		{
-			$db    = \Joomla\CMS\Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName(array('u.id', 'ku.posts'), array(null, 'count')));
 			$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
@@ -401,7 +402,7 @@ abstract class KunenaUserHelper
 		$test = $recursive ? '>=' : '=';
 
 		// Find users and their groups.
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select('m.*')
 			->from('#__usergroups AS ug1')
@@ -457,9 +458,9 @@ abstract class KunenaUserHelper
 
 		if ($counts === null)
 		{
-			$app    = \Joomla\CMS\Factory::getApplication();
+			$app    = Factory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db     = \Joomla\CMS\Factory::getDbo();
+			$db     = Factory::getDbo();
 			$query  = $db->getQuery(true);
 			$query
 				->select('COUNT(*)')
@@ -469,13 +470,13 @@ abstract class KunenaUserHelper
 			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
 			{
 				// Calculate x minutes by using Kunena setting.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - $config->show_session_starttime;
+				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
 				$query->where('time > ' . $time);
 			}
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
+				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -509,9 +510,9 @@ abstract class KunenaUserHelper
 	{
 		if (self::$_online === null)
 		{
-			$app    = \Joomla\CMS\Factory::getApplication();
+			$app    = Factory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db     = \Joomla\CMS\Factory::getDbo();
+			$db     = Factory::getDbo();
 			$query  = $db->getQuery(true);
 			$query
 				->select('userid, MAX(time) AS time')
@@ -523,13 +524,13 @@ abstract class KunenaUserHelper
 			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
 			{
 				// Calculate x minutes by using Kunena setting.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - $config->show_session_starttime;
+				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
 				$query->where('time > ' . $time);
 			}
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = \Joomla\CMS\Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
+				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -578,7 +579,7 @@ abstract class KunenaUserHelper
 				self::getOnlineUsers();
 			}
 
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - \Joomla\CMS\Factory::getApplication()->get('lifetime', 15) * 60) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - Factory::getApplication()->get('lifetime', 15) * 60) : false;
 		}
 
 		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator()))
@@ -610,7 +611,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recount()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Update user post count
 		$query = "INSERT INTO #__kunena_users (userid, posts)
@@ -644,7 +645,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recountBanned()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// Update banned state
 		$query = "UPDATE #__kunena_users AS u
@@ -678,7 +679,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recountPostsNull()
 	{
-		$db = \Joomla\CMS\Factory::getDBO();
+		$db = Factory::getDBO();
 
 		// If user has no user_topics, set posts into 0
 		$query = "UPDATE #__kunena_users AS u

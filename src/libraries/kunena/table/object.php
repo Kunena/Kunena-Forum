@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
+
 /**
  * Abstract Table Object class
  *
@@ -633,7 +636,7 @@ abstract class KunenaTableObject
 	 */
 	public static function &loadInstances(JDatabaseQuery $query)
 	{
-		$db = \Joomla\CMS\Factory::getDbo();
+		$db = Factory::getDbo();
 		$db->setQuery($query);
 		$items = (array) $db->loadObjectList('id', get_called_class());
 
@@ -885,7 +888,7 @@ abstract class KunenaTableObject
 		}
 
 		// Get the current time in MySQL format.
-		$time = \Joomla\CMS\Factory::getDate()->toSql();
+		$time = Factory::getDate()->toSql();
 
 		// Check the row out by primary key.
 		$query = static::$db->getQuery(true);
@@ -1019,7 +1022,7 @@ abstract class KunenaTableObject
 			return false;
 		}
 
-		static::$db = \Joomla\CMS\Factory::getDBO();
+		static::$db = Factory::getDBO();
 		static::$db->setQuery('SELECT COUNT(userid)' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . (int) $against);
 		$checkedOut = (boolean) static::$db->loadResult();
 
@@ -1044,4 +1047,4 @@ abstract class KunenaTableObject
 	}
 }
 
-KunenaTableObject::setDbo(\Joomla\CMS\Factory::getDbo());
+KunenaTableObject::setDbo(Factory::getDbo());

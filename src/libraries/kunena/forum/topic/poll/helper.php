@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class KunenaForumTopicPollHelper
  * @since Kunena
@@ -59,7 +61,7 @@ abstract class KunenaForumTopicPollHelper
 	 */
 	public static function recount()
 	{
-		$db    = \Joomla\CMS\Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query
 			->update('#__kunena_topics AS a')

@@ -9,6 +9,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Kunena View Class
  * @since Kunena
@@ -78,10 +81,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	public function __construct($config = array())
 	{
 		$name           = isset($config['name']) ? $config['name'] : $this->getName();
-		$this->document = \Joomla\CMS\Factory::getDocument();
+		$this->document = Factory::getDocument();
 		$this->document->setBase('');
 		$this->profiler  = KunenaProfiler::instance('Kunena');
-		$this->app       = \Joomla\CMS\Factory::getApplication();
+		$this->app       = Factory::getApplication();
 		$this->me        = KunenaUserHelper::getMyself();
 		$this->config    = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
@@ -110,10 +113,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		}
 
 		// Use our own browser side cache settings.
-		\Joomla\CMS\Factory::getApplication()->allowCache(false);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
-		\Joomla\CMS\Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		Factory::getApplication()->allowCache(false);
+		Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 	}
 
 	/**
@@ -164,7 +167,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			if ($this->config->board_offline && !$this->me->isAdmin())
 			{
 				// Forum is offline
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body   = $this->config->offline_message;
 				$this->common->html   = true;
@@ -176,7 +179,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			elseif ($this->config->regonly && !$this->me->exists() && !$this->teaser)
 			{
 				// Forum is for registered users only
-				\Joomla\CMS\Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body   = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
@@ -232,7 +235,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		}
 
 		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
-		$app   = \Joomla\CMS\Factory::getApplication();
+		$app   = Factory::getApplication();
 
 		switch ((int) $code)
 		{
@@ -359,7 +362,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	public function getModulePosition($position)
 	{
 		$html     = '';
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 
 		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{
@@ -381,7 +384,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	public function isModulePosition($position)
 	{
-		$document = \Joomla\CMS\Factory::getDocument();
+		$document = Factory::getDocument();
 
 		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
@@ -652,7 +655,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
 		}
 
-		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
+		return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
 	}
 
 	/**
@@ -704,6 +707,6 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			}
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
+		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
 	}
 }

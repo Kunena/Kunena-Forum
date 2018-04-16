@@ -96,7 +96,7 @@ $editor   = $template->params->get('editor');
 			<input type="hidden" id="kurl_users" name="kurl_users"
 			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
-		<?php echo HTMLHelper:::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<div class="modal-body">
 

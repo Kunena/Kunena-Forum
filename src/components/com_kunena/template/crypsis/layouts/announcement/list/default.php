@@ -19,7 +19,7 @@ HTMLHelper::_('behavior.core');
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
       id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo HTMLHelper:::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<h2>
 		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>

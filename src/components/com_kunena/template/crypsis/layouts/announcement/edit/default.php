@@ -25,7 +25,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 	      name="editform" class="form-horizontal" id="editform">
 		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
-		<?php echo HTMLHelper:::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 
 		<div class="control-group">
 			<label class="control-label" for="ann-title">

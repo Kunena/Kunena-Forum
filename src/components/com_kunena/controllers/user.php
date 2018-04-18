@@ -221,10 +221,28 @@ class KunenaControllerUser extends KunenaController
 		if ($this->user->userid == $this->me->userid)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+			$edited_by_moderator = 0;
 		}
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'));
+			$edited_by_moderator = 1;
+		}
+
+		if ($this->config->log_moderation)
+		{
+			$log     = KunenaLog::LOG_USER_EDIT;
+
+			KunenaLog::log(
+				KunenaLog::TYPE_ACTION,
+				$log,
+				array(
+					'edited_by_moderator'     => $edited_by_moderator,
+				),
+				null,
+				null,
+				$this->user
+			);
 		}
 
 		if ($return)

@@ -237,9 +237,9 @@ class KunenaLog
 	// Const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 5.0
 	 */
-	// Const LOG_USER_EDIT = 'LOG_USER_EDIT';
+	Const LOG_USER_EDIT = 'LOG_USER_EDIT';
 
 	/**
 	 * @since Kunena 5.0

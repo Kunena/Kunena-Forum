@@ -41,7 +41,9 @@ if ($this->config->showuserstats)
 		<div class="col-md-12">
 			<?php if ($avatar) : ?>
 				<div class="col-md-2">
-					<div class="center"> <?php echo $avatar; ?> </div>
+					<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
+						<?php echo $this->profile->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, KunenaConfig::getInstance()->avataredit); ?>
+					</div>
 					<?php if ($this->config->user_status): ?>
 						<div class="center">
 							<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>

@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 // @var KunenaForumMessage $message
 
 $message              = $this->message;
+$topic                = $message->getTopic();
+$category             = $message->getCategory();
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
@@ -48,12 +50,12 @@ else
 		<div class="profile-horizontal-top">
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
-		<div class="badger-left badger-info
-<?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?>">
-			<div class="mykmsg-header"><?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' .
-					KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname .
-					' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject),
-						0, $subjectlengthmessage); ?>
+		<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $this->message->getState(); ?>">
+			<div class="mykmsg-header">
+				<?php
+				$title = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+				echo JText::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false));?>
 			</div>
 			<div class="kmsg">
 				<?php if (!$this->me->userid && !$isReply) :

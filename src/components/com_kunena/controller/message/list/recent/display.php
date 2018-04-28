@@ -62,6 +62,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
+		$view = $this->state->get('view');
+
 
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
@@ -247,6 +249,27 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+
+				$app = \Joomla\CMS\Factory::getApplication();
+				$view = $app->input->get('view');
+
+				if ($view == 'user')
+				{
+					$userName              = $user->getName();
+					$charMapApostropheOnly = array('s','S','z','Z');
+
+					if (in_array(substr($userName, -1), $charMapApostropheOnly))
+					{
+						$userName .= "";
+					}
+					else
+					{
+						$userName .= "'s ";
+					}
+
+					$this->headerText = JText::sprintf(JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName);
+				}
+
 				$actions          = array('approve', 'delete', 'move', 'permdelete');
 		}
 

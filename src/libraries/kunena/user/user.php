@@ -554,7 +554,7 @@ class KunenaUser extends JObject
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90)
+	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90, $online = '')
 	{
 		if (!$this->avatar && KunenaConfig::getInstance()->avatar_type)
 		{
@@ -565,17 +565,17 @@ class KunenaUser extends JObject
 			{
 				if ($topicicontype == 'fa')
 				{
-					return '<i class="fas fa-user-circle" aria-hidden="true"></i>';
+					return '<i class="fas fa-user-circle status-' . $online . '" aria-hidden="true"></i>';
 				}
 
 				if ($topicicontype == 'B2')
 				{
-					return '<span class="icon icon-user user-circle user-default" aria-hidden="true"></span>';
+					return '<span class="icon icon-user user-circle user-default status-' . $online . '" aria-hidden="true"></span>';
 				}
 
 				if ($topicicontype == 'B3')
 				{
-					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
+					return '<span class="glyphicon glyphicon-user user-circle user-default status-' . $online . '" aria-hidden="true"></span>';
 				}
 			}
 			elseif ($sizex == 'logout' || $sizex == 'profile')

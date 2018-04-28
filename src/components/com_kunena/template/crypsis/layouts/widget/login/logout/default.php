@@ -33,15 +33,15 @@ $config         = KunenaFactory::getTemplate()->params;
 			$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
 
 			if ($this->me->getStatus() == 0 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20);
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20, 'green');
 			elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20);
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20, 'yellow');
 			elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20);
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20, 'red');
 			elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20);
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20, 'grey');
 			else :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20);
+				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
 			endif; ?>
 				<b class="caret"></b>
 				</span>

@@ -63,6 +63,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfile
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
+$me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 if ($editor == 0)
 {
@@ -375,7 +376,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
 									       id="subscribeMe"
-									       value="1" <?php if ($this->subscriptionschecked)
+									       value="1" <?php if ($this->config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $me->canSubscribe == 1)
 									{
 										echo 'checked="checked"';
 									} ?> />

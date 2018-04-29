@@ -360,6 +360,12 @@ class KunenaControllerTopics extends KunenaController
 		{
 			$target = KunenaForumCategoryHelper::get($this->app->input->getInt('target', 0));
 
+			if (empty($target->id))
+			{
+			    $this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
+				$this->setRedirectBack();
+			}
+
 			if (!$target->isAuthorised('read'))
 			{
 				$this->app->enqueueMessage($target->getError(), 'error');

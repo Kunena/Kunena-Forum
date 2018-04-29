@@ -44,7 +44,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return KunenaAdminTemplate|KunenaTemplate
+	 * @return KunenaAdminTemplate4|KunenaAdminTemplate3|KunenaTemplate
 	 * @since Kunena
 	 */
 	public static function getAdminTemplate()

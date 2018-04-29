@@ -152,7 +152,10 @@ class KunenaAccess
 
 		// Load native category moderators and administrators
 		$db    = Factory::getDBO();
-		$query = "SELECT user_id, category_id, role FROM #__kunena_user_categories WHERE role IN (1,2)";
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('role'));
+		$query->from($db->quoteName('#__kunena_user_categories'));
+		$query->where($db->quoteName('role') . ' IN (1,2)');
 		$db->setQuery($query);
 
 		try
@@ -988,13 +991,25 @@ window.addEvent('domready', function(){
 		if ($type & self::TOPIC_SUBSCRIPTION)
 		{
 			// Get topic subscriptions
-			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1";
+			$querytopic = $db->getQuery(true);
+			$querytopic->select($db->quoteName('user_id'));
+			$querytopic->from($db->quoteName('#__kunena_user_topics'));
+			$querytopic->where($db->quoteName('topic_id') . '=' . $topic->id);
+			$querytopic->andWhere($db->quoteName('subscribed') . '=1');
+
+			$query[] = $querytopic;
 		}
 
 		if ($type & self::CATEGORY_SUBSCRIPTION)
 		{
 			// Get category subscriptions
-			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id} AND subscribed=1";
+			$querycat = $db->getQuery(true);
+			$querycat->select($db->quoteName('user_id'));
+			$querycat->from($db->quoteName('#__kunena_user_categories'));
+			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
+			$querycat->andWhere($db->quoteName('subscribed') . '=1');
+
+			$query[] = $querycat;
 		}
 
 		$query = implode(' UNION ', $query);

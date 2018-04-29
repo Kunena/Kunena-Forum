@@ -138,7 +138,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param   null $layout layout
 	 * @param   null $tpl    tmpl
 	 *
-	 * @return mixed|void|string
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -394,13 +394,13 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 	 * @param   int    $len    len
 	 * @param   mixed  $parent parent
 	 *
-	 * @return mixed|void
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function parse($text, $len = 0, $parent)
 	{
-		if ($this instanceof KunenaViewSearch)
+		if ($this instanceof ComponentKunenaControllerSearchFormDisplay)
 		{
 			$parent_object = $parent;
 		}

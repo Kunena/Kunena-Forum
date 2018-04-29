@@ -1364,7 +1364,11 @@ class KunenaConfig extends JObject
 	public function load()
 	{
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from($db->quoteName('#__kunena_configuration'));
+		$query->where($db->quoteName('id') . '=1');
+		$db->setQuery($query);
 
 		try
 		{
@@ -1444,7 +1448,11 @@ class KunenaConfig extends JObject
 		$params = $this->getProperties();
 		unset($params['id']);
 
-		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_configuration'));
+		$query->set($db->quoteName('id') . '=1');
+		$query->set($db->quoteName('params') . '=' . $db->quote(json_encode($params)));
+		$db->setQuery($query);
 
 		try
 		{

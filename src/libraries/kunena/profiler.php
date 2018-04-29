@@ -126,7 +126,9 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 	 */
 	public function sort(&$array, $property = 'total')
 	{
-		return usort($array, function ($a, $b) use ($property) {
+		return usort($array, function ($a, $b) use ($property)
+		{
+
 			if ($a->$property == $b->$property)
 			{
 				return 0;

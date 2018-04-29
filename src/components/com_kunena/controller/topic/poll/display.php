@@ -73,7 +73,14 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		$this->poll       = $this->topic->getPoll();
 		$this->usercount  = $this->poll->getUserCount();
 		$this->usersvoted = $this->poll->getUsers();
-		$this->voted      = $this->poll->getMyVotes();
+		if (is_object($this->poll->getMyVotes()))
+		{
+			$this->userhasvoted      = $this->poll->getMyVotes();
+		}
+		else
+		{
+			$this->userhasvoted = 0;
+		}
 
 		if (!empty($this->alwaysVote))
 		{
@@ -82,7 +89,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			$this->topic->tryAuthorise('reply');
 			$this->name = 'Topic/Poll/Vote';
 		}
-		elseif (!$this->voted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
+		elseif (!$this->userhasvoted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
 			$this->name = 'Topic/Poll/Vote';
 		}

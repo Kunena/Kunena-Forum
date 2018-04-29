@@ -59,7 +59,11 @@ else
 			:
 			?> badger-moderator <?php
 		endif; ?>"
-		     data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+			data-badger="<?php
+				$subject = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+				$msg = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+				echo JText::sprintf($msg, $avatarname, $subject);
+			?>">
 			<div class="kmessage">
 				<div class="horizontal-message-text">
 					<div class="kmsg">
@@ -165,7 +169,7 @@ if ($message->modified_by && $this->config->editmarkup)
 		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
 	} ?>
 	<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink(null, null, '', '', null, $this->category->id) . '.'; ?>
+		<?php echo JText::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
 		<?php
 		if ($message->modified_reason)
 		{

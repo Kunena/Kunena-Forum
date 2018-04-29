@@ -48,7 +48,11 @@ $list = array();
 	</small>
 
 	<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
-	     data-badger="<?php echo (!$isReply) ? $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage) : $avatarname . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage); ?>">
+		data-badger="<?php
+			$subject = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+			$msg = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+			echo JText::sprintf($msg, $avatarname, $subject);
+		?>">
 		<div class="kmessage">
 			<div class="kmsg">
 				<?php if (!$this->me->userid && !$isReply) :
@@ -142,7 +146,7 @@ endif; ?>
 	}
 	?>
 	<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink(null, null, '', '', null, $this->category->id) . '.'; ?>
+		<?php echo JText::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
 		<?php if ($message->modified_reason)
 		{
 			echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);

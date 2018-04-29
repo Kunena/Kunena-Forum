@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 ?>
 
 <?php if ($this->me->exists()) : ?>
-	<strong><?php JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
+	<strong><?php echo JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
 	<div class="kmsgtext-hide"><?php echo $this->content; ?></div>
 <?php else : ?>
 	<strong><?php echo JText::_('COM_KUNENA_BBCODE_HIDDENTEXT'); ?></strong>

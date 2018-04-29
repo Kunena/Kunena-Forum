@@ -1853,7 +1853,7 @@ class KunenaUser extends JObject
 						$gender = 'unknown';
 				}
 
-				$title = JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender);
+				$title = JText::sprintf('COM_KUNENA_MYPROFILE_GENDER_GENDER', JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender));
 
 				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-toggle="tooltip" data-placement="right" title="' . $title . '"></span>';
 				break;
@@ -1867,7 +1867,7 @@ class KunenaUser extends JObject
 						break;
 					}
 
-					return '<span class="kicon-profile kicon-profile-birthdate" data-toggle="tooltip" data-placement="right" title="' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" data-toggle="tooltip" data-placement="right" title="' . JText::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate->toKunena('date', 'GMT')) . '"></span>';
 				}
 				break;
 			case 'location' :

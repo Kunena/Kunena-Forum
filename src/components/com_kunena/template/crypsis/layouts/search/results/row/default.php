@@ -42,7 +42,10 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 		</small>
 		<div class="badger-left badger-info khistory">
 			<div class="mykmsg-header">
-				<?php echo (!$isReply) ? $name . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $name . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'); ?><?php echo $message->displayField('subject'); ?>
+				<?php
+				$subject = $message->displayField('subject');
+				$msg = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+				echo JText::sprintf($msg, $name, $subject);
 			</div>
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message, null, null, 'hasTooltip'); ?>

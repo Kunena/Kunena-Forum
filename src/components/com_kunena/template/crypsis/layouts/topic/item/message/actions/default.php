@@ -28,8 +28,7 @@ if ($this->config->editmarkup && $this->message->modified_time)
 			:
 			?>
 			<span class="alert" <?php echo $dateTitle; ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateText . JText::_('COM_KUNENA_BY')
-			. ' ' . $this->message->getModifier()->getLink() . '.'; ?>
+		<?php echo JText::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateText, $this->message->getModifier()->getLink()); ?>
 		<?php
 		if ($this->message->modified_reason)
 		{

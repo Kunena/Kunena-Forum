@@ -68,7 +68,7 @@ class KunenaViewTopic extends KunenaView
 
 			$db     = Factory::getDBO();
 			$kquery = new KunenaDatabaseQuery;
-			$kquery->select('*')->from("{$db->qn('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
+			$kquery->select('*')->from("{$db->quoteName('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);
 
 			try

@@ -444,8 +444,8 @@ class KunenaTableMap
 				}
 
 				$query = $this->_db->getQuery(true);
-				$query->insert($this->_db->qn($this->_tbl));
-				$query->columns(array($this->_db->qn($this->_tbl_key), $this->_db->qn($this->_tbl_mapped)));
+				$query->insert($this->_db->quoteName($this->_tbl));
+				$query->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)));
 				$query->values($values);
 				$this->_db->setQuery($query);
 				$this->_db->execute();
@@ -455,9 +455,9 @@ class KunenaTableMap
 			if ($deleted)
 			{
 				$query = $this->_db->getQuery(true);
-				$query->delete($this->_db->qn($this->_tbl));
-				$query->where($this->_db->qn($this->_tbl_key) . '=' . (int) $id);
-				$query->where($this->_db->qn($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
+				$query->delete($this->_db->quoteName($this->_tbl));
+				$query->where($this->_db->quoteName($this->_tbl_key) . '=' . (int) $id);
+				$query->where($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
 				$this->_db->setQuery($query);
 				$this->_db->execute();
 			}

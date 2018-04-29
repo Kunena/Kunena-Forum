@@ -62,9 +62,9 @@ class KunenaAdminControllerCpanel extends KunenaController
 
 			$query = $db->getQuery(true)
 				->select('*')
-				->from($db->qn('#__updates'))
-				->where($db->qn('extension_id') . ' > 0')
-				->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
+				->from($db->quoteName('#__updates'))
+				->where($db->quoteName('extension_id') . ' > 0')
+				->where($db->quoteName('detailsurl') . ' LIKE ' . $db->quote($updateSite));
 			$db->setQuery($query);
 			$list = (array) $db->loadObjectList();
 
@@ -90,9 +90,9 @@ class KunenaAdminControllerCpanel extends KunenaController
 			{
 				$query = $db->getQuery(true)
 					->select('update_site_id')
-					->from($db->qn('#__update_sites'))
-					->where($db->qn('enabled') . ' = 0')
-					->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
+					->from($db->quoteName('#__update_sites'))
+					->where($db->quoteName('enabled') . ' = 0')
+					->where($db->quoteName('location') . ' LIKE ' . $db->quote($updateSite));
 				$db->setQuery($query);
 				$updateInfo = !$db->loadResult();
 			}

@@ -700,7 +700,7 @@ abstract class KunenaAttachmentHelper
 		$db = Factory::getDBO();
 		$db->getQuery(true)
 			->select('*')
-			->from($db->qn('#__kunena_attachments'));
+			->from($db->quoteName('#__kunena_attachments'));
 
 		try
 		{

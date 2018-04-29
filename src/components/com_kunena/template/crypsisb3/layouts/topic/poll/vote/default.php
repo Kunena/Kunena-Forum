@@ -38,7 +38,7 @@ $this->addScript('assets/js/poll.js');
 								       id="radio_name<?php echo (int) $key; ?>"
 								       value="<?php echo (int) $poll_option->id; ?>"
 									<?php
-									if ($this->voted && $this->voted->lastvote == $poll_option->id)
+									if ($this->poll->getMyVotes()->votes && $this->voted->lastvote == $poll_option->id)
 									{
 										echo 'checked="checked"';
 									} ?> />
@@ -50,7 +50,7 @@ $this->addScript('assets/js/poll.js');
 				</ul>
 
 				<input id="kpoll-button-vote" class="btn btn-success" type="submit"
-				       value="<?php echo $this->voted && $this->config->pollallowvoteone
+				       value="<?php echo $this->poll->getMyVotes()->votes && !$this->config->pollallowvoteone
 					       ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
 					       : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
 				<input id="kpoll_go_results" type="button" class="btn btn-success"

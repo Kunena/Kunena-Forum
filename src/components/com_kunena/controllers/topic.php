@@ -2146,7 +2146,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage($topic->getError(), 'error');
 		}
-		elseif (!$this->config->pollallowvoteone || !$poll->getMyVotes())
+		elseif (!$poll->getMyVotes())
 		{
 			// Give a new vote
 			$success = $poll->vote($vote);
@@ -2160,7 +2160,7 @@ class KunenaControllerTopic extends KunenaController
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'));
 			}
 		}
-		else
+		elseif (!$this->config->pollallowvoteone)
 		{
 			// Change existing vote
 			$success = $poll->vote($vote, true);

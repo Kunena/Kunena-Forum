@@ -191,7 +191,13 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id = {$this->$k}";
+		$query = $this->_db->getQuery(true);
+		$query->select(array('m.*', 't.message'));
+		$query->from($this->_db->quoteName('#__kunena_messages', 'm'));
+		$query->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') .
+			' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
+		);
+		$query->where($this->_db->quoteName('m.id') . '=' . $this->$k);
 		$this->_db->setQuery($query);
 
 		try
@@ -293,14 +299,24 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		$this->message = $message;
+		$query = $this->_db->getQuery(true);
 
 		if ($update)
 		{
-			$query = "UPDATE #__kunena_messages_text SET message={$this->_db->quote($this->message)} WHERE mesid = {$this->$k}";
+			$query->update($this->_db->quoteName('#__kunena_messages_text'));
+			$query->set($this->_db->quoteName('message') . '=' . $this->_db->quote($this->message));
+			$query->where($this->_db->quoteName('mesid') . '=' . $this->$k);
 		}
 		else
 		{
-			$query = "INSERT INTO #__kunena_messages_text (mesid, message) VALUES ({$this->$k}, {$this->_db->quote($this->message)})";
+			$query->insert('#__kunena_messages_text')
+				->columns(
+					array(
+						$this->_db->quoteName('mesid'),
+						$this->_db->quoteName('message'),
+					)
+				)
+				->values($this->$k . ', ' . $this->_db->quote($this->message));
 		}
 
 		$this->_db->setQuery($query);

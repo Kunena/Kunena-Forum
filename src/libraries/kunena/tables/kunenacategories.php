@@ -390,8 +390,7 @@ class TableKunenaCategories extends KunenaTable
 		if ($id > 0)
 		{
 			$query = $this->_db->getQuery(true);
-			$query->select($this->_db->quoteName('id'));
-			$query->select($this->_db->quoteName('parent_id'));
+			$query->select($this->_db->quoteName(array('id', 'parent_id')));
 			$query->from($this->_db->quoteName('#__kunena_categories'));
 			$this->_db->setQuery($query);
 

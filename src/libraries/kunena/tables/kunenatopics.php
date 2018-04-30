@@ -201,7 +201,10 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = "SELECT * FROM #__kunena_topics WHERE id = {$this->$k}";
+		$query = $this->_db->getQuery(true);
+		$query->select('*');
+		$query->from($this->_db->quoteName('#__kunena_topics'));
+		$query->where($this->_db->quoteName('id') . '=' . $this->$k);
 		$this->_db->setQuery($query);
 
 		try

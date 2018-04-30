@@ -2101,6 +2101,23 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$poll   = $this->getPoll();
 		$votes  = $poll->getMyVotes($user);
 
+		if (!$config->pollallowvoteone)
+		{
+			$time_zone = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
+			$objTimeZone = new DateTimeZone($time_zone);
+
+			// Check the time between two votes
+			$date_a = new DateTime($poll->getMyTime(), $objTimeZone);
+			$date_b = new DateTime('now', $objTimeZone);
+
+			$interval = date_diff($date_a, $date_b);
+
+			if ($interval->format('%H:%I:%S') < $config->polltimebtvotes)
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 403);
+			}
+		}
+
 		if ($votes && $config->pollallowvoteone)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
@@ -2111,7 +2128,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
 
-		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > Factory::getDate()->toUnix())
+		if ($config->polltimebtvotes && (int) $poll->getMyTime($user) + (int) $config->polltimebtvotes > Factory::getDate()->toUnix())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
 		}

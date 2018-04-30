@@ -314,7 +314,7 @@ class KunenaForumTopicPoll extends JObject
 			}
 		}
 
-		return (int) $this->mytime[$user->userid];
+		return $this->mytime[$user->userid];
 	}
 
 	/**
@@ -392,7 +392,7 @@ class KunenaForumTopicPoll extends JObject
 			}
 		}
 
-		$votes->lasttime = Factory::getDate()->toSql();
+		$votes->lasttime = KunenaUserHelper::getMyself()->getTime();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 

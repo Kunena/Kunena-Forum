@@ -10,8 +10,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
-
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -275,7 +273,10 @@ class TableKunenaCategories extends KunenaTable
 		}
 
 		// Load the data.
-		$query = "SELECT * FROM #__kunena_categories WHERE id = {$this->$k}";
+		$query = $this->_db->getQuery(true);
+		$query->select('*');
+		$query->from($this->_db->quoteName('#__kunena_categories'));
+		$query->where($this->_db->quoteName('id') . '=' . $this->$k);
 		$this->_db->setQuery($query);
 
 		try
@@ -388,7 +389,10 @@ class TableKunenaCategories extends KunenaTable
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0)
 		{
-			$query = "SELECT id, parent_id FROM #__kunena_categories";
+			$query = $this->_db->getQuery(true);
+			$query->select($this->_db->quoteName('id'));
+			$query->select($this->_db->quoteName('parent_id'));
+			$query->from($this->_db->quoteName('#__kunena_categories'));
 			$this->_db->setQuery($query);
 
 			try
@@ -444,15 +448,18 @@ class TableKunenaCategories extends KunenaTable
 	{
 		if (!$where)
 		{
-			$db    = Factory::getDbo();
-			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
-			$db->setQuery($query);
-			$parents = $db->loadColumn();
+			$query = $this->_db->getQuery(true);
+			$query->select($this->_db->quoteName('parent_id'));
+			$query->from($this->_db->quoteName('#__kunena_categories'));
+			$query->group($this->_db->quoteName('parent_id'));
+			$this->_db->setQuery($query);
+
+			$parents = $this->_db->loadColumn();
 			$success = true;
 
 			foreach ($parents as $parent_id)
 			{
-				$success &= parent::reorder("parent_id={$db->quote($parent_id)}");
+				$success &= parent::reorder("parent_id={$this->_db->quote($parent_id)}");
 			}
 
 			return $success;

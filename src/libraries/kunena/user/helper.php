@@ -399,14 +399,14 @@ abstract class KunenaUserHelper
 			return array();
 		}
 
-		$test = $recursive ? '>=' : '=';
+		$recurs = $recursive ? '>=' : '=';
 
 		// Find users and their groups.
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select('m.*')
 			->from('#__usergroups AS ug1')
-			->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt')
+			->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $recurs . 'ug1.lft AND ug1.rgt' . $recurs . 'ug2.rgt')
 			->join('INNER', '#__user_usergroup_map AS m ON ug2.id=m.group_id');
 
 		if ($groupIds)
@@ -464,8 +464,9 @@ abstract class KunenaUserHelper
 			$query  = $db->getQuery(true);
 			$query
 				->select('COUNT(*)')
-				->from('#__session')
-				->where('client_id=0 AND userid=0');
+				->from($db->quoteName('#__session'))
+				->where($db->quoteName('client_id') . '=0')
+				->andWhere($db->quoteName('userid') . '=0');
 
 			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
 			{
@@ -516,9 +517,10 @@ abstract class KunenaUserHelper
 			$query  = $db->getQuery(true);
 			$query
 				->select('userid, MAX(time) AS time')
-				->from('#__session')
-				->where('client_id=0 AND userid>0')
-				->group('userid')
+				->from($db->quoteName('#__session'))
+				->where($db->quoteName('client_id') . '=0')
+				->andWhere($db->quoteName('userid') . '>0')
+				->group($db->quoteName('userid'))
 				->order('time DESC');
 
 			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
@@ -619,7 +621,6 @@ abstract class KunenaUserHelper
 				FROM #__kunena_user_topics
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
-		$db->setQuery($query);
 
 		try
 		{

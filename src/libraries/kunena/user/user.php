@@ -1323,7 +1323,10 @@ class KunenaUser extends JObject
 		// First run? Initialize ranks.
 		if (self::$_ranks === null)
 		{
-			$this->_db->setQuery("SELECT * FROM #__kunena_ranks");
+			$query = $this->_db->getQuery(true);
+			$query->select('*');
+			$query->from($this->_db->quoteName('#__kunena_ranks'));
+			$this->_db->setQuery($query);
 
 			try
 			{
@@ -1792,9 +1795,9 @@ class KunenaUser extends JObject
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
-				->select('title')
+				->select($db->quoteName('title'))
 				->from('#__usergroups')
-				->where('id = ' . (int) $groupid_list);
+				->where($db->quoteName('id') . '=' . (int) $groupid_list);
 
 			$db->setQuery($query);
 			$groupNames = $db->loadResult();

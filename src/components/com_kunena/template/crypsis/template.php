@@ -44,10 +44,10 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	{
 		// Template requires Bootstrap javascript
 		HTMLHelper::_('bootstrap.framework');
-		HTMLHelper::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 
 		// Template also requires jQuery framework.
 		HTMLHelper::_('jquery.framework');
+		HTMLHelper::_('bootstrap.tooltip');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{

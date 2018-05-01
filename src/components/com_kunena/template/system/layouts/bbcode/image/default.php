@@ -28,36 +28,15 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
-
-if ($config->lazyload)
-{
-	?>
+?>
+<div class="kmsgimage">
 	<?php if ($canLink) : ?>
-		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
-	<?php endif; ?>
+	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
+		<?php endif; ?>
 
-	<img class="lazy" src="<?php echo $this->escape($url); ?>"
-	     data-src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
-	     alt="<?php echo $title;?>"/>
+		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $alt;?>"/>
 
-	<?php if ($canLink) : ?>
-		</a>
-	<?php endif; ?>
-
-	<?php
-}
-else
-{
-	?>
-	<div class="kmsgimage">
 		<?php if ($canLink) : ?>
-		<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
-			<?php endif; ?>
-
-			<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $alt;?>"/>
-
-			<?php if ($canLink) : ?>
-		</a>
-	<?php endif; ?>
-	</div>
-<?php } ?>
+	</a>
+<?php endif; ?>
+</div>

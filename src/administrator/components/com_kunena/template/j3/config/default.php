@@ -1018,11 +1018,6 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 												</tr>
-												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_LAZYLOAD') ?></td>
-													<td><?php echo $this->lists ['lazyload'] ?></td>
-													<td><?php echo JText::_('COM_KUNENA_A_LAZYLOAD_DESC') ?></td>
-												</tr>
 												</tbody>
 											</table>
 										</fieldset>

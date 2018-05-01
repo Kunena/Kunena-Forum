@@ -489,7 +489,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['signature'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox" size="1"', 'value', 'text', $this->config->signature);
 		$lists ['personal']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox" size="1"', 'value', 'text', $this->config->personal);
 		$lists ['social']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox" size="1"', 'value', 'text', $this->config->social);
-		$lists ['lazyload']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
 
 		$lists ['plain_email']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->plain_email);
 		$lists ['smartlinking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_smartlinking', 'class="inputbox" size="1"', 'value', 'text', $this->config->smartlinking);

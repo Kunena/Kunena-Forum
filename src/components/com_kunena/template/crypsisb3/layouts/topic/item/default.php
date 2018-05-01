@@ -41,11 +41,6 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addScript('assets/js/krating.js');
 }
 
-if (KunenaConfig::getInstance()->lazyload)
-{
-	$this->addScript('assets/js/jquery.lazyload.min.js');
-}
-
 $this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();

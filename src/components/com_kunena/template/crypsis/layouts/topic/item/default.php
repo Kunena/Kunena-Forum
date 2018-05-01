@@ -44,12 +44,6 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addScript('assets/js/krating.js');
 }
 
-if (KunenaConfig::getInstance()->lazyload)
-{
-	$this->addScriptDeclaration('new LazyLoad();');
-
-	$this->addScript('assets/js/jquery.lazyload.min.js');
-}
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');

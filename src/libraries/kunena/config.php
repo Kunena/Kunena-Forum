@@ -1201,12 +1201,6 @@ class KunenaConfig extends JObject
 	public $social = 1;
 
 	/**
-	 * @var integer LAzy Load
-	 * @since  K5.1.0
-	 */
-	public $lazyload = 1;
-
-	/**
 	 * @var integer
 	 * @since  K5.0.4
 	 */

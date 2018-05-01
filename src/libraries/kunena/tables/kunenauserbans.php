@@ -141,13 +141,10 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 		$now = new \Joomla\CMS\Date\Date;
 
 		// Load the user data.
-		$query  = $this->_db->getQuery(true);
-		$query->select('*');
-		$query->from($this->_db->quoteName($this->_tbl));
-		$query->where($this->_db->quoteName('userid') . '=' . (int) $userid);
-		$query->andWhere($this->_db->quoteName('expiration') . '=' . $this->_db->quote($this->_db->getNullDate()));
-		$query->orWhere($this->_db->quoteName('expiration') . '>' . $this->_db->quote($now->toSql()));
-		$query->order($this->_db->quoteName('id') . ' DESC');
+		$query = "SELECT * FROM {$this->_tbl} 
+      WHERE userid = {$this->_db->quote($userid)} 
+      " . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . " 
+      ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 
 		try

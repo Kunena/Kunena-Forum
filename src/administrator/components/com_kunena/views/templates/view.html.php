@@ -113,6 +113,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolbarHelper::spacer();
 		JToolbarHelper::save('save');
 		JToolbarHelper::spacer();
+		JToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE_TEMPLATE_SETTINGS', false);
+		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';

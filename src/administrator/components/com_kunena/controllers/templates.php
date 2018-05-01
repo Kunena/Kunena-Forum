@@ -869,6 +869,32 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
+	 * Method to restore the default settings of the template selected
+	 *
+	 * @return void
+	 *
+	 * @since 5.1
+	 */
+	public function restore()
+	{
+	    $template = $this->app->input->get('templatename', '', 'method', 'cmd');
+	    $file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+	    if(file_exists($file))
+	    {
+	        $result = JFile::delete($file);
+
+	        if ($result)
+	        {
+	            KunenaFile::write($file, '');
+	        }
+	    }
+
+	    $this->app->enqueueMessage(JText::_('COM_KUNENA_TEMPLATES_SETTINGS_RESTORED_SUCCESSFULLY'));
+	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
 	 * @return void

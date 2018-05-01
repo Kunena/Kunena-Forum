@@ -260,14 +260,14 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 					if (in_array(substr($userName, -1), $charMapApostropheOnly))
 					{
-						$userName .= "";
+						$userName2 = "";
 					}
 					else
 					{
-						$userName .= "'s ";
+						$userName2 = "'s ";
 					}
 
-					$this->headerText = JText::sprintf(JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName);
+					$this->headerText = JText::sprintf(JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
 				}
 
 				$actions          = array('approve', 'delete', 'move', 'permdelete');

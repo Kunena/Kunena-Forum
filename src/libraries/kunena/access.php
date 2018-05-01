@@ -153,7 +153,7 @@ class KunenaAccess
 		// Load native category moderators and administrators
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName('role'));
+		$query->select($db->quoteName(array('user_id', 'category_id', 'role')));
 		$query->from($db->quoteName('#__kunena_user_categories'));
 		$query->where($db->quoteName('role') . ' IN (1,2)');
 		$db->setQuery($query);
@@ -379,7 +379,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name,);
+			                                     'title' => $name,);
 		}
 
 		return $list;

@@ -621,6 +621,7 @@ abstract class KunenaUserHelper
 				FROM #__kunena_user_topics
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
+		$db->setQuery($query);
 
 		try
 		{

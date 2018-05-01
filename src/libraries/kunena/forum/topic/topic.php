@@ -2101,7 +2101,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$poll   = $this->getPoll();
 		$votes  = $poll->getMyVotes($user);
 
-		if (!$config->pollallowvoteone)
+		if (!$config->pollallowvoteone && $votes)
 		{
 			$time_zone = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
 			$objTimeZone = new DateTimeZone($time_zone);

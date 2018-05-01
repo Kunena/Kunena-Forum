@@ -2162,20 +2162,6 @@ class KunenaControllerTopic extends KunenaController
 		}
 		elseif (!$this->config->pollallowvoteone)
 		{
-			$time_zone = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
-			$objTimeZone = new DateTimeZone($time_zone);
-
-			// Check the time between two votes
-			$date_a = new DateTime($poll->getMyTime(), $objTimeZone);
-			$date_b = new DateTime('now', $objTimeZone);
-
-			$interval = date_diff($date_a, $date_b);
-
-			if ($interval->format('%H:%I:%S') < $this->config->polltimebtvotes)
-			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 'notice');
-			}
-
 			// Change existing vote
 			$success = $poll->vote($vote, true);
 

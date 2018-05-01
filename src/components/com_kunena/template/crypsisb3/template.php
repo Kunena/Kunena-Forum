@@ -98,8 +98,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	public function initialize()
 	{
 		HTMLHelper::_('bootstrap.framework');
-		HTMLHelper::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 		HTMLHelper::_('jquery.framework');
+		HTMLHelper::_('bootstrap.tooltip');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{

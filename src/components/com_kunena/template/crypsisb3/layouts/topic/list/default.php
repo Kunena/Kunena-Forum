@@ -16,6 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = Factory::getApplication()->input->getWord('view');
+$layout            = Factory::getApplication()->input->getWord('layout');
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 
@@ -35,10 +36,12 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		<div class="pull-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-xs">
-					(<?php echo KunenaForumCategory::getInstance()->totalCount($this->pagination->total); ?>)
-				</small>
 
+				<?php if ($layout != 'unread') : ?>
+					<small class="hidden-xs">
+						(<?php echo KunenaForumCategory::getInstance()->totalCount($this->pagination->total); ?>)
+					</small>
+				<?php endif; ?>
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
 			</h1>
 		</div>

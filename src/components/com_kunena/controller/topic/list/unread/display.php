@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  *
@@ -29,15 +31,34 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 	{
 		parent::before();
 
+		require_once KPATH_SITE . '/models/topics.php';
+		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
-		$access        = KunenaAccess::getInstance();
 		$this->moreUri = null;
-
+		$access        = KunenaAccess::getInstance();
+		$start = $this->state->get('list.start');
+		$limit = $this->state->get('list.limit');
 		$params = $this->app->getParams('com_kunena');
-		$start  = $this->input->getInt('limitstart', 0);
-		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
 		$this->embedded = $this->getOptions()->get('embedded', true);
+
+		// Handle &sel=x parameter.
+		$time = $this->state->get('list.time');
+
+		if ($time < 0)
+		{
+			$time = null;
+		}
+		elseif ($time == 0)
+		{
+			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
+		}
+		else
+		{
+			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
+		}
 
 		if (!$Itemid)
 		{
@@ -67,8 +88,14 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		$this->topics = $finder
 			->start($start)
 			->limit($limit)
+			->filterByTime($time)
+			->order('id', 0)
 			->filterByUserAccess($this->me)
 			->find();
+
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		$limitnew = $finder->count();
 
 		$mesIds = array();
 
@@ -76,17 +103,20 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 
 		$list = array();
 
+		$this->count = 0;
+
 		foreach ($this->topics as $topic)
 		{
 			if ($topic->unread)
 			{
 				$list[] = $topic;
+				$this->count++;
 			}
 		}
 
 		$this->topics = $list;
 
-		$this->pagination = new KunenaPagination(count($list), $start, $limit);
+		$this->pagination = new KunenaPagination($limitnew, $start, $limit);
 
 		if ($this->moreUri)
 		{
@@ -100,7 +130,6 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 
 		$actions       = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions = $this->getTopicActions($this->topics, $actions);
-
 		$this->headerText = JText::_('COM_KUNENA_UNREAD');
 	}
 }

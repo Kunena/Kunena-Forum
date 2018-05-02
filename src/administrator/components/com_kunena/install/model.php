@@ -2957,6 +2957,8 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			                     'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => array(),),
 			'recent'    => array('name' => JText::_('COM_KUNENA_MENU_ITEM_RECENT'), 'alias' => KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
 			                     'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => array('topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''),),
+			'unread'    => array('name' => JText::_('COM_KUNENA_MENU_ITEM_UNREAD'), 'alias' => KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
+			                     'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => array(),),
 			'newtopic'  => array('name' => JText::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'), 'alias' => KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
 			                     'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => array(),),
 			'noreplies' => array('name' => JText::_('COM_KUNENA_MENU_ITEM_NOREPLIES'), 'alias' => KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),

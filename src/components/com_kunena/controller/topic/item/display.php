@@ -491,7 +491,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('og:image', $image, 'property');
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toKunena('config_post_dateformat'), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
-		$doc->setMetaData('twitter:card', $first, 'name');
+		$doc->setMetaData('twitter:card', 'summary', 'name');
 		$doc->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
 		$doc->setMetaData('twitter:image', $image, 'property');
 		$doc->setMetaData('twitter:description', $first);

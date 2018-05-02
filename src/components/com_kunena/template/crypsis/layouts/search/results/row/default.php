@@ -46,6 +46,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				$subject = $message->displayField('subject');
 				$msg = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
 				echo JText::sprintf($msg, $name, $subject);
+				?>
 			</div>
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message, null, null, 'hasTooltip'); ?>

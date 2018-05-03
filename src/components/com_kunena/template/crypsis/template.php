@@ -107,7 +107,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$doc->addScript('https://use.fontawesome.com/releases/v5.0.11/js/all.js', array(), array('defer' => true));
+			$doc->addScript('https://use.fontawesome.com/releases/v5.0.12/js/all.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings

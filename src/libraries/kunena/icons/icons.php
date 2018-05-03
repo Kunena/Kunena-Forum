@@ -1200,6 +1200,11 @@ class KunenaIcons
 		$topicicontype = $ktemplate->params->get('topicicontype');
 		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
 
+		if ($categoryicon == ' ')
+		{
+			$categoryicon = null;
+		}
+
 		if ($new)
 		{
 			$newchar = 'knewchar';

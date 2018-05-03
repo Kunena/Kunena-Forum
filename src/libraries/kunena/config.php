@@ -1442,11 +1442,7 @@ class KunenaConfig extends JObject
 		$params = $this->getProperties();
 		unset($params['id']);
 
-		$query = $db->getQuery(true);
-		$query->update($db->quoteName('#__kunena_configuration'));
-		$query->set($db->quoteName('id') . '=1');
-		$query->set($db->quoteName('params') . '=' . $db->quote(json_encode($params)));
-		$db->setQuery($query);
+		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
 
 		try
 		{

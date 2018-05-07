@@ -996,6 +996,10 @@
                type="varchar(128)"
                null="0"
                default=""/>
+        <field name="socialshare"
+               type="tinyint(1)"
+               null="0"
+               default="1"/>
         <key name="PRIMARY"
              unique="1"
              columns="userid"/>

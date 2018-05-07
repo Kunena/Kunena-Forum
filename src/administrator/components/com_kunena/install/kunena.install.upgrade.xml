@@ -801,6 +801,12 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY COLUMN `checked_out` int(11);</query>
         </version>
+        <version version="5.1.0-RC9"
+                 versiondate="2018-05-07"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `socialshare` tinyint(1) NOT NULL default '1' AFTER `ip`;
+            </query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

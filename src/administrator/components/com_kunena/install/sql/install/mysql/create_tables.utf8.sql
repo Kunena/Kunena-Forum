@@ -319,6 +319,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`userListtime` int(11) NULL default '-2',
 	`thankyou` int(11) NULL default '0',
 	`ip` varchar(128) NOT NULL,
+	`socialshare` tinyint(1) NOT NULL default '1',
 	PRIMARY KEY (userid),
 	KEY `group_id` (group_id),
 	KEY `posts` (posts),

@@ -109,6 +109,17 @@ class KunenaAdminViewUser extends KunenaView
 		);
 		$this->settings[] = $item;
 
+		$item             = new StdClass;
+		$item->name       = 'socialshare';
+		$item->label      = JText::_('COM_KUNENA_USER_SOCIALSHARE');
+		$options          = array();
+		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field      = HTMLHelper::_('select.genericlist', $options, 'social', 'class="kinputbox form-control" size="1"', 'value',
+			'text', $this->escape($this->user->socialshare), 'ksocialshare'
+		);
+		$this->settings[] = $item;
+
 		$this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');

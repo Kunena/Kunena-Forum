@@ -110,6 +110,17 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		);
 		$this->settings[] = $item;
 
+		$item             = new StdClass;
+		$item->name       = 'socialshare';
+		$item->label      = JText::_('COM_KUNENA_USER_SOCIALSHARE');
+		$options          = array();
+		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field      = HTMLHelper::_('select.genericlist', $options, 'social', 'class="kinputbox form-control" size="1"', 'value',
+			'text', $this->escape($this->profile->socialshare), 'ksocialshare'
+		);
+		$this->settings[] = $item;
+
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
 	}
 

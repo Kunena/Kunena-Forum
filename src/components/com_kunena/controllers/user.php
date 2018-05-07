@@ -1246,6 +1246,7 @@ class KunenaControllerUser extends KunenaController
 		$this->user->showOnline   = $this->app->input->getInt('showonline', '');
 		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', '');
 		$this->user->userListtime = $this->app->input->getInt('userlisttime', '');
+		$this->user->socialshare  = $this->app->input->getInt('socialshare', '');
 	}
 
 	public function delfile()

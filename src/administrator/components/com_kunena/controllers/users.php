@@ -142,6 +142,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->showOnline   = $this->app->input->getString('showonline');
 			$user->cansubscribe = $this->app->input->getString('cansubscribe');
 			$user->userlisttime = $this->app->input->getString('userlisttime');
+			$user->socialshare  = $this->app->input->getString('socialshare');
 			$user->view         = $newview;
 			$user->ordering     = $neworder;
 			$user->rank         = $newrank;
@@ -241,6 +242,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			$user->showOnline   = $this->app->input->getString('showonline');
 			$user->cansubscribe = $this->app->input->getString('cansubscribe');
 			$user->userlisttime = $this->app->input->getString('userlisttime');
+			$user->socialshare  = $this->app->input->getString('socialshare');
 
 			$user->view     = $newview;
 			$user->ordering = $neworder;

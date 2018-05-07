@@ -400,6 +400,13 @@ class TableKunenaUsers extends KunenaTable
 	public $telegram = null;
 
 	/**
+	 * social
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $socialshare = null;
+
+	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena

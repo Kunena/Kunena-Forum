@@ -26,10 +26,10 @@ if (KunenaConfig::getInstance()->ratingenabled)
 } ?>
 <div class="row-fluid">
 	<div class="span12">
-		<?php if ($social == 1) : ?>
+		<?php if ($social == 1 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 		<?php endif; ?>
-		<?php if ($social == 2) : ?>
+		<?php if ($social == 2 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 		<?php endif; ?>
 		<div class="pull-left">

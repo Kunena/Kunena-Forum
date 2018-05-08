@@ -75,6 +75,7 @@ jimport('joomla.utilities.date');
  * @property    string $whatsapp
  * @property    string $youtube
  * @property    string $ok
+ * @property    int    $socialshare
  * @since Kunena
  */
 class KunenaUser extends JObject

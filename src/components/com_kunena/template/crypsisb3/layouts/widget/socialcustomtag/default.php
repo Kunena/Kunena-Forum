@@ -15,4 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag  = $this->ktemplate->params->get('socialsharetag');
 
-echo HTMLHelper::_('content.prepare', $socialsharetag);
+if ($me->socialshare != 0)
+{
+	echo HTMLHelper::_('content.prepare', $socialsharetag);
+}

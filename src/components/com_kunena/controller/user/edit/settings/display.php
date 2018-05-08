@@ -116,7 +116,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options          = array();
 		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field      = HTMLHelper::_('select.genericlist', $options, 'social', 'class="kinputbox form-control" size="1"', 'value',
+		$item->field      = HTMLHelper::_('select.genericlist', $options, 'socialshare', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->socialshare), 'ksocialshare'
 		);
 		$this->settings[] = $item;

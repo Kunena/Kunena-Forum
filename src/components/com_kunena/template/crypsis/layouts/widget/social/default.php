@@ -10,6 +10,11 @@
  **/
 defined('_JEXEC') or die;
 
+if (KunenaUserHelper::getMyself()->socialshare == 0)
+{
+	return false;
+}
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $socialtheme     = $this->ktemplate->params->get('socialtheme');
 $this->addStyleSheet('assets/css/jssocials.css');

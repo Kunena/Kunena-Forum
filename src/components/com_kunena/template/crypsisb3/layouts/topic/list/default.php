@@ -16,9 +16,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = Factory::getApplication()->input->getWord('view');
-$layout            = Factory::getApplication()->input->getWord('layout');
+$layout          = Factory::getApplication()->input->getWord('layout');
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
+$me              = KunenaUserHelper::getMyself();
 
 if (KunenaConfig::getInstance()->ratingenabled)
 {

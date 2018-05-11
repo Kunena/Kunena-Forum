@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<div class="navbar" itemscope itemtype="http://schema.org/SiteNavigationElement">
+<div class="navbar" itemscope itemtype="https://schema.org/SiteNavigationElement">
 	<div class="navbar-inner">
 		<div class="visible-desktop">
 			<?php echo $this->subRequest('Widget/Menu'); ?>

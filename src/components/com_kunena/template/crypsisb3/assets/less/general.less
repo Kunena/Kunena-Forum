@@ -291,14 +291,8 @@ a:focus,
   border-radius: 4px;
 }
 
-.horizontal-message-top .kmsg {
-  padding-top: 40px;
-  min-height: 140px;
-  padding-left: 10px;
-}
-
 .horizontal-message .kmessage {
-  padding: 10px;
+  padding: 5px 10px 0;
 }
 
 [class*="horizontal-message-top"] {
@@ -310,10 +304,12 @@ a:focus,
   position: absolute;
   top: 0;
   font-weight: bold;
-  padding: 8px 12px;
-  margin-top: -10px;
+  padding: 8px 12px !important;
+  margin-top: -10px !important;
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
+  border-top: 0 !important;
+  border-left: 0 !important;
 }
 
 [class*="horizontal-message-bottom"] {
@@ -321,16 +317,29 @@ a:focus,
 }
 
 .horizontal-message-bottom:after {
-  content: attr(data-badger);
-  position: absolute;
-  top: 0;
-  font-weight: bold;
-  padding: 8px 12px;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  content       : attr(data-badger);
+  position      : absolute;
+  top           : 0;
+  font-weight   : bold;
+  padding       : 8px 12px !important;
+  border-right  : 1px solid #ddd;
+  border-bottom : 1px solid #ddd;
 }
 
-[class*="badger"] {
+.horizontal-message [class*="badger-left"] {
+  position: relative;
+  margin: -8px 0 0 0;
+  padding: 0 9px 0 3px !important;
+  border-radius: 4px;
+  border: 0;
+  box-shadow: none;
+}
+
+.message-bottom [class*="badger-left"]{
+  margin: 0;
+}
+
+[class*="badger-left"] {
   position: relative;
   margin: 15px 0;
   padding: 39px 19px 0 14px;
@@ -359,6 +368,11 @@ a:focus,
   background: rgba(229, 229, 229, 0.4);
 }
 
+.badger-solved {
+  border: 1px solid #5cb85c;
+  background-color: honeydew;
+}
+
 legend {
   color: inherit;
 }
@@ -378,6 +392,34 @@ div.kmsgtext-confidential {
   margin: 5px;
   padding: 15px;
   font-style: italic;
+}
+
+/* styling for message header */
+.mykmsg-header {
+  margin-top: 0;
+  background: rgba(229,229,229,0.4);
+  padding: 10px 19px 12px 14px !important;
+  margin-left: -15px;
+  margin-right:-20px;
+  font-weight: bold;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* make .badger-left::after invisible */
+.badger-left::after {
+  border-radius: 0 !important;
+  height: 0 !important;
+}
+
+[class*="badger"]::after {
+  padding: 0;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+[class*="badger-left"] {
+  padding: 0 19px 0 14px !important;
 }
 
 #kwho > div > p,

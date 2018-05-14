@@ -24,7 +24,7 @@ $tabs = $this->getTabs();
 		?>
 		<?php echo $this->profile->getLink(
 		KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
-		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default'
+		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
 	); ?>
 	<?php endif; ?>
 </h2>
@@ -34,6 +34,8 @@ echo $this->subLayout('User/Item/Summary')
 	->set('profile', $this->profile)
 	->set('config', $this->config);
 ?>
+
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
 	<br/>
@@ -45,7 +47,7 @@ echo $this->subLayout('User/Item/Summary')
 			:
 			?>
 			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-				<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
+				<a href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
 		<?php endforeach; ?>
 
@@ -66,3 +68,4 @@ echo $this->subLayout('User/Item/Summary')
 </div>
 
 <div class="clearfix"></div>
+

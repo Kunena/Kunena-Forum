@@ -17,7 +17,7 @@ function kPreviewHelper(previewActive) {
 		jQuery.ajax({
 			type    : 'POST',
 			url     : jQuery('#kpreview_url').val(),
-			async   : false,
+			async   : true,
 			dataType: 'json',
 			data: {body: jQuery('#editor').val()},
 			success: function (data) {

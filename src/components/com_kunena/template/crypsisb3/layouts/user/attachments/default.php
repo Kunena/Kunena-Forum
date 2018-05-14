@@ -132,7 +132,6 @@ $attachments = $this->attachments;
 			->set('display', true); ?>
 	</div>
 	<?php if ($attachments) : ?>
-		<?php foreach ($attachments as $attachment) : ?>
 		<a href="#modaldeleteall" class="btn btn-default pull-right"
 		       data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
@@ -144,7 +143,7 @@ $attachments = $this->attachments;
 						<h4 class="modal-title" id="myModalLabel"><?php echo JText::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
 					</div>
 					<div class="modal-body">
-						<p><?php echo JText::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachmens->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
+						<p><?php echo JText::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
@@ -153,6 +152,5 @@ $attachments = $this->attachments;
 				</div>
 			</div>
 		</div>
-		<?php endforeach; ?>
 	<?php endif; ?>
 </form>

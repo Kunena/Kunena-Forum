@@ -216,39 +216,39 @@ jQuery(document).ready(function ($) {
 		});
 
 		// Load template text for the category by ajax request
-		category_template_text = function () {
-			var tmp = null;
-			$.ajax({
+		category_template_text = function cat_template_text() {
+			return $.ajax({
 				type: 'POST',
 				url: $('#kurl_category_template_text').val(),
 				async: true,
 				dataType: 'json',
 				data: {catid: catid},
-				success: function (data) {
-					if( $('#editor').val().length > 1 ) {
-						if ($('#editor').val().length > 1) {
-							$('#modal_confirm_template_category').modal('show');
-						}
-						else
-						{
-							$('#editor').val(category_template_text);
-						}
+			})
+			.done(function (data) {
+				if( $('#editor').val().length > 1 ) {
+					if ($('#editor').val().length > 1) {
+						$('#modal_confirm_template_category').modal('show');
 					}
 					else
 					{
-						if (data.length > 1) {
-							$('#modal_confirm_template_category').modal('show');
-						}
-						else
-						{
-							$('#editor').val(data);
-						}
+						$('#editor').val(category_template_text);
 					}
-					tmp = data;
 				}
+				else
+				{
+					if (data.length > 1) {
+						$('#modal_confirm_template_category').modal('show');
+					}
+					else
+					{
+						$('#editor').val(data);
+					}
+				}
+						 
+			})
+			.fail(function (){
+				//TODO: handle the error of ajax request
 			});
-
-			return tmp;
 		}();
 	});
 
@@ -256,7 +256,7 @@ jQuery(document).ready(function ($) {
 		$('#modal_confirm_template_category').modal('hide');
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text);
+		$('#editor').val(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
 		var existing_content = $('#editor').val();
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text + ' ' + existing_content);
+		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
 	});
 
 	if ($.fn.datepicker != undefined) {

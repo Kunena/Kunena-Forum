@@ -159,7 +159,7 @@ jQuery(function ($) {
 		$.ajax({
 			type: 'POST',
 			url: Joomla.getOptions('com_kunena.avatar_preload_url'),
-			async: false,
+			async: true,
 			dataType: 'json',
 			data: {userid: $('#kunena_userid').val()},
 			success: function (data) {

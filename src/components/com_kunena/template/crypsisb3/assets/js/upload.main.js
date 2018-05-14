@@ -401,7 +401,7 @@ jQuery(function ($) {
 		$.ajax({
 			type: 'POST',
 			url: Joomla.getOptions('com_kunena.kunena_upload_files_preload'),
-			async: false,
+			async: true,
 			dataType: 'json',
 			data: {mes_id: $('#kmessageid').val()},
 			success: function (data) {

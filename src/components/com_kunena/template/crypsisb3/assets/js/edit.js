@@ -163,7 +163,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			type: 'POST',
 			url: kurl_topicons_request,
-			async: false,
+			async: true,
 			dataType: 'json',
 			data: {catid: catid},
 			success: function (data) {
@@ -235,7 +235,7 @@ jQuery(document).ready(function ($) {
 			$.ajax({
 				type: 'POST',
 				url: $('#kurl_category_template_text').val(),
-				async: false,
+				async: true,
 				dataType: 'json',
 				data: {catid: catid},
 				success: function (data) {

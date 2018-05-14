@@ -293,7 +293,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	if (document.getElementById("gotoeditor") !== undefined) {
-		document.getElementById("gotoeditor").addEventListener("click", function ()
+		document.getElementById("gotoeditor").on("click", function ()
 		{
 			if (qreply.length > 0) {
 				var local = localStorage.setItem("copyKunenaeditor", qreply.val());

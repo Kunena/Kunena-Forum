@@ -13,7 +13,7 @@
 var previewActive = false;
 
 function kPreviewHelper(previewActive) {
-	if (jQuery('#editor').val() != null) {
+	if (jQuery('#editor').val() !== null) {
 		jQuery.ajax({
 			type: 'POST',
 			url: jQuery('#kpreview_url').val(),
@@ -61,7 +61,7 @@ jQuery(document).ready(function ($) {
 	/* To enabled emojis in kunena textera feature like on github */
 	if ($('#kemojis_allowed').val() == 1) {
 		var item = '';
-		if ($('#editor').length > 0 && $('.qreply').length == 0) {
+		if ($('#editor').length > 0 && $('.qreply').length === 0) {
 			item = '#editor';
 		}
 		else if ($('.qreply').length > 0) {
@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
 			item = '#wysibb-body';
 		}
 
-		if (item != undefined) {
+		if (item !== undefined) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
@@ -96,7 +96,7 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	if (item != undefined) {
+	if (item !== undefined) {
 		var users_url = $('#kurl_users').val();
 		$(item).atwho({
 			at: "@",
@@ -107,7 +107,7 @@ jQuery(document).ready(function ($) {
 
 
 	/* Store form data into localstorage every 1 second */
-	if ($.fn.sisyphus != undefined) {
+	if ($.fn.sisyphus !== undefined) {
 		$("#postform").sisyphus({
 			locationBased: true,
 			timeout: 5
@@ -175,7 +175,7 @@ jQuery(document).ready(function ($) {
 
 				$.each(data, function (index, value) {
 					if (value.type != 'system') {
-						if (value.id == 0) {
+						if (value.id === 0) {
 							var input = $('<input>', {
 								type: 'radio',
 								id: 'radio' + value.id,

@@ -71,7 +71,17 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 					break;
 			}
 
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}", true);
+			$itemid = KunenaRoute::fixMissingItemID();
+
+			if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			{
+				$url = \Joomla\CMS\Uri\Uri::root(true) ."/index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rss_type}&Itemid={$itemid}";
+			}
+			else
+			{
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rss_type}&Itemid={$itemid}", true);
+			}
+
 			$doc = Factory::getDocument();
 			$doc->addHeadLink($url, 'alternate', 'rel', array('type' => 'application/rss+xml'));
 

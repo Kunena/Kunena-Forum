@@ -10,11 +10,11 @@
 /**
  *  Helper function for to perform JSON request for preview
  */
-var previewActive = false;
+const previewActive = false;
 
 function kPreviewHelper(previewActive) {
-	var editor = jQuery('#editor');
-	if (editor.val() !== null) {
+    const editor = jQuery('#editor');
+    if (editor.val() !== null) {
 		jQuery.ajax({
 			type    : 'POST',
 			url     : jQuery('#kpreview_url').val(),
@@ -29,26 +29,27 @@ function kPreviewHelper(previewActive) {
 }
 
 jQuery(document).ready(function ($) {
-	var qreply = $('.qreply');
-	var editor = $('#editor');
+    let item;
+    const qreply = $('.qreply');
+    const editor = $('#editor');
 
-	$('#tabs_kunena_editor a:first').tab('show');
+    $('#tabs_kunena_editor a:first').tab('show');
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
 		e.preventDefault();
 
-		var preview = $("#kbbcode-preview");
-		var message = $("#editor");
+        const preview = $("#kbbcode-preview");
+        const message = $("#editor");
 
-		preview.css('display', 'block');
+        preview.css('display', 'block');
 
 		message.hide();
 
 		kPreviewHelper();
 
 		preview.attr('class', 'kbbcode-preview-bottom controls');
-		var height = message.css('height');
-		preview.css('height', height);
+        const height = message.css('height');
+        preview.css('height', height);
 	});
 
 	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
@@ -64,8 +65,8 @@ jQuery(document).ready(function ($) {
 
 	/* To enabled emojis in kunena textera feature like on github */
 	if ($('#kemojis_allowed').val() === 1) {
-		var item = '';
-		if (editor.length > 0 && qreply.length === 0) {
+        item = '';
+        if (editor.length > 0 && qreply.length === 0) {
 			item = '#editor';
 		}
 		else if (qreply.length > 0) {
@@ -101,8 +102,8 @@ jQuery(document).ready(function ($) {
 	}
 
 	if (item !== undefined) {
-		var users_url = $('#kurl_users').val();
-		$(item).atwho({
+        const users_url = $('#kurl_users').val();
+        $(item).atwho({
 			at: "@",
 			data: users_url,
 			limit: 5
@@ -132,14 +133,14 @@ jQuery(document).ready(function ($) {
 		$("#editor").attr('required', 'required');
 	});
 
-	var category_template_text;
-	$('#postcatid').change(function () {
-		var catid = $('select#postcatid option').filter(':selected').val();
-		var kurl_topicons_request = $('#kurl_topicons_request').val();
+    let category_template_text;
+    $('#postcatid').change(function () {
+        const catid = $('select#postcatid option').filter(':selected').val();
+        const kurl_topicons_request = $('#kurl_topicons_request').val();
 
-		if ($('#kanynomous-check').length > 0) {
-			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
-			if (arrayanynomousbox[catid] !== undefined) {
+        if ($('#kanynomous-check').length > 0) {
+            const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+            if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
 			}
@@ -159,14 +160,16 @@ jQuery(document).ready(function ($) {
 			success: function (data) {
 				$('#iconset_topic_list').remove();
 
-				var div_object = $('<div>', {'id': 'iconset_topic_list'});
+                const div_object = $('<div>', {'id': 'iconset_topic_list'});
 
-				$('#iconset_inject').append(div_object);
+                $('#iconset_inject').append(div_object);
 
 				$.each(data, function (index, value) {
-					if (value.type !== 'system') {
+					let label;
+                    let input;
+                    if (value.type !== 'system') {
 						if (value.id === 0) {
-							var input = $('<input>', {
+							input = $('<input>', {
 								type: 'radio',
 								id: 'radio' + value.id,
 								name: 'topic_emoticon',
@@ -174,18 +177,18 @@ jQuery(document).ready(function ($) {
 							}).prop('checked', true);
 						}
 						else {
-							var input = $('<input>', {
-								type: 'radio',
-								id: 'radio' + value.id,
-								name: 'topic_emoticon',
-								value: value.id
-							});
-						}
+                            input = $('<input>', {
+                                type: 'radio',
+                                id: 'radio' + value.id,
+                                name: 'topic_emoticon',
+                                value: value.id
+                            });
+                        }
 
-						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
+                        const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
-							var label = $('<label>', {
+                        if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
+							label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<span>', {
@@ -195,17 +198,17 @@ jQuery(document).ready(function ($) {
 							}));
 						}
 						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
-							var label = $('<label>', {
-								'class': 'radio inline',
-								'for': 'radio' + value.id
-							}).append($('<i>', {
-								'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
-								'border': '0',
-								'al': ''
-							}));
-						}
+                            label = $('<label>', {
+                                'class': 'radio inline',
+                                'for': 'radio' + value.id
+                            }).append($('<i>', {
+                                'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
+                                'border': '0',
+                                'al': ''
+                            }));
+                        }
 						else {
-							var label = $('<label>', {
+							label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
@@ -258,16 +261,16 @@ jQuery(document).ready(function ($) {
 
 	$('#modal_confirm_erase').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var textarea = $("#editor").next();
-		textarea.empty();
+        const textarea = $("#editor").next();
+        textarea.empty();
 		$('#editor').val(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var existing_content = editor.val();
-		var textarea = $("#editor").next();
-		textarea.empty();
+        const existing_content = editor.val();
+        const textarea = $("#editor").next();
+        textarea.empty();
 		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
 	});
 
@@ -282,8 +285,8 @@ jQuery(document).ready(function ($) {
 		document.getElementById("gotoeditor").on("click", function ()
 		{
 			if (qreply.length > 0) {
-				var local = localStorage.setItem("copyKunenaeditor", qreply.val());
-				console.log(local);
+                const local = localStorage.setItem("copyKunenaeditor", qreply.val());
+                console.log(local);
 			}
 		} , false);
 	}

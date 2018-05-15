@@ -109,8 +109,9 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				dataType: 'json',
 				context: this,
 				cache: false,
-				timeout: 180000, // 3 minutes
-				success: function (data, status) {
+				timeout: 180000 // 3 minutes
+			})
+			.done(function (data) {
 					var $this = $(this);
 
 					if ('header' in data) {
@@ -139,8 +140,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 						}
 					}
 					$this.find('.recount-close').removeAttr('disabled');
-				},
-				error: function (xhr, status, error) {
+				})
+				.fail(function (){
 					var $this = $(this);
 					if (status == 'error' && error) {
 						$this.find('.modal-header h3').text(xhr.status + ' ' + error);

@@ -141,6 +141,9 @@ jQuery(document).ready(function ($) {
 					$('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
 				});
 			});
+		})
+		.fail(function (){
+			//TODO: handle the error of ajax request
 		});
 	});
 });

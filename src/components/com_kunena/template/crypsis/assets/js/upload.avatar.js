@@ -27,10 +27,13 @@ jQuery(function ($) {
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
 				url    : Joomla.getOptions('com_kunena.avatar_remove_url') + '&userid=' + userid + '&avatar=' + avatar,
-				type: 'POST',
-				success: function (result) {
-					$this.parent().remove();
-				}
+				type: 'POST'
+			})
+			.done(function (data) {
+				$this.parent().remove();
+			})
+			.fail(function (){
+				//TODO: handle the error of ajax request
 			});
 		});
 
@@ -161,32 +164,35 @@ jQuery(function ($) {
 			url: Joomla.getOptions('com_kunena.avatar_preload_url'),
 			async: true,
 			dataType: 'json',
-			data: {userid: $('#kunena_userid').val()},
-			success: function (data) {
-				if ($.isEmptyObject(data) == false) {
-					fileCount = 1;
+			data: {userid: $('#kunena_userid').val()}
+		})
+		.done(function (data) {
+			if ($.isEmptyObject(data) == false) {
+				fileCount = 1;
 
-					if (data.name != undefined)
-					{
-						var name = data.name;
-					}
-					else
-					{
-						var name = '';
-					}
-
-					var object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
-					data.uploaded = true;
-					data.result = false;
-
-					data.userid = $('#kunena_userid').val();
-					data.filename = data.name;
-
-					object.append(removeButton.clone(true).data(data));
-
-					object.appendTo("#files");
+				if (data.name != undefined)
+				{
+					var name = data.name;
 				}
+				else
+				{
+					var name = '';
+				}
+
+				var object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
+				data.uploaded = true;
+				data.result = false;
+
+				data.userid = $('#kunena_userid').val();
+				data.filename = data.name;
+
+				object.append(removeButton.clone(true).data(data));
+
+				object.appendTo("#files");
 			}
+		})
+		.fail(function (){
+			//TODO: handle the error of ajax request
 		});
 	}
 });

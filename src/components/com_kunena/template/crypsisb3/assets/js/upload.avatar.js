@@ -28,9 +28,12 @@ jQuery(function ($) {
 			$.ajax({
 				url    : Joomla.getOptions('com_kunena.avatar_remove_url') + '&userid=' + userid + '&avatar=' + avatar,
 				type: 'POST',
-				success: function (result) {
-					$this.parent().remove();
-				}
+			})
+			.done(function (data) {
+				$this.parent().remove();
+			})
+			.fail(function (){
+				//TODO: handle the error of ajax request
 			});
 		});
 
@@ -161,8 +164,9 @@ jQuery(function ($) {
 			url: Joomla.getOptions('com_kunena.avatar_preload_url'),
 			async: true,
 			dataType: 'json',
-			data: {userid: $('#kunena_userid').val()},
-			success: function (data) {
+			data: {userid: $('#kunena_userid').val()}
+		})
+		.done(function (data) {
 				if ($.isEmptyObject(data) == false) {
 					fileCount = 1;
 
@@ -187,6 +191,9 @@ jQuery(function ($) {
 					object.appendTo("#files");
 				}
 			}
+		})
+		.fail(function (){
+			//TODO: handle the error of ajax request
 		});
 	}
 });

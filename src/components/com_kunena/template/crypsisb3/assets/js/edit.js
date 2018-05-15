@@ -20,10 +20,13 @@ function kPreviewHelper(previewActive) {
 			url     : jQuery('#kpreview_url').val(),
 			async   : true,
 			dataType: 'json',
-			data: {body: editor.val()},
-			success: function (data) {
-				jQuery('#kbbcode-preview').html(data.preview);
-			}
+			data: {body: editor.val()}
+		})
+		.done(function (data) {
+			jQuery('#kbbcode-preview').html(data.preview);
+		})
+		.fail(function (){
+			//TODO: handle the error of ajax request
 		});
 	}
 }
@@ -88,10 +91,13 @@ jQuery(document).ready(function ($) {
 								url: $("#kurl_emojis").val(),
 								data: {
 									search: query
-								},
-								success: function (data) {
-									callback(data.emojis);
 								}
+							})
+							.done(function (data) {
+								callback(data.emojis);
+							})
+							.fail(function (){
+								//TODO: handle the error of ajax request
 							});
 						}
 					}
@@ -169,8 +175,9 @@ jQuery(document).ready(function ($) {
 			url: kurl_topicons_request,
 			async: true,
 			dataType: 'json',
-			data: {catid: catid},
-			success: function (data) {
+			data: {catid: catid}
+		})
+		.done(function (data) {
 				$('#iconset_topic_list').remove();
 
 				var div_object = $('<div>', {'id': 'iconset_topic_list'});
@@ -230,7 +237,9 @@ jQuery(document).ready(function ($) {
 						$('#iconset_topic_list').append(span_object);
 					}
 				});
-			}
+		})
+		.fail(function (){
+			//TODO: handle the error of ajax request
 		});
 
 		// Load template text for the category by ajax request
@@ -292,8 +301,8 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	if (document.getElementById("gotoeditor") !== undefined) {
-		document.getElementById("gotoeditor").on("click", function ()
+	if ($("gotoeditor") !== undefined) {
+		$("gotoeditor").on("click", function ()
 		{
 			if (qreply.length > 0) {
 				var local = localStorage.setItem("copyKunenaeditor", qreply.val());

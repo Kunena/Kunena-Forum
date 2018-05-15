@@ -161,7 +161,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				}
 				$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
 				$this.find('.recount-close').removeAttr('disabled');
-    		});
+			});
 		};
 
 		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {

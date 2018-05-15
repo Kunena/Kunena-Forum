@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
 			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function (reponse) {
-
+				//TODO: handle the error of ajax request
 			});
 		}
 	})();

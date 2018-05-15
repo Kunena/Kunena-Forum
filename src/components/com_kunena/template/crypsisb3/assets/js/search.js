@@ -23,10 +23,13 @@ jQuery(document).ready(function ($) {
 						url: users_url,
 						data: {
 							search: query
-						},
-						success: function(data) {
-							callback(data);
 						}
+					})
+					.done(function (data) {
+						callback(data);
+					})
+					.fail(function (){
+						//TODO: handle the error of ajax request
 					});
 				}
 			}

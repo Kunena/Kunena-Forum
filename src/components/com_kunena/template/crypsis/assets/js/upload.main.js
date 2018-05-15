@@ -121,7 +121,7 @@ jQuery(function ($) {
 				})
 				.fail(function (){
 					//TODO: handle the error of ajax request
-				});	
+				});
 			}
 		});
 

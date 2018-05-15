@@ -2,13 +2,13 @@
 /**
  * Kunena Component
  *
- * @package        Kunena.Site
+ * @package    Kunena.Site
  *
  * @copyright      Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
- * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           https://www.kunena.org
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
-defined('_JEXEC') or die();
+defined('_JEXEC') or die ();
 
 use Joomla\CMS\Factory;
 
@@ -18,8 +18,7 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !Kunena
 	$lang = Factory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-	Factory::getApplication()->setHeader('status', 503, true);
-	Factory::getApplication()->sendHeaders();
+	Factory::getApplication()->sendHeaders('Status', '503 Service Temporarily Unavailable', true);
 	?>
 	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
 	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>

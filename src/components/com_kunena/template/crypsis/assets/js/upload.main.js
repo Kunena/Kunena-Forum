@@ -15,7 +15,7 @@ jQuery(function ($) {
 		var value = $('#editor').val();
 		$('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
-		if (button != undefined) {
+		if (button !== undefined) {
 			button.removeClass('btn-primary');
 			button.addClass('btn-success');
 			button.html('<i class="icon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
@@ -33,7 +33,7 @@ jQuery(function ($) {
 					sel.text = myValue;
 					this.focus();
 				}
-				else if (this.selectionStart || this.selectionStart == '0') {
+				else if (this.selectionStart || this.selectionStart === '0') {
 					//For browsers like Firefox and Webkit based
 					var startPos = this.selectionStart;
 					var endPos = this.selectionEnd;
@@ -71,9 +71,9 @@ jQuery(function ($) {
 		$('#insert-all').hide();
 
 		// Removing items in edit if they are present
-		if ($.isEmptyObject(filesedit) == false) {
+		if ($.isEmptyObject(filesedit) === false) {
 			$(filesedit).each(function (index, file) {
-				if ($('#kattachs-' + file.id).length == 0) {
+				if ($('#kattachs-' + file.id).length === 0) {
 					$('#kattach-list').append('<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />');
 				}
 
@@ -104,7 +104,7 @@ jQuery(function ($) {
 			if (!elem.attr('id').match("[a-z]{8}")) {
 				var fileid = elem.attr('id').match("[0-9]{2}");
 
-				if ($('#kattachs-' + fileid).length == 0) {
+				if ($('#kattachs-' + fileid).length === 0) {
 					$('#kattach-list').append('<input id="kattachs-' + fileid + '" type="hidden" name="attachments[' + fileid + ']" value="1" />');
 				}
 
@@ -134,7 +134,7 @@ jQuery(function ($) {
 		e.preventDefault();
 
 		// Inserting items from edit if they are present
-		if ($.isEmptyObject(filesedit) == false) {
+		if ($.isEmptyObject(filesedit) === false) {
 			$(filesedit).each(function (index, file) {
 				insertInMessage(file.id, file.name);
 			});
@@ -179,7 +179,7 @@ jQuery(function ($) {
 
 			var file_id = 0;
 			var filename = null;
-			if (data.result != undefined) {
+			if (data.result !== undefined) {
 				file_id = data.result.data.id;
 				filename = data.result.data.filename;
 			}
@@ -199,8 +199,8 @@ jQuery(function ($) {
 				data = $this.data();
 
 			var file_id = 0;
-			if (data.uploaded == true) {
-				if (data.result != false) {
+			if (data.uploaded === true) {
+				if (data.result !== false) {
 					file_id = data.result.data.id;
 				}
 				else {
@@ -231,8 +231,8 @@ jQuery(function ($) {
 			$('#klabel_info_drop_browse').show();
 
 			var file_id = 0;
-			if (data.uploaded == true) {
-				if (data.result != false) {
+			if (data.uploaded === true) {
+				if (data.result !== false) {
 					file_id = data.result.data.id;
 				}
 				else {
@@ -240,7 +240,7 @@ jQuery(function ($) {
 				}
 			}
 
-			if ($('#kattachs-' + file_id).length == 0) {
+			if ($('#kattachs-' + file_id).length === 0) {
 				$('#kattach-list').append('<input id="kattachs-' + file_id + '" type="hidden" name="attachments[' + file_id + ']" value="1" />');
 			}
 
@@ -394,7 +394,7 @@ jQuery(function ($) {
 		data.context.find('span')
 			.wrap(link);
 
-		if (data.result.success == true) {
+		if (data.result.success === true) {
 			$('#form_submit_button').prop('disabled', false);
 
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
@@ -445,7 +445,7 @@ jQuery(function ($) {
 			data: {mes_id: $('#kmessageid').val()}
 		})
 		.done(function (data) {
-			if ($.isEmptyObject(data.files) == false) {
+			if ($.isEmptyObject(data.files) === false) {
 				fileCount = Object.keys(data.files).length;
 
 				filesedit = data.files;

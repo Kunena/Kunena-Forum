@@ -13,7 +13,7 @@ jQuery(function ($) {
 			var $this = $(this),
 			data = $this.data();
 
-			if (data['files']!= undefined)
+			if (data['files'] !== undefined)
 			{
 				var userid = data['files'].userid;
 				var avatar = data['files'].filename;
@@ -120,7 +120,7 @@ jQuery(function ($) {
 		data.context.find('span')
 			.wrap(link);
 
-		if (data.result.success == true) {
+		if (data.result.success === true) {
 			$('#form_submit_button').prop('disabled', false);
 
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
@@ -166,11 +166,11 @@ jQuery(function ($) {
 			dataType: 'json',
 			data: {userid: $('#kunena_userid').val()}
 		})
-		.done(function (data) {
-				if ($.isEmptyObject(data) == false) {
+			.done(function (data) {
+				if ($.isEmptyObject(data) === false) {
 					fileCount = 1;
 
-					if (data.name != undefined)
+					if (data.name !== undefined)
 					{
 						var name = data.name;
 					}
@@ -190,10 +190,9 @@ jQuery(function ($) {
 
 					object.appendTo("#files");
 				}
-			}
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+			})
+			.fail(function (){
+				//TODO: handle the error of ajax request
+			});
 	}
 });

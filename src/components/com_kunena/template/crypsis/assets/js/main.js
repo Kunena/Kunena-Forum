@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 	/* Allow to make working drop-down choose destination */
 	$('#kchecktask').change(function () {
 		var task = $("select#kchecktask").val();
-		if (task == 'move') {
+		if (task === 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
 		}
 		else {
@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	if ($.fn.datepicker != undefined) {
+	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for announcement
 		$('#ann-date .input-append.date').datepicker({
 			orientation: "top auto",
@@ -84,9 +84,10 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	$('#clearcache').on('click', function (e) {
+	var clearcache = $('#clearcache');
+	clearcache.on('click', function (e) {
 		e.preventDefault();
-		$('#clearcache').addClass('btn-success');
-		$('#clearcache').html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
+		clearcache.addClass('btn-success');
+		clearcache.html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
 });

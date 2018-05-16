@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
 		polldiv.append(newInput);
 	}
 
-	if ($('#kbutton-poll-add') != undefined) {
+	if ($('#kbutton-poll-add') !== undefined) {
 		$('#kbutton-poll-add').click(function () {
 			var nboptionsmax = $('#nb_options_allowed').val();
 			var koptions = getOptionsNumber();
@@ -53,13 +53,12 @@ jQuery(document).ready(function ($) {
 			else {
 				// Set error message with alert bootstrap way
 				$('#kpoll-alert-error').show();
-
 				$('#kbutton-poll-add').hide();
 			}
 		});
 	}
 
-	if ($('#kbutton-poll-rem') != undefined) {
+	if ($('#kbutton-poll-rem') !== undefined) {
 		$('#kbutton-poll-rem').click(function () {
 			var koption = $('div.polloption:last');
 			if (koption) {
@@ -67,7 +66,6 @@ jQuery(document).ready(function ($) {
 
 				if (isvisible) {
 					$('#kpoll-alert-error').hide();
-
 					$('#kbutton-poll-add').show();
 				}
 
@@ -76,10 +74,10 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	if ($('#postcatid') != undefined) {
+	if ($('#postcatid') !== undefined) {
 		$('#postcatid').change(function () {
 			var catid = $('select#postcatid option').filter(':selected').val();
-      var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+			var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 			if (pollcategoriesid[catid] !== undefined) {
 				$('.pollbutton').show();
 			}
@@ -90,7 +88,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	$('#kpoll_go_results').click(function () {
-		if ($('#poll-results').is(':visible') == true) {
+		if ($('#poll-results').is(':visible') === true) {
 			$('#poll-results').hide();
 			$('#kpoll_hide_results').hide();
 		}
@@ -102,7 +100,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	$('#kpoll_hide_results').click(function () {
-		if ($('#poll-results').is(':visible') == true) {
+		if ($('#poll-results').is(':visible') === true) {
 			$('#poll-results').hide();
 			$('#kpoll_go_results').show();
 			$('#kpoll_hide_results').hide();

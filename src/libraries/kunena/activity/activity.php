@@ -135,7 +135,7 @@ class KunenaActivity
 	 * Triggered after (un)subscribing a topic.
 	 *
 	 * @param   int $topicid Topic Id.
-	 * @param   int $action  1 = subscribe, 0 = unsuscribe.
+	 * @param   int $action  1 = subscribe, 0 = unsubscribe.
 	 *
 	 * @since Kunena
 	 * @return void

@@ -1403,7 +1403,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$this->time = $now;
 		}
 
-		// Do not allow indentical posting times inside topic (simplifies logic)
+		// Do not allow identical posting times inside topic (simplifies logic)
 		$topic = $this->getTopic();
 
 		if (!$this->exists() && $topic->exists() && $this->time <= $topic->last_post_time)

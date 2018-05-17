@@ -34,7 +34,7 @@ if ($config->lightbox == 1)
 
 	$config = KunenaConfig::getInstance();
 
-	$attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+	$attributesLink = $config->lightbox ? ' data-fancybox' : '';
 	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 
 	?>

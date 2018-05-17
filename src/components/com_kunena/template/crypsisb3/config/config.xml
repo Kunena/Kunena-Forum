@@ -14,11 +14,6 @@
 		       description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
-		<field name="lightboxColor" type="list" default="white" label="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_COLOR"
-		       description="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_DESC">
-			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
-			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
-		</field>
 		<field name="borderless" type="list" default="1" label="COM_KUNENA_TEMPLATE_BORDERLESS" description="COM_KUNENA_TEMPLATE_BORDERLESS_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>

@@ -18,7 +18,7 @@ echo $this->subLayout('Widget/Lightbox');
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 $name           = preg_replace('/.html/', '', $attachment->getUrl());
 

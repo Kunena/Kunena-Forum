@@ -15,16 +15,5 @@ if (KunenaConfig::getInstance()->lightbox != 1)
 	return false;
 }
 
-$template = KunenaTemplate::getInstance();
-
-if ($template->params->get('lightboxColor') == 'white')
-{
-	$this->addStyleSheet('assets/css/fancybox.white.css');
-}
-else
-{
-	$this->addStyleSheet('assets/css/fancybox.black.css');
-}
-
+$this->addStyleSheet('assets/css/fancybox.css');
 $this->addScript('assets/js/fancybox.js');
-$this->addScript('assets/js/fancybox.settings.js');

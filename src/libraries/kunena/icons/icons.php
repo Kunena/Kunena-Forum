@@ -454,7 +454,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-search" aria-hidden="true"></i>';
+			return '<i class="fas fa-search" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

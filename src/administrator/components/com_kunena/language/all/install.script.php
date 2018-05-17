@@ -70,7 +70,6 @@ class pkg_kunena_languagesInstallerScript
 		$source    = $parent->getParent()->getPath('source') . '/language';
 		$languages = \Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
 
-
 		$files = $parent->manifest->files;
 
 		foreach ($languages as $language)

@@ -61,7 +61,7 @@ HTMLHelper::_('behavior.multiselect');
 		<div id="j-main-container" class="col-md-10" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				      method="post" id="adminForm" name="adminForm">
+					  method="post" id="adminForm" name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="1"/>
 					<fieldset>
@@ -79,7 +79,7 @@ HTMLHelper::_('behavior.multiselect');
 										</a>
 									</p>
 									<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
-									          rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+											  rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 								</td>
 							</tr>
 						</table>
@@ -100,8 +100,8 @@ HTMLHelper::_('behavior.multiselect');
 										</a>
 									</p>
 									<textarea id="report_final_anonymous" class="input-block-level"
-									          name="report_final_anonymous" cols="80"
-									          rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+											  name="report_final_anonymous" cols="80"
+											  rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
 								</td>
 							</tr>
 						</table>

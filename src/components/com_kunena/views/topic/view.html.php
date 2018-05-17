@@ -291,11 +291,11 @@ class KunenaViewTopic extends KunenaView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$cat_params = array('ordering'    => 'ordering',
-		                    'toplevel'    => 0,
-		                    'sections'    => 0,
-		                    'direction'   => 1,
-		                    'hide_lonely' => 1,
-		                    'action'      => 'topic.create',);
+							'toplevel'    => 0,
+							'sections'    => 0,
+							'direction'   => 1,
+							'hide_lonely' => 1,
+							'action'      => 'topic.create',);
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaForumCategoryHelper::get($this->catid);

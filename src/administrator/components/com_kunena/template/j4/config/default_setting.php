@@ -14,8 +14,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
-      name="settingFormModal"
-      id="settingFormModal">
+	  name="settingFormModal"
+	  id="settingFormModal">
 	<div class="modal hide fade" id="settingModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -34,7 +34,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 						<?php echo JText::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-primary" type="submit"
-					        onclick="document.getElementById('settingFormModal').submit();">
+							onclick="document.getElementById('settingFormModal').submit();">
 						<?php echo JText::_('JSUBMIT'); ?>
 					</button>
 				</div>

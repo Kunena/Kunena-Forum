@@ -180,7 +180,6 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		{
 			$this->body = function () use ($body) {
 
-
 				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 

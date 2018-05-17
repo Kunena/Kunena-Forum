@@ -64,7 +64,6 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$limit = $this->state->get('list.limit');
 		$view  = $this->state->get('view');
 
-
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
 

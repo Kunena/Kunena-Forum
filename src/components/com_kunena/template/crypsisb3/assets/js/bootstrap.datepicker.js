@@ -4,15 +4,16 @@
  * Copyright 2012 Stefan Petre
  * Improvements by Andrew Rowls
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */(function(factory){
-    if (typeof define === "function" && define.amd) {
-        define(["jquery"], factory);
-    } else if (typeof exports === 'object') {
-        factory(require('jquery'));
-    } else {
-        factory(jQuery);
-    }
-}(function($, undefined){
+ */
+(function (factory) {
+	if (typeof define === "function" && define.amd) {
+		define(["jquery"], factory);
+	} else if (typeof exports === 'object') {
+		factory(require('jquery'));
+	} else {
+		factory(jQuery);
+	}
+}(function ($, undefined) {
 
 	function UTCDate() {
 		return new Date(Date.UTC.apply(Date, arguments));
@@ -460,11 +461,11 @@
 				[$(document), {
 					mousedown: $.proxy(function (e) {
 						// Clicked outside the datepicker, hide it
-						if (!(                        this.element.is(e.target)
+						if (!(this.element.is(e.target)
 							|| this.element.find(e.target).length
 							|| this.picker.is(e.target)
 							|| this.picker.find(e.target).length
-							|| this.isInline                            )
+							|| this.isInline)
 						) {
 							this.hide();
 						}
@@ -1161,7 +1162,7 @@
 					clsName = $.unique(clsName);
 				}
 
-				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
+				html.push('<td class="' + clsName.join(' ') + '"' + (tooltip ? ' title="' + tooltip + '"' : '') + '>' + prevMonth.getUTCDate() + '</td>');
 				tooltip = null;
 				if (prevMonth.getUTCDay() === this.o.weekEnd) {
 					html.push('</tr>');
@@ -1539,13 +1540,13 @@
 					// If going back one month, make sure month is not current month
 					// (eg, Mar 31 -> Feb 31 == Feb 28, not Mar 02)
 					? function () {
-					return new_date.getUTCMonth() === month;
-				}
+						return new_date.getUTCMonth() === month;
+					}
 					// If going forward one month, make sure month is as expected
 					// (eg, Jan 31 -> Feb 31 == Feb 28, not Mar 02)
 					: function () {
-					return new_date.getUTCMonth() !== new_month;
-				};
+						return new_date.getUTCMonth() !== new_month;
+					};
 				new_month = month + dir;
 				new_date.setUTCMonth(new_month);
 				// Dec -> Jan (12) or Jan -> Dec (-1) -- limit expected date to 0-11
@@ -1846,6 +1847,7 @@
 			out = {}, inkey,
 			replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])');
 		prefix = new RegExp('^' + prefix.toLowerCase());
+
 		function re_lower(_, a) {
 			return a.toLowerCase();
 		}
@@ -2246,24 +2248,24 @@
 			return date.join('');
 		},
 		headTemplate: '<thead>' +
-		'<tr>' +
-		'<th colspan="7" class="datepicker-title"></th>' +
-		'</tr>' +
-		'<tr>' +
-		'<th class="prev">&laquo;</th>' +
-		'<th colspan="5" class="datepicker-switch"></th>' +
-		'<th class="next">&raquo;</th>' +
-		'</tr>' +
-		'</thead>',
+			'<tr>' +
+			'<th colspan="7" class="datepicker-title"></th>' +
+			'</tr>' +
+			'<tr>' +
+			'<th class="prev">&laquo;</th>' +
+			'<th colspan="5" class="datepicker-switch"></th>' +
+			'<th class="next">&raquo;</th>' +
+			'</tr>' +
+			'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
 		footTemplate: '<tfoot>' +
-		'<tr>' +
-		'<th colspan="7" class="today"></th>' +
-		'</tr>' +
-		'<tr>' +
-		'<th colspan="7" class="clear"></th>' +
-		'</tr>' +
-		'</tfoot>'
+			'<tr>' +
+			'<th colspan="7" class="today"></th>' +
+			'</tr>' +
+			'<tr>' +
+			'<th colspan="7" class="clear"></th>' +
+			'</tr>' +
+			'</tfoot>'
 	};
 	DPGlobal.template = '<div class="datepicker">' +
 		'<div class="datepicker-days">' +

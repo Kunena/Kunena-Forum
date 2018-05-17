@@ -31,7 +31,8 @@
 	 */
 
 	"use strict";
-	var EditableCaret, InputCaret, Mirror, Utils, discoveryIframeOf, methods, oDocument, oFrame, oWindow, pluginName, setContextBy;
+	var EditableCaret, InputCaret, Mirror, Utils, discoveryIframeOf, methods, oDocument, oFrame, oWindow, pluginName,
+		setContextBy;
 
 	pluginName = 'caret';
 

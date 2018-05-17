@@ -85,7 +85,8 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 											</li>
 										<?php endif; ?>
 									</ul>
-									<div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+									<div class="tab-content"
+									     style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 										<div class="tab-pane active" id="tab-general">
 											<fieldset>
 												<table class="table table-striped">
@@ -132,7 +133,8 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
 														<td>
-															<input class="inputbox" type="text" name="class_sfx" size="20"
+															<input class="inputbox" type="text" name="class_sfx"
+															       size="20"
 															       maxlength="20"
 															       value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
 															<p><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
@@ -141,7 +143,8 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 														<td>
-															<textarea class="inputbox" cols="50" rows="6" name="description"
+															<textarea class="inputbox" cols="50" rows="6"
+															          name="description"
 															          id="description"
 															          style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
 															<p><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
@@ -150,7 +153,8 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 														<td>
-															<textarea class="inputbox" cols="50" rows="6" name="headerdesc"
+															<textarea class="inputbox" cols="50" rows="6"
+															          name="headerdesc"
 															          id="headerdesc"
 															          style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 														</td>

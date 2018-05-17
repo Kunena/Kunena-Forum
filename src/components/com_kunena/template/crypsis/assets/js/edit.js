@@ -16,18 +16,18 @@ function kPreviewHelper(previewActive) {
 	var editor = jQuery('#editor');
 	if (editor.val() !== null) {
 		jQuery.ajax({
-			type    : 'POST',
-			url     : jQuery('#kpreview_url').val(),
-			async   : true,
+			type: 'POST',
+			url: jQuery('#kpreview_url').val(),
+			async: true,
 			dataType: 'json',
 			data: {body: editor.val()}
 		})
-		.done(function (data) {
-			jQuery('#kbbcode-preview').html(data.preview);
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+			.done(function (data) {
+				jQuery('#kbbcode-preview').html(data.preview);
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	}
 }
 
@@ -93,12 +93,12 @@ jQuery(document).ready(function ($) {
 									search: query
 								}
 							})
-							.done(function (data) {
-								callback(data.emojis);
-							})
-							.fail(function (){
-								//TODO: handle the error of ajax request
-							});
+								.done(function (data) {
+									callback(data.emojis);
+								})
+								.fail(function () {
+									//TODO: handle the error of ajax request
+								});
 						}
 					}
 				}
@@ -163,70 +163,70 @@ jQuery(document).ready(function ($) {
 			dataType: 'json',
 			data: {catid: catid}
 		})
-		.done(function (data) {
-			$('#iconset_topic_list').remove();
+			.done(function (data) {
+				$('#iconset_topic_list').remove();
 
-			var div_object = $('<div>', {'id': 'iconset_topic_list'});
+				var div_object = $('<div>', {'id': 'iconset_topic_list'});
 
-			$('#iconset_inject').append(div_object);
+				$('#iconset_inject').append(div_object);
 
-			$.each(data, function (index, value) {
-				if (value.type !== 'system') {
-					if (value.id === 0) {
-						var input = $('<input>', {
-							type: 'radio',
-							id: 'radio' + value.id,
-							name: 'topic_emoticon',
-							value: value.id
-						}).prop('checked', true);
+				$.each(data, function (index, value) {
+					if (value.type !== 'system') {
+						if (value.id === 0) {
+							var input = $('<input>', {
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
+								value: value.id
+							}).prop('checked', true);
+						}
+						else {
+							var input = $('<input>', {
+								type: 'radio',
+								id: 'radio' + value.id,
+								name: 'topic_emoticon',
+								value: value.id
+							});
+						}
+
+						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
+
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
+							var label = $('<label>', {
+								'class': 'radio inline',
+								'for': 'radio' + value.id
+							}).append($('<span>', {
+								'class': 'icon icon-topic icon-' + value.b2,
+								'border': '0',
+								'al': ''
+							}));
+						}
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
+							var label = $('<label>', {
+								'class': 'radio inline',
+								'for': 'radio' + value.id
+							}).append($('<i>', {
+								'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
+								'border': '0',
+								'al': ''
+							}));
+						}
+						else {
+							var label = $('<label>', {
+								'class': 'radio inline',
+								'for': 'radio' + value.id
+							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+						}
+
+						span_object.append(label);
+
+						$('#iconset_topic_list').append(span_object);
 					}
-					else {
-						var input = $('<input>', {
-							type: 'radio',
-							id: 'radio' + value.id,
-							name: 'topic_emoticon',
-							value: value.id
-						});
-					}
-
-					var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
-
-					if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
-						var label = $('<label>', {
-							'class': 'radio inline',
-							'for': 'radio' + value.id
-						}).append($('<span>', {
-							'class': 'icon icon-topic icon-' + value.b2,
-							'border': '0',
-							'al': ''
-						}));
-					}
-					else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
-						var label = $('<label>', {
-							'class': 'radio inline',
-							'for': 'radio' + value.id
-						}).append($('<i>', {
-							'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
-							'border': '0',
-							'al': ''
-						}));
-					}
-					else {
-						var label = $('<label>', {
-							'class': 'radio inline',
-							'for': 'radio' + value.id
-						}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
-					}
-
-					span_object.append(label);
-
-					$('#iconset_topic_list').append(span_object);
-				}
+				});
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
 			});
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
 
 		// Load template text for the category by ajax request
 		category_template_text = function cat_template_text() {
@@ -237,31 +237,28 @@ jQuery(document).ready(function ($) {
 				dataType: 'json',
 				data: {catid: catid}
 			})
-			.done(function (data) {
-				if( $('#editor').val().length > 1 ) {
+				.done(function (data) {
 					if ($('#editor').val().length > 1) {
-						$('#modal_confirm_template_category').modal('show');
+						if ($('#editor').val().length > 1) {
+							$('#modal_confirm_template_category').modal('show');
+						}
+						else {
+							$('#editor').val(category_template_text);
+						}
 					}
-					else
-					{
-						$('#editor').val(category_template_text);
+					else {
+						if (data.length > 1) {
+							$('#modal_confirm_template_category').modal('show');
+						}
+						else {
+							$('#editor').val(data);
+						}
 					}
-				}
-				else
-				{
-					if (data.length > 1) {
-						$('#modal_confirm_template_category').modal('show');
-					}
-					else
-					{
-						$('#editor').val(data);
-					}
-				}
 
-			})
-			.fail(function (){
-				//TODO: handle the error of ajax request
-			});
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		}();
 	});
 
@@ -288,12 +285,11 @@ jQuery(document).ready(function ($) {
 	}
 
 	if ($("gotoeditor") !== undefined) {
-		$("gotoeditor").on("click", function ()
-		{
+		$("gotoeditor").on("click", function () {
 			if (qreply.length > 0) {
 				var local = localStorage.setItem("copyKunenaeditor", qreply.val());
 				console.log(local);
 			}
-		} , false);
+		}, false);
 	}
 });

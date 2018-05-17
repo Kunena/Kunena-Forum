@@ -204,7 +204,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td>
 								<label for="filter_target_user"
 								       class="element-invisible"><?php echo JText::_('COM_KUNENA_LOG_TARGET_USER_FILTER_LABEL'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_target_user"
+								<input class="input-block-level input-filter filter" type="text"
+								       name="filter_target_user"
 								       id="filter_target_user"
 								       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterTargetUser; ?>"
@@ -307,7 +308,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								     aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;"
 								     data-backdrop="false">
 									<div class="modal-header">
-										<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;
+										<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">
+											&times;
 										</button>
 										<h3>
 											<span class="icon-warning" aria-hidden="true"></span> Kunena Error
@@ -316,12 +318,15 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									</div>
 									<div class="modal-body">
 										<div>
-											<textarea style="margin-top: -3000px" id="report_final<?php echo $item->id; ?>" for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data);?></textarea>
+											<textarea style="margin-top: -3000px"
+											          id="report_final<?php echo $item->id; ?>"
+											          for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data); ?></textarea>
 											<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
 										</div>
 									</div>
 									<div class="modal-footer">
-										<a href="#" id="link_sel_all<?php echo $item->id; ?>" name="link_sel_all<?php echo $item->id; ?>" type="button"
+										<a href="#" id="link_sel_all<?php echo $item->id; ?>"
+										   name="link_sel_all<?php echo $item->id; ?>" type="button"
 										   class="btn btn-small btn-primary"><i
 													class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>

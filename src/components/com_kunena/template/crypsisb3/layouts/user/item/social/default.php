@@ -13,12 +13,12 @@ defined('_JEXEC') or die;
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
 <div class="inline pull-right">
-	<?php foreach($this->socials as $key => $social)
+	<?php foreach ($this->socials as $key => $social)
 	{
-	    if (!empty($this->profile->$key))
-	    {
-	        echo $this->profile->socialButtonsTemplate($key, $showAll);
-	    }
+		if (!empty($this->profile->$key))
+		{
+			echo $this->profile->socialButtonsTemplate($key, $showAll);
+		}
 	}
 	?>
 </div>

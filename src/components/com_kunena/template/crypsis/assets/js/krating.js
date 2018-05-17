@@ -17,10 +17,10 @@ jQuery(document).ready(function ($) {
 
 		if ($('#krating').length > 0) {
 			$.ajax({
-				 dataType: "json",
+				dataType: "json",
 				url: $('#krating_url').val(),
-				 data: 'topic_id=' + topic_id
-			}).done(function(response) {
+				data: 'topic_id=' + topic_id
+			}).done(function (response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function (reponse) {
 				//TODO: handle the error of ajax request

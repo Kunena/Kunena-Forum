@@ -14,7 +14,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 
 
-
 $message = $this->message;
 
 if (!$message->isAuthorised('reply'))

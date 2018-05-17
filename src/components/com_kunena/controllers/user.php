@@ -231,13 +231,13 @@ class KunenaControllerUser extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			$log     = KunenaLog::LOG_USER_EDIT;
+			$log = KunenaLog::LOG_USER_EDIT;
 
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$log,
 				array(
-					'edited_by_moderator'     => $edited_by_moderator,
+					'edited_by_moderator' => $edited_by_moderator,
 				),
 				null,
 				null,

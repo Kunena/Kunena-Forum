@@ -43,7 +43,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<div class="mykmsg-header">
 				<?php
 				$subject = $message->displayField('subject');
-				$msg = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+				$msg     = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
 				echo JText::sprintf($msg, $name, $subject);
 				?>
 			</div>

@@ -69,7 +69,8 @@ HTMLHelper::_('dropdown.init');
 							?>
 							<tr>
 								<td>
-									<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>" name="cid[]"
+									<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>"
+									       name="cid[]"
 									       value="<?php echo $this->escape($row->directory); ?>"
 									       onclick="Joomla.isChecked(this.checked);"/>
 								</td>
@@ -140,7 +141,8 @@ HTMLHelper::_('dropdown.init');
 								<?php $img_path = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
 								<span class="editlinktip hasTip"
 								      title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-									<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank"
+									<a href="https://www.kunena.org/download/templates/product/blue-eagle-5"
+									   target="_blank"
 									   rel="noopener noreferrer">Blue Eagle 5</a>
 								</span>
 							</td>
@@ -177,11 +179,13 @@ HTMLHelper::_('dropdown.init');
 								K5.0.X
 							</td>
 							<td style="width: 5%;">
-								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates"
+								   target="_blank"
 								   rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 							</td>
 							<td style="width: 25%;">
-								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates"
+								   target="_blank"
 								   rel="noopener noreferrer">http://www.9themestore.com</a>
 							</td>
 							<td style="width: 30%;">

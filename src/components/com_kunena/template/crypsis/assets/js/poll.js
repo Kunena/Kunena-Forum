@@ -30,8 +30,8 @@ jQuery(document).ready(function ($) {
 		polldiv.append(label);
 
 		newInput = document.createElement('input');
-		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
-		newInput.setAttribute('id', 'field_option'+options);
+		newInput.setAttribute('name', 'polloptionsID[new' + options + ']');
+		newInput.setAttribute('id', 'field_option' + options);
 		newInput.setAttribute('class', 'inputbox inputpollclear');
 		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');
@@ -39,7 +39,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	var kpollalert = $('#kpoll-alert-error');
-	var polladd    = $('#kbutton-poll-add');
+	var polladd = $('#kbutton-poll-add');
 	if (polladd !== undefined) {
 		polladd.click(function () {
 			var nboptionsmax = $('#nb_options_allowed').val();
@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
 		pollremove.click(function () {
 			var koption = $('div.polloption:last');
 			if (koption) {
-				var isvisible  = kpollalert.is(":visible");
+				var isvisible = kpollalert.is(":visible");
 
 				if (isvisible) {
 					kpollalert.hide();

@@ -299,7 +299,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		$this->message = $message;
-		$query = $this->_db->getQuery(true);
+		$query         = $this->_db->getQuery(true);
 
 		if ($update)
 		{

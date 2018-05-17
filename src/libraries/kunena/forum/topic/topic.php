@@ -2103,7 +2103,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		if (!$config->pollallowvoteone && $votes)
 		{
-			$time_zone = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
+			$time_zone   = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
 			$objTimeZone = new DateTimeZone($time_zone);
 
 			// Check the time between two votes
@@ -2155,7 +2155,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	protected function authoriseNoVotes(KunenaUser $user)
 	{
-		$poll = $this->getPoll();
+		$poll   = $this->getPoll();
 		$config = KunenaFactory::getConfig();
 
 		if ($poll->exists() && $poll->getUserCount() && $config->pollallowvoteone)

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE extension>
 <extension type="file" version="2.5" method="upgrade">
-	<name>Kunena Language - English</name>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<author>Kunena Team</author>
-	<authorEmail>kunena@kunena.org</authorEmail>
-	<authorUrl>https://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2018 Kunena Team. All rights reserved.</copyright>
-	<license>GNU/GPL</license>
-	<description>English language file for Kunena Forum Component</description>
+    <name>Kunena Language - English</name>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <version>@kunenaversion@</version>
+    <author>Kunena Team</author>
+    <authorEmail>kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>(C) 2008 - 2018 Kunena Team. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
+    <description>English language file for Kunena Forum Component</description>
 
-	<fileset>
-		<files folder="admin" target="administrator/language/en-GB">
-			<filename>en-GB.com_kunena.controllers.ini</filename>
-			<filename>en-GB.com_kunena.ini</filename>
-			<filename>en-GB.com_kunena.libraries.ini</filename>
-			<filename>en-GB.com_kunena.models.ini</filename>
-			<filename>en-GB.com_kunena.sys.ini</filename>
-			<filename>en-GB.com_kunena.views.ini</filename>
-			<filename>en-GB.plg_kunena_altauserpoints.sys.ini</filename>
-			<filename>en-GB.plg_kunena_community.sys.ini</filename>
-			<filename>en-GB.plg_kunena_comprofiler.sys.ini</filename>
-			<filename>en-GB.plg_kunena_easyblog.sys.ini</filename>
-			<filename>en-GB.plg_kunena_easyprofile.sys.ini</filename>
-			<filename>en-GB.plg_kunena_easysocial.sys.ini</filename>
-			<filename>en-GB.plg_kunena_gravatar.sys.ini</filename>
-			<filename>en-GB.plg_kunena_joomla.sys.ini</filename>
-			<filename>en-GB.plg_kunena_kunena.sys.ini</filename>
-			<filename>en-GB.plg_kunena_uddeim.sys.ini</filename>
-			<filename>en-GB.plg_quickicon_kunena.sys.ini</filename>
-			<filename>en-GB.plg_system_kunena.sys.ini</filename>
-		</files>
-		<files folder="site" target="language/en-GB">
-			<filename>en-GB.com_kunena.controllers.ini</filename>
-			<filename>en-GB.com_kunena.ini</filename>
-			<filename>en-GB.com_kunena.models.ini</filename>
-			<filename>en-GB.com_kunena.templates.ini</filename>
-			<filename>en-GB.com_kunena.views.ini</filename>
-			<filename>en-GB.kunena_tmpl_crypsis.ini</filename>
-		</files>
-	</fileset>
+    <fileset>
+        <files folder="admin" target="administrator/language/en-GB">
+            <filename>en-GB.com_kunena.controllers.ini</filename>
+            <filename>en-GB.com_kunena.ini</filename>
+            <filename>en-GB.com_kunena.libraries.ini</filename>
+            <filename>en-GB.com_kunena.models.ini</filename>
+            <filename>en-GB.com_kunena.sys.ini</filename>
+            <filename>en-GB.com_kunena.views.ini</filename>
+            <filename>en-GB.plg_kunena_altauserpoints.sys.ini</filename>
+            <filename>en-GB.plg_kunena_community.sys.ini</filename>
+            <filename>en-GB.plg_kunena_comprofiler.sys.ini</filename>
+            <filename>en-GB.plg_kunena_easyblog.sys.ini</filename>
+            <filename>en-GB.plg_kunena_easyprofile.sys.ini</filename>
+            <filename>en-GB.plg_kunena_easysocial.sys.ini</filename>
+            <filename>en-GB.plg_kunena_gravatar.sys.ini</filename>
+            <filename>en-GB.plg_kunena_joomla.sys.ini</filename>
+            <filename>en-GB.plg_kunena_kunena.sys.ini</filename>
+            <filename>en-GB.plg_kunena_uddeim.sys.ini</filename>
+            <filename>en-GB.plg_quickicon_kunena.sys.ini</filename>
+            <filename>en-GB.plg_system_kunena.sys.ini</filename>
+        </files>
+        <files folder="site" target="language/en-GB">
+            <filename>en-GB.com_kunena.controllers.ini</filename>
+            <filename>en-GB.com_kunena.ini</filename>
+            <filename>en-GB.com_kunena.models.ini</filename>
+            <filename>en-GB.com_kunena.templates.ini</filename>
+            <filename>en-GB.com_kunena.views.ini</filename>
+            <filename>en-GB.kunena_tmpl_crypsis.ini</filename>
+        </files>
+    </fileset>
 </extension>

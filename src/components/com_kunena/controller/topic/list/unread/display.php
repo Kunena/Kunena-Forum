@@ -34,14 +34,14 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state   = $this->model->getState();
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->moreUri = null;
-		$access        = KunenaAccess::getInstance();
-		$start = $this->state->get('list.start');
-		$limit = $this->state->get('list.limit');
-		$params = $this->app->getParams('com_kunena');
-		$Itemid = $this->input->getInt('Itemid');
+		$this->state    = $this->model->getState();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->moreUri  = null;
+		$access         = KunenaAccess::getInstance();
+		$start          = $this->state->get('list.start');
+		$limit          = $this->state->get('list.limit');
+		$params         = $this->app->getParams('com_kunena');
+		$Itemid         = $this->input->getInt('Itemid');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		// Handle &sel=x parameter.
@@ -128,8 +128,8 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$this->prepareTopics();
 		}
 
-		$actions       = array('delete', 'approve', 'undelete', 'move', 'permdelete');
-		$this->actions = $this->getTopicActions($this->topics, $actions);
+		$actions          = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$this->actions    = $this->getTopicActions($this->topics, $actions);
 		$this->headerText = JText::_('COM_KUNENA_UNREAD');
 	}
 }

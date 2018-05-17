@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\HTML\HTMLHelper;
 
 ?>

@@ -30,8 +30,8 @@ jQuery(document).ready(function ($) {
 		polldiv.append(label);
 
 		newInput = document.createElement('input');
-		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
-		newInput.setAttribute('id', 'field_option'+options);
+		newInput.setAttribute('name', 'polloptionsID[new' + options + ']');
+		newInput.setAttribute('id', 'field_option' + options);
 		newInput.setAttribute('class', 'inputbox inputpollclear');
 		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');

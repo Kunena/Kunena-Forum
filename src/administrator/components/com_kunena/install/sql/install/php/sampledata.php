@@ -39,7 +39,7 @@ class KText
  */
 function installSampleData()
 {
-	$lang  = Factory::getLanguage();
+	$lang = Factory::getLanguage();
 
 	// $debug = $lang->setDebug(false);
 

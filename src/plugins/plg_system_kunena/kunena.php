@@ -55,7 +55,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 
 		parent::__construct($subject, $config);
 
-		$app = Factory::getApplication();
+		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
 
 		if ($format != 'feed')

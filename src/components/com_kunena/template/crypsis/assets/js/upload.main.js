@@ -85,12 +85,12 @@ jQuery(function ($) {
 					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + file.id,
 					type: 'POST'
 				})
-				.done(function (data) {
-					$('#files').empty();
-				})
-				.fail(function (){
-					//TODO: handle the error of ajax request
-				});
+					.done(function (data) {
+						$('#files').empty();
+					})
+					.fail(function () {
+						//TODO: handle the error of ajax request
+					});
 			});
 
 			filesedit = null;
@@ -116,12 +116,12 @@ jQuery(function ($) {
 					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + fileid,
 					type: 'POST'
 				})
-				.done(function (data) {
-					$('#files').empty();
-				})
-				.fail(function (){
-					//TODO: handle the error of ajax request
-				});
+					.done(function (data) {
+						$('#files').empty();
+					})
+					.fail(function () {
+						//TODO: handle the error of ajax request
+					});
 			}
 		});
 
@@ -212,13 +212,13 @@ jQuery(function ($) {
 				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
 				type: 'POST'
 			})
-			.done(function (data) {
-				console.log(result);
-			})
-			.fail(function (){
-				//TODO: handle the error of ajax request
-			});
-	});
+				.done(function (data) {
+					console.log(result);
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
+		});
 
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
@@ -257,12 +257,12 @@ jQuery(function ($) {
 				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&fil_id=' + file_id,
 				type: 'POST'
 			})
-			.done(function (data) {
-				$this.parent().remove();
-			})
-			.fail(function (){
-				//TODO: handle the error of ajax request
-			});
+				.done(function (data) {
+					$this.parent().remove();
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		});
 
 	$('#fileupload').fileupload({
@@ -381,13 +381,13 @@ jQuery(function ($) {
 		}
 	}).on('fileuploaddone', function (e, data) {
 		// $.each(data.result.data, function (index, file)
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$('#progress .bar').css(
-				'width',
-				progress + '%'
-			);
+		var progress = parseInt(data.loaded / data.total * 100, 10);
+		$('#progress .bar').css(
+			'width',
+			progress + '%'
+		);
 
-			var link = $('<a>')
+		var link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
 
@@ -444,35 +444,35 @@ jQuery(function ($) {
 			dataType: 'json',
 			data: {mes_id: $('#kmessageid').val()}
 		})
-		.done(function (data) {
-			if ($.isEmptyObject(data.files) === false) {
-				fileCount = Object.keys(data.files).length;
+			.done(function (data) {
+				if ($.isEmptyObject(data.files) === false) {
+					fileCount = Object.keys(data.files).length;
 
-				filesedit = data.files;
+					filesedit = data.files;
 
-				$(data.files).each(function (index, file) {
-					var image = '';
-					if (file.image === true) {
-						image = '<img src="' + file.path + '" width="100" height="100" /><br />';
-					}
-					else {
-						image = '<i class="icon-flag-2 icon-big"></i><br />';
-					}
+					$(data.files).each(function (index, file) {
+						var image = '';
+						if (file.image === true) {
+							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
+						}
+						else {
+							image = '<i class="icon-flag-2 icon-big"></i><br />';
+						}
 
-					var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
-					data.uploaded = true;
-					data.result = false;
-					data.file_id = file.id;
+						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
+						data.uploaded = true;
+						data.result = false;
+						data.file_id = file.id;
 
-					object.append(insertButton.clone(true).data(file));
-					object.append(removeButton.clone(true).data(data));
+						object.append(insertButton.clone(true).data(file));
+						object.append(removeButton.clone(true).data(data));
 
-					object.appendTo("#files");
-				});
-			}
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+						object.appendTo("#files");
+					});
+				}
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	}
 });

@@ -1357,7 +1357,7 @@ class KunenaConfig extends JObject
 	 */
 	public function load()
 	{
-		$db = Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__kunena_configuration'));

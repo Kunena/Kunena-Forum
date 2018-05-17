@@ -88,7 +88,7 @@ jQuery(function ($) {
 					.done(function (data) {
 						$('#files').empty();
 					})
-					.fail(function (){
+					.fail(function () {
 						//TODO: handle the error of ajax request
 					});
 			});
@@ -119,7 +119,7 @@ jQuery(function ($) {
 					.done(function (data) {
 						$('#files').empty();
 					})
-					.fail(function (){
+					.fail(function () {
 						//TODO: handle the error of ajax request
 					});
 			}
@@ -215,7 +215,7 @@ jQuery(function ($) {
 				.done(function (data) {
 					console.log(result);
 				})
-				.fail(function (){
+				.fail(function () {
 					//TODO: handle the error of ajax request
 				});
 		});
@@ -260,7 +260,7 @@ jQuery(function ($) {
 				.done(function (data) {
 					$this.parent().remove();
 				})
-				.fail(function (){
+				.fail(function () {
 					//TODO: handle the error of ajax request
 				});
 		});
@@ -471,7 +471,7 @@ jQuery(function ($) {
 					});
 				}
 			})
-			.fail(function (){
+			.fail(function () {
 				//TODO: handle the error of ajax request
 			});
 	}

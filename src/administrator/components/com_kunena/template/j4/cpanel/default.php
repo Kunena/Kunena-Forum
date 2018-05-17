@@ -106,16 +106,16 @@ defined('_JEXEC') or die();
 							<hr class="hr-condensed">
 							<ul class="pull-left">
 								<li><i class="icon icon-question"></i> <a href="https://docs.kunena.org/en/setup"
-																		  target="_blank"
-																		  rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
+								                                          target="_blank"
+								                                          rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
 								</li>
 								<li><i class="icon icon-question"></i> <a
 											href="https://docs.kunena.org/en/setup/sections-categories" target="_blank"
 											rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
 								</li>
 								<li><i class="icon icon-question"></i> <a href="https://www.kunena.org/forum"
-																		  target="_blank"
-																		  rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
+								                                          target="_blank"
+								                                          rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
 								</li>
 							</ul>
 							<div class="clearfix"></div>
@@ -149,7 +149,8 @@ defined('_JEXEC') or die();
 								<dd>GNU General Public License</dd>
 								<hr class="hr-condensed">
 								<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
-								<dd><a href="https://www.kunena.org/terms-of-use" target="_blank" rel="noopener noreferrer">https://www.kunena.org/terms-of-use</a>
+								<dd><a href="https://www.kunena.org/terms-of-use" target="_blank"
+								       rel="noopener noreferrer">https://www.kunena.org/terms-of-use</a>
 								</dd>
 								<hr class="hr-condensed">
 								<dt><?php echo JText::_('Check Updates') ?>:</dt>
@@ -161,11 +162,11 @@ defined('_JEXEC') or die();
 										<input name="cmd" type="hidden" value="_s-xclick">
 										<input name="hosted_button_id" type="hidden" value="TPKVQFBQPFSLU">
 										<input name="submit" type="image"
-											   alt="PayPal - The safer, easier way to pay online!"
-											   src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif"
-											   border="0">
+										       alt="PayPal - The safer, easier way to pay online!"
+										       src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif"
+										       border="0">
 										<img width="1" height="1" alt=""
-											 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
+										     src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" border="0">
 									</form>
 								</dd>
 							</dl>

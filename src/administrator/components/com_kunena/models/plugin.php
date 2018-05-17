@@ -206,8 +206,8 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		// Setup type
 		$data['type'] = 'plugin';
 
-		$context    = $this->option . '.' . $this->name;
-		$table      = $this->getTable();
+		$context = $this->option . '.' . $this->name;
+		$table   = $this->getTable();
 		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, true, $data));
 
 		return parent::save($data);

@@ -32,7 +32,8 @@ $this->addScript('assets/js/profile.js');
 			</td>
 			<td>
 				<input id="personaltext" type="text" maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>" class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC')?>"/>
+				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"
+				       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -46,7 +47,8 @@ $this->addScript('assets/js/profile.js');
 			<div id="birthdate">
 				<div class="input-append date">
 					<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>" class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC')?>">
+					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>"
+					       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="add-on"><i class="icon-grid-view-2 "></i></span>
 				</div>
 			</div>
@@ -60,7 +62,8 @@ $this->addScript('assets/js/profile.js');
 		</td>
 		<td>
 			<input id="location" type="text" name="location"
-			       value="<?php echo $this->escape($this->profile->location); ?>" class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION_DESC')?>"/>
+			       value="<?php echo $this->escape($this->profile->location); ?>" class="hasTooltip"
+			       title="<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
 		</td>
 	</tr>
 	<tr>
@@ -78,7 +81,7 @@ $this->addScript('assets/js/profile.js');
 
 			// Build the html select list
 			echo HTMLHelper::_(
-				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="'. JText::_('COM_KUNENA_MYPROFILE_GENDER') .'" size="1"', 'value', 'text',
+				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
 				$this->escape($this->profile->gender), 'gender'
 			);
 			?>

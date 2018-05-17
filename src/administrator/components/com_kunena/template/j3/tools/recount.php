@@ -34,8 +34,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-			  method="post" id="adminForm"
-			  name="adminForm">
+		      method="post" id="adminForm"
+		      name="adminForm">
 			<input type="hidden" name="task" value="recount"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -74,8 +74,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
 <!-- Modal -->
 <div id="recountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
-	 aria-hidden="true"
-	 data-backdrop="static" data-keyboard="false">
+     aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
 	<div class="modal-header">
 		<button type="button" class="close recount-close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3></h3>
@@ -89,7 +89,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div class="modal-footer">
 		<button class="btn recount-close" data-dismiss="modal"
-				aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
+		        aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
 	</div>
 </div>
 
@@ -106,60 +106,60 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				cache: false,
 				timeout: 180000 // 3 minutes
 			})
-			.done(function (data) {
-				var $this = $(this);
+				.done(function (data) {
+					var $this = $(this);
 
-				if ('header' in data) {
-					$this.find('.modal-header h3').text(data.header);
-				}
-				if ('message' in data) {
-					$this.find('.modal-body p').html(data.message);
-				}
-				if ('status' in data) {
-					$this.find('.bar').css('width', data.status);
-				}
-				if ('error' in data) {
-					$this.find('.modal-error').html(data.error);
-				}
-				if (!('success' in data && data.success)) {
-					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
-				} else if ('status' in data && data.status === '100%') {
-					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-success');
-				} else if ('href' in data && data.href) {
-					$this.doRecount(data.href, {format: 'json'});
-					return;
-				} else {
-					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-warning');
-					if (!('error' in data)) {
-						$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT'));
+					if ('header' in data) {
+						$this.find('.modal-header h3').text(data.header);
 					}
-				}
-				$this.find('.recount-close').removeAttr('disabled');
-    		})
-    		.fail(function (){
-    			var $this = $(this);
-				if (status === 'error' && error) {
-					$this.find('.modal-header h3').text(xhr.status + ' ' + error);
-					$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
-					$this.find('.modal-error').html(xhr.responseText);
-				} else if (status === 'timeout') {
-					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER'));
-					$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY'));
-				} else if (status === 'abort') {
-					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER'));
-					$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
-					$this.find('.modal-error').text(error);
-				} else if (status === 'parsererror') {
-					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER'));
-					$this.find('.modal-body p').text(error);
-					$this.find('.modal-error').html(xhr.responseText);
-				} else {
-					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER'));
-					$this.find('.modal-error').text(error ? error : Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY'));
-				}
-				$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
-				$this.find('.recount-close').removeAttr('disabled');
-			});
+					if ('message' in data) {
+						$this.find('.modal-body p').html(data.message);
+					}
+					if ('status' in data) {
+						$this.find('.bar').css('width', data.status);
+					}
+					if ('error' in data) {
+						$this.find('.modal-error').html(data.error);
+					}
+					if (!('success' in data && data.success)) {
+						$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
+					} else if ('status' in data && data.status === '100%') {
+						$this.find('.progress').removeClass('active').children('.bar').addClass('bar-success');
+					} else if ('href' in data && data.href) {
+						$this.doRecount(data.href, {format: 'json'});
+						return;
+					} else {
+						$this.find('.progress').removeClass('active').children('.bar').addClass('bar-warning');
+						if (!('error' in data)) {
+							$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT'));
+						}
+					}
+					$this.find('.recount-close').removeAttr('disabled');
+				})
+				.fail(function () {
+					var $this = $(this);
+					if (status === 'error' && error) {
+						$this.find('.modal-header h3').text(xhr.status + ' ' + error);
+						$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
+						$this.find('.modal-error').html(xhr.responseText);
+					} else if (status === 'timeout') {
+						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER'));
+						$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY'));
+					} else if (status === 'abort') {
+						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER'));
+						$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
+						$this.find('.modal-error').text(error);
+					} else if (status === 'parsererror') {
+						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER'));
+						$this.find('.modal-body p').text(error);
+						$this.find('.modal-error').html(xhr.responseText);
+					} else {
+						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER'));
+						$this.find('.modal-error').text(error ? error : Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY'));
+					}
+					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
+					$this.find('.recount-close').removeAttr('disabled');
+				});
 		};
 
 		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {

@@ -11,15 +11,15 @@
 defined('_JEXEC') or die;
 
 
-$message  = $this->message;
-$topic    = $message->getTopic();
-$category = $topic->getCategory();
-$author   = $message->getAuthor();
-$isReply  = $message->id != $topic->first_post_id;
-$config   = KunenaFactory::getConfig();
-$name     = $config->username ? $author->username : $author->name;
-$me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-$this->ktemplate  = KunenaFactory::getTemplate();
+$message              = $this->message;
+$topic                = $message->getTopic();
+$category             = $topic->getCategory();
+$author               = $message->getAuthor();
+$isReply              = $message->id != $topic->first_post_id;
+$config               = KunenaFactory::getConfig();
+$name                 = $config->username ? $author->username : $author->name;
+$me                   = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$this->ktemplate      = KunenaFactory::getTemplate();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
 ?>
@@ -42,9 +42,9 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $message->getState(); ?> khistory">
 			<div class="mykmsg-header">
 				<?php
-				$title = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo JText::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false));?>
+				echo JText::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
 			<div class="kmessage">
 				<?php if (!$isReply)

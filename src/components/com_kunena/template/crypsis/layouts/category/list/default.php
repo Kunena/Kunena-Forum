@@ -11,8 +11,10 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="kcategoryform" id="kcategoryform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
+      name="kcategoryform" id="kcategoryform">
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<h3>

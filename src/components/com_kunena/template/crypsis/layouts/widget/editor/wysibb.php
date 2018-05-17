@@ -88,7 +88,7 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
-$settings = $templatesettings->get('wysibb');
+$settings      = $templatesettings->get('wysibb');
 ?>
 
 <script>
@@ -98,7 +98,7 @@ $settings = $templatesettings->get('wysibb');
 		// Todo More Support
 		traceTextarea: true,
 		smileList: [
-			{title:CURLANG.sm1, img: '<img src="media/kunena/emoticons/blink.png">', bbcode:":)"}
+			{title: CURLANG.sm1, img: '<img src="media/kunena/emoticons/blink.png">', bbcode: ":)"}
 		],
 		allButtons: {
 			custom: {
@@ -110,15 +110,15 @@ $settings = $templatesettings->get('wysibb');
 					tabs: [
 						{
 							input: [ //List of form fields
-								{param: "SELTEXT",title:"Enter City",type:"div"},
-								{param: "ZOOM",title:"Zoom Level",type:"div"}
+								{param: "SELTEXT", title: "Enter City", type: "div"},
+								{param: "ZOOM", title: "Zoom Level", type: "div"}
 							]
 						}
 					],
-					onLoad: function() {
+					onLoad: function () {
 						//Callback function that will be called after the display of a modal window
 					},
-					onSubmit: function() {
+					onSubmit: function () {
 						//Callback function that will be called by pressing the "Save"
 						//If function return false, it means sending data WysiBB not be made
 					}

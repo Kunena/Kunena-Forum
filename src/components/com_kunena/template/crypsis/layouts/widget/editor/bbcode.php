@@ -277,17 +277,17 @@ if (!empty($codeTypes))
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>
-					<?php
-					if ($this->poll->exists())
-					{
-						$x = 1;
+				<?php
+				if ($this->poll->exists())
+				{
+					$x = 1;
 
-						foreach ($this->poll->getOptions() as $poll_option)
-						{
-							echo '<div class="polloption"><label>Option ' . $x . '</label><input type="text" size="100" id="field_option' . $x . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '" /></div>';
-							$x++;
-						}
-					} ?>
+					foreach ($this->poll->getOptions() as $poll_option)
+					{
+						echo '<div class="polloption"><label>Option ' . $x . '</label><input type="text" size="100" id="field_option' . $x . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '" /></div>';
+						$x++;
+					}
+				} ?>
 				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
 				       value="<?php echo $this->config->pollnboptions; ?>"/>
 				<input type="hidden" name="number_total_options" id="numbertotal"

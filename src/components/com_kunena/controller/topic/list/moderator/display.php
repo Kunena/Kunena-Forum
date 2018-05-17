@@ -29,9 +29,9 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	{
 		parent::before();
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$access        = KunenaAccess::getInstance();
-		$this->moreUri = null;
+		$this->me       = KunenaUserHelper::getMyself();
+		$access         = KunenaAccess::getInstance();
+		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$params = $this->app->getParams('com_kunena');

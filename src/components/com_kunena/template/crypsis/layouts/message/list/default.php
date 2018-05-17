@@ -45,7 +45,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
 						</div>
-						<?php echo HTMLHelper::_( 'form.token' ); ?>
+						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
 				</div>
 			</h2>

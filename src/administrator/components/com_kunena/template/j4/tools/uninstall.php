@@ -21,7 +21,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_ALERTBOX_DESC') ?>
 </div>
 
-<<div id="kunena" class="container-fluid">
+<
+<div id="kunena" class="container-fluid">
 	<div class="row">
 		<div class="col-md-2 d-none d-md-block sidebar">
 			<div id="sidebar">
@@ -76,7 +77,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 									<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
 									     aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+												×
 											</button>
 											<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h3>
 										</div>
@@ -84,7 +86,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 											<p><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_DESC') ?></p>
 										</div>
 										<div class="modal-footer">
-											<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+											<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+												Close
+											</button>
 											<button type="submit"
 											        class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 										</div>

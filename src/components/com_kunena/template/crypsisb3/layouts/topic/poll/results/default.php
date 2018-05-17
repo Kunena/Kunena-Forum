@@ -22,7 +22,7 @@ $this->addScript('assets/js/poll.js');
 		&times;
 	</button>
 	<h2>
-		<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 <?php endif; ?>
 

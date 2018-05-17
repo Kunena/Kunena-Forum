@@ -128,7 +128,8 @@ $user = Factory::getUser();
 							<td class="hidden-phone">
 							</td>
 							<td class="nowrap center">
-								<label for="filter_enabled" class="element-invisible"><?php echo JText::_('All'); ?></label>
+								<label for="filter_enabled"
+								       class="element-invisible"><?php echo JText::_('All'); ?></label>
 								<select name="filter_enabled" id="filter_enabled" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
@@ -154,7 +155,8 @@ $user = Factory::getUser();
 								       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_access" class="element-invisible"><?php echo JText::_('All'); ?></label>
+								<label for="filter_access"
+								       class="element-invisible"><?php echo JText::_('All'); ?></label>
 								<select name="filter_access" id="filter_access" class="select-filter filter"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>

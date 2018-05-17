@@ -54,7 +54,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
-						<?php echo HTMLHelper::_( 'form.token' ); ?>
+						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
 				</h2>
 			</div>

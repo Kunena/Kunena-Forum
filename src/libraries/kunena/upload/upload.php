@@ -8,6 +8,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
@@ -500,18 +501,18 @@ class KunenaUpload
 			case 'gb':
 				$value *= 1024;
 
-				// Continue , do not put break here
+			// Continue , do not put break here
 			case 'm':
 			case 'mb':
 				$value *= 1024;
 				$value *= 1024;
 
-				// Continue , do not put break here
+			// Continue , do not put break here
 			case 'k':
 			case 'kb':
 				$value *= 1024;
 
-				// Continue, do not put break here
+			// Continue, do not put break here
 		}
 
 		return (int) $value;
@@ -632,8 +633,7 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+			} while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;

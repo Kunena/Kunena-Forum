@@ -16,18 +16,18 @@ function kPreviewHelper(previewActive) {
 	var editor = jQuery('#editor');
 	if (editor.val() !== null) {
 		jQuery.ajax({
-			type    : 'POST',
-			url     : jQuery('#kpreview_url').val(),
-			async   : true,
+			type: 'POST',
+			url: jQuery('#kpreview_url').val(),
+			async: true,
 			dataType: 'json',
 			data: {body: editor.val()}
 		})
-		.done(function (data) {
-			jQuery('#kbbcode-preview').html(data.preview);
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+			.done(function (data) {
+				jQuery('#kbbcode-preview').html(data.preview);
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	}
 }
 
@@ -93,12 +93,12 @@ jQuery(document).ready(function ($) {
 									search: query
 								}
 							})
-							.done(function (data) {
-								callback(data.emojis);
-							})
-							.fail(function (){
-								//TODO: handle the error of ajax request
-							});
+								.done(function (data) {
+									callback(data.emojis);
+								})
+								.fail(function () {
+									//TODO: handle the error of ajax request
+								});
 						}
 					}
 				}
@@ -177,7 +177,7 @@ jQuery(document).ready(function ($) {
 			dataType: 'json',
 			data: {catid: catid}
 		})
-		.done(function (data) {
+			.done(function (data) {
 				$('#iconset_topic_list').remove();
 
 				var div_object = $('<div>', {'id': 'iconset_topic_list'});
@@ -237,10 +237,10 @@ jQuery(document).ready(function ($) {
 						$('#iconset_topic_list').append(span_object);
 					}
 				});
-		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 
 		// Load template text for the category by ajax request
 		category_template_text = function cat_template_text() {
@@ -252,28 +252,25 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid}
 			})
 				.done(function (data) {
-					if( $('#editor').val().length > 1 ) {
+					if ($('#editor').val().length > 1) {
 						if ($('#editor').val().length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
-						else
-						{
+						else {
 							$('#editor').val(category_template_text);
 						}
 					}
-					else
-					{
+					else {
 						if (data.length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
-						else
-						{
+						else {
 							$('#editor').val(data);
 						}
 					}
 
 				})
-				.fail(function (){
+				.fail(function () {
 					//TODO: handle the error of ajax request
 				});
 		}();
@@ -302,12 +299,11 @@ jQuery(document).ready(function ($) {
 	}
 
 	if ($("gotoeditor") !== undefined) {
-		$("gotoeditor").on("click", function ()
-		{
+		$("gotoeditor").on("click", function () {
 			if (qreply.length > 0) {
 				var local = localStorage.setItem("copyKunenaeditor", qreply.val());
 				console.log(local);
 			}
-		} , false);
+		}, false);
 	}
 });

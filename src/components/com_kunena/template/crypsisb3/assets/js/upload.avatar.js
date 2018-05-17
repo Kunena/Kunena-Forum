@@ -11,10 +11,9 @@ jQuery(function ($) {
 		.html('<i class="icon-trash"></i> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_AVATAR'))
 		.on('click', function () {
 			var $this = $(this),
-			data = $this.data();
+				data = $this.data();
 
-			if (data['files'] !== undefined)
-			{
+			if (data['files'] !== undefined) {
 				var userid = data['files'].userid;
 				var avatar = data['files'].filename;
 			} else {
@@ -26,42 +25,42 @@ jQuery(function ($) {
 
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
-				url    : Joomla.getOptions('com_kunena.avatar_remove_url') + '&userid=' + userid + '&avatar=' + avatar,
+				url: Joomla.getOptions('com_kunena.avatar_remove_url') + '&userid=' + userid + '&avatar=' + avatar,
 				type: 'POST',
 			})
-			.done(function (data) {
-				$this.parent().remove();
-			})
-			.fail(function (){
-				//TODO: handle the error of ajax request
-			});
+				.done(function (data) {
+					$this.parent().remove();
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		});
 
 	$('#fileupload').fileupload({
-		url               : 'index.php?option=com_kunena&view=user&task=upload&format=json',
-		dataType          : 'json',
-		autoUpload        : true,
+		url: 'index.php?option=com_kunena&view=user&task=upload&format=json',
+		dataType: 'json',
+		autoUpload: true,
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
 		disableImageResize: /Android(?!.*Chrome)|Opera/
 			.test(window.navigator.userAgent),
-		previewMaxWidth   : 100,
-		previewMaxHeight  : 100,
-		previewCrop       : true
+		previewMaxWidth: 100,
+		previewMaxHeight: 100,
+		previewCrop: true
 	}).bind('fileuploadsubmit', function (e, data) {
-			var params = {};
-			$.each(data.files, function (index, file) {
-				params = {
-					'userid': $('#kunena_userid').val(),
-					'filename': file.name,
-					'size'    : file.size,
-					'mime'    : file.type
-				};
-			});
+		var params = {};
+		$.each(data.files, function (index, file) {
+			params = {
+				'userid': $('#kunena_userid').val(),
+				'filename': file.name,
+				'size': file.size,
+				'mime': file.type
+			};
+		});
 
-			data.formData = params;
-		})
+		data.formData = params;
+	})
 		.bind('fileuploaddrop', function (e, data) {
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
@@ -170,12 +169,10 @@ jQuery(function ($) {
 				if ($.isEmptyObject(data) === false) {
 					fileCount = 1;
 
-					if (data.name !== undefined)
-					{
+					if (data.name !== undefined) {
 						var name = data.name;
 					}
-					else
-					{
+					else {
 						var name = '';
 					}
 
@@ -191,7 +188,7 @@ jQuery(function ($) {
 					object.appendTo("#files");
 				}
 			})
-			.fail(function (){
+			.fail(function () {
 				//TODO: handle the error of ajax request
 			});
 	}

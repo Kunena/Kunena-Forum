@@ -98,21 +98,27 @@ $attachments = $this->attachments;
 					<td class="center">
 
 						<?php if ($canDelete) : ?>
-							<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center" data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
+							<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
+							   data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
 
-							<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="modaldeleteLabel">
+							<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog"
+							     aria-labelledby="modaldeleteLabel">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="myModalLabel"><?php echo JText::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title"
+											    id="myModalLabel"><?php echo JText::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
 										</div>
 										<div class="modal-body">
 											<p><?php echo JText::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-											<button type="button" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
+											<button type="button" class="btn btn-default"
+											        data-dismiss="modal"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+											<button type="button"
+											        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 										</div>
 									</div>
 								</div>
@@ -132,21 +138,25 @@ $attachments = $this->attachments;
 	</div>
 	<?php if ($attachments) : ?>
 		<a href="#modaldeleteall" class="btn btn-default pull-right"
-		       data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?></a>
+		   data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
 		<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="modaldeleteLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel"><?php echo JText::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+									aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"
+						    id="myModalLabel"><?php echo JText::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
 					</div>
 					<div class="modal-body">
 						<p><?php echo JText::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-						<button type="button" class="btn btn-primary" onclick="adminform.submit();"><?php echo JText::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
+						<button type="button" class="btn btn-default"
+						        data-dismiss="modal"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+						<button type="button" class="btn btn-primary"
+						        onclick="adminform.submit();"><?php echo JText::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 					</div>
 				</div>
 			</div>

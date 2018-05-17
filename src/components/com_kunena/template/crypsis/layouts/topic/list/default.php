@@ -54,7 +54,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 						<div>
 							<?php $this->displayTimeFilter('sel'); ?>
 						</div>
-						<?php echo HTMLHelper::_( 'form.token' ); ?>
+						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
 				</h2>
 			</div>

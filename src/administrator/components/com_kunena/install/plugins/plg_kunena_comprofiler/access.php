@@ -222,7 +222,7 @@ class KunenaAccessComprofiler
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
 	 * @param   KunenaForumCategory $category category
-	 * @param   int $userid userid
+	 * @param   int                 $userid   userid
 	 *
 	 * @return array
 	 * @since Kunena

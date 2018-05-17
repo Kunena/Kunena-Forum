@@ -143,8 +143,8 @@ jQuery(document).ready(function ($) {
 				});
 			});
 		})
-		.fail(function (){
-			//TODO: handle the error of ajax request
-		});
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	});
 });

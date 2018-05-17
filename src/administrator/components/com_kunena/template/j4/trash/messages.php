@@ -52,7 +52,8 @@ HTMLHelper::_('dropdown.init');
 				      method="post" id="adminForm"
 				      name="adminForm">
 					<input type="hidden" name="type" value="<?php echo $this->escape($this->state->get('layout')) ?>"/>
-					<input type="hidden" name="layout" value="<?php echo $this->escape($this->state->get('layout')) ?>"/>
+					<input type="hidden" name="layout"
+					       value="<?php echo $this->escape($this->state->get('layout')) ?>"/>
 					<input type="hidden" name="filter_order"
 					       value="<?php echo intval($this->state->get('list.ordering')) ?>"/>
 					<input type="hidden" name="filter_order_Dir"
@@ -103,7 +104,8 @@ HTMLHelper::_('dropdown.init');
 							<div class="btn-group pull-right">
 								<label for="sortTable"
 								       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
-								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+								<select name="sortTable" id="sortTable" class="input-medium"
+								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 								</select>
@@ -210,7 +212,7 @@ HTMLHelper::_('dropdown.init');
 							</tfoot>
 							<tbody>
 							<?php
-							$i = 0;
+							$i      = 0;
 							$itemid = KunenaRoute::fixMissingItemID();
 
 							if ($this->pagination->total > 0)
@@ -221,10 +223,12 @@ HTMLHelper::_('dropdown.init');
 									<tr>
 										<td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->id)) ?></td>
 										<td><?php echo intval($row->id); ?></td>
-										<td><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&mesid=' . $row->id .'&Itemid=' . $itemid . '#' . $row->id ); ?>"
-										       target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
-										<td><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
-										       target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
+										<td>
+											<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&mesid=' . $row->id . '&Itemid=' . $itemid . '#' . $row->id); ?>"
+											   target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
+										<td>
+											<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
+											   target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
 										</td>
 										<td><?php echo $this->escape($row->getCategory()->name); ?></td>
 										<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>

@@ -60,8 +60,8 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	/**
 	 * @param          $user
 	 * @param   string $class class
-	 * @param   int $sizex sizex
-	 * @param   int $sizey sizey
+	 * @param   int    $sizex sizex
+	 * @param   int    $sizey sizey
 	 *
 	 * @return string
 	 * @throws Exception

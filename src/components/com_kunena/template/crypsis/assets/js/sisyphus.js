@@ -281,7 +281,7 @@
 
 						self.findFieldsToProtect($(this)).each(function () {
 							var field = $(this);
-							if ($.inArray(this, self.options.excludeFields) !== -1 || ( field.attr("name") === undefined && field.attr("id") === undefined )) {
+							if ($.inArray(this, self.options.excludeFields) !== -1 || (field.attr("name") === undefined && field.attr("id") === undefined)) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
@@ -382,11 +382,11 @@
 					}
 
 					var name = field.attr("name");
-					if (field.is(":checkbox") && resque !== "false" && ( name === undefined || name.indexOf("[") === -1 )) {
+					if (field.is(":checkbox") && resque !== "false" && (name === undefined || name.indexOf("[") === -1)) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.prop("checked", true);
 					}
-					else if (field.is(":checkbox") && resque === "false" && ( name === undefined || name.indexOf("[") === -1 )) {
+					else if (field.is(":checkbox") && resque === "false" && (name === undefined || name.indexOf("[") === -1)) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.prop("checked", false);
 					}

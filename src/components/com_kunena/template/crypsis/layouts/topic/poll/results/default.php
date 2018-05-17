@@ -18,7 +18,7 @@ $this->addScript('assets/js/poll.js');
 	?>
 	<div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
 	<h2>
-		<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 <?php endif; ?>
 
@@ -90,7 +90,8 @@ $this->addScript('assets/js/poll.js');
 					:
 					?>
 
-					<a class="btn" href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>">
+					<a class="btn"
+					   href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>">
 						<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGE_VOTE'); ?>
 					</a>
 				<?php endif; ?>

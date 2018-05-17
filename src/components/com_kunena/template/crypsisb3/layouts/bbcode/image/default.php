@@ -30,10 +30,10 @@ $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
 <div class="kmsgimage">
 	<?php if ($canLink) : ?>
-	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
+	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
 		<?php endif; ?>
 
-		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $title;?>"/>
+		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $title; ?>"/>
 
 		<?php if ($canLink) : ?>
 	</a>

@@ -249,7 +249,7 @@ jQuery(document).ready(function ($) {
 				url: $('#kurl_category_template_text').val(),
 				async: true,
 				dataType: 'json',
-				data: {catid: catid},
+				data: {catid: catid}
 			})
 				.done(function (data) {
 					if( $('#editor').val().length > 1 ) {

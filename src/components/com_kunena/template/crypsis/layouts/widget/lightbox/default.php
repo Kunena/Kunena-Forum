@@ -16,4 +16,4 @@ if (KunenaConfig::getInstance()->lightbox != 1)
 }
 
 $this->addStyleSheet('assets/css/fancybox.css');
-$this->addScript('assets/js/fancybox.js');
+$this->addScript('assets/js/fancybox-min.js');

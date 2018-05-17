@@ -13,4 +13,4 @@ defined('_JEXEC') or die;
 $template = KunenaTemplate::getInstance();
 
 $this->addStyleSheet('assets/css/fancybox.css');
-$this->addScript('assets/js/fancybox.js');
+$this->addScript('assets/js/fancybox-min.js');

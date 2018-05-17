@@ -227,7 +227,7 @@ jQuery(document).ready(function ($) {
 		.fail(function (){
 			//TODO: handle the error of ajax request
 		});
-			
+
 		// Load template text for the category by ajax request
 		category_template_text = function cat_template_text() {
 			return $.ajax({
@@ -235,7 +235,7 @@ jQuery(document).ready(function ($) {
 				url: $('#kurl_category_template_text').val(),
 				async: true,
 				dataType: 'json',
-				data: {catid: catid},
+				data: {catid: catid}
 			})
 			.done(function (data) {
 				if( $('#editor').val().length > 1 ) {

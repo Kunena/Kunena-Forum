@@ -87,7 +87,6 @@ $this->addStyleSheet('assets/css/rating.css');
 			<?php endif; ?>
 		</tr>
 		</thead>
-		<?php endif; ?>
 		<?php
 		/** @var KunenaForumTopic $previous */
 		$previous = null;
@@ -172,4 +171,6 @@ $this->addStyleSheet('assets/css/rating.css');
 
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 	<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $this->category->id); ?></div>
+<?php endif; ?>
+
 <?php endif; ?>

@@ -23,15 +23,14 @@ defined('_JEXEC') or die;
 	<div style="text-align: center;"><a href="<?php echo $this->naturalurl; ?>" target="_blank"
 	                                    rel="noopener noreferrer"> <img src="<?php echo $this->pictureurl; ?>"/></a>
 	</div>
-	<div style="margin:10px 0;"/></div>
-	<a href="<?php echo $this->naturalurl; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->title; ?></a>
-	<div style="margin:10px 0;"/></div>
-	<div style="margin:10px 0;"/></div>
+	<div style="margin:10px 0;"/>
+    <a href="<?php echo $this->naturalurl; ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->title; ?></a>
+	<div style="margin:10px 0;"/>
+    <div style="margin:10px 0;"/>
 	<?php if ($this->status == "Active") : ?>
 		<a class="btn" href="<?php echo $this->naturalurl; ?>"
 		   target="_blank"><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
 	<?php else: ?>
 		<?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
 	<?php endif; ?>
-	</div>
 <?php endif;

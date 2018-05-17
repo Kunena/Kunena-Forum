@@ -420,8 +420,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					</div>
 				<?php endif; ?>
 
-				</fieldset>
-			</div>
+            </div>
 		</div>
 		<div class="center">
 			<?php if ($editor == 1)

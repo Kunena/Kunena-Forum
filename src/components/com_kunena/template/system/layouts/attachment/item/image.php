@@ -34,7 +34,7 @@ if ($config->lightbox == 1)
 
 	$config = KunenaConfig::getInstance();
 
-	$attributesLink = $config->lightbox ? ' data-fancybox' : '';
+	$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"

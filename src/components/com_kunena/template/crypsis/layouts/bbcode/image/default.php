@@ -16,7 +16,6 @@ $url      = $this->url;
 $filename = $this->filename;
 $size     = $this->size;
 $alt      = $this->alt;
-// @var  bool $canLink False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url]
 
 $canLink = isset($this->canLink) ? $this->canLink : true;
 

@@ -10,9 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-/*
-  @var KunenaLayout $this */
-// @var KunenaForumTopic $topic
 
 $topic           = $this->topic;
 $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);

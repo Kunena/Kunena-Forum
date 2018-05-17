@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 
-// @var KunenaAdminViewReport $this
 
 $document = Factory::getDocument();
 $document->addScriptDeclaration(

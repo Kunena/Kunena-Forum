@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die;
 
-// @var KunenaUser $user
 
 $user              = $this->user;
 $this->ktemplate   = KunenaFactory::getTemplate();

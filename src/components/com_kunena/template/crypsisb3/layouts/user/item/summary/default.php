@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// @var KunenaUser $profile
 
 $profile             = $this->profile;
 $socials             = $this->profile->socialButtons();

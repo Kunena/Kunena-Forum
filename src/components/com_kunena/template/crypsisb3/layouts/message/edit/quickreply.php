@@ -13,9 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 
-// @var KunenaLayout $this
 
-// @var KunenaForumMessage  $message  Message to reply to.
 
 $message = $this->message;
 
@@ -24,19 +22,14 @@ if (!$message->isAuthorised('reply'))
 	return;
 }
 
-// @var KunenaUser  $author  Author of the message.
 
 $author = isset($this->author) ? $this->author : $message->getAuthor();
-// @var KunenaForumTopic  $topic Topic of the message.
 
 $topic = isset($this->topic) ? $this->topic : $message->getTopic();
-// @var KunenaForumCategory  $category  Category of the message.
 
 $category = isset($this->category) ? $this->category : $message->getCategory();
-// @var KunenaConfig  $config  Kunena configuration.
 
 $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
-// @var KunenaUser  $me  Current user.
 
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 

@@ -17,7 +17,6 @@ $content = $this->execute('Topic/Item')
 $parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-// @var KunenaForumCategory $parent
 
 foreach ($parents as $parent)
 {

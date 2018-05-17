@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewCategories $this
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');

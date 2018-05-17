@@ -14,7 +14,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.core');
 
-// @var array|KunenaAttachment[] $attachments
 
 $attachments = $this->attachments;
 ?>

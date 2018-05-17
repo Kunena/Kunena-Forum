@@ -396,8 +396,7 @@ if (!empty($codeTypes)) : ?>
 			}
 			?>
 		</div>
-		</p>
-	</div>
+    </div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal"
 		        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL'); ?></button>

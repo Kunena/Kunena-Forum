@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-// @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
 ?>

@@ -140,7 +140,6 @@ $this->addScript('assets/js/search.js');
 		<?php
 		$i               = $this->pagination->limitstart;
 		$this->ktemplate = KunenaFactory::getTemplate();
-		// @var KunenaUser $user
 
 		foreach ($this->users as $user) :
 			$avatar = $config->userlist_avatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;

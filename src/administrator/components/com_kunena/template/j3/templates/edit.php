@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewTemplates $this
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');

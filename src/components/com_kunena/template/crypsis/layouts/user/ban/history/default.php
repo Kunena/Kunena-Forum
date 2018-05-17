@@ -44,7 +44,6 @@ defined('_JEXEC') or die;
 		:
 		$i = count($this->banHistory);
 
-		// @var KunenaUserBan $banInfo
 
 		foreach ($this->banHistory as $banInfo)
 			:

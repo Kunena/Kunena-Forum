@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
-// @var KunenaAdminViewStats $this
 
 $document = Factory::getDocument();
 /** @noinspection PhpDeprecationInspection */

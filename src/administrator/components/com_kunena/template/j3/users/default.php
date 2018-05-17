@@ -26,7 +26,7 @@ HTMLHelper::_('dropdown.init');
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
 
-		if (order != '<?php echo $this->listOrdering; ?>') {
+		if (order !== '<?php echo $this->listOrdering; ?>') {
 			var dirn = 'asc';
 		}
 		else {

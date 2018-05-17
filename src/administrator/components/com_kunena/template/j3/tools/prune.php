@@ -11,9 +11,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-
-// @var KunenaAdminViewTools $this
-
 ?>
 
 <div id="kunena" class="admin override">
@@ -23,7 +20,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
 			  method="post" id="adminForm"
 			  name="adminForm">

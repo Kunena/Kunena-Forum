@@ -9,9 +9,6 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
-
-// @var KunenaAdminViewTools $this
-
 ?>
 
 <div id="kunena" class="admin override">

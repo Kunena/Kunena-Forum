@@ -11,9 +11,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-
-// @var KunenaAdminViewTools $this
-
 ?>
 
 <div id="kunena" class="admin override">
@@ -29,8 +26,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 		      name="adminForm">
 			<input type="hidden" name="task" value="diagnostics"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
-
-		</form>
 
 		<?php
 		if (!empty($task))
@@ -121,7 +116,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			</table>
 
 		<?php endif ?>
-
+		</form>
 	</div>
 	<div class="pull-right small">
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>

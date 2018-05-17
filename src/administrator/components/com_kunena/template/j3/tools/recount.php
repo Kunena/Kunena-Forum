@@ -12,8 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewTools $this
-
 JText::script('COM_KUNENA_MODAL_CLOSE');
 JText::script('COM_KUNENA_AJAXMODAL_START_HEADER');
 JText::script('COM_KUNENA_AJAXMODAL_START_BODY');
@@ -125,7 +123,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				}
 				if (!('success' in data && data.success)) {
 					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
-				} else if ('status' in data && data.status == '100%') {
+				} else if ('status' in data && data.status === '100%') {
 					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-success');
 				} else if ('href' in data && data.href) {
 					$this.doRecount(data.href, {format: 'json'});
@@ -140,18 +138,18 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
     		})
     		.fail(function (){
     			var $this = $(this);
-				if (status == 'error' && error) {
+				if (status === 'error' && error) {
 					$this.find('.modal-header h3').text(xhr.status + ' ' + error);
 					$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
 					$this.find('.modal-error').html(xhr.responseText);
-				} else if (status == 'timeout') {
+				} else if (status === 'timeout') {
 					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER'));
 					$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY'));
-				} else if (status == 'abort') {
+				} else if (status === 'abort') {
 					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER'));
 					$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
 					$this.find('.modal-error').text(error);
-				} else if (status == 'parsererror') {
+				} else if (status === 'parsererror') {
 					$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER'));
 					$this.find('.modal-body p').text(error);
 					$this.find('.modal-error').html(xhr.responseText);

@@ -11,9 +11,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-
-// @var KunenaAdminViewTools $this
-
 ?>
 
 <div id="kunena" class="admin override">

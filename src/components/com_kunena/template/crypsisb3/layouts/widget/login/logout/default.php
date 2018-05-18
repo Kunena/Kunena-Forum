@@ -201,7 +201,7 @@ $config         = KunenaFactory::getTemplate()->params;
 	 */
 	?>
 </div>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form"
       class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')
 		->set('id', 'statusTextModal')
@@ -209,7 +209,7 @@ $config         = KunenaFactory::getTemplate()->params;
 		->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
 		->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
 		->set('data', $this->me->status_text)
-		->set('form', 'statusText-form'); ?>
+		->set('form', 'status-form'); ?>
 	<input type="hidden" name="view" value="user"/>
 	<input type="hidden" name="task" value="statustext"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -217,6 +217,10 @@ $config         = KunenaFactory::getTemplate()->params;
 <script type='text/javascript'>
 	jQuery(document).ready(function ($) {
 		$("input[name=status]").change(function () {
+			$("#status-form").submit();
+		});
+
+		$("btn_statustext") .click(function() {
 			$("#status-form").submit();
 		});
 	});

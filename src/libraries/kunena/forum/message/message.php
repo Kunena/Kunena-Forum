@@ -46,7 +46,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected static $actions = array(
 		'none'                   => array(),
 		'read'                   => array('Read'),
-		'reply'                  => array('Read', 'NotHold'),
+		'reply'                  => array('Read', 'NotHold', 'GuestWrite'),
 		'edit'                   => array('Read', 'Own', 'EditTime'),
 		'move'                   => array('Read'),
 		'approve'                => array('Read'),
@@ -1849,6 +1849,24 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
 			}
+		}
+
+		return;
+	}
+
+	/**
+	 * @param   KunenaUser $user user
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function authoriseGuestWrite(KunenaUser $user)
+	{
+		// Check if user is guest and they can create or reply topics
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
 		return;

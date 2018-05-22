@@ -63,6 +63,7 @@ class KunenaAdminViewConfig extends KunenaView
 					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 					$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'restore');
+		JToolbarHelper::back('JTOOLBAR_CANCEL', 'index.php?option=com_kunena');
 
 		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/configuration';

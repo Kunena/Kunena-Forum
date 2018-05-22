@@ -38,6 +38,19 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!file_exists($aup))
 		{
+			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'altauserpoints'))
+			{
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+				$query->update('`#__extensions`');
+				$query->where($db->quoteName('element') . ' = ' . $db->quote('altauserpoints'));
+				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
+				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
+				$query->set($db->quoteName('enabled') . '=0');
+				$db->setQuery($query);
+				$db->execute();
+			}
+
 			return;
 		}
 

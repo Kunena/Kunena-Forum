@@ -38,6 +38,19 @@ class plgKunenaEasyprofile extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
+			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyprofile'))
+			{
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+				$query->update('`#__extensions`');
+				$query->where($db->quoteName('element') . ' = ' . $db->quote('easyprofile'));
+				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
+				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
+				$query->set($db->quoteName('enabled') . '=0');
+				$db->setQuery($query);
+				$db->execute();
+			}
+
 			return;
 		}
 

@@ -513,6 +513,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$avatar_type[]         = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_AVATAR_ICONTYPE'));
 		$lists ['avatar_type'] = HTMLHelper::_('select.genericlist', $avatar_type, 'cfg_avatar_type', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatar_type);
 
+		$lists ['sef_redirect']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef_redirect', 'class="inputbox" size="1"', 'value', 'text', $this->config->sef_redirect);
+
 		return $lists;
 	}
 }

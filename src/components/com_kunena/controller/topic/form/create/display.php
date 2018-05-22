@@ -51,7 +51,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 		$format = Factory::getApplication()->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed')
+		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
 		{
 			if (KunenaConfig::getInstance()->search_id)
 			{

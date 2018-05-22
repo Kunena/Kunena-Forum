@@ -1315,6 +1315,12 @@ class KunenaConfig extends JObject
 	public $avatar_type = 1;
 
 	/**
+	 * @var string
+	 * @since  K5.1.1
+	 */
+	public $sef_redirect = 1;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

@@ -69,7 +69,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");

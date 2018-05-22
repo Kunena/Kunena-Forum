@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			if (KunenaConfig::getInstance()->moderator_id)
 			{

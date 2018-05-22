@@ -203,6 +203,11 @@ HTMLHelper::_('behavior.tabstate');
 														<td><?php echo $this->lists ['legacy_urls'] ?></td>
 														<td><?php echo JText::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']) ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_SEF_REDIRECT') ?></td>
+														<td><?php echo $this->lists ['sef_redirect'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_SEF_REDIRECT_DESC') ?></td>
+													</tr>
 													</tbody>
 												</table>
 											</fieldset>

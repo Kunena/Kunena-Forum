@@ -50,7 +50,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			if (KunenaConfig::getInstance()->search_id)
 			{

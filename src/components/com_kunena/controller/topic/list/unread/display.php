@@ -60,7 +60,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			if (KunenaConfig::getInstance()->moderator_id)
 			{

@@ -3,13 +3,11 @@ bbcodeSettings = {
 	markupSet: [{
 		className: 'boldbutton',
 		name: 'Bold',
-		name: 'Bold',
 		key: 'B',
 		openWith: '[b]',
 		closeWith: '[/b]'
 	}, {
 		className: 'italicbutton',
-		name: 'Italic',
 		name: 'Italic',
 		key: 'I',
 		openWith: '[i]',
@@ -17,20 +15,17 @@ bbcodeSettings = {
 	}, {
 		className: 'underlinebutton',
 		name: 'Underline',
-		name: 'Underline',
 		key: 'U',
 		openWith: '[u]',
 		closeWith: '[/u]'
 	}, {
 		className: 'strokebutton',
 		name: 'Stroke',
-		name: 'Strikethrough',
 		key: 'T',
 		openWith: '[strike]',
 		closeWith: '[/strike]'
 	}, {
 		className: 'subscriptbutton',
-		name: 'Subscript',
 		name: 'Subscript',
 		key: 'T',
 		openWith: '[sub]',
@@ -38,7 +33,6 @@ bbcodeSettings = {
 	}, {
 		className: 'supscriptbutton',
 		name: 'Supscript',
-		name: 'Superscript',
 		key: 'T',
 		openWith: '[sup]',
 		closeWith: '[/sup]'
@@ -72,46 +66,39 @@ bbcodeSettings = {
 	}, {separator: '|'}, {
 		className: 'bulletedlistbutton',
 		name: 'Unordered List',
-		name: 'Unordered List',
 		openWith: '[ul]\n  [li]',
 		closeWith: '[/li]\n  [li][/li]\n[/ul]'
 	}, {
 		className: 'numericlistbutton',
-		name: 'Ordered List',
 		name: 'Ordered List',
 		openWith: '[ol]\n  [li]',
 		closeWith: '[/li]\n  [li][/li]\n[/ol]'
 	}, {
 		className: 'listitembutton',
 		name: 'Li',
-		name: 'List Item',
 		openWith: '\n  [li]',
 		closeWith: '[/li]'
-	}, {className: 'hrbutton', name: 'HR', name: 'Horizontal line', openWith: '[hr]'}, {
+	}, {className: 'hrbutton', name: 'HR', openWith: '[hr]'}, {
 		className: 'alignleftbutton',
 		name: 'Left',
-		name: 'Align left',
 		openWith: '[left]',
 		closeWith: '[/left]'
 	}, {
 		className: 'centerbutton',
 		name: 'Center',
-		name: 'Align center',
 		openWith: '[center]',
 		closeWith: '[/center]'
 	}, {
 		className: 'alignrightbutton',
 		name: 'Right',
-		name: 'Align right',
 		openWith: '[right]',
 		closeWith: '[/right]'
 	}, {separator: '|'}, {
 		className: 'quotebutton',
 		name: 'Quote',
-		name: 'Quote',
 		openWith: '[quote]',
 		closeWith: '[/quote]'
-	}, {className: 'codesimplebutton', name: 'Code', name: 'Code', openWith: '[code]', closeWith: '[/code]'}, {
+	}, {className: 'codesimplebutton', name: 'Code', openWith: '[code]', closeWith: '[/code]'}, {
 		name: 'code', className: 'codemodalboxbutton', beforeInsert: function () {
 			jQuery('#code-modal-submit').click(function (event) {
 				event.preventDefault();
@@ -138,19 +125,16 @@ bbcodeSettings = {
 	}, {
 		className: 'spoilerbutton',
 		name: 'Spoiler',
-		name: 'Spoiler',
 		openWith: '[spoiler]',
 		closeWith: '[/spoiler]'
 	}, {
 		className: 'hiddentextbutton',
 		name: 'Hide',
-		name: 'Hide text from Guests',
 		openWith: '[hide]',
 		closeWith: '[/hide]'
 	}, {
 		className: 'confidentialbutton',
 		name: 'confidential',
-		name: 'Confidential information:',
 		openWith: '[confidential]',
 		closeWith: '[/confidential]'
 	}, {separator: '|'}, {

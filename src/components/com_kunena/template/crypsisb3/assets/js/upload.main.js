@@ -195,6 +195,10 @@ jQuery(function ($) {
 		.addClass("btn btn-primary")
 		.html('<span class="glyphicon glyphicon-upload"></span> Remove inline')
 		.on('click', function (e) {
+			// Make sure the button click doesn't submit the form:
+			e.preventDefault();
+			e.stopPropagation();
+			
 			var $this = $(this),
 				data = $this.data();
 
@@ -213,7 +217,7 @@ jQuery(function ($) {
 				type: 'POST'
 			})
 				.done(function (data) {
-					console.log(result);
+					$this.parent().remove();
 				})
 				.fail(function () {
 					//TODO: handle the error of ajax request
@@ -225,6 +229,10 @@ jQuery(function ($) {
 		.attr('type', 'button')
 		.html('<span class="glyphicon glyphicon-trash"></span> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function () {
+			// Make sure the button click doesn't submit the form:
+			e.preventDefault();
+			e.stopPropagation();
+			
 			var $this = $(this),
 				data = $this.data();
 

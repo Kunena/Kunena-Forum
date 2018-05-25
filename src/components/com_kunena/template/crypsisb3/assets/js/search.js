@@ -18,16 +18,19 @@ jQuery(document).ready(function ($) {
 			displayTpl: '<li data-value="${name}"><img src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
 			limit: 5,
 			callbacks: {
-				remoteFilter: function(query, callback)  {
+				remoteFilter: function (query, callback) {
 					$.ajax({
 						url: users_url,
 						data: {
 							search: query
-						},
-						success: function(data) {
-							callback(data);
 						}
-					});
+					})
+						.done(function (data) {
+							callback(data);
+						})
+						.fail(function () {
+							//TODO: handle the error of ajax request
+						});
 				}
 			}
 		});
@@ -38,7 +41,7 @@ jQuery(document).ready(function ($) {
 		$('#search').collapse("hide");
 	}
 
-	if (jQuery.fn.datepicker != undefined) {
+	if (jQuery.fn.datepicker !== undefined) {
 		jQuery('#searchatdate .input-append.date').datepicker({
 			orientation: "top auto"
 		});

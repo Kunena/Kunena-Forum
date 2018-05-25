@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 
-// @var KunenaAdminViewReport $this
 
 $document = Factory::getDocument();
 $document->addScriptDeclaration(
@@ -66,7 +65,8 @@ HTMLHelper::_('behavior.multiselect');
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="1"/>
 					<fieldset>
-						<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
+						<legend>
+							<i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
 						</legend>
 						<table class="table table-bordered table-striped">
 							<tr>
@@ -85,14 +85,16 @@ HTMLHelper::_('behavior.multiselect');
 						</table>
 					</fieldset>
 					<fieldset>
-						<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
+						<legend>
+							<i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
 						</legend>
 						<table class="table table-bordered table-striped">
 							<tr>
 								<td>
 									<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
 									<p>
-										<a href="#" id="link_sel_all_complete" name="link_sel_all_complete" type="button"
+										<a href="#" id="link_sel_all_complete" name="link_sel_all_complete"
+										   type="button"
 										   class="btn btn-small btn-primary"><i
 													class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>

@@ -63,7 +63,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfile
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
-$me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 if ($editor == 0)
 {

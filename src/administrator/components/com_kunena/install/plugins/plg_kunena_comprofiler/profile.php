@@ -68,7 +68,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -91,8 +91,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * @param          $user
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param   string $task  task
+	 * @param   bool   $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception

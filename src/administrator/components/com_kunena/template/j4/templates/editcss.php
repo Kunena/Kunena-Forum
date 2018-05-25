@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewTemplates $this
 
 ?>
 <div id="kunena" class="container-fluid">

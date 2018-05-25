@@ -85,8 +85,8 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
 $this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
-$topictemplate = !KunenaConfig::getInstance()->pickup_category;
-$settings = $templatesettings->get('wysibb');
+$topictemplate    = !KunenaConfig::getInstance()->pickup_category;
+$settings         = $templatesettings->get('wysibb');
 ?>
 <script>
 	var wbbOpt = {

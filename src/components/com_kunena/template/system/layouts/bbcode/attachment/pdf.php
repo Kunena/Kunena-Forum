@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-// @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
 $location   = \Joomla\CMS\Uri\Uri::root() . $attachment->getUrl();
@@ -27,6 +26,5 @@ if (!$attachment->isPdf())
         style="min-height: 300px;">
 	<embed src="<?php echo $location; ?>">
 	This browser does not support PDFs. Please download the PDF to view it: <a href="<?php echo $location; ?>">Download
-		PDF</a>.</p>
-	</embed>
+		PDF</a>.
 </object>

@@ -40,7 +40,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean|string
 	 * @throws Exception
@@ -112,8 +112,8 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param          $userid
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param   string $task  task
+	 * @param   bool   $xhtml xhtml
 	 *
 	 * @return boolean|string
 	 * @since Kunena

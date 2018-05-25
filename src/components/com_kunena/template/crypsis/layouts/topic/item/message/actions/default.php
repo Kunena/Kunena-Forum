@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// @var KunenaForumMessage $message
 
 $message = $this->message;
 

@@ -84,7 +84,7 @@ JText::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
 $this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
-$settings = $templatesettings->get('wysibb');
+$settings         = $templatesettings->get('wysibb');
 ?>
 <script>
 	var wbbOpt = {

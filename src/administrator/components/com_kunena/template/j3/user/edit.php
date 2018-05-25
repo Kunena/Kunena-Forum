@@ -14,7 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 
-// @var KunenaAdminViewUser $this
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -158,8 +157,7 @@ jQuery(function($) {
 																<input type="text" name="birthdate"
 																       data-date-format="mm/dd/yyyy"
 																       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
-																<span class="add-on"><i
-																			class="icon-grid-view-2 "></i></span>
+																<span class="add-on"><?php echo KunenaIcons::grid();?></span>
 															</div>
 														</div>
 													</td>

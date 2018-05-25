@@ -28,8 +28,8 @@ HTMLHelper::_('behavior.tabstate');
 		</div>
 		<div id="j-main-container" class="col-md-10" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
-					method="post" id="adminForm"
-					name="adminForm">
+				  method="post" id="adminForm"
+				  name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -46,8 +46,12 @@ HTMLHelper::_('behavior.tabstate');
 											<a class="nav-link active" href="#tab_info" data-toggle="tab">
 												<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 										</li>
-										<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
-											<?php if ($fieldset->name != 'template') : ?>
+										<?php foreach ($this->form->getFieldsets() as $fieldset)
+										:
+	?>
+											<?php if ($fieldset->name != 'template')
+											:
+	?>
 												<li class="nav-item">
 													<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
 													   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
@@ -65,12 +69,14 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>:
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>
+														:
 													</td>
 													<td><?php echo JText::_($this->details->version); ?></td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?>:</td>
+													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?>:
+													</td>
 													<td><?php echo JText::_($this->details->creationdate); ?></td>
 												</tr>
 												<tr>
@@ -79,35 +85,46 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 
-														if (is_file($path)) : ?>
+													if (is_file($path))
+													:
+	?>
 															<div>
 																<img
 																		src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
 																		alt="<?php echo $this->escape($this->templatename); ?>"/>
 															</div>
-														<?php endif; ?>
+													<?php endif; ?>
 														<div><?php echo JText::_($this->details->description); ?></div>
 													</td>
 												</tr>
 											</table>
 										</div>
 
-										<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
+										<?php foreach ($this->form->getFieldsets() as $fieldset)
+										:
+	?>
 											<div class="tab-pane" id="tab_<?php echo $fieldset->name; ?>">
 												<table class="table table-bordered table-striped">
-													<?php foreach ($this->form->getFieldset($fieldset->name) as $field) :?>
-														<?php if ($field->hidden) :?>
+													<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
+													:
+	?>
+														<?php if ($field->hidden)
+														:
+	?>
 															<tr style="display: none">
-																<td class="paramlist_key"><?php echo $field->label;?></td>
-																<td class="paramlist_value"><?php echo $field->input;?></td>
+																<td class="paramlist_key"><?php echo $field->label; ?></td>
+																<td class="paramlist_value"><?php echo $field->input; ?></td>
 															</tr>
-														<?php else :?>
-														<tr>
-															<td width="40%"
-																class="paramlist_key"><?php echo $field->label;?></td>
-															<td class="paramlist_value"><?php echo $field->input;?></td>
-														</tr>
-													<?php endif;?>
+														<?php else
+
+		:
+	?>
+															<tr>
+																<td width="40%"
+																	class="paramlist_key"><?php echo $field->label; ?></td>
+																<td class="paramlist_value"><?php echo $field->input; ?></td>
+															</tr>
+														<?php endif; ?>
 													<?php endforeach; ?>
 												</table>
 											</div>

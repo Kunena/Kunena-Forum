@@ -9,8 +9,9 @@
 
 jQuery(document).ready(function ($) {
 	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-	
-	if (typeof pollcategoriesid != 'undefined' && pollcategoriesid != null && $('#poll_exist_edit').length == 0) {
+	var pollexist = $('#poll_exist_edit');
+
+	if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
 		var catid = $('#kcategory_poll').val();
 
 		if (pollcategoriesid[catid] !== undefined) {
@@ -20,7 +21,7 @@ jQuery(document).ready(function ($) {
 			$('.pollbutton').hide();
 		}
 	}
-	else if ($('#poll_exist_edit').length > 0) {
+	else if (pollexist.length > 0) {
 		$('.pollbutton').show();
 	}
 	else {

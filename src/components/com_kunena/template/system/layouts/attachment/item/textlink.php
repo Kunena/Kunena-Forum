@@ -11,13 +11,12 @@
  **/
 defined('_JEXEC') or die();
 
-// @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 ?>
 
 <a class="btn btn-small" rel="popover" data-placement="bottom" data-trigger="hover" target="_blank"

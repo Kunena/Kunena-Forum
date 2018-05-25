@@ -180,8 +180,6 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		{
 			$this->body = function () use ($body) {
 
-				// @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheControllerCallback $cache
-
 				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 

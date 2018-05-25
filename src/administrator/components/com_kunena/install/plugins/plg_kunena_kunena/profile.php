@@ -37,7 +37,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -122,8 +122,8 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param               $user
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param   string      $task      task
+	 * @param   bool        $xhtml     xhtml
 	 * @param   bool|string $avatarTab avatarTab
 	 *
 	 * @return boolean

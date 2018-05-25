@@ -46,7 +46,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected static $actions = array(
 		'none'                   => array(),
 		'read'                   => array('Read'),
-		'reply'                  => array('Read', 'NotHold'),
+		'reply'                  => array('Read', 'NotHold', 'GuestWrite'),
 		'edit'                   => array('Read', 'Own', 'EditTime'),
 		'move'                   => array('Read'),
 		'approve'                => array('Read'),
@@ -625,6 +625,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function save()
 	{
+		$user = KunenaUserHelper::getMyself();
+
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+		}
+
 		$isNew = !$this->_exists;
 
 		$topic    = $this->getTopic();
@@ -1403,7 +1410,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$this->time = $now;
 		}
 
-		// Do not allow indentical posting times inside topic (simplifies logic)
+		// Do not allow identical posting times inside topic (simplifies logic)
 		$topic = $this->getTopic();
 
 		if (!$this->exists() && $topic->exists() && $this->time <= $topic->last_post_time)
@@ -1849,6 +1856,24 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
 			}
+		}
+
+		return;
+	}
+
+	/**
+	 * @param   KunenaUser $user user
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function authoriseGuestWrite(KunenaUser $user)
+	{
+		// Check if user is guest and they can create or reply topics
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
 		return;

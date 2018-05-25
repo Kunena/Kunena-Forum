@@ -212,7 +212,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 				// Existing topic: Send email to both category and topic subscribers
 				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-				// FIXME: category subcription can override topic
+				// FIXME: category subscription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}
 		}

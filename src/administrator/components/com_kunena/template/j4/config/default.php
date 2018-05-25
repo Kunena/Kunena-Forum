@@ -203,6 +203,11 @@ HTMLHelper::_('behavior.tabstate');
 														<td><?php echo $this->lists ['legacy_urls'] ?></td>
 														<td><?php echo JText::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']) ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_SEF_REDIRECT') ?></td>
+														<td><?php echo $this->lists ['sef_redirect'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_SEF_REDIRECT_DESC') ?></td>
+													</tr>
 													</tbody>
 												</table>
 											</fieldset>
@@ -561,9 +566,14 @@ HTMLHelper::_('behavior.tabstate');
 														<td><?php echo JText::_('COM_KUNENA_A_SOCIAL_DESC') ?></td>
 													</tr>
 													<tr align="center" valign="middle">
-														<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
-														<td align="left" valign="top"><input type="text" name="cfg_maxsig" value="<?php echo $this->escape($this->config->maxsig) ?>" /></td>
-														<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
+														<td align="left"
+															valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
+														<td align="left" valign="top"><input type="text"
+																							 name="cfg_maxsig"
+																							 value="<?php echo $this->escape($this->config->maxsig) ?>"/>
+														</td>
+														<td align="left"
+															valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
 													</tr>
 													</tbody>
 												</table>
@@ -855,7 +865,8 @@ HTMLHelper::_('behavior.tabstate');
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 														<td class="nowrap">
-															<input type="text" name="cfg_avatarquality" class="ksm-field"
+															<input type="text" name="cfg_avatarquality"
+																   class="ksm-field"
 																   value="<?php echo $this->escape($this->config->avatarquality) ?>"/>
 															%
 														</td>

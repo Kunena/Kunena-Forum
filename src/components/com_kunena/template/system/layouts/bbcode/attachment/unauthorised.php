@@ -10,11 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
-// @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
 
-// @var KunenaUser $user
 
 $user = isset($this->user) ? $this->user : null;
 

@@ -80,7 +80,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * @param          $userid
 	 * @param   string $class class
-	 * @param   string $icon icon
+	 * @param   string $icon  icon
 	 *
 	 * @return string
 	 * @since Kunena

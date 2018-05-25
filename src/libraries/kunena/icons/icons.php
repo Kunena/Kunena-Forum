@@ -454,7 +454,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-search" aria-hidden="true"></i>';
+			return '<i class="fas fa-search" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
@@ -1396,7 +1396,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-calendar" aria-hidden="true"></i>';
+			return '<i class="far fa-calendar-alt" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

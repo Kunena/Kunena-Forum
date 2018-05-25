@@ -13,13 +13,6 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 jimport('joomla.filesystem.file');
 
-$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-if (!JFile::exists($file))
-{
-	return;
-}
-
 require_once $file;
 require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
@@ -39,6 +32,26 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
 		{
 			return true;
+		}
+
+		$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+		if (!JFile::exists($file))
+		{
+			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
+			{
+				$db = JFactory::getDBO();
+				$query = $db->getQuery(true);
+				$query->update('`#__extensions`');
+				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));
+				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
+				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
+				$query->set($db->quoteName('enabled') . '=0');
+				$db->setQuery($query);
+				$db->execute();
+			}
+
+			return;
 		}
 
 		parent::__construct($subject, $config);

@@ -32,7 +32,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 
 	/**
 	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   bool   $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -54,8 +54,8 @@ class KunenaProfileEasyblog extends KunenaProfile
 
 	/**
 	 * @param          $userid
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param   string $task  task
+	 * @param   bool   $xhtml xhtml
 	 *
 	 * @return boolean
 	 * @since K2.0

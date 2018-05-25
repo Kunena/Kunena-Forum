@@ -399,8 +399,6 @@ class KunenaAdminModelCategories extends KunenaModel
 			$admin = 0;
 			$acl   = KunenaAccess::getInstance();
 
-			// @var KunenaForumCategory $category
-
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:

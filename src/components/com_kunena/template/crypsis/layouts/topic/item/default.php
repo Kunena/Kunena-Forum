@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// @var KunenaForumTopic $topic
 
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();

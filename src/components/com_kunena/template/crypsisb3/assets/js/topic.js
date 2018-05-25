@@ -70,14 +70,14 @@ jQuery(document).ready(function ($) {
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();
-		if (id_item_selected != 0) {
+		if (id_item_selected !== 0) {
 			$('#kmod_subject').hide();
 		}
 		else {
 			$('#kmod_subject').show();
 		}
 
-		if (id_item_selected == -1) {
+		if (id_item_selected === -1) {
 			$('#kmod_targetid').show();
 		}
 		else {
@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	if ($.fn.jsSocials != undefined) {
+	if ($.fn.jsSocials !== undefined) {
 		$("#share").jsSocials({
 			showCount: true,
 			showLabel: true,
@@ -141,6 +141,9 @@ jQuery(document).ready(function ($) {
 					$('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
 				});
 			});
-		});
+		})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	});
 });

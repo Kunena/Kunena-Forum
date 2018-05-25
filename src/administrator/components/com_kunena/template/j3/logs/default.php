@@ -315,12 +315,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								</div>
 								<div class="modal-body">
 									<div>
-										<textarea style="margin-top: -3000px" id="report_final<?php echo $item->id; ?>" for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data);?></textarea>
+										<textarea style="margin-top: -3000px" id="report_final<?php echo $item->id; ?>"
+										          for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data); ?></textarea>
 										<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<a href="#" id="link_sel_all<?php echo $item->id; ?>" name="link_sel_all<?php echo $item->id; ?>" type="button"
+									<a href="#" id="link_sel_all<?php echo $item->id; ?>"
+									   name="link_sel_all<?php echo $item->id; ?>" type="button"
 									   class="btn btn-small btn-primary"><i
 												class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 									</a>

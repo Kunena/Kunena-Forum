@@ -225,8 +225,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor actor
-	 * @param   int $target target
+	 * @param   int $actor   actor
+	 * @param   int $target  target
 	 * @param   int $message message
 	 *
 	 * @since Kunena

@@ -155,7 +155,7 @@ dt {
 }
 
 .nav.nav-tabs li:hover {
-	box-shadow: 0 1px #fff inset, 0 2px 3px -3px rgba(0,0,0,0.15), 0 -4px 0 #fbcdcf inset, 0 0 3px rgba(0,0,0,0.04) !important;
+	box-shadow: 0 1px #fff inset, 0 2px 3px -3px rgba(0, 0, 0, 0.15), 0 -4px 0 #fbcdcf inset, 0 0 3px rgba(0, 0, 0, 0.04) !important;
 }
 
 .nav.nav-tabs .nav-link.active::after {

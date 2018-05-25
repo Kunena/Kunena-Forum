@@ -13,21 +13,28 @@
 var previewActive = false;
 
 function kPreviewHelper(previewActive) {
-	if (jQuery('#editor').val() != null) {
+	var editor = jQuery('#editor');
+	if (editor.val() !== null) {
 		jQuery.ajax({
 			type: 'POST',
 			url: jQuery('#kpreview_url').val(),
 			async: true,
 			dataType: 'json',
-			data: {body: jQuery('#editor').val()},
-			success: function (data) {
+			data: {body: editor.val()}
+		})
+			.done(function (data) {
 				jQuery('#kbbcode-preview').html(data.preview);
-			}
-		});
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 	}
 }
 
 jQuery(document).ready(function ($) {
+	var qreply = $('.qreply');
+	var editor = $('#editor');
+
 	$('#tabs_kunena_editor a:first').tab('show');
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
@@ -44,27 +51,27 @@ jQuery(document).ready(function ($) {
 
 		preview.attr('class', 'kbbcode-preview-bottom controls');
 		var height = message.css('height');
-		preview.css('height', message.css('height'));
+		preview.css('height', height);
 	});
 
 	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
 		$('#kbbcode-preview').hide();
-		$('#editor').css('display', 'inline-block');
+		editor.css('display', 'inline-block');
 		$('#markItUpeditor').css('display', 'inline-block');
 	});
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
-		$('#editor').hide();
+		editor.hide();
 		$('#markItUpeditor').hide();
 	});
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if ($('#kemojis_allowed').val() == 1) {
+	if ($('#kemojis_allowed').val() === 1) {
 		var item = '';
-		if ($('#editor').length > 0 && $('.qreply').length == 0) {
+		if (editor.length > 0 && qreply.length === 0) {
 			item = '#editor';
 		}
-		else if ($('.qreply').length > 0) {
+		else if (qreply.length > 0) {
 			item = '.qreply';
 		}
 
@@ -72,7 +79,7 @@ jQuery(document).ready(function ($) {
 			item = '#wysibb-body';
 		}
 
-		if (item != undefined) {
+		if (item !== undefined) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
@@ -84,11 +91,14 @@ jQuery(document).ready(function ($) {
 								url: $("#kurl_emojis").val(),
 								data: {
 									search: query
-								},
-								success: function (data) {
-									callback(data.emojis);
 								}
-							});
+							})
+								.done(function (data) {
+									callback(data.emojis);
+								})
+								.fail(function () {
+									//TODO: handle the error of ajax request
+								});
 						}
 					}
 				}
@@ -96,7 +106,7 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	if (item != undefined) {
+	if (item !== undefined) {
 		var users_url = $('#kurl_users').val();
 		$(item).atwho({
 			at: "@",
@@ -107,7 +117,7 @@ jQuery(document).ready(function ($) {
 
 
 	/* Store form data into localstorage every 1 second */
-	if ($.fn.sisyphus != undefined) {
+	if ($.fn.sisyphus !== undefined) {
 		$("#postform").sisyphus({
 			locationBased: true,
 			timeout: 5
@@ -163,10 +173,11 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			type: 'POST',
 			url: kurl_topicons_request,
-			async: false,
+			async: true,
 			dataType: 'json',
-			data: {catid: catid},
-			success: function (data) {
+			data: {catid: catid}
+		})
+			.done(function (data) {
 				$('#iconset_topic_list').remove();
 
 				var div_object = $('<div>', {'id': 'iconset_topic_list'});
@@ -174,8 +185,8 @@ jQuery(document).ready(function ($) {
 				$('#iconset_inject').append(div_object);
 
 				$.each(data, function (index, value) {
-					if (value.type != 'system') {
-						if (value.id == 0) {
+					if (value.type !== 'system') {
+						if (value.id === 0) {
 							var input = $('<input>', {
 								type: 'radio',
 								id: 'radio' + value.id,
@@ -194,7 +205,7 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'B3') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
@@ -204,7 +215,7 @@ jQuery(document).ready(function ($) {
 								'al': ''
 							}));
 						}
-						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') == 'fa') {
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
@@ -226,43 +237,42 @@ jQuery(document).ready(function ($) {
 						$('#iconset_topic_list').append(span_object);
 					}
 				});
-			}
-		});
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 
 		// Load template text for the category by ajax request
-		category_template_text = function () {
-			var tmp = null;
-			$.ajax({
+		category_template_text = function cat_template_text() {
+			return $.ajax({
 				type: 'POST',
 				url: $('#kurl_category_template_text').val(),
-				async: false,
+				async: true,
 				dataType: 'json',
-				data: {catid: catid},
-				success: function (data) {
-					if( $('#editor').val().length > 1 ) {
+				data: {catid: catid}
+			})
+				.done(function (data) {
+					if ($('#editor').val().length > 1) {
 						if ($('#editor').val().length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
-						else
-						{
+						else {
 							$('#editor').val(category_template_text);
 						}
 					}
-					else
-					{
+					else {
 						if (data.length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
-						else
-						{
+						else {
 							$('#editor').val(data);
 						}
 					}
-					tmp = data;
-				}
-			});
 
-			return tmp;
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		}();
 	});
 
@@ -270,21 +280,30 @@ jQuery(document).ready(function ($) {
 		$('#modal_confirm_template_category').modal('hide');
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text);
+		$('#editor').val(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var existing_content = $('#editor').val();
+		var existing_content = editor.val();
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text + ' ' + existing_content);
+		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
 	});
 
-	if ($.fn.datepicker != undefined) {
+	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for poll
 		$('#datepoll-container .input-group.date').datepicker({
 			orientation: "bottom auto"
 		});
+	}
+
+	if ($("gotoeditor") !== undefined) {
+		$("gotoeditor").on("click", function () {
+			if (qreply.length > 0) {
+				var local = localStorage.setItem("copyKunenaeditor", qreply.val());
+				console.log(local);
+			}
+		}, false);
 	}
 });

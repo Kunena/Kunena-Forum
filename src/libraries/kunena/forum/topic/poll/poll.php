@@ -471,7 +471,7 @@ class KunenaForumTopicPoll extends JObject
 	 */
 	public function getLastVoteId($user = null)
 	{
-			$user = KunenaFactory::getUser($user);
+		$user  = KunenaFactory::getUser($user);
 		$query = "SELECT lastvote
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";

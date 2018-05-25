@@ -328,8 +328,10 @@
                 ADD KEY `parent_id` (`parent_id`);
             </query>
             <query>
-                INSERT IGNORE INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
-                SELECT `userid` AS `user_id`, `thread` AS `topic_id`, `catid` AS `category_id`, COUNT(*) AS `posts`, MAX(id) AS
+                INSERT IGNORE INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`,
+                `last_post_id`, `owner`)
+                SELECT `userid` AS `user_id`, `thread` AS `topic_id`, `catid` AS `category_id`, COUNT(*) AS `posts`,
+                MAX(id) AS
                 last_post_id, MAX(IF(parent=0,1,0)) AS owner
                 FROM `#__kunena_messages` WHERE userid>0 AND moved=0 AND hold=0
                 GROUP BY `user_id`, `topic_id`;
@@ -613,7 +615,8 @@
             <query>ALTER TABLE `#__kunena_user_categories` CHANGE `allreadtime_new` `allreadtime` INT(11) NOT NULL
                 DEFAULT '0';
             </query>
-            <query>UPDATE `#__kunena_user_categories` AS c INNER JOIN `#__kunena_sessions` AS s ON c.user_id=s.userid SET
+            <query>UPDATE `#__kunena_user_categories` AS c INNER JOIN `#__kunena_sessions` AS s ON c.user_id=s.userid
+                SET
                 c.allreadtime=s.lasttime WHERE c.category_id=0 AND s.lasttime>c.allreadtime;
             </query>
         </version>
@@ -804,7 +807,8 @@
         <version version="5.1.0-RC9"
                  versiondate="2018-05-07"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `socialshare` tinyint(1) NOT NULL default '1' AFTER `ip`;
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `socialshare` tinyint(1) NOT NULL default '1'
+                AFTER `ip`;
             </query>
         </version>
         <version version="@kunenaversion@"

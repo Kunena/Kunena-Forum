@@ -877,21 +877,21 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function restore()
 	{
-	    $template = $this->app->input->get('templatename', '', 'method', 'cmd');
-	    $file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
+		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
-	    if(file_exists($file))
-	    {
-	        $result = JFile::delete($file);
+		if (file_exists($file))
+		{
+			$result = JFile::delete($file);
 
-	        if ($result)
-	        {
-	            KunenaFile::write($file, '');
-	        }
-	    }
+			if ($result)
+			{
+				KunenaFile::write($file, '');
+			}
+		}
 
-	    $this->app->enqueueMessage(JText::_('COM_KUNENA_TEMPLATES_SETTINGS_RESTORED_SUCCESSFULLY'));
-	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_TEMPLATES_SETTINGS_RESTORED_SUCCESSFULLY'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**

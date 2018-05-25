@@ -8,7 +8,7 @@
  **/
 
 jQuery(document).ready(function () {
-	if (jQuery.fn.datepicker != undefined) {
+	if (jQuery.fn.datepicker !== undefined) {
 		jQuery('#birthdate .input-group.date').datepicker({
 			orientation: "top auto"
 		});
@@ -16,8 +16,7 @@ jQuery(document).ready(function () {
 
 	var avatartab = jQuery.parseJSON(Joomla.getOptions('com_kunena.avatartab'));
 
-	if (avatartab)
-	{
+	if (avatartab) {
 		jQuery('.nav-tabs a[href=#editavatar]').tab('show');
 	}
 });

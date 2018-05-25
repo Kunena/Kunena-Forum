@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewTrash $this
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -210,7 +209,7 @@ HTMLHelper::_('dropdown.init');
 						</tfoot>
 						<tbody>
 						<?php
-						$i = 0;
+						$i      = 0;
 						$itemid = KunenaRoute::fixMissingItemID();
 
 						if ($this->pagination->total > 0)
@@ -221,10 +220,12 @@ HTMLHelper::_('dropdown.init');
 								<tr>
 									<td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->id)) ?></td>
 									<td><?php echo intval($row->id); ?></td>
-									<td><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&mesid=' . $row->id .'&Itemid=' . $itemid . '#' . $row->id ); ?>"
-									       target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
-									<td><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
-									       target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
+									<td>
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&mesid=' . $row->id . '&Itemid=' . $itemid . '#' . $row->id); ?>"
+										   target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
+									<td>
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
+										   target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
 									</td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
 									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>

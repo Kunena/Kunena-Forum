@@ -1047,7 +1047,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (is_file(JPATH_ROOT . '/plugins/kunena/alphauserpoints/avatar.php'))
 		{
-			$this->uninstallPlugin('kunena','alphauserpoints');
+			$this->uninstallPlugin('kunena', 'alphauserpoints');
 		}
 
 		if (function_exists('apc_clear_cache'))
@@ -2974,7 +2974,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		);
 
 		// Disable language debugging while creating menu items.
-		$lang  = Factory::getLanguage();
+		$lang = Factory::getLanguage();
 		//$debug = $lang->setDebug(false);
 
 		$this->createMenuJ25($menu, $submenu);

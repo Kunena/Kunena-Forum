@@ -40,7 +40,6 @@ defined('_JEXEC') or die;
 		:
 		$i = 0;
 
-		// @var KunenaUserBan $banInfo
 
 		foreach ($this->userBans as $banInfo)
 			:

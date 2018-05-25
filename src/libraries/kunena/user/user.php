@@ -1464,44 +1464,52 @@ class KunenaUser extends JObject
 			$rank->rank_image = null;
 		}
 
-		/**
-		 *  Rankimages 0 = Text Rank
-		 *             1 = Rank Image
-		 *             2 = Usergroup
-		 *             3 = Both Rank image and Usergroup
-		 */
-		if ($config->rankimages == 0)
+		if ($type == 'image')
 		{
-			return false;
-		}
-		elseif ($config->rankimages == 1)
-		{
-			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
-			$data     = getimagesize($location);
-			$width    = $data[0];
-			$height   = $data[1];
+			if (!$rank->rank_image)
+			{
+				return null;
+			}
 
-			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
-		}
-		elseif ($config->rankimages == 2)
-		{
-			return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
-		}
-		elseif ($config->rankimages == 3)
-		{
-			$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
-			$data     = getimagesize($location);
-			$width    = $data[0];
-			$height   = $data[1];
+			/**
+			 *  Rankimages 0 = Text Rank
+			 *             1 = Rank Image
+			 *             2 = Usergroup
+			 *             3 = Both Rank image and Usergroup
+			 */
+			if ($config->rankimages == 0)
+			{
+				return false;
+			}
+			elseif ($config->rankimages == 1)
+			{
+				$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
+				$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+				$data     = getimagesize($location);
+				$width    = $data[0];
+				$height   = $data[1];
 
-			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
+				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
+			}
+			elseif ($config->rankimages == 2)
+			{
+				return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
+			}
+			elseif ($config->rankimages == 3)
+			{
+				$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
+				$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+				$data     = getimagesize($location);
+				$width    = $data[0];
+				$height   = $data[1];
+
+				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
-		}
-		elseif ($config->rankimages == 4)
-		{
-			return self::rankCss($rank, $catid);
+			}
+			elseif ($config->rankimages == 4)
+			{
+				return self::rankCss($rank, $catid);
+			}
 		}
 
 		return $rank;
@@ -2122,7 +2130,7 @@ class KunenaUser extends JObject
 						'telegram'   => array('url' => 'https://t.me/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
 						'apple'      => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'),
 						'whatsapp'   => array('url' => '##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'),
-						'youtube'    => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => JText::_(' COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
+						'youtube'    => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
 						'ok'         => array('url' => 'https://ok.ru/##VALUE##', 'title' => JText::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
 		);
 

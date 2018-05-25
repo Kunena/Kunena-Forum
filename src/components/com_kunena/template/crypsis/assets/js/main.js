@@ -15,7 +15,7 @@ function kunenatableOrdering(order, dir, task, form) {
 	form.submit(task);
 }
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 	/* To check or uncheck boxes to select items */
 	$('input.kcheckall').click(function () {
 		$('.kcheck').prop('checked', $(this).prop("checked"));
@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 	/* Allow to make working drop-down choose destination */
 	$('#kchecktask').change(function () {
 		var task = $("select#kchecktask").val();
-		if (task == 'move') {
+		if (task === 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
 		}
 		else {
@@ -54,19 +54,19 @@ jQuery(document).ready(function($) {
 
 		// Get the list of images from the gallery selected drop-down above
 		$.ajax({
-			 dataType: "json",
-			 url: $('#kunena_url_avatargallery').val(),
-			 data: 'gallery_name=' + gallery_selected
-		}).done(function(response) {
-       $.each(response, function( key, value ) {
-				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar_gallery"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
-			  });
-		}).fail(function(response) {
+			dataType: "json",
+			url: $('#kunena_url_avatargallery').val(),
+			data: 'gallery_name=' + gallery_selected
+		}).done(function (response) {
+			$.each(response, function (key, value) {
+				gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar_gallery"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');
+			});
+		}).fail(function (response) {
 
 		});
 	});
 
-	if ($.fn.datepicker != undefined) {
+	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for announcement
 		$('#ann-date .input-append.date').datepicker({
 			orientation: "top auto",
@@ -84,9 +84,10 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	$('#clearcache').on('click', function (e) {
+	var clearcache = $('#clearcache');
+	clearcache.on('click', function (e) {
 		e.preventDefault();
-		$('#clearcache').addClass('btn-success');
-		$('#clearcache').html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
+		clearcache.addClass('btn-success');
+		clearcache.html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
 });

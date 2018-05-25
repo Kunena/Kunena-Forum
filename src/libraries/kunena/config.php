@@ -1315,6 +1315,12 @@ class KunenaConfig extends JObject
 	public $avatar_type = 1;
 
 	/**
+	 * @var string
+	 * @since  K5.1.1
+	 */
+	public $sef_redirect = 1;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -1357,7 +1363,7 @@ class KunenaConfig extends JObject
 	 */
 	public function load()
 	{
-		$db = Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__kunena_configuration'));

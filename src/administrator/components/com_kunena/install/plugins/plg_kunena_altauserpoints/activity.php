@@ -50,7 +50,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 */
 	public function onAfterPost($message)
 	{
-		// Check for permisions of the current category - activity only if public or registered
+		// Check for permissions of the current category - activity only if public or registered
 		if ($this->_checkPermissions($message))
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
@@ -136,7 +136,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 */
 	public function onAfterReply($message)
 	{
-		// Check for permisions of the current category - activity only if public or registered
+		// Check for permissions of the current category - activity only if public or registered
 		if ($this->_checkPermissions($message))
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
@@ -176,8 +176,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor actor
-	 * @param   int $target target
+	 * @param   int $actor   actor
+	 * @param   int $target  target
 	 * @param   int $message message
 	 *
 	 * @throws Exception
@@ -203,7 +203,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 					AltaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
 				}
 
-				// For who has gived the thank you
+				// For who has given the thank you
 				if ($aupactor)
 				{
 					AltaUserPointsHelper::newpoints($ruleName, $aupactor, '', $infoRootUser);

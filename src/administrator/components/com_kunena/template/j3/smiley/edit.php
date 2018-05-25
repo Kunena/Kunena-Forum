@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewSmiley $this
 
 $iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
 $this->document->addScriptDeclaration(

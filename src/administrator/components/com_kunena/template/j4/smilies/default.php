@@ -53,9 +53,10 @@ HTMLHelper::_('behavior.tabstate');
 					<div class="tabbable-line">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
-								<a class="nav-link active" href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></a></li>
+								<a class="nav-link active" href="#tab1"
+								   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></a></li>
 							<li class="nav-item"><a class="nav-link" href="#tab2"
-							       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
+							                        data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
 							</li>
 						</ul>
 						<div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -66,7 +67,8 @@ HTMLHelper::_('behavior.tabstate');
 								      id="adminForm" name="adminForm">
 									<input type="hidden" name="task" value=""/>
 									<input type="hidden" name="boxchecked" value="0"/>
-									<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
+									<input type="hidden" name="filter_order"
+									       value="<?php echo $this->listOrdering; ?>"/>
 									<input type="hidden" name="filter_order_Dir"
 									       value="<?php echo $this->listDirection; ?>"/>
 									<?php echo HTMLHelper::_('form.token'); ?>

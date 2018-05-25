@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewCategories $this
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -284,7 +283,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									$parentsStr = "";
 								}
 								?>
-								<tr sortable-group-id="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>"
+								<tr sortable-group-id="<?php echo $item->parent_id; ?>"
+								    item-id="<?php echo $item->id ?>"
 								    parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 									<td class="order nowrap center hidden-phone">
 										<?php if ($canChange)
@@ -320,13 +320,15 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id))
 											:
 											?>
-											<button class="btn btn-micro" title="Display only this item and its children"
+											<button class="btn btn-micro"
+											        title="Display only this item and its children"
 											        onclick="jQuery('input[name=catid]').val(<?php echo $item->id ?>);this.form.submit()">
 												<i class="icon-location"></i>
 											</button>
 										<?php else:
 											?>
-											<button class="btn btn-micro" title="Display only this item and its children"
+											<button class="btn btn-micro"
+											        title="Display only this item and its children"
 											        onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
 												<i class="icon-arrow-up"></i>
 											</button>

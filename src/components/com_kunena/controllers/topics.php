@@ -362,7 +362,7 @@ class KunenaControllerTopics extends KunenaController
 
 			if (empty($target->id))
 			{
-			    $this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
 				$this->setRedirectBack();
 			}
 

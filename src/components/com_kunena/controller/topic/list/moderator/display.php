@@ -29,9 +29,9 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	{
 		parent::before();
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$access        = KunenaAccess::getInstance();
-		$this->moreUri = null;
+		$this->me       = KunenaUserHelper::getMyself();
+		$access         = KunenaAccess::getInstance();
+		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$params = $this->app->getParams('com_kunena');
@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			if (KunenaConfig::getInstance()->moderator_id)
 			{

@@ -10,9 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-/*
-  @var KunenaLayout $this */
-// @var KunenaForumMessage $message
 $this->addStyleSheet('assets/css/rating.css');
 
 $message         = $this->message;

@@ -8,26 +8,30 @@
  **/
 
 jQuery(document).ready(function ($) {
+	var kurlusers = $('#kurl_users');
 
 	/* Provide autocomplete user list in search form and in user list */
-	if ($('#kurl_users').length > 0) {
-		var users_url = $('#kurl_users').val();
+	if (kurlusers.length > 0) {
+		var users_url = kurlusers.val();
 
 		$('#kusersearch').atwho({
 			at: "",
 			displayTpl: '<li data-value="${name}"><img src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
 			limit: 5,
 			callbacks: {
-				remoteFilter: function(query, callback)  {
+				remoteFilter: function (query, callback) {
 					$.ajax({
 						url: users_url,
 						data: {
-							search : query
-						},
-						success: function(data) {
-							callback(data);
+							search: query
 						}
-					});
+					})
+						.done(function (data) {
+							callback(data);
+						})
+						.fail(function () {
+							//TODO: handle the error of ajax request
+						});
 				}
 			}
 		});
@@ -38,9 +42,9 @@ jQuery(document).ready(function ($) {
 		$('#search').collapse("hide");
 	}
 
-	if (jQuery.fn.datepicker != undefined) {
+	if (jQuery.fn.datepicker !== undefined) {
 		jQuery('#searchatdate .input-append.date').datepicker({
 			orientation: "top auto"
-		 });
+		});
 	}
 });

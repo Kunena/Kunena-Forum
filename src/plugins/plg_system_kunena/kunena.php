@@ -55,21 +55,27 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 
 		parent::__construct($subject, $config);
 
-		if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if ($format != 'feed')
 		{
-			$styles = <<<EOF
+			if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+			{
+				$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
 		#kunena + div { display: block !important;}
 EOF;
 
-			$document = Factory::getDocument();
-			$document->addStyleDeclaration($styles);
-		}
+				$document = Factory::getDocument();
+				$document->addStyleDeclaration($styles);
+			}
 
-		if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
-		{
-			Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
-				'notice');
+			if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
+			{
+				Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
+					'notice');
+			}
 		}
 
 		// ! Always load language after parent::construct else the name of plugin isn't yet set

@@ -39,7 +39,7 @@ $form        = $this->form;
 		<button class="btn" type="button" data-dismiss="modal">
 			<?php echo JText::_('JCANCEL'); ?>
 		</button>
-		<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('<?php echo $form ?> ');">
+		<button class="btn btn-primary" type="submit" id="btn_statustext">
 			<?php echo JText::_('JSUBMIT'); ?>
 		</button>
 	</div>

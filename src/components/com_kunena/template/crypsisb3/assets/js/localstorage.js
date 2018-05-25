@@ -1,8 +1,8 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 	/* To hide or open collapse localStorage */
 	$('.collapse').on('hidden', function () {
 		if (this.id) {
-			if (this.id != 'search') {
+			if (this.id !== 'search') {
 				localStorage[this.id] = 'true';
 			}
 		}

@@ -37,7 +37,7 @@ $form        = $this->form;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('<?php echo $form ?> ');">
+				<button class="btn btn-primary" type="submit" id="btn_statustext">
 					<?php echo JText::_('JSUBMIT'); ?>
 				</button>
 				<button class="btn btn-default" type="button" data-dismiss="modal">

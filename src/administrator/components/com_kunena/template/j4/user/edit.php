@@ -75,7 +75,7 @@ jQuery(function($) {
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="#tab3"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
+											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="#tab4"
@@ -87,7 +87,7 @@ jQuery(function($) {
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="#tab6"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
+											   data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="#tab7"
@@ -113,7 +113,8 @@ jQuery(function($) {
 											<fieldset>
 												<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 												<div>
-														<textarea id="user-signature" class="input-xxlarge" name="signature"
+														<textarea id="user-signature" class="input-xxlarge"
+														          name="signature"
 														          cols="4" rows="6"
 														><?php echo $this->escape($this->user->signature); ?></textarea>
 												</div>
@@ -159,8 +160,7 @@ jQuery(function($) {
 																	<input type="text" name="birthdate"
 																	       data-date-format="mm/dd/yyyy"
 																	       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
-																	<span class="add-on"><i
-																				class="icon-grid-view-2 "></i></span>
+																	<span class="add-on"><?php echo KunenaIcons::grid();?></span>
 																</div>
 															</div>
 														</td>
@@ -239,7 +239,8 @@ jQuery(function($) {
 																	      title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
 																		      . '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																	<?php endif; ?>
-																		<input id="social-<?php echo $key; ?>" type="text"
+																		<input id="social-<?php echo $key; ?>"
+																		       type="text"
 																		       name="<?php echo $key ?>"
 																		       value="<?php echo $this->escape($this->user->$key); ?>"/>
 																	</span>

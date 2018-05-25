@@ -77,7 +77,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$defaultmenu = $this->input->getInt('defaultmenu');
 		$layout      = $this->input->getInt('layout');
 
-		if (!$Itemid)
+		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
 			$controller = JControllerLegacy::getInstance("kunena");
 

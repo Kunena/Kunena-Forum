@@ -22,53 +22,55 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<h3>
 			<?php echo $this->getCategoryLink($this->category, null, $this->category->description, KunenaTemplate::getInstance()->tooltips()); ?>
 			<small class="hidden-phone">
-				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>)
+				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>
+				)
 			</small>
 		</h3>
 	</td>
 
 	<?php if (!$topic->exists())
-	:
-	?>
+		:
+		?>
 		<td>
 			<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
 		</td>
 
 	<?php else:
-	?>
+		?>
 
 		<?php if ($avatar)
 		:
-	?>
-			<td class="center">
+		?>
+		<td class="center">
 		<span class="hidden-phone">
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 		</span>
-			</td>
-		<?php endif; ?>
+		</td>
+	<?php endif; ?>
 
-	<td<?php if (!$avatar)
-	{
-		echo ' colspan="2"';
-} ?>>
-		<div>
-			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $this->category, true, true); ?>
-		</div>
-		<div>
-			<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>
-		</div>
-		<div>
-			<?php echo $topic->getLastPostTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-		</div>
-	</td>
+		<td<?php if (!$avatar)
+		{
+			echo ' colspan="2"';
+		} ?>>
+			<div>
+				<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $this->category, true, true); ?>
+			</div>
+			<div>
+				<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>
+			</div>
+			<div>
+				<?php echo $topic->getLastPostTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+			</div>
+		</td>
 	<?php endif; ?>
 
 	<?php if ($this->checkbox)
-	:
-	?>
+		:
+		?>
 		<td class="center">
 			<label>
-				<input class="kcheckallcategory" type="checkbox" name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>
+				<input class="kcheckallcategory" type="checkbox"
+				       name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>
 			</label>
 		</td>
 	<?php endif; ?>

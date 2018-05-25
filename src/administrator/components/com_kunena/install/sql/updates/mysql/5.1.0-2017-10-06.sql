@@ -1,1 +1,2 @@
-ALTER TABLE `#__kunena_users` DROP `aim`;
+ALTER TABLE `#__kunena_users`
+  DROP `aim`;

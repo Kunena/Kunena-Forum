@@ -16,7 +16,6 @@ $url      = $this->url;
 $filename = $this->filename;
 $size     = $this->size;
 $alt      = $this->alt;
-// @var  bool $canLink False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url]
 
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
@@ -24,17 +23,17 @@ echo $this->subLayout('Widget/Lightbox');
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
 <div class="kmsgimage">
 	<?php if ($canLink) : ?>
-	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt;?>" <?php echo $attributesLink; ?>>
+	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
 		<?php endif; ?>
 
-		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?>  alt="<?php echo $alt;?>"/>
+		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $alt; ?>"/>
 
 		<?php if ($canLink) : ?>
 	</a>

@@ -231,13 +231,13 @@ class KunenaControllerUser extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			$log     = KunenaLog::LOG_USER_EDIT;
+			$log = KunenaLog::LOG_USER_EDIT;
 
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$log,
 				array(
-					'edited_by_moderator'     => $edited_by_moderator,
+					'edited_by_moderator' => $edited_by_moderator,
 				),
 				null,
 				null,
@@ -1342,9 +1342,9 @@ class KunenaControllerUser extends KunenaController
 		// Create a 'stream' transport.
 		$http = new \Joomla\CMS\Http\Http($options, $transport);
 
-		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
+		$data = "username[]=" . $spammer->username . "&ip[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key;
 
-		$response = $http->put('http://api.stopforumspam.org/api', $data);
+		$response = $http->post('https://api.stopforumspam.com/api', $data);
 
 		if ($response->code == '200')
 		{
@@ -1357,7 +1357,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			// Report failed or refused
 			$reasons = array();
-			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			preg_match('/<p>.*<\/p>/', $response->body, $reasons);
 
 			// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');

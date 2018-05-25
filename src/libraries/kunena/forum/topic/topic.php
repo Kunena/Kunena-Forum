@@ -48,8 +48,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	protected static $actions = array(
 		'none'                        => array(),
 		'read'                        => array('Read'),
-		'create'                      => array('NotExists'),
-		'reply'                       => array('Read', 'NotHold', 'NotMoved', 'Unlocked'),
+		'create'                      => array('NotExists', 'GuestWrite'),
+		'reply'                       => array('Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'),
 		'edit'                        => array('Read', 'NotMoved', 'Unlocked', 'Own'),
 		'move'                        => array('Read'),
 		'approve'                     => array('Read', 'NotMoved'),
@@ -69,7 +69,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		'post.read'                   => array('Read'),
 		'post.thankyou'               => array('Read', 'NotMoved', 'Unlocked'),
 		'post.unthankyou'             => array('Read', 'Unlocked'),
-		'post.reply'                  => array('Read', 'NotHold', 'NotMoved', 'Unlocked'),
+		'post.reply'                  => array('Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'),
 		'post.edit'                   => array('Read', 'Unlocked'),
 		'post.move'                   => array('Read'),
 		'post.approve'                => array('Read'),
@@ -2103,7 +2103,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		if (!$config->pollallowvoteone && $votes)
 		{
-			$time_zone = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
+			$time_zone   = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('offset');
 			$objTimeZone = new DateTimeZone($time_zone);
 
 			// Check the time between two votes
@@ -2155,7 +2155,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	protected function authoriseNoVotes(KunenaUser $user)
 	{
-		$poll = $this->getPoll();
+		$poll   = $this->getPoll();
 		$config = KunenaFactory::getConfig();
 
 		if ($poll->exists() && $poll->getUserCount() && $config->pollallowvoteone)
@@ -2190,5 +2190,23 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param   KunenaUser $user user
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function authoriseGuestWrite(KunenaUser $user)
+	{
+		// Check if user is guest and they can create or reply topics
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+		}
+
+		return;
 	}
 }

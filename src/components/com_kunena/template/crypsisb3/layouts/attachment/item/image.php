@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-// @var KunenaAttachment $attachment
 
 $attachment = $this->attachment;
 
@@ -35,7 +34,7 @@ if ($config->lightbox == 1)
 
 	$config = KunenaConfig::getInstance();
 
-	$attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+	$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 
 	?>

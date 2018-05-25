@@ -77,7 +77,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getInt('format');
 
-		if (!$Itemid && $format != 'feed')
+		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = JControllerLegacy::getInstance("kunena");

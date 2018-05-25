@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-// @var KunenaAdminViewAttachments $this
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -104,7 +103,8 @@ HTMLHelper::_('dropdown.init');
 					<table class="table table-striped" id="attachmentsList">
 						<thead>
 						<tr>
-							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
+							<th width="1%"><input type="checkbox" name="toggle" value=""
+							                      onclick="Joomla.checkAll(this)"/>
 							</th>
 							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
 							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>

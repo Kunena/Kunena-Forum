@@ -596,7 +596,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @param   int    $id     Id of the button.
 	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
-	 * @param   string $icon icon
+	 * @param   string $icon   icon
 	 *
 	 * @return KunenaLayout|KunenaLayoutBase
 	 * @throws Exception

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
  *
  * @copyright   (C) 2008 - 2018 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -42,8 +42,8 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				continue;
 			}
 
-			$files = KunenaFolder::files($path, ".php");
-			$options = array();
+			$files     = KunenaFolder::files($path, ".php");
+			$options   = array();
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)

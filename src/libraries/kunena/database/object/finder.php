@@ -8,6 +8,7 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
 use Joomla\CMS\Factory;
 
 // No direct access

@@ -195,6 +195,10 @@ jQuery(function ($) {
 		.addClass("btn btn-primary")
 		.html('<i class="icon-upload"></i> Remove inline')
 		.on('click', function (e) {
+			// Make sure the button click doesn't submit the form:
+			e.preventDefault();
+			e.stopPropagation();
+			
 			var $this = $(this),
 				data = $this.data();
 
@@ -212,12 +216,12 @@ jQuery(function ($) {
 				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
 				type: 'POST'
 			})
-				.done(function (data) {
-					console.log(result);
-				})
-				.fail(function () {
-					//TODO: handle the error of ajax request
-				});
+			.done(function (data) {
+				$this.parent().remove();
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 		});
 
 	var removeButton = $('<button/>')
@@ -225,6 +229,10 @@ jQuery(function ($) {
 		.attr('type', 'button')
 		.html('<i class="icon-trash"></i> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function () {
+			// Make sure the button click doesn't submit the form:
+			e.preventDefault();
+			e.stopPropagation();
+			
 			var $this = $(this),
 				data = $this.data();
 

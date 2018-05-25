@@ -58,10 +58,7 @@ jQuery(function ($) {
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
-		$('#progress').css(
-			'display',
-			'block'
-		);
+		$('#progress').hide();
 
 		$('#insert-all').removeClass('btn-success');
 		$('#insert-all').addClass('btn-primary');

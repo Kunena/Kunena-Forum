@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package         Kunena.Site
- * @subpackage      Controller.Application
+ * @package     Kunena.Site
+ * @subpackage  Controller.Application
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
+ * @copyright   (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -68,7 +68,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 						$default = clone $home;
 					}
 
-					$default->query['view']   = 'category';
+					$default->query['view'] = 'category';
 					$default->query['layout'] = 'list';
 				}
 			}
@@ -115,8 +115,8 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * Get default menu item to be shown up.
 	 *
 	 * @param   \Joomla\CMS\Menu\SiteMenu $menu    Joomla menu.
-	 * @param   object                    $active  Active menu item.
-	 * @param   array                     $visited Already visited menu items.
+	 * @param   object     $active   Active menu item.
+	 * @param   array      $visited  Already visited menu items.
 	 *
 	 * @return object|null
 	 * @throws Exception
@@ -127,7 +127,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		if (empty($active->query['defaultmenu']) || $active->id == $active->query['defaultmenu'])
 		{
 			// There is no highlighted menu item!
-			return;
+			return null;
 		}
 
 		$item = $menu->getItem($active->query['defaultmenu']);
@@ -137,27 +137,27 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 			// Menu item points to nowhere, abort!
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
-			return;
+			return null;
 		}
 		elseif (isset($visited[$item->id]))
 		{
 			// Menu loop detected, abort!
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
-			return;
+			return null;
 		}
 		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query['view']))
 		{
 			// Menu item doesn't point to Kunena, abort!
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
-			return;
+			return null;
 		}
 		elseif ($item->query['view'] == 'home')
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there.
 			$visited[$item->id] = 1;
-			$item               = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
+			$item = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
 		}
 
 		return $item;

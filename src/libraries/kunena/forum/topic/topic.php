@@ -1482,13 +1482,14 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string $subject      New subject
 	 * @param   bool   $subjectall   Change subject from every message
 	 * @param   int    $topic_iconid Define a new topic icon
+	 * @param   int    $keep_poll    Define if you want keep the poll to the original topic or to the splitted topic
 	 *
 	 * @return    boolean|KunenaForumCategory|KunenaForumTopic    Target KunenaForumCategory or KunenaForumTopic or
 	 *                                                            false on failure
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function move($target, $ids = false, $shadow = false, $subject = '', $subjectall = false, $topic_iconid = null)
+	public function move($target, $ids = false, $shadow = false, $subject = '', $subjectall = false, $topic_iconid = null, $keep_poll = 0)
 	{
 		// Warning: logic in this function is very complicated and even with full understanding its easy to miss some details!
 
@@ -1731,33 +1732,40 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
-		// If all messages were moved into another topic, we need to move poll as well
-		if ($this->poll_id && !$ids && $target != $this)
+		if ($keep_poll)
 		{
-			// Note: We may already have saved cloned target (having poll_id already in there)
-			$target->poll_id = $this->poll_id;
-
-			// Note: Do not remove poll from shadow: information could still be used to show icon etc
-
-			$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
-			$this->_db->setQuery($query);
-
-			try
-			{
-				$this->_db->execute();
-			}
-			catch (JDatabaseExceptionExecuting $e)
-			{
-				throw new RuntimeException($e->getMessage(), $e->getCode());
-			}
+			$target->poll_id = 0;
 		}
-
-		// When moving only first message keep poll only on target topic
-		if ($this->poll_id && $target != $this && $ids)
+		else
 		{
-			if ($ids && $this->first_post_id)
+			// If all messages were moved into another topic, we need to move poll as well
+			if ($this->poll_id && !$ids && $target != $this)
 			{
-				$this->poll_id = 0;
+				// Note: We may already have saved cloned target (having poll_id already in there)
+				$target->poll_id = $this->poll_id;
+
+				// Note: Do not remove poll from shadow: information could still be used to show icon etc
+
+				$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
+				$this->_db->setQuery($query);
+
+				try
+				{
+					$this->_db->execute();
+				}
+				catch (JDatabaseExceptionExecuting $e)
+				{
+					throw new RuntimeException($e->getMessage(), $e->getCode());
+				}
+			}
+
+			// When moving only first message keep poll only on target topic
+			if ($this->poll_id && $target != $this && $ids)
+			{
+				if ($ids && $this->first_post_id)
+				{
+					$this->poll_id = 0;
+			 	}
 			}
 		}
 

@@ -1881,6 +1881,7 @@ class KunenaControllerTopic extends KunenaController
 			$subject        = Factory::getApplication()->input->getString('subject', '');
 			$shadow         = Factory::getApplication()->input->getBool('shadow', false);
 			$topic_emoticon = Factory::getApplication()->input->getInt('topic_emoticon', null);
+			$keep_poll      = Factory::getApplication()->input->getInt('keep_poll', false);
 
 			if ($object instanceof KunenaForumMessage)
 			{
@@ -1902,7 +1903,7 @@ class KunenaControllerTopic extends KunenaController
 				$ids = false;
 			}
 
-			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
 
 			if (!$targetobject)
 			{

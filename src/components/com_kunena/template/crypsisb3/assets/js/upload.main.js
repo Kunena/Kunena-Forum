@@ -225,7 +225,7 @@ jQuery(function ($) {
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
 		.html('<span class="glyphicon glyphicon-trash"></span> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
-		.on('click', function () {
+		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
 			e.stopPropagation();

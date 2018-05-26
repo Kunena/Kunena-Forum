@@ -197,6 +197,15 @@ $labels          = $this->ktemplate->params->get('labels');
 							<?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES'); ?> </label>
 					</div>
 				</div>
+				<?php if (isset($this->message) && $this->topic->poll_id && $this->topic->first_post_id!=$this->message->id) : ?>
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox">
+								<input type="checkbox" name="keep_poll" value="1" />
+								<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_KEEP_POLL'); ?> </label>
+						</div>
+					</div>
+				<?php endif; ?>
 				<?php if (!isset($this->message)) : ?>
 					<div class="control-group">
 						<div class="controls">

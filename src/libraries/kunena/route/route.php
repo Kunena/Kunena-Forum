@@ -1107,11 +1107,6 @@ abstract class KunenaRoute
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$uri = self::prepare($uri);
 
-		if (!$uri)
-		{
-			$uri->setVar('Itemid', self::fixMissingItemID());
-		}
-
 		if (!$uri->getVar('Itemid'))
 		{
 			self::setItemID($uri);

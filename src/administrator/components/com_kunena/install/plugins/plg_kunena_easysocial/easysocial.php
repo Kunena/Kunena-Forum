@@ -13,8 +13,15 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 jimport('joomla.filesystem.file');
 
-require_once $file;
-require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
+$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+if (!JFile::exists($file))
+{
+	return;
+}
+
+require_once($file);
+require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
 
 class plgKunenaEasySocial extends EasySocialPlugins
 {

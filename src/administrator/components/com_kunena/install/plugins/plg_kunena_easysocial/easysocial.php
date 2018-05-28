@@ -30,8 +30,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @param $subject
 	 * @param $config
-	 *
-	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -39,26 +37,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
 		{
 			return true;
-		}
-
-		$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-		if (!JFile::exists($file))
-		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
-			{
-				$db = JFactory::getDBO();
-				$query = $db->getQuery(true);
-				$query->update('`#__extensions`');
-				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));
-				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
-				$query->set($db->quoteName('enabled') . '=0');
-				$db->setQuery($query);
-				$db->execute();
-			}
-
-			return;
 		}
 
 		parent::__construct($subject, $config);
@@ -69,14 +47,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return boolean|KunenaLogin|KunenaLoginEasySocial
-	 * @since Kunena
+	 * @return KunenaLogin
 	 */
 	public function onKunenaGetLogin()
 	{
 		if (!$this->params->get('login', 1))
 		{
-			return;
+			return null;
 		}
 
 		require_once __DIR__ . "/login.php";
@@ -87,14 +64,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return boolean|KunenaAvatar
-	 * @since Kunena
+	 * @return KunenaAvatar
 	 */
 	public function onKunenaGetAvatar()
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return;
+			return null;
 		}
 
 		require_once __DIR__ . "/avatar.php";
@@ -105,17 +81,16 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return boolean|KunenaProfile
-	 * @since Kunena
+	 * @return KunenaProfile
 	 */
 	public function onKunenaGetProfile()
 	{
 		if (!$this->params->get('profile', 1))
 		{
-			return;
+			return null;
 		}
 
-		require_once __DIR__ . "/profile.php";
+		require_once(__DIR__ . "/profile.php");
 
 		return new KunenaProfileEasySocial($this->params);
 	}
@@ -123,14 +98,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return boolean|KunenaPrivate
-	 * @since Kunena
+	 * @return KunenaPrivate
 	 */
 	public function onKunenaGetPrivate()
 	{
 		if (!$this->params->get('private', 1))
 		{
-			return;
+			return null;
 		}
 
 		require_once __DIR__ . "/private.php";
@@ -141,14 +115,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return boolean|KunenaActivity
-	 * @since Kunena
+	 * @return KunenaActivity
 	 */
 	public function onKunenaGetActivity()
 	{
 		if (!$this->params->get('activity', 1))
 		{
-			return;
+			return null;
 		}
 
 		require_once __DIR__ . "/activity.php";

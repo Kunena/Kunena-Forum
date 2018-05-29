@@ -1068,9 +1068,7 @@ abstract class KunenaRoute
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
-		$itemid = self::getItemID();
-
-		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}&Itemid={$itemid}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
 
 	/**

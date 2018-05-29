@@ -1186,9 +1186,7 @@ abstract class KunenaRoute
 			$topic = $message->getTopic();
 		}
 
-		$itemid = self::getItemID();
-
-		return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}&Itemid={$itemid}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
 	}
 
 	/**
@@ -1202,9 +1200,7 @@ abstract class KunenaRoute
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
-		$itemid = self::getItemID();
-
-		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}&Itemid={$itemid}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}}", $xhtml);
 	}
 
 	/**

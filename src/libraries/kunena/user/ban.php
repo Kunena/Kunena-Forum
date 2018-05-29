@@ -169,6 +169,10 @@ class KunenaUserBan extends JObject
 		$this->setProperties($data);
 		$this->comments = !empty($this->comments) ? json_decode($this->comments) : array();
 		$this->params   = !empty($this->params) ? json_decode($this->params) : array();
+		$now            = new \Joomla\CMS\Date\Date;
+		$config         = Factory::getConfig();
+		$now->setTimezone(new \DateTimeZone($config->get('offset')));
+		$this->created_time = $now->format('Y-m-d H:i:s', true);
 	}
 
 	/**

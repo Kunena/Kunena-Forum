@@ -164,8 +164,8 @@ HTMLHelper::_('dropdown.init');
 						</td>
 						<td style="width: 7%;">
 							<span class="editlinktip hasTip"
-							      title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="http://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-								<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates"
+							      title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="https://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates"
 								   target="_blank" rel="noopener noreferrer">9themestore.com</a>
 							</span>
 						</td>
@@ -176,12 +176,12 @@ HTMLHelper::_('dropdown.init');
 							K5.0.X
 						</td>
 						<td style="width: 5%;">
-							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+							<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
 							   rel="noopener noreferrer"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 						</td>
 						<td style="width: 25%;">
-							<a href="http://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
-							   rel="noopener noreferrer">http://www.9themestore.com</a>
+							<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
+							   rel="noopener noreferrer">https://www.9themestore.com</a>
 						</td>
 						<td style="width: 30%;">
 						</td>

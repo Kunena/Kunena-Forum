@@ -837,7 +837,7 @@ HTMLHelper::_('behavior.tabstate');
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
-													<td><input type="text" name="cfg_avatarypes"
+													<td><input type="text" name="cfg_avatartypes"
 															   value="<?php echo $this->escape($this->config->avatartypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>

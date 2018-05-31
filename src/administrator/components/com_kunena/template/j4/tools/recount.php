@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 JText::script('COM_KUNENA_MODAL_CLOSE');

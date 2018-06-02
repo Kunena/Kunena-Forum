@@ -54,7 +54,7 @@ HTMLHelper::_('behavior.tabstate');
 	?>
 												<li class="nav-item">
 													<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
-													   data-toggle="tab"><?php echo ucfirst($fieldset->name); ?></a>
+													   data-toggle="tab"><?php echo JText::_($fieldset->name); ?></a>
 												</li>
 											<?php endif; ?>
 										<?php endforeach; ?>

@@ -962,18 +962,21 @@ class KunenaControllerTopic extends KunenaController
 				}
 				else
 				{
-					// Edit existing poll
-					if (!$topic->isAuthorised('poll.edit'))
+					if (!$this->config->allow_edit_poll  && !$poll->getUserCount())
 					{
-						$this->app->enqueueMessage($topic->getError(), 'notice');
-					}
-					elseif (!$poll->save())
-					{
-						$this->app->enqueueMessage($poll->getError(), 'notice');
-					}
-					else
-					{
-						$this->app->enqueueMessage(JText::_('COM_KUNENA_POLL_EDITED'));
+						// Edit existing poll
+						if (!$topic->isAuthorised('poll.edit'))
+						{
+							$this->app->enqueueMessage($topic->getError(), 'notice');
+						}
+						elseif (!$poll->save())
+						{
+							$this->app->enqueueMessage($poll->getError(), 'notice');
+						}
+						else
+						{
+							$this->app->enqueueMessage(JText::_('COM_KUNENA_POLL_EDITED'));
+						}
 					}
 				}
 			}

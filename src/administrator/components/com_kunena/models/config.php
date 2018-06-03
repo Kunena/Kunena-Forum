@@ -515,6 +515,8 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['sef_redirect']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef_redirect', 'class="inputbox" size="1"', 'value', 'text', $this->config->sef_redirect);
 
+		$lists ['allow_user_edit_poll']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allow_edit_poll', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_edit_poll);
+
 		return $lists;
 	}
 }

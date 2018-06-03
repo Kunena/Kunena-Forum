@@ -1321,6 +1321,12 @@ class KunenaConfig extends JObject
 	public $sef_redirect = 1;
 
 	/**
+	 * @var integer
+	 * @since  K5.1.1
+	 */
+	public $allow_edit_poll = 0;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

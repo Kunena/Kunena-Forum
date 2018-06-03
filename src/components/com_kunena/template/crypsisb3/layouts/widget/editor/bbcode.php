@@ -253,6 +253,21 @@ if (!empty($codeTypes)) : ?>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
+	<div id="modal-poll-not-allowed-to-edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="poll-not-allowed-to-edit"
+	     aria-hidden="true" data-backdrop="false" style="display: none;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="poll-not-allowed-to-edit"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?></h3>
+				</div>
+				<div class="modal-body">
+					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	     aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-dialog" role="document">

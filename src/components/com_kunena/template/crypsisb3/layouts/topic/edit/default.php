@@ -83,6 +83,7 @@ if ($this->config->pollenabled)
 
 Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+Factory::getDocument()->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
 
 $this->addScript('assets/js/edit.js');
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!DOCTYPE config>
 <config>
-    <fieldset name="advanced">
+    <fieldset name="COM_KUNENA_TEMPLATE_TAB_ADVANCED">
         <field name="DefaultCategoryicon" type="text" default="" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON"
                description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
         <field name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET"
@@ -50,7 +50,7 @@
         </field>
     </fieldset>
 
-    <fieldset name="features">
+    <fieldset name="COM_KUNENA_TEMPLATE_TAB_FEATURES">
         <field name="displayMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MENU"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -162,14 +162,14 @@
         </field>
     </fieldset>
 
-    <fieldset name="colors">
+    <fieldset name="COM_KUNENA_TEMPLATE_TAB_COLORS">
         <field name="IconColor" type="color" default="inherit" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS"
                description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
         <field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW"
                description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
     </fieldset>
 
-    <fieldset name="bbcode">
+    <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
         <field name="editor" type="list" default="0" label="COM_KUNENA_TEMPLATE_EDITOR"
                description="COM_KUNENA_TEMPLATE_EDITOR_DESC">
             <option value="0">COM_KUNENA_TEMPLATE_EDITOR_BBCODE</option>
@@ -333,7 +333,7 @@
         <field name="wysibb" type="hidden" default=""/>
     </fieldset>
 
-    <fieldset name="avatar">
+    <fieldset name="COM_KUNENA_TEMPLATE_TAB_AVATAR">
         <field name="avatarSizeX" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_LABEL"
                description="COM_KUNENA_TEMPLATE_AVATAR_SIZE_X_DESC" default="40"/>
         <field name="avatarSizeY" label="COM_KUNENA_TEMPLATE_AVATAR_SIZE_Y_LABEL"

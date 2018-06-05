@@ -85,6 +85,8 @@ Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->
 
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 
+Factory::getDocument()->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
+
 $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))

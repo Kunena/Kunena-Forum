@@ -11,7 +11,7 @@ Migrating Kunena (or FireBoard) from the old site contains the following six ste
 
 As Joomla users cannot be just copied from Joomla! 1.5 into Joomla! 2.5 or 3.x, you always need to start by using
 one of the Joomla migration tools in
-[Joomla! Extensions Directory](http://extensions.joomla.org/extensions/migration-a-conversion/joomla-migration).
+[Joomla! Extensions Directory](https://extensions.joomla.org/extensions/migration-a-conversion/joomla-migration).
 
 From the listed extensions, only latest versions of JUpgrade are able to migrate Kunena 2.0 automatically to your new
 site. The tool also has newer PRO version available. If you choose to use JUpgrade and the migration succeeds without

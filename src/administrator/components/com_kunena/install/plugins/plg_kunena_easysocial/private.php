@@ -11,30 +11,16 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-/**
- * Class KunenaPrivateEasySocial
- * @since Kunena
- */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
-	/**
-	 * @var boolean
-	 * @since Kunena
-	 */
 	protected $loaded = false;
 
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $params = null;
 
 	/**
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -45,10 +31,31 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
+	protected function getOnClick($userid)
+	{
+		$userid = (int) $userid;
+
+		return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
+	}
+
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
+	protected function getURL($userid)
+	{
+		return "javascript:void(0)";
+	}
+
+	/**
 	 * @param $text
 	 *
 	 * @return string
-	 * @since Kunena
 	 */
 	public function getInboxLink($text)
 	{
@@ -64,34 +71,9 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 
 	/**
 	 * @return mixed
-	 * @since Kunena
 	 */
 	public function getInboxURL()
 	{
 		return FRoute::conversations();
-	}
-
-	/**
-	 * @param $userid
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getOnClick($userid)
-	{
-		$userid = (int) $userid;
-
-		return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
-	}
-
-	/**
-	 * @param $userid
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	protected function getURL($userid)
-	{
-		return "javascript:void(0)";
 	}
 }

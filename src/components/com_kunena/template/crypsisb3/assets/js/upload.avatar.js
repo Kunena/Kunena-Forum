@@ -148,8 +148,7 @@ jQuery(function ($) {
 		}
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {
-			// TODO: replace text with error message from server if possible
-			var error = $('<span class="text-danger"/>').text('File upload failed.');
+			var error = $('<span class="text-danger"/>').text(file.error);
 			$(data.context.children()[index])
 				.append('<br>')
 				.append(error);

@@ -11,24 +11,14 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-/**
- * Class KunenaLoginEasySocial
- * @since Kunena
- */
 class KunenaLoginEasySocial
 {
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $params = null;
 
 	/**
 	 * KunenaLoginEasySocial constructor.
 	 *
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -37,7 +27,6 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
-	 * @since Kunena
 	 */
 	public function getLoginURL()
 	{
@@ -46,7 +35,6 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
-	 * @since Kunena
 	 */
 	public function getLogoutURL()
 	{
@@ -55,17 +43,16 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return null
-	 * @since Kunena
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$usersConfig = JComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
 			return FRoute::registration();
 		}
 
-		return;
+		return null;
 	}
 }

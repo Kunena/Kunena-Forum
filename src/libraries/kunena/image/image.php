@@ -73,7 +73,7 @@ class KunenaImage extends \Joomla\Image\Image
 					}
 				}
 
-				ImageSetPixel($dst_img, $x, $y, ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
+				ImageSetPixel($dst_img, $x, $y, (int) ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
 			}
 		}
 

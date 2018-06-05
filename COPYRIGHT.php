@@ -21,18 +21,18 @@ licenses, including works distributed under the following copyright notices:
 Joomla
 ------
 Copyright:	2005 - 2014 Open Source Matters, Inc. All rights reserved.
-License:	GPLv2 or later; http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+License:	GPLv2 or later; https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 Bootstrap
 ---------
 Copyright:	Copyright 2012 Twitter, Inc.
-License:	Apache License v2.0: http://www.apache.org/licenses/LICENSE-2.0
+License:	Apache License v2.0: https://www.apache.org/licenses/LICENSE-2.0
 
 mooboo
 ------
 Copyright:	Copyright 2012 Twitter, Inc.
 			Modified for MooTools by GP Technology Solutions Pty Ltd, darrennolan
-License:	Apache License v2.0: http://www.apache.org/licenses/LICENSE-2.0
+License:	Apache License v2.0: https://www.apache.org/licenses/LICENSE-2.0
 
 Nawte
 -----

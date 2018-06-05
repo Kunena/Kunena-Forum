@@ -13,24 +13,14 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\String\StringHelper;
 
-/**
- * Class KunenaActivityEasySocial
- * @since Kunena
- */
 class KunenaActivityEasySocial extends KunenaActivity
 {
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -38,9 +28,37 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param      $command
+	 * @param      $message
+	 * @param null $target
 	 *
-	 * @since Kunena
+	 * @return mixed
+	 */
+	public function assignBadge($command, $message, $target = null)
+	{
+		$user  = FD::user($target);
+		$badge = FD::badges();
+
+		return $badge->log('com_kunena', $command, $user->id, $user->id);
+	}
+
+	/**
+	 * @param      $command
+	 * @param null $target
+	 *
+	 * @return mixed
+	 */
+	public function assignPoints($command, $target = null)
+	{
+		$user = FD::user($target);
+
+		$points = FD::points();
+
+		return $points->assign($command, 'com_kunena', $user->id);
+	}
+
+	/**
+	 * @param $message
 	 */
 	public function onAfterPost($message)
 	{
@@ -67,38 +85,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param        $command
-	 * @param   null $target target
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function assignPoints($command, $target = null)
-	{
-		$user = FD::user($target);
-
-		$points = FD::points();
-
-		return $points->assign($command, 'com_kunena', $user->id);
-	}
-
-	/**
-	 * @param        $command
-	 * @param        $message
-	 * @param   null $target target
-	 *
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function assignBadge($command, $message, $target = null)
-	{
-		$user  = FD::user($target);
-		$badge = FD::badges();
-
-		return $badge->log('com_kunena', $command, $user->id, $user->id);
-	}
-
-	/**
 	 * After a person replies a topic
 	 *
 	 * @since     1.3
@@ -106,7 +92,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
-	 * @throws Exception
 	 * @internal  param $string
 	 */
 	public function onAfterReply($message)
@@ -143,7 +128,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return;
 		}
 
-		$permalink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
+		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
 		$options = array(
 			'uid'      => $message->id,
@@ -151,7 +136,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			'title'    => '',
 			'type'     => 'post',
 			'url'      => $permalink,
-			'image'    => '',
+			'image'    => ''
 		);
 
 		// Add notifications in EasySocial
@@ -166,8 +151,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
-	 * @return array|boolean
-	 * @throws Exception
+	 * @return array|bool
 	 * @internal  param $string
 	 */
 	public function getSubscribers($message)
@@ -212,7 +196,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 				// Existing topic: Send email to both category and topic subscribers
 				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-				// FIXME: category subscription can override topic
+				// FIXME: category subcription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}
 		}
@@ -241,11 +225,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor   actor
-	 * @param   int $target  target
-	 * @param   int $message message
-	 *
-	 * @since Kunena
+	 * @param int $actor
+	 * @param int $target
+	 * @param int $message
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -269,8 +251,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $target
-	 *
-	 * @since Kunena
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -279,8 +259,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $topic
-	 *
-	 * @since Kunena
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

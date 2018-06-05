@@ -962,18 +962,21 @@ class KunenaControllerTopic extends KunenaController
 				}
 				else
 				{
-					// Edit existing poll
-					if (!$topic->isAuthorised('poll.edit'))
+					if (!$this->config->allow_edit_poll  && !$poll->getUserCount())
 					{
-						$this->app->enqueueMessage($topic->getError(), 'notice');
-					}
-					elseif (!$poll->save())
-					{
-						$this->app->enqueueMessage($poll->getError(), 'notice');
-					}
-					else
-					{
-						$this->app->enqueueMessage(JText::_('COM_KUNENA_POLL_EDITED'));
+						// Edit existing poll
+						if (!$topic->isAuthorised('poll.edit'))
+						{
+							$this->app->enqueueMessage($topic->getError(), 'notice');
+						}
+						elseif (!$poll->save())
+						{
+							$this->app->enqueueMessage($poll->getError(), 'notice');
+						}
+						else
+						{
+							$this->app->enqueueMessage(JText::_('COM_KUNENA_POLL_EDITED'));
+						}
 					}
 				}
 			}
@@ -1881,6 +1884,7 @@ class KunenaControllerTopic extends KunenaController
 			$subject        = Factory::getApplication()->input->getString('subject', '');
 			$shadow         = Factory::getApplication()->input->getBool('shadow', false);
 			$topic_emoticon = Factory::getApplication()->input->getInt('topic_emoticon', null);
+			$keep_poll      = Factory::getApplication()->input->getInt('keep_poll', false);
 
 			if ($object instanceof KunenaForumMessage)
 			{
@@ -1902,7 +1906,7 @@ class KunenaControllerTopic extends KunenaController
 				$ids = false;
 			}
 
-			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
 
 			if (!$targetobject)
 			{

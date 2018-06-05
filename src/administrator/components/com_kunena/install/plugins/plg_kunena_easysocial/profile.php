@@ -11,26 +11,14 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-use Joomla\CMS\Factory;
-
-/**
- * Class KunenaProfileEasySocial
- * @since Kunena
- */
 class KunenaProfileEasySocial extends KunenaProfile
 {
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $params = null;
 
 	/**
 	 * KunenaProfileEasySocial constructor.
 	 *
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function __construct($params)
 	{
@@ -38,17 +26,15 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param string $action
+	 * @param bool   $xhtml
 	 *
-	 * @return boolean
-	 * @throws Exception
-	 * @since Kunena
+	 * @return bool
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
+		$my     = JFactory::getUser();
 
 		if ($config->userlist_allowed == 0 && $my->guest)
 		{
@@ -59,12 +45,11 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param        $userid
+	 * @param string $task
+	 * @param bool   $xhtml
 	 *
 	 * @return string
-	 * @since Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -78,13 +63,14 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
 			{
-				$url = rtrim(\Joomla\CMS\Uri\Uri::root(), '/') . '/' . $user->getAlias(false);
+				$url = rtrim(JURI::root(), '/') . '/' . $user->getAlias(false);
 
 				return $url;
 			}
 
 			// If it's not configured for simple urls, just set the alias
 			$alias = $user->getAlias();
+
 		}
 		else
 		{
@@ -104,10 +90,9 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param int $limit
 	 *
 	 * @return array|void
-	 * @since Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -116,8 +101,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
-	 *
-	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -154,7 +137,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			$birthday = FD::date($data['date']);
 		}
 
-		if ($birthday !== null)
+		if (!is_null($birthday))
 		{
 			$view->profile->birthdate = $birthday->format('Y-m-d');
 		}
@@ -164,7 +147,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param $birthday
 	 *
 	 * @return mixed
-	 * @since Kunena
 	 */
 	public function getLegacyDate($birthday)
 	{
@@ -175,11 +157,10 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml xhtml
+	 * @param      $userid
+	 * @param bool $xhtml
 	 *
 	 * @return mixed
-	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

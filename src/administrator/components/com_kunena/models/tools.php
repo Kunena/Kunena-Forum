@@ -376,7 +376,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		// Get Kunena default template
 		$ktemplate              = KunenaFactory::getTemplate();
 		$this->ktemplatedetails = $ktemplate->getTemplateDetails();
-		$this->ktemplateparams  = $ktemplate->params;
+		$this->ktemplateparams  = $this->getKunenaTemplateParams($ktemplate->params);
 
 		$this->jtemplatedetails = $this->_getJoomlaTemplate();
 
@@ -864,5 +864,27 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
+	}
+
+	/**
+	 * Method to put readable correctly the kunena template params
+	 *
+	 * @return    string
+	 * @since 5.1.1
+	 */
+	protected function getKunenaTemplateParams($params)
+	{
+		$template_params = json_decode($params);
+
+		$ktemplate_params = '[table]';
+
+		foreach($template_params as $param=>$value)
+		{
+			$ktemplate_params .= '[tr][td][b]'.$param.'[/b][/td][td]'.$value.'[/td][/tr]';
+		}
+
+		$ktemplate_params .= '[table]';
+
+		return $ktemplate_params;
 	}
 }

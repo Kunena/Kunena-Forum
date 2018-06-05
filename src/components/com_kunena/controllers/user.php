@@ -1342,9 +1342,9 @@ class KunenaControllerUser extends KunenaController
 		// Create a 'stream' transport.
 		$http = new \Joomla\CMS\Http\Http($options, $transport);
 
-		$data = "username[]=" . $spammer->username . "&ip[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key;
+		$data = "username[]=" . $spammer->username . "&ip_addr[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key;
 
-		$response = $http->post('https://api.stopforumspam.com/api', $data);
+		$response = $http->post('https://api.stopforumspam.com/add', $data);
 
 		if ($response->code == '200')
 		{

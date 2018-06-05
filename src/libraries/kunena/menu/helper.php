@@ -45,39 +45,52 @@ abstract class KunenaMenuHelper
 		$app  = Factory::getApplication();
 		$menu = $app->getMenu();
 
-		// If no active menu, use default
-		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
-
+		// Get active menu item
+		$base   = self::getBase($params);
 		$user   = Factory::getUser();
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
-		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
+		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $base->id;
 		$cache = Factory::getCache('mod_menu', '');
 
-		if (!($items = $cache->get($key)))
+		if ($cache->contains($key))
 		{
-			// Initialise variables.
-			$list = array();
-			$db   = Factory::getDbo();
-
-			$path    = $active->tree;
-			$start   = (int) $params->get('startLevel');
-			$end     = 0;
-			$showAll = 1;
-			$items   = $menu->getItems('menutype', $params->get('menutype'));
-
-			$lastitem = 0;
+			$items = $cache->get($key);
+		}
+		else
+		{
+			$path           = $base->tree;
+			$start          = (int) $params->get('startLevel');
+			$end            = 0;
+			$showAll        = 1;
+			$items          = $menu->getItems('menutype', $params->get('menutype'));
+			$hidden_parents = array();
+			$lastitem       = 0;
 
 			if ($items)
 			{
 				foreach ($items as $i => $item)
 				{
+					$item->parent = false;
+
+					if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parent_id && $item->params->get('menu_show', 1) == 1)
+					{
+						$items[$lastitem]->parent = true;
+					}
+
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
 						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
-						|| ($start > 1 && !in_array($item->tree[$start - 2], $path))
-					)
+						|| ($start > 1 && !in_array($item->tree[$start - 2], $path)))
 					{
+						unset($items[$i]);
+						continue;
+					}
+
+					// Exclude item with menu item option set to exclude from menu modules
+					if (($item->params->get('menu_show', 1) == 0) || in_array($item->parent_id, $hidden_parents))
+					{
+						$hidden_parents[] = $item->id;
 						unset($items[$i]);
 						continue;
 					}
@@ -93,17 +106,19 @@ abstract class KunenaMenuHelper
 						$items[$lastitem]->level_diff = ($items[$lastitem]->level - $item->level);
 					}
 
-					$item->parent = (boolean) $menu->getItems('parent_id', (int) $item->id, true);
-
 					$lastitem     = $i;
 					$item->active = false;
 					$item->flink  = $item->link;
 
+					// Reverted back for CMS version 2.5.6
 					switch ($item->type)
 					{
 						case 'separator':
+							break;
+
+						case 'heading':
 							// No further action needed.
-							continue;
+							break;
 
 						case 'url':
 							if ((strpos($item->link, 'index.php?') === 0) && (strpos($item->link, 'Itemid=') === false))
@@ -114,25 +129,15 @@ abstract class KunenaMenuHelper
 							break;
 
 						case 'alias':
-							// If this is an alias use the item id stored in the parameters to make the link.
 							$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
 							break;
 
 						default:
-							$router = JSite::getRouter();
-
-							if ($router->getMode() == JROUTER_MODE_SEF)
-							{
-								$item->flink = 'index.php?Itemid=' . $item->id;
-							}
-							else
-							{
-								$item->flink .= '&Itemid=' . $item->id;
-							}
+							$item->flink = 'index.php?Itemid=' . $item->id;
 							break;
 					}
 
-					if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false))
+					if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 					{
 						$item->flink = JRoute::_($item->flink, true, $item->params->get('secure'));
 					}
@@ -141,18 +146,22 @@ abstract class KunenaMenuHelper
 						$item->flink = JRoute::_($item->flink);
 					}
 
-					$item->title        = htmlspecialchars($item->title);
-					$item->anchor_css   = '';
-					$item->anchor_title = '';
-					$item->anchor_rel   = '';
-					$item->menu_image   = '';
+					// We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
+					// when the cause of that is found the argument should be removed
+					$item->title          = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_css     = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_title   = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_rel     = htmlspecialchars($item->params->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->menu_image     = $item->params->get('menu_image', '') ?
+						htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+					$item->menu_image_css = htmlspecialchars($item->params->get('menu_image_css', ''), ENT_COMPAT, 'UTF-8', false);
 				}
 
 				if (isset($items[$lastitem]))
 				{
-					$items[$lastitem]->deeper     = (($start ? $start : 1) > $items[$lastitem]->level);
-					$items[$lastitem]->shallower  = (($start ? $start : 1) < $items[$lastitem]->level);
-					$items[$lastitem]->level_diff = ($items[$lastitem]->level - ($start ? $start : 1));
+					$items[$lastitem]->deeper     = (($start ?: 1) > $items[$lastitem]->level);
+					$items[$lastitem]->shallower  = (($start ?: 1) < $items[$lastitem]->level);
+					$items[$lastitem]->level_diff = ($items[$lastitem]->level - ($start ?: 1));
 				}
 			}
 
@@ -160,5 +169,72 @@ abstract class KunenaMenuHelper
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Get base menu item.
+	 *
+	 * @param   \Joomla\Registry\Registry &$params The module options.
+	 *
+	 * @return  object
+	 *
+	 * @since    3.0.2
+	 */
+	public static function getBase(&$params)
+	{
+		// Get base menu item from parameters
+		if ($params->get('base'))
+		{
+			$base = Factory::getApplication()->getMenu()->getItem($params->get('base'));
+		}
+		else
+		{
+			$base = false;
+		}
+
+		// Use active menu item if no base found
+		if (!$base)
+		{
+			$base = self::getActive($params);
+		}
+
+		return $base;
+	}
+
+	/**
+	 * Get active menu item.
+	 *
+	 * @param   \Joomla\Registry\Registry &$params The module options.
+	 *
+	 * @return  object
+	 *
+	 * @since    3.0.2
+	 */
+	public static function getActive(&$params)
+	{
+		$menu = Factory::getApplication()->getMenu();
+
+		return $menu->getActive() ?: self::getDefault();
+	}
+
+	/**
+	 * Get default menu item (home page) for current language.
+	 *
+	 * @return  object
+	 */
+	public static function getDefault()
+	{
+		$menu = Factory::getApplication()->getMenu();
+		$lang = Factory::getLanguage();
+
+		// Look for the home menu
+		if (JLanguageMultilang::isEnabled())
+		{
+			return $menu->getDefault($lang->getTag());
+		}
+		else
+		{
+			return $menu->getDefault();
+		}
 	}
 }

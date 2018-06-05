@@ -837,7 +837,7 @@ HTMLHelper::_('behavior.tabstate');
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
-													<td><input type="text" name="cfg_avatarypes"
+													<td><input type="text" name="cfg_avatartypes"
 															   value="<?php echo $this->escape($this->config->avatartypes) ?>"/>
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>
@@ -1554,6 +1554,11 @@ HTMLHelper::_('behavior.tabstate');
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST') ?></td>
 													<td><?php echo $this->lists ['pollresultsuserslist'] ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL') ?></td>
+													<td><?php echo $this->lists ['allow_user_edit_poll'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DESC') ?></td>
 												</tr>
 												</tbody>
 											</table>

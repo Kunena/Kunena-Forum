@@ -575,7 +575,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	protected function attachEmailBody(\Joomla\CMS\Mail\Mail $mail, $subscription, $subject, $url, $once)
+	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
 	{
 		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
 			->set('mail', $mail)

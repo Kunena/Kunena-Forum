@@ -114,7 +114,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	</div>
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
 	      class="form-horizontal form-validate"
-	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
+	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1" novalidate>
 		<input type="hidden" name="view" value="topic"/>
 		<input id="kurl_topicons_request" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>

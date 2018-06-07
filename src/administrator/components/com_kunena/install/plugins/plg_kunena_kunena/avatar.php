@@ -24,6 +24,12 @@ class KunenaAvatarKunena extends KunenaAvatar
 	protected $params = null;
 
 	/**
+	 * @var null
+	 * @since Kunena
+	 */
+	public $css = true;
+
+	/**
 	 * @param $params
 	 *
 	 * @since Kunena

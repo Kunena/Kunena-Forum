@@ -45,9 +45,9 @@ $this->addScript('assets/js/search.js');
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<button class="btn btn-default btn-sm <?php echo KunenaIcons::collapse(); ?>" type="button"
+			<button class="btn btn-default btn-sm" type="button"
 			        data-toggle="collapse"
-			        data-target="#search" aria-expanded="false" aria-controls="search"></button>
+			        data-target="#search" aria-expanded="false" aria-controls="search"><?php echo KunenaIcons::collapse(); ?></button>
 		</div>
 	</div>
 	<h1>
@@ -102,9 +102,9 @@ $this->addScript('assets/js/search.js');
 			</div>
 		</div>
 
-		<button type="button" class="btn btn-default btn-sm pull-right  <?php echo KunenaIcons::collapse(); ?>"
+		<button type="button" class="btn btn-default btn-sm pull-right"
 		        data-toggle="collapse"
-		        data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
+		        data-target="#search-options" aria-expanded="false" aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
 		<h2>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>

@@ -485,7 +485,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return 'fa';
+			return '<i class="fas fa-compress" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

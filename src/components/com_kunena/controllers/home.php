@@ -110,6 +110,8 @@ class KunenaControllerHome extends KunenaController
 	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
+		KunenaFactory::loadLanguage('com_kunena.controllers');
+
 		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
 		{
 			// There is no highlighted menu item

@@ -501,18 +501,18 @@ class KunenaUpload
 			case 'gb':
 				$value *= 1024;
 
-				// Continue , do not put break here
+			// Continue , do not put break here
 			case 'm':
 			case 'mb':
 				$value *= 1024;
 				$value *= 1024;
 
-				// Continue , do not put break here
+			// Continue , do not put break here
 			case 'k':
 			case 'kb':
 				$value *= 1024;
 
-				// Continue, do not put break here
+			// Continue, do not put break here
 		}
 
 		return (int) $value;
@@ -695,7 +695,9 @@ class KunenaUpload
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}
 
-			$a = array('gif', 'jpeg', 'jpg', 'png');
+			$avatartypes = array();
+			$avatartypes = strtolower(KunenaConfig::getInstance()->avatartypes);
+			$a           = explode(', ', $avatartypes);
 
 			if (!in_array($file->ext, $a, true))
 			{
@@ -797,7 +799,11 @@ class KunenaUpload
 		// Format string
 		$format = ($format === null) ? '%01.2f %s' : (string) $format;
 
-		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'));
+		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB')
+		);
 		$mod   = 1024;
 
 		// Determine unit to use

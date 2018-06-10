@@ -148,7 +148,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							:
 							?>
 							<th class="nowrap center">
-								<?php echo 'Type'; ?>
+								<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>
 							</th>
 						<?php endif; ?>
 					</tr>

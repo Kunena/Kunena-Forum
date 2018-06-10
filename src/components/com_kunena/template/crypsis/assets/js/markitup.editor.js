@@ -250,29 +250,30 @@ bbcodeSettings = {
 				jQuery('#modal-poll-settings').modal('hide');
 			});
 			
-			if (allow_edit_poll){
-				jQuery('#modal-poll-not-allowed-to-edit').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-						dialog.overlay.fadeIn('slow', function () {
-							dialog.container.slideDown('slow', function () {
-								dialog.data.fadeIn('slow');
-							});
-						});
-					}
-				});
-			}else {
+			if (allow_edit_poll==1){
 				jQuery('#modal-poll-settings').modal(
-				{
-					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-							dialog.overlay.fadeIn('slow', function () {
-								dialog.container.slideDown('slow', function () {
-									dialog.data.fadeIn('slow');
+						{
+							overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
+									dialog.overlay.fadeIn('slow', function () {
+										dialog.container.slideDown('slow', function () {
+											dialog.data.fadeIn('slow');
+										});
+									});
+								}
+							
+						});
+			}else {
+				jQuery('#modal-poll-not-allowed-to-edit').modal(
+						{
+							overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
 								});
-							});
-						}
-					
-				});
+							}
+						});
+				
 			}
 		}
 	}, {

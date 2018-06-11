@@ -36,6 +36,7 @@ JText::script('COM_KUNENA_EDITOR_EBAY');
 JText::script('COM_KUNENA_EDITOR_MAP');
 JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
 JText::script('COM_KUNENA_EDITOR_TWEET');
+JText::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
 
 Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
@@ -58,6 +59,9 @@ Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', K
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+Factory::getDocument()->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
+Factory::getDocument()->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
+Factory::getDocument()->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
 // If polls are enabled, load also poll JavaScript.
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -348,7 +352,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 										</button>
 										<button id="remove-all" class="btn btn-danger" type="submit"
 										        style="display:none;">
-											<?php echo KunenaIcons::cancel(); ?>
+											<?php echo KunenaIcons::delete(); ?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
 										<div class="clearfix"></div>

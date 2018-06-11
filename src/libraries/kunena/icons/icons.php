@@ -937,7 +937,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-upload" aria-hidden="true"></i>';
+			return '<i class="fas fa-upload" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
@@ -1030,7 +1030,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="large-kicon fa fa-trash" aria-hidden="true"></i>';
+			return '<i class="fas fa-trash-alt" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

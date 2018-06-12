@@ -153,10 +153,10 @@ defined('_JEXEC') or die();
 									   rel="noopener noreferrer">https://www.kunena.org/terms-of-use</a>
 								</dd>
 								<hr class="hr-condensed">
-								<dt><?php echo JText::_('Check Updates') ?>:</dt>
+								<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CHECK_UPDATES') ?>:</dt>
 								<dd><?php echo KunenaAdminControllerCpanel::onGetIcons(); ?></dd>
 								<hr class="hr-condensed">
-								<dt>Donate:</dt>
+								<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_DONATE') ?>:</dt>
 								<dd>
 									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input name="cmd" type="hidden" value="_s-xclick">

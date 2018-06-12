@@ -28,8 +28,8 @@ class KunenaAdminViewCpanel extends KunenaView
 		$help_url = 'https://docs.kunena.org/en/';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
-		JToolbarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('Changelog'));
-		JToolbarHelper::link('https://www.kunena.org/forum', JText::_('Get Support'));
+		JToolbarHelper::link('https://www.kunena.org/bugs/changelog', JText::_('COM_KUNENA_DASHBOARD_CHANGELOG'));
+		JToolbarHelper::link('https://www.kunena.org/forum', JText::_('COM_KUNENA_DASHBOARD_GET_SUPPORT'));
 
 		if (Factory::getUser()->authorise('core.admin', 'com_kunena'))
 		{

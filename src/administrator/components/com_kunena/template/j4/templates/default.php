@@ -125,7 +125,7 @@ HTMLHelper::_('dropdown.init');
 						</thead>
 						<tbody>
 						<tr>
-							<th width="10%">Price</th>
+							<th width="10%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_PRICE'); ?></th>
 							<th width="10%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
 							<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
 							<th width="5%"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>

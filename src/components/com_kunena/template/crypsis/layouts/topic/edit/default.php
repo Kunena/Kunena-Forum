@@ -118,7 +118,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	</div>
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
 	      class="form-horizontal form-validate"
-	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1" novalidate>
+	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic"/>
 		<input id="kurl_topicons_request" type="hidden"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
@@ -404,11 +404,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 		<div class="center">
 			<?php if ($editor == 1): ?>
-				<input type="submit" class="btn btn-success" name="submit"
+				<input type="submit" class="btn btn-success form-validate" name="submit"
 				       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 				       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
 			<?php else : ?>
-				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
+				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
 					<?php echo KunenaIcons::save(); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_SUBMIT') . ' '; ?>
 				</button>

@@ -811,6 +811,13 @@
                 AFTER `ip`;
             </query>
         </version>
+         <version version="5.1.2"
+                 versiondate="2018-06-23"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `linkedin_company` varchar(50) NULL
+                AFTER `linkedin`;
+            </query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

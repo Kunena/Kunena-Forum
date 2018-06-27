@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 
 $attachment = $this->attachment;
-$location   = \Joomla\CMS\Uri\Uri::root() . $attachment->getUrl();
+$location   = $attachment->getUrl();
 
 if (!$attachment->isPdf())
 {

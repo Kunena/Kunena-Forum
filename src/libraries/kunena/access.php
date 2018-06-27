@@ -958,6 +958,12 @@ window.addEvent('domready', function(){
 		{
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
+
+			// Only send to users whose Joomla account is enabled to Receive System Emails
+			if (KunenaConfig::getInstance()->get('use_system_emails')) {
+				$query->where("u.sendEmail = 1");
+			}
+
 			$db = Factory::getDBO();
 			$db->setQuery($query);
 

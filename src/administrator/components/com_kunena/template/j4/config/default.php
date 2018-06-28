@@ -644,6 +644,11 @@ HTMLHelper::_('behavior.tabstate');
 														</td>
 														<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_USE_SYSTEM_EMAILS') ?></td>
+														<td><?php echo $this->lists ['use_system_emails'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_USE_SYSTEM_EMAILS_DESC') ?></td>
+													</tr>
 													</tbody>
 												</table>
 											</fieldset>

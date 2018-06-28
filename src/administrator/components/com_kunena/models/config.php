@@ -521,6 +521,9 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['allow_user_edit_poll']  = HTMLHelper::_('select.genericlist', $user_edit_poll, 'cfg_allow_edit_poll', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_edit_poll);
 
+		// K 5.1.2
+		$lists ['use_system_emails']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_use_system_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->use_system_emails);
+
 		return $lists;
 	}
 }

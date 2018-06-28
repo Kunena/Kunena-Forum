@@ -168,7 +168,7 @@ jQuery(function ($) {
 				if ($.isEmptyObject(data) === false) {
 					fileCount = 1;
 
-					if (data.name !== undefined) {
+					if (data.name != undefined) {
 						var name = data.name;
 					}
 					else {

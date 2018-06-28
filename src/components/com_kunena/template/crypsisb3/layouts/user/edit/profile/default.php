@@ -31,10 +31,10 @@ $this->addScript('assets/js/profile.js');
 				</label>
 			</td>
 			<td>
-				<input class="form-control" id="personaltext" type="text"
+				<input class="form-control hasTooltip" id="personaltext" type="text"
 				       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
 				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"
-				       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
+				       title="<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -47,9 +47,9 @@ $this->addScript('assets/js/profile.js');
 		<td>
 			<div id="birthdate">
 				<div class="input-group date">
-					<input class="form-control" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>"
-					       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
+					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
+					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('mm/dd/yyyy') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					       title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
 			</div>

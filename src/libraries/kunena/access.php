@@ -1000,7 +1000,7 @@ window.addEvent('domready', function(){
 			$querytopic = $db->getQuery(true);
 			$querytopic->select($db->quoteName('user_id'));
 			$querytopic->from($db->quoteName('#__kunena_user_topics') . 'AS ut');
-			$querytopic->leftJoin($db->quoteName('#__kunena_user') . ' AS ku ON ut.user_id = ku.userid');
+			$querytopic->leftJoin($db->quoteName('#__kunena_users') . ' AS ku ON ut.user_id = ku.userid');
 			$querytopic->where($db->quoteName('ut.topic_id') . '=' . $topic->id);
 			$querytopic->andWhere($db->quoteName('ut.subscribed') . '=1');
 			$querytopic->andWhere($db->quoteName('ku.banned') . ' IS NOT NULL');
@@ -1014,7 +1014,7 @@ window.addEvent('domready', function(){
 			$querycat = $db->getQuery(true);
 			$querycat->select($db->quoteName('user_id'));
 			$querycat->from($db->quoteName('#__kunena_user_categories'). 'AS ut');
-			$querycat->leftJoin($db->quoteName('#__kunena_user') . ' AS ku ON ut.user_id = ku.userid');
+			$querycat->leftJoin($db->quoteName('#__kunena_users') . ' AS ku ON ut.user_id = ku.userid');
 			$querycat->where($db->quoteName('ut.category_id') . '=' . $category->id);
 			$querycat->andWhere($db->quoteName('ut.subscribed') . '=1');
 			$querycat->andWhere($db->quoteName('ku.banned') . ' IS NOT NULL');
@@ -1024,7 +1024,7 @@ window.addEvent('domready', function(){
 
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
-
+		
 		try
 		{
 			$userids = (array) $db->loadColumn();

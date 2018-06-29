@@ -999,9 +999,11 @@ window.addEvent('domready', function(){
 			// Get topic subscriptions
 			$querytopic = $db->getQuery(true);
 			$querytopic->select($db->quoteName('user_id'));
-			$querytopic->from($db->quoteName('#__kunena_user_topics'));
-			$querytopic->where($db->quoteName('topic_id') . '=' . $topic->id);
-			$querytopic->andWhere($db->quoteName('subscribed') . '=1');
+			$querytopic->from($db->quoteName('#__kunena_user_topics') . 'AS ut');
+			$querytopic->leftJoin($db->quoteName('#__users') . ' AS ku ON ut.user_id = ku.id');
+			$querytopic->where($db->quoteName('ut.topic_id') . '=' . $topic->id);
+			$querytopic->andWhere($db->quoteName('ut.subscribed') . '=1');
+			$querytopic->andWhere($db->quoteName('ku.block') . '=0');
 
 			$query[] = $querytopic;
 		}
@@ -1011,9 +1013,11 @@ window.addEvent('domready', function(){
 			// Get category subscriptions
 			$querycat = $db->getQuery(true);
 			$querycat->select($db->quoteName('user_id'));
-			$querycat->from($db->quoteName('#__kunena_user_categories'));
-			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
-			$querycat->andWhere($db->quoteName('subscribed') . '=1');
+			$querycat->from($db->quoteName('#__kunena_user_categories'). 'AS ut');
+			$querycat->leftJoin($db->quoteName('#__users') . ' AS ku ON ut.user_id = ku.id');
+			$querycat->where($db->quoteName('ut.category_id') . '=' . $category->id);
+			$querycat->andWhere($db->quoteName('ut.subscribed') . '=1');
+			$querycat->andWhere($db->quoteName('ku.block') . '=0');
 
 			$query[] = $querycat;
 		}

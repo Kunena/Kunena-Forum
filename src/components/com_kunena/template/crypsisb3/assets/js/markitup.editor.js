@@ -243,14 +243,14 @@ bbcodeSettings = {
 	}, {
 		name: Joomla.JText._('COM_KUNENA_EDITOR_POLL_SETTINGS'), className: 'pollbutton', beforeInsert: function () {
 			var allow_edit_poll = Joomla.getOptions('com_kunena.allow_edit_poll');
-			
+
 			jQuery('#poll-settings-modal-submit').click(function (event) {
 				event.preventDefault();
 
 				jQuery('#modal-poll-settings').modal('hide');
 			});
-			
-			if (allow_edit_poll==1){
+
+			if (allow_edit_poll){
 				jQuery('#modal-poll-settings').modal(
 				{
 					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
@@ -260,7 +260,7 @@ bbcodeSettings = {
 							});
 						});
 					}
-							
+
 				});
 			}else {
 				jQuery('#modal-poll-not-allowed-to-edit').modal(

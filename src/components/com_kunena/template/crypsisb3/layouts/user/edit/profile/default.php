@@ -112,7 +112,7 @@ $this->addScript('assets/js/profile.js');
 				<span class="hasTooltip"
 				      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 					<input id="social-url" type="url" name="websiteurl" class="form-control"
-					       value="<?php echo $this->escape($this->profile->websiteurl); ?>"/>
+					       value="<?php echo $this->escape($this->profile->getWebsiteURL()); ?>"/>
 				</span>
 		</td>
 	</tr>

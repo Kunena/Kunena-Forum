@@ -505,7 +505,6 @@ class KunenaUpload
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-				$value *= 1024;
 
 			// Continue , do not put break here
 			case 'k':

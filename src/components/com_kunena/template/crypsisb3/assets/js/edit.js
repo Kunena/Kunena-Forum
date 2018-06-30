@@ -65,6 +65,18 @@ jQuery(document).ready(function ($) {
 		$('#markItUpeditor').hide();
 	});
 
+	var cat = localStorage.getItem('copyKunenaeditor');
+	if (cat) {
+		var textarea = $("#editor").next();
+		textarea.empty();
+		$('#editor').val(cat);
+		localStorage.removeItem('copyKunenaeditor');
+	}
+
+	$('#reset').onclick = function() {
+		localStorage.removeItem('copyKunenaeditor');
+	};
+
 	/* To enabled emojis in kunena textera feature like on github */
 	if ($('#kemojis_allowed').val() === 1) {
 		var item = '';
@@ -298,12 +310,7 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	if ($("gotoeditor") !== undefined) {
-		$("gotoeditor").on("click", function () {
-			if (qreply.length > 0) {
-				var local = localStorage.setItem("copyKunenaeditor", qreply.val());
-				console.log(local);
-			}
-		}, false);
-	}
+	$('#gotoeditor').click(function () {
+		localStorage.setItem("copyKunenaeditor", $('#editor').val());
+	});
 });

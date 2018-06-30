@@ -32,6 +32,14 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
+Factory::getDocument()->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
+
 $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
@@ -148,7 +156,7 @@ $editor   = $template->params->get('editor');
 									}
 									else
 									{
-										echo '<textarea class="qreply form-control" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+										echo '<textarea class="qreply form-control test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 									} ?>
 								</div>
 

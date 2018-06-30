@@ -296,7 +296,8 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	$('#gotoeditor').click(function () {
-		localStorage.setItem("copyKunenaeditor", $('#editor').val());
+	var test  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
+	$('#gotoeditor'+test).click(function () {
+		localStorage.setItem("copyKunenaeditor", $(".test" + test).val());
 	});
 });

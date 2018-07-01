@@ -1016,7 +1016,7 @@ window.addEvent('domready', function(){
 			$querycat->select('DISTINCT ' . $db->quoteName('user_id'));
 			$querycat->from($db->quoteName('#__kunena_user_categories'). 'AS ut');
 			$querycat->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
-			$querycat->where('ut.topic_id =' . $category->id);
+			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
 			$querycat->andWhere('ut.subscribed=1');
 			$querycat->andWhere('ku.banned <>0');
 			$querycat->orWhere('ku.banned IS NULL');

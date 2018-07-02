@@ -24,7 +24,7 @@ abstract class KunenaEmail
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function send(\Joomla\CMS\Mail\Mail $mail, array $receivers)
+	public static function send($mail, array $receivers)
 	{
 		$config = KunenaFactory::getConfig();
 

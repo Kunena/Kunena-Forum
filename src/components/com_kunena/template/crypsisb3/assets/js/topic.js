@@ -129,8 +129,8 @@ jQuery(document).ready(function ($) {
 		$.getJSON(
 			kunena_url_ajax, {catid: $(this).val()}
 		).done(function (json) {
-			var first_item = $('#kmod_topics option:nth(0)').clone();
-			var second_item = $('#kmod_topics option:nth(1)').clone();
+			var first_item = $('#kmod_topics option:nth-child(0)').clone();
+			var second_item = $('#kmod_topics option:nth-child(1)').clone();
 
 			$('#kmod_topics').empty();
 			first_item.appendTo('#kmod_topics');

@@ -160,7 +160,7 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 														</td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('Topic Template'); ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE'); ?></td>
 														<td>
 															<textarea class="inputbox" cols="50" rows="6"
 															          name="topictemplate" id="topictemplate"

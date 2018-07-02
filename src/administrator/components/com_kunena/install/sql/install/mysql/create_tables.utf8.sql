@@ -338,6 +338,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
   `google`       varchar(50)  NULL,
   `myspace`      varchar(50)  NULL,
   `linkedin`     varchar(50)  NULL,
+  `linkedin_company`     varchar(50)  NULL,
   `delicious`    varchar(50)  NULL,
   `instagram`    varchar(50)  NULL,
   `qq`           varchar(50)  NULL,

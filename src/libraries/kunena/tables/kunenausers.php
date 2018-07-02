@@ -407,6 +407,13 @@ class TableKunenaUsers extends KunenaTable
 	public $socialshare = null;
 
 	/**
+	 * odnoklassniki
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $odnoklassniki = null;
+
+	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena

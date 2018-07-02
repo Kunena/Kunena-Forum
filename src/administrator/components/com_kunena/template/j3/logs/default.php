@@ -148,7 +148,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							:
 							?>
 							<th class="nowrap center">
-								Error
+								<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>
 							</th>
 						<?php endif; ?>
 					</tr>
@@ -297,7 +297,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										   class="btn openmodal"
 										   data-toggle="modal" data-target="#kerror<?php echo $item->id; ?>_form"
 										   rel="nofollow">
-											<span class="icon-warning" aria-hidden="true"></span>Error
+											<?php if ($this->escape($this->getType($item->type)) != 'ACT') :?>
+												<span class="icon-warning" aria-hidden="true"></span>
+											<?php else: ?>
+												<span class="icon-edit" aria-hidden="true"></span>
+											<?php endif ;?>
+											<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 										</a>
 									</td>
 								<?php endif; ?>
@@ -309,7 +314,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;
 									</button>
 									<h3>
-										<span class="icon-warning" aria-hidden="true"></span> Kunena Error
+										<?php if ($this->escape($this->getType($item->type)) != 'ACT') :?>
+											<span class="icon-warning" aria-hidden="true"></span>
+										<?php else: ?>
+											<span class="icon-edit" aria-hidden="true"></span>
+										<?php endif ;?>
+										Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
+
 										ID:<?php echo $item->id; ?>
 									</h3>
 								</div>

@@ -958,6 +958,12 @@ window.addEvent('domready', function(){
 		{
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
+
+			// Only send to users whose Joomla account is enabled to Receive System Emails
+			if (KunenaConfig::getInstance()->get('use_system_emails')) {
+				$query->where("u.sendEmail = 1");
+			}
+
 			$db = Factory::getDBO();
 			$db->setQuery($query);
 
@@ -993,9 +999,13 @@ window.addEvent('domready', function(){
 			// Get topic subscriptions
 			$querytopic = $db->getQuery(true);
 			$querytopic->select($db->quoteName('user_id'));
-			$querytopic->from($db->quoteName('#__kunena_user_topics'));
-			$querytopic->where($db->quoteName('topic_id') . '=' . $topic->id);
-			$querytopic->andWhere($db->quoteName('subscribed') . '=1');
+			$querytopic->from($db->quoteName('#__kunena_user_topics') . 'AS ut');
+			$querytopic->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
+			$querytopic->where('ut.topic_id =' . $topic->id);
+			$querytopic->andWhere('ut.subscribed=1');
+			$querytopic->andWhere('ku.banned <>0');
+			$querytopic->orWhere('ku.banned IS NULL');
+			$querytopic->group($db->quoteName('user_id'));
 
 			$query[] = $querytopic;
 		}
@@ -1005,9 +1015,13 @@ window.addEvent('domready', function(){
 			// Get category subscriptions
 			$querycat = $db->getQuery(true);
 			$querycat->select($db->quoteName('user_id'));
-			$querycat->from($db->quoteName('#__kunena_user_categories'));
+			$querycat->from($db->quoteName('#__kunena_user_categories'). 'AS ut');
+			$querycat->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
 			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
-			$querycat->andWhere($db->quoteName('subscribed') . '=1');
+			$querycat->andWhere('ut.subscribed=1');
+			$querycat->andWhere('ku.banned <>0');
+			$querycat->orWhere('ku.banned IS NULL');
+			$querycat->group($db->quoteName('user_id'));
 
 			$query[] = $querycat;
 		}

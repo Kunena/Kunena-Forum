@@ -16,8 +16,8 @@ $config = KunenaFactory::getConfig();
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-small <?php echo KunenaIcons::collapse(); ?>" data-toggle="collapse"
-			     data-target="#writeaccess"></div>
+			<div class="btn btn-default btn-sm" data-toggle="collapse"
+			     data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
 

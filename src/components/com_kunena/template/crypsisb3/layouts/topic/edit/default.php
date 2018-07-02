@@ -30,12 +30,34 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 JText::script('COM_KUNENA_EDITOR_BOLD');
 JText::script('COM_KUNENA_EDITOR_COLORS');
 JText::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
+JText::script('COM_KUNENA_EDITOR_OLIST');
 JText::script('COM_KUNENA_EDITOR_TABLE');
+JText::script('COM_KUNENA_EDITOR_ITALIC');
+JText::script('COM_KUNENA_EDITOR_UNDERL');
+JText::script('COM_KUNENA_EDITOR_STRIKE');
+JText::script('COM_KUNENA_EDITOR_SUB');
+JText::script('COM_KUNENA_EDITOR_SUP');
+JText::script('COM_KUNENA_EDITOR_CODE');
+JText::script('COM_KUNENA_EDITOR_QUOTE');
+JText::script('COM_KUNENA_EDITOR_SPOILER');
+JText::script('COM_KUNENA_EDITOR_CONFIDENTIAL');
+JText::script('COM_KUNENA_EDITOR_HIDE');
+JText::script('COM_KUNENA_EDITOR_RIGHT');
+JText::script('COM_KUNENA_EDITOR_LEFT');
+JText::script('COM_KUNENA_EDITOR_CENTER');
+JText::script('COM_KUNENA_EDITOR_HR');
+JText::script('COM_KUNENA_EDITOR_FONTSIZE_SELECTION');
 JText::script('COM_KUNENA_EDITOR_LINK');
 JText::script('COM_KUNENA_EDITOR_EBAY');
 JText::script('COM_KUNENA_EDITOR_MAP');
-JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
+JText::script('COM_KUNENA_EDITOR_POLL_SETTINGS');
+JText::script('COM_KUNENA_EDITOR_VIDEO');
+JText::script('COM_KUNENA_EDITOR_IMAGELINK');
+JText::script('COM_KUNENA_EDITOR_EMOTICONS');
 JText::script('COM_KUNENA_EDITOR_TWEET');
+JText::script('COM_KUNENA_EDITOR_INSTAGRAM');
+JText::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
+JText::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
 
 Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
@@ -58,6 +80,9 @@ Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', K
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
 Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+Factory::getDocument()->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
+Factory::getDocument()->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
+Factory::getDocument()->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
@@ -430,21 +455,21 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<?php if ($editor == 1)
 					:
 					?>
-					<input type="submit" class="btn btn-success" name="submit"
+					<input type="submit" class="btn btn-success form-validate" name="submit"
 					       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 					       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
 				<?php else
 
 					:
 					?>
-					<button id="form_submit_button" name="submit" type="submit" class="btn btn-success" tabindex="8">
+					<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
 						<?php echo KunenaIcons::save(); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_SUBMIT') . ' '; ?>
 					</button>
 				<?php endif; ?>
 
 				<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="10">
-					<?php echo KunenaIcons::cancel(); ?>
+					<?php echo KunenaIcons::delete(); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>
 				</button>
 			</div>

@@ -387,7 +387,6 @@ if (!empty($codeTypes)) : ?>
 		<h3 id="myModalLabel">Emoticons</h3>
 	</div>
 	<div class="modal-body">
-		<p>
 		<div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 			foreach ($emoticons as $emo_code => $emo_url)
@@ -396,7 +395,6 @@ if (!empty($codeTypes)) : ?>
 			}
 			?>
 		</div>
-		</p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal"

@@ -37,6 +37,12 @@ class KunenaAvatar
 	protected $resize = false;
 
 	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	public $css = false;
+
+	/**
 	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaAvatar

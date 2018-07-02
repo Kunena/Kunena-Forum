@@ -18,7 +18,7 @@ jQuery(function ($) {
 		if (button !== undefined) {
 			button.removeClass('btn-primary');
 			button.addClass('btn-success');
-			button.html('<i class="glyphicon glyphicon-upload"></i> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+			button.html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		}
 	}
 
@@ -62,7 +62,7 @@ jQuery(function ($) {
 
 		$('#insert-all').removeClass('btn-success');
 		$('#insert-all').addClass('btn-primary');
-		$('#insert-all').html('<span class="glyphicon glyphicon-upload"></span>' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
+		$('#insert-all').html(Joomla.getOptions('com_kunena.icons.delete') + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
 
 		$('#remove-all').hide();
 		$('#insert-all').hide();
@@ -152,20 +152,20 @@ jQuery(function ($) {
 
 				$('#insert-all').removeClass('btn-primary');
 				$('#insert-all').addClass('btn-success');
-				$('#insert-all').html('<span class="glyphicon glyphicon-upload"></span> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+				$('#insert-all').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
 		});
 
 		$('#files .btn.btn-primary').each(function () {
 			$('#files .btn.btn-primary').addClass('btn-success');
 			$('#files .btn.btn-success').removeClass('btn-primary');
-			$('#files .btn.btn-success').html('<span class="glyphicon glyphicon-upload"></span> ' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+			$('#files .btn.btn-success').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 		});
 	});
 
 	var insertButton = $('<button>')
 		.addClass("btn btn-primary")
-		.html('<span class="glyphicon glyphicon-upload"></span> ' + Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
+		.html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
 		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
@@ -190,12 +190,12 @@ jQuery(function ($) {
 
 	var removeInline = $('<button>')
 		.addClass("btn btn-primary")
-		.html('<span class="glyphicon glyphicon-upload"></span> Remove inline')
+		.html(Joomla.getOptions('com_kunena.icons.trash') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_REMOVE_INLINE'))
 		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
 			e.stopPropagation();
-			
+
 			var $this = $(this),
 				data = $this.data();
 
@@ -224,12 +224,12 @@ jQuery(function ($) {
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
-		.html('<span class="glyphicon glyphicon-trash"></span> ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
+		.html(Joomla.getOptions('com_kunena.icons.trash') + ' ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
 			e.stopPropagation();
-			
+
 			var $this = $(this),
 				data = $this.data();
 
@@ -461,7 +461,7 @@ jQuery(function ($) {
 							image = '<img src="' + file.path + '" width="100" height="100" /><br />';
 						}
 						else {
-							image = '<span class="glyphicon glyphicon-paperclip glyphicon-big"></span><br />';
+							image = Joomla.getOptions('com_kunena.icons.attach') + ' <br />';
 						}
 
 						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');

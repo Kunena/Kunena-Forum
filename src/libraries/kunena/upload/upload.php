@@ -457,9 +457,9 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('post_max_size')),
+				$this->toBytes(ini_get('memory_limit'))
 			)
 		);
 	}
@@ -474,48 +474,9 @@ class KunenaUpload
 	 */
 	public static function toBytes($value)
 	{
-		$value = trim($value);
+		$base = log($value, 1024);
 
-		if (empty($value))
-		{
-			return 0;
-		}
-
-		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $value, $matches);
-
-		$last = '';
-
-		if (isset($matches[2]))
-		{
-			$last = $matches[2];
-		}
-
-		if (isset($matches[1]))
-		{
-			$value = (int) $matches[1];
-		}
-
-		switch (strtolower($last))
-		{
-			case 'g':
-			case 'gb':
-				$value *= 1024;
-
-				// Continue , do not put break here
-			case 'm':
-			case 'mb':
-				$value *= 1024;
-				$value *= 1024;
-
-				// Continue , do not put break here
-			case 'k':
-			case 'kb':
-				$value *= 1024;
-
-				// Continue, do not put break here
-		}
-
-		return (int) $value;
+		return round(pow(1024, $base - floor($base)));
 	}
 
 	/**
@@ -540,9 +501,9 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('post_max_size')),
+				$this->toBytes(ini_get('memory_limit'))
 			)
 		);
 	}
@@ -569,9 +530,9 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-				$this->toBytes(ini_get('post_max_size')) - 1024,
-				$this->toBytes(ini_get('memory_limit')) - 1024 * 1024
+				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('post_max_size')),
+				$this->toBytes(ini_get('memory_limit'))
 			)
 		);
 	}
@@ -695,7 +656,9 @@ class KunenaUpload
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}
 
-			$a = array('gif', 'jpeg', 'jpg', 'png');
+			$avatartypes = array();
+			$avatartypes = strtolower(KunenaConfig::getInstance()->avatartypes);
+			$a           = explode(', ', $avatartypes);
 
 			if (!in_array($file->ext, $a, true))
 			{
@@ -797,7 +760,11 @@ class KunenaUpload
 		// Format string
 		$format = ($format === null) ? '%01.2f %s' : (string) $format;
 
-		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'));
+		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
+			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB')
+		);
 		$mod   = 1024;
 
 		// Determine unit to use

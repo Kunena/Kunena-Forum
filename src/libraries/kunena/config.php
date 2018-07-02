@@ -1324,7 +1324,13 @@ class KunenaConfig extends JObject
 	 * @var integer
 	 * @since  K5.1.1
 	 */
-	public $allow_edit_poll = 0;
+	public $allow_edit_poll = 1;
+
+	/**
+	 * @var integer
+	 * @since  K5.1.2
+	 */
+	public $use_system_emails = 0;
 
 	/**
 	 * @since Kunena

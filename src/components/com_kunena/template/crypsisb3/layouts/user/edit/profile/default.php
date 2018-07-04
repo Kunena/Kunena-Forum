@@ -48,7 +48,7 @@ $this->addScript('assets/js/profile.js');
 			<div id="birthdate">
 				<div class="input-group date">
 					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('mm/dd/yyyy') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/y') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
 					       title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>

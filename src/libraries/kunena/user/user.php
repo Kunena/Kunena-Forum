@@ -1077,7 +1077,7 @@ class KunenaUser extends JObject
 	{
 		$url = $this->websiteurl;
 
-		if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+		if (!empty($url) && !preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
 		{
 			$url = 'http://' . $url;
 		}

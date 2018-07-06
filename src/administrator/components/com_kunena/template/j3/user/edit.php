@@ -156,7 +156,7 @@ jQuery(function($) {
 															<div class="input-append date">
 																<input type="text" name="birthdate"
 																       data-date-format="mm/dd/yyyy"
-																       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : $this->user->birthdate; ?>">
+																       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y');; ?>">
 															</div>
 														</div>
 													</td>

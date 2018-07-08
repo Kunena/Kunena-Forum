@@ -1005,6 +1005,8 @@ window.addEvent('domready', function(){
 			$querytopic->andWhere('ut.subscribed=1');
 			$querytopic->andWhere('ku.banned <>0');
 			$querytopic->orWhere('ku.banned IS NULL');
+			$querytopic->andWhere('ut.topic_id =' . $topic->id);
+			$querytopic->andWhere('ut.subscribed=1');
 			$querytopic->group($db->quoteName('user_id'));
 
 			$query[] = $querytopic;
@@ -1021,6 +1023,8 @@ window.addEvent('domready', function(){
 			$querycat->andWhere('ut.subscribed=1');
 			$querycat->andWhere('ku.banned <>0');
 			$querycat->orWhere('ku.banned IS NULL');
+			$querycat->andWhere($db->quoteName('category_id') . '=' . $category->id);
+			$querycat->andWhere('ut.subscribed=1');
 			$querycat->group($db->quoteName('user_id'));
 
 			$query[] = $querycat;

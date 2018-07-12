@@ -627,7 +627,7 @@ class KunenaModelTopics extends KunenaModel
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if ($actionDropdown == 1)
+		if (count($actionDropdown) == 1)
 		{
 			return;
 		}
@@ -695,7 +695,7 @@ class KunenaModelTopics extends KunenaModel
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if ($actionDropdown == 1)
+		if (count($actionDropdown) == 1)
 		{
 			return;
 		}

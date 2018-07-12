@@ -128,6 +128,7 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$value = Factory::getApplication()->input->getString('ids', '0', 'get');
+			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
@@ -332,7 +333,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($this->total == 0)
 		{
-			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'), 'error');
 
 			return 0;
 		}

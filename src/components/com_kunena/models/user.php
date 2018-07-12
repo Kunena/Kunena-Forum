@@ -202,7 +202,8 @@ class KunenaModelUser extends KunenaModel
 			$search = $this->getQuerySearch();
 
 			$query = $db->getQuery(true);
-			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
+			$query->select('COUNT(*)')
+				->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}");
 			$db->setQuery($query);
@@ -272,7 +273,8 @@ class KunenaModelUser extends KunenaModel
 			$search = $this->getQuerySearch();
 			$query  = $db->getQuery(true);
 
-			$query->select($db->quoteName('u.id'))->from($db->quoteName('#__users', 'u'))
+			$query->select($db->quoteName('u.id'))
+				->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}")
 				->order("{$orderby} {$direction}");

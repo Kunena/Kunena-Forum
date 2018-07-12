@@ -101,12 +101,12 @@ class KunenaModelTopics extends KunenaModel
 			$latestcategory    = array($catid);
 			$latestcategory_in = true;
 
-			// Check if the category is in exclued list
+			// Check if the category is in excluded list
 			if (!empty($this->config->rss_excluded_categories))
 			{
-				$cat_exclued = explode(',', $this->config->rss_excluded_categories);
+				$cat_excluded = explode(',', $this->config->rss_excluded_categories);
 
-				if (in_array($catid, $cat_exclued))
+				if (in_array($catid, $cat_excluded))
 				{
 					$latestcategory    = $this->config->rss_excluded_categories;
 					$latestcategory_in = 0;
@@ -202,8 +202,8 @@ class KunenaModelTopics extends KunenaModel
 
 		$this->setState('list.limit', $value);
 
-		// $value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
-		// $this->setState ( 'list.ordering', $value );
+		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_ordering", 'filter_order', 'id', 'cmd');
+		$this->setState('list.ordering', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int');
 
@@ -242,8 +242,7 @@ class KunenaModelTopics extends KunenaModel
 					$total  = 0;
 					$topics = false;
 
-					\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-
+					Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 					Factory::getApplication()->triggerEvent('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
 
 					if (!empty($topics))

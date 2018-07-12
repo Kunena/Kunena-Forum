@@ -160,16 +160,6 @@ class KunenaModelTopic extends KunenaModel
 					$ids[$topic->moved_id] = 1;
 					$topic                 = KunenaForumTopicHelper::get($topic->moved_id);
 				}
-
-				// If topic doesn't exist, check if there's a message with the same id
-
-				/*
-				if (! $topic->exists()) {
-					$message = KunenaForumMessageHelper::get($this->getState ( 'item.id'));
-					if ($message->exists()) {
-						$topic = KunenaForumTopicHelper::get($message->thread);
-					}
-				}*/
 			}
 
 			$this->topic = $topic;

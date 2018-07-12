@@ -45,12 +45,12 @@ class KunenaModelRate extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumRate
+	 * @return KunenaForumTopicRate
 	 * @since Kunena
 	 */
 	public function getNewRate()
 	{
-		return new KunenaForumRate;
+		return new KunenaForumTopicRate;
 	}
 
 	/**
@@ -59,17 +59,7 @@ class KunenaModelRate extends KunenaModel
 	 */
 	public function getRate()
 	{
-		return KunenaForumRateHelper::get($this->getState('item.topicid'));
-	}
-
-	/**
-	 * @return mixed
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getRates()
-	{
-		return KunenaForumRateHelper::getRates($this->getState('list.start'), $this->getState('list.limit'), !$this->me->isModerator());
+		return KunenaForumTopicRateHelper::get($this->getState('item.topicid'));
 	}
 
 	/**

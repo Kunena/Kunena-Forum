@@ -21,7 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 class KunenaLayoutAnnouncementList extends KunenaLayout
 {
 	/**
-	 * Method to get moderation action in annoucements list
+	 * Method to get moderation action in announcements list
 	 *
 	 * @see   KunenaCompatLayoutBase::getOptions()
 	 *

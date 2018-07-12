@@ -46,6 +46,7 @@ class KunenaLayoutMessageList extends KunenaLayout
 		$timesel[] = HTMLHelper::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
 		$timesel[] = HTMLHelper::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
 		$timesel[] = HTMLHelper::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+
 		echo HTMLHelper::_('select.genericlist', $timesel, 'sel', $attrib, 'value', 'text', $this->state->get('list.time'), $id);
 	}
 }

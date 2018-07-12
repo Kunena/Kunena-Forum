@@ -328,12 +328,9 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$this->getResults();
 		}
-
-		// If there are no forums to search in, set error and return
-
-		if ($this->total == 0)
+		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'), 'error');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'), 'notice');
 
 			return 0;
 		}
@@ -446,7 +443,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (empty($this->messages))
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'));
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'), 'notice');
 		}
 
 		return $this->messages;

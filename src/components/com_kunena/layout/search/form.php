@@ -34,6 +34,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options   = array();
 		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'));
 		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'titleonly', $attributes, 'value', 'text', $this->state->get('query.titleonly'), $id);
 	}
 
@@ -58,6 +59,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options[] = HTMLHelper::_('select.option', '180', JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS'));
 		$options[] = HTMLHelper::_('select.option', '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR'));
 		$options[] = HTMLHelper::_('select.option', 'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'searchdate', $attributes, 'value', 'text', $this->state->get('query.searchdate'), $id);
 	}
 
@@ -75,6 +77,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options   = array();
 		$options[] = HTMLHelper::_('select.option', 'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER'));
 		$options[] = HTMLHelper::_('select.option', 'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'beforeafter', $attributes, 'value', 'text', $this->state->get('query.beforeafter'), $id);
 	}
 
@@ -100,6 +103,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 
 		// $options[] = HTMLHelper::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER'));
 		$options[] = HTMLHelper::_('select.option', 'forum', JText::_('COM_KUNENA_CATEGORY'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id);
 	}
 
@@ -117,6 +121,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options   = array();
 		$options[] = HTMLHelper::_('select.option', 'inc', JText::_('COM_KUNENA_SEARCH_SORTBY_INC'));
 		$options[] = HTMLHelper::_('select.option', 'dec', JText::_('COM_KUNENA_SEARCH_SORTBY_DEC'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'order', $attributes, 'value', 'text', $this->state->get('query.order'), $id);
 	}
 
@@ -141,6 +146,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options[] = HTMLHelper::_('select.option', '10', JText::_('COM_KUNENA_SEARCH_LIMIT10'));
 		$options[] = HTMLHelper::_('select.option', '15', JText::_('COM_KUNENA_SEARCH_LIMIT15'));
 		$options[] = HTMLHelper::_('select.option', '20', JText::_('COM_KUNENA_SEARCH_LIMIT20'));
+
 		echo HTMLHelper::_('select.genericlist', $options, 'limit', $attributes, 'value', 'text', $this->state->get('list.limit'), $id);
 	}
 
@@ -160,6 +166,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS'));
 
 		$cat_params = array('sections' => true);
+
 		echo HTMLHelper::_(
 			'kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
 		);

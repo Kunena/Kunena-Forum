@@ -460,7 +460,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if ($actionDropdown == 1)
+		if (count($actionDropdown) == 1)
 		{
 			return;
 		}
@@ -498,7 +498,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		$actionDropdown[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
-		if ($actionDropdown == 1)
+		if (count($actionDropdown) == 1)
 		{
 			return;
 		}

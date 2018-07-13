@@ -71,6 +71,7 @@ $attachments = $this->attachments;
 			foreach ($attachments as $attachment) :
 				$message = $attachment->getMessage();
 				$canDelete = $attachment->isAuthorised('delete');
+				if ($attachment->isAuthorised('read', $this->me)) :
 				?>
 				<tr>
 					<td class="center"><?php echo ++$i; ?></td>
@@ -127,6 +128,7 @@ $attachments = $this->attachments;
 
 					</td>
 				</tr>
+				<?php endif; ?>
 			<?php endforeach; ?>
 		<?php endif; ?>
 		</tbody>

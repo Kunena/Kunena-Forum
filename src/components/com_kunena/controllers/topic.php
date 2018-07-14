@@ -476,32 +476,15 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		// Ignore identical
-		$db = Factory::getDBO();
-		// All topics (posted within 1 minute)
-		$duplicatetimewindow = Factory::getDate()->toUnix() - 1 * 60;
-		$db->setQuery("SELECT MAX(Id) FROM #__kunena_topics
-			WHERE subject={$db->quote($topic->subject)}
-			AND first_post_time >={$db->quote($duplicatetimewindow)}
-			AND category_id ={$db->quote($topic->category_id)}"
-		);
+		// Ignore identical for 5 minutes
+		$duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
+		$lastTopic           = $topic->getCategory()->getLastTopic();
 
-		try
-		{
-			$id = $db->loadResult();
-		}
-		catch (JDatabaseExceptionExecuting $e)
-		{
-			KunenaError::displayDatabaseError($e);
-
-			return false;
-		}
-
-		if ($id)
+		if ($lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow && $lastTopic->category_id == $topic->category_id)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
-			$lastTopic = $topic->getCategory()->getLastTopic()->id;
-			return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic}}", false));
+
+			return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic->id}}", false));
 		}
 
 		// Set topic icon if permitted

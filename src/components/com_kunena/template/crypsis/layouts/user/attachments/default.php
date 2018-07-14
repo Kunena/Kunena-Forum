@@ -14,7 +14,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::_('behavior.core');
 
-
 $attachments = $this->attachments;
 ?>
 <h3>
@@ -33,12 +32,14 @@ $attachments = $this->attachments;
 			<th class="span1 center">
 				#
 			</th>
+			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
 			<th class="span1 center">
 				<label>
 					<input type="checkbox" name="checkall-toggle" value="cid"
 					       title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
 				</label>
 			</th>
+			<?php endif; ?>
 			<th class="span1 center">
 				<?php echo JText::_('COM_KUNENA_FILETYPE'); ?>
 			</th>
@@ -54,9 +55,11 @@ $attachments = $this->attachments;
 			<th class="span1 center">
 				<?php echo JText::_('COM_KUNENA_PREVIEW'); ?>
 			</th>
+			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
 			<th class="span1 center">
 				<?php echo JText::_('COM_KUNENA_DELETE'); ?>
 			</th>
+			<?php endif; ?>
 		</tr>
 		</thead>
 		<tbody>
@@ -76,12 +79,13 @@ $attachments = $this->attachments;
 				?>
 				<tr>
 					<td class="center"><?php echo ++$i; ?></td>
+
+					<?php if ($canDelete) :?>
 					<td class="center">
-						<?php if ($canDelete)
-						{
-							echo HTMLHelper::_('grid.id', $i, intval($attachment->id));
-						} ?>
+						<?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id));?>
 					</td>
+					<?php endif;?>
+
 					<td class="center">
 						<?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
 					</td>
@@ -97,10 +101,9 @@ $attachments = $this->attachments;
 					<td class="center">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 					</td>
+					<?php if ($canDelete) :?>
 					<td class="center">
-
-						<?php if ($canDelete) : ?>
-							<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
+						<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
 							   data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
 
 							<div id="modaldelete<?php echo $i ?>" class="modal hide fade" tabindex="-1" role="dialog"
@@ -120,9 +123,8 @@ $attachments = $this->attachments;
 									        onclick="return listItemTask('cb<?php echo $i; ?>','delfile');"><?php echo JText::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
 								</div>
 							</div>
-						<?php endif; ?>
-
 					</td>
+					<?php endif; ?>
 				</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -135,7 +137,7 @@ $attachments = $this->attachments;
 			->set('display', true); ?>
 	</div>
 
-	<?php if ($attachments) : ?>
+	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator()) : ?>
 		<a href="#modaldeleteall" class="btn pull-right"
 		   data-toggle="modal"><?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?></a>
 

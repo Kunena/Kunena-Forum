@@ -829,7 +829,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected function authoriseOwn(KunenaUser $user)
 	{
 		// Checks if attachment is users own or user is moderator in the category (or global)
-		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory()))
+		if ($this->userid != $user->userid && !$user->isModerator($this->getMessage()->getCategory()) || !$user->exists() || $user->isBanned())
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}

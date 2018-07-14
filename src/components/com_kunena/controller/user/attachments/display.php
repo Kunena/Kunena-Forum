@@ -85,6 +85,11 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
+		if (!KunenaConfig::getInstance()->show_imgfiles_manage_profile || !$this->me->exists() && !KunenaConfig::getInstance()->pubprofile)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+		}
+
 		if ($this->moreUri)
 		{
 			$this->pagination->setUri($this->moreUri);

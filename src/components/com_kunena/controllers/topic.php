@@ -477,14 +477,16 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Ignore identical for 5 minutes
-		$duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
+		$duplicatetimewindow = Factory::getDate()->toUnix() - 1 * 60;
 		$lastTopic           = $topic->getCategory()->getLastTopic();
 
-		if ($lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow && $lastTopic->category_id == $topic->category_id)
+		if ($lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow &&
+			$lastTopic->category_id == $topic->category_id && $lastTopic->last_post_id == $topic->last_post_id
+			&& $lastTopic->id == $topic->id && $lastTopic->last_post_message == $message->message)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
 
-			return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic->id}}", false));
+			return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic->id}&mesid={$lastTopic->last_post_id}", false));
 		}
 
 		// Set topic icon if permitted

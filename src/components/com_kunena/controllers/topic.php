@@ -2005,9 +2005,6 @@ class KunenaControllerTopic extends KunenaController
 			$log     = KunenaLog::LOG_TOPIC_REPORT;
 		}
 
-		$messagetext = $message->message;
-		$baduser     = KunenaFactory::getUser($message->userid);
-
 		if (!$target->isAuthorised('read'))
 		{
 			// Deny access if user cannot read target
@@ -2103,12 +2100,14 @@ class KunenaControllerTopic extends KunenaController
 
 				foreach ($emailToList as $emailTo)
 				{
-					if (!$emailTo->email || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
+					if (!Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
 					{
 						continue;
 					}
-
-					$receivers[] = $emailTo->email;
+					else
+					{
+						$receivers[] = $emailTo->email;
+					}
 				}
 
 				KunenaEmail::send($mail, $receivers);

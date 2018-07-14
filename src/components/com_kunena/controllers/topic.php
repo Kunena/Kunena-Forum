@@ -476,6 +476,34 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
+		// Ignore identical
+		$db = Factory::getDBO();
+		// All topics (posted within 1 minute)
+		$duplicatetimewindow = Factory::getDate()->toUnix() - 1 * 60;
+		$db->setQuery("SELECT MAX(Id) FROM #__kunena_topics
+			WHERE subject={$db->quote($topic->subject)}
+			AND first_post_time >={$db->quote($duplicatetimewindow)}
+			AND category_id ={$db->quote($topic->category_id)}"
+		);
+
+		try
+		{
+			$id = $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+
+			return false;
+		}
+
+		if ($id)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
+			$lastTopic = $topic->getCategory()->getLastTopic()->id;
+			return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic}}", false));
+		}
+
 		// Set topic icon if permitted
 		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
 		{

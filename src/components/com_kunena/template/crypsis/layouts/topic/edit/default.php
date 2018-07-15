@@ -84,6 +84,9 @@ Factory::getDocument()->addScriptOptions('com_kunena.icons.upload', KunenaIcons:
 Factory::getDocument()->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 Factory::getDocument()->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
+$suffix = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix');
+Factory::getDocument()->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
+
 // If polls are enabled, load also poll JavaScript.
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');

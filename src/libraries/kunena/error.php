@@ -170,6 +170,8 @@ abstract class KunenaError
 		{
 			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
 		}
+
+		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, $exception);
 	}
 
 	/**

@@ -2166,7 +2166,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$poll   = $this->getPoll();
 		$config = KunenaFactory::getConfig();
 
-		if ($poll->exists() && $poll->getUserCount() && $config->pollallowvoteone)
+		if ($poll->exists() && $poll->getUserCount() && !$config->allow_edit_poll)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}

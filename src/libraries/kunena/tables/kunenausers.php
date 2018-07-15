@@ -414,6 +414,27 @@ class TableKunenaUsers extends KunenaTable
 	public $odnoklassniki = null;
 
 	/**
+	 * what's app
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $whatsapp = null;
+
+	/**
+	 * Linkedin company
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $linkedin_company = null;
+
+	/**
+	 * Youtube
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $youtube = null;
+
+	/**
 	 * @param   JDatabaseDriver $db Database driver
 	 *
 	 * @since Kunena

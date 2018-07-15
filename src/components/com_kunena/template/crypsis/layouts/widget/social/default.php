@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-if (KunenaUserHelper::getMyself()->socialshare == 0)
+if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists())
 {
 	return false;
 }

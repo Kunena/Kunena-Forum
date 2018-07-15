@@ -89,11 +89,11 @@ $quick           = $this->ktemplate->params->get('quick');
 
 	<div class="clearfix"></div>
 
-	<?php if ($social == 1 && $me->socialshare != 0) : ?>
+	<?php if ($social == 1 && $me->socialshare != 0 || $social == 1 && !$me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 	<?php endif; ?>
 
-	<?php if ($social == 2 && $me->socialshare != 0) : ?>
+	<?php if ($social == 2 && $me->socialshare != 0 || $social == 2 && !$me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 

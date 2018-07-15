@@ -162,6 +162,10 @@ abstract class KunenaError
 			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
 					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
 		}
+		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
+		{
+			$app->enqueueMessage($exception->getMessage(), 'error');
+		}
 		else
 		{
 			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');

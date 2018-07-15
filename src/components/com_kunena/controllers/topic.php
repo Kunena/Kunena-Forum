@@ -1076,10 +1076,18 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $topic
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
+		$category = $topic->getCategory();
+
+		if ($this->me->isAdmin() || $this->me->isModerator($category))
+		{
+			return true;
+		}
+
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
 
 		$ignore = false;

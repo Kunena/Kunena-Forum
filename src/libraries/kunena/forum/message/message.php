@@ -627,6 +627,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$user = KunenaUserHelper::getMyself();
 
+		if ($user->userid == 0 && $this->userid)
+		{
+			$user = KunenaUserHelper::get($this->userid);
+		}
+
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);

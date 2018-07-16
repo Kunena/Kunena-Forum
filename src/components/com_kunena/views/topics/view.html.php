@@ -49,9 +49,7 @@ class KunenaViewTopics extends KunenaView
 				$this->moreUri .= "&userid={$userid}";
 			}
 		}
-
-		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
-
+		
 		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);

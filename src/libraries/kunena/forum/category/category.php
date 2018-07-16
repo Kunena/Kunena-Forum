@@ -638,7 +638,14 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$params = '&catid=' . (int) $this->id;
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml);
+			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			{
+				return KunenaRoute::_( "/index.php?option=com_kunena&view=rss{$params}"). '?format=feed&type=rss';
+			}
+			else
+			{
+				return KunenaRoute::_("index.php?option=com_kunena&view=rss{$params}?format=feed&type=rss", $xhtml);
+			}
 		}
 
 		return;

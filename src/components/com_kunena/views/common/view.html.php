@@ -657,7 +657,7 @@ class KunenaViewCommon extends KunenaView
 					break;
 			}
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}{$params}", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}{$params}?format=feed&type=rss", $xhtml);
 		}
 	}
 

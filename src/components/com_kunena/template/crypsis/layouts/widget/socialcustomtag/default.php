@@ -12,10 +12,12 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists())
+{
+        return false;
+}
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag  = $this->ktemplate->params->get('socialsharetag');
 
-if ($me->socialshare != 0)
-{
-	echo HTMLHelper::_('content.prepare', $socialsharetag);
-}
+echo HTMLHelper::_('content.prepare', $socialsharetag);

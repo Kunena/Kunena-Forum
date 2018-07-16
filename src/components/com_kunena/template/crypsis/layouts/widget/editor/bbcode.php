@@ -311,7 +311,7 @@ if (!empty($codeTypes))
 		</div>
 		<div class="modal-footer">
 			<button id="poll-settings-modal-submit"
-			        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+			        class="btn btn-primary"><?php echo $this->poll->exists() ? JText::_('COM_KUNENA_EDITOR_MODAL_EDIT_LABEL') : JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 			<button class="btn" data-dismiss="modal"
 			        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			<button id="clearpoll" class="btn btn-danger" data-dismiss="modal"

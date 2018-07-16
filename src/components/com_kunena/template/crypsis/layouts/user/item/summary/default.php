@@ -222,20 +222,20 @@ if ($this->config->showuserstats)
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php
-							if (!empty($websiteName) && $websiteURL != 'http://')
+							if (!empty($websiteName) && !empty($websiteURL))
 								:
 								?>
 								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
-							<?php elseif (empty($websiteName) && $websiteURL != 'http://')
+								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></a>
+							<?php elseif (empty($websiteName) && !empty($websiteURL))
 								:
 								?>
-								<a class="btn btn-small"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
-							<?php elseif (!empty($websiteName) && $websiteURL == 'http://')
+								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank"
+								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe(); ?></a>
+							<?php elseif (!empty($websiteName) && empty($websiteURL))
 								:
 								?>
-								<button class="btn btn-small"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></button>
+								<button class="btn btn-small"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

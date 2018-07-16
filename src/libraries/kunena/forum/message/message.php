@@ -477,7 +477,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$subject     = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
-			$mail = \Joomla\CMS\Mail\Mail::getInstance();
+			$mail = \Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 

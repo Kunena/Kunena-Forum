@@ -225,6 +225,17 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
 		$data->interactionStatistic     = $tmp2;
 
+		if ($this->category->allow_ratings && KunenaConfig::getInstance()->ratingenabled)
+		{
+			$data->aggregateRating  = array();
+			$tmp3                   = new JObject;
+			$tmp3->{'@type'}        = "AggregateRating";
+			$tmp3->{'itemReviewed'} = $this->headerText;
+			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id);
+			$tmp3->{'reviewCount'}  = KunenaForumTopicRateHelper::getCount($this->topic->id);
+			$data->aggregateRating  = $tmp3;
+		}
+
 		Factory::getDocument()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), 'application/ld+json');
 	}
 

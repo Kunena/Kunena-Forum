@@ -46,11 +46,7 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
 ?>
-<div itemscope itemtype="https://schema.org/Article">
-	<meta itemprop="name" content="<?php echo $topic->displayField('subject'); ?>"/>
-	<meta itemprop="author" content="<?php echo $topic->getAuthor()->username; ?>"/>
-	<meta itemprop="datePublished" content="<?php echo new KunenaDate($topic->first_post_time); ?>"/>
-
+<div class="kunena-topic-item">
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>

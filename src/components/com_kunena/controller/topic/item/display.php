@@ -208,6 +208,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 
+		var_dump($this->docImage());
 		$data                           = new JObject;
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
@@ -635,6 +636,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
 				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			}
+			else
+			{
+				$image = \Joomla\CMS\Uri\Uri::base() . '/media/kunena/email/hero-wide.png';
 			}
 		}
 		else

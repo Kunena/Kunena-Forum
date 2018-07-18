@@ -208,22 +208,22 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 
-		$data = new JObject;
-		$data->{'@context'} = "http://schema.org";
-		$data->{'@type'} = "DiscussionForumPosting";
-		$data->{'id'} = $this->topic->getUrl();
-		$data->{'headline'} = $this->headerText;
-		$data->author = array();
-		$tmp = new JObject;
-		$tmp->{'@type'} = "Person";
-		$tmp->{'name'} = $this->topic->getLastPostAuthor();
-		$data->author = $tmp;
-		$data->interactionStatistic = array();
-		$tmp2 = new JObject;
-		$tmp2->{'@type'} = "InteractionCounter";
-		$tmp2->{'interactionType'} = "InteractionCounter";
+		$data                           = new JObject;
+		$data->{'@context'}             = "http://schema.org";
+		$data->{'@type'}                = "DiscussionForumPosting";
+		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->{'headline'}             = $this->headerText;
+		$data->author                   = array();
+		$tmp                            = new JObject;
+		$tmp->{'@type'}                 = "Person";
+		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
+		$data->author                   = $tmp;
+		$data->interactionStatistic     = array();
+		$tmp2                           = new JObject;
+		$tmp2->{'@type'}                = "InteractionCounter";
+		$tmp2->{'interactionType'}      = "InteractionCounter";
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
-		$data->interactionStatistic = $tmp2;
+		$data->interactionStatistic     = $tmp2;
 
 		Factory::getDocument()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), 'application/ld+json');
 	}

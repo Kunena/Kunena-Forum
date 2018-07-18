@@ -231,8 +231,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$tmp3                   = new JObject;
 			$tmp3->{'@type'}        = "AggregateRating";
 			$tmp3->{'itemReviewed'} = $this->headerText;
-			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id);
-			$tmp3->{'reviewCount'}  = KunenaForumTopicRateHelper::getCount($this->topic->id);
+			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getCount($this->topic->id) : 5;
+			$tmp3->{'reviewCount'}  = KunenaForumTopicRateHelper::getCount($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getCount($this->topic->id) : 1;
 			$data->aggregateRating  = $tmp3;
 		}
 

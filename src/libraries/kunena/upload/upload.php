@@ -474,7 +474,7 @@ class KunenaUpload
 	 */
 	public static function toBytes($value)
 	{
-		$base = log($value, 1024);
+		$base = log((int) $value, 1024);
 
 		return round(pow(1024, $base - floor($base)));
 	}

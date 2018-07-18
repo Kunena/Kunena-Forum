@@ -213,6 +213,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
 		$data->{'headline'}             = $this->headerText;
+		$data->{'image'}                = $this->docImage();
 		$data->author                   = array();
 		$tmp                            = new JObject;
 		$tmp->{'@type'}                 = "Person";
@@ -448,21 +449,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
 		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
 
-		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
-		{
-			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
-		}
-		elseif ($this->topic->getAuthor()->avatar == null)
-		{
-			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
-			{
-				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			}
-		}
-		else
-		{
-			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
-		}
+		$image = $this->docImage();
 
 		$message = KunenaHtmlParser::parseText($this->topic->first_post_message);
 		$matches = preg_match("/\[img]http(s?):\/\/.*\/\img]/iu", $message, $title);
@@ -627,5 +614,34 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$this->setDescription($small);
 			}
 		}
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
+	 */
+	protected function docImage()
+	{
+		$image = '';
+		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
+		{
+			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
+		}
+		elseif ($this->topic->getAuthor()->avatar == null)
+		{
+			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+			{
+				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			}
+		}
+		else
+		{
+			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
+		}
+
+		return $image;
 	}
 }

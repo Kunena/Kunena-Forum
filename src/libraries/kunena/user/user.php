@@ -57,6 +57,7 @@ jimport('joomla.utilities.date');
  * @property    string $google
  * @property    string $myspace
  * @property    string $linkedin
+ * @property    string $linkedin_company
  * @property    string $delicious
  * @property    string $friendfeed
  * @property    string $digg

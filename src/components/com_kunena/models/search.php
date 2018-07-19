@@ -128,7 +128,7 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$value = Factory::getApplication()->input->getString('ids', '0', 'get');
-			$value = explode(' ', $value);
+			$value = explode(' ', (int) $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserEditSettingsDisplay
@@ -45,11 +46,11 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 
 		$item             = new StdClass;
 		$item->name       = 'messageordering';
-		$item->label      = JText::_('COM_KUNENA_USER_ORDER');
+		$item->label      = Text::_('COM_KUNENA_USER_ORDER');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[]        = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_USER_ORDER_ASC'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_USER_ORDER_DESC'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'messageordering', 'class="kinputbox form-control" size="1"',
 			'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering'
 		);
@@ -57,11 +58,11 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 
 		$item             = new StdClass;
 		$item->name       = 'hidemail';
-		$item->label      = JText::_('COM_KUNENA_USER_HIDEEMAIL');
+		$item->label      = Text::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$options[]        = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_A_ONLY_REGISTERED'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->hideEmail), 'khidemail'
 		);
@@ -69,10 +70,10 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 
 		$item             = new StdClass;
 		$item->name       = 'showonline';
-		$item->label      = JText::_('COM_KUNENA_USER_SHOWONLINE');
+		$item->label      = Text::_('COM_KUNENA_USER_SHOWONLINE');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->showOnline), 'kshowonline'
 		);
@@ -80,11 +81,11 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 
 		$item             = new StdClass;
 		$item->name       = 'cansubscribe';
-		$item->label      = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
+		$item->label      = Text::_('COM_KUNENA_USER_CANSUBSCRIBE');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', -1, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe'
 		);
@@ -92,19 +93,19 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 
 		$item             = new StdClass;
 		$item->name       = 'userlisttime';
-		$item->label      = JText::_('COM_KUNENA_USER_USERLISTTIME');
+		$item->label      = Text::_('COM_KUNENA_USER_USERLISTTIME');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', -2, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[]        = HTMLHelper::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
-		$options[]        = HTMLHelper::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
-		$options[]        = HTMLHelper::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
-		$options[]        = HTMLHelper::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+		$options[]        = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_LASTVISIT'));
+		$options[]        = HTMLHelper::_('select.option', 4, Text::_('COM_KUNENA_SHOW_4_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 8, Text::_('COM_KUNENA_SHOW_8_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 12, Text::_('COM_KUNENA_SHOW_12_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 24, Text::_('COM_KUNENA_SHOW_24_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 48, Text::_('COM_KUNENA_SHOW_48_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 168, Text::_('COM_KUNENA_SHOW_WEEK'));
+		$options[]        = HTMLHelper::_('select.option', 720, Text::_('COM_KUNENA_SHOW_MONTH'));
+		$options[]        = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->userListtime), 'kuserlisttime'
 		);
@@ -117,17 +118,17 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		{
 			$item             = new StdClass;
 			$item->name       = 'socialshare';
-			$item->label      = JText::_('COM_KUNENA_USER_SOCIALSHARE');
+			$item->label      = Text::_('COM_KUNENA_USER_SOCIALSHARE');
 			$options          = array();
-			$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-			$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+			$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+			$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 			$item->field      = HTMLHelper::_('select.genericlist', $options, 'socialshare', 'class="kinputbox form-control" size="1"', 'value',
 				'text', $this->escape($this->profile->socialshare), 'ksocialshare'
 			);
 			$this->settings[] = $item;
 		}
 
-		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
+		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
 	}
 
 	/**

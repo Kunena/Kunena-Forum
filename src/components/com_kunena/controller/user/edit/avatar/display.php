@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
@@ -78,7 +79,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		if (!($avatar instanceof KunenaAvatarKunena))
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
 
 		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';
@@ -90,7 +91,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 			: reset($this->galleries);
 		$this->galleryUri     = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/avatars/gallery';
 
-		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
+		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}
 
 	/**
@@ -167,7 +168,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		foreach ($this->galleries as $gallery => $files)
 		{
-			$text      = $gallery ? StringHelper::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
+			$text      = $gallery ? StringHelper::ucwords(str_replace('/', ' / ', $gallery)) : Text::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = HTMLHelper::_('select.option', $gallery, $text);
 		}
 

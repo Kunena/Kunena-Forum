@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserBanHistoryDisplay
@@ -69,7 +70,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 
 		$this->banHistory = KunenaUserBan::getUserHistory($this->profile->userid);
 
-		$this->headerText = JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
+		$this->headerText = Text::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
 	}
 
 	/**

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerCategorySubscriptionsDisplay
@@ -61,7 +62,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		if (!$me->exists())
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		$limit = $this->input->getInt('limit', 0);
@@ -117,7 +118,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		$this->pagination = new \Joomla\CMS\Pagination\Pagination($total, $limitstart, $limit);
 
-		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+		$this->headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}
 
 	/**
@@ -129,8 +130,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	public function getActions()
 	{
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		return $options;
 	}
@@ -183,7 +184,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+				$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_USER');
 				$this->setTitle($title);
 			}
 
@@ -194,7 +195,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = Text::_('COM_KUNENA_CATEGORIES');
 				$this->setKeywords($keywords);
 			}
 
@@ -205,7 +206,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 

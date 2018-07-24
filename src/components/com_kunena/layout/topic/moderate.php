@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutTopicModerate
@@ -36,14 +37,14 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		// Start with default options.
 		if (!$this->message)
 		{
-			$options[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_MODERATION_MOVE_TOPIC'));
+			$options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MODERATION_MOVE_TOPIC'));
 		}
 		else
 		{
-			$options[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_MODERATION_CREATE_TOPIC'));
+			$options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MODERATION_CREATE_TOPIC'));
 		}
 
-		$options[] = HTMLHelper::_('select.option', -1, JText::_('COM_KUNENA_MODERATION_ENTER_TOPIC'));
+		$options[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_MODERATION_ENTER_TOPIC'));
 
 		// Then list a few topics.
 		$db     = Factory::getDbo();

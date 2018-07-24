@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 require_once KPATH_ADMIN . '/models/categories.php';
 
@@ -433,31 +434,31 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			}
 		}
 
-		$actionDropdown[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 
 		if ($move)
 		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
 		}
 
 		if ($approve)
 		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'approve', Text::_('COM_KUNENA_APPROVE_SELECTED'));
 		}
 
 		if ($delete)
 		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE_SELECTED'));
 		}
 
 		if ($permdelete)
 		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 		}
 
 		if ($undelete)
 		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		if (count($actionDropdown) == 1)
@@ -495,8 +496,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	 */
 	public function getCategoryActions()
 	{
-		$actionDropdown[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		if (count($actionDropdown) == 1)
 		{

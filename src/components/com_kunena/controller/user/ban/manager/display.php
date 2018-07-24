@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserBanManagerDisplay
@@ -71,7 +72,7 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 			KunenaUserHelper::loadUsers(array_keys($this->userBans));
 		}
 
-		$this->headerText = JText::_('COM_KUNENA_BAN_BANMANAGER');
+		$this->headerText = Text::_('COM_KUNENA_BAN_BANMANAGER');
 	}
 
 	/**

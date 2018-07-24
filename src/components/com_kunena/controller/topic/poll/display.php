@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicPollDisplay
@@ -161,7 +162,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
 			}
 
 			if (!empty($params_keywords))
@@ -171,7 +172,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setKeywords(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setKeywords(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
 			}
 
 			if (!empty($params_description))
@@ -181,7 +182,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setDescription(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
 			}
 		}
 	}

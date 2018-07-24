@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicFormHistoryDisplay
@@ -71,7 +72,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = array();
 
-		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}
 
 	/**

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicListDisplay
@@ -106,7 +107,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}*/
 
 		$options            = array();
-		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -131,7 +132,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
@@ -167,7 +168,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 			if (!empty($params_title))
 			{
-				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setTitle($title);
 			}
 			else
@@ -189,12 +190,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 
@@ -224,14 +225,14 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$options                = array();
-		$options['none']        = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options['unsubscribe'] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
-		$options['unfavorite']  = HTMLHelper::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		$options['move']        = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		$options['approve']     = HTMLHelper::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete']      = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['permdelete']  = HTMLHelper::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete']    = HTMLHelper::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['none']        = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['unsubscribe'] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options['unfavorite']  = HTMLHelper::_('select.option', 'unfavorite', Text::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		$options['move']        = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['approve']     = HTMLHelper::_('select.option', 'approve', Text::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']      = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['permdelete']  = HTMLHelper::_('select.option', 'permdel', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete']    = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));
@@ -288,12 +289,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 
 		$options               = array();
-		$options['none']       = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options['approve']    = HTMLHelper::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		$options['delete']     = HTMLHelper::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		$options['move']       = HTMLHelper::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		$options['permdelete'] = HTMLHelper::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		$options['undelete']   = HTMLHelper::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$options['none']       = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['approve']    = HTMLHelper::_('select.option', 'approve_posts', Text::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete']     = HTMLHelper::_('select.option', 'delete_posts', Text::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['move']       = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['permdelete'] = HTMLHelper::_('select.option', 'permdel_posts', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete']   = HTMLHelper::_('select.option', 'restore_posts', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
 		$actions = array_combine($actions, array_fill(0, count($actions), false));

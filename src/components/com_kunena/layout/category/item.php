@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutCategoryItem
@@ -232,7 +233,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+			$title = Text::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		}
 
 		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

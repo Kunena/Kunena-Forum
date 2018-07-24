@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
@@ -230,24 +231,24 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		switch ($this->state->get('list.mode'))
 		{
 			case 'unapproved':
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
 				$actions          = array('approve', 'delete', 'move', 'permdelete');
 				break;
 			case 'deleted':
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
 				$actions          = array('undelete', 'delete', 'permdelete');
 				break;
 			case 'mythanks':
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
 				$actions          = array('approve', 'delete', 'permdelete');
 				break;
 			case 'thankyou':
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
 				$actions          = array('approve', 'delete', 'permdelete');
 				break;
 			case 'recent':
 			default:
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 
 				$app  = \Joomla\CMS\Factory::getApplication();
 				$view = $app->input->get('view');
@@ -266,7 +267,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 						$userName2 = "'s ";
 					}
 
-					$this->headerText = JText::sprintf(JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
+					$this->headerText = Text::sprintf(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
 				}
 
 				$actions = array('approve', 'delete', 'move', 'permdelete');
@@ -289,7 +290,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$total = $this->pagination->pagesTotal;
 		$user  = KunenaUserHelper::get($this->state->get('user'));
 
-		$headerText      = $this->headerText . ' ' . JText::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$doc             = Factory::getDocument();
 		$app             = Factory::getApplication();
 		$menu_item       = $app->getMenu()->getActive();
@@ -316,7 +317,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			}
 			else
 			{
-				$this->title = $this->headerText . ' ' . JText::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
+				$this->title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
 				$this->setTitle($this->title);
 			}
 
@@ -342,12 +343,12 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			}
 			elseif (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description') . ' ' . JText::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = $params->get('menu-meta_description') . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = $this->headerText . ' ' . JText::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 		}

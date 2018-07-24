@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutUserItem
@@ -72,7 +73,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			);
 
 			$tab           = new stdClass;
-			$tab->title    = JText::_('COM_KUNENA_USERPOSTS');
+			$tab->title    = Text::_('COM_KUNENA_USERPOSTS');
 			$tab->content  = $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
 			$tab->active   = true;
 			$tabs['posts'] = $tab;
@@ -81,7 +82,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		if ($showSubscriptions)
 		{
 			$tab          = new stdClass;
-			$tab->title   = JText::_('COM_KUNENA_SUBSCRIPTIONS');
+			$tab->title   = Text::_('COM_KUNENA_SUBSCRIPTIONS');
 			$tab->content = '';
 
 			if ($this->config->category_subscriptions != 'disabled')
@@ -141,7 +142,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			);
 
 			$tab               = new stdClass;
-			$tab->title        = JText::_('COM_KUNENA_FAVORITES');
+			$tab->title        = Text::_('COM_KUNENA_FAVORITES');
 			$tab->content      = $this->subRequest('Topic/List/User', new \Joomla\Input\Input($params), $params);
 			$tab->active       = false;
 			$tabs['favorites'] = $tab;
@@ -150,7 +151,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		if ($showThankYou)
 		{
 			$tab          = new stdClass;
-			$tab->title   = JText::_('COM_KUNENA_THANK_YOU');
+			$tab->title   = Text::_('COM_KUNENA_THANK_YOU');
 			$tab->content = '';
 
 			$params       = array(
@@ -203,7 +204,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order_Dir' => 'desc',
 			);
 			$tab                = new stdClass;
-			$tab->title         = JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
+			$tab->title         = Text::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
 			$tab->content       = $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
 			$tab->active        = false;
 			$tabs['unapproved'] = $tab;
@@ -216,7 +217,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'userid'   => $this->profile->userid,
 			);
 			$tab                 = new stdClass;
-			$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+			$tab->title          = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 			$tab->content        = $this->subRequest('User/Attachments', new \Joomla\Input\Input($params), $params);
 			$tab->active         = false;
 			$tabs['attachments'] = $tab;
@@ -225,7 +226,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		if ($showBanManager)
 		{
 			$tab                = new stdClass;
-			$tab->title         = JText::_('COM_KUNENA_BAN_BANMANAGER');
+			$tab->title         = Text::_('COM_KUNENA_BAN_BANMANAGER');
 			$tab->content       = $this->subRequest('User/Ban/Manager');
 			$tab->active        = false;
 			$tabs['banmanager'] = $tab;
@@ -234,7 +235,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		if ($showBanHistory)
 		{
 			$tab                = new stdClass;
-			$tab->title         = JText::_('COM_KUNENA_BAN_BANHISTORY');
+			$tab->title         = Text::_('COM_KUNENA_BAN_BANHISTORY');
 			$tab->content       = $this->subRequest('User/Ban/History');
 			$tab->active        = false;
 			$tabs['banhistory'] = $tab;
@@ -243,7 +244,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		if ($showBanManager)
 		{
 			$tab             = new stdClass;
-			$tab->title      = $banInfo->exists() ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW');
+			$tab->title      = $banInfo->exists() ? Text::_('COM_KUNENA_BAN_EDIT') : Text::_('COM_KUNENA_BAN_NEW');
 			$tab->content    = $this->subRequest('User/Ban/Form');
 			$tab->active     = false;
 			$tabs['banuser'] = $tab;

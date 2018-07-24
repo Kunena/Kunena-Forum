@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserItemDisplay
@@ -73,7 +74,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');
@@ -130,7 +131,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->headerText = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 	}
 
 	/**
@@ -147,15 +148,15 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		if ($this->profile->getGender() == 1)
 		{
-			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
+			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
 		}
 		elseif ($this->profile->getGender() == 2)
 		{
-			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
+			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
 		}
 		else
 		{
-			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
+			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
 		}
 
 		$app       = Factory::getApplication();
@@ -220,7 +221,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+				$title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 				$this->setTitle($title);
 			}
 
@@ -245,7 +246,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
+				$description = Text::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
 					$this->config->board_title, $this->profile->getName(), $this->config->board_title
 				);
 				$this->setDescription($description);

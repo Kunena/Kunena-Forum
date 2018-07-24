@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena User Controller
@@ -73,14 +74,14 @@ class KunenaControllerUser extends KunenaController
 		{
 			if (!KunenaFactory::getConfig()->userlist_allowed && Factory::getUser()->guest)
 			{
-				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
 		// Else the user does not exists.
 		if (!$this->me)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_USER_UNKNOWN'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
 		}
 
 		parent::display();
@@ -123,7 +124,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -165,13 +166,13 @@ class KunenaControllerUser extends KunenaController
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 
 		// Make sure that the user exists.
 		if (!$this->me->exists())
 		{
-			throw new KunenaExceptionAuthorise(JText::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		$errors = 0;
@@ -191,7 +192,7 @@ class KunenaControllerUser extends KunenaController
 		if (!$success)
 		{
 			$errors++;
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
 		}
 
 		// Save Kunena user.
@@ -215,17 +216,17 @@ class KunenaControllerUser extends KunenaController
 
 		if ($errors)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
 		if ($this->user->userid == $this->me->userid)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED'));
 			$edited_by_moderator = 0;
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'));
 			$edited_by_moderator = 1;
 		}
 
@@ -262,7 +263,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$user->exists() || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
 			return;
 		}
@@ -324,12 +325,12 @@ class KunenaControllerUser extends KunenaController
 			if ($ban->isEnabled())
 			{
 				$this->app->logout($user->userid);
-				$message = JText::_('COM_KUNENA_USER_BLOCKED_DONE');
+				$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
 				$log     = KunenaLog::LOG_USER_BLOCK;
 			}
 			else
 			{
-				$message = JText::_('COM_KUNENA_USER_UNBLOCKED_DONE');
+				$message = Text::_('COM_KUNENA_USER_UNBLOCKED_DONE');
 				$log     = KunenaLog::LOG_USER_UNBLOCK;
 			}
 		}
@@ -337,12 +338,12 @@ class KunenaControllerUser extends KunenaController
 		{
 			if ($ban->isEnabled())
 			{
-				$message = JText::_('COM_KUNENA_USER_BANNED_DONE');
+				$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
 				$log     = KunenaLog::LOG_USER_BAN;
 			}
 			else
 			{
-				$message = JText::_('COM_KUNENA_USER_UNBANNED_DONE');
+				$message = Text::_('COM_KUNENA_USER_UNBANNED_DONE');
 				$log     = KunenaLog::LOG_USER_UNBAN;
 			}
 		}
@@ -394,12 +395,12 @@ class KunenaControllerUser extends KunenaController
 			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
 			{
 				KunenaFile::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
-				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
+				$avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
 
 			$user->avatar = '';
 			$user->save();
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
 		}
 
 		if (!empty($DelProfileInfo))
@@ -439,13 +440,13 @@ class KunenaControllerUser extends KunenaController
 			$user->websiteurl       = '';
 			$user->signature        = '';
 			$user->save();
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
 		}
 		elseif (!empty($DelSignature))
 		{
 			$user->signature = '';
 			$user->save();
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
 		}
 
 		if (!empty($banDelPosts))
@@ -465,7 +466,7 @@ class KunenaControllerUser extends KunenaController
 				$mes->publish(KunenaForum::DELETED);
 			}
 
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
 		}
 
 		if (!empty($banDelPostsPerm))
@@ -485,7 +486,7 @@ class KunenaControllerUser extends KunenaController
 				$mes->delete();
 			}
 
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
 		}
 
 		$this->setRedirect($user->getUrl(false));
@@ -510,7 +511,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!Factory::getUser()->guest || !\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -550,7 +551,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -589,7 +590,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -610,7 +611,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($me->save())
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();
@@ -628,7 +629,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -649,7 +650,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($me->save())
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();
@@ -668,7 +669,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -683,7 +684,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -693,7 +694,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
 			$this->setRedirectBack();
 
 			return;
@@ -703,23 +704,23 @@ class KunenaControllerUser extends KunenaController
 		{
 			if ($this->me->userid == $target->userid)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'notice');
 				$karmaDelta = -10;
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_INCREASED'));
 			}
 		}
 		else
 		{
 			if ($this->me->userid == $target->userid)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'notice');
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_DECREASED'));
 			}
 		}
 
@@ -791,14 +792,14 @@ class KunenaControllerUser extends KunenaController
 			// Do a password safety check.
 			if ($post_password != $post_password2)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH'), 'notice');
 
 				return false;
 			}
 
 			if (strlen($post_password) < $params->get('minimum_length'))
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'notice');
 
 				return false;
 			}
@@ -831,7 +832,7 @@ class KunenaControllerUser extends KunenaController
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
 			{
-				$this->app->enqueueMessage(JText::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+				$this->app->enqueueMessage(Text::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
 			}
 
 			// We don't allow white space inside passwords
@@ -843,7 +844,7 @@ class KunenaControllerUser extends KunenaController
 			if (strlen($valueTrim) != $valueLength)
 			{
 				$this->app->enqueueMessage(
-					JText::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+					Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
 					'warning'
 				);
 
@@ -858,7 +859,7 @@ class KunenaControllerUser extends KunenaController
 				if ($nInts < $minimumIntegers)
 				{
 					$this->app->enqueueMessage(
-						JText::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+						Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
 						'warning'
 					);
 
@@ -874,7 +875,7 @@ class KunenaControllerUser extends KunenaController
 				if ($nsymbols < $minimumSymbols)
 				{
 					$this->app->enqueueMessage(
-						JText::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+						Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
 						'warning'
 					);
 
@@ -890,7 +891,7 @@ class KunenaControllerUser extends KunenaController
 				if ($nUppercase < $minimumUppercase)
 				{
 					$this->app->enqueueMessage(
-						JText::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+						Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
 						'warning'
 					);
 
@@ -904,7 +905,7 @@ class KunenaControllerUser extends KunenaController
 				if (strlen((string) $value) < $minimumLength)
 				{
 					$this->app->enqueueMessage(
-						JText::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+						Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
 						'warning'
 					);
 
@@ -1071,7 +1072,7 @@ class KunenaControllerUser extends KunenaController
 		// Only support JSON requests.
 		if ($this->input->getWord('format', 'html') != 'json')
 		{
-			throw new RuntimeException(JText::_('Bad Request'), 400);
+			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
 		$upload = KunenaUpload::getInstance();
@@ -1149,12 +1150,12 @@ class KunenaControllerUser extends KunenaController
 		// Only support JSON requests.
 		if ($this->input->getWord('format', 'html') != 'json')
 		{
-			throw new RuntimeException(JText::_('Bad Request'), 400);
+			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			throw new RuntimeException(JText::_('Forbidden'), 403);
+			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
 		$success = array();
@@ -1195,12 +1196,12 @@ class KunenaControllerUser extends KunenaController
 		// Only support JSON requests.
 		if ($this->input->getWord('format', 'html') != 'json')
 		{
-			throw new RuntimeException(JText::_('Bad Request'), 400);
+			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			throw new RuntimeException(JText::_('Forbidden'), 403);
+			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
 		$userid = $this->input->getInt('userid', 0);
@@ -1255,7 +1256,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -1296,21 +1297,21 @@ class KunenaControllerUser extends KunenaController
 
 			if ($number > 0)
 			{
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number));
 				$this->setRedirectBack();
 
 				return;
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'), 'error');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETE_FAILED'), 'error');
 				$this->setRedirectBack();
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
 		$this->setRedirectBack();
 	}
 
@@ -1351,7 +1352,7 @@ class KunenaControllerUser extends KunenaController
 		if ($response->code == '200')
 		{
 			// Report accepted. There is no need to display the reason
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
 
 			return true;
 		}
@@ -1362,7 +1363,7 @@ class KunenaControllerUser extends KunenaController
 			preg_match('/<p>.*<\/p>/', $response->body, $reasons);
 
 			// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
 
 			return false;
 		}

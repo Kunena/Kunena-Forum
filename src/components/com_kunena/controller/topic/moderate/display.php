@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicModerateDisplay
@@ -93,7 +94,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$this->category = $this->topic->getCategory();
@@ -102,8 +103,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			. "&catid={$this->category->id}&id={$this->topic->id}"
 			. ($this->message ? "&mesid={$this->message->id}" : '');
 		$this->title = !$this->message ?
-			JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
-			JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
+			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
+			Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
 		$this->template = KunenaTemplate::getInstance();
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);

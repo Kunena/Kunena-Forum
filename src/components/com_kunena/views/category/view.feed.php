@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Category View
@@ -29,7 +30,7 @@ class KunenaViewCategory extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 500);
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
 
 		KunenaHtmlParser::$relative = false;
@@ -43,7 +44,7 @@ class KunenaViewCategory extends KunenaView
 
 		$this->topics = $this->get('Topics');
 
-		$title = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
 		$this->setTitle($title);
 
 		$metaDesc = $this->document->getDescription() . '. ' . $this->escape("{$this->category->name} - {$this->config->board_title}");
@@ -88,7 +89,7 @@ class KunenaViewCategory extends KunenaView
 		if ($this->config->rss_author_in_title)
 		{
 			// We want author in item titles
-			$title .= ' - ' . JText::_('COM_KUNENA_BY') . ': ' . $username;
+			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
 		}
 
 		$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);

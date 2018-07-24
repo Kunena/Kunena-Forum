@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Topics View
@@ -49,7 +50,7 @@ class KunenaViewTopics extends KunenaView
 				$this->moreUri .= "&userid={$userid}";
 			}
 		}
-		
+
 		$this->_prepareDocument();
 
 		$this->render('Topic/List', $tpl);
@@ -233,7 +234,7 @@ class KunenaViewTopics extends KunenaView
 			case 'TOPIC_ICON':
 				return $this->topic->getIcon();
 			case 'TOPIC_NEW_COUNT':
-				return $this->topic->unread ? $this->getTopicLink($this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>') : '';
+				return $this->topic->unread ? $this->getTopicLink($this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>') : '';
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 

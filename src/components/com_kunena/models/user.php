@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * User Model for Kunena
@@ -70,7 +71,7 @@ class KunenaModelUser extends KunenaModel
 
 		$value = $this->app->input->get('search', null, 'string');
 
-		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH'))
+		if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH'))
 		{
 			$this->setState('list.search', rtrim($value));
 		}

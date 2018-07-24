@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Display offline message if Kunena hasn't been fully installed.
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
@@ -20,8 +21,8 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !Kunena
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 	Factory::getApplication()->sendHeaders('Status', '503 Service Temporarily Unavailable', true);
 	?>
-	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
-	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+	<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+	<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
 	<?php
 	return;
 }
@@ -40,13 +41,13 @@ if (!KunenaConfig::getInstance()->get('access_component', 1))
 	{
 		// Prevent access without using a menu item.
 		\Joomla\CMS\Log\Log::add("Kunena: Direct access denied: " . \Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query')), \Joomla\CMS\Log\Log::WARNING, 'kunena');
-		throw new Exception(JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 	elseif ($active->type != 'component' || $active->component != 'com_kunena')
 	{
 		// Prevent spoofed access by using random menu item.
 		\Joomla\CMS\Log\Log::add("Kunena: spoofed access denied: " . \Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query')), \Joomla\CMS\Log\Log::WARNING, 'kunena');
-		throw new Exception(JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 }
 
@@ -75,7 +76,7 @@ if ($ksession->userid > 0)
 	// Save session
 	if (!$ksession->save())
 	{
-		Factory::getApplication()->enqueueMessage(JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
+		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
 	}
 }
 

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerSearchFormDisplay
@@ -127,7 +128,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+				$this->setTitle(Text::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 			}
 
 			if (!empty($params_keywords))
@@ -137,7 +138,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH');
+				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_SEARCH_ADVSEARCH');
 				$this->setKeywords($keywords);
 			}
 
@@ -148,7 +149,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 

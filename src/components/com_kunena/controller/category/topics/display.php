@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -214,7 +215,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$page  = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;
 
-		$pagesText    = ($pages > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$pagesText    = ($pages > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$parentText   = $this->category->getParent()->name;
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
@@ -296,7 +297,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$title = JText::sprintf("{$categoryText}{$pagesText}");
+				$title = Text::sprintf("{$categoryText}{$pagesText}");
 				$this->setTitle($title);
 			}
 
@@ -307,7 +308,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+				$keywords = Text::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
 				$this->setKeywords($keywords);
 			}
 

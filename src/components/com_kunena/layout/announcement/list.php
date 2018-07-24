@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutAnnouncementList
@@ -35,11 +36,11 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 
 		if (KunenaUserHelper::getMyself()->isModerator())
 		{
-			$options[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-			$options[] = HTMLHelper::_('select.option', 'unpublish', JText::_('COM_KUNENA_UNPUBLISH'));
-			$options[] = HTMLHelper::_('select.option', 'publish', JText::_('COM_KUNENA_PUBLISH'));
-			$options[] = HTMLHelper::_('select.option', 'edit', JText::_('COM_KUNENA_EDIT'));
-			$options[] = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE'));
+			$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+			$options[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_UNPUBLISH'));
+			$options[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_PUBLISH'));
+			$options[] = HTMLHelper::_('select.option', 'edit', Text::_('COM_KUNENA_EDIT'));
+			$options[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE'));
 		}
 
 		return $options;

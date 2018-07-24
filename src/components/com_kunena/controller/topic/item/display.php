@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
@@ -102,7 +103,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		 }*/
 
 		$options            = array();
-		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -535,7 +536,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$pagdata = $this->pagination->getData();
 
@@ -600,7 +601,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 					$small = $headerText;
 				}
 
-				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
+				$this->setDescription($small . " - " . Text::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{

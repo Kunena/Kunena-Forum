@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerStatisticsGeneralDisplay
@@ -52,12 +53,12 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		if (!$this->config->statslink_allowed && Factory::getUser()->guest)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$statistics = KunenaForumStatistics::getInstance();
@@ -94,7 +95,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
+				$this->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS'));
 			}
 
 			if (!empty($params_keywords))
@@ -104,7 +105,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			}
 			else
 			{
-				$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_STAT_FORUMSTATS');
+				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_STAT_FORUMSTATS');
 				$this->setKeywords($keywords);
 			}
 
@@ -115,7 +116,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 		}

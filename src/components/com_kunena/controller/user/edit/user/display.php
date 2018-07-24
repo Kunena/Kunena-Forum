@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserEditUserDisplay
@@ -73,7 +74,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 			$this->frontendForm = $form->getFieldset('params');
 		}
 
-		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
+		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
 	}
 
 	/**

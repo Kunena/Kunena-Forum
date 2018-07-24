@@ -9,12 +9,13 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+use Joomla\CMS\Language\Text;
 
 
 $attachment = $this->attachment;
 ?>
 <div class="kmsgattach">
 	<h4>
-		<?php echo JText::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $attachment->getFilename()); ?>
+		<?php echo Text::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $attachment->getFilename()); ?>
 	</h4>
 </div>

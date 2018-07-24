@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Crypsis template.
@@ -226,8 +227,8 @@ EOF;
 		// Need special style for buttons in drop-down list
 		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
 
-		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
-		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 
 		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
 		{

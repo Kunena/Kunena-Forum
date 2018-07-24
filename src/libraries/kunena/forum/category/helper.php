@@ -568,7 +568,7 @@ abstract class KunenaForumCategoryHelper
 				{
 					if ($category->parent_id == $catid)
 					{
-						$category->name = JText::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
+						$category->name = Text::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
 					}
 
 					$list[$category->id] = $category;

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Statistics view for Kunena backend
@@ -56,7 +57,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
 		$document = Factory::getDocument();
-		$document->setTitle(JText::_('Forum Logs'));
+		$document->setTitle(Text::_('Forum Logs'));
 
 		$this->setToolbar();
 		$this->display();
@@ -106,8 +107,8 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -144,7 +145,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		{
 			if (strpos($key, 'LOG_') === 0)
 			{
-				$filterFields[] = HTMLHelper::_('select.option', $key, JText::_("COM_KUNENA_{$value}"));
+				$filterFields[] = HTMLHelper::_('select.option', $key, Text::_("COM_KUNENA_{$value}"));
 			}
 		}
 
@@ -154,7 +155,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	protected function setToolbar()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
 	}
 
 	/**

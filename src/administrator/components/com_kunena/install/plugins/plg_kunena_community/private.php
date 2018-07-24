@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaPrivateCommunity
@@ -54,7 +55,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	{
 		if (!$text)
 		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
+			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
 		return '<a href="' . CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';

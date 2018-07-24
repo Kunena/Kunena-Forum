@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * About view for Kunena config backend
@@ -47,7 +48,7 @@ class KunenaAdminViewConfig extends KunenaView
 		JToolbarHelper::apply();
 		JToolbarHelper::save('save');
 		JToolbarHelper::divider();
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
@@ -58,7 +59,7 @@ class KunenaAdminViewConfig extends KunenaView
 			HTMLHelper::_('bootstrap.modal', 'settingModal');
 		}
 
-		$title = JText::_('COM_KUNENA_RESET_CONFIG');
+		$title = Text::_('COM_KUNENA_RESET_CONFIG');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#settingModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 					$title</button>";

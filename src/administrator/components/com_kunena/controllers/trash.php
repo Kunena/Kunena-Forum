@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Kunena Trash Controller
  *
@@ -51,7 +53,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -93,7 +95,7 @@ class KunenaAdminControllerTrash extends KunenaController
 					{
 						KunenaForumTopicHelper::recount($ids);
 						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
-						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
 					}
 				}
 				elseif ($type == 'messages')
@@ -122,7 +124,7 @@ class KunenaAdminControllerTrash extends KunenaController
 					{
 						KunenaForumTopicHelper::recount($ids);
 						KunenaForumCategoryHelper::recount($topic->getCategory()->id);
-						$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
 					}
 				}
 			}
@@ -147,7 +149,7 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -169,7 +171,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -182,7 +184,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 		if (empty($cid))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -238,7 +240,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 		if ($nb_items > 0)
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items));
 		}
 
 		KunenaUserHelper::recount();

@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -28,7 +29,7 @@ defined('_JEXEC') or die();
 			<input type="hidden" name="boxchecked" value="0"/>
 
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></legend>
+				<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></legend>
 
 				<table class="table table-striped">
 					<thead>
@@ -38,7 +39,7 @@ defined('_JEXEC') or die();
 							<?php echo $this->escape($this->dir); ?>
 						</th>
 						<th>
-							<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CSS_FILE_PERMISSION'); ?>
+							<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CSS_FILE_PERMISSION'); ?>
 						</th>
 					</tr>
 					</thead>
@@ -56,7 +57,7 @@ defined('_JEXEC') or die();
 								<?php echo $this->escape($file); ?>
 							</td>
 							<td>
-								<?php echo is_writable($this->dir . '/' . $file) ? '<span style="color:green;"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</span>' : '<span style="color:red;"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</span>' ?>
+								<?php echo is_writable($this->dir . '/' . $file) ? '<span style="color:green;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</span>' : '<span style="color:red;"> ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</span>' ?>
 							</td>
 						</tr>
 					<?php endforeach; ?>

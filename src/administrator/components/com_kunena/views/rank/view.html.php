@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * About view for Kunena rank backend
  *
@@ -41,7 +43,7 @@ class KunenaAdminViewRank extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
 		JToolbarHelper::spacer();
 		JToolbarHelper::save('save');
 		JToolbarHelper::spacer();

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 
 $document = Factory::getDocument();
@@ -30,54 +31,54 @@ if (Factory::getLanguage()->isRTL())
 </div>
 <div id="j-main-container" class="col-md-10">
 
-	<div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></div>
+	<div class="kadmin-functitle icon-stats"><?php echo Text::_('COM_KUNENA_STATS_GEN_STATS'); ?></div>
 	<div class="kadmin-statscover">
 
 		<!-- BEGIN: STATS -->
 		<div class="kadmin-statscover">
 
 			<table class="kadmin-stat">
-				<caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
+				<caption><?php echo Text::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
 
 				<thead>
 				<tr>
-					<th><?php echo JText::_('COM_KUNENA_STATISTIC'); ?></th>
-					<th><?php echo JText::_('COM_KUNENA_VALUE'); ?></th>
-					<th><?php echo JText::_('COM_KUNENA_STATISTIC'); ?></th>
-					<th><?php echo JText::_('COM_KUNENA_VALUE'); ?></th>
+					<th><?php echo Text::_('COM_KUNENA_STATISTIC'); ?></th>
+					<th><?php echo Text::_('COM_KUNENA_VALUE'); ?></th>
+					<th><?php echo Text::_('COM_KUNENA_STATISTIC'); ?></th>
+					<th><?php echo Text::_('COM_KUNENA_VALUE'); ?></th>
 				</tr>
 				</thead>
 
 				<tbody>
 				<tr>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_MEMBERS'); ?> </td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_MEMBERS'); ?> </td>
 					<td><strong><?php echo $this->memberCount; ?></strong></td>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_SECTIONS'); ?> </td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_SECTIONS'); ?> </td>
 					<td><strong><?php echo $this->sectionCount; ?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_REPLIES'); ?></td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_REPLIES'); ?></td>
 					<td><strong><?php echo $this->messageCount; ?></strong></td>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_CATEGORIES'); ?> </td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_CATEGORIES'); ?> </td>
 					<td><strong><?php echo $this->categoryCount; ?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_TOPICS'); ?></td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_TOPICS'); ?></td>
 					<td><strong><?php echo $this->topicCount; ?></strong></td>
-					<td><?php echo JText::_('COM_KUNENA_STATS_LATEST_MEMBER'); ?> </td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_LATEST_MEMBER'); ?> </td>
 					<td><strong><?php echo KunenaFactory::getUser(intval($this->lastUserId))->getName(); ?></strong>
 					</td>
 				</tr>
 				<tr>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
 					<td><strong><?php echo $this->todayTopicCount; ?></strong></td>
-					<td><?php echo JText::_('COM_KUNENA_STATS_YESTERDAY_TOPICS'); ?> </td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_YESTERDAY_TOPICS'); ?> </td>
 					<td><strong><?php echo $this->yesterdayTopicCount; ?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_REPLIES'); ?></td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_TODAY_REPLIES'); ?></td>
 					<td><strong><?php echo $this->todayReplyCount; ?></strong></td>
-					<td><?php echo JText::_('COM_KUNENA_STATS_YESTERDAY_REPLIES'); ?></td>
+					<td><?php echo Text::_('COM_KUNENA_STATS_YESTERDAY_REPLIES'); ?></td>
 					<td><strong><?php echo $this->yesterdayReplyCount; ?></strong></td>
 				</tr>
 				</tbody>

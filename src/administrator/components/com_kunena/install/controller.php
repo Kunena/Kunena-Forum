@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * The Kunena Installer Controller
@@ -117,7 +118,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 			// Installation complete: reset and exit installer
 			$this->model->setAction(null);
 			$this->model->setStep(0);
-			echo json_encode(array('success' => true, 'status' => '100%', 'html' => JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE')));
+			echo json_encode(array('success' => true, 'status' => '100%', 'html' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE')));
 
 			return;
 		}
@@ -177,7 +178,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		}
 		else
 		{
-			echo json_encode(array('success' => true, 'status' => '100%', 'current' => JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log' => $log));
+			echo json_encode(array('success' => true, 'status' => '100%', 'current' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log' => $log));
 		}
 
 		Factory::getApplication()->close();
@@ -199,7 +200,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 		$this->model->setAction('uninstall');
 		$this->model->deleteTables('kunena_');
 		$app = Factory::getApplication();
-		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
+		$app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_REMOVED'));
 
 		if (class_exists('KunenaForum') && !KunenaForum::isDev())
 		{

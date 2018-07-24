@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 
 $document = Factory::getDocument();
@@ -66,16 +67,16 @@ HTMLHelper::_('behavior.multiselect');
 					<input type="hidden" name="boxchecked" value="1"/>
 					<fieldset>
 						<legend>
-							<i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
+							<i class="icon icon-support"></i> <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
 						</legend>
 						<table class="table table-bordered table-striped">
 							<tr>
 								<td>
-									<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
+									<p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
 									<p>
 										<a href="#" id="link_sel_all" name="link_sel_all" type="button"
 										   class="btn btn-small btn-primary"><i
-													class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>
 									</p>
 									<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
@@ -86,17 +87,17 @@ HTMLHelper::_('behavior.multiselect');
 					</fieldset>
 					<fieldset>
 						<legend>
-							<i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
+							<i class="icon icon-support"></i> <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
 						</legend>
 						<table class="table table-bordered table-striped">
 							<tr>
 								<td>
-									<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
+									<p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
 									<p>
 										<a href="#" id="link_sel_all_complete" name="link_sel_all_complete"
 										   type="button"
 										   class="btn btn-small btn-primary"><i
-													class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>
 									</p>
 									<textarea id="report_final_anonymous" class="input-block-level"

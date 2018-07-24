@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Kunena 1.6.0: Migrate polls data from K1.5
 /**
@@ -183,7 +184,7 @@ function kunena_160_2010_05_30_polls($parent)
 
 	if ($upgraded)
 	{
-		return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_160_POLLS'), 'success' => true);
+		return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_POLLS'), 'success' => true);
 	}
 
 	return null;

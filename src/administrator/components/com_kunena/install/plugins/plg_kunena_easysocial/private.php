@@ -11,6 +11,8 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\CMS\Language\Text;
+
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
 	protected $loaded = false;
@@ -61,7 +63,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	{
 		if (!$text)
 		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
+			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
 		$url = $this->getInboxURL();

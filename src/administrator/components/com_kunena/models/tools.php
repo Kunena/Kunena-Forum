@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.model');
 require_once __DIR__ . '/cpanel.php';
@@ -208,8 +209,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
-		$trashdelete [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
-		$trashdelete [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_DELETE_PERMANENTLY'));
+		$trashdelete [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_TRASH_USERMESSAGES'));
+		$trashdelete [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
 		return HTMLHelper::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
@@ -222,14 +223,14 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneControlOptions()
 	{
 		$contoloptions    = array();
-		$contoloptions [] = HTMLHelper::_('select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'normal', JText::_('COM_KUNENA_A_PRUNE_NORMAL'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'unanswered', JText::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'answered', JText::_('COM_KUNENA_A_PRUNE_ANSWERED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', JText::_('COM_KUNENA_A_PRUNE_DELETED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', JText::_('COM_KUNENA_A_PRUNE_SHADOW'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'all', Text::_('COM_KUNENA_A_PRUNE_ALL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'normal', Text::_('COM_KUNENA_A_PRUNE_NORMAL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'locked', Text::_('COM_KUNENA_A_PRUNE_LOCKED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unanswered', Text::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'answered', Text::_('COM_KUNENA_A_PRUNE_ANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unapproved', Text::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', Text::_('COM_KUNENA_A_PRUNE_DELETED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', Text::_('COM_KUNENA_A_PRUNE_SHADOW'));
 
 		return HTMLHelper::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
 	}
@@ -242,8 +243,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneKeepSticky()
 	{
 		$optionsticky    = array();
-		$optionsticky [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
-		$optionsticky [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
+		$optionsticky [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
+		$optionsticky [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
 		return HTMLHelper::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
 	}
@@ -540,13 +541,13 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 			if (!$data->creationdate)
 			{
-				$data->creationdate = JText::_('Unknown');
+				$data->creationdate = Text::_('Unknown');
 			}
 		}
 
 		if (!$data->author)
 		{
-			JText::_('Unknown');
+			Text::_('Unknown');
 		}
 
 		return $data;

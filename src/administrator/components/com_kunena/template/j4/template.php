@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAdminTemplate
@@ -67,16 +68,16 @@ class KunenaAdminTemplate4
 		// Special cases for "Start", "Prev", "Next", "End".
 		switch ($item->text)
 		{
-			case JText::_('JLIB_HTML_START') :
+			case Text::_('JLIB_HTML_START') :
 				$display = '<i class="icon-first"></i>';
 				break;
-			case JText::_('JPREV') :
+			case Text::_('JPREV') :
 				$display = '<i class="icon-previous"></i>';
 				break;
-			case JText::_('JNEXT') :
+			case Text::_('JNEXT') :
 				$display = '<i class="icon-next"></i>';
 				break;
-			case JText::_('JLIB_HTML_END') :
+			case Text::_('JLIB_HTML_END') :
 				$display = '<i class="icon-last"></i>';
 				break;
 			default:

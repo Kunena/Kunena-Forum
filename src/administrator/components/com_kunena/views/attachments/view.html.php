@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Attachments view for Kunena backend
@@ -57,7 +58,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	{
 		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
 
@@ -73,12 +74,12 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = HTMLHelper::_('select.option', 'filename', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'filetype', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'size', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'username', JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'));
-		$sortFields[] = HTMLHelper::_('select.option', 'post', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'filename', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'filetype', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'size', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_ATTACHMENTS_USERNAME'));
+		$sortFields[] = HTMLHelper::_('select.option', 'post', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}
@@ -92,8 +93,8 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

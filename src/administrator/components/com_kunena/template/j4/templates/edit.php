@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -37,14 +38,14 @@ HTMLHelper::_('behavior.tabstate');
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-							<h1 style="text-transform: capitalize;"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>
+							<h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE'); ?>
 								: <?php echo $this->escape($this->templatename); ?></h1>
 							<div class="tabbable-panel">
 								<div class="tabbable-line">
 									<ul class="nav nav-tabs ">
 										<li class="nav-item">
 											<a class="nav-link active" href="#tab_info" data-toggle="tab">
-												<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
+												<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 										</li>
 										<?php foreach ($this->form->getFieldsets() as $fieldset)
 										:
@@ -54,7 +55,7 @@ HTMLHelper::_('behavior.tabstate');
 	?>
 												<li class="nav-item">
 													<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
-													   data-toggle="tab"><?php echo JText::_($fieldset->name); ?></a>
+													   data-toggle="tab"><?php echo Text::_($fieldset->name); ?></a>
 												</li>
 											<?php endif; ?>
 										<?php endforeach; ?>
@@ -63,24 +64,24 @@ HTMLHelper::_('behavior.tabstate');
 										<div class="tab-pane active" id="tab_info">
 											<table class="table table-bordered table-striped">
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?>:
+													<td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?>:
 													</td>
-													<td><strong><?php echo JText::_($this->details->author); ?></strong>
+													<td><strong><?php echo Text::_($this->details->author); ?></strong>
 													</td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>
+													<td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?>
 														:
 													</td>
-													<td><?php echo JText::_($this->details->version); ?></td>
+													<td><?php echo Text::_($this->details->version); ?></td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?>:
+													<td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?>:
 													</td>
-													<td><?php echo JText::_($this->details->creationdate); ?></td>
+													<td><?php echo Text::_($this->details->creationdate); ?></td>
 												</tr>
 												<tr>
-													<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>
+													<td><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>
 														:
 													</td>
 													<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
@@ -94,7 +95,7 @@ HTMLHelper::_('behavior.tabstate');
 																		alt="<?php echo $this->escape($this->templatename); ?>"/>
 															</div>
 													<?php endif; ?>
-														<div><?php echo JText::_($this->details->description); ?></div>
+														<div><?php echo Text::_($this->details->description); ?></div>
 													</td>
 												</tr>
 											</table>

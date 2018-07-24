@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use \CBLib\Application\Application;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaPrivateComprofiler
@@ -59,11 +60,11 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
 		$url         = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
-			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
+			Text::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
 		if ($resultArray > 0)
 		{
-			$linkItem = '<span class="pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '" />';
+			$linkItem = '<span class="pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '" />';
 
 			foreach ($resultArray as $res)
 			{
@@ -99,12 +100,12 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		$url  = $_CB_framework->userProfileUrl($userid);
 		$html = '<a class="' . $class . '" href="' . $url . '" title="' .
-			JText::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
+			Text::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
 
 		if ($userid == $myid)
 		{
 			$this->pmCount = $this->getUnreadCount($myid);
-			$text          = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$text          = $this->pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
 			$url           = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
@@ -174,7 +175,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if (!$text)
 		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
+			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
 		$userid = $this->getCBUserid();

@@ -12,19 +12,20 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
-JText::script('COM_KUNENA_MODAL_CLOSE');
-JText::script('COM_KUNENA_AJAXMODAL_START_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_START_BODY');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
-JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
+Text::script('COM_KUNENA_MODAL_CLOSE');
+Text::script('COM_KUNENA_AJAXMODAL_START_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_START_BODY');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
+Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
 Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\components\com_kunena\template\j4\tools\recount.js');
 ?>
@@ -45,27 +46,27 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
-						<legend><?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_A_RECOUNT'); ?></legend>
 						<table class="table table-bordered table-striped">
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_TOPICS'); ?></td>
 								<td><input type="checkbox" checked="checked" name="topics" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_TOPICS_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERTOPICS'); ?></td>
 								<td><input type="checkbox" checked="checked" name="usertopics" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERTOPICS_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_CATEGORIES'); ?></td>
 								<td><input type="checkbox" checked="checked" name="categories" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_CATEGORIES_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERS'); ?></td>
 								<td><input type="checkbox" checked="checked" name="users" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERS_DESC'); ?></td>
 							</tr>
 						</table>
 					</fieldset>
@@ -95,6 +96,6 @@ Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\c
 	</div>
 	<div class="modal-footer">
 		<button class="btn recount-close" data-dismiss="modal"
-				aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
+				aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
 	</div>
 </div>

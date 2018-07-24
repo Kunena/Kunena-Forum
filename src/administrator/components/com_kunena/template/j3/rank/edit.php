@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 $iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
@@ -43,12 +44,12 @@ HTMLHelper::_('behavior.multiselect');
 			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_NEW_RANK') : JText::_('COM_KUNENA_RANKS_EDIT'); ?></legend>
+				<legend><?php echo !$this->state->get('item.id') ? Text::_('COM_KUNENA_NEW_RANK') : Text::_('COM_KUNENA_RANKS_EDIT'); ?></legend>
 				<table class="table table-bordered table-striped">
 
 					<tr>
 						<td width="20%">
-							<?php echo JText::_('COM_KUNENA_RANKS'); ?>
+							<?php echo Text::_('COM_KUNENA_RANKS'); ?>
 						</td>
 						<td width="80%">
 							<input class="post" type="text" name="rank_title"
@@ -57,7 +58,7 @@ HTMLHelper::_('behavior.multiselect');
 					</tr>
 					<tr>
 						<td>
-							<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
+							<?php echo Text::_('COM_KUNENA_RANKSIMAGE'); ?>
 						</td>
 						<td>
 							<?php echo $this->listranks; ?>
@@ -79,7 +80,7 @@ HTMLHelper::_('behavior.multiselect');
 					</tr>
 					<tr>
 						<td>
-							<?php echo JText::_('COM_KUNENA_RANKSMIN'); ?>
+							<?php echo Text::_('COM_KUNENA_RANKSMIN'); ?>
 						</td>
 						<td>
 							<input class="post" type="text" name="rank_min"
@@ -88,7 +89,7 @@ HTMLHelper::_('behavior.multiselect');
 					</tr>
 					<tr>
 						<td>
-							<?php echo JText::_('COM_KUNENA_RANKS_SPECIAL'); ?>
+							<?php echo Text::_('COM_KUNENA_RANKS_SPECIAL'); ?>
 						</td>
 						<td>
 							<input

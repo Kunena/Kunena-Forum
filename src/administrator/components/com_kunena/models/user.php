@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.model');
 
@@ -152,7 +153,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 		if ($this->me->isAdmin())
 		{
-			$categoryList[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+			$categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
 		$params  = array(
@@ -202,7 +203,7 @@ class KunenaAdminModelUser extends KunenaModel
 			return;
 		}
 
-		$yesnoRank [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED'));
+		$yesnoRank [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
 
 		foreach ($specialRanks as $ranks)
 		{

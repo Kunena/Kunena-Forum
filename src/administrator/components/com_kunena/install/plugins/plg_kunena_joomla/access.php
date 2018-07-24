@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Access Control for Joomla 2.5+
@@ -73,7 +74,7 @@ class KunenaAccessJoomla
 		if ($category->accesstype == 'joomla.group')
 		{
 			$groupname  = $this->getGroupName($category->accesstype, $category->pub_access);
-			$accessname = JText::sprintf($category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_($groupname) : JText::_('COM_KUNENA_NOBODY'));
+			$accessname = Text::sprintf($category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_($groupname) : Text::_('COM_KUNENA_NOBODY'));
 
 			$list["joomla.group.{$category->pub_access}"] = array('type'  => 'joomla.group', 'id' => $category->pub_access, 'alias' => $accessname,
 																  'title' => $accessname,);
@@ -82,7 +83,7 @@ class KunenaAccessJoomla
 
 			if ($groupname && $category->pub_access != $category->admin_access)
 			{
-				$accessname                                     = JText::sprintf($category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_($groupname));
+				$accessname                                     = Text::sprintf($category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_($groupname));
 				$list["joomla.group.{$category->admin_access}"] = array('type'  => 'joomla.group', 'id' => $category->admin_access, 'alias' => $accessname,
 																		'title' => $accessname,);
 			}
@@ -137,7 +138,7 @@ class KunenaAccessJoomla
 
 		if ($id !== null)
 		{
-			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : JText::_('COM_KUNENA_NOBODY');
+			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : Text::_('COM_KUNENA_NOBODY');
 		}
 
 		return $groups[$accesstype];
@@ -159,23 +160,23 @@ class KunenaAccessJoomla
 		if (!$accesstype || $accesstype == 'joomla.level')
 		{
 			$html ['joomla-level']['access'] = array(
-				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') . '<br /><br />' . JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
+				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') . '<br /><br />' . Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
 				'input' => HTMLHelper::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1),
 			);
 
 			if (!$category->isSection())
 			{
 				$html ['joomla-level']['post']  = array(
-					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
-					'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+					'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+					'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
 					'input' => HTMLHelper::_('access.usergroup', 'params-joomla-level[access_post][]',
 						$category->params->get('access_post', array(2, 6, 8)), 'multiple="multiple" class="inputbox" size="10"', false
 					),
 				);
 				$html ['joomla-level']['reply'] = array(
-					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
-					'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+					'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+					'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
 					'input' => HTMLHelper::_('access.usergroup', 'params-joomla-level[access_reply][]',
 						$category->params->get('access_reply', array(2, 6, 8)), 'multiple="multiple" class="inputbox" size="10"', false
 					),
@@ -186,48 +187,48 @@ class KunenaAccessJoomla
 		if (!$accesstype || $accesstype == 'joomla.group')
 		{
 			$yesno    = array();
-			$yesno [] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-			$yesno [] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+			$yesno [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+			$yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
 			$html ['joomla-group']['pub_access'] = array(
-				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
-					JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
-					JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
+				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
 				'input' => HTMLHelper::_('access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="10"', false),
 			);
 
 			$html ['joomla-group']['pub_recurse']  = array(
-				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
+				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
 				'input' => HTMLHelper::_('select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse),
 			);
 			$html ['joomla-group']['admin_access'] = array(
-				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
-					JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
-					JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
+				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
 				'input' => HTMLHelper::_('access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox" size="10"', false),
 			);
 
 			$html ['joomla-group']['admin_recurse'] = array(
-				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
+				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
 				'input' => HTMLHelper::_('select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse),
 			);
 
 			if (!$category->isSection())
 			{
 				$html ['joomla-group']['post']  = array(
-					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
-					'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+					'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+					'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
 					'input' => HTMLHelper::_('access.usergroup', 'params-joomla-group[access_post][]',
 						$category->params->get('access_post', array(2, 6, 8)), 'multiple="multiple" class="inputbox" size="10"', false
 					),
 				);
 				$html ['joomla-group']['reply'] = array(
-					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
-					'desc'  => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+					'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+					'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
 					'input' => HTMLHelper::_('access.usergroup', 'params-joomla-group[access_reply][]',
 						$category->params->get('access_reply', array(2, 6, 8)), 'multiple="multiple" class="inputbox" size="10"', false
 					),

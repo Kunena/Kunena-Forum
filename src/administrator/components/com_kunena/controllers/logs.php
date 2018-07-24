@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Backend Logs Controller
@@ -68,7 +69,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -100,12 +101,12 @@ class KunenaAdminControllerLogs extends KunenaController
 
 		if ($num_rows > 0)
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $num_rows));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $num_rows));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_LOG_ENTRIES_DELETED_NOTHING_TO_DELETE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_LOG_ENTRIES_DELETED_NOTHING_TO_DELETE'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}

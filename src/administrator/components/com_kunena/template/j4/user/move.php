@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -31,7 +32,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></legend>
+					<legend><?php echo Text::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></legend>
 					<table class="table table-striped">
 						<thead>
 						<tr>
@@ -43,7 +44,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 						<tbody>
 						<tr>
 							<td>
-								<?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?>
+								<?php echo Text::_('COM_KUNENA_CATEGORY_TARGET'); ?>
 							</td>
 							<td>
 								<?php
@@ -51,12 +52,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 								?>
 							</td>
 							<td>
-								<strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
+								<strong><?php echo Text::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
 								<ol>
 									<?php
 									foreach ($this->users as $user)
 									{
-										echo '<li>' . $this->escape($user->username) . ' (' . JText::_('COM_KUNENA_TRASH_AUTHOR_USERID') . ' ' . $this->escape($user->id) . ')</li> ';
+										echo '<li>' . $this->escape($user->username) . ' (' . Text::_('COM_KUNENA_TRASH_AUTHOR_USERID') . ' ' . $this->escape($user->id) . ')</li> ';
 									}
 									?>
 								</ol>

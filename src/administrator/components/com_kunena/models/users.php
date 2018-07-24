@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modellist');
 
@@ -144,7 +145,7 @@ class KunenaAdminModelUsers extends \Joomla\CMS\MVC\Model\ListModel
 
 		if ($this->me->isAdmin())
 		{
-			$options[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+			$options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
 		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action' => 'admin'), 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.model');
 
@@ -320,8 +321,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	public function getViewOptions()
 	{
 		$view_options   = array();
-		$view_options[] = HTMLHelper::_('select.option', 'topics', JText::_('COM_KUNENA_TRASH_TOPICS'));
-		$view_options[] = HTMLHelper::_('select.option', 'messages', JText::_('COM_KUNENA_TRASH_MESSAGES'));
+		$view_options[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
+		$view_options[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
 
 		return HTMLHelper::_('select.genericlist', $view_options, 'layout',
 			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')

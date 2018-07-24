@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Update menu items
 /**
@@ -36,7 +37,7 @@ function kunena_200_2012_04_13_menu($parent)
 
 	if (!empty($legacy))
 	{
-		return array('action' => '', 'name' => JText::sprintf('COM_KUNENA_INSTALL_200_MENU', count($legacy)), 'success' => !$errors);
+		return array('action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_200_MENU', count($legacy)), 'success' => !$errors);
 	}
 
 	return null;

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /** @var KunenaAdminViewLogs $this */
 
@@ -32,7 +33,7 @@ HTMLHelper::_('bootstrap.popover');
 		<div class="well well-small">
 			<div class="module-title nav-header">
 				<i class="icon-grid-2"></i>
-				<?php echo JText::_('Icons') ?>
+				<?php echo Text::_('Icons') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">

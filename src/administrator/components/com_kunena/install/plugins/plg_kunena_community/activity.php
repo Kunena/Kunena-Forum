@@ -12,6 +12,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 jimport('joomla.utilities.string');
 
 /**
@@ -56,8 +58,8 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
 		$act->target  = 0;
-		$act->title   = JText::_(
-			'{actor} ' . JText::sprintf(
+		$act->title   = Text::_(
+			'{actor} ' . Text::sprintf(
 				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
 				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
 			)
@@ -105,7 +107,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . JText::_('COM_KUNENA_READMORE') . '</a>';
+		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . Text::_('COM_KUNENA_READMORE') . '</a>';
 
 		return $content;
 	}
@@ -187,7 +189,7 @@ class KunenaActivityCommunity extends KunenaActivity
 			$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 			// Finally, send notifications
-			CNotificationLibrary::add('kunena_reply', $actor->id, $target->id, JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE_ACT'), JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params);
+			CNotificationLibrary::add('kunena_reply', $actor->id, $target->id, Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE_ACT'), Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params);
 		}
 
 		// Activity stream
@@ -196,7 +198,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
 		$act->target  = 0; // No target
-		$act->title   = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>'));
+		$act->title   = Text::_('{single}{actor}{/single}{multiple}{actors}{/multiple} ' . Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>'));
 		$act->content = $this->buildContent($message);
 		$act->app     = 'kunena.thread.reply';
 		$act->cid     = $message->thread;
@@ -252,13 +254,13 @@ class KunenaActivityCommunity extends KunenaActivity
 		$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 		// Finally, send notifications
-		CNotificationLibrary::add('kunena_thankyou', $actor->id, $target->id, JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'), JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'), '', $params);
+		CNotificationLibrary::add('kunena_thankyou', $actor->id, $target->id, Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'), Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'), '', $params);
 
 		$act          = new stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $actor->id;
 		$act->target  = $target->id;
-		$act->title   = JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL', $params->get('actor_url'), $params->get('actor'), $params->get('recipientUrl'), $params->get('recipientName'), $params->get('url'), $params->get('title'));
+		$act->title   = Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL', $params->get('actor_url'), $params->get('actor'), $params->get('recipientUrl'), $params->get('recipientName'), $params->get('url'), $params->get('title'));
 		$act->content = null;
 		$act->app     = 'kunena.message.thankyou';
 		$act->cid     = $target->id;

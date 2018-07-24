@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Logs view for Kunena backend
@@ -57,7 +58,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
 		$document = Factory::getDocument();
-		$document->setTitle(JText::_('Forum Logs'));
+		$document->setTitle(Text::_('Forum Logs'));
 
 		$this->setToolbar();
 		$this->display();
@@ -70,12 +71,12 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function getFilterUserFields()
 	{
 		$filterFields   = array();
-		$filterFields[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
-		$filterFields[] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
-		$filterFields[] = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
-		$filterFields[] = HTMLHelper::_('select.option', 3, JText::_('COM_KUNENA_LOG_MODERATORS_FILTER_USERTYPE_LABEL'));
-		$filterFields[] = HTMLHelper::_('select.option', 4, JText::_('COM_KUNENA_LOG_ADMINISTRATORS_FILTER_USERTYPE_LABEL'));
-		$filterFields[] = HTMLHelper::_('select.option', 5, JText::_('COM_KUNENA_LOG_MOD_AND_ADMIN_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 3, Text::_('COM_KUNENA_LOG_MODERATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 4, Text::_('COM_KUNENA_LOG_ADMINISTRATORS_FILTER_USERTYPE_LABEL'));
+		$filterFields[] = HTMLHelper::_('select.option', 5, Text::_('COM_KUNENA_LOG_MOD_AND_ADMIN_FILTER_USERTYPE_LABEL'));
 
 		return $filterFields;
 	}
@@ -88,13 +89,13 @@ class KunenaAdminViewLogs extends KunenaView
 	{
 		$sortFields = array();
 
-		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'type', JText::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'user', JText::_('COM_KUNENA_LOG_USER_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'category', JText::_('COM_KUNENA_LOG_CATEGORY_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'topic', JText::_('COM_KUNENA_LOG_TOPIC_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'target_user', JText::_('COM_KUNENA_LOG_TARGET_USER_SORT_FIELD_LABEL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'time', JText::_('COM_KUNENA_LOG_TIME_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'type', Text::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'user', Text::_('COM_KUNENA_LOG_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'category', Text::_('COM_KUNENA_LOG_CATEGORY_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_LOG_TOPIC_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'target_user', Text::_('COM_KUNENA_LOG_TARGET_USER_SORT_FIELD_LABEL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'time', Text::_('COM_KUNENA_LOG_TIME_SORT_FIELD_LABEL'));
 
 		return $sortFields;
 	}
@@ -106,8 +107,8 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -144,7 +145,7 @@ class KunenaAdminViewLogs extends KunenaView
 		{
 			if (strpos($key, 'LOG_') === 0)
 			{
-				$filterFields[] = HTMLHelper::_('select.option', $key, JText::_("COM_KUNENA_{$value}"));
+				$filterFields[] = HTMLHelper::_('select.option', $key, Text::_("COM_KUNENA_{$value}"));
 			}
 		}
 
@@ -161,7 +162,7 @@ class KunenaAdminViewLogs extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES');
@@ -182,7 +183,7 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function setToolbarClean()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_LOG_MANAGER'), 'users');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);

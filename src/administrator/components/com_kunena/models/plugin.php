@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modeladmin');
 
@@ -340,7 +341,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 
 		if (!is_file($formFile))
 		{
-			throw new Exception(JText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element . '.xml'));
+			throw new Exception(Text::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element . '.xml'));
 		}
 
 		// Load the core and/or local language file(s).
@@ -354,14 +355,14 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 			// Get the plugin form.
 			if (!$form->loadFile($formFile, false, '//config'))
 			{
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(Text::_('JERROR_LOADFILE_FAILED'));
 			}
 		}
 
 		// Attempt to load the xml file.
 		if (!$xml = simplexml_load_file($formFile))
 		{
-			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+			throw new Exception(Text::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		// Get the help data from the XML file if present.

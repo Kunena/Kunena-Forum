@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 HTMLHelper::_('behavior.tooltip');
@@ -47,16 +48,16 @@ HTMLHelper::_('behavior.tabstate');
 		<div class="well well-small">
 			<div class="module-title nav-header">
 				<i class="icon-thumbs-up"></i>
-				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
+				<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<div class="tabbable-panel">
 				<div class="tabbable-line">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></a></li>
+							<a href="#tab1" data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_EMOTICONS'); ?></a></li>
 						<li><a href="#tab2"
-						       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
+						       data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></a>
 						</li>
 					</ul>
 					<div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -75,21 +76,21 @@ HTMLHelper::_('behavior.tabstate');
 								<div id="filter-bar" class="btn-toolbar">
 									<div class="filter-search btn-group pull-left">
 										<label for="filter_search"
-										       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+										       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 										<input type="text" name="filter_search" id="filter_search" class="filter"
-										       placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
+										       placeholder="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
 										       value="<?php echo $this->escape($this->state->get('list.search')); ?>"
-										       title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>"/>
+										       title="<?php echo Text::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>"/>
 									</div>
 									<div class="btn-group pull-left">
 										<button class="btn tip" type="submit"
-										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
-											<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
+										        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
+											<i class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 										</button>
 										<button class="btn tip" type="button"
-										        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+										        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 										        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
-											<i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
+											<i class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 										</button>
 									</div>
 									<div class="btn-group pull-right hidden-phone">
@@ -97,19 +98,19 @@ HTMLHelper::_('behavior.tabstate');
 									</div>
 									<div class="btn-group pull-right hidden-phone">
 										<label for="directionTable"
-										       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+										       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 										<select name="directionTable" id="directionTable" class="input-medium"
 										        onchange="Joomla.orderTable()">
-											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
+											<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 											<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 										</select>
 									</div>
 									<div class="btn-group pull-right">
 										<label for="sortTable"
-										       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+										       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 										<select name="sortTable" id="sortTable" class="input-medium"
 										        onchange="Joomla.orderTable()">
-											<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
+											<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 											<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 										</select>
 									</div>
@@ -123,7 +124,7 @@ HTMLHelper::_('behavior.tabstate');
 											       onclick="Joomla.checkAll(this)"/>
 										</th>
 										<th width="5%"
-										    class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
+										    class="center"><?php echo Text::_('COM_KUNENA_EMOTICON'); ?></th>
 										<th width="8%"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
 										<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering); ?></th>
 										<th width="1%" class="nowrap center hidden-phone">
@@ -137,22 +138,22 @@ HTMLHelper::_('behavior.tabstate');
 										</td>
 										<td class="nowrap center">
 											<label for="filter_code"
-											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+											       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 											<input class="input-block-level input-filter filter" type="text"
 											       name="filter_code" id="filter_code"
-											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterCode; ?>"
-											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+											       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 										</td>
 										<td class="nowrap center">
 											<label for="filter_location"
-											       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+											       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 											<input class="input-block-level input-filter filter" type="text"
 											       name="filter_location"
 											       id="filter_location"
-											       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 											       value="<?php echo $this->filterLocation; ?>"
-											       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+											       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 										</td>
 										<td class="hidden-phone center">
 										</td>
@@ -205,18 +206,18 @@ HTMLHelper::_('behavior.tabstate');
 										<tr>
 											<td colspan="10">
 												<div class="well center filter-state">
-														<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+														<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
 															<?php
 															if ($this->filterActive)
 																:
 																?>
 																<button class="btn" type="button"
-																        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+																        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 															<?php else
 																:
 																?>
 																<button class="btn btn-success" type="button"
-																        onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_SMILIE'); ?></button>
+																        onclick="Joomla.submitbutton('add');"><?php echo Text::_('COM_KUNENA_NEW_SMILIE'); ?></button>
 															<?php endif; ?>
 														</span>
 												</div>
@@ -239,7 +240,7 @@ HTMLHelper::_('behavior.tabstate');
 
 								<input type="file" id="file-upload" class="btn" name="Filedata"/>
 								<input type="submit" id="file-upload-submit" class="btn btn-primary"
-								       value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>"/>
+								       value="<?php echo Text::_('COM_KUNENA_A_START_UPLOAD'); ?>"/>
 							</form>
 						</div>
 					</div>

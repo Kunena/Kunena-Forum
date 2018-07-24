@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
 
 ?>
 
@@ -22,10 +23,10 @@ defined('_JEXEC') or die();
 		</div>
 		<div id="j-main-container" class="col-md-10" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
+				<div class="kadmin-functitle icon-config"><?php echo Text::_('Subscriptions'); ?></div>
 				<table class="adminform">
 					<tr>
-						<th><?php echo JText::_('Active Category Subscriptions'); ?></th>
+						<th><?php echo Text::_('Active Category Subscriptions'); ?></th>
 					</tr>
 					<?php
 					foreach ($this->cat_subscribers_users as $user)
@@ -38,7 +39,7 @@ defined('_JEXEC') or die();
 						</tr>
 					<?php endforeach ?>
 					<tr>
-						<th><?php echo JText::_('Active Topic Subscriptions'); ?></th>
+						<th><?php echo Text::_('Active Topic Subscriptions'); ?></th>
 					</tr>
 					<?php
 					foreach ($this->topic_subscribers_users as $user)
@@ -51,7 +52,7 @@ defined('_JEXEC') or die();
 						</tr>
 					<?php endforeach ?>
 					<tr>
-						<th><?php echo JText::_('E-mails sent to'); ?></th>
+						<th><?php echo Text::_('E-mails sent to'); ?></th>
 					</tr>
 					<?php
 					foreach ($this->cat_topic_subscribers as $sub)

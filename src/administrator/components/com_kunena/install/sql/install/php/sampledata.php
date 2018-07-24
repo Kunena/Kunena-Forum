@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // This file contains initial sample data for the forum
 
@@ -28,7 +29,7 @@ class KText
 	 */
 	public static function _($string)
 	{
-		return str_replace('\n', "\n", html_entity_decode(JText::_($string), ENT_COMPAT, 'UTF-8'));
+		return str_replace('\n', "\n", html_entity_decode(Text::_($string), ENT_COMPAT, 'UTF-8'));
 	}
 }
 

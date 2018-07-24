@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -31,21 +32,21 @@ use Joomla\CMS\HTML\HTMLHelper;
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
-						<legend><?php echo JText::_('COM_KUNENA_LEGEND_CLEANUP_IP'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_LEGEND_CLEANUP_IP'); ?></legend>
 						<table class="table table-bordered table-striped">
 							<tr>
-								<td width="20%"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
+								<td width="20%"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
 								<td>
 									<div class="input-append">
 										<input class="col-md-3" type="text" name="cleanup_ip_days" value="30"/>
-										<span class="add-on"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
+										<span class="add-on"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<td width="20%"><?php echo JText::_('COM_KUNENA_DELETE_USERS_IP') ?></td>
+								<td width="20%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP') ?></td>
 								<td width="10%"><input type="checkbox" name="deleteipusers" value="1"/></td>
-								<td width="79%"><?php echo JText::_('COM_KUNENA_DELETE_USERS_IP_DESC'); ?></td>
+								<td width="79%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP_DESC'); ?></td>
 							</tr>
 						</table>
 					</fieldset>

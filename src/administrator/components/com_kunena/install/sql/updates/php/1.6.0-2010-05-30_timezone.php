@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
 /**
@@ -77,7 +78,7 @@ function kunena_160_2010_05_30_timezone($parent)
 		}
 
 		unset($config->board_ofset);
-		$result = array('action' => '', 'name' => JText::sprintf('COM_KUNENA_INSTALL_160_TIMEZONE', sprintf('%+d:%02d', $timeshift / 3600, ($timeshift / 60) % 60)), 'success' => true);
+		$result = array('action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_160_TIMEZONE', sprintf('%+d:%02d', $timeshift / 3600, ($timeshift / 60) % 60)), 'success' => true);
 	}
 
 	// Save configuration

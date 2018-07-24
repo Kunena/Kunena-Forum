@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 HTMLHelper::_('behavior.tooltip');
@@ -37,8 +38,8 @@ $count = count($this->purgeitems);
 				<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ITEMS_BEING_DELETED'); ?></legend>
-					<div class="alert"><?php echo JText::sprintf('COM_KUNENA_WARNING_PERM_DELETE_ITEMS', $count); ?></div>
+					<legend><?php echo Text::_('COM_KUNENA_ITEMS_BEING_DELETED'); ?></legend>
+					<div class="alert"><?php echo Text::sprintf('COM_KUNENA_WARNING_PERM_DELETE_ITEMS', $count); ?></div>
 					<?php
 					if ($count)
 						:

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -49,7 +49,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 		<div class="well well-small">
 			<div class="module-title nav-header">
 				<i class="icon-list-view"></i>
-				<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
+				<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>"
@@ -65,50 +65,50 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="filter-search btn-group pull-left">
 						<label for="filter_search"
-						       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+						       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 						<input type="text" name="filter_search" id="filter_search" class="filter"
-						       placeholder="<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
+						       placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
 						       value="<?php echo $this->filterSearch; ?>"
-						       title="<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
+						       title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
 					</div>
 					<div class="btn-group pull-left">
 						<button class="btn tip" type="submit"
-						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
-									class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
+						        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
+									class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 						</button>
 						<button class="btn tip" type="button"
-						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+						        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 						        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
-									class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
+									class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 						</button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit"
-						       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable"
-						       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 						<select name="directionTable" id="directionTable" class="input-medium"
 						        onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
+							<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 							<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
 						<label for="sortTable"
-						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
+							<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 							<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 						</select>
 					</div>
 					<!-- TODO: not implemented
 						<div class="btn-group pull-right">
-							<label for="sortTable" class="element-invisible"><?php // Echo JText::_('JGLOBAL_SORT_BY');?></label>
+							<label for="sortTable" class="element-invisible"><?php // Echo Text::_('JGLOBAL_SORT_BY');?></label>
 							<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-								<option value=""><?php // Echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
+								<option value=""><?php // Echo Text::_('JOPTION_SELECT_MAX_LEVELS');?></option>
 								<?php // echo HTMLHelper::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
 							</select>
 						</div>-->
@@ -123,14 +123,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						</th>
 						<th width="1%" class="hidden-phone">
 							<input type="checkbox" name="checkall-toggle" value=""
-							       title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>"
+							       title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
 							       onclick="Joomla.checkAll(this)"/>
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="1%" class="nowrap">
-							<?php echo JText::_('COM_KUNENA_GO'); ?>
+							<?php echo Text::_('COM_KUNENA_GO'); ?>
 						</th>
 						<th width="51%" class="nowrap">
 							<?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
@@ -161,10 +161,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						</td>
 						<td class="nowrap center">
 							<label for="filter_published"
-							       class="element-invisible"><?php echo JText::_('All'); ?></label>
+							       class="element-invisible"><?php echo Text::_('All'); ?></label>
 							<select name="filter_published" id="filter_published" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 							</select>
 						</td>
@@ -172,55 +172,55 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						</td>
 						<td class="nowrap">
 							<label for="filter_title"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_title"
 							       id="filter_title"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+							       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 							       value="<?php echo $this->filterTitle; ?>"
-							       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+							       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 						</td>
 						<td class="nowrap center hidden-phone">
 							<label for="filter_access"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 							<select name="filter_access" id="filter_access" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
 							<label for="filter_locked"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 							<select name="filter_locked" id="filter_locked" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
 							<label for="filter_review"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 							<select name="filter_review" id="filter_review" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
 							<label for="filter_allow_polls"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 							<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
 							<label for="filter_anonymous"
-							       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 							<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter"
 							        onchange="Joomla.orderTable()">
-								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+								<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
 							</select>
 						</td>
@@ -292,7 +292,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 
 										if (!$this->saveOrder)
 											:
-											$disabledLabel    = JText::_('JORDERINGDISABLED');
+											$disabledLabel    = Text::_('JORDERINGDISABLED');
 											$disableClassName = 'inactive tip-top';
 										endif; ?>
 										<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>"
@@ -345,13 +345,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php echo $this->escape($item->name); ?>
 									</a>
 									<small>
-										<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
+										<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
 									</small>
 								</td>
 								<td class="center hidden-phone">
 									<span><?php echo $item->accessname; ?></span>
 									<small>
-										<?php echo JText::sprintf('(Access: %s)', $this->escape($item->accesstype)); ?>
+										<?php echo Text::sprintf('(Access: %s)', $this->escape($item->accesstype)); ?>
 									</small>
 								</td>
 								<td class="center hidden-phone">
@@ -365,7 +365,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									:
 									?>
 									<td class="center hidden-phone" colspan="3">
-										<?php echo JText::_('COM_KUNENA_SECTION'); ?>
+										<?php echo Text::_('COM_KUNENA_SECTION'); ?>
 									</td>
 								<?php else
 
@@ -406,18 +406,18 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
-										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+										<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
 											<?php
 											if ($this->filterActive)
 												:
 												?>
 												<button class="btn" type="button"
-												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 											<?php else
 												:
 												?>
 												<button class="btn btn-success" type="button"
-												        onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_CATEGORY'); ?></button>
+												        onclick="Joomla.submitbutton('add');"><?php echo Text::_('COM_KUNENA_NEW_CATEGORY'); ?></button>
 											<?php endif; ?>
 										</span>
 								</div>

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.model');
 jimport('joomla.html.pagination');
@@ -68,26 +69,26 @@ class KunenaAdminModelCategories extends KunenaModel
 		}
 
 		$catList    = array();
-		$catList [] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
+		$catList [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_TOPLEVEL'));
 
 		// Make a standard yes/no list
 		$published    = array();
-		$published [] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_PUBLISHED'));
-		$published [] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_UNPUBLISHED'));
+		$published [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));
+		$published [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_UNPUBLISHED'));
 
 		// Make a standard yes/no list
 		$yesno    = array();
-		$yesno [] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$yesno [] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$yesno [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
 		// Anonymous posts default
 		$post_anonymous    = array();
-		$post_anonymous [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
-		$post_anonymous [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
+		$post_anonymous [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
+		$post_anonymous [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
 
 		$cat_params                = array();
 		$cat_params['ordering']    = 'ordering';
-		$cat_params['toplevel']    = JText::_('COM_KUNENA_TOPLEVEL');
+		$cat_params['toplevel']    = Text::_('COM_KUNENA_TOPLEVEL');
 		$cat_params['sections']    = 1;
 		$cat_params['unpublished'] = 1;
 		$cat_params['catid']       = $category->id;
@@ -97,8 +98,8 @@ class KunenaAdminModelCategories extends KunenaModel
 		$channels_params['catid']  = $category->id;
 		$channels_params['action'] = 'admin';
 		$channels_options          = array();
-		$channels_options []       = HTMLHelper::_('select.option', 'THIS', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
-		$channels_options []       = HTMLHelper::_('select.option', 'CHILDREN', JText::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
+		$channels_options []       = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
+		$channels_options []       = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
 
 		if (empty($category->channels))
 		{
@@ -106,9 +107,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		}
 
 		$topic_ordering_options   = array();
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'lastpost', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'creation', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'alpha', JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
+		$topic_ordering_options[] = HTMLHelper::_('select.option', 'lastpost', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
+		$topic_ordering_options[] = HTMLHelper::_('select.option', 'creation', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
+		$topic_ordering_options[] = HTMLHelper::_('select.option', 'alpha', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
 
 		$aliases = array_keys($category->getAliases());
 
@@ -128,10 +129,10 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['allow_ratings']   = HTMLHelper::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox" size="1"', 'value', 'text', $category->allow_ratings);
 
 		$options                 = array();
-		$options[0]              = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
-		$options[1]              = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
-		$options[2]              = HTMLHelper::_('select.option', '2', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
-		$options[3]              = HTMLHelper::_('select.option', '3', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SUBCATEGORY'));
+		$options[0]              = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
+		$options[1]              = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
+		$options[2]              = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
+		$options[3]              = HTMLHelper::_('select.option', '3', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SUBCATEGORY'));
 		$lists['display_parent'] = HTMLHelper::_('select.genericlist', $options, 'params[display][index][parent]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.parent', '3'));
 
 		unset($options[1]);
@@ -330,7 +331,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	{
 		$categories         = $this->getAdminCategories();
 		$batch_categories   = array();
-		$batch_categories[] = HTMLHelper::_('select.option', 'select', JText::_('JSELECT'));
+		$batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 
 		foreach ($categories as $category)
 		{
@@ -445,7 +446,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		if (!empty($orphans))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_CATEGORY_ORPHAN_DESC'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_ORPHAN_DESC'), 'notice');
 		}
 
 		return $this->_admincategories;

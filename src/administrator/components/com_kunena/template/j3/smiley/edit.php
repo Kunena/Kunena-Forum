@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 $iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
@@ -43,11 +44,11 @@ HTMLHelper::_('behavior.multiselect');
 			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY') : JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></legend>
+				<legend><?php echo !$this->state->get('item.id') ? Text::_('COM_KUNENA_EMOTICONS_NEW_SMILEY') : Text::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td width="20%">
-							<?php echo JText::_('COM_KUNENA_EMOTICONS_CODE'); ?>
+							<?php echo Text::_('COM_KUNENA_EMOTICONS_CODE'); ?>
 						</td>
 						<td width="80%">
 							<input class="span2" type="text" name="smiley_code"
@@ -60,7 +61,7 @@ HTMLHelper::_('behavior.multiselect');
 					</tr>
 					<tr>
 						<td>
-							<?php echo JText::_('COM_KUNENA_EMOTICONS_URL'); ?>
+							<?php echo Text::_('COM_KUNENA_EMOTICONS_URL'); ?>
 						</td>
 						<td>
 							<?php echo $this->listsmileys; ?>
@@ -68,7 +69,7 @@ HTMLHelper::_('behavior.multiselect');
 					</tr>
 					<tr>
 						<td>
-							<?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICONBAR'); ?>
+							<?php echo Text::_('COM_KUNENA_EMOTICONS_EMOTICONBAR'); ?>
 						</td>
 						<td>
 							<input type="checkbox" name="smiley_emoticonbar" value="1"

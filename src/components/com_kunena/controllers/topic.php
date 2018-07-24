@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Kunena Topic Controller
@@ -1121,6 +1122,19 @@ class KunenaControllerTopic extends KunenaController
 			}
 
 			$countlink = count($matches[0]);
+
+			// Ignore internal links
+			foreach ($matches[1] as $link)
+			{
+				$uri = Uri::getInstance($link);
+				$host = $uri->getHost();
+
+				// The cms will catch most of these well
+				if (empty($host) || Uri::isInternal($link))
+				{
+					$countlink--;
+				}
+			}
 
 			if (!$topic->isAuthorised('approve') && $countlink >= $this->config->max_links + 1)
 			{

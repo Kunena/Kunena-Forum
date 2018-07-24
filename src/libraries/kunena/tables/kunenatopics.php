@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -243,7 +245,7 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$category->exists())
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
 		}
 		else
 		{
@@ -254,7 +256,7 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$this->subject)
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
 		}
 
 		return $this->getError() == '';

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumTopicPoll
@@ -330,7 +331,7 @@ class KunenaForumTopicPoll extends JObject
 	{
 		if (!$this->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
+			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
 
 			return false;
 		}
@@ -339,7 +340,7 @@ class KunenaForumTopicPoll extends JObject
 
 		if (!isset($options[$option]))
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
+			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
 
 			return false;
 		}
@@ -348,7 +349,7 @@ class KunenaForumTopicPoll extends JObject
 
 		if (!$user->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
+			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
 
 			return false;
 		}
@@ -414,7 +415,7 @@ class KunenaForumTopicPoll extends JObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
+				$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
 
 				return false;
 			}
@@ -435,7 +436,7 @@ class KunenaForumTopicPoll extends JObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+				$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
 
 				return false;
 			}
@@ -552,7 +553,7 @@ class KunenaForumTopicPoll extends JObject
 		{
 			KunenaError::displayDatabaseError($e);
 
-			$this->setError(JText::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
+			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
 
 			return false;
 		}
@@ -675,7 +676,7 @@ class KunenaForumTopicPoll extends JObject
 
 		if ($isnew && empty($this->newOptions))
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
+			$this->setError(Text::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
 
 			return false;
 		}

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumMessageThankyou
@@ -87,22 +88,22 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new Exception(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
 		}
 
 		if ($user->userid == $message->userid)
 		{
-			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
+			throw new Exception(Text::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
 		}
 
 		if ($this->exists($user->userid))
 		{
-			throw new Exception(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
+			throw new Exception(Text::_('COM_KUNENA_THANKYOU_ALLREADY'));
 		}
 
 		if ($user->isBanned())
 		{
-			throw new Exception(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+			throw new Exception(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 		}
 
 		$db    = Factory::getDBO();
@@ -194,12 +195,12 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			throw new Exception(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new Exception(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
 		}
 
 		if (!$this->exists($user->userid))
 		{
-			throw new Exception(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+			throw new Exception(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 		}
 
 		$db    = Factory::getDBO();

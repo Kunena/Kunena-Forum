@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -76,14 +78,14 @@ class TableKunenaUserCategories extends KunenaTable
 
 		if (!$user->exists())
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_USER_INVALID', (int) $user->userid));
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
 		$category = KunenaForumCategoryHelper::get($this->category_id);
 
 		if ($this->category_id && !$category->exists())
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_CATEGORY_INVALID', (int) $category->id));
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_CATEGORY_INVALID', (int) $category->id));
 		}
 
 		return $this->getError() == '';

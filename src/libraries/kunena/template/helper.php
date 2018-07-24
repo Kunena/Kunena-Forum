@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Kunena Template Helper Class
  *
@@ -166,17 +168,17 @@ abstract class KunenaTemplateHelper
 
 		if (!$data->version)
 		{
-			$data->version = JText::_('Unknown');
+			$data->version = Text::_('Unknown');
 		}
 
 		if (!$data->creationdate)
 		{
-			$data->creationdate = JText::_('Unknown');
+			$data->creationdate = Text::_('Unknown');
 		}
 
 		if (!$data->author)
 		{
-			$data->author = JText::_('Unknown');
+			$data->author = Text::_('Unknown');
 		}
 
 		return $data;

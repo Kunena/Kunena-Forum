@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumStatistics
@@ -392,9 +393,9 @@ class KunenaForumStatistics
 				return array();
 			}
 
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
-			$top->titleName  = JText::_('COM_KUNENA_GEN_SUBJECT');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_POSTS');
+			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
+			$top->titleName  = Text::_('COM_KUNENA_GEN_SUBJECT');
+			$top->titleCount = Text::_('COM_KUNENA_USRL_POSTS');
 
 			foreach ($this->topTopics as &$item)
 			{
@@ -448,9 +449,9 @@ class KunenaForumStatistics
 				return array();
 			}
 
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_POLLS');
-			$top->titleName  = JText::_('COM_KUNENA_POLL_STATS_NAME');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_VOTES');
+			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_POLLS');
+			$top->titleName  = Text::_('COM_KUNENA_POLL_STATS_NAME');
+			$top->titleCount = Text::_('COM_KUNENA_USRL_VOTES');
 			$top->count      = $polls[$top->id]->count;
 
 			foreach ($this->topPolls as &$item)
@@ -524,9 +525,9 @@ class KunenaForumStatistics
 				return array();
 			}
 
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
-			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_POSTS');
+			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
+			$top->titleName  = Text::_('COM_KUNENA_USERNAME');
+			$top->titleCount = Text::_('COM_KUNENA_USRL_POSTS');
 
 			foreach ($this->topPosters as &$item)
 			{
@@ -561,9 +562,9 @@ class KunenaForumStatistics
 				return array();
 			}
 
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
-			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
-			$top->titleCount = JText::_('COM_KUNENA_USRL_HITS');
+			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
+			$top->titleName  = Text::_('COM_KUNENA_USERNAME');
+			$top->titleCount = Text::_('COM_KUNENA_USRL_HITS');
 
 			foreach ($this->topProfiles as &$item)
 			{
@@ -621,9 +622,9 @@ class KunenaForumStatistics
 				return array();
 			}
 
-			$top->title      = JText::_('COM_KUNENA_LIB_STAT_TOP_THANKS');
-			$top->titleName  = JText::_('COM_KUNENA_USERNAME');
-			$top->titleCount = JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED');
+			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_THANKS');
+			$top->titleName  = Text::_('COM_KUNENA_USERNAME');
+			$top->titleCount = Text::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED');
 
 			foreach ($this->topThanks as &$item)
 			{

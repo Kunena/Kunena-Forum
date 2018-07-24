@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
@@ -1120,7 +1121,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 
 		// Translate plain text "Quote:"
-		$this->default_tag_rules['quote']['plain_start'] = "\n" . JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE') . "\n";
+		$this->default_tag_rules['quote']['plain_start'] = "\n" . Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE') . "\n";
 	}
 
 	/**
@@ -1439,11 +1440,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// Display only spoiler text in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
-			return '[' . ($default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
+			return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
 		}
 
 		$document = Factory::getDocument();
-		$title    = $default ? $default : JText::_('COM_KUNENA_BBCODE_SPOILER');
+		$title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
 		$hidden   = ($document instanceof \Joomla\CMS\Document\HtmlDocument);
 
 		$layout = KunenaLayout::factory('BBCode/Spoiler');
@@ -1504,7 +1505,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 		else
 		{
-			return '<br />' . JText::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
+			return '<br />' . Text::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
 		}
 	}
 
@@ -1571,7 +1572,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		}
 		else
 		{
-			return '<div class="kmsgtext-confidentialguests">' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
+			return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
 		}
 	}
 
@@ -1621,7 +1622,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (empty($content))
 		{
-			echo '<div class="alert alert-error">' . JText::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
+			echo '<div class="alert alert-error">' . Text::_('COM_KUNENA_LIB_BBCODE_MAP_ERROR_CITY_MISSING') . '</div>';
 
 			return false;
 		}
@@ -1706,13 +1707,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (empty($config->ebay_api_key))
 		{
-			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+			echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
 
 			return false;
 		}
 		elseif (!is_numeric($ItemID))
 		{
-			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+			echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
 
 			return false;
 		}
@@ -1817,11 +1818,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid))
 		{
-			$html = JText::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED');
+			$html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED');
 		}
 		elseif (!empty($denied) && !$params->get('show_noauth'))
 		{
-			$html = JText::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS');
+			$html = Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS');
 		}
 		else
 		{
@@ -1864,7 +1865,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 						if (!empty($article->fulltext))
 						{
-							$link = '<a href="' . $url . '"class="readon">' . JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE') . '</a>';
+							$link = '<a href="' . $url . '"class="readon">' . Text::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE') . '</a>';
 						}
 						else
 						{
@@ -1895,7 +1896,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			if (!empty($denied))
 			{
-				$link = '<span class="readon">' . JText::_('COM_CONTENT_REGISTER_TO_READ_MORE') . '</span>';
+				$link = '<span class="readon">' . Text::_('COM_CONTENT_REGISTER_TO_READ_MORE') . '</span>';
 			}
 		}
 
@@ -1925,7 +1926,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if ($user)
 		{
-			$wrote = $user . " " . JText::_('COM_KUNENA_POST_WROTE') . ': ';
+			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
 		$html = '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
@@ -2436,7 +2437,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 				if (!$hide)
 				{
-					return "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_('COM_KUNENA_FILESIZE') . ' ' . number_format(intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
+					return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
 				}
 			}
 		}
@@ -2573,7 +2574,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			// Hide between content from non registered users
 			return (string) $layout
-				->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))
+				->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))
 				->setLayout('unauthorised');
 		}
 
@@ -2584,13 +2585,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			// File does not exist (or URL was pointing somewhere else).
 			$layout
-				->set('title', JText::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode($filename)))
+				->set('title', Text::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode($filename)))
 				->setLayout('deleted');
 		}
 		else
 		{
 			$layout
-				->set('title', JText::_('COM_KUNENA_FILEATTACH'))
+				->set('title', Text::_('COM_KUNENA_FILEATTACH'))
 				->set('url', $fileurl)
 				->set('size', filesize($filepath));
 		}
@@ -2653,7 +2654,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$config = KunenaFactory::getConfig();
 		$layout = KunenaLayout::factory('BBCode/Image')
-			->set('title', JText::_('COM_KUNENA_FILEATTACH'))
+			->set('title', Text::_('COM_KUNENA_FILEATTACH'))
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
@@ -2663,7 +2664,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
-			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+			return (string) $layout->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
 		}
 
 		// Obey image security settings.
@@ -2757,7 +2758,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
-			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
+			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
 		return $this->renderTweet($tweetid);
@@ -2858,7 +2859,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			else
 			{
 				$tweet        = new stdClass;
-				$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+				$tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
 
 				return $tweet;
 			}
@@ -2866,7 +2867,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		elseif (empty($consumer_key) || empty($consumer_secret))
 		{
 			$tweet        = new stdClass;
-			$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
+			$tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
 
 			return $tweet;
 		}
@@ -3000,7 +3001,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			else
 			{
 				$tweet        = new stdClass;
-				$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+				$tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
 
 				return $tweet;
 			}

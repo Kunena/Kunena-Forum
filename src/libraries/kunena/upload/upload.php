@@ -10,6 +10,7 @@
  **/
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -133,7 +134,7 @@ class KunenaUpload
 			// Create target directory if it does not exist.
 			if (!KunenaFolder::exists($folder) && !KunenaFolder::create($folder))
 			{
-				throw new RuntimeException(JText::_('Failed to create upload directory.'), 500);
+				throw new RuntimeException(Text::_('Failed to create upload directory.'), 500);
 			}
 
 			// Calculate temporary filename.
@@ -141,7 +142,7 @@ class KunenaUpload
 
 			if ($options['chunkEnd'] > $options['size'] || $options['chunkStart'] > $options['chunkEnd'])
 			{
-				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK'), 400);
+				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK'), 400);
 			}
 
 			if (strpos($contentType, 'multipart') !== false)
@@ -164,7 +165,7 @@ class KunenaUpload
 
 			if (!$in)
 			{
-				throw new RuntimeException(JText::_('Failed to open upload input stream.'), 500);
+				throw new RuntimeException(Text::_('Failed to open upload input stream.'), 500);
 			}
 
 			// Open temporary file.
@@ -172,7 +173,7 @@ class KunenaUpload
 
 			if (!$out)
 			{
-				throw new RuntimeException(JText::_('Failed to open upload output stream.'), 500);
+				throw new RuntimeException(Text::_('Failed to open upload output stream.'), 500);
 			}
 
 			// Get current size for the file.
@@ -180,14 +181,14 @@ class KunenaUpload
 
 			if (!$stat)
 			{
-				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
+				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
 			}
 
 			$size = $stat['size'];
 
 			if ($options['chunkStart'] > $size)
 			{
-				throw new RuntimeException(JText::sprintf('Missing data chunk at location %d.', $size), 500);
+				throw new RuntimeException(Text::sprintf('Missing data chunk at location %d.', $size), 500);
 			}
 
 			fseek($out, $options['chunkStart']);
@@ -202,14 +203,14 @@ class KunenaUpload
 
 				if ($buff === false)
 				{
-					throw new RuntimeException(JText::_('Failed to read from upload input stream.'), 500);
+					throw new RuntimeException(Text::_('Failed to read from upload input stream.'), 500);
 				}
 
 				$bytes = fwrite($out, $buff);
 
 				if ($bytes === false)
 				{
-					throw new RuntimeException(JText::_('Failed to write into upload output stream.'), 500);
+					throw new RuntimeException(Text::_('Failed to write into upload output stream.'), 500);
 				}
 
 				$size += $bytes;
@@ -218,7 +219,7 @@ class KunenaUpload
 				{
 					if (!$this->checkFileSizeAvatar($size))
 					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+						throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
 				else
@@ -227,7 +228,7 @@ class KunenaUpload
 					{
 						if (!$this->checkFileSizeFileAttachment($size))
 						{
-							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
 					}
 
@@ -235,7 +236,7 @@ class KunenaUpload
 					{
 						if (!$this->checkFileSizeImageAttachment($size))
 						{
-							throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
 					}
 				}
@@ -354,7 +355,7 @@ class KunenaUpload
 
 		if (!$filename)
 		{
-			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
+			throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
 		}
 
 		// Check if file extension matches any allowed extensions (case insensitive)
@@ -378,7 +379,7 @@ class KunenaUpload
 		}
 
 		throw new RuntimeException(
-			JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+			Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
 			400
 		);
 	}
@@ -402,36 +403,36 @@ class KunenaUpload
 
 			case UPLOAD_ERR_INI_SIZE :
 			case UPLOAD_ERR_FORM_SIZE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
 				break;
 
 			case UPLOAD_ERR_PARTIAL :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
 				break;
 
 			case UPLOAD_ERR_NO_FILE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
 				break;
 
 			case UPLOAD_ERR_NO_TMP_DIR :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
 				break;
 
 			case UPLOAD_ERR_CANT_WRITE :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
 				break;
 
 			case UPLOAD_ERR_EXTENSION :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
 				break;
 
 			default :
-				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
+				$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
 		}
 
 		if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])))
 		{
-			$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
+			$exception = new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
 		}
 
 		return $exception;
@@ -653,7 +654,7 @@ class KunenaUpload
 		{
 			if (!$this->checkFileSizeAvatar($file->size))
 			{
-				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}
 
 			$avatartypes = array();
@@ -662,7 +663,7 @@ class KunenaUpload
 
 			if (!in_array($file->ext, $a, true))
 			{
-				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
+				throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
 			}
 		}
 
@@ -677,7 +678,7 @@ class KunenaUpload
 		}
 		elseif ($file->error != 0)
 		{
-			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 500);
+			throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 500);
 		}
 
 		// Check if file extension matches any allowed extensions (case insensitive)
@@ -694,7 +695,7 @@ class KunenaUpload
 				if (!$name)
 				{
 					throw new RuntimeException(
-						JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+						Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
 						400
 					);
 				}
@@ -715,7 +716,7 @@ class KunenaUpload
 			{
 				if (!$this->checkFileSizeImageAttachment($file->size))
 				{
-					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+					throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 				}
 			}
 
@@ -723,7 +724,7 @@ class KunenaUpload
 			{
 				if (!$this->checkFileSizeFileAttachment($file->size))
 				{
-					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+					throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 				}
 			}
 		}
@@ -732,7 +733,7 @@ class KunenaUpload
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{
-			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
+			throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
 		}
 
 		unlink($file->tmp_name);
@@ -760,10 +761,10 @@ class KunenaUpload
 		// Format string
 		$format = ($format === null) ? '%01.2f %s' : (string) $format;
 
-		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
-			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
-			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
-			JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB')
+		$units = array(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
+			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
+			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
+			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB')
 		);
 		$mod   = 1024;
 

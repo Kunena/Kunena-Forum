@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.form.formfield');
 
@@ -92,7 +93,7 @@ class JFormFieldKunenaCategoryList extends \Joomla\CMS\Form\FormField
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = HTMLHelper::_('select.option', (string) $option['value'], JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled'] == 'true'));
+			$tmp = HTMLHelper::_('select.option', (string) $option['value'], Text::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled'] == 'true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAvatar
@@ -125,7 +126,7 @@ class KunenaAvatar
 			$class = ' class="' . $class . '"';
 		}
 
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 
 		return $link;
 	}

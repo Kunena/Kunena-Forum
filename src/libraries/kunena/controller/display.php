@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaControllerDisplay
@@ -324,17 +325,17 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Obey Joomla configuration.
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
 				if ($this->config->board_title == $this->app->get('sitename'))
 				{
-					$title = JText::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
 				}
 				else
 				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 				}
 			}
 			else

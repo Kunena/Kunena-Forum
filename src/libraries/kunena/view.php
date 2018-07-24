@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena View Class
@@ -168,7 +169,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			{
 				// Forum is offline
 				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
-				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
+				$this->common->header = Text::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body   = $this->config->offline_message;
 				$this->common->html   = true;
 				$this->common->display('default');
@@ -180,8 +181,8 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			{
 				// Forum is for registered users only
 				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
-				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
-				$this->common->body   = JText::_('COM_KUNENA_LOGIN_FORUM');
+				$this->common->header = Text::_('COM_KUNENA_LOGIN_NOTIFICATION');
+				$this->common->body   = Text::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
@@ -190,7 +191,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			elseif (!method_exists($this, $layoutFunction) && !is_file(KPATH_SITE . "/views/{$view}/{$layout}.php"))
 			{
 				// Layout was not found (don't allow Joomla to raise an error)
-				$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
+				$this->displayError(array(Text::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
@@ -234,7 +235,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 		}
 
-		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
+		$title = Text::_('COM_KUNENA_ACCESS_DENIED');
 		$app   = Factory::getApplication();
 
 		switch ((int) $code)
@@ -302,17 +303,17 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
 				if ($this->config->board_title == $this->app->get('sitename'))
 				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
 				}
 				else
 				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 				}
 			}
 			else
@@ -517,7 +518,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 
 		if (!is_file($file))
 		{
-			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
+			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
 		}
 
 		ob_start();
@@ -621,7 +622,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
+			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
 		}
 	}
 
@@ -652,7 +653,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+			$title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
 		}
 
 		return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
@@ -686,23 +687,23 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+				$title = Text::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						$title = Text::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'last':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						$title = Text::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'unread':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						$title = Text::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					default:
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+						$title = Text::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 				}
 			}
 		}

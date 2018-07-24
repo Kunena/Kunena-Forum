@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -63,7 +65,7 @@ class TableKunenaKeywords extends KunenaTable
 
 		if (!$this->name)
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_KEYWORDS_ERROR_EMPTY'));
+			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_KEYWORDS_ERROR_EMPTY'));
 		}
 
 		return $this->getError() == '';

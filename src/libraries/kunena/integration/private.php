@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaPrivate
@@ -181,14 +182,14 @@ class KunenaPrivate
 		if ($userid == $my->id)
 		{
 			$pmCount = $this->getUnreadCount($my->id);
-			$text    = $pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
 			$url     = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
 		}
 
 		// We should offer the user a PM link
-		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . ' ' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
+		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . ' ' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
 	}
 
 	/**

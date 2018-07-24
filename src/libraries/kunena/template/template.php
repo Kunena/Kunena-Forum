@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.html.parameter');
 
@@ -378,7 +379,7 @@ class KunenaTemplate extends JObject
 
 				if (is_dir(KPATH_SITE . "/template/{$templatename}"))
 				{
-					KunenaError::warning(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename));
+					KunenaError::warning(Text::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename));
 				}
 			}
 
@@ -537,8 +538,8 @@ class KunenaTemplate extends JObject
 		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
 		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',);
 
-		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
-		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 
 		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
 		{
@@ -660,7 +661,7 @@ HTML;
 	public function getPaginationListFooter($list)
 	{
 		$html = '<div class="list-footer">';
-		$html .= '<div class="limit">' . JText::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM') . ' ' . $list['limitfield'] . '</div>';
+		$html .= '<div class="limit">' . Text::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM') . ' ' . $list['limitfield'] . '</div>';
 		$html .= $list['pageslinks'];
 		$html .= '<div class="counter">' . $list['pagescounter'] . '</div>';
 		$html .= '<input type="hidden" name="' . $list['prefix'] . 'limitstart" value="' . $list['limitstart'] . '" />';
@@ -678,7 +679,7 @@ HTML;
 	public function getPaginationListRender($list)
 	{
 		$html = '<ul class="kpagination">';
-		$html .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$html .= '<li class="page">' . Text::_('COM_KUNENA_PAGE') . '</li>';
 		$last = 0;
 
 		foreach ($list['pages'] as $i => $page)

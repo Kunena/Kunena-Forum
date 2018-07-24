@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -260,7 +262,7 @@ class TableKunenaUserBans extends \Joomla\CMS\Table\Table
 
 			if (!$user->exists())
 			{
-				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
+				$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
 			}
 		}
 

@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+use Joomla\CMS\Language\Text;
+
 ?>
 <ul class="thumbnails">
 	<?php foreach ($this->attachments as $attachment)
@@ -26,7 +28,7 @@ defined('_JEXEC') or die();
 				<?php echo '(' . number_format(intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>
 			</span>
 				<a href="#" class="btn pull-right">
-					<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>
+					<?php echo Text::_('COM_KUNENA_EDITOR_INSERT'); ?>
 				</a>
 			</div>
 		</li>

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $config = $this->config;
 
@@ -22,7 +23,7 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 ?>
 <h1>
-	<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
+	<?php echo Text::_('COM_KUNENA_MEMBERS'); ?>
 </h1>
 
 <h2 class="pull-right">
@@ -55,13 +56,13 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlist_online & $config->user_status) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
-					<?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?>
+					<?php echo Text::_('COM_KUNENA_USRL_ONLINE'); ?>
 				</th>
 			<?php endif; ?>
 
 			<?php if ($config->userlist_avatar) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs">
-					<?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?>
+					<?php echo Text::_('COM_KUNENA_USRL_AVATAR'); ?>
 				</th>
 			<?php endif; ?>
 

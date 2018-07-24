@@ -10,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $author            = $this->message->getAuthor();
 $config            = KunenaConfig::getInstance();
@@ -18,16 +19,16 @@ $this->messageLink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme'
 
 if (empty($this->message->modified_time))
 {
-	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+	$msg1 = Text::_('COM_KUNENA_POST_EMAIL_MOD1');
 }
 else
 {
-	$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD3');
+	$msg1 = Text::_('COM_KUNENA_POST_EMAIL_MOD3');
 }
 
-$msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
+$msg2 = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
 $more = ($this->once ?
-	JText::_(
+	Text::_(
 		$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 			'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 
@@ -165,16 +166,16 @@ if (!$config->plain_email) :
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
 							<div>
-								<p><?php echo JText::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
-								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
+								<p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
+								<p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
+								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
 								<p>URL :
 									<a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
 								</p>
 							</div>
 
-							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
+							<?php if ($config->mailfull == 1) : echo Text::_('COM_KUNENA_MESSAGE'); ?>:
 								<div>
 									<p><?php echo $this->message->displayField('message'); ?></p>
 								</div>
@@ -200,7 +201,7 @@ if (!$config->plain_email) :
 										    bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
 										                         href="<?php echo $this->messageLink; ?>">
-												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
+												<?php echo Text::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
 									</tr>
@@ -218,7 +219,7 @@ if (!$config->plain_email) :
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
 			padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
-							<?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
+							<?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
 							<?php echo $msg2; ?>
 						</td>
 					</tr>
@@ -236,7 +237,7 @@ if (!$config->plain_email) :
 
 	if ($config->mailfull)
 	{
-		$full = JText::_('COM_KUNENA_MESSAGE') . ': ';
+		$full = Text::_('COM_KUNENA_MESSAGE') . ': ';
 		$full .= "\n";
 		$full .= $this->message->displayField('message', false);
 	}

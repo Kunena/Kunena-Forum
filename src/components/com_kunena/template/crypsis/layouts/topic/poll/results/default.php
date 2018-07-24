@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $this->addScript('assets/js/poll.js');
 ?>
 
@@ -18,7 +18,7 @@ $this->addScript('assets/js/poll.js');
 	?>
 	<div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
 	<h2>
-		<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 <?php endif; ?>
 
@@ -47,7 +47,7 @@ $this->addScript('assets/js/poll.js');
 					}
 					else
 					{
-						echo JText::_('COM_KUNENA_POLL_NO_VOTE');
+						echo Text::_('COM_KUNENA_POLL_NO_VOTE');
 					}
 					?>
 				</td>
@@ -61,7 +61,7 @@ $this->addScript('assets/js/poll.js');
 		<tr>
 			<td colspan="4">
 				<?php
-				echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
+				echo Text::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
 
 				if (!empty($this->users_voted_list))
 					:
@@ -70,7 +70,7 @@ $this->addScript('assets/js/poll.js');
 					if ($this->usercount > '5')
 						:
 						?>
-						<a href="#" id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
+						<a href="#" id="kpoll-moreusers"><?php echo Text::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 						<div style="display: none;" id="kpoll-moreusers-div">
 							<?php echo implode(', ', $this->users_voted_morelist); ?>
 						</div>
@@ -84,7 +84,7 @@ $this->addScript('assets/js/poll.js');
 		?>
 		<tr>
 			<td colspan="4">
-				<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
+				<?php echo Text::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 
 				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply'))
 					:
@@ -92,7 +92,7 @@ $this->addScript('assets/js/poll.js');
 
 					<a class="btn"
 					   href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>">
-						<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGE_VOTE'); ?>
+						<?php echo Text::_('COM_KUNENA_POLL_BUTTON_CHANGE_VOTE'); ?>
 					</a>
 				<?php endif; ?>
 
@@ -100,7 +100,7 @@ $this->addScript('assets/js/poll.js');
 				:
 				?>
 				<a href="#resetVotes" role="button" class="btn" data-toggle="modal">
-					<?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
+					<?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 				</a>
 				<div class="clearfix"></div>
 				<br/>
@@ -108,19 +108,19 @@ $this->addScript('assets/js/poll.js');
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h3>
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
+							<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
 						</h3>
 					</div>
 					<div class="modal-body">
-						<p><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
+						<p><?php echo Text::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
 					</div>
 					<div class="modal-footer">
 						<a data-dismiss="modal" aria-hidden="true" class="btn">
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
+							<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 						</a>
 						<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . \Joomla\CMS\Session\Session::getFormToken() . '=1') ?>"
 						   class="btn btn-primary">
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
+							<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
 						</a>
 					</div>
 				</div>

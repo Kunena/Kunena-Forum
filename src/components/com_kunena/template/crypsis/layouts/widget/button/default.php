@@ -9,9 +9,9 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-$label = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
-$title = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
+use Joomla\CMS\Language\Text;
+$label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
+$title = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
 
 if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
 {

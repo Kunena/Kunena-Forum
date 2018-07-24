@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $cols            = !empty($this->actions) ? 6 : 5;
 $colspan         = !empty($this->actions) ? 4 : 3;
 $view            = Factory::getApplication()->input->getWord('view');
@@ -91,13 +91,13 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 				</a>
 			</td>
 			<td class="span<?php echo $cols ?>" id="recent-list">
-				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+				<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="span2 hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
+				<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
 			<td class="span3 hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>
 				<td class="span1 center">
@@ -125,16 +125,16 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 					<div class="input-append">
 						<?php if (!empty($this->topics) && !empty($this->moreUri))
 						{
-							echo HTMLHelper::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
+							echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
 						} ?>
 						<?php if (!empty($this->actions)) : ?>
 							<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if (isset($this->actions['move'])) :
-								$options = array(HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+								$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 								echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
 							<input type="submit" name="kcheckgo" class="btn"
-							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
@@ -144,7 +144,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 		<tbody>
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
-				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
+				<td colspan="4" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 			</tr>
 		<?php else : ?>
 			<?php $counter = 2; ?>

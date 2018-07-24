@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Category/Subscriptions');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_VIEW_CATEGORIES_USER'),
+	Text::_('COM_KUNENA_VIEW_CATEGORIES_USER'),
 	'index.php?option=com_kunena&view=category&layout=user'
 );
 

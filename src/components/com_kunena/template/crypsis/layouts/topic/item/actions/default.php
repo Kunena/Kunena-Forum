@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 ?>
@@ -34,7 +35,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 		) : ?>
 			<div class="btn-group">
 				<a class="btn btn-primary"
-				   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+				   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
 				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><?php echo $this->topicButtons->get('delete') ?></li>
@@ -59,7 +60,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			) : ?>
 				<div class="btn-group">
 					<a class="btn"
-					   data-toggle="dropdown"><?php echo KunenaIcons::edit(); ?><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
+					   data-toggle="dropdown"><?php echo KunenaIcons::edit(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
 					</a>
 					<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -79,7 +80,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			) : ?>
 				<div class="btn-group">
 					<a class="btn btn-primary"
-					   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+					   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
 					<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><?php echo $this->topicButtons->get('delete') ?></li>

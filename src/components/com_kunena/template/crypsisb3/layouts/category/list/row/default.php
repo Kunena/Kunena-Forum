@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 /*
  * @var KunenaForumTopic $topic
@@ -22,7 +23,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<h3>
 			<?php echo $this->getCategoryLink($this->category); ?>
 			<small class="hidden-xs">
-				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>
+				(<?php echo Text::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>
 				)
 			</small>
 		</h3>
@@ -32,7 +33,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		:
 		?>
 		<td>
-			<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
+			<?php echo Text::_('COM_KUNENA_NO_POSTS'); ?>
 		</td>
 
 	<?php else
@@ -55,7 +56,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 			echo ' colspan="2"';
 		} ?>>
 			<div>
-				<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $this->category, true, true); ?>
+				<?php echo $this->getTopicLink($topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $this->category, true, true); ?>
 			</div>
 			<div>
 				<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>

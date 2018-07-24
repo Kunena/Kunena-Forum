@@ -12,9 +12,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
-JText::script('COM_KUNENA_GEN_REMOVE_AVATAR');
-JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
+Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
+Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
 HTMLHelper::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
@@ -41,12 +42,12 @@ Factory::getDocument()->addScriptOptions('com_kunena.avatar_delete', KunenaIcons
 		?>
 		<tr>
 			<td>
-				<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
+				<label for="kavatar-upload"><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 			</td>
 			<td>
 					<span class="btn btn-primary fileinput-button">
 						<?php echo KunenaIcons::plus(); ?>
-						<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
+						<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
 						<!-- The file input field used as target for the file upload widget -->
 						<input id="fileupload" type="file" name="file" multiple>
 						</span>
@@ -56,7 +57,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.avatar_delete', KunenaIcons
 					<div class="dropzone">
 						<div class="default message">
 							<span
-									id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+									id="klabel_info_drop_browse"><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
 						</div>
 					</div>
 				</div>
@@ -71,7 +72,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.avatar_delete', KunenaIcons
 		?>
 		<tr>
 			<td class="col-md-3">
-				<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
+				<label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
 				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 			</td>

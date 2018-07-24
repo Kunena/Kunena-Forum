@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $this->document->addScript('includes/js/joomla.javascript.js');
 ?>
 <div class="kblock kmanage">
@@ -36,25 +36,25 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_LOCKED'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_REVIEW'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_ADMIN_POLLS'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_PUBLISHED'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_PUBLICACCESS'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_PUBLICACCESS'); ?></small>
 						</th>
 						<th class="kcenter">
-							<small><?php echo JText::_('COM_KUNENA_CHECKEDOUT'); ?></small>
+							<small><?php echo Text::_('COM_KUNENA_CHECKEDOUT'); ?></small>
 						</th>
 					</tr>
 					</thead>
@@ -66,8 +66,8 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 					$i       = -1;
 					$j       = 0;
 					$n       = count($this->categories);
-					$img_yes = '<img src="' . $this->ktemplate->getImagePath('tick.png') . '" alt="' . JText::_('COM_KUNENA_YES') . '" />';
-					$img_no  = '<img src="' . $this->ktemplate->getImagePath('publish_x.png') . '" alt="' . JText::_('COM_KUNENA_NO') . '" />';
+					$img_yes = '<img src="' . $this->ktemplate->getImagePath('tick.png') . '" alt="' . Text::_('COM_KUNENA_YES') . '" />';
+					$img_no  = '<img src="' . $this->ktemplate->getImagePath('publish_x.png') . '" alt="' . Text::_('COM_KUNENA_NO') . '" />';
 					foreach ($this->categories as $category)
 					{
 						?>
@@ -108,7 +108,7 @@ $this->document->addScript('includes/js/joomla.javascript.js');
 										<?php echo $category->locked == 1 ? $img_yes : $img_no; ?>
 									</a>
 								</td>
-								<td colspan="3" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+								<td colspan="3" class="kcenter"><?php echo Text::_('COM_KUNENA_SECTION') ?></td>
 
 							<?php else: ?>
 

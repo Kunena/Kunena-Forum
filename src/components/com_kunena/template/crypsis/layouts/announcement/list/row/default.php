@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $row          = $this->row;
 $announcement = $this->announcement;
@@ -40,7 +41,7 @@ $announcement = $this->announcement;
 			<?php if ($this->canEdit())
 			{
 				echo HTMLHelper::_(
-					'kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
+					'kunenagrid.task', $row, 'tick.png', Text::_('COM_KUNENA_ANN_EDIT'),
 					'edit', '', true);
 			} ?>
 		</td>
@@ -49,7 +50,7 @@ $announcement = $this->announcement;
 			{
 				echo HTMLHelper::_(
 					'kunenagrid.task', $row, 'publish_x.png',
-					JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true);
+					Text::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true);
 			} ?>
 		</td>
 	<?php endif; ?>

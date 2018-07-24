@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
       name="kcategoryform" id="kcategoryform">
@@ -25,7 +25,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<div class="input-append pull-right">
 				<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 					'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+				<input type="submit" name="kcheckgo" class="btn" value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 			</div>
 		<?php endif; ?>
 
@@ -55,7 +55,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<tbody>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
+					<?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
 				</td>
 			</tr>
 			</tbody>

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('User/Edit');
 
@@ -21,7 +22,7 @@ $document = Factory::getDocument();
 $document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_EDIT'),
+	Text::_('COM_KUNENA_EDIT'),
 	'index.php?option=com_kunena&view=user&layout=edit'
 );
 

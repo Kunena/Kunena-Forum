@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-
+use Joomla\CMS\Language\Text;
 $message  = $this->message;
 $topic    = $message->getTopic();
 $category = $topic->getCategory();
@@ -44,7 +44,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				<?php
 				$subject = $message->displayField('subject');
 				$msg     = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo JText::sprintf($msg, $name, $subject);
+				echo Text::sprintf($msg, $name, $subject);
 				?>
 			</div>
 			<h3>
@@ -52,7 +52,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			</h3>
 
 			<p>
-				<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($category, null, null, 'hasTooltip')); ?>
+				<?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($category, null, null, 'hasTooltip')); ?>
 			</p>
 
 			<div class="kmessage">
@@ -62,7 +62,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				else
 
 					:
-					echo (!$me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+					echo (!$me->userid && $config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 				endif; ?>
 			</div>
 		</div>

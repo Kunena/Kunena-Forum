@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $options = $this->getOptions();
 HTMLHelper::_('behavior.core');
@@ -24,7 +25,7 @@ HTMLHelper::_('behavior.core');
 	<div class="row">
 		<div class="col-md-7">
 			<h2>
-				<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 			</h2>
 		</div>
 		<div class="col-md-5">
@@ -36,10 +37,10 @@ HTMLHelper::_('behavior.core');
 						<div class="input-group-btn">
 							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-default"
-							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-primary"
 							   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
-								<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
+								<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 							</a>
 						</div>
 					</div>
@@ -52,31 +53,31 @@ HTMLHelper::_('behavior.core');
 		<thead>
 		<tr>
 			<th class="col-md-1">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
 			</th>
 			<th class="col-md-5">
-				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
 			</th>
 
 			<?php if ($options)
 				:
 				?>
 				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
 				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_EDIT'); ?>
 				</th>
 				<th class="col-md-1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
 				<th class="col-md-1">
-					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+					<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 			<?php endif; ?>
 
 			<th class="col-md-1 center">
-				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
 			<?php if ($options)

@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $this->addScript('assets/js/poll.js');
 ?>
 	<div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-vote">&times;</div>
 	<h2>
-		<?php echo JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 
 	<div class="collapse in" id="poll-vote">
@@ -51,12 +51,12 @@ $this->addScript('assets/js/poll.js');
 
 				<input id="kpoll-button-vote" class="btn btn-success" type="submit"
 				       value="<?php echo $this->userhasvoted && !$this->config->pollallowvoteone
-					       ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
-					       : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
+					       ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
+					       : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
 				<input id="kpoll_go_results" type="button" class="btn btn-success"
-				       value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
+				       value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
 				<input id="kpoll_hide_results" type="button" class="btn btn-success" style="display:none;"
-				       value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
+				       value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
 			</div>
 		</form>
 	</div>

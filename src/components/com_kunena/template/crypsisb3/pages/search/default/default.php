@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Search/Form');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_SEARCH'),
+	Text::_('COM_KUNENA_MENU_SEARCH'),
 	'index.php?option=com_kunena&view=search'
 );
 

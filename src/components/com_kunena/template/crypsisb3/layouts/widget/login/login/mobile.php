@@ -11,13 +11,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
 			<?php echo KunenaIcons::user(); ?>
-			<span class="login-text"><?php echo JText::_('JLOGIN'); ?></span>
+			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>
 
@@ -33,11 +34,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 							<span class="add-on">
 								<?php echo KunenaIcons::user(); ?>
 								<label for="kmobile-username" class="element-invisible">
-									<?php echo JText::_('JGLOBAL_USERNAME'); ?>
+									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
 							</span>
 							<input id="kmobile-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"/>
+							       size="18" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -48,11 +49,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 							<span class="add-on">
 								<?php echo KunenaIcons::lock(); ?>
 								<label for="kmobile-passwd" class="element-invisible">
-									<?php echo JText::_('JGLOBAL_PASSWORD'); ?>
+									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
 							</span>
 							<input id="kmobile-passwd" type="password" name="password" class="input-small" tabindex="2"
-							       size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"/>
+							       size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -68,12 +69,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 							<span class="add-on">
 								<?php echo KunenaIcons::star(); ?>
 								<label for="kmobile-secretkey" class="element-invisible">
-									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+									<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>
 						  </span>
 								<input id="kmobile-secretkey" type="text" name="secretkey" class="input-small"
 								       tabindex="3"
-								       size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
+								       size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
 							</div>
 						</div>
 					</div>
@@ -89,7 +90,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 									<input id="kmobile-remember" type="checkbox" name="remember" class="inputbox"
 									       value="yes"/>
 									<label for="kmobile-remember" class="control-label">
-										<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
+										<?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?>
 									</label>
 								</div>
 							</div>
@@ -100,7 +101,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<div id="kmobile-form-login-submit" class="control-group center">
 					<p>
 						<button type="submit" tabindex="3" name="submit" class="btn btn-primary">
-							<?php echo JText::_('JLOGIN'); ?>
+							<?php echo Text::_('JLOGIN'); ?>
 						</button>
 					</p>
 
@@ -109,7 +110,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 							:
 							?>
 							<a href="<?php echo $this->resetPasswordUrl; ?>">
-								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
+								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 							</a>
 							<br/>
 						<?php endif ?>
@@ -118,7 +119,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 							:
 							?>
 							<a href="<?php echo $this->remindUsernameUrl; ?>">
-								<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
+								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 							</a>
 							<br/>
 						<?php endif ?>
@@ -127,7 +128,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 							:
 							?>
 							<a href="<?php echo $this->registrationUrl; ?>">
-								<?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
+								<?php echo Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
 							</a>
 						<?php endif ?>
 

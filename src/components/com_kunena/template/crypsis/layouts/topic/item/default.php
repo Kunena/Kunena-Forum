@@ -10,25 +10,25 @@
  **/
 defined('_JEXEC') or die;
 
-
+use Joomla\CMS\Language\Text;
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
 $this->addScript('assets/js/topic.js');
 
-JText::script('COM_KUNENA_RATE_LOGIN');
-JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
-JText::script('COM_KUNENA_RATE_ALLREADY');
-JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+Text::script('COM_KUNENA_RATE_LOGIN');
+Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
+Text::script('COM_KUNENA_RATE_ALLREADY');
+Text::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 
-JText::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
-JText::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
-JText::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
-JText::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
-JText::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
-JText::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
-JText::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
-JText::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
+Text::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
+Text::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
+Text::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
+Text::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
+Text::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
+Text::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
+Text::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
+Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
@@ -79,7 +79,7 @@ $quick           = $this->ktemplate->params->get('quick');
 	<h2 class="pull-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
-			->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
 	</h2>
 
@@ -137,7 +137,7 @@ $quick           = $this->ktemplate->params->get('quick');
 	<div class="pull-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
-			->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
 	</div>
 

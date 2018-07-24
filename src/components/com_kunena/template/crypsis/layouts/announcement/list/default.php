@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $options = $this->getOptions();
 HTMLHelper::_('behavior.core');
@@ -22,17 +23,17 @@ HTMLHelper::_('behavior.core');
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<h2>
-		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+		<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 
 		<?php if (!empty($options)) : ?>
 			<div class="input-group pull-right">
 				<div class="input-append">
 					<?php echo HTMLHelper::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
-					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+					<input type="submit" name="kcheckgo" class="btn" value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 				</div>
 				<a class="btn btn-primary" id="announcement-add-button"
 				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
-					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
+					<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 				</a>
 			</div>
 		<?php endif; ?>
@@ -42,28 +43,28 @@ HTMLHelper::_('behavior.core');
 		<thead>
 		<tr>
 			<th class="span1 hidden-phone">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
 			</th>
 			<th class="span5">
-				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
 			</th>
 
 			<?php if ($options) : ?>
 				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
 				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_EDIT'); ?>
 				</th>
 				<th class="span1 center">
-					<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
+					<?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
 			<?php endif; ?>
 			<th class="span2">
-				<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+				<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 			</th>
 			<th class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
 			<?php if ($options) : ?>

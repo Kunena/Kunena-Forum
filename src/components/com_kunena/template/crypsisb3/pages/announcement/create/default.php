@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Announcement/Edit');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
+	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
 	'index.php?option=com_kunena&view=announcement&layout=list'
 );
 

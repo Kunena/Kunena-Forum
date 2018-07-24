@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-
+use Joomla\CMS\Language\Text;
 $user                = $this->user;
 $avatar              = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 $config              = KunenaConfig::getInstance();
@@ -48,10 +48,10 @@ if ($show)
 					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
 					{
 						echo 'topic-starter-circle';
-					} ?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+					} ?>"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif; ?>
 				<?php /*if ($user->isModerator()) : */ ?><!--
-			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/ ?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */ ?></span>
+			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/ ?> topic-moderator"><?php /*echo Text::_('COM_KUNENA_TEAM_MEMBER') */ ?></span>
 		--><?php /*endif;*/ ?>
 			</li>
 		<?php endif; ?>
@@ -87,31 +87,31 @@ if ($show)
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">
 		<span class="heading btn btn-small heading-less"
-		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-small"><?php echo KunenaIcons::arrowdown(); ?><?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+		<span class="heading btn btn-small"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1) : ?>
 					<li>
-						<?php echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
+						<?php echo Text::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
 					</li>
 				<?php endif; ?>
 
 				<?php if (!empty($karma) && $config->showkarma) : ?>
 					<li>
-						<?php echo JText::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
+						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
 					</li>
 				<?php endif; ?>
 
 				<?php if ($show && isset($user->thankyou) && $config->showthankyou) : ?>
 					<li>
-						<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
+						<?php echo Text::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 					</li>
 				<?php endif; ?>
 
 				<?php if ($show && !empty($points)) : ?>
 					<li>
-						<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' ' . $points; ?>
+						<?php echo Text::_('COM_KUNENA_AUP_POINTS') . ' ' . $points; ?>
 					</li>
 				<?php endif; ?>
 

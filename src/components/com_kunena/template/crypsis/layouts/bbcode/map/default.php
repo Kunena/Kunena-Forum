@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 // [map type=roadmap zoom=10 control=0]London, UK[/map]
 
 // Display map location.
@@ -55,7 +55,7 @@ if (!empty($this->config->google_map_api_key))
 	$map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
 	$map_control   = isset($params['control']) ? (int) $params['control'] : 0;
 	$content       = json_encode(addslashes($this->content));
-	$contentString = JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
+	$contentString = Text::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
 	$this->addScriptDeclaration(
 		"
@@ -96,7 +96,7 @@ if (!empty($this->config->google_map_api_key))
 	?>
 
 	<div id="<?php echo $mapid; ?>"
-	     class="kgooglemap"><?php echo JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
+	     class="kgooglemap"><?php echo Text::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
 
 	<?php
 }
@@ -104,7 +104,7 @@ else
 { ?>
 	<div class="alert alert-info">
 		<?php
-		echo JText::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
+		echo Text::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
 		?>
 	</div>
 <?php } ?>

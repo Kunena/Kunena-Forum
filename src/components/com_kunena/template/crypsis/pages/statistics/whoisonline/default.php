@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Statistics/WhoIsOnline');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'),
+	Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'),
 	'index.php?option=com_kunena&view=statistics&layout=whoisonline'
 );
 

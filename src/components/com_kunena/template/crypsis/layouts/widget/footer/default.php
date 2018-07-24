@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 ?>
 
 <?php if (($rss = $this->getRSS()) !== null)
@@ -22,6 +23,6 @@ defined('_JEXEC') or die;
 	:
 	?>
 	<div class="center">
-		<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
+		<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
 	</div>
 <?php endif;

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
@@ -25,7 +26,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo JText::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>
+					(<?php echo Text::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>
 					)
 				</small>
 
@@ -73,7 +74,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 			?>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
-					<?php echo JText::_('COM_KUNENA_NO_POSTS') ?>
+					<?php echo Text::_('COM_KUNENA_NO_POSTS') ?>
 				</td>
 			</tr>
 		<?php else
@@ -88,14 +89,14 @@ $view    = Factory::getApplication()->input->getWord('view');
 					</a>
 				</td>
 				<td class="col-md-<?php echo $cols; ?>">
-					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?>
-					/ <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_MESSAGE'); ?>
+					/ <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="col-md-2 hidden-xs">
-					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="col-md-3">
-					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php if (!empty($this->actions))
 					:
@@ -127,7 +128,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 							<div class="input-group-btn">
 								<?php if (!empty($this->moreUri))
 								{
-									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
+									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
 								} ?>
 								<?php
 								if (!empty($this->actions))
@@ -137,11 +138,11 @@ $view    = Factory::getApplication()->input->getWord('view');
 									<?php
 									if (isset($this->actions['move']))
 										:
-										$options = array(HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+										$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 										echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 									endif; ?>
 									<input type="submit" name="kcheckgo" class="btn btn-default"
-									       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+									       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 								<?php endif; ?>
 							</div>
 						</div>

@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 
 $message              = $this->message;
@@ -44,7 +45,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 				<?php
 				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo JText::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
 			<div class="kmessage">
 				<?php if (!$isReply)
@@ -53,7 +54,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 				else
 
 					:
-					echo (!$me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+					echo (!$me->userid && $config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 				endif; ?>
 			</div>
 		</div>

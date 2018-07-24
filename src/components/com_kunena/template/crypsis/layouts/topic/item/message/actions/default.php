@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-
+use Joomla\CMS\Language\Text;
 $message = $this->message;
 
 $dateText = $dateHover = '';
@@ -27,11 +27,11 @@ if ($this->config->editmarkup && $this->message->modified_time)
 			:
 			?>
 			<span class="alert" <?php echo $dateTitle; ?>>
-		<?php echo JText::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateText, $this->message->getModifier()->getLink()); ?>
+		<?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateText, $this->message->getModifier()->getLink()); ?>
 		<?php
 		if ($this->message->modified_reason)
 		{
-			echo JText::_('COM_KUNENA_REASON')
+			echo Text::_('COM_KUNENA_REASON')
 				. ': ' . $this->escape($this->message->modified_reason);
 		} ?>
 	</span>
@@ -43,11 +43,11 @@ if ($this->config->editmarkup && $this->message->modified_time)
 			?>
 			<div>
 				<?php
-				echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+				echo Text::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
 
 				if ($this->more_thankyou)
 				{
-					echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+					echo Text::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
 				}
 				?>
 			</div>

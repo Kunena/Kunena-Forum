@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $template     = KunenaTemplate::getInstance();
 $direction    = $template->params->get('avatarPosition');

@@ -10,11 +10,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 // [confidential]For moderators only[/confidential]
 
 // Hide content from everyone except the author and moderators.
 ?>
 <br/>
-<strong><?php echo JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT'); ?></strong>
+<strong><?php echo Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT'); ?></strong>
 <div class="kmsgtext-confidential"><?php echo $this->content; ?></div>

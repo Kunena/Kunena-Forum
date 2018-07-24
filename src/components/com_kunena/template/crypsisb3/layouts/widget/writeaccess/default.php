@@ -9,6 +9,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
+
 $topic  = KunenaForumTopicHelper::get($this->id);
 $config = KunenaFactory::getConfig();
 ?>
@@ -22,7 +24,7 @@ $config = KunenaFactory::getConfig();
 	</div>
 
 	<h3 class="btn-link">
-		<?php echo JText::_('COM_KUNENA_WRITEACCESS'); ?>
+		<?php echo Text::_('COM_KUNENA_WRITEACCESS'); ?>
 	</h3>
 
 	<div class="row-fluid collapse in" id="writeaccess">
@@ -31,41 +33,41 @@ $config = KunenaFactory::getConfig();
 				<li>
 					<?php if ($topic->getCategory()->getNewTopicCategory()->exists())
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
 					<?php }
 					else
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
 					<?php } ?>
 				</li>
 				<li>
 					<?php if ($topic->isAuthorised('reply'))
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
 					<?php }
 					else
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
 					<?php } ?>
 				</li>
 				<li>
 					<?php if ($topic->isAuthorised('reply') && $config->file_upload !== 'nobody' || $topic->isAuthorised('reply') && $config->file_upload = 'everybody')
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 					<?php }
 					else
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 					<?php } ?>
 				</li>
 				<li>
 					<?php if ($topic->isAuthorised('edit'))
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
 					<?php }
 					else
 					{ ?>
-						<b><?php echo JText::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo JText::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
 					<?php } ?>
 				</li>
 			</ul>

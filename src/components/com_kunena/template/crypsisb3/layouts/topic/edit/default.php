@@ -13,51 +13,52 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
-JText::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
-JText::script('COM_KUNENA_EDITOR_INSERT');
-JText::script('COM_KUNENA_EDITOR_IN_MESSAGE');
-JText::script('COM_KUNENA_GEN_REMOVE_FILE');
-JText::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, array('script' => true));
-JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
-JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
-JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
-JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
-JText::script('COM_KUNENA_EDITOR_BOLD');
-JText::script('COM_KUNENA_EDITOR_COLORS');
-JText::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
-JText::script('COM_KUNENA_EDITOR_OLIST');
-JText::script('COM_KUNENA_EDITOR_TABLE');
-JText::script('COM_KUNENA_EDITOR_ITALIC');
-JText::script('COM_KUNENA_EDITOR_UNDERL');
-JText::script('COM_KUNENA_EDITOR_STRIKE');
-JText::script('COM_KUNENA_EDITOR_SUB');
-JText::script('COM_KUNENA_EDITOR_SUP');
-JText::script('COM_KUNENA_EDITOR_CODE');
-JText::script('COM_KUNENA_EDITOR_QUOTE');
-JText::script('COM_KUNENA_EDITOR_SPOILER');
-JText::script('COM_KUNENA_EDITOR_CONFIDENTIAL');
-JText::script('COM_KUNENA_EDITOR_HIDE');
-JText::script('COM_KUNENA_EDITOR_RIGHT');
-JText::script('COM_KUNENA_EDITOR_LEFT');
-JText::script('COM_KUNENA_EDITOR_CENTER');
-JText::script('COM_KUNENA_EDITOR_HR');
-JText::script('COM_KUNENA_EDITOR_FONTSIZE_SELECTION');
-JText::script('COM_KUNENA_EDITOR_LINK');
-JText::script('COM_KUNENA_EDITOR_EBAY');
-JText::script('COM_KUNENA_EDITOR_MAP');
-JText::script('COM_KUNENA_EDITOR_POLL_SETTINGS');
-JText::script('COM_KUNENA_EDITOR_VIDEO');
-JText::script('COM_KUNENA_EDITOR_IMAGELINK');
-JText::script('COM_KUNENA_EDITOR_EMOTICONS');
-JText::script('COM_KUNENA_EDITOR_TWEET');
-JText::script('COM_KUNENA_EDITOR_INSTAGRAM');
-JText::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
-JText::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
+Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
+Text::script('COM_KUNENA_EDITOR_INSERT');
+Text::script('COM_KUNENA_EDITOR_IN_MESSAGE');
+Text::script('COM_KUNENA_GEN_REMOVE_FILE');
+Text::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, array('script' => true));
+Text::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
+Text::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
+Text::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
+Text::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
+Text::script('COM_KUNENA_EDITOR_BOLD');
+Text::script('COM_KUNENA_EDITOR_COLORS');
+Text::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
+Text::script('COM_KUNENA_EDITOR_OLIST');
+Text::script('COM_KUNENA_EDITOR_TABLE');
+Text::script('COM_KUNENA_EDITOR_ITALIC');
+Text::script('COM_KUNENA_EDITOR_UNDERL');
+Text::script('COM_KUNENA_EDITOR_STRIKE');
+Text::script('COM_KUNENA_EDITOR_SUB');
+Text::script('COM_KUNENA_EDITOR_SUP');
+Text::script('COM_KUNENA_EDITOR_CODE');
+Text::script('COM_KUNENA_EDITOR_QUOTE');
+Text::script('COM_KUNENA_EDITOR_SPOILER');
+Text::script('COM_KUNENA_EDITOR_CONFIDENTIAL');
+Text::script('COM_KUNENA_EDITOR_HIDE');
+Text::script('COM_KUNENA_EDITOR_RIGHT');
+Text::script('COM_KUNENA_EDITOR_LEFT');
+Text::script('COM_KUNENA_EDITOR_CENTER');
+Text::script('COM_KUNENA_EDITOR_HR');
+Text::script('COM_KUNENA_EDITOR_FONTSIZE_SELECTION');
+Text::script('COM_KUNENA_EDITOR_LINK');
+Text::script('COM_KUNENA_EDITOR_EBAY');
+Text::script('COM_KUNENA_EDITOR_MAP');
+Text::script('COM_KUNENA_EDITOR_POLL_SETTINGS');
+Text::script('COM_KUNENA_EDITOR_VIDEO');
+Text::script('COM_KUNENA_EDITOR_IMAGELINK');
+Text::script('COM_KUNENA_EDITOR_EMOTICONS');
+Text::script('COM_KUNENA_EDITOR_TWEET');
+Text::script('COM_KUNENA_EDITOR_INSTAGRAM');
+Text::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
+Text::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
 
 Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
@@ -104,8 +105,8 @@ $this->addScript('assets/js/pollcheck.js');
 
 if ($this->config->pollenabled)
 {
-	JText::script('COM_KUNENA_POLL_OPTION_NAME');
-	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	Text::script('COM_KUNENA_POLL_OPTION_NAME');
+	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 	$this->addScript('assets/js/poll.js');
 }
 
@@ -126,18 +127,18 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
+					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
 				</div>
 				<div class="modal-body">
-					<p><?php echo JText::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
+					<p><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
 				</div>
 				<div class="modal-footer">
 					<button class="btn" data-dismiss="modal"
-					        aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
+					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
 					<button class="btn btn-primary"
-					        id="modal_confirm_erase"><?php echo JText::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>
+					        id="modal_confirm_erase"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>
 					<button class="btn btn-primary"
-					        id="modal_confirm_erase_keep_old"><?php echo JText::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE_KEEP'); ?></button>
+					        id="modal_confirm_erase_keep_old"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE_KEEP'); ?></button>
 				</div>
 			</div>
 		</div>
@@ -216,7 +217,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							?>
 							<div class="control-group">
 								<!-- Username -->
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_CATEGORY') ?></label>
 
 								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
 							</div>
@@ -224,7 +225,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if ($this->message->userid) : ?>
 							<div class="control-group" id="kanynomous-check"
 							     <?php if (!$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls" style="text-align: right">
 									<input type="checkbox" id="kanonymous" name="anonymous"
@@ -232,7 +233,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									{
 										echo 'checked="checked"';
 									} ?> />
-									<span><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
+									<span><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -241,19 +242,19 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						     :
 						     ?>style="display:none;"<?php
 						endif; ?>>
-							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
+							<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
 								<input type="text" id="kauthorname" name="authorname" size="35"
-								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
+								       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
 								       class="input-xxlarge" maxlength="35" tabindex="4"
 								       value="<?php echo $this->escape($this->message->name); ?>"/>
 								<!-- Encourage guest user to login or register -->
 								<?php
-								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . JText::_('JLOGIN') . '</a>';
-								$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . JText::_('JREGISTER') . '</a>';
-								echo JText::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
+								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
+								$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . Text::_('JREGISTER') . '</a>';
+								echo Text::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
 								?>
 							</div>
 						</div>
@@ -261,21 +262,21 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							:
 							?>
 							<div class="control-group">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_EMAIL'); ?></label>
 								<div class="col-md-10">
 									<input type="text" id="email" name="email" size="35"
-									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
+									       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
 									       class="form-control" maxlength="45" tabindex="5"
 									       value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"
 									       required/>
 									<br/>
-									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+									<?php echo $this->config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>
 							</div>
 						<?php endif; ?>
 
 						<div class="form-group" id="kpost-subject">
-							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
+							<label class="control-label col-md-4"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
 								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory()))
 									:
@@ -287,7 +288,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									:
 									?>
 									<input class="form-control" type="text"
-									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
+									       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
 									       name="subject" id="subject"
 									       maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"
 									       tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"/>
@@ -299,7 +300,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							:
 							?>
 							<div class="form-group" id="kpost-topicicons">
-								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
+								<label class="col-md-3 control-label"><?php echo Text::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon)
@@ -347,14 +348,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							:
 							?>
 							<div class="control-group" id="modified_reason">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITING_REASON') ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_EDITING_REASON') ?></label>
 
 								<div class="controls">
 									<input class="input-xxlarge form-control" name="modified_reason" size="40"
 									       maxlength="200"
 									       type="text"
 									       value="<?php echo $this->modified_reason; ?>" title="reason"
-									       placeholder="<?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
+									       placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -366,30 +367,30 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"></label>
 								<div class="controls">
 									<button class="btn btn-default" id="kshow_attach_form"
-									        type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									        type="button"><?php echo KunenaIcons::attach() . ' ' . Text::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
-									<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
+									<span class="label label-info"><?php echo Text::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
 										: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br/><br/>
-										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
-											: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
-											: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br/><br/>
+										<span class="label label-info"><?php echo Text::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
+											: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo Text::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
+											: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br/><br/>
 
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
 										<?php echo KunenaIcons::plus(); ?>
-											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
+											<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 											<!-- The file input field used as target for the file upload widget -->
 										<input id="fileupload" type="file" name="file" multiple>
 									</span>
 										<button id="insert-all" class="btn btn-primary" type="submit"
 										        style="display:none;">
 											<?php echo KunenaIcons::upload(); ?>
-											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
+											<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
 										</button>
 										<button id="remove-all" class="btn btn-danger" type="submit"
 										        style="display:none;">
 											<?php echo KunenaIcons::cancel(); ?>
-											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
+											<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
 										<div class="clearfix"></div>
 										<br/>
@@ -402,7 +403,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 											<div class="dropzone">
 												<div class="default message">
 												<span
-														id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+														id="klabel_info_drop_browse"><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
 												</div>
 											</div>
 										</div>
@@ -413,7 +414,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 						<?php if ($this->canSubscribe): ?>
 							<div class="control-group" id="kpost-subscribe">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
 									       id="subscribeMe"
@@ -422,7 +423,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 										echo 'checked="checked"';
 									} ?> />
 									<label class="string optional"
-									       for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+									       for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -430,14 +431,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if ($this->message->userid): ?>
 							<div class="control-group" id="kanynomous-check"
 							     <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
+								<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 								<div class="controls">
 									<input type="checkbox" id="kanonymous" name="anonymous"
 									       value="1" <?php if ($this->post_anonymous)
 									{
 										echo 'checked="checked"';
 									} ?> />
-									<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
+									<label for="kanonymous"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -459,21 +460,21 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					:
 					?>
 					<input type="submit" class="btn btn-success form-validate" name="submit"
-					       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
-					       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
+					       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
+					       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
 				<?php else
 
 					:
 					?>
 					<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
 						<?php echo KunenaIcons::save(); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_SUBMIT') . ' '; ?>
+						<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
 					</button>
 				<?php endif; ?>
 
 				<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="10">
 					<?php echo KunenaIcons::delete(); ?>
-					<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>
+					<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 				</button>
 			</div>
 			<?php

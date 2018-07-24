@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
@@ -21,15 +22,15 @@ $this->getBBcodesEnabled();
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <div class="form-group">
-	<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></label>
+	<label class="control-label col-md-4"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs">
 			<li class="active"><a href="#write"
-			                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
-			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
+			                      data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
+			<li><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="form-control" name="message" id="editor" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 			{
 				echo $this->message->getCategory()->topictemplate;
 			}
@@ -50,16 +51,16 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_MAP_SETTINGS') ?></h3>
+				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_MAP_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_TYPE') ?>: <select id="modal-map-type">
-						<option value="HYBRID"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_HYBRID') ?></option>
-						<option value="ROADMAP"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ROADMAP') ?></option>
-						<option value="TERRAIN"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_TERRAIN') ?></option>
-						<option value="SATELLITE"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_SATELLITE') ?></option>
+				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_TYPE') ?>: <select id="modal-map-type">
+						<option value="HYBRID"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_HYBRID') ?></option>
+						<option value="ROADMAP"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ROADMAP') ?></option>
+						<option value="TERRAIN"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_TERRAIN') ?></option>
+						<option value="SATELLITE"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_SATELLITE') ?></option>
 					</select><br/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ZOOM_LEVEL') ?>: <select
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_ZOOM_LEVEL') ?>: <select
 							id="modal-map-zoomlevel">
 						<option value="2">2</option>
 						<option value="4">4</option>
@@ -71,16 +72,16 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 						<option value="16">16</option>
 						<option value="18">18</option>
 					</select><br/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>:
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>:
 					<input name="modal-map-city" id="modal-map-city"
 					       type="text" value=""
-					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/></p>
+					       placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/></p>
 			</div>
 			<div class="modal-footer">
 				<button id="map-modal-submit"
-				        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -93,7 +94,7 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
+					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
 				</div>
 				<div class="modal-body">
 					<p>
@@ -102,9 +103,9 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-footer">
 					<button id="code-modal-submit"
-					        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+					        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 					<button class="btn btn-default" data-dismiss="modal"
-					        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
 		</div>
@@ -116,10 +117,10 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
+				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
+				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
 					<select id="kpicture-size-list-modal"
 					        name="modal-picture-size" class="kbutton">
 						<?php
@@ -132,21 +133,21 @@ if (!empty($codeTypes)) : ?>
 						}
 						?>
 					</select>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input
 							class="form-control" name="modal-picture-alt"
 							id="modal-picture-alt" type="text" value=""
-							placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input
+							placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>"/>
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input
 							name="modal-picture-url"
 							id="modal-picture-url" type="text" value=""
-							placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
+							placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>"/>
 				</p>
 			</div>
 			<div class="modal-footer">
 				<button id="picture-modal-submit"
-				        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -157,23 +158,23 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
+				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
 				<p>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL') ?>:
 					<input name="modal-link-url" id="modal-link-url" type="text" value=""
-					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>"/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
+					       placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_URL_PLACEHOLDER') ?>"/>
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
 					<input name="modal-link-text" id="modal-link-text" type="text" value=""
-					       placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
+					       placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
 				</p>
 			</div>
 			<div class="modal-footer">
 				<button id="link-modal-submit"
-				        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -184,24 +185,24 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_SETTINGS') ?></h3>
+				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_SETTINGS') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_SIZE') ?>: <input
+				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_SIZE') ?>: <input
 							class="form-control" name="modal-video-size"
 							id="modal-video-size" type="text" maxlength="5"
 							size="5" value=""/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_WIDTH') ?>: <input
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_WIDTH') ?>: <input
 							class="form-control" name="modal-video-width"
 							id="modal-video-width" type="text"
 							maxlength="5" size="5" value=""/>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_HEIGHT') ?>: <input
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_HEIGHT') ?>: <input
 							class="form-control"
 							name="modal-video-height"
 							id="modal-video-height" type="text"
 							maxlength="5" size="5" value=""/>
 					<?php
-					echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
+					echo Text::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 					?>
 					<select id="kvideoprovider-list-modal"
 					        name="provider" class="kbutton form-control">
@@ -214,16 +215,16 @@ if (!empty($codeTypes)) : ?>
 						}
 						?>
 					</select>
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_ID') ?>: <input
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_ID') ?>: <input
 							class="form-control" name="modal-video-id"
 							id="modal-video-id" type="text" maxlength="30"
 							size="11" value=""/></p>
 			</div>
 			<div class="modal-footer">
 				<button id="videosettings-modal-submit"
-				        class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -234,10 +235,10 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
+				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
 			</div>
 			<div class="modal-body">
-				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input
+				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input
 							class="form-control"
 							name="modal-video-urlprovider-input"
 							id="modal-video-urlprovider-input"
@@ -245,9 +246,9 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit"
-				        class="btn btn-primary modal-submit"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				        class="btn btn-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -259,10 +260,10 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="poll-not-allowed-to-edit"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?></h3>
+					<h3 id="poll-not-allowed-to-edit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?></h3>
 				</div>
 				<div class="modal-body">
-					<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?>
+					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?>
 				</div>
 			</div>
 		</div>
@@ -274,13 +275,13 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
+					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
 				</div>
 				<div class="modal-body">
 					<div id="kbbcode-poll-options">
 						<div class="input-group col-md-12" style="padding: 0;">
 							<label class="kpoll-title-lbl"
-							       for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
+							       for="kpoll-title"><?php echo Text::_('COM_KUNENA_POLL_TITLE'); ?></label>
 							<input type="text" class="inputbox form-control col-md-12" name="poll_title"
 							       id="kpoll-title"
 							       maxlength="150" size="40"
@@ -293,7 +294,7 @@ if (!empty($codeTypes)) : ?>
 						<div class="clearfix"></div>
 						<div id="datepoll-container">
 							<label class="kpoll-term-lbl"
-							       for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+							       for="kpoll-time-to-live"><?php echo Text::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 							<div class="input-group date">
 								<input type="text" class="form-control" id="poll_time_to_live"
 								       data-date-format="mm/dd/yyyy"
@@ -308,7 +309,7 @@ if (!empty($codeTypes)) : ?>
 					<br/>
 					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
+						<?php echo Text::sprintf('COM_KUNENA_ALERT_WARNING_X', Text::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 					</div>
 					<?php
 					if ($this->poll->exists())
@@ -328,9 +329,9 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-footer">
 					<button id="poll-settings-modal-submit"
-					        class="btn btn-primary"><?php echo $this->poll->exists() ? JText::_('COM_KUNENA_EDITOR_MODAL_EDIT_LABEL') : JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+					        class="btn btn-primary"><?php echo $this->poll->exists() ? Text::_('COM_KUNENA_EDITOR_MODAL_EDIT_LABEL') : Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 					<button class="btn btn-default" data-dismiss="modal"
-					        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
 		</div>
@@ -359,7 +360,7 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default" data-dismiss="modal"
-				        aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>

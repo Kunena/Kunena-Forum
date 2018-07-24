@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $me    = KunenaUserHelper::getMyself();
 $state = $this->state;
@@ -30,7 +31,7 @@ $state = $this->state;
 	<div class="search">
 		<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"
 		       value="<?php echo $this->escape($state); ?>"
-		       placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
+		       placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 		<button type="submit" class="btn btn-default">
 			<?php echo KunenaIcons::search(); ?>
 		</button>

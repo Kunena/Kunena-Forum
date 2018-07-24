@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 ?>
 	<h3>
 		<?php echo $this->headerText; ?>
@@ -18,7 +19,7 @@ defined('_JEXEC') or die;
 		<tbody>
 		<tr>
 			<td class="span3">
-				<label for="username"><?php echo JText::_('COM_KUNENA_UNAME'); ?></label>
+				<label for="username"><?php echo Text::_('COM_KUNENA_UNAME'); ?></label>
 			</td>
 			<td>
 				<input type="text" name="username" id="username"
@@ -32,7 +33,7 @@ defined('_JEXEC') or die;
 		</tr>
 		<tr>
 			<td>
-				<label for="name"><?php echo JText::_('COM_KUNENA_REALNAME'); ?></label>
+				<label for="name"><?php echo Text::_('COM_KUNENA_REALNAME'); ?></label>
 			</td>
 			<td>
 				<input class="required" type="text" id="name" name="name"
@@ -41,7 +42,7 @@ defined('_JEXEC') or die;
 		</tr>
 		<tr>
 			<td>
-				<label for="email"><?php echo JText::_('COM_KUNENA_USRL_EMAIL'); ?></label>
+				<label for="email"><?php echo Text::_('COM_KUNENA_USRL_EMAIL'); ?></label>
 			</td>
 			<td>
 				<input class="required validate-email" type="text" id="email" name="email"
@@ -53,7 +54,7 @@ defined('_JEXEC') or die;
 			?>
 			<tr>
 				<td>
-					<label for="password"><?php echo JText::_('COM_KUNENA_PASS'); ?></label>
+					<label for="password"><?php echo Text::_('COM_KUNENA_PASS'); ?></label>
 				</td>
 				<td>
 					<input class="validate-password" type="password" id="password" name="password"
@@ -62,7 +63,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<label for="password2"><?php echo JText::_('COM_KUNENA_VPASS'); ?></label>
+					<label for="password2"><?php echo Text::_('COM_KUNENA_VPASS'); ?></label>
 				</td>
 				<td>
 					<input class="validate-passverify" type="password" id="password2" name="password2"
@@ -77,7 +78,7 @@ defined('_JEXEC') or die;
 	:
 	?>
 	<h3>
-		<?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?>
+		<?php echo Text::_('COM_KUNENA_GLOBAL_SETTINGS'); ?>
 	</h3>
 
 	<table class="table table-bordered table-striped table-hover">
@@ -103,5 +104,5 @@ defined('_JEXEC') or die;
 if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
 	<a class="btn"
 	   href="<?php echo \Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
-	   data-toggle="modal" id="2fa_settings"><?php echo JText::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
+	   data-toggle="modal" id="2fa_settings"><?php echo Text::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
 <?php endif;

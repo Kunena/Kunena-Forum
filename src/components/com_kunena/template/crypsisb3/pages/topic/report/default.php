@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Topic/Report');
 
@@ -26,20 +27,20 @@ foreach ($parents as $parent)
 }
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_TOPIC'),
+	Text::_('COM_KUNENA_MENU_TOPIC'),
 	$content->topic->getUri()
 );
 
 if ($content->message)
 {
 	$this->addBreadcrumb(
-		JText::_('COM_KUNENA_MESSAGE'),
+		Text::_('COM_KUNENA_MESSAGE'),
 		$content->message->getUri()
 	);
 }
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_REPORT'),
+	Text::_('COM_KUNENA_REPORT'),
 	$content->uri
 );
 

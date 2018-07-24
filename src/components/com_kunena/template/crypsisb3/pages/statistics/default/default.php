@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Statistics/General');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_STATISTICS'),
+	Text::_('COM_KUNENA_MENU_STATISTICS'),
 	'index.php?option=com_kunena&view=statistics&layout=default'
 );
 

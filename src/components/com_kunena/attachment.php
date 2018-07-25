@@ -31,9 +31,6 @@ define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) 
 // Define Joomla constants.
 require_once JPATH_BASE . '/includes/defines.php';
 
-// Joomla system checks.
-@ini_set('magic_quotes_runtime', 0);
-
 // Installation check, and check on removal of the install directory.
 if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
 	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10)

@@ -59,18 +59,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @var null
 	 * @since Kunena
 	 */
-	protected $register_globals = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	protected $safe_mode = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
 	protected $mbstring = null;
 
 	/**
@@ -264,7 +252,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$this->getReportData();
 
-		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
 			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
@@ -330,24 +318,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		else
 		{
 			$this->htaccess = 'Missing';
-		}
-
-		if (ini_get('register_globals'))
-		{
-			$this->register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
-		}
-		else
-		{
-			$this->register_globals = '[u]register_globals:[/u] Off';
-		}
-
-		if (ini_get('safe_mode'))
-		{
-			$this->safe_mode = '[u]safe_mode:[/u] [color=#FF0000]On[/color]';
-		}
-		else
-		{
-			$this->safe_mode = '[u]safe_mode:[/u] Off';
 		}
 
 		if (extension_loaded('mbstring'))
@@ -855,7 +825,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
-			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
 			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |

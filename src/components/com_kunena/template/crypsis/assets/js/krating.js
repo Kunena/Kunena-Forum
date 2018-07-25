@@ -48,13 +48,13 @@ jQuery(document).ready(function ($) {
 				data: 'starid=' + rating + '&topic_id=' + topicid
 			}).done(function (response) {
 				if (response.success) {
-					$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
+					$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.JText._('COM_KUNENA_RATING_SUCCESS_LABEL') + '</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
 				}
 				else {
-					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
+					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.JText._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + Joomla.JText._(response.message) + '</div>').appendTo('#system-message-container');
 				}
 			}).fail(function (reponse) {
-				$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>' + reponse + '</div>').appendTo('#system-message-container');
+				$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.JText._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + reponse + '</div>').appendTo('#system-message-container');
 			});
 		};
 		var r = rating(ratingElement, currentRating, maxRating, callback);

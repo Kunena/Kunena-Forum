@@ -39,6 +39,9 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addStyleSheet('assets/css/rating.css');
 	$this->addScript('assets/js/rating.js');
 	$this->addScript('assets/js/krating.js');
+
+	Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
+	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
 }
 
 $this->addScript('assets/js/topic.js');

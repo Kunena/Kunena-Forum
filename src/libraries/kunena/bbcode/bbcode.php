@@ -167,6 +167,17 @@ class KunenaBbcode extends NBBC_BBCode
 			}
 		}
 
+		if ($config->autoembedinstagram && empty($this->parent->forceMinimal) && isset($params['host']))
+		{
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+
+			if (strstr($params['host'], 'instagram.') && !empty($path[1]))
+			{
+				return '<div class="embed-container"><iframe src="' . rtrim($params['url'], '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+		}
+
 		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host']))
 		{
 			// Convert youtube links to embedded player
@@ -265,6 +276,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 		if ($config->autolink)
 		{
+			$internal = false;
 			$layout = KunenaLayout::factory('BBCode/URL');
 
 			if ($config->smartlinking)
@@ -272,12 +284,22 @@ class KunenaBbcode extends NBBC_BBCode
 				$text = $this->get_title($url);
 			}
 
+			$uri = Uri::getInstance($url);
+			$host = $uri->getHost();
+
+			// The cms will catch most of these well
+			if (empty($host) || Uri::isInternal($url))
+			{
+				$internal = true;
+			}
+
 			if ($layout->getPath())
 			{
 				return (string) $layout
 					->set('content', $text)
 					->set('url', $url)
-					->set('target', $this->url_target);
+					->set('target', $this->url_target)
+					->set('internal', $internal);
 			}
 
 			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');

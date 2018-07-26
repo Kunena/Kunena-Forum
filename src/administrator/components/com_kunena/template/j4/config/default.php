@@ -1187,6 +1187,11 @@ HTMLHelper::_('behavior.tabstate');
 														<td><?php echo Text::_('COM_KUNENA_A_AUTOEMBEDEBAY_DESC') ?></td>
 													</tr>
 													<tr>
+														<td><?php echo Text::_('COM_KUNENA_A_AUTOEMBEDINSTAGRAM') ?></td>
+														<td><?php echo $this->lists ['autoembedinstagram'] ?></td>
+														<td><?php echo Text::_('COM_KUNENA_A_AUTOEMBEDINSTAGRAM_DESC') ?></td>
+													</tr>
+													<tr>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD') ?></td>
 														<td><?php echo $this->lists ['autoembedsoundcloud'] ?></td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD_DESC') ?></td>

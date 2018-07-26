@@ -524,6 +524,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		// K 5.1.2
 		$lists ['use_system_emails']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_use_system_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->use_system_emails);
+		$lists ['autoembedinstagram']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoembedinstagram', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedinstagram);
 
 		return $lists;
 	}

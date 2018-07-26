@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
@@ -1234,6 +1235,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$bbcode->autolink_disable--;
 		$url = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
 		$url = preg_replace('# #u', '%20', $url);
+		$internal = false;
 
 		if (preg_match('#^(index.php?)#uim', $url))
 		{
@@ -1272,6 +1274,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$class  = null;
 		}
 
+		$uri = Uri::getInstance($url);
+		$host = $uri->getHost();
+
+		// The cms will catch most of these well
+		if (empty($host) || Uri::isInternal($url))
+		{
+			$internal = true;
+		}
+
 		$smart = KunenaConfig::getInstance()->smartlinking;
 
 		if ($smart && $bbcode->get_title($url))
@@ -1287,7 +1298,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				->set('class', $class)
 				->set('content', $content)
 				->set('url', $url)
-				->set('target', $target);
+				->set('target', $target)
+				->set('internal', $internal);
 		}
 	}
 

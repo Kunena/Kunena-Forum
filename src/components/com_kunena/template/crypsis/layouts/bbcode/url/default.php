@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 // Display URL.
 $target = ' target="' . $this->escape($this->target) . '"';
 
-if (strpos($this->escape($this->url), '/index.php') !== 0)
+if (!$this->internal)
 {
 	$rel = 'rel="nofollow noopener noreferrer"';
 }

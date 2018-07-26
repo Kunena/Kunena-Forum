@@ -1255,7 +1255,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
 
-		var_dump($params);
 		if ($bbcode->url_targetable !== false && isset($params['target']))
 		{
 			$target = $params['target'];

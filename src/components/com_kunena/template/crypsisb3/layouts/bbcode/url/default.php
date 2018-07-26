@@ -24,6 +24,6 @@ else
 	$rel = '';
 }
 ?>
-<a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url" <?php echo $rel . $target; ?>>
+<a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url<?php if (!empty($this->class)) echo ' ' . $this->class; ?>" <?php echo $rel . $target; ?>>
 	<?php echo $this->content; ?>
 </a>

@@ -1255,17 +1255,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
 
+		var_dump($params);
 		if ($bbcode->url_targetable !== false && isset($params['target']))
 		{
 			$target = $params['target'];
+			$class  = $params['class'];
 		}
 		elseif ($bbcode->url_target !== false)
 		{
 			$target = $bbcode->url_target;
+			$class  = $params['class'];
 		}
 		else
 		{
 			$target = '';
+			$class  = null;
 		}
 
 		$smart = KunenaConfig::getInstance()->smartlinking;
@@ -1280,6 +1284,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		if ($layout->getPath())
 		{
 			return (string) $layout
+				->set('class', $class)
 				->set('content', $content)
 				->set('url', $url)
 				->set('target', $target);

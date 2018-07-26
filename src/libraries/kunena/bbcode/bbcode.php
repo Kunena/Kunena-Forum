@@ -1235,9 +1235,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$url = $default ? $default : strip_tags($bbcode->UnHTMLEncode($content));
 		$url = preg_replace('# #u', '%20', $url);
 
-		if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
+		if (preg_match('#^(index.php?)#uim', $url))
 		{
-			// Add scheme to raw domain URLs.
+			$url = JRoute::_($url, false);
+		}
+
+		if (preg_match('#^(/index.php?)#uim', $url))
+		{
+			$url = JRoute::_($url, false);
+		}
+
+		if (!preg_match('#^(/|https?:|ftp:)#uim', $url))
+		{
 			$url = "http://{$url}";
 		}
 

@@ -1242,7 +1242,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (preg_match('#^(/index.php?)#uim', $url))
 		{
-			$url = JRoute::_($url, false);
+			$str = substr($url, 1);
+			$url = JRoute::_($str, false);
 		}
 
 		if (!preg_match('#^(/|https?:|ftp:)#uim', $url))

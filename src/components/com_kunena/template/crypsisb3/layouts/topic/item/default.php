@@ -67,7 +67,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?>
+		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config)->set('reviewCount', $this->reviewCount); ?>
 	</h1>
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

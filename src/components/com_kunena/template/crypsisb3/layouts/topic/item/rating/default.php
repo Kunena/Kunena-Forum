@@ -23,5 +23,5 @@ defined('_JEXEC') or die();
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=rate&topic_id=' . $this->topicid . '&format=raw'); ?>"/>
 	<div id="krating">
 		<p class="unseen element-invisible"></p>
-	</div>
+	</div> <span><?php echo $this->reviewCount; ?></span>
 <?php endif;

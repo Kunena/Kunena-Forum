@@ -161,6 +161,13 @@ class KunenaForumTopicRate extends JObject
 			return new \Joomla\CMS\Response\JsonResponse($exception);
 		}
 
+		if ($user->isBanned())
+		{
+			$exception = new RuntimeException('COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED', 500);
+
+			return new \Joomla\CMS\Response\JsonResponse($exception);
+		}
+
 		if ($user->userid == $topic->first_post_userid)
 		{
 			$exception = new RuntimeException('COM_KUNENA_RATE_NOT_YOURSELF', 500);

@@ -91,6 +91,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			$rss_word_count    = array();
 			$rss_word_count [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_RSS_WORD_COUNT_ALL'));
+			$rss_word_count [] = HTMLHelper::_('select.option', '-1', JText::_('JNONE'));
 			$rss_word_count [] = HTMLHelper::_('select.option', '50', '50');
 			$rss_word_count [] = HTMLHelper::_('select.option', '100', '100');
 			$rss_word_count [] = HTMLHelper::_('select.option', '250', '250');

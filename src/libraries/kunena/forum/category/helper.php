@@ -727,6 +727,7 @@ abstract class KunenaForumCategoryHelper
 						}
 						break;
 					case 'name' :
+					case 'p.title' :
 						if ($params['direction'] > 0)
 						{
 							uksort($cats, array(__CLASS__, 'compareByNameAsc'));

@@ -92,18 +92,25 @@ class KunenaViewCategory extends KunenaView
 			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
 		}
 
-		$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
-		$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
-		$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
-		$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
-
-		if ((bool) $this->config->rss_allow_html)
+		if ((int) $this->config->rss_word_count === -1)
 		{
-			$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+			$description = '';
 		}
 		else
 		{
-			$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+			$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
+			$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
+			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
+			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
+
+			if ((bool) $this->config->rss_allow_html)
+			{
+				$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+			}
+			else
+			{
+				$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+			}
 		}
 
 		// Assign values to feed item

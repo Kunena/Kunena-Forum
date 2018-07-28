@@ -237,6 +237,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								?>
 								<?php // Load the batch processing form. ?>
 								<?php echo $this->loadTemplate('batch'); ?>
+								<?php // Load the modal to confirm delete. ?>
+							<?php echo $this->loadTemplate('confirmdelete'); ?>
 							</td>
 						</tr>
 						</tfoot>

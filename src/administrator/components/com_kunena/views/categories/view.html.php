@@ -129,6 +129,9 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
 
+		// Get the toolbar object instance
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
+
 		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		JToolbarHelper::spacer();
 		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
@@ -138,22 +141,25 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolbarHelper::publish();
 		JToolbarHelper::unpublish();
 		JToolbarHelper::divider();
-		JToolbarHelper::deleteList();
-		JToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
-
-		// Get the toolbar object instance
-		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-			HTMLHelper::_('bootstrap.renderModal', 'collapseModal');
+		    HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 		}
 		else
 		{
-			HTMLHelper::_('bootstrap.modal', 'collapseModal');
+		    HTMLHelper::_('bootstrap.modal', 'moderateModal');
 		}
+
+		$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small\">
+					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
+						$title</button>";
+						$bar->appendButton('Custom', $dhtml, 'confirmdelete');
+
+		JToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
+		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 
 		$title = Text::_('JTOOLBAR_BATCH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">

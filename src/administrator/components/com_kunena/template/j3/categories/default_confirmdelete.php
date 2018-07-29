@@ -26,13 +26,12 @@ use Joomla\CMS\Language\Text;
 				<p><?php echo Text::_('COM_KUNENA_CATEGORIES_CONFIRM_DELETE_BODY_MODAL'); ?></p>
 				<div class="control-group">
 					<div class="controls">
-
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" type="button"
-						data-dismiss="modal">
+				        data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-danger" type="submit" onclick="Joomla.submitbutton('remove');">

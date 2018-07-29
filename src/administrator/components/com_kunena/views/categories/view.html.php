@@ -144,11 +144,11 @@ class KunenaAdminViewCategories extends KunenaView
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-		    HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
+			HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 		}
 		else
 		{
-		    HTMLHelper::_('bootstrap.modal', 'moderateModal');
+			HTMLHelper::_('bootstrap.modal', 'moderateModal');
 		}
 
 		$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');

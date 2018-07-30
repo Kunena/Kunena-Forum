@@ -131,7 +131,6 @@ abstract class KunenaHtmlParser
 		$config        = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
 		$events        = (int) $config->get('jcontentevents', false);
 		$event_target  = (array) $config->get('jcontentevent_target', array());
-		$event_plugins = (array) $config->get('jcontentevent_plugins', array());
 
 		$name   = '';
 		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content');

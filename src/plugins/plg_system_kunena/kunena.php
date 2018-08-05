@@ -61,15 +61,18 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if ($format != 'feed')
 		{
-			if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+			if ($app->scope == 'com_kunena')
 			{
-				$styles = <<<EOF
+				if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+				{
+					$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
 		#kunena + div { display: block !important;}
 EOF;
 
-				$document = Factory::getDocument();
-				$document->addStyleDeclaration($styles);
+					$document = Factory::getDocument();
+					$document->addStyleDeclaration($styles);
+				}
 			}
 
 			if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))

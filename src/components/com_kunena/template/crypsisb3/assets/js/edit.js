@@ -170,6 +170,7 @@ jQuery(document).ready(function ($) {
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
 		$("#editor").attr('required', 'required');
+		localStorage.removeItem('copyKunenaeditor');
 	});
 
 	var category_template_text;

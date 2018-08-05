@@ -152,8 +152,8 @@ class KunenaAdminViewCategories extends KunenaView
 		}
 
 		$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');
-		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small\">
-					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">
+					<i class=\"icon-trash\" title=\"$title\"> </i>
 						$title</button>";
 						$bar->appendButton('Custom', $dhtml, 'confirmdelete');
 

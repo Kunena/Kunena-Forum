@@ -27,6 +27,7 @@ if ($this->config->ratingenabled && $this->category->allow_ratings)
 				<li class="c-rating__item <?php echo $this->topic->rating >= 5 ? 'is-active' : ''; ?>"
 				    data-index="4"></li>
 			</ul>
+			<span><?php echo $this->reviewCount; ?></span>
 		</div>
 	<?php endif;
 endif;

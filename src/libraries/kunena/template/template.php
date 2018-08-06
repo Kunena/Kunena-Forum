@@ -771,13 +771,11 @@ HTML;
 	 * @param   string $filename filename
 	 * @param   string $group    group
 	 *
-	 * @param   bool   $nocache  cache dir
-	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function addStyleSheet($filename, $group = 'forum', $nocache = true)
+	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -789,33 +787,47 @@ HTML;
 
 		if (!preg_match('|https?://|', $filename))
 		{
-			$filename = preg_replace('|^css/|u', '', $filename);
+			$filename     = preg_replace('|^css/|u', '', $filename);
+			$filename     = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+			$filemin      = $filename;
+			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
-			if ($nocache)
+			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
-				$filename     = preg_replace('/^assets/', $format, $filename);
-				$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
-				$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
-
-				if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
-				{
-					$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
-				}
-
-				if (file_exists(JPATH_ROOT . "/$filemin"))
-				{
-					$filename = $filemin;
-				}
+				$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
 			}
-			else
+
+			if (file_exists(JPATH_ROOT . "/$filemin"))
 			{
-				$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+				$filename = $filemin;
 			}
 
 			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
 		}
 
 		return Factory::getDocument()->addStyleSheet($filename);
+	}
+
+	/**
+	 * @param   string $filename filename
+	 *
+	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function addLessSheet($filename)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+
+		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

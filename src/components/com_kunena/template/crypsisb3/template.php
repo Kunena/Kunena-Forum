@@ -114,7 +114,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
-		$this->addStyleSheet('kunena.css', 'forum', false);
+		$this->addLessSheet('kunena.css');
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$storage         = $this->ktemplate->params->get('storage');

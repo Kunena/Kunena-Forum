@@ -70,7 +70,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
-		$this->addStyleSheet('kunena.css', 'forum', false);
+		$this->addLessSheet('kunena.css');
 
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
 

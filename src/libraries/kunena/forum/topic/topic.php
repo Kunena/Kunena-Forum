@@ -2085,6 +2085,18 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Return the number of rating given to the topic
+	 *
+	 * @return int
+	 * @since Kunena 5.1.3
+	 *
+	 */
+	public function getReviewCount()
+	{
+	    return KunenaForumTopicRateHelper::getCount($this->id);
+	}
+
+	/**
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
 	 */

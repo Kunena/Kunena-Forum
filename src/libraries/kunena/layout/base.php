@@ -430,6 +430,22 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	}
 
 	/**
+	 * Add script options to the document.
+	 *
+	 * @param $key
+	 * @param $options
+	 * @param $merge
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function addScriptOptions($key, $options, $merge = true)
+	{
+		return KunenaFactory::getTemplate()->addScriptOptions($key, $options, $merge);
+	}
+
+	/**
 	 * Method to get the view paths.
 	 *
 	 * @return  array  The paths queue.

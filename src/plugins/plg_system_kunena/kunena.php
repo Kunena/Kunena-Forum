@@ -59,7 +59,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
 
-		if ($format != 'feed')
+		if (!empty($format) && $format != 'html')
 		{
 			if ($app->scope == 'com_kunena')
 			{
@@ -70,8 +70,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		#kunena + div { display: block !important;}
 EOF;
 
-					$document = Factory::getDocument();
-					$document->addStyleDeclaration($styles);
+					KunenaTemplate::getInstance()->addStyleDeclaration($styles);
 				}
 			}
 

@@ -97,8 +97,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		if ($this->topic->unread)
 		{
-			$doc = Factory::getDocument();
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 
 		$this->captchaEnabled = false;

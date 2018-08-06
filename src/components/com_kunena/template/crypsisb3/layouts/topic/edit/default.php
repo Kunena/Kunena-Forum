@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -60,8 +59,8 @@ Text::script('COM_KUNENA_EDITOR_INSTAGRAM');
 Text::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
 Text::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
 
-Factory::getDocument()->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
-Factory::getDocument()->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
+$this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
+$this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 HTMLHelper::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
@@ -77,16 +76,16 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
-Factory::getDocument()->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
-Factory::getDocument()->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
-Factory::getDocument()->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+$this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
+$this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
+$this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
 $suffix = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix');
-Factory::getDocument()->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
+$this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
@@ -110,9 +109,9 @@ if ($this->config->pollenabled)
 	$this->addScript('assets/js/poll.js');
 }
 
-Factory::getDocument()->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
-Factory::getDocument()->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
+$this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+$this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+$this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
 
 $this->addScript('assets/js/edit.js');
 

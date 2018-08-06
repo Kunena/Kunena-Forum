@@ -294,13 +294,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 	protected function prepareDocument()
 	{
-		$doc = Factory::getDocument();
-		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			$doc->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('og:image', $image, 'property');
 		}
 	}
 }

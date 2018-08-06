@@ -407,8 +407,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		#kunena + div { display: block !important;}
 EOF;
 
-			$document = Factory::getDocument();
-			$document->addStyleDeclaration($styles);
+			KunenaTemplate::getInstance()->addStyleDeclaration($styles);
 		}
 
 		return $credits;

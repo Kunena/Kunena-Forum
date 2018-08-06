@@ -372,7 +372,6 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	{
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$doc       = Factory::getDocument();
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
@@ -380,24 +379,24 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			$doc->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('og:image', $image, 'property');
 		}
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -419,9 +418,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				$this->setTitle($title);
 			}
 
-			$doc->setMetaData('og:type', 'article', 'property');
-			$doc->setMetaData('og:description', $title, 'property');
-			$doc->setMetaData('og:title', $title, 'property');
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $title, 'property');
+			$this->setMetaData('og:title', $title, 'property');
 
 			if (!empty($params_keywords))
 			{
@@ -448,7 +447,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

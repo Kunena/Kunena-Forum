@@ -90,8 +90,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = Factory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$this->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)
 		{

@@ -453,10 +453,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	{
 		$image = '';
 		$doc   = Factory::getDocument();
-		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
-		$doc->setMetaData('og:type', 'article', 'property');
-		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
-		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
+		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:type', 'article', 'property');
+		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
+		$this->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
 
 		$image = $this->docImage();
 
@@ -513,33 +513,33 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$first = $this->topic->subject;
 		}
 
-		$doc->setMetaData('og:description', $first, 'property');
-		$doc->setMetaData('og:image', $image, 'property');
-		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
-		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
-		$doc->setMetaData('twitter:card', 'summary', 'name');
-		$doc->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
-		$doc->setMetaData('twitter:image', $image, 'property');
-		$doc->setMetaData('twitter:description', $first);
+		$this->setMetaData('og:description', $first, 'property');
+		$this->setMetaData('og:image', $image, 'property');
+		$this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
+		$this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
+		$this->setMetaData('twitter:card', 'summary', 'name');
+		$this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
+		$this->setMetaData('twitter:image', $image, 'property');
+		$this->setMetaData('twitter:description', $first);
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		$page       = $this->pagination->pagesCurrent;
@@ -593,7 +593,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
-				$doc->setMetaData('article:tag', $keywords, 'property');
+				$this->setMetaData('article:tag', $keywords, 'property');
 			}
 			else
 			{
@@ -635,6 +635,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	protected function docImage()
 	{
 		$image = '';
+
 		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
 		{
 			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;

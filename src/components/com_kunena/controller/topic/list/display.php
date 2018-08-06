@@ -137,25 +137,24 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = Factory::getDocument();
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -202,7 +201,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

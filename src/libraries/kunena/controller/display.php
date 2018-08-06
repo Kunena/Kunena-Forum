@@ -213,6 +213,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Executed after display.
 	 * @since Kunena
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function after()
 	{
@@ -225,10 +226,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 * @since Kunena
-	 * @return void
+	 * @return bool
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -356,10 +365,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setKeywords($keywords)
 	{
-		if (!empty($keywords))
-		{
-			$this->document->setMetadata('keywords', $keywords);
-		}
+		$this->document->setMetadata('keywords', $keywords);
 	}
 
 	/**
@@ -382,5 +388,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function setRobots($robots)
 	{
 		$this->document->setMetaData('robots', $robots, 'robots');
+	}
+
+	/**
+	 * @param        $name
+	 * @param        $content
+	 * @param string $attribute
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	protected function setMetaData($name, $content, $attribute = 'name')
+	{
+		$this->document->setMetaData($name, $content, $attribute);
 	}
 }

@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -115,7 +114,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
-		$this->addStyleSheet('kunena.css');
+		$this->addStyleSheet('kunena.css', 'forum', false);
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$storage         = $this->ktemplate->params->get('storage');
@@ -141,13 +140,12 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc         = Factory::getDocument();
 
 		if ($fontawesome)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$doc->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
-			$doc->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
@@ -155,7 +153,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		if ($icons)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+			$this->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
 		// Load template colors settings
@@ -188,25 +186,9 @@ EOF;
 EOF;
 		}
 
-		$document = Factory::getDocument();
-		$document->addStyleDeclaration($styles);
+		$this->addStyleDeclaration($styles);
 
 		parent::initialize();
-	}
-
-	/**
-	 * @param          $filename
-	 * @param   string $group group
-	 *
-	 * @return \Joomla\CMS\Document\Document
-	 * @since Kunena
-	 */
-	public function addStyleSheet($filename, $group = 'forum')
-	{
-		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-
-		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

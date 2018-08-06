@@ -771,33 +771,72 @@ HTML;
 	 * @param   string $filename filename
 	 * @param   string $group    group
 	 *
+	 * @param   bool   $nocache  cache dir
+	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function addStyleSheet($filename, $group = 'forum')
+	public function addStyleSheet($filename, $group = 'forum', $nocache = true)
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		if (!preg_match('|https?://|', $filename))
 		{
-			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
-			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
+			$filename = preg_replace('|^css/|u', '', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			if ($nocache)
 			{
-				$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
+				$filename     = preg_replace('/^assets/', $format, $filename);
+				$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+				$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
+
+				if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+				{
+					$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
+				}
+
+				if (file_exists(JPATH_ROOT . "/$filemin"))
+				{
+					$filename = $filemin;
+				}
 			}
-
-			if (file_exists(JPATH_ROOT . "/$filemin"))
+			else
 			{
-				$filename = $filemin;
+				$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 			}
 
 			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
 		}
 
-		/** @noinspection PhpDeprecationInspection */
 		return Factory::getDocument()->addStyleSheet($filename);
+	}
+
+	/**
+	 * @param $style
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public function addStyleDeclaration($style)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		return Factory::getDocument()->addStyleDeclaration($style);
 	}
 
 	/**
@@ -882,10 +921,19 @@ HTML;
 	 * @param   string $type    type
 	 *
 	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		return Factory::getDocument()->addScriptDeclaration($content, $type);
 	}
 
@@ -894,12 +942,23 @@ HTML;
 	 *
 	 * @param   string $filename filename
 	 *
+	 * @param array    $options
+	 * @param array    $attribs
+	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function addScript($filename)
+	public function addScript($filename, $options = array(), $attribs = array())
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^js/|u', '', $filename);
@@ -914,8 +973,32 @@ HTML;
 			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
 		}
 
-		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addScript($filename);
+		return Factory::getDocument()->addScript($filename, $options, $attribs);
+	}
+
+	/**
+	 * Add option for script
+	 *
+	 * @param   string $key     Name in Storage
+	 * @param   mixed  $options Scrip options as array or string
+	 * @param   bool   $merge   Whether merge with existing (true) or replace (false)
+	 *
+	 * @return \Joomla\CMS\Document\Document
+	 *
+	 * @throws Exception
+	 * @since   3.5
+	 */
+	public function addScriptOptions($key, $options, $merge = true)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		return Factory::getDocument()->addScriptOptions($key, $options, $merge);
 	}
 
 	/**

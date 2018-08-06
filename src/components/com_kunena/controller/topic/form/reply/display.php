@@ -164,8 +164,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = Factory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$this->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)
 		{
@@ -208,7 +207,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

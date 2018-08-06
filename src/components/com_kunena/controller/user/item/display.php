@@ -143,33 +143,30 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$doc = Factory::getDocument();
-		$doc->setMetaData('profile:username', $this->profile->getName(), 'property');
+		$this->setMetaData('profile:username', $this->profile->getName(), 'property');
 
 		if ($this->profile->getGender() == 1)
 		{
-			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
 		}
 		elseif ($this->profile->getGender() == 2)
 		{
-			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
 		}
 		else
 		{
-			$doc->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
 		}
 
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
+		$config    = Factory::getConfig();
+		$robots    = $config->get('robots');
+		$image     = '';
 
-		$doc    = Factory::getDocument();
-		$config = Factory::getConfig();
-		$robots = $config->get('robots');
-		$image  = '';
-
-		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
-		$doc->setMetaData('og:type', 'profile', 'property');
-		$doc->setMetaData('og:author', $this->profile->name, 'property');
+		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:type', 'profile', 'property');
+		$this->setMetaData('og:author', $this->profile->name, 'property');
 
 		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
 		{
@@ -187,23 +184,23 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$image = $this->profile->getAvatarURL('Profile', '200');
 		}
 
-		$doc->setMetaData('og:image', $image, 'property');
+		$this->setMetaData('og:image', $image, 'property');
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -225,8 +222,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 				$this->setTitle($title);
 			}
 
-			$doc->setMetaData('og:description', $title, 'property');
-			$doc->setMetaData('og:title', $this->profile->getName(), 'property');
+			$this->setMetaData('og:description', $title, 'property');
+			$this->setMetaData('og:title', $this->profile->getName(), 'property');
 
 			if (!empty($params_keywords))
 			{
@@ -255,7 +252,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

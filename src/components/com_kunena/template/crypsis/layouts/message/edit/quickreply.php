@@ -37,8 +37,8 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
+$this->addScriptOptions('com_kunena.kunena_topicicontype', '');
+$this->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/edit.js');
 

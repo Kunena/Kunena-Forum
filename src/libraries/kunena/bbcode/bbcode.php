@@ -1346,6 +1346,27 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
+		if ($default == 200)
+		{
+			$default = 6;
+		}
+		elseif ($default == 150)
+		{
+			$default = 4;
+		}
+		elseif ($default == 100)
+		{
+			$default = 3;
+		}
+		elseif ($default == 85)
+		{
+			$default = 2;
+		}
+		elseif ($default == 50)
+		{
+			$default = 1;
+		}
+
 		$layout = KunenaLayout::factory('BBCode/Size');
 
 		if ($layout->getPath())

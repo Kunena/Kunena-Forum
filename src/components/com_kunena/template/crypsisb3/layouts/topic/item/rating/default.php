@@ -21,7 +21,7 @@ defined('_JEXEC') or die();
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=getrate&format=raw'); ?>"/>
 	<input type="hidden" id="krating_submit_url" name="url"
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=rate&topic_id=' . $this->topicid . '&format=raw'); ?>"/>
-	<div id="krating">
+	<div id="krating" title="<?php echo JText::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->rating,$this->getReviewCount()); ?>" class="hasTooltip">
 		<p class="unseen element-invisible"></p>
-	</div> <span id="kreviewcount"><?php echo $this->reviewCount; ?></span>
+	</div>
 <?php endif;

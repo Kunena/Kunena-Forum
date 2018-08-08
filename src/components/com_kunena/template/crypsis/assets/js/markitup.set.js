@@ -190,127 +190,127 @@ jQuery(document).ready(function ($) {
 		$('#poll_time_to_live').val('');
 	});
 
-	if (!kunena_showvideotag) {
+	if (!Joomla.getOptions('kunena_showvideotag')) {
 		$('.videodropdownbutton').remove();
 	}
 
-	if (!kunena_disemoticons) {
+	if (!Joomla.getOptions('kunena_disemoticons')) {
 		$('.emoticonsbutton').remove();
 	}
 
-	if (!kunena_showebaytag) {
+	if (!Joomla.getOptions('kunena_showebaytag')) {
 		$('.ebaybutton').remove();
 	}
 
-	if (!kunena_showspoilertag) {
+	if (!Joomla.getOptions('kunena_showspoilertag')) {
 		$('.spoilerbutton').remove();
 	}
 
-	if (!kunena_showmapstag) {
+	if (!Joomla.getOptions('kunena_showmapstag')) {
 		$('.mapbutton').remove();
 	}
 
-	if (!kunena_showtwittertag) {
+	if (!Joomla.getOptions('kunena_showtwittertag')) {
 		$('.tweetbutton').remove();
 	}
 
-	if (!kunena_showlinktag) {
+	if (!Joomla.getOptions('kunena_showlinktag')) {
 		$('.linkbutton').remove();
 	}
 
-	if (!kunena_showpicturetag) {
+	if (!Joomla.getOptions('kunena_showpicturetag')) {
 		$('.picturebutton').remove();
 	}
 
-	if (!kunena_showhidetag) {
+	if (!Joomla.getOptions('kunena_showhidetag')) {
 		$('.hiddentextbutton').remove();
 	}
 
-	if (!kunena_showtabletag) {
+	if (!Joomla.getOptions('kunena_showtabletag')) {
 		$('.tablebutton').remove();
 	}
 
-	if (!kunena_showcodetag) {
+	if (!Joomla.getOptions('kunena_showcodetag')) {
 		$('.codesimplebutton').remove();
 	}
 
-	if (!kunena_showquotetag) {
+	if (!Joomla.getOptions('kunena_showquotetag')) {
 		$('.quotebutton').remove();
 	}
 
-	if (!kunena_showdividertag) {
+	if (!Joomla.getOptions('kunena_showdividertag')) {
 		$('.markItUpSeparator').remove();
 	}
 
-	if (!kunena_showinstagramtag) {
+	if (!Joomla.getOptions('kunena_showinstagramtag')) {
 		$('.instagrambutton').remove();
 	}
 
-	if (!kunena_showsoundcloudtag) {
+	if (!Joomla.getOptions('kunena_showsoundcloudtag')) {
 		$('.soundcloudbutton').remove();
 	}
 
-	if (!kunena_showconfidentialtag) {
+	if (!Joomla.getOptions('kunena_showconfidentialtag')) {
 		$('.confidentialbutton').remove();
 	}
 
-	if (!kunena_showhrtag) {
+	if (!Joomla.getOptions('kunena_showhrtag')) {
 		$('.hrbutton').remove();
 	}
 
-	if (!kunena_showlistitemtag) {
+	if (!Joomla.getOptions('kunena_showlistitemtag')) {
 		$('.listitembutton').remove();
 	}
 
-	if (!kunena_showsupscripttag) {
+	if (!Joomla.getOptions('kunena_showsupscripttag')) {
 		$('.supscriptbutton').remove();
 	}
 
-	if (!kunena_showsubscripttag) {
+	if (!Joomla.getOptions('kunena_showsubscripttag')) {
 		$('.subscriptbutton').remove();
 	}
 
-	if (!kunena_shownumericlisttag) {
+	if (!Joomla.getOptions('kunena_shownumericlisttag')) {
 		$('.numericlistbutton').remove();
 	}
 
-	if (!kunena_showbulletedlisttag) {
+	if (!Joomla.getOptions('kunena_showbulletedlisttag')) {
 		$('.bulletedlistbutton').remove();
 	}
 
-	if (!kunena_showalignrighttag) {
+	if (!Joomla.getOptions('kunena_showalignrighttag')) {
 		$('.alignrightbutton').remove();
 	}
 
-	if (!kunena_showalignlefttag) {
+	if (!Joomla.getOptions('kunena_showalignlefttag')) {
 		$('.alignleftbutton').remove();
 	}
 
-	if (!kunena_showcentertag) {
+	if (!Joomla.getOptions('kunena_showcentertag')) {
 		$('.centerbutton').remove();
 	}
 
-	if (!kunena_showunderlinetag) {
+	if (!Joomla.getOptions('kunena_showunderlinetag')) {
 		$('.underlinebutton').remove();
 	}
 
-	if (!kunena_showitalictag) {
+	if (!Joomla.getOptions('kunena_showitalictag')) {
 		$('.italicbutton').remove();
 	}
 
-	if (!kunena_showboldtag) {
+	if (!Joomla.getOptions('kunena_showboldtag')) {
 		$('.boldbutton').remove();
 	}
 
-	if (!kunena_showstrikethroughtag) {
+	if (!Joomla.getOptions('kunena_showstrikethroughtag')) {
 		$('.strokebutton').remove();
 	}
 
-	if (!kunena_showcolorstag) {
+	if (!Joomla.getOptions('kunena_showcolorstag')) {
 		$('.colors').remove();
 	}
 
-	if (!kunena_showsizetag) {
+	if (!Joomla.getOptions('kunena_showsizetag')) {
 		$('.sizebutton').remove();
 	}
 });

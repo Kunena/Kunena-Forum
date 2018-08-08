@@ -1,0 +1,444 @@
+/**
+* Kunena Component
+* @package Kunena.Template.Crypsis
+*
+* markItUp! Universal MarkUp Engine, JQuery plugin
+* By Jay Salvat - http://markitup.jaysalvat.com/
+*
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link https://www.kunena.org
+**/
+
+/*------------------------------------------------------------------
+BBCODE BUTTONS
+-------------------------------------------------------------------- */
+
+tr {
+  td.kpostbuttons {
+    select.selectbox {
+      position: relative;
+      bottom: 5px;
+    }
+  }
+}
+
+.form-horizontal .controls {
+  margin-left: 90px;
+}
+
+.form-horizontal .control-label {
+  width: auto;
+}
+
+.ktxtarea {
+  margin-left: -80px
+}
+
+#kbbcode-smilies-button {
+  background-position: -108px -18px;
+}
+
+.kbbcode-preview-bottom {
+  border: 1px solid #dddddd;
+  padding: 4px 12px;
+  margin: 10px;
+  border-radius: 4px;
+  min-height: 150px;
+}
+
+.markItUp .boldbutton a {
+  background-image: url(assets/images/bold.png);
+}
+
+.markItUp .italicbutton a {
+  background-image: url(assets/images/italic.png);
+}
+
+.markItUp .underlinebutton a {
+  background-image: url(assets/images/underline.png);
+}
+
+.markItUp .strokebutton a {
+  background-image: url(assets/images/stroke.png);
+}
+
+.markItUp .supscriptbutton a {
+  background-image: url(assets/images/supscript.png);
+}
+
+.markItUp .subscriptbutton a {
+  background-image: url(assets/images/subscript.png);
+}
+
+.markItUp .sizebutton a {
+  background-image: url(assets/images/fonts.png);
+}
+
+.markItUp .colors a {
+  background-image: url(assets/images/colors.png);
+}
+
+.markItUp .bulletedlistbutton a {
+  background-image: url(assets/images/list-bullet.png);
+}
+
+.markItUp .numericlistbutton a {
+  background-image: url(assets/images/list-numeric.png);
+}
+
+.markItUp .listitembutton a {
+  background-image: url(assets/images/list-item.png);
+}
+
+.markItUp .alignleftbutton a {
+  background-image: url(assets/images/text_align_left.png);
+}
+
+.markItUp .centerbutton a {
+  background-image: url(assets/images/text_align_center.png);
+}
+
+.markItUp .alignrightbutton a {
+  background-image: url(assets/images/text_align_right.png);
+}
+
+.markItUp .quotebutton a {
+  background-image: url(assets/images/quotes.png);
+}
+
+.markItUp .codemodalboxbutton a,
+.markItUp .codesimplebutton a {
+  background-image: url(assets/images/code.png);
+}
+
+.markItUp .tablebutton a {
+  background-image: url(assets/images/table.png);
+}
+
+.markItUp .spoilerbutton a {
+  background-image: url(assets/images/spoiler.png);
+}
+
+.markItUp .hiddentextbutton a {
+  background-image: url(assets/images/hidden.png);
+}
+
+.markItUp .picturebutton a {
+  background-image: url(assets/images/picture.png);
+}
+
+.markItUp .linkbutton a {
+  background-image: url(assets/images/link.png);
+}
+
+.markItUp .ebaybutton a {
+  background-image: url(assets/images/ebay.png);
+}
+
+.markItUp .videodropdownbutton a {
+  background-image: url(assets/images/film.png);
+}
+
+.markItUp .mapbutton a {
+  background-image: url(assets/images/map.png);
+}
+
+.markItUp .pollbutton a {
+  background-image: url(assets/images/poll.png);
+}
+
+.markItUp .tweetbutton a {
+  background-image: url(assets/images/tweet.png);
+}
+
+.markItUp .soundcloudbutton a {
+  background-image: url(assets/images/soundcloud.png);
+  margin-left: -3px;
+  margin-top: 3px;
+}
+
+.markItUp .instagrambutton a {
+  background-image: url(assets/images/instagram.png);
+}
+
+.markItUp .hrbutton a {
+  background-image: url(assets/images/hr.png);
+}
+
+.markItUp .emoticonsbutton a {
+  background-image: url(assets/images/emoticon.png);
+}
+
+.markItUp .confidentialbutton a {
+  background-image: url(assets/images/confidential.png);
+}
+
+.markItUp .clean a {
+  background-image: url(assets/images/clean.png);
+}
+
+.markItUp .colors ul {
+  width: auto;
+  padding: 1px;
+}
+
+.markItUp .colors li {
+  border: 1px solid white;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+
+.markItUp .colors ul a {
+  width: 25px;
+  height: 25px;
+}
+
+.markItUp .colors .col1-1 a {
+  background: black;
+}
+
+.markItUp .colors .col1-2 a {
+  background: orange;
+}
+
+.markItUp .colors .col1-3 a {
+  background: red;
+}
+
+.markItUp .colors .col2-1 a {
+  background: blue;
+}
+
+.markItUp .colors .col2-2 a {
+  background: purple;
+}
+
+.markItUp .colors .col2-3 a {
+  background: green;
+}
+
+.markItUp .colors .col3-1 a {
+  background: white;
+}
+
+.markItUp .colors .col3-2 a {
+  background: gray;
+}
+
+.markItUp .colors .col3-3 a {
+  background: black;
+}
+
+.markItUp {
+  width: 100%;
+}
+
+.markItUpContainer {
+  width: 100%;
+}
+
+.markItUpEditor {
+  padding: 5px;
+  margin: 0;
+  clear: both;
+  display: block;
+  line-height: 18px;
+  overflow: auto;
+  border: 1px solid #e5e5e5;
+}
+
+.markItUpEditor a {
+  box-sizing: content-box;
+}
+
+.markItUpPreviewFrame {
+  overflow: auto;
+  background-color: #FFFFFF;
+  width: 99.9%;
+  height: 350px;
+  margin: 5px 0;
+}
+
+.markItUpHeader {
+  width: 100%;
+  margin: 0;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  height: 25px;
+}
+
+.markItUpFooter {
+  width: 100%;
+  height: 25px;
+  padding-bottom: 10px;
+}
+
+/***************************************************************************************/
+/* first row of buttons */
+.markItUpHeader ul li {
+  list-style: none;
+  float: left;
+  position: relative;
+  box-sizing: content-box;
+}
+
+.markItUpHeader ul li:hover > ul {
+  display: block;
+}
+
+.markItUpHeader ul .markItUpDropMenu li {
+  margin-right: 0;
+}
+
+/* next rows of buttons */
+.markItUpHeader ul ul {
+  display: none;
+  position: absolute;
+  top: 18px;
+  left: 0;
+  margin-top: 10px;
+  background: #FFF;
+  border: 1px solid #e5e5e5;
+}
+
+.markItUpHeader ul ul li {
+  float: none;
+  border-bottom: 1px solid #e5e5e5;
+
+}
+
+.markItUpHeader ul .markItUpSeparator {
+  width: 1px;
+  color: #ccc;
+  height: 24px;
+  margin-right: 5px;
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+  text-indent: -10000px;
+}
+
+.markItUpHeader ul ul .markItUpSeparator {
+  width: auto;
+  height: 1px;
+  margin: 0;
+}
+
+/* next rows of buttons */
+.markItUpHeader ul ul ul {
+  position: absolute;
+  top: -1px;
+  left: 150px;
+}
+
+.markItUpHeader ul ul ul li {
+  float: none;
+}
+
+.markItUpHeader ul a {
+  display: block;
+  width: 16px;
+  height: 16px;
+  text-indent: -10000px;
+  background-repeat: no-repeat;
+  padding: 4px;
+  margin: 0;
+  box-sizing: content-box;
+}
+
+.markItUpHeader ul ul a {
+  display: block;
+  text-indent: 0;
+  width: 150px;
+  padding: 5px 5px 5px 25px;
+  background-position: 2px 50%;
+}
+
+.markItUpHeader ul ul a:hover {
+  color: #FFF;
+  background-color: #3875D7;
+}
+
+.markItUpHeader ul {
+  margin: 0;
+  padding: 0;
+}
+
+.markItUpButton {
+  display: inline-block;
+  margin-bottom: 0;
+  padding-top: 4px;
+  font-size: 14px;
+  line-height: 12px;
+  *margin-left: .3em;
+}
+
+li.markItUpButton ul {
+  z-index: 1;
+}
+
+.dropzone .message {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+
+.dropzone {
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  min-height: 120px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 23px;
+}
+
+.dropzone .default.message {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  background: no-repeat 0 0;
+}
+
+#klabel_info_drop_browse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#files {
+  padding-bottom: 10px;
+}
+
+#files button.btn {
+  margin-right: 5px;
+}
+
+#files p {
+  margin: 15px 0 0 0;
+}
+
+#kbbcode-preview {
+  height: auto !important;
+  margin-bottom: 35px;
+}
+
+.wysibb-text-editor {
+  min-height: 300px !important;
+}
+
+#iconset_inject .inline:hover {
+  cursor: pointer;
+}
+
+.kpoll-time-to-live-input {
+  margin-left: -30px !important;
+}

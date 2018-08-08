@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE kinstall>
+<kinstall type="kunena-template" version="4.0" method="upgrade">
+    <name>Crypsisb5</name>
+    <version>5.1.3-DEV</version>
+    <creationDate>2018-08-01</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>team@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>Kunena Team</copyright>
+    <license>GNU/GPL</license>
+    <description>COM_KUNENA_TEMPLATE_CRYPSISB5_DESC</description>
+    <thumbnail>template_thumbnail.png</thumbnail>
+</kinstall>

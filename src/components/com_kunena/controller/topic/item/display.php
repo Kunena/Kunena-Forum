@@ -58,12 +58,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	public $headerText;
 
 	/**
-	 * @var int
-	 * @since Kunena 5.1.3
-	 */
-	public $reviewCount;
-
-	/**
 	 * Prepare topic display.
 	 *
 	 * @return void
@@ -242,8 +236,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getSelected($this->topic->id) : 5;
 			$tmp3->{'reviewCount'}  = KunenaForumTopicRateHelper::getCount($this->topic->id);
 			$data->aggregateRating  = $tmp3;
-
-			$this->reviewCount = KunenaForumTopicRateHelper::getCount($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getCount($this->topic->id) : '';
 		}
 
 		KunenaTemplate::getInstance()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), 'application/ld+json');

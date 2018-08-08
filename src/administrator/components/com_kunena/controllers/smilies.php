@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Smileys Controller
@@ -53,7 +54,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -76,7 +77,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -89,7 +90,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 		if (!$id)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_SMILEYS_SELECTED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_SMILEYS_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -114,7 +115,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -167,7 +168,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			}
 		}
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_SMILEY_SAVED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SAVED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -185,7 +186,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -198,11 +199,11 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 		if ($upload)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -225,7 +226,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -252,7 +253,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			}
 		}
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_SMILEY_DELETED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 
 /**
@@ -223,7 +224,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=topics';
@@ -235,7 +236,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=sticky';
@@ -247,7 +248,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=locked';
@@ -259,7 +260,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=noreplies';
@@ -271,7 +272,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=unapproved';
@@ -283,7 +284,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=deleted';
@@ -296,7 +297,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				}
 				else
 				{
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
 
 				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=replies';
@@ -335,37 +336,36 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
-		$doc       = Factory::getDocument();
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			$doc->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('og:image', $image, 'property');
 		}
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -378,7 +378,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 			if (!empty($params_title))
 			{
-				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setTitle($title);
 			}
 			else
@@ -387,9 +387,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				$this->setTitle($headerText);
 			}
 
-			$doc->setMetaData('og:type', 'article', 'property');
-			$doc->setMetaData('og:description', $headerText, 'property');
-			$doc->setMetaData('og:title', $headerText, 'property');
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $headerText, 'property');
+			$this->setMetaData('og:title', $headerText, 'property');
 
 			if (!empty($params_keywords))
 			{
@@ -404,19 +404,19 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

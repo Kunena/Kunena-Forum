@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
@@ -18,11 +19,11 @@ $tabs          = $this->getTabsEdit();
 $avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
-		KunenaIcons::back() . ' ' . JText::_('COM_KUNENA_BACK'),
-		JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default pull-right'
+		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
+		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default pull-right'
 	); ?>
 </h2>
 
@@ -67,11 +68,11 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
 		<div class="center">
 			<button class="btn btn-primary validate" type="submit">
-				<?php echo KunenaIcons::save(); ?><?php echo JText::_('COM_KUNENA_SAVE'); ?>
+				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
 			</button>
 			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
-			        title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
-				<?php echo KunenaIcons::cancel(); ?><?php echo JText::_('COM_KUNENA_CANCEL'); ?>
+			        title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
+				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>
 	</div>

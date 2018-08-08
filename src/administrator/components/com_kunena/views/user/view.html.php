@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * User view for Kunena backend
@@ -39,28 +40,28 @@ class KunenaAdminViewUser extends KunenaView
 
 		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
 		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.1.0/js/all.js', array(), array('defer' => true));
+			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
 		}
 
 		// Make the select list for the moderator flag
-		$yesnoMod [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_YES'));
-		$yesnoMod [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
+		$yesnoMod [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 
 		// Build the html select list
 		$this->selectMod = HTMLHelper::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $this->user->moderator);
 
 		// Make the select list for the moderator flag
-		$yesnoOrder [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_USER_ORDER_ASC'));
-		$yesnoOrder [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_USER_ORDER_DESC'));
+		$yesnoOrder [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_USER_ORDER_ASC'));
+		$yesnoOrder [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_USER_ORDER_DESC'));
 
 		// Build the html select list
 		$item             = new StdClass;
 		$item->name       = 'hidemail';
-		$item->label      = JText::_('COM_KUNENA_USER_HIDEEMAIL');
+		$item->label      = Text::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$options[]        = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_A_ONLY_REGISTERED'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->user->hideEmail), 'khidemail'
 		);
@@ -68,10 +69,10 @@ class KunenaAdminViewUser extends KunenaView
 
 		$item             = new StdClass;
 		$item->name       = 'showonline';
-		$item->label      = JText::_('COM_KUNENA_USER_SHOWONLINE');
+		$item->label      = Text::_('COM_KUNENA_USER_SHOWONLINE');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->user->showOnline), 'kshowonline'
 		);
@@ -79,11 +80,11 @@ class KunenaAdminViewUser extends KunenaView
 
 		$item             = new StdClass;
 		$item->name       = 'cansubscribe';
-		$item->label      = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
+		$item->label      = Text::_('COM_KUNENA_USER_CANSUBSCRIBE');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', -1, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->user->canSubscribe), 'kcansubscribe'
 		);
@@ -91,19 +92,19 @@ class KunenaAdminViewUser extends KunenaView
 
 		$item             = new StdClass;
 		$item->name       = 'userlisttime';
-		$item->label      = JText::_('COM_KUNENA_USER_USERLISTTIME');
+		$item->label      = Text::_('COM_KUNENA_USER_USERLISTTIME');
 		$options          = array();
-		$options[]        = HTMLHelper::_('select.option', -2, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[]        = HTMLHelper::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
-		$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
-		$options[]        = HTMLHelper::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
-		$options[]        = HTMLHelper::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
-		$options[]        = HTMLHelper::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
-		$options[]        = HTMLHelper::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+		$options[]        = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));
+		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_LASTVISIT'));
+		$options[]        = HTMLHelper::_('select.option', 4, Text::_('COM_KUNENA_SHOW_4_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 8, Text::_('COM_KUNENA_SHOW_8_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 12, Text::_('COM_KUNENA_SHOW_12_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 24, Text::_('COM_KUNENA_SHOW_24_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 48, Text::_('COM_KUNENA_SHOW_48_HOURS'));
+		$options[]        = HTMLHelper::_('select.option', 168, Text::_('COM_KUNENA_SHOW_WEEK'));
+		$options[]        = HTMLHelper::_('select.option', 720, Text::_('COM_KUNENA_SHOW_MONTH'));
+		$options[]        = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->user->userListtime), 'kuserlisttime'
 		);
@@ -116,10 +117,10 @@ class KunenaAdminViewUser extends KunenaView
 		{
 			$item             = new StdClass;
 			$item->name       = 'socialshare';
-			$item->label      = JText::_('COM_KUNENA_USER_SOCIALSHARE');
+			$item->label      = Text::_('COM_KUNENA_USER_SOCIALSHARE');
 			$options          = array();
-			$options[]        = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-			$options[]        = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+			$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+			$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 			$item->field      = HTMLHelper::_('select.genericlist', $options, 'social', 'class="kinputbox form-control" size="1"', 'value',
 				'text', $this->escape($this->user->socialshare), 'ksocialshare'
 			);
@@ -140,7 +141,7 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'users');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		JToolbarHelper::spacer();
 		JToolbarHelper::apply('apply');
 		JToolbarHelper::spacer();
@@ -169,7 +170,7 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'users');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolbarHelper::spacer();

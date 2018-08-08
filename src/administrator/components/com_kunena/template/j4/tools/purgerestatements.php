@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -31,11 +32,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
-						<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
 						<table class="table table-bordered table-striped">
 							<tr>
 								<td>
-									<p><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
+									<p><?php echo Text::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
 									<input type="text" name="re_string" value=""/>
 								</td>
 							</tr>

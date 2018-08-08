@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -79,31 +80,31 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 
 		$this->logo = KunenaFactory::getTemplate()->getImagePath('icons/kunena-logo-48-white.png');
 
-		$this->intro = JText::sprintf('COM_KUNENA_CREDITS_INTRO', 'https://www.kunena.org/team');
+		$this->intro = Text::sprintf('COM_KUNENA_CREDITS_INTRO', 'https://www.kunena.org/team');
 
 		$this->memberList = array(
 			array(
 				'name'  => 'Florian Dal Fitto',
 				'url'   => 'https://www.kunena.org/forum/user/1288-xillibit',
-				'title' => JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'),),
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),),
 			array(
 				'name'  => 'Jelle Kok',
 				'url'   => 'https://www.kunena.org/forum/user/634-810',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'), JText::_('COM_KUNENA_CREDITS_DESIGN')),),
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), Text::_('COM_KUNENA_CREDITS_DESIGN')),),
 			array(
 				'name'  => 'Richard Binder',
 				'url'   => 'https://www.kunena.org/forum/user/2198-rich',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING')),),
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_MODERATION'), Text::_('COM_KUNENA_CREDITS_TESTING')),),
 			array(
 				'name'  => 'Matias Griese',
 				'url'   => 'https://www.kunena.org/forum/user/63-matias',
-				'title' => JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'),),
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),),
 			array(
 				'name'  => 'Oliver Ratzesberger',
 				'url'   => 'https://www.kunena.org/forum/user/64-fxstein',
-				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER'),),
+				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'),),
 		);
-		$this->thanks     = JText::sprintf(
+		$this->thanks     = Text::sprintf(
 			'COM_KUNENA_CREDITS_THANKS', 'https://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'https://www.kunena.org',
 			'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
@@ -136,7 +137,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
+				$title = Text::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
 				$this->setTitle($title);
 			}
 

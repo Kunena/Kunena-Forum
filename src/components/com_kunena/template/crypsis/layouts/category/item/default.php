@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $categoryActions = $this->getCategoryActions();
 $cols            = empty($this->checkbox) ? 7 : 6;
@@ -69,13 +70,13 @@ $this->addStyleSheet('assets/css/rating.css');
 					</a>
 				</td>
 				<td class="span<?php echo $cols ?>">
-					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span2 hidden-phone">
-					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
 				<td class="span3 hidden-phone">
-					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+					<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php if (!empty($this->topicActions)) : ?>
 					<td class="span1 center">
@@ -118,7 +119,7 @@ $this->addStyleSheet('assets/css/rating.css');
 							{
 								echo HTMLHelper::_(
 									'kunenaforum.link', $this->moreUri,
-									JText::_('COM_KUNENA_MORE'), null, null, 'follow');
+									Text::_('COM_KUNENA_MORE'), null, null, 'follow');
 							} ?>
 
 							<?php if (!empty($this->topicActions)) : ?>
@@ -128,7 +129,7 @@ $this->addStyleSheet('assets/css/rating.css');
 
 								<?php if ($this->actionMove) : ?>
 									<?php
-									$options = array(HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+									$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 									echo HTMLHelper::_(
 										'kunenaforum.categorylist', 'target', 0, $options, array(),
 										' disabled="disabled"', 'value', 'text', 0,
@@ -136,14 +137,14 @@ $this->addStyleSheet('assets/css/rating.css');
 									);
 									?>
 									<button class="btn" name="kcheckgo"
-									        type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+									        type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 								<?php endif; ?>
 							<?php endif; ?>
 						</div>
 					</td>
 				</tr>
 			<?php else:
-				echo JText::_('COM_KUNENA_VIEW_NO_TOPICS');
+				echo Text::_('COM_KUNENA_VIEW_NO_TOPICS');
 			endif; ?>
 			</tfoot>
 			<?php endif; ?>

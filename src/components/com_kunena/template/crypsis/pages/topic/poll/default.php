@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Topic/Poll');
 
@@ -26,11 +27,11 @@ foreach ($parents as $parent)
 }
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_TOPIC'),
+	Text::_('COM_KUNENA_MENU_TOPIC'),
 	$content->topic->getUri()
 );
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_POLL_STATS_NAME'),
+	Text::_('COM_KUNENA_POLL_STATS_NAME'),
 	$content->uri
 );
 

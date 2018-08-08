@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutUserItem
@@ -37,7 +38,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		if ($myProfile)
 		{
 			$tab          = new stdClass;
-			$tab->title   = JText::_('COM_KUNENA_PROFILE_EDIT_USER');
+			$tab->title   = Text::_('COM_KUNENA_PROFILE_EDIT_USER');
 			$tab->content = $this->subRequest('User/Edit/User');
 			$tab->active  = true;
 			$tabs['User'] = $tab;
@@ -46,7 +47,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		if ($myProfile)
 		{
 			$tab             = new stdClass;
-			$tab->title      = JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
+			$tab->title      = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
 			$tab->content    = $this->subRequest('User/Edit/Profile');
 			$tab->active     = false;
 			$tabs['profile'] = $tab;
@@ -57,7 +58,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
 			{
 				$tab            = new stdClass;
-				$tab->title     = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
+				$tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
 				$tab->content   = $this->subRequest('User/Edit/Avatar');
 				$tab->active    = false;
 				$tabs['avatar'] = $tab;
@@ -67,7 +68,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		if ($myProfile)
 		{
 			$tab              = new stdClass;
-			$tab->title       = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
+			$tab->title       = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
 			$tab->content     = $this->subRequest('User/Edit/Settings');
 			$tab->active      = false;
 			$tabs['settings'] = $tab;

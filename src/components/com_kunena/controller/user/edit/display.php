@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserEditDisplay
@@ -54,7 +55,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');
@@ -63,7 +64,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
-		$this->headerText = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 	}
 
 	/**

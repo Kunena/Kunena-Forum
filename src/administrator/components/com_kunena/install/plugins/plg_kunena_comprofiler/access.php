@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 require_once dirname(__FILE__) . '/integration.php';
 
@@ -158,12 +159,12 @@ class KunenaAccessComprofiler
 			if (!$options)
 			{
 				$selected  = 0;
-				$options[] = HTMLHelper::_('select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
+				$options[] = HTMLHelper::_('select.option', 0, Text::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
 			}
 
 			$html ['communitybuilder']['access'] = array(
-				'title' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
+				'title' => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
 				'input' => HTMLHelper::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}

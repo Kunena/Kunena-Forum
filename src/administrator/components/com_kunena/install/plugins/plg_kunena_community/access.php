@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAccessCommunity
@@ -161,8 +162,8 @@ class KunenaAccessCommunity
 			}
 
 			$html ['jomsocial']['access'] = array(
-				'title' => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
-				'desc'  => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
+				'title' => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
+				'desc'  => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
 				'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected),
 			);
 		}

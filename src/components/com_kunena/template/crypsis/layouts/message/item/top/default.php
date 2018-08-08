@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-
+use Joomla\CMS\Language\Text;
 $message              = $this->message;
 $topic                = $message->getTopic();
 $category             = $message->getCategory();
@@ -43,7 +43,7 @@ else
 		<?php if ($message->modified_time) : ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); endif; ?>
 		<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
 		   rel="canonical">#<?php echo $this->numLink; ?></a>
-		<span class="visible-phone"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+		<span class="visible-phone"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 	</small>
 	<div class="horizontal-message">
 		<div class="profile-horizontal-top">
@@ -54,13 +54,13 @@ else
 				<?php
 				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo JText::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
 			<div class="kmsg">
 				<?php if (!$this->me->userid && !$isReply) :
 					echo $message->displayField('message');
 				else:
-					echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+					echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 				endif; ?>
 			</div>
 
@@ -91,7 +91,7 @@ else
 
 <?php if (!empty($attachments)) : ?>
 	<div class="kattach">
-		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<h5> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
 			<?php foreach ($attachments as $attachment) : ?>
 				<?php if ($attachment->isAudio()) :
@@ -112,11 +112,11 @@ else
 	{
 		if ($attachs->image > 1)
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 		}
 		else
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
 		}
 	}
 
@@ -124,11 +124,11 @@ else
 	{
 		if ($attachs->file > 1)
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 		}
 		else
 		{
-			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
 		}
 	}
 endif; ?>
@@ -141,12 +141,12 @@ endif; ?>
 		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
 	} ?>
 	<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
-		<?php echo JText::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
+		<?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
 		<?php
 
 		if ($message->modified_reason)
 		{
-			echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
+			echo Text::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
 		} ?>
 	</div>
 <?php endif; ?>
@@ -154,11 +154,11 @@ endif; ?>
 <?php if (!empty($this->thankyou)) : ?>
 	<div class="kmessage-thankyou">
 		<?php
-		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+		echo Text::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
 
 		if ($this->more_thankyou)
 		{
-			echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+			echo Text::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
 		}
 		?>
 	</div>

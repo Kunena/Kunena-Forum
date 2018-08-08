@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class plgSystemKunena
@@ -58,17 +59,19 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
 
-		if ($format != 'feed')
+		if (!empty($format) && $format != 'html')
 		{
-			if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+			if ($app->scope == 'com_kunena')
 			{
-				$styles = <<<EOF
+				if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+				{
+					$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
 		#kunena + div { display: block !important;}
 EOF;
 
-				$document = Factory::getDocument();
-				$document->addStyleDeclaration($styles);
+					KunenaTemplate::getInstance()->addStyleDeclaration($styles);
+				}
 			}
 
 			if (!method_exists(KunenaControllerApplicationDisplay::class, 'poweredBy'))
@@ -189,8 +192,8 @@ EOF;
 		$app = Factory::getApplication();
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.',
 			KunenaForum::version(), $manifest->version), 'warning');
-		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
-		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))));
+		$app->enqueueMessage(Text::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
+		$app->enqueueMessage(Text::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', Text::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
 
 		return true;

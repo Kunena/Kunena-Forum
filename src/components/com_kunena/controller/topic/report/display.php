@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicReportDisplay
@@ -63,13 +64,13 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 		if (!$this->config->reportmsg)
 		{
 			// Deny access if report feature has been disabled.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (!$me->exists())
 		{
 			// Deny access if user is guest.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		if (!$mesid)
@@ -116,7 +117,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_REPORT_TO_MODERATOR'));
+				$this->setTitle(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
 			}
 
 			if (!empty($params_keywords))
@@ -126,7 +127,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 			}
 			else
 			{
-				$this->setKeywords(JText::_('COM_KUNENA_REPORT_TO_MODERATOR'));
+				$this->setKeywords(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
 			}
 
 			if (!empty($params_description))
@@ -136,7 +137,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 			}
 			else
 			{
-				$this->setDescription(JText::_('COM_KUNENA_REPORT_TO_MODERATOR'));
+				$this->setDescription(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
 			}
 		}
 	}

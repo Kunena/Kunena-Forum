@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Announcements Controller
@@ -40,7 +41,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -89,7 +90,7 @@ class KunenaControllerAnnouncement extends KunenaController
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, array('id' => $announcement->id));
 				}
 
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
 			}
 		}
 
@@ -105,7 +106,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -154,7 +155,7 @@ class KunenaControllerAnnouncement extends KunenaController
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, array('id' => $announcement->id));
 				}
 
-				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
 			}
 		}
 
@@ -185,7 +186,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -226,7 +227,7 @@ class KunenaControllerAnnouncement extends KunenaController
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, array('id' => $announcement->id));
 				}
 
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_ANN_DELETED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
 			}
 		}
 
@@ -242,7 +243,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -292,7 +293,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, array('id' => $announcement->id));
 		}
 
-		$this->app->enqueueMessage(JText::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));
+		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));
 		$this->setRedirect($announcement->getUrl('default', false));
 	}
 }

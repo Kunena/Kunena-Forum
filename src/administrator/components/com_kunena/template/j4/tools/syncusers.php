@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -31,27 +32,27 @@ use Joomla\CMS\HTML\HTMLHelper;
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
-						<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?></legend>
 						<table class="table table-bordered table-striped">
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
 								<td><input type="checkbox" checked="checked" name="useradd" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DEL'); ?></td>
 								<td><input type="checkbox" name="userdel" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DEL_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
 								<td><input type="checkbox" name="userrename" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
 							</tr>
 							<tr>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DELLIFE'); ?></td>
 								<td><input type="checkbox" name="userdellife" value="1"/></td>
-								<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE_DESC'); ?></td>
+								<td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DELLIFE_DESC'); ?></td>
 							</tr>
 						</table>
 					</fieldset>

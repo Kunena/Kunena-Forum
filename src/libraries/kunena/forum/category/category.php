@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumCategory
@@ -509,7 +510,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			// Unknown action - throw invalid argument exception.
 			if (!isset(self::$actions[$action]))
 			{
-				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+				throw new InvalidArgumentException(Text::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 			}
 
 			// Load custom authorisation from the plugins (except for admins and moderators).
@@ -524,7 +525,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			{
 				// Plugin forces authorisation to fail.
 				// TODO: allow plugin to customise the error.
-				$this->_authcache[$user->userid][$action] = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), $user->userid ? 403 : 401);
+				$this->_authcache[$user->userid][$action] = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->userid ? 403 : 401);
 			}
 			else
 			{
@@ -580,18 +581,18 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Checks if user can read category
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (empty($catids[$this->id]))
 		{
 			if ($user->exists())
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
 			else
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 			}
 		}
 
@@ -638,7 +639,14 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$params = '&catid=' . (int) $this->id;
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml);
+			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			{
+				return KunenaRoute::_( "/index.php?option=com_kunena&view=rss{$params}"). '?format=feed&type=rss';
+			}
+			else
+			{
+				return KunenaRoute::_("index.php?option=com_kunena&view=rss{$params}?format=feed&type=rss", $xhtml);
+			}
 		}
 
 		return;
@@ -924,7 +932,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if (!$parent->exists())
 		{
-			$parent->name    = JText::_('COM_KUNENA_TOPLEVEL');
+			$parent->name    = Text::_('COM_KUNENA_TOPLEVEL');
 			$parent->_exists = true;
 		}
 
@@ -1184,7 +1192,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 			if ($this->checkAlias($this->alias) === false)
 			{
-				$this->setError(JText::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias));
+				$this->setError(Text::sprintf('COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias));
 
 				return false;
 			}
@@ -1703,11 +1711,11 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 			if (!$banned->isLifetime())
 			{
-				return new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+				return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
 			else
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 			}
 		}
 
@@ -1726,7 +1734,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
 		return;
@@ -1746,12 +1754,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if (!$config->allowsubscriptions || $config->topic_subscriptions == 'disabled')
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
 
 		return;
@@ -1771,12 +1779,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if (!$config->allowsubscriptions || $config->category_subscriptions == 'disabled')
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
 
 		return;
@@ -1794,12 +1802,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if user is guest and they can create or reply topics
 		if (!KunenaFactory::getConfig()->allowfavorites)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
 		}
 
 		return;
@@ -1816,7 +1824,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if category is not a section
 		if ($this->isSection())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
 		}
 
 		return;
@@ -1848,7 +1856,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if (!isset($channels[$this->id]))
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
 		}
 
 		return;
@@ -1866,7 +1874,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check that category is not locked or that user is a moderator
 		if ($this->locked && (!$user->userid || !$user->isModerator($this)))
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
 		}
 
 		return;
@@ -1884,12 +1892,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check that user is moderator
 		if (!$user->userid)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator($this))
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
 		return;
@@ -1907,12 +1915,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check that user is a global moderator
 		if (!$user->userid)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
 		}
 
 		return;
@@ -1930,12 +1938,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check that user is admin
 		if (!$user->userid)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 401);
 		}
 
 		if (!$user->isAdmin($this))
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
 		}
 
 		return;
@@ -1953,13 +1961,13 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if polls are enabled at all
 		if (!KunenaFactory::getConfig()->pollenabled)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED'), 403);
 		}
 
 		// Check if polls are not enabled in this category
 		if (!$this->allow_polls)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}
 
 		return;
@@ -1976,7 +1984,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if user is guest
 		if ($user->userid == 0)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
 		}
 
 		return;
@@ -1994,7 +2002,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Check if attachments are allowed
 		if (KunenaAttachmentHelper::getExtensions($this, $user) === false)
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
 
 		return;
@@ -2013,15 +2021,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			if ($count > 1)
 			{
-				return JText::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($count));
+				return Text::plural('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($count));
 			}
 			else
 			{
-				return JText::plural('COM_KUNENA_X_TOPICS_1', $count);
+				return Text::plural('COM_KUNENA_X_TOPICS_1', $count);
 			}
 		}
 
-		return JText::_('COM_KUNENA_X_TOPICS_0');
+		return Text::_('COM_KUNENA_X_TOPICS_0');
 	}
 
 	/**
@@ -2052,11 +2060,11 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		}
 		elseif ($number >= 1000000)
 		{
-			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
+			$output = $number / 1000000 . Text::_('COM_KUNENA_MILLION');
 		}
 		else
 		{
-			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
+			$output = $number / 1000 . Text::_('COM_KUNENA_THOUSAND');
 		}
 
 		return $output;

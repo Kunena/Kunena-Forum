@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  *
@@ -112,6 +114,6 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$actions       = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 
-		$this->headerText = JText::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
+		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}
 }

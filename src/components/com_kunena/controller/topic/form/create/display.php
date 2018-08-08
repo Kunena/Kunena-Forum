@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicFormCreateDisplay
@@ -108,13 +109,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		// FIXME: We need to proxy this...
-		$this->document = Factory::getDocument();
-		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
@@ -154,7 +154,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if (!$this->topic->category_id)
 		{
-			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+			throw new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
@@ -163,7 +163,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->config->pickup_category)
 		{
-			$options[] = HTMLHelper::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
+			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
 		}
 
@@ -200,7 +200,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->canSubscribe = $this->canSubscribe();
 
-		$this->headerText = JText::_('COM_KUNENA_NEW_TOPIC');
+		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
 
 		return true;
 	}
@@ -217,8 +217,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = Factory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$this->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)
 		{
@@ -261,7 +260,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

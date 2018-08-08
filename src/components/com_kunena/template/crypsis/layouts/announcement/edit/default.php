@@ -11,13 +11,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
-	<?php echo $this->announcement->exists() ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
+	<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
+	<?php echo $this->announcement->exists() ? Text::_('COM_KUNENA_ANN_EDIT') : Text::_('COM_KUNENA_ANN_ADD'); ?>
 </h2>
 
 <div class="well well-small">
@@ -29,34 +30,34 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 		<div class="control-group">
 			<label class="control-label" for="ann-title">
-				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
 			</label>
 			<div class="controls" id="ann-title">
-				<?php echo $this->displayInput('title', 'class="input-xxlarge" required placeholder="' . JText::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_TITLE') . '"'); ?>
+				<?php echo $this->displayInput('title', 'class="input-xxlarge" required placeholder="' . Text::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_TITLE') . '"'); ?>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="ann-short">
-				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_SORTTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-short">
-				<?php echo $this->displayInput('sdescription', 'rows="9" class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
+				<?php echo $this->displayInput('sdescription', 'rows="9" class="input-xxlarge" required placeholder="' . Text::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="ann-long">
-				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="12" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
+				<?php echo $this->displayInput('description', 'rows="12" class="input-xxlarge" placeholder="' . Text::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="ann-date">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
 			</label>
 			<div class="controls" id="ann-date">
 				<div class="input-append date">
@@ -67,7 +68,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 		<div class="control-group">
 			<label class="control-label" for="ann-date2">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE_UP'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_DATE_UP'); ?>
 			</label>
 			<div class="controls" id="ann-date2">
 				<div class="input-append date">
@@ -78,7 +79,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 		<div class="control-group">
 			<label class="control-label" for="ann-date3">
-				<?php echo JText::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
 			</label>
 			<div class="controls" id="ann-date3">
 				<div class="input-append date">
@@ -89,7 +90,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 		<div class="control-group">
 			<label class="control-label" for="ann-showdate">
-				<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_SHOWDATE'); ?>
 			</label>
 			<div class="controls" id="ann-showdate">
 				<?php echo $this->displayInput('showdate'); ?>
@@ -98,7 +99,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 		<div class="control-group">
 			<label class="control-label" for="ann-publish">
-				<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+				<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 			</label>
 			<div class="controls" id="ann-publish">
 				<?php echo $this->displayInput('published'); ?>
@@ -108,9 +109,9 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 		<div class="control-group">
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
-				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
+				       value="<?php echo Text::_('COM_KUNENA_SAVE'); ?>"/>
 				<input onclick="window.history.back();" name="cancel" class="btn" type="button"
-				       value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
+				       value="<?php echo Text::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>
 	</form>

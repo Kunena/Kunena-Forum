@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 /**
@@ -110,7 +111,7 @@ function kunena_200_2011_12_14_aliases($parent)
 		}
 	}
 
-	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true);
+	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true);
 }
 
 /**

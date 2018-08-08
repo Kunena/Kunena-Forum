@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\String\StringHelper;
+use Joomla\CMS\Language\Text;
 
 class KunenaActivityEasySocial extends KunenaActivity
 {
@@ -69,7 +70,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
 		{
-			$this->assignBadge('thread.new', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
+			$this->assignBadge('thread.new', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
 		}
 
 		$stream = FD::stream();
@@ -107,7 +108,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 		// Assign badge for replying to a thread
 		if ($length > $this->params->get('activity_badge_limit', 0))
 		{
-			$this->assignBadge('thread.reply', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'));
+			$this->assignBadge('thread.reply', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'));
 		}
 
 		$stream = FD::stream();
@@ -236,7 +237,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			$this->assignPoints('thread.thanks', $target);
 		}
 
-		$this->assignBadge('thread.thanks', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_THANKED_TITLE'), $target);
+		$this->assignBadge('thread.thanks', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_THANKED_TITLE'), $target);
 
 		$tmpl = FD::stream()->getTemplate();
 

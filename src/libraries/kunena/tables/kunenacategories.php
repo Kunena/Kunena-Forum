@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -352,11 +354,11 @@ class TableKunenaCategories extends KunenaTable
 		{
 			if ($this->id == $this->parent_id)
 			{
-				$this->setError(JText::_('COM_KUNENA_FORUM_SAME_ERR'));
+				$this->setError(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
 			elseif ($this->isChild($this->parent_id))
 			{
-				$this->setError(JText::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
+				$this->setError(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
 		}
 
@@ -364,7 +366,7 @@ class TableKunenaCategories extends KunenaTable
 
 		if (!$this->name)
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
+			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
 		if ($this->params instanceof \Joomla\Registry\Registry)
@@ -411,7 +413,7 @@ class TableKunenaCategories extends KunenaTable
 			{
 				if (in_array($id, $recurse))
 				{
-					$this->setError(get_class($this) . JText::_('COM_KUNENA_RECURSION'));
+					$this->setError(get_class($this) . Text::_('COM_KUNENA_RECURSION'));
 
 					return 0;
 				}
@@ -420,7 +422,7 @@ class TableKunenaCategories extends KunenaTable
 
 				if (!isset($list [$id]))
 				{
-					$this->setError(get_class($this) . JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
+					$this->setError(get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
 
 					return 0;
 				}

@@ -35,10 +35,7 @@
                     <option value="index_top">index_top</option>
                     <option value="topic_top">topic_top</option>
                     <option value="topic_list_default">topic_list_default</option>
-                </field>
-                <field name="jcontentevent_plugins" type="list" multiple="true" default=""
-                       label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_PLUGINS"
-                       description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_PLUGINS_DESC" class="inputbox">
+                    <option value="message">messages</option>
                 </field>
             </fieldset>
         </fields>

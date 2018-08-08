@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+use Joomla\CMS\Language\Text;
 
 $title    = $this->title;
 $url      = $this->url;
@@ -24,15 +25,15 @@ $size     = $this->size;
 		:
 		?>
 
-		<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
+		<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
 		<a href="<?php echo $url; ?>" title="<?php echo $this->escape($filename); ?>">
 			<?php echo $this->escape(KunenaAttachmentHelper::shortenFilename($filename)); ?>
 		</a>
 
 		<br/>
 
-		<?php echo JText::_('COM_KUNENA_FILESIZE') . number_format($size / 1024, 0, '', ',') . ' ' .
-		JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+		<?php echo Text::_('COM_KUNENA_FILESIZE') . number_format($size / 1024, 0, '', ',') . ' ' .
+		Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 
 	<?php endif; ?>
 </div>

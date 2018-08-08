@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $icon            = KunenaFactory::getTemplate()->getTopicLabel($this->topic);
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
@@ -35,5 +35,5 @@ else
 		?>
 		<?php echo $icons ?>
 	<?php endif; ?>
-	<span class="sr-only"></span><?php echo JText::_($icon->name); ?>
+	<span class="sr-only"></span><?php echo Text::_($icon->name); ?>
 </span>

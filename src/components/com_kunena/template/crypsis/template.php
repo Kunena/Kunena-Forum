@@ -10,7 +10,6 @@
  * @link            https://www.kunena.org
  **/
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 defined('_JEXEC') or die;
@@ -71,7 +70,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
-		$this->addStyleSheet('kunena.css');
+		$this->addLessSheet('kunena.css');
 
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
 
@@ -89,17 +88,16 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		}
 
 		$bootstrap = $ktemplate->params->get('bootstrap');
-		$doc       = Factory::getDocument();
 
 		if ($bootstrap)
 		{
-			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
-			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
+			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
 			if ($ktemplate->params->get('icomoon'))
 			{
-				$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
+				$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
 
@@ -107,8 +105,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$doc->addScript('https://use.fontawesome.com/releases/v5.1.0/js/all.js', array(), array('defer' => true));
-			$doc->addScript('https://use.fontawesome.com/releases/v5.1.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings
@@ -142,23 +140,7 @@ EOF;
 EOF;
 		}
 
-		$document = Factory::getDocument();
-		$document->addStyleDeclaration($styles);
-
+		$this->addStyleDeclaration($styles);
 		parent::initialize();
-	}
-
-	/**
-	 * @param   string $filename filename
-	 * @param   string $group    group
-	 *
-	 * @return \Joomla\CMS\Document\Document
-	 * @since Kunena
-	 */
-	public function addStyleSheet($filename, $group = 'forum')
-	{
-		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-
-		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 }

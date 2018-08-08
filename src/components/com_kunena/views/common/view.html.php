@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.cache.handler.output');
 jimport('joomla.document.html.html');
@@ -54,7 +55,7 @@ class KunenaViewCommon extends KunenaView
 
 		if (!$layout)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_PAGE'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
 		}
 
 		return $this->displayLayout($layout, $tpl);
@@ -163,7 +164,7 @@ class KunenaViewCommon extends KunenaView
 		}
 
 		$options            = array();
-		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
@@ -227,7 +228,7 @@ class KunenaViewCommon extends KunenaView
 
 			if ($view == 'announcement')
 			{
-				$pathway->addItem(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'), KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list"));
+				$pathway->addItem(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'), KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list"));
 			}
 			elseif ($id)
 			{
@@ -244,19 +245,19 @@ class KunenaViewCommon extends KunenaView
 					case 'create':
 						if ($active_layout != 'create')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_NEW')));
+							$pathway->addItem($this->escape(Text::_('COM_KUNENA_NEW')));
 						}
 						break;
 					case 'reply':
 						if ($active_layout != 'reply')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY')));
+							$pathway->addItem($this->escape(Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY')));
 						}
 						break;
 					case 'edit':
 						if ($active_layout != 'edit')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_EDIT')));
+							$pathway->addItem($this->escape(Text::_('COM_KUNENA_EDIT')));
 						}
 						break;
 				}
@@ -311,26 +312,26 @@ class KunenaViewCommon extends KunenaView
 
 		if ($onlineusers['user'] == 1)
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
 		}
 		else
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
 		}
 
-		$who .= JText::_('COM_KUNENA_WHO_AND');
+		$who .= Text::_('COM_KUNENA_WHO_AND');
 		$who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
 
 		if ($onlineusers['guest'] == 1)
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
 		}
 		else
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who                 .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
 		$this->onlineList = array();
@@ -393,10 +394,10 @@ class KunenaViewCommon extends KunenaView
 		$this->kunena_stats     = $kunena_stats;
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
-		$this->statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');
+		$this->statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
 		$this->usercountLink    = $this->getUserlistLink('', $this->memberCount);
-		$this->userlistLink     = $this->getUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
-		$this->moreLink         = $this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
+		$this->userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
+		$this->moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
 
 		$result = $this->loadTemplateFile($tpl);
 
@@ -439,8 +440,8 @@ class KunenaViewCommon extends KunenaView
 			if (isset($rss_params))
 			{
 				$document = Factory::getDocument();
-				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
-				$this->rss = $this->getRSSLink($this->getIcon('krss', JText::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
+				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
+				$this->rss = $this->getRSSLink($this->getIcon('krss', Text::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
 		}
 
@@ -559,12 +560,12 @@ class KunenaViewCommon extends KunenaView
 				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
-				// $this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
+				// $this->editProfileLink = '<a href="' . $url.'">'. Text::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
 				// Announcements
 				if ($this->me->isModerator())
 				{
-					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list') . '">' . JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
+					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
 				}
 			}
 
@@ -605,7 +606,7 @@ class KunenaViewCommon extends KunenaView
 		if ($private)
 		{
 			$count                     = $private->getUnreadCount($this->me->userid);
-			$this->privateMessagesLink = $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX'));
+			$this->privateMessagesLink = $private->getInboxLink($count ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : Text::_('COM_KUNENA_PMS_INBOX'));
 		}
 	}
 
@@ -657,7 +658,7 @@ class KunenaViewCommon extends KunenaView
 					break;
 			}
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}{$params}", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}{$params}?format=feed&type=rss", $xhtml);
 		}
 	}
 

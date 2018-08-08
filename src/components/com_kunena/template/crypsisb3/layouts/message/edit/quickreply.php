@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 
 $message = $this->message;
@@ -37,8 +38,8 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_topicicontype', '');
-Factory::getDocument()->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
+$this->addScriptOptions('com_kunena.kunena_topicicontype', '');
+$this->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/edit.js');
 
@@ -110,7 +111,7 @@ $editor   = $template->params->get('editor');
 											aria-hidden="true">×</span><span
 											class="sr-only">Close</span></button>
 								<h3>
-									<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
+									<?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 								</h3>
 							</div>
 
@@ -118,19 +119,19 @@ $editor   = $template->params->get('editor');
 								<?php if (!$me->exists()) : ?>
 									<div class="form-group">
 										<label class="col-md-12 control-label" style="padding:0;">
-											<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
+											<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
 										</label>
 										<input type="text" name="authorname" class="form-control" maxlength="35"
-										       placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value=""
+										       placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value=""
 										       required/>
 									</div>
 								<?php endif; ?>
 
 								<?php if ($config->askemail && !$me->exists()): ?>
 									<div class="form-group">
-										<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+										<?php echo $config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 										<input type="text" id="email" name="email"
-										       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
+										       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
 										       class="inputbox col-md-12 form-control" maxlength="45" value=""
 										       required/>
 									</div>
@@ -139,7 +140,7 @@ $editor   = $template->params->get('editor');
 								<div class="form-group">
 									<label for="kanonymous<?php echo intval($message->id); ?>"
 									       class="col-md-12 control-label" style="padding:0;">
-										<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
+										<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 									</label>
 									<input type="text" id="subject" name="subject" class="form-control"
 									       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
@@ -148,7 +149,7 @@ $editor   = $template->params->get('editor');
 								</div>
 								<div class="form-group">
 									<label class="col-md-12 control-label" style="padding:0;">
-										<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
+										<?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
 									</label>
 									<?php if ($editor == 1)
 									{
@@ -156,7 +157,7 @@ $editor   = $template->params->get('editor');
 									}
 									else
 									{
-										echo '<textarea class="qreply form-control test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . JText::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+										echo '<textarea class="qreply form-control test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 									} ?>
 								</div>
 
@@ -171,7 +172,7 @@ $editor   = $template->params->get('editor');
 												echo 'checked="checked"';
 											} ?> />
 											<label class="string optional col-md-12 control-label" style="padding:0;"
-											       for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+											       for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 										</div>
 									</div>
 								<?php endif; ?>
@@ -184,14 +185,14 @@ $editor   = $template->params->get('editor');
 											       value="1"
 											       class="kinputbox postinput form-control" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
 											<label for="kanonymous<?php echo intval($message->id); ?>">
-												<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
+												<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
 											</label>
 										</div>
 									</div>
 								<?php endif; ?>
 								<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
 								   role="button" class="btn btn-default btn-small btn-link pull-right"
-								   rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+								   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 								<br/>
 							</div>
 							<?php if (!empty($this->quickcaptchaEnabled)) : ?>
@@ -200,14 +201,14 @@ $editor   = $template->params->get('editor');
 								</div>
 							<?php endif; ?>
 							<div class="modal-footer">
-								<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
+								<small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
 								<input type="submit" class="btn btn-primary kreply-submit" name="submit"
-								       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
-								       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
+								       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
+								       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
 								<?php //TODO: remove data on cancel. ?>
 								<input type="reset" name="reset" class="btn btn-default kreply-cancel"
-								       value="<?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>"
-								       title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
+								       value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
+								       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
 								       data-dismiss="modal" aria-hidden="true"/>
 							</div>
 							<input type="hidden" id="kurl_emojis" name="kurl_emojis"

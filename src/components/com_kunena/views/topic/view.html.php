@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 /**
@@ -97,7 +98,7 @@ class KunenaViewTopic extends KunenaView
 		elseif (!$this->topic)
 		{
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
-			$errors[] = JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP');
+			$errors[] = Text::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP');
 		}
 		elseif (!$this->topic->isAuthorised('read'))
 		{
@@ -132,7 +133,7 @@ class KunenaViewTopic extends KunenaView
 
 		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists())
 		{
-			$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
+			$this->displayError(array(Text::_('COM_KUNENA_NO_ACCESS')), 404);
 
 			return;
 		}
@@ -303,7 +304,7 @@ class KunenaViewTopic extends KunenaView
 
 		if (!$this->topic->category_id)
 		{
-			$msg = JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
+			$msg = Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
 			$this->app->enqueueMessage($msg, 'notice');
 
 			return false;
@@ -314,7 +315,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->pickup_category)
 		{
-			$options[] = HTMLHelper::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
+			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
 		}
 
@@ -536,12 +537,12 @@ class KunenaViewTopic extends KunenaView
 
 			if ($this->config->showkarma && $this->profile->userid)
 			{
-				$this->userkarma_title = JText::_('COM_KUNENA_KARMA') . ": " . $this->profile->karma;
+				$this->userkarma_title = Text::_('COM_KUNENA_KARMA') . ": " . $this->profile->karma;
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$this->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$this->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$this->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$this->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 
@@ -744,7 +745,7 @@ class KunenaViewTopic extends KunenaView
 		elseif (!$this->me->isModerator($this->topic->getCategory()))
 		{
 			// User is not allowed to write a post
-			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : JText::_('COM_KUNENA_VIEW_DISABLED'));
+			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : Text::_('COM_KUNENA_VIEW_DISABLED'));
 		}
 
 		// Thank you
@@ -862,7 +863,7 @@ class KunenaViewTopic extends KunenaView
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$thankyou_delete  = $canUnthankyou === true ? ' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
+					$thankyou_delete  = $canUnthankyou === true ? ' <a title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
 						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>' : '';
 					$this->thankyou[] = $loaded_users[$userid]->getLink() . $thankyou_delete;
 				}
@@ -882,7 +883,7 @@ class KunenaViewTopic extends KunenaView
 			}
 			else
 			{
-				$this->reportMessageLink = HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
+				$this->reportMessageLink = HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), Text::_('COM_KUNENA_REPORT'), Text::_('COM_KUNENA_REPORT'));
 			}
 		}
 
@@ -1233,8 +1234,8 @@ class KunenaViewTopic extends KunenaView
 
 			if ($type == 'default')
 			{
-				$this->headerText = JText::_('COM_KUNENA_MENU_LATEST_DESC');
-				$this->title      = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+				$this->headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
+				$this->title      = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 
 				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
 				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
@@ -1246,7 +1247,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$title = JText::sprintf($this->topic->subject) . " ({$page}/{$pages})";
+					$title = Text::sprintf($this->topic->subject) . " ({$page}/{$pages})";
 					$this->setTitle($title);
 				}
 
@@ -1291,7 +1292,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->title = JText::_('COM_KUNENA_POST_NEW_TOPIC');
+					$this->title = Text::_('COM_KUNENA_POST_NEW_TOPIC');
 					$this->setTitle($this->title);
 				}
 
@@ -1302,7 +1303,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$keywords = JText::_('COM_KUNENA_POST_NEW_TOPIC');
+					$keywords = Text::_('COM_KUNENA_POST_NEW_TOPIC');
 					$this->setKeywords($keywords);
 				}
 
@@ -1313,7 +1314,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->setDescription(JText::_('COM_KUNENA_POST_NEW_TOPIC'));
+					$this->setDescription(Text::_('COM_KUNENA_POST_NEW_TOPIC'));
 				}
 			}
 			elseif ($type == 'reply')
@@ -1325,7 +1326,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->title = JText::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
+					$this->title = Text::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
 					$this->setTitle($this->title);
 				}
 
@@ -1336,7 +1337,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$keywords = JText::_('COM_KUNENA_POST_REPLY_TOPIC');
+					$keywords = Text::_('COM_KUNENA_POST_REPLY_TOPIC');
 					$this->setKeywords($keywords);
 				}
 
@@ -1347,7 +1348,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->setDescription(JText::_('COM_KUNENA_POST_REPLY_TOPIC'));
+					$this->setDescription(Text::_('COM_KUNENA_POST_REPLY_TOPIC'));
 				}
 			}
 			elseif ($type == 'edit')
@@ -1359,7 +1360,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->title = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+					$this->title = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 					$this->setTitle($this->title);
 				}
 
@@ -1370,7 +1371,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$keywords = JText::_('COM_KUNENA_POST_EDIT');
+					$keywords = Text::_('COM_KUNENA_POST_EDIT');
 					$this->setKeywords($keywords);
 				}
 
@@ -1381,7 +1382,7 @@ class KunenaViewTopic extends KunenaView
 				}
 				else
 				{
-					$this->setDescription(JText::_('COM_KUNENA_POST_EDIT'));
+					$this->setDescription(Text::_('COM_KUNENA_POST_EDIT'));
 				}
 			}
 		}
@@ -1421,11 +1422,11 @@ class KunenaViewTopic extends KunenaView
 
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 			}
 			else
 			{

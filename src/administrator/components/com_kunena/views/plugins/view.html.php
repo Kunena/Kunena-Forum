@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * View class for a list of plugins.
@@ -60,7 +61,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		JToolbarHelper::spacer();
 		JToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
 		JToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
@@ -83,11 +84,11 @@ class KunenaAdminViewPlugins extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = HTMLHelper::_('select.option', 'enable', JText::_('JSTATUS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'name', JText::_('COM_PLUGINS_NAME_HEADING'));
-		$sortFields[] = HTMLHelper::_('select.option', 'element', JText::_('COM_PLUGINS_ELEMENT_HEADING'));
-		$sortFields[] = HTMLHelper::_('select.option', 'access', JText::_('JGRID_HEADING_ACCESS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'enable', Text::_('JSTATUS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'name', Text::_('COM_PLUGINS_NAME_HEADING'));
+		$sortFields[] = HTMLHelper::_('select.option', 'element', Text::_('COM_PLUGINS_ELEMENT_HEADING'));
+		$sortFields[] = HTMLHelper::_('select.option', 'access', Text::_('JGRID_HEADING_ACCESS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}
@@ -102,8 +103,8 @@ class KunenaAdminViewPlugins extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -118,8 +119,8 @@ class KunenaAdminViewPlugins extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}

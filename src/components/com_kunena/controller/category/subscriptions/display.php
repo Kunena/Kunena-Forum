@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerCategorySubscriptionsDisplay
@@ -61,7 +62,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		if (!$me->exists())
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		$limit = $this->input->getInt('limit', 0);
@@ -117,7 +118,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		$this->pagination = new \Joomla\CMS\Pagination\Pagination($total, $limitstart, $limit);
 
-		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+		$this->headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}
 
 	/**
@@ -129,8 +130,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	public function getActions()
 	{
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options[] = HTMLHelper::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		return $options;
 	}
@@ -147,25 +148,24 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc    = Factory::getDocument();
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -183,7 +183,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+				$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_USER');
 				$this->setTitle($title);
 			}
 
@@ -194,7 +194,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = Text::_('COM_KUNENA_CATEGORIES');
 				$this->setKeywords($keywords);
 			}
 
@@ -205,14 +205,14 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

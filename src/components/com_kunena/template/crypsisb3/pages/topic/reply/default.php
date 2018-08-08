@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Topic/Form/Reply');
 
@@ -31,7 +32,7 @@ $this->addBreadcrumb(
 );
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY'),
+	Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY'),
 	null
 );
 

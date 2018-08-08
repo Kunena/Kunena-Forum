@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Rate Model for Kunena
@@ -45,12 +46,12 @@ class KunenaModelRate extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumRate
+	 * @return KunenaForumTopicRate
 	 * @since Kunena
 	 */
 	public function getNewRate()
 	{
-		return new KunenaForumRate;
+		return new KunenaForumTopicRate;
 	}
 
 	/**
@@ -59,17 +60,7 @@ class KunenaModelRate extends KunenaModel
 	 */
 	public function getRate()
 	{
-		return KunenaForumRateHelper::get($this->getState('item.topicid'));
-	}
-
-	/**
-	 * @return mixed
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getRates()
-	{
-		return KunenaForumRateHelper::getRates($this->getState('list.start'), $this->getState('list.limit'), !$this->me->isModerator());
+		return KunenaForumTopicRateHelper::get($this->getState('item.topicid'));
 	}
 
 	/**
@@ -79,10 +70,10 @@ class KunenaModelRate extends KunenaModel
 	public function getRateActions()
 	{
 		$actions   = array();
-		$actions[] = HTMLHelper::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$actions[] = HTMLHelper::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_RATE_UNPUBLISH'));
-		$actions[] = HTMLHelper::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_RATE_PUBLISH'));
-		$actions[] = HTMLHelper::_('select.option', 'delete', JText::_('COM_KUNENA_BULK_RATE_DELETE'));
+		$actions[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actions[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_BULK_RATE_UNPUBLISH'));
+		$actions[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_BULK_RATE_PUBLISH'));
+		$actions[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_BULK_RATE_DELETE'));
 
 		return $actions;
 	}

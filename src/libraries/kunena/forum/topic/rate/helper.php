@@ -80,4 +80,24 @@ abstract class KunenaForumTopicRateHelper
 
 		return round($db->loadResult());
 	}
+
+	/**
+	 * Return sum of all rates gived to a topics by all users
+	 *
+	 * @param   integer $id id
+	 *
+	 * @return float
+	 * @since Kunena
+	 */
+	public static function getCount($id)
+	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select("(COUNT(rate)) AS selected")
+			->from('#__kunena_rate')
+			->where('topic_id = ' . $db->escape($id));
+		$db->setQuery($query);
+
+		return round($db->loadResult());
+	}
 }

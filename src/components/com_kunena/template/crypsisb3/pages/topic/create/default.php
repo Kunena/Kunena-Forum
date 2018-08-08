@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Topic/Form/Create');
 
@@ -26,7 +27,7 @@ foreach ($parents as $parent)
 }
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_NEW'),
+	Text::_('COM_KUNENA_NEW'),
 	null
 );
 

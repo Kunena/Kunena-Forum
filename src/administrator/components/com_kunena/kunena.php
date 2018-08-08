@@ -11,11 +11,12 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Access check.
 if (!Factory::getUser()->authorise('core.manage', 'com_kunena'))
 {
-	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+	throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 }
 
 // Check if installation hasn't been completed.

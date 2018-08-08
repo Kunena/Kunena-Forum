@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /** @var KunenaAdminViewLogs $this */
 
@@ -46,7 +47,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 		<div class="well well-small">
 			<div class="module-title nav-header">
 				<i class="icon-chart"></i>
-				<?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?>
+				<?php echo Text::_('COM_KUNENA_MENU_STATISTICS') ?>
 			</div>
 			<hr class="hr-condensed">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=statistics'); ?>"
@@ -60,39 +61,39 @@ $filterItem = $this->escape($this->state->get('item.id'));
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<?php echo HTMLHelper::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_STATISTICS_START_DATE'))); ?>
-						<?php echo HTMLHelper::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => JText::_('COM_KUNENA_STATISTICS_END_DATE'))); ?>
+						<?php echo HTMLHelper::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_STATISTICS_START_DATE'))); ?>
+						<?php echo HTMLHelper::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_STATISTICS_END_DATE'))); ?>
 					</div>
 					<div class="btn-group pull-left">
 						<button class="btn tip" type="submit"
-						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
-									class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
+						        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
+									class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 						</button>
 						<button class="btn tip" type="button"
-						        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+						        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 						        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
-									class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
+									class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 						</button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit"
-						       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable"
-						       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 						<select name="directionTable" id="directionTable" class="input-medium"
 						        onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
+							<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 							<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
 						<label for="sortTable"
-						       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
+							<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 							<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 						</select>
 					</div>
@@ -103,26 +104,26 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					<thead>
 					<tr>
 						<th class="">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_NAME') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_NAME') ?>
 						</th>
 						<th class="">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_USERNAME') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_USERNAME') ?>
 							<small>(id)</small>
 						</th>
 						<th class="center">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_POSTS') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_POSTS') ?>
 						</th>
 						<th class="center">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_MOVES') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_MOVES') ?>
 						</th>
 						<th class="center">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_EDITS') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_EDITS') ?>
 						</th>
 						<th class="center">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_DELETES') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_DELETES') ?>
 						</th>
 						<th class="center">
-							<?php echo JText::_('COM_KUNENA_STATISTICS_THANK_YOU') ?>
+							<?php echo Text::_('COM_KUNENA_STATISTICS_THANK_YOU') ?>
 						</th>
 					</tr>
 					</thead>
@@ -176,13 +177,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<tr>
 							<td colspan="10">
 								<div class="well center filter-state">
-							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+							<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
 								<?php
 								if ($this->filterActive)
 									:
 									?>
 									<button class="btn" type="button"
-									        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+									        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 								<?php endif; ?>
 							</span>
 								</div>

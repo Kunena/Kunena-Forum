@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -136,7 +137,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}*/
 
 		$options            = array();
-		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -371,7 +372,6 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	{
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$doc       = Factory::getDocument();
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
@@ -379,24 +379,24 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			$doc->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('og:image', $image, 'property');
 		}
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		if ($menu_item)
@@ -414,13 +414,13 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+				$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 				$this->setTitle($title);
 			}
 
-			$doc->setMetaData('og:type', 'article', 'property');
-			$doc->setMetaData('og:description', $title, 'property');
-			$doc->setMetaData('og:title', $title, 'property');
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $title, 'property');
+			$this->setMetaData('og:title', $title, 'property');
 
 			if (!empty($params_keywords))
 			{
@@ -429,7 +429,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+				$keywords = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 				$this->setKeywords($keywords);
 			}
 
@@ -440,14 +440,14 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

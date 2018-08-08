@@ -9,12 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $tabs = $this->getTabs();
 ?>
 
 <h1 class="pull-left">
-	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
+	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 </h1>
 
@@ -23,8 +23,8 @@ $tabs = $this->getTabs();
 		:
 		?>
 		<?php echo $this->profile->getLink(
-		KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
-		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
+		KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
+		Text::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
 	); ?>
 	<?php endif; ?>
 </h2>

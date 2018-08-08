@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
 $status         = $config->user_status;
@@ -74,7 +74,7 @@ $config         = KunenaFactory::getTemplate()->params;
 										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::online(); ?>
-											<?php echo JText::_('COM_KUNENA_ONLINE') ?>
+											<?php echo Text::_('COM_KUNENA_ONLINE') ?>
 										</a>
 									</label>
 								</div>
@@ -85,7 +85,7 @@ $config         = KunenaFactory::getTemplate()->params;
 										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::away(); ?>
-											<?php echo JText::_('COM_KUNENA_AWAY') ?>
+											<?php echo Text::_('COM_KUNENA_AWAY') ?>
 										</a>
 									</label>
 								</div>
@@ -96,7 +96,7 @@ $config         = KunenaFactory::getTemplate()->params;
 										?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::busy(); ?>
-											<?php echo JText::_('COM_KUNENA_BUSY') ?>
+											<?php echo Text::_('COM_KUNENA_BUSY') ?>
 										</a>
 									</label>
 								</div>
@@ -106,7 +106,7 @@ $config         = KunenaFactory::getTemplate()->params;
 										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::invisible(); ?>
-											<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
+											<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>
 										</a>
 									</label>
 								</div>
@@ -129,7 +129,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								?>
 								<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 									<?php echo KunenaIcons::edit(); ?>
-									<?php echo JText::_('COM_KUNENA_STATUS') ?>
+									<?php echo Text::_('COM_KUNENA_STATUS') ?>
 								</a>
 							</div>
 							<div class="divider"></div>
@@ -142,7 +142,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<div id="announcement">
 								<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
 									<?php echo KunenaIcons::pencil(); ?>
-									<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
+									<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 								</a>
 							</div>
 						<?php endif; ?>
@@ -161,7 +161,7 @@ $config         = KunenaFactory::getTemplate()->params;
 						<div id="settings">
 							<a href="<?php echo $this->profile_edit_url; ?>" class="btn btn-link">
 								<?php echo KunenaIcons::cog(); ?>
-								<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
+								<?php echo Text::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 							</a>
 						</div>
 						<div class="divider"></div>
@@ -172,7 +172,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<div id="allread">
 								<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
 									<?php echo KunenaIcons::drawer(); ?>
-									<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
+									<?php echo Text::_('COM_KUNENA_MARK_ALL_READ'); ?>
 								</a>
 							</div>
 						<?php endif ?>
@@ -185,7 +185,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<div>
 								<button class="btn btn-link" name="submit" type="submit">
 									<?php echo KunenaIcons::out(); ?>
-									<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
+									<?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
 								</button>
 							</div>
 							<input type="hidden" name="view" value="user"/>
@@ -207,8 +207,8 @@ $config         = KunenaFactory::getTemplate()->params;
 	<?php echo $this->subLayout('Widget/Modal')
 		->set('id', 'statusTextModal')
 		->set('name', 'status_text')
-		->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
-		->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
+		->set('label', Text::_('COM_KUNENA_STATUS_MESSAGE'))
+		->set('description', Text::_('COM_KUNENA_STATUS_TYP'))
 		->set('data', $this->me->status_text)
 		->set('form', 'status-text-form'); ?>
 	<input type="hidden" name="view" value="user"/>

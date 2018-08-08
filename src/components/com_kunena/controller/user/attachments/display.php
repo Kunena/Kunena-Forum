@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserAttachmentsDisplay
@@ -85,6 +86,11 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
+		if (!KunenaConfig::getInstance()->show_imgfiles_manage_profile || !$this->me->exists() && !KunenaConfig::getInstance()->pubprofile)
+		{
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+		}
+
 		if ($this->moreUri)
 		{
 			$this->pagination->setUri($this->moreUri);
@@ -116,7 +122,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 
 		KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
-		$this->headerText = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+		$this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 	}
 
 	/**

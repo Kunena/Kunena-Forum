@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -247,7 +248,7 @@ class TableKunenaMessages extends KunenaTable
 		if (!$category->exists())
 		{
 			// TODO: maybe we should have own error message? or not?
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
 		}
 		else
 		{
@@ -258,14 +259,14 @@ class TableKunenaMessages extends KunenaTable
 
 		if (!$this->subject)
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
+			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
 		}
 
 		$this->message = trim($this->message);
 
 		if (!$this->message)
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
 		}
 
 		if (!$this->time)

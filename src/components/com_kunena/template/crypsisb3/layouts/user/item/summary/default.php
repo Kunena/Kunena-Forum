@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 
 $profile             = $this->profile;
@@ -41,7 +42,7 @@ if ($this->config->showuserstats)
 			<?php if ($avatar) : ?>
 				<div class="col-md-2">
 					<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
-						<?php echo $this->profile->getLink($avatar, JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, KunenaConfig::getInstance()->avataredit); ?>
+						<?php echo $this->profile->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, KunenaConfig::getInstance()->avataredit); ?>
 					</div>
 					<?php if ($this->config->user_status): ?>
 						<div class="center">
@@ -55,18 +56,18 @@ if ($this->config->showuserstats)
 					<div class="col-md-12">
 						<ul class="list-unstyled col-md-3">
 							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
-								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
+								<strong> <?php echo Text::_('COM_KUNENA_USERTYPE'); ?>:</strong>
+								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo Text::_($profile->getType()); ?> </span>
 							</li>
 							<?php if ($banInfo && $banInfo->reason_public) : ?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
 									<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
 								</li>
 							<?php endif ?>
 							<?php if ($this->config->showuserstats && $this->config->showranking) : ?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
 										<?php echo $this->escape($rankTitle); ?>
 										<?php echo $rankImage; ?>
@@ -77,7 +78,7 @@ if ($this->config->showuserstats)
 						<ul class="list-unstyled col-md-3">
 							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
 									<span
 											title="<?php echo $profile->getRegisterDate()->toKunena('ago'); ?>"> <?php echo $profile->getRegisterDate()->toKunena('date_today', 'utc'); ?> </span>
 								</li>
@@ -87,17 +88,17 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
 									<span
 											title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('config_post_dateformat'); ?> </span>
 								</li>
 							<?php endif; ?>
 							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong>
+								<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong>
 								<span> UTC <?php echo $profile->getTime()->toTimezone(); ?> </span>
 							</li>
 							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>:</strong>
+								<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>:</strong>
 								<span> <?php echo $profile->getTime()->toKunena('time'); ?> </span>
 							</li>
 						</ul>
@@ -106,8 +107,8 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-									<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
+									<strong> <?php echo Text::_('COM_KUNENA_POSTS'); ?> </strong>
+									<span> <?php echo Text::sprintf((int) $profile->posts); ?> </span>
 								</li>
 							<?php endif; ?>
 							<?php
@@ -115,8 +116,8 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
-									<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
+									<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
+									<span> <?php echo Text::sprintf((int) $profile->karma); ?> </span>
 								</li>
 							<?php endif; ?>
 							<?php
@@ -124,8 +125,8 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
-									<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
+									<strong> <?php echo Text::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
+									<span> <?php echo Text::sprintf((int) $profile->uhits); ?> </span>
 								</li>
 							<?php endif; ?>
 							<?php
@@ -133,8 +134,8 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-									<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
+									<strong> <?php echo Text::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
+									<span> <?php echo Text::sprintf((int) $profile->thankyou); ?> </span>
 								</li>
 							<?php endif; ?>
 							<?php
@@ -142,7 +143,7 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?></strong>
+									<strong> <?php echo Text::_('COM_KUNENA_AUP_POINTS'); ?></strong>
 									<span> <?php echo $points; ?></span>
 								</li>
 							<?php endif; ?>
@@ -152,7 +153,7 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 									<span>
 									<?php if ($profile->location)
 										:
@@ -164,7 +165,7 @@ if ($this->config->showuserstats)
 
 										:
 										?>
-										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
+										<?php echo Text::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
 								</span>
 								</li>
@@ -174,7 +175,7 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
 									<span> <?php echo $profile->getGender(); ?> </span>
 								</li>
 							<?php endif; ?>
@@ -183,7 +184,7 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
+									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 									<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 								</li>
 							<?php endif; ?>
@@ -192,7 +193,7 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_AUP_MEDALS'); ?> </strong>
+									<strong> <?php echo Text::_('COM_KUNENA_AUP_MEDALS'); ?> </strong>
 									<span> <?php echo implode(' ', $medals); ?> </span>
 								</li>
 							<?php endif; ?>
@@ -216,20 +217,20 @@ if ($this->config->showuserstats)
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php
-							if (!empty($websiteName) && $websiteURL != 'http://')
-								:
-								?>
-								<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></a>
-							<?php elseif (empty($websiteName) && $websiteURL != 'http://')
-								:
-								?>
-								<a class="btn btn-default btn-sm"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteURL ?></a>
-							<?php elseif (!empty($websiteName) && $websiteURL == 'http://')
-								:
-								?>
-								<button class="btn btn-default btn-sm"><?php echo KunenaIcons::globe() . ' ' . $websiteName ?></button>
+							if (!empty($websiteName) && !empty($websiteURL))
+							:
+							?>
+							<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+							   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></a>
+							<?php elseif (empty($websiteName) && !empty($websiteURL))
+							:
+							?>
+							<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+							   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe(); ?></a>
+							<?php elseif (!empty($websiteName) && empty($websiteURL))
+							:
+							?>
+							<button class="btn btn-default btn-sm"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></button>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -252,7 +253,7 @@ if ($this->config->showuserstats)
 		:
 		?>
 		<blockquote>
-			<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>: </span>
+			<span> <?php echo Text::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>: </span>
 			<br/>
 			<span> <?php echo $personalText; ?> </span>
 		</blockquote>

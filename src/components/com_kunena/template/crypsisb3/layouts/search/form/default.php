@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 // FIXME: change into JForm.
 
@@ -51,7 +52,7 @@ $this->addScript('assets/js/search.js');
 		</div>
 	</div>
 	<h1>
-		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
+		<?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
 	</h1>
 
 	<div class="collapse in" id="search">
@@ -59,13 +60,13 @@ $this->addScript('assets/js/search.js');
 			<div class="row">
 				<fieldset class="col-md-6">
 					<legend>
-						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
+						<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
 					</legend>
 					<div class="col-md-6">
 						<div class="form-group">
 							<input type="text" name="query" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
+							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -80,12 +81,12 @@ $this->addScript('assets/js/search.js');
 					?>
 					<fieldset class="col-md-6">
 						<legend>
-							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
 						</legend>
 						<div class="form-group">
 							<input id="kusersearch" type="text" name="searchuser" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
-							       placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
+							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="exactname" value="1"
@@ -93,7 +94,7 @@ $this->addScript('assets/js/search.js');
 										{
 											echo ' checked="checked" ';
 										} ?> />
-									<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
+									<?php echo Text::_('COM_KUNENA_SEARCH_EXACT'); ?>
 								</label>
 							</div>
 						</div>
@@ -106,7 +107,7 @@ $this->addScript('assets/js/search.js');
 		        data-toggle="collapse"
 		        data-target="#search-options" aria-expanded="false" aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
 		<h2>
-			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
+			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
 
 		<div class="collapse in" id="search-options">
@@ -114,7 +115,7 @@ $this->addScript('assets/js/search.js');
 				<div class="row">
 					<fieldset class="col-md-4">
 						<legend>
-							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
 						<div class="form-group">
 							<?php $this->displayDateList('date'); ?>
@@ -124,7 +125,7 @@ $this->addScript('assets/js/search.js');
 
 					<fieldset class="col-md-4">
 						<legend>
-							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
 						<div class="form-group">
 							<?php $this->displaySortByList('sort'); ?>
@@ -134,7 +135,7 @@ $this->addScript('assets/js/search.js');
 
 					<fieldset class="ool-md-4">
 						<legend>
-							<?php echo JText::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>
 						<div class="col-md-6">
 							<div class="form-group" id="searchatdate">
@@ -153,7 +154,7 @@ $this->addScript('assets/js/search.js');
 					<div class="col-md-6">
 						<fieldset class="form-group">
 							<legend>
-								<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
+								<?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
 							<div class="col-md-6">
 								<input type="text" name="limitstart" class="form-control"
@@ -169,7 +170,7 @@ $this->addScript('assets/js/search.js');
 							?>
 							<fieldset>
 								<legend>
-									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>
+									<?php echo Text::_('COM_KUNENA_SEARCH_SHOW'); ?>
 								</legend>
 								<div class="radio">
 									<label>
@@ -178,7 +179,7 @@ $this->addScript('assets/js/search.js');
 											{
 												echo 'checked="checked"';
 											} ?> />
-										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
+										<?php echo Text::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
 									</label>
 								</div>
 
@@ -189,7 +190,7 @@ $this->addScript('assets/js/search.js');
 											{
 												echo 'checked="checked"';
 											} ?> />
-										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
+										<?php echo Text::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
 									</label>
 								</div>
 
@@ -200,7 +201,7 @@ $this->addScript('assets/js/search.js');
 											{
 												echo 'checked="checked"';
 											} ?> />
-										<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
+										<?php echo Text::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
 									</label>
 								</div>
 							</fieldset>
@@ -209,7 +210,7 @@ $this->addScript('assets/js/search.js');
 
 					<fieldset class="col-md-6">
 						<legend>
-							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
 						</legend>
 						<?php $this->displayCategoryList('categorylist', 'class="form-control" size="10" multiple="multiple"'); ?>
 						<label>
@@ -218,7 +219,7 @@ $this->addScript('assets/js/search.js');
 								{
 									echo 'checked="checked"';
 								} ?> />
-							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?>
+							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?>
 						</label>
 					</fieldset>
 				</div>
@@ -227,10 +228,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-primary">
-				<?php echo KunenaIcons::search(); ?><?php echo ' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
+				<?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
 			</button>
 			<button type="reset" class="btn btn-default" onclick="window.history.back();">
-				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . JText::_('COM_KUNENA_CANCEL') . ' '; ?>
+				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>
 	</div>

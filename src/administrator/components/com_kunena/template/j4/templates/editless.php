@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -33,7 +34,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 				<?php // TODO: redo FTP protection fields ?>
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_LESS_TEMPLATE'); ?></legend>
+					<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_LESS_TEMPLATE'); ?></legend>
 					<table class="table table-bordered table-striped">
 						<tr>
 							<th>

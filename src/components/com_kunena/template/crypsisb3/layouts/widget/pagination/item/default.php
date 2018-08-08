@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $item = $this->item;
 
@@ -16,7 +17,7 @@ if ($item->base !== null)
 {
 	// Check if the item can be clicked.
 	$limit = 'limitstart.value=' . (int) $item->base;
-	echo '<li><a ' . KunenaTemplate::getInstance()->tooltips(true) . ' href="' . $item->link . '" title="' . JText::_('COM_KUNENA_PAGE') . $item->text . '">' . $item->text . '</a></li>';
+	echo '<li><a ' . KunenaTemplate::getInstance()->tooltips(true) . ' href="' . $item->link . '" title="' . Text::_('COM_KUNENA_PAGE') . $item->text . '">' . $item->text . '</a></li>';
 }
 elseif (!empty($item->active))
 {

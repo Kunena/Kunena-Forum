@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.html.parameter');
 
@@ -378,7 +379,7 @@ class KunenaTemplate extends JObject
 
 				if (is_dir(KPATH_SITE . "/template/{$templatename}"))
 				{
-					KunenaError::warning(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename));
+					KunenaError::warning(Text::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename));
 				}
 			}
 
@@ -537,8 +538,8 @@ class KunenaTemplate extends JObject
 		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
 		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',);
 
-		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
-		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 
 		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
 		{
@@ -660,7 +661,7 @@ HTML;
 	public function getPaginationListFooter($list)
 	{
 		$html = '<div class="list-footer">';
-		$html .= '<div class="limit">' . JText::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM') . ' ' . $list['limitfield'] . '</div>';
+		$html .= '<div class="limit">' . Text::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM') . ' ' . $list['limitfield'] . '</div>';
 		$html .= $list['pageslinks'];
 		$html .= '<div class="counter">' . $list['pagescounter'] . '</div>';
 		$html .= '<input type="hidden" name="' . $list['prefix'] . 'limitstart" value="' . $list['limitstart'] . '" />';
@@ -678,7 +679,7 @@ HTML;
 	public function getPaginationListRender($list)
 	{
 		$html = '<ul class="kpagination">';
-		$html .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$html .= '<li class="page">' . Text::_('COM_KUNENA_PAGE') . '</li>';
 		$last = 0;
 
 		foreach ($list['pages'] as $i => $page)
@@ -776,10 +777,20 @@ HTML;
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+			$filename     = preg_replace('/^assets\//', '', $filename);
+			$filename     = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
 			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
@@ -795,8 +806,50 @@ HTML;
 			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
 		}
 
-		/** @noinspection PhpDeprecationInspection */
 		return Factory::getDocument()->addStyleSheet($filename);
+	}
+
+	/**
+	 * @param   string $filename filename
+	 *
+	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function addLessSheet($filename)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+
+		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+	}
+
+	/**
+	 * @param $style
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public function addStyleDeclaration($style)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		return Factory::getDocument()->addStyleDeclaration($style);
 	}
 
 	/**
@@ -881,10 +934,19 @@ HTML;
 	 * @param   string $type    type
 	 *
 	 * @return \Joomla\CMS\Document\Document
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		return Factory::getDocument()->addScriptDeclaration($content, $type);
 	}
 
@@ -893,12 +955,23 @@ HTML;
 	 *
 	 * @param   string $filename filename
 	 *
+	 * @param array    $options
+	 * @param array    $attribs
+	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function addScript($filename)
+	public function addScript($filename, $options = array(), $attribs = array())
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^js/|u', '', $filename);
@@ -913,8 +986,32 @@ HTML;
 			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
 		}
 
-		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addScript($filename);
+		return Factory::getDocument()->addScript($filename, $options, $attribs);
+	}
+
+	/**
+	 * Add option for script
+	 *
+	 * @param   string $key     Name in Storage
+	 * @param   mixed  $options Scrip options as array or string
+	 * @param   bool   $merge   Whether merge with existing (true) or replace (false)
+	 *
+	 * @return \Joomla\CMS\Document\Document
+	 *
+	 * @throws Exception
+	 * @since   3.5
+	 */
+	public function addScriptOptions($key, $options, $merge = true)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		return Factory::getDocument()->addScriptOptions($key, $options, $merge);
 	}
 
 	/**

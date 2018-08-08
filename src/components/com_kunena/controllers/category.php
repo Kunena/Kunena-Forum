@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
 /**
@@ -61,7 +63,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -78,11 +80,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			if (!$session->save())
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_ALL_MARKED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'));
 			}
 		}
 		else
@@ -115,11 +117,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 				if (count($categories) > 1)
 				{
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_ALL_MARKED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'));
 				}
 				else
 				{
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_FORUM_MARKED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'));
 				}
 			}
 		}
@@ -136,7 +138,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('get'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -158,7 +160,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			if ($success)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED'));
 			}
 		}
 
@@ -174,7 +176,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('request'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -202,7 +204,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 				if ($success)
 				{
-					$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name));
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name));
 				}
 			}
 		}

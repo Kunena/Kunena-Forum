@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $state      = isset($this->state) ? ' ' . $this->state : ' hide';
 $transition = isset($this->transition) ? ' ' . $this->transition : ' fade';
 
@@ -37,10 +37,10 @@ $form        = $this->form;
 	</div>
 	<div class="modal-footer">
 		<button class="btn" type="button" data-dismiss="modal">
-			<?php echo JText::_('JCANCEL'); ?>
+			<?php echo Text::_('JCANCEL'); ?>
 		</button>
 		<button class="btn btn-primary" type="submit" id="btn_statustext">
-			<?php echo JText::_('JSUBMIT'); ?>
+			<?php echo Text::_('JSUBMIT'); ?>
 		</button>
 	</div>
 </div>

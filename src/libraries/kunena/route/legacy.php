@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 require_once KPATH_SITE . '/router.php';
 
@@ -344,7 +345,7 @@ abstract class KunenaRouteLegacy
 
 				if ($uri->getVar('task'))
 				{
-					$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
+					$app->enqueueMessage(Text::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
 					$uri->delVar('task');
 				}
 
@@ -482,7 +483,7 @@ abstract class KunenaRouteLegacy
 
 				if ($uri->getVar('action'))
 				{
-					$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
+					$app->enqueueMessage(Text::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
 					$uri->delVar('action');
 				}
 				else
@@ -628,7 +629,7 @@ abstract class KunenaRouteLegacy
 							break;
 
 						default :
-							$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
+							$app->enqueueMessage(Text::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
 					}
 				}
 				break;

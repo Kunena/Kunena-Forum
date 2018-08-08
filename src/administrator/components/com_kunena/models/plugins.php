@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.modellist');
 
@@ -186,7 +187,7 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 			|| $lang->load($extension . '.sys', $source, null, false, false)
 			|| $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
-			$item->name = JText::_($item->name);
+			$item->name = Text::_($item->name);
 		}
 	}
 

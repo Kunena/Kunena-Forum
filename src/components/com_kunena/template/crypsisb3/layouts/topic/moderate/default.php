@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('behavior.tabstate');
 
@@ -25,8 +26,8 @@ $labels          = $this->ktemplate->params->get('labels');
 ?>
 <div class="well">
 	<h3> <?php echo !isset($this->message)
-			? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC')
-			: JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
+			? Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC')
+			: Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
 	</h3>
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post"
 	      name="myform" id="myform" class="form-horizontal">
@@ -40,15 +41,15 @@ $labels          = $this->ktemplate->params->get('labels');
 		<div>
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab1"
-				                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
+				                      data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
 				</li>
 				<li><a href="#tab2"
-				       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
+				       data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
 				<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
 					<li><a href="#tab3"
-					       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
+					       data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
 					</li>
-					<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
+					<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 				<?php endif; ?>
 			</ul>
 			<br>
@@ -56,17 +57,17 @@ $labels          = $this->ktemplate->params->get('labels');
 				<div class="tab-pane active" id="tab1">
 
 					<dl class="dl-horizontal">
-						<dt> <?php echo JText::_('COM_KUNENA_MENU_TOPIC'); ?> </dt>
+						<dt> <?php echo Text::_('COM_KUNENA_MENU_TOPIC'); ?> </dt>
 						<dd> <?php echo $this->topic->displayField('subject'); ?> </dd>
-						<dt> <?php echo JText::_('COM_KUNENA_CATEGORY'); ?> </dt>
+						<dt> <?php echo Text::_('COM_KUNENA_CATEGORY'); ?> </dt>
 						<dd> <?php echo $this->category->displayField('name') ?> </dd>
 						<?php if (isset($this->userLink)) : ?>
-							<dt> <?php echo JText::_('JGLOBAL_USERNAME'); ?> </dt>
+							<dt> <?php echo Text::_('JGLOBAL_USERNAME'); ?> </dt>
 							<dd><strong> <?php echo $this->userLink; ?></strong></dd>
 						<?php endif; ?>
 					</dl>
 					<?php if ($this->config->topicicons) : ?>
-						<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
+						<div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 						<br>
 						<div class="kmoderate-topicicons">
 							<?php foreach ($this->topicIcons as $id => $icon): ?>
@@ -89,7 +90,7 @@ $labels          = $this->ktemplate->params->get('labels');
 									<?php endforeach; ?>
 						</div>
 					<?php elseif ($labels && !$this->config->topicicons) : ?>
-						<div><strong><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
+						<div><strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
 						<br>
 						<div class="kmoderate-topicicons">
 							<?php foreach ($this->topicIcons as $id => $icon) : ?>
@@ -130,9 +131,9 @@ $labels          = $this->ktemplate->params->get('labels');
 							<?php echo $this->message->displayField('subject'); ?>
 							<br/>
 							<small>
-								<?php echo JText::_('COM_KUNENA_POSTED_AT') ?>
+								<?php echo Text::_('COM_KUNENA_POSTED_AT') ?>
 								<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-								<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?>
+								<?php echo Text::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?>
 							</small>
 							<div class="clearfix"></div>
 						</h3>
@@ -145,17 +146,17 @@ $labels          = $this->ktemplate->params->get('labels');
 				</div>
 
 				<div class="tab-pane" id="tab2">
-					<h3> <?php echo JText::_('COM_KUNENA_MODERATION_DEST'); ?> </h3>
+					<h3> <?php echo Text::_('COM_KUNENA_MODERATION_DEST'); ?> </h3>
 
 					<div class="control-group">
 						<label class="control-label"
-						       for="modcategorieslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
+						       for="modcategorieslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
 
 						<div class="controls" id="modcategorieslist"> <?php echo $this->getCategoryList(); ?> </div>
 					</div>
 					<div class="control-group">
 						<label class="control-label"
-						       for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
+						       for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
 						<div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
 								'select.genericlist', $this->getTopicOptions(), 'targettopic', 'class="form-control"', 'value', 'text', 0, 'kmod_topics'
@@ -163,7 +164,7 @@ $labels          = $this->ktemplate->params->get('labels');
 					</div>
 					<div class="control-group" id="kmod_targetid" style="display: none;">
 						<label class="control-label"
-						       for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
+						       for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
 						<div class="controls">
 							<input type="text" size="7" name="targetid" value=""/>
@@ -171,7 +172,7 @@ $labels          = $this->ktemplate->params->get('labels');
 					</div>
 					<div class="control-group" id="kmod_subject">
 						<label class="control-label"
-						       for="kmod_subject"> <?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
+						       for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
 						<div class="controls">
 							<input type="text" class="form-control" name="subject" id="ktitle_moderate_subject"
@@ -188,11 +189,11 @@ $labels          = $this->ktemplate->params->get('labels');
 									<input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"
 									       value="selected"
 									       style="display: inline-block;"/>
-									<?php echo JText::_('COM_KUNENA_MODERATION_MOVE_SELECTED'); ?> </label>
+									<?php echo Text::_('COM_KUNENA_MODERATION_MOVE_SELECTED'); ?> </label>
 								<label class="checkbox">
 									<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer"
 									       style="display: inline-block;"/>
-									<?php echo JText::sprintf('COM_KUNENA_MODERATION_MOVE_NEWER', $this->escape($this->replies)); ?>
+									<?php echo Text::sprintf('COM_KUNENA_MODERATION_MOVE_NEWER', $this->escape($this->replies)); ?>
 								</label>
 							</div>
 						</div>
@@ -202,7 +203,7 @@ $labels          = $this->ktemplate->params->get('labels');
 						<div class="controls">
 							<label class="checkbox">
 								<input type="checkbox" name="changesubject" value="1"/>
-								<?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES'); ?> </label>
+								<?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES'); ?> </label>
 						</div>
 					</div>
 					<?php if (!isset($this->message)) : ?>
@@ -211,19 +212,19 @@ $labels          = $this->ktemplate->params->get('labels');
 								<label class="checkbox">
 									<input type="checkbox" <?php if ($this->config->boxghostmessage) echo ' checked="checked"'; ?>
 									       name="shadow" value="1"/>
-									<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW'); ?> </label>
+									<?php echo Text::_('COM_KUNENA_MODERATION_TOPIC_SHADOW'); ?> </label>
 							</div>
 						</div>
 					<?php endif; ?>
 				</div>
 				<?php if (isset($this->message)) : ?>
 					<div class="tab-pane" id="tab3">
-						<?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', $this->me); ?>
+						<?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', $this->me); ?>
 					</div>
 
 					<!-- FIXME: This adds a form which cause an issue, because there will be nested forms
 				<div class="tab-pane" id="tab4">
-					<?php //echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN')); ?>
+					<?php //echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN')); ?>
 				</div>-->
 				<?php endif; ?>
 				<hr/>
@@ -231,9 +232,9 @@ $labels          = $this->ktemplate->params->get('labels');
 
 				<div class="control-group center">
 					<input type="submit" class="btn btn-primary"
-					       value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
+					       value="<?php echo Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
 					<a href="javascript:window.history.back();"
-					   class="btn btn-default"> <?php echo JText::_('COM_KUNENA_BACK'); ?> </a>
+					   class="btn btn-default"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
 				</div>
 			</div>
 		</div>

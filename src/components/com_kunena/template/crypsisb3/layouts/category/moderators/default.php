@@ -9,11 +9,13 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
+
 ?>
 <?php if (!empty($this->moderators)) : ?>
 	<div>
 		<?php
-		echo JText::_('COM_KUNENA_MODERATORS') . ": ";
+		echo Text::_('COM_KUNENA_MODERATORS') . ": ";
 
 		$mods_lin = array();
 

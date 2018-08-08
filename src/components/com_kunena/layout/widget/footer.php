@@ -75,7 +75,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 			if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
-				$url = \Joomla\CMS\Uri\Uri::root(true) . "/index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rss_type}&Itemid={$itemid}";
+				$url = KunenaRoute::_( "index.php?option=com_kunena&view=topics&layout=default&{$rss_type}"). '?format=feed&type=rss';
 			}
 			else
 			{

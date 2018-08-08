@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.model');
 require_once __DIR__ . '/cpanel.php';
@@ -53,18 +54,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @since Kunena
 	 */
 	protected $htaccess = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	protected $register_globals = null;
-
-	/**
-	 * @var null
-	 * @since Kunena
-	 */
-	protected $safe_mode = null;
 
 	/**
 	 * @var null
@@ -208,8 +197,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
-		$trashdelete [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
-		$trashdelete [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_DELETE_PERMANENTLY'));
+		$trashdelete [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_TRASH_USERMESSAGES'));
+		$trashdelete [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
 		return HTMLHelper::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
@@ -222,14 +211,14 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneControlOptions()
 	{
 		$contoloptions    = array();
-		$contoloptions [] = HTMLHelper::_('select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'normal', JText::_('COM_KUNENA_A_PRUNE_NORMAL'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'unanswered', JText::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'answered', JText::_('COM_KUNENA_A_PRUNE_ANSWERED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', JText::_('COM_KUNENA_A_PRUNE_DELETED'));
-		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', JText::_('COM_KUNENA_A_PRUNE_SHADOW'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'all', Text::_('COM_KUNENA_A_PRUNE_ALL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'normal', Text::_('COM_KUNENA_A_PRUNE_NORMAL'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'locked', Text::_('COM_KUNENA_A_PRUNE_LOCKED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unanswered', Text::_('COM_KUNENA_A_PRUNE_UNANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'answered', Text::_('COM_KUNENA_A_PRUNE_ANSWERED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'unapproved', Text::_('COM_KUNENA_A_PRUNE_UNAPPROVED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', Text::_('COM_KUNENA_A_PRUNE_DELETED'));
+		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', Text::_('COM_KUNENA_A_PRUNE_SHADOW'));
 
 		return HTMLHelper::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
 	}
@@ -242,8 +231,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	public function getPruneKeepSticky()
 	{
 		$optionsticky    = array();
-		$optionsticky [] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_A_NO'));
-		$optionsticky [] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_A_YES'));
+		$optionsticky [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
+		$optionsticky [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
 		return HTMLHelper::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
 	}
@@ -263,7 +252,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$this->getReportData();
 
-		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
 			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
@@ -329,24 +318,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		else
 		{
 			$this->htaccess = 'Missing';
-		}
-
-		if (ini_get('register_globals'))
-		{
-			$this->register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
-		}
-		else
-		{
-			$this->register_globals = '[u]register_globals:[/u] Off';
-		}
-
-		if (ini_get('safe_mode'))
-		{
-			$this->safe_mode = '[u]safe_mode:[/u] [color=#FF0000]On[/color]';
-		}
-		else
-		{
-			$this->safe_mode = '[u]safe_mode:[/u] Off';
 		}
 
 		if (extension_loaded('mbstring'))
@@ -540,13 +511,13 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 			if (!$data->creationdate)
 			{
-				$data->creationdate = JText::_('Unknown');
+				$data->creationdate = Text::_('Unknown');
 			}
 		}
 
 		if (!$data->author)
 		{
-			JText::_('Unknown');
+			Text::_('Unknown');
 		}
 
 		return $data;
@@ -854,7 +825,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
-			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
 			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . \Joomla\CMS\Uri\Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |

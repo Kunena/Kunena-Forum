@@ -10,23 +10,24 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
 
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
-JText::script('COM_KUNENA_RATE_LOGIN');
-JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
-JText::script('COM_KUNENA_RATE_ALLREADY');
-JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+Text::script('COM_KUNENA_RATE_LOGIN');
+Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
+Text::script('COM_KUNENA_RATE_ALLREADY');
+Text::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 
-JText::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
-JText::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
-JText::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
-JText::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
-JText::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
-JText::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
-JText::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
-JText::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
+Text::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
+Text::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
+Text::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
+Text::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
+Text::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
+Text::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
+Text::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
+Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addStyleSheet('assets/css/jquery.atwho.css');
@@ -38,6 +39,9 @@ if (KunenaConfig::getInstance()->ratingenabled)
 	$this->addStyleSheet('assets/css/rating.css');
 	$this->addScript('assets/js/rating.js');
 	$this->addScript('assets/js/krating.js');
+
+	Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
+	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
 }
 
 $this->addScript('assets/js/topic.js');
@@ -46,11 +50,7 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
 ?>
-<div itemscope itemtype="https://schema.org/Article">
-	<meta itemprop="name" content="<?php echo $topic->displayField('subject'); ?>"/>
-	<meta itemprop="author" content="<?php echo $topic->getAuthor()->username; ?>"/>
-	<meta itemprop="datePublished" content="<?php echo new KunenaDate($topic->first_post_time); ?>"/>
-
+<div class="kunena-topic-item">
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>
@@ -67,7 +67,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?>
+		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config)->set('reviewCount', $this->reviewCount); ?>
 	</h1>
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
@@ -80,17 +80,17 @@ $quick           = $this->ktemplate->params->get('quick');
 	<h2 class="pull-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
-			->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
 	</h2>
 
 	<div class="clearfix"></div>
 
-	<?php if ($social == 1) : ?>
+	<?php if ($social == 1 && $me->socialshare != 0 || $social == 1 && !$me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 	<?php endif; ?>
 
-	<?php if ($social == 2) : ?>
+	<?php if ($social == 2 && $me->socialshare != 0 || $social == 2 && !$me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 
@@ -137,7 +137,7 @@ $quick           = $this->ktemplate->params->get('quick');
 	<div class="pull-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
-			->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
 	</div>
 

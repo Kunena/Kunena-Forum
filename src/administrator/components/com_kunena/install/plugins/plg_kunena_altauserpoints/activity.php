@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.utilities.string');
 
@@ -185,8 +186,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
-		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
-		$infoRootUser   = JText::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
+		$infoTargetUser = Text::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
+		$infoRootUser   = Text::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
 
 		if ($this->_checkPermissions($message))
 		{

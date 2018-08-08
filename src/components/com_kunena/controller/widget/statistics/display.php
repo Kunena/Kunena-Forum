@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Class ComponentKunenaControllerWidgetStatisticsDisplay
  *
@@ -57,7 +59,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		$statistics = KunenaForumStatistics::getInstance();

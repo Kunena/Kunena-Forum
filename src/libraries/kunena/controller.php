@@ -10,6 +10,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.helper');
 
@@ -116,7 +117,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		}
 		else
 		{
-			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
+			throw new Exception(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
 		}
 
 		// Set the name for the controller and instantiate it.
@@ -142,7 +143,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		}
 		else
 		{
-			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
+			throw new Exception(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
 		}
 
 		return $instance;
@@ -196,13 +197,13 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
 				if (!KunenaForum::enabled(true))
 				{
-					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+					throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 				}
 
 				// If forum is for registered users only, prevent guests from accessing tasks.
 				if ($this->config->regonly && !$this->me->exists())
 				{
-					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+					throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
 			}
 			*/
@@ -311,7 +312,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 		}
 		else
 		{
-			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
 		}
 
 		// Record the actual task being fired

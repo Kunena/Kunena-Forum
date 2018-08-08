@@ -253,15 +253,24 @@ abstract class KunenaFactory
 
 		// Capture hidden PHP errors from the parsing.
 		$php_errormsg = null;
-		$track_errors = ini_get('track_errors');
-		ini_set('track_errors', true);
+
+		// Todo Remove when we only Support php > 7.2
+		if (version_compare(PHP_VERSION, '7.2.0', '<'))
+		{
+			$track_errors = ini_get('track_errors');
+			ini_set('track_errors', true);
+		}
 
 		$contents = file_get_contents($filename);
 		$contents = str_replace('_QQ_', '"\""', $contents);
 		$strings  = @parse_ini_string($contents);
 
-		// Restore error tracking to what it was before.
-		ini_set('track_errors', $track_errors);
+		// Todo Remove when we only Support php > 7.2
+		if (version_compare(PHP_VERSION, '7.2.0', '<'))
+		{
+			// Restore error tracking to what it was before.
+			ini_set('track_errors', $track_errors);
+		}
 
 		if (!is_array($strings))
 		{

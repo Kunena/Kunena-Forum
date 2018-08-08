@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $config            = KunenaConfig::getInstance();
 $user              = $this->message->getAuthor();
 $this->messageLink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
@@ -84,7 +84,7 @@ if (!$config->plain_email) :
 
 		</style>
 
-		<title><?php echo JText::_('COM_KUNENA_REPORT_MSG') . " " . $config->board_title; ?></title>
+		<title><?php echo Text::_('COM_KUNENA_REPORT_MSG') . " " . $config->board_title; ?></title>
 
 	</head>
 
@@ -125,7 +125,7 @@ if (!$config->plain_email) :
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-							<?php echo JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})"; ?>
+							<?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})"; ?>
 						</td>
 					</tr>
 
@@ -149,13 +149,13 @@ if (!$config->plain_email) :
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
-							<div><?php echo JText::_('COM_KUNENA_REPORT_RREASON') . " " . $this->title; ?></div>
-							<div><?php echo JText::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $this->content; ?></div>
+							<div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . " " . $this->title; ?></div>
+							<div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $this->content; ?></div>
 
-							<div><?php echo JText::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
-							<div><?php echo JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
+							<div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
+							<div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
 							<br/>
-							<div><?php echo JText::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
+							<div><?php echo Text::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
 							<hr/>
 							<div><?php echo $this->message->displayField('message'); ?></div>
 						</td>
@@ -174,7 +174,7 @@ if (!$config->plain_email) :
 										    bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
 										                         href="<?php echo $this->messageLink; ?>">
-												<?php echo JText::_('COM_KUNENA_REPORT_POST_LINK'); ?>
+												<?php echo Text::_('COM_KUNENA_REPORT_POST_LINK'); ?>
 											</a>
 										</td>
 									</tr>
@@ -195,7 +195,7 @@ if (!$config->plain_email) :
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
 			padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
-							<?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
+							<?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
 						</td>
 					</tr>
 				</table>

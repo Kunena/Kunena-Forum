@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 KunenaMenuFix::initialize();
 
@@ -110,7 +111,7 @@ abstract class KunenaMenuFix
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
-			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
+			throw new Exception(Text::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
 		foreach (self::$items as &$item)

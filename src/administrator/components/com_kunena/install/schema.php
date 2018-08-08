@@ -947,7 +947,7 @@ class KunenaModelSchema extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 					if (strstr($collation, 'utf8mb4'))
 					{
-						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";
+						$str .= implode(",\n", $fields) . " ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";
 					}
 					else
 					{

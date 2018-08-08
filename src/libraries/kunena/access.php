@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAccess
@@ -266,8 +267,8 @@ class KunenaAccess
 		if (!isset($list [$key]))
 		{
 			$list [$key]['access'] = array(
-				'title' => JText::_('COM_KUNENA_ACCESS_UNKNOWN'),
-				'desc'  => JText::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
+				'title' => Text::_('COM_KUNENA_ACCESS_UNKNOWN'),
+				'desc'  => Text::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
 				'input' => $category->access,
 			);
 		}
@@ -323,7 +324,7 @@ window.addEvent('domready', function(){
 			{
 				if (method_exists($access, 'getAccessOptions'))
 				{
-					$string                = JText::_('COM_KUNENA_INTEGRATION_TYPE_' . preg_replace('/[^\w\d]/', '_', $type));
+					$string                = Text::_('COM_KUNENA_INTEGRATION_TYPE_' . preg_replace('/[^\w\d]/', '_', $type));
 					$accesstypes [$string] = HTMLHelper::_('select.option', $type, $string);
 					$exists                |= $type == $category->accesstype;
 
@@ -337,7 +338,7 @@ window.addEvent('domready', function(){
 		// User has disabled access control
 		if (!$exists)
 		{
-			$string                = JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
+			$string                = Text::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
 			$accesstypes [$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
 		}
 
@@ -400,7 +401,7 @@ window.addEvent('domready', function(){
 	{
 		if (!isset($this->accesstypes[$accesstype]))
 		{
-			return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
+			return Text::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		}
 
 		/** @var KunenaAccess $access */
@@ -1005,6 +1006,8 @@ window.addEvent('domready', function(){
 			$querytopic->andWhere('ut.subscribed=1');
 			$querytopic->andWhere('ku.banned <>0');
 			$querytopic->orWhere('ku.banned IS NULL');
+			$querytopic->andWhere('ut.topic_id =' . $topic->id);
+			$querytopic->andWhere('ut.subscribed=1');
 			$querytopic->group($db->quoteName('user_id'));
 
 			$query[] = $querytopic;
@@ -1021,6 +1024,8 @@ window.addEvent('domready', function(){
 			$querycat->andWhere('ut.subscribed=1');
 			$querycat->andWhere('ku.banned <>0');
 			$querycat->orWhere('ku.banned IS NULL');
+			$querycat->andWhere($db->quoteName('category_id') . '=' . $category->id);
+			$querycat->andWhere('ut.subscribed=1');
 			$querycat->group($db->quoteName('user_id'));
 
 			$query[] = $querycat;

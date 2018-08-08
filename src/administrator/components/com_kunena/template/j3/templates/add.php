@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -29,15 +30,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?>
-					- <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
+				<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?>
+					- <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
 
 				<div>
-					<label for="install_package"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
+					<label for="install_package"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
 						:</label>
 					<input class="input_box" name="install_package" type="file"/>
 					<input class="btn" type="submit" name="submit"
-						   value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
+						   value="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
 				</div>
 			</fieldset>
 		</form>

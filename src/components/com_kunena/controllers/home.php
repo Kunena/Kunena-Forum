@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Home Controller
@@ -72,7 +73,7 @@ class KunenaControllerHome extends KunenaController
 
 			if (!$default)
 			{
-				throw new Exception(JText::_('COM_KUNENA_NO_ACCESS'), 500);
+				throw new Exception(Text::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item
@@ -123,21 +124,21 @@ class KunenaControllerHome extends KunenaController
 		if (!$item)
 		{
 			// Menu item points to nowhere, abort
-			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
+			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
 			return null;
 		}
 		elseif (isset($visited[$item->id]))
 		{
 			// Menu loop detected, abort
-			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
+			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
 			return null;
 		}
 		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view']))
 		{
 			// Menu item doesn't point to Kunena, abort
-			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
+			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
 			return null;
 		}

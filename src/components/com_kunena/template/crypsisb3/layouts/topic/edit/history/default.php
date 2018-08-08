@@ -10,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+use Joomla\CMS\Language\Text;
 
 $k = 0;
 ?>
@@ -17,13 +18,13 @@ $k = 0;
 	<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#history">X</div>
 </div>
 <h3>
-	<?php echo JText::_('COM_KUNENA_POST_TOPIC_HISTORY') ?>:
+	<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY') ?>:
 	<?php echo $this->escape($this->topic->subject) ?>
 </h3>
 
 <div id="history" class="collapse in">
 	<p>
-		<?php echo JText::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
+		<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . Text::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
 	</p>
 	<?php foreach ($this->history as $this->message)
 		:
@@ -64,7 +65,7 @@ $k = 0;
 						:
 						?>
 						<div class="kattach col-md-12">
-							<h4><?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
+							<h4><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
 							<ul class="thumbnails">
 								<?php foreach ($attachments as $attachment)
 									:

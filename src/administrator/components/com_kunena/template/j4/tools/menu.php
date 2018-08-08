@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -32,13 +33,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>
-						<legend><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER'); ?></legend>
 						<table class="table table-bordered table-striped">
 							<tr>
-								<td colspan="4"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_ISSUES') ?></td>
+								<td colspan="4"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_ISSUES') ?></td>
 							</tr>
 							<tr>
-								<th width="20%"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
+								<th width="20%"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
 								<th colspan="3"><?php echo count($this->legacy) ?></th>
 							</tr>
 							<?php foreach ($this->legacy as $item)
@@ -48,11 +49,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 									<td></td>
 									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? JText::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? JText::_('COM_KUNENA_TRASHED') : JText::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
 								</tr>
 							<?php endforeach ?>
 							<tr>
-								<th><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
+								<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
 								<th colspan="2"><?php echo count($this->conflicts) ?></th>
 							</tr>
 							<?php foreach ($this->conflicts as $item)
@@ -62,11 +63,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 									<td></td>
 									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? JText::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? JText::_('COM_KUNENA_TRASHED') : JText::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
 								</tr>
 							<?php endforeach ?>
 							<tr>
-								<th><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
+								<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
 								<th colspan="2"><?php echo count($this->invalid) ?></th>
 							</tr>
 							<?php foreach ($this->invalid as $item)
@@ -76,7 +77,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 									<td></td>
 									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? JText::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? JText::_('COM_KUNENA_TRASHED') : JText::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
 								</tr>
 							<?php endforeach ?>
 						</table>

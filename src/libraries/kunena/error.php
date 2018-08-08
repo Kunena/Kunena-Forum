@@ -10,6 +10,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaError
@@ -113,7 +114,7 @@ abstract class KunenaError
 		if (self::$debug)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
+			$app->enqueueMessage(Text::sprintf('COM_KUNENA_ERROR_' . strtoupper($where), $msg), 'error');
 		}
 	}
 
@@ -130,7 +131,7 @@ abstract class KunenaError
 		if (self::$debug)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
+			$app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
 
@@ -159,13 +160,19 @@ abstract class KunenaError
 		}
 		elseif (self::$debug || self::$admin)
 		{
-			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
+			$app->enqueueMessage('Kunena ' . Text::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
 					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
+		}
+		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
+		{
+			$app->enqueueMessage($exception->getMessage(), 'error');
 		}
 		else
 		{
-			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
+			$app->enqueueMessage('Kunena ' . Text::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
 		}
+
+		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, $exception);
 	}
 
 	/**

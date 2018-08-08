@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 ?>
 <div>
 
@@ -56,11 +57,11 @@ defined('_JEXEC') or die;
 		:
 		?>
 		<h2>
-			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
+			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 		</h2>
 
 		<div class="well well-small">
-			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
 			<b>
 
 				<?php if ($this->userlistUrl)
@@ -75,35 +76,35 @@ defined('_JEXEC') or die;
 
 			</b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 			<b><?php echo $this->latestMemberLink ?></b>
 
 			<br/>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
 			<b><?php echo (int) $this->messageCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
 			<b><?php echo (int) $this->topicCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
 			<b><?php echo (int) $this->sectionCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
 			<b><?php echo (int) $this->categoryCount; ?></b>
 
 			<br/>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
 			<b><?php echo (int) $this->todayTopicCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
 			<b><?php echo (int) $this->yesterdayTopicCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
 			<b><?php echo (int) $this->todayReplyCount; ?></b>
 
-			<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
+			<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
 			<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
 		</div>
 	<?php endif; ?>

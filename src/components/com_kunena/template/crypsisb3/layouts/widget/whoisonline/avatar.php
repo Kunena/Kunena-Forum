@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
+
 ?>
 
 <?php if (!empty($this->onlineList)) : ?>
@@ -27,7 +29,7 @@ defined('_JEXEC') or die;
 
 <?php if (!empty($this->hiddenList)) : ?>
 	<div id="whoisonlinelist">
-		<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
+		<span><?php echo Text::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
 		<?php
 		foreach ($this->hiddenList as $user)

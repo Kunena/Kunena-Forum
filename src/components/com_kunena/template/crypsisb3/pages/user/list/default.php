@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('User/List');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_USRL_USERLIST'),
+	Text::_('COM_KUNENA_USRL_USERLIST'),
 	'index.php?option=com_kunena&view=user&layout=list'
 );
 

@@ -11,8 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Crypsis template.
@@ -114,7 +114,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
-		$this->addStyleSheet('kunena.css');
+		$this->addLessSheet('kunena.css');
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$storage         = $this->ktemplate->params->get('storage');
@@ -140,13 +140,12 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc         = Factory::getDocument();
 
 		if ($fontawesome)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$doc->addScript('https://use.fontawesome.com/releases/v5.1.0/js/all.js', array(), array('defer' => true));
-			$doc->addScript('https://use.fontawesome.com/releases/v5.1.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
@@ -154,7 +153,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		if ($icons)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+			$this->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
 		// Load template colors settings
@@ -187,25 +186,9 @@ EOF;
 EOF;
 		}
 
-		$document = Factory::getDocument();
-		$document->addStyleDeclaration($styles);
+		$this->addStyleDeclaration($styles);
 
 		parent::initialize();
-	}
-
-	/**
-	 * @param          $filename
-	 * @param   string $group group
-	 *
-	 * @return \Joomla\CMS\Document\Document
-	 * @since Kunena
-	 */
-	public function addStyleSheet($filename, $group = 'forum')
-	{
-		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-
-		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**
@@ -226,8 +209,8 @@ EOF;
 		// Need special style for buttons in drop-down list
 		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
 
-		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
-		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 
 		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
 		{

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * About view for Kunena cpanel
  * @since Kunena
@@ -31,7 +33,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarDefault()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
 		$help_url = 'https://docs.kunena.org/en/manual/backend/tools';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
@@ -55,7 +57,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarPrune()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
 		JToolbarHelper::spacer();
@@ -101,7 +103,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarSyncUsers()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('syncusers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
 		JToolbarHelper::spacer();
@@ -125,7 +127,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarRecount()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
 		JToolbarHelper::spacer();
@@ -153,7 +155,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarMenu()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 
 		if (!empty($this->legacy))
@@ -183,7 +185,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarPurgeReStatements()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::trash('purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
 		JToolbarHelper::spacer();
@@ -207,7 +209,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolCleanupIP()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('cleanupip', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEANUP_IP', false);
 		JToolbarHelper::spacer();
@@ -231,7 +233,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarDiagnostics()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();
@@ -257,7 +259,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarUninstall()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();
@@ -281,7 +283,7 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	protected function setToolBarReport()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA'), 'help');
+		JToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();

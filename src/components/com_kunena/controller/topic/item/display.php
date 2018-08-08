@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
@@ -55,6 +56,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 */
 	public $headerText;
+
+	/**
+	 * @var int
+	 * @since Kunena 5.1.3
+	 */
+	public $reviewCount;
 
 	/**
 	 * Prepare topic display.
@@ -102,7 +109,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		 }*/
 
 		$options            = array();
-		$options []         = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -207,6 +214,39 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && KunenaConfig::getInstance()->quickreply;
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
+
+		$data                           = new JObject;
+		$data->{'@context'}             = "http://schema.org";
+		$data->{'@type'}                = "DiscussionForumPosting";
+		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->{'headline'}             = $this->headerText;
+		$data->{'image'}                = $this->docImage();
+		$data->author                   = array();
+		$tmp                            = new JObject;
+		$tmp->{'@type'}                 = "Person";
+		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
+		$data->author                   = $tmp;
+		$data->interactionStatistic     = array();
+		$tmp2                           = new JObject;
+		$tmp2->{'@type'}                = "InteractionCounter";
+		$tmp2->{'interactionType'}      = "InteractionCounter";
+		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
+		$data->interactionStatistic     = $tmp2;
+
+		if ($this->category->allow_ratings && KunenaConfig::getInstance()->ratingenabled)
+		{
+			$data->aggregateRating  = array();
+			$tmp3                   = new JObject;
+			$tmp3->{'@type'}        = "AggregateRating";
+			$tmp3->{'itemReviewed'} = $this->headerText;
+			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getSelected($this->topic->id) : 5;
+			$tmp3->{'reviewCount'}  = KunenaForumTopicRateHelper::getCount($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getCount($this->topic->id) : 1;
+			$data->aggregateRating  = $tmp3;
+
+			$this->reviewCount = KunenaForumTopicRateHelper::getCount($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getCount($this->topic->id) : '';
+		}
+
+		Factory::getDocument()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), 'application/ld+json');
 	}
 
 	/**
@@ -413,26 +453,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	{
 		$image = '';
 		$doc   = Factory::getDocument();
-		$doc->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
-		$doc->setMetaData('og:type', 'article', 'property');
-		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
-		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
+		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:type', 'article', 'property');
+		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
+		$this->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
 
-		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
-		{
-			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
-		}
-		elseif ($this->topic->getAuthor()->avatar == null)
-		{
-			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
-			{
-				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			}
-		}
-		else
-		{
-			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
-		}
+		$image = $this->docImage();
 
 		$message = KunenaHtmlParser::parseText($this->topic->first_post_message);
 		$matches = preg_match("/\[img]http(s?):\/\/.*\/\img]/iu", $message, $title);
@@ -487,38 +513,38 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$first = $this->topic->subject;
 		}
 
-		$doc->setMetaData('og:description', $first, 'property');
-		$doc->setMetaData('og:image', $image, 'property');
-		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
-		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
-		$doc->setMetaData('twitter:card', 'summary', 'name');
-		$doc->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
-		$doc->setMetaData('twitter:image', $image, 'property');
-		$doc->setMetaData('twitter:description', $first);
+		$this->setMetaData('og:description', $first, 'property');
+		$this->setMetaData('og:image', $image, 'property');
+		$this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
+		$this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
+		$this->setMetaData('twitter:card', 'summary', 'name');
+		$this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
+		$this->setMetaData('twitter:image', $image, 'property');
+		$this->setMetaData('twitter:description', $first);
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
 		if ($robots == '')
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$pagdata = $this->pagination->getData();
 
@@ -567,7 +593,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
-				$doc->setMetaData('article:tag', $keywords, 'property');
+				$this->setMetaData('article:tag', $keywords, 'property');
 			}
 			else
 			{
@@ -583,7 +609,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 					$small = $headerText;
 				}
 
-				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
+				$this->setDescription($small . " - " . Text::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
@@ -597,5 +623,39 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$this->setDescription($small);
 			}
 		}
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
+	 */
+	protected function docImage()
+	{
+		$image = '';
+
+		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
+		{
+			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
+		}
+		elseif ($this->topic->getAuthor()->avatar == null)
+		{
+			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+			{
+				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			}
+			else
+			{
+				$image = \Joomla\CMS\Uri\Uri::base() . '/media/kunena/email/hero-wide.png';
+			}
+		}
+		else
+		{
+			$image = $this->topic->getAuthor()->getAvatarURL('Profile', '200');
+		}
+
+		return $image;
 	}
 }

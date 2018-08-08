@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class JHtmlKunenaForum
@@ -132,7 +133,7 @@ abstract class JHtmlKunenaForum
 		{
 			$me         = KunenaUserHelper::getMyself();
 			$disabled   = ($action == 'admin' && !$me->isAdmin());
-			$options [] = HTMLHelper::_('select.option', '0', JText::_($topleveltxt), 'value', 'text', $disabled);
+			$options [] = HTMLHelper::_('select.option', '0', Text::_($topleveltxt), 'value', 'text', $disabled);
 
 			if ($preselect && empty($selected) && !$disabled)
 			{

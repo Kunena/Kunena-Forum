@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerAnnouncementListDisplay
@@ -108,7 +109,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+				$this->setTitle(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 			}
 
 			if (!empty($params_keywords))
@@ -118,7 +119,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			}
 			else
 			{
-				$this->setKeywords(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+				$this->setKeywords(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 			}
 
 			if (!empty($params_description))
@@ -128,7 +129,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			}
 			else
 			{
-				$this->setDescription(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+				$this->setDescription(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 			}
 		}
 	}

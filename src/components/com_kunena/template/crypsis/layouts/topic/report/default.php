@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 ?>
 
 <h2>
-	<?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
+	<?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
 </h2>
 
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
@@ -35,7 +35,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<div class="well well-small">
 		<div class="control-group">
 			<label class="control-label" for="kreport-reason">
-				<?php echo JText::_('COM_KUNENA_REPORT_REASON'); ?>
+				<?php echo Text::_('COM_KUNENA_REPORT_REASON'); ?>
 			</label>
 			<div class="controls">
 				<input class="input-xxlarge" type="text" name="reason" size="30" id="kreport-reason"/>
@@ -43,7 +43,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="kreport-msg">
-				<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE'); ?>
+				<?php echo Text::_('COM_KUNENA_REPORT_MESSAGE'); ?>
 			</label>
 			<div class="controls">
 				<textarea class="input-xxlarge" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
@@ -52,9 +52,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
-				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
+				       value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
-					<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
+					<?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>
 	</div>

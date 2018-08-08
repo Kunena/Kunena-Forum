@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Class KunenaPrivateUddeIM
  * @since Kunena
@@ -72,7 +74,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	{
 		if (!$text)
 		{
-			$text = JText::_('COM_KUNENA_PMS_INBOX');
+			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
 		return '<a href="' . JRoute::_($this->uddeim->getLinkToBox('inbox', false)) . '" rel="follow">' . $text . '</a>';

@@ -9,10 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
+
 ?>
 
 <h1>
-	<?php echo JText::_('COM_KUNENA') . ' - ' . JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
+	<?php echo Text::_('COM_KUNENA') . ' - ' . Text::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
 </h1>
 
 <div class="well well-small" id="credits">
@@ -39,7 +41,7 @@ defined('_JEXEC') or die;
 				</dd>
 				<hr class="hr-condensed">
 			<?php endforeach ?>
-			<dt><a><?php echo JText::_('COM_KUNENA_DONATE'); ?></a></dt>
+			<dt><a><?php echo Text::_('COM_KUNENA_DONATE'); ?></a></dt>
 			<dd>
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 					<input name="cmd" type="hidden" value="_s-xclick">
@@ -58,16 +60,16 @@ defined('_JEXEC') or die;
 		</p>
 
 		<p>
-			<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>
-			<a href="javascript:window.history.back()" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
-				<?php echo JText::_('COM_KUNENA_USER_RETURN_B'); ?>
+			<?php echo Text::_('COM_KUNENA_CREDITS_GO_BACK'); ?>
+			<a href="javascript:window.history.back()" title="<?php echo Text::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
+				<?php echo Text::_('COM_KUNENA_USER_RETURN_B'); ?>
 			</a>
 		</p>
 
 		<p class="center">
-			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2018 <a href="https://www.kunena.org"
+			<?php echo Text::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2018 <a href="https://www.kunena.org"
 			                                                                      target="_blank">Kunena</a>,
-			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href="https://www.gnu.org/copyleft/gpl.html"
+			<?php echo Text::_('COM_KUNENA_LICENSE'); ?>: <a href="https://www.gnu.org/copyleft/gpl.html"
 			                                                  target="_blank">GNU GPL</a>
 		</p>
 	</div>

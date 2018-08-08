@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicListDisplay
@@ -130,6 +131,6 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 
 		$actions          = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions    = $this->getTopicActions($this->topics, $actions);
-		$this->headerText = JText::_('COM_KUNENA_UNREAD');
+		$this->headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -30,25 +31,25 @@ HTMLHelper::_('bootstrap.popover');
 		<div id="j-main-container" class="col-md-10" role="main">
 			<div class="card card-block bg-faded p-2">
 				<div class="module-title nav-header"><i
-							class="icon-mail"></i> <?php echo JText::_('Select Email Form') ?>
+							class="icon-mail"></i> <?php echo Text::_('Select Email Form') ?>
 				</div>
 				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
 					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-user"></i><br/>
-						<span><?php echo JText::_('Subscription') ?></span>
+						<span><?php echo Text::_('Subscription') ?></span>
 					</a>
 					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-shield"></i><br/>
-						<span><?php echo JText::_('Moderator') ?></span>
+						<span><?php echo Text::_('Moderator') ?></span>
 					</a>
 					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-checkmark"></i><br/>
-						<span><?php echo JText::_('Approved') ?></span>
+						<span><?php echo Text::_('Approved') ?></span>
 					</a>
 					<a class="btn btn-default" href="#">
 						<i class="icon-big icon-notification-circle"></i><br/>
-						<span><?php echo JText::_('Report') ?></span>
+						<span><?php echo Text::_('Report') ?></span>
 					</a>
 				</div>
 				<div class="clearfix"></div>

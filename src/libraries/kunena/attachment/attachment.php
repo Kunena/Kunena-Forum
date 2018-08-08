@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAttachment
@@ -483,7 +484,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Unknown action - throw invalid argument exception.
 		if (!isset(self::$actions[$action]))
 		{
-			throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+			throw new InvalidArgumentException(Text::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 		}
 
 		// Load message authorisation.
@@ -729,7 +730,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Create target directory if it does not exist.
 		if (!KunenaFolder::exists(JPATH_ROOT . "/{$this->folder}") && !KunenaFolder::create(JPATH_ROOT . "/{$this->folder}"))
 		{
-			throw new RuntimeException(JText::_('Failed to create attachment directory.'));
+			throw new RuntimeException(Text::_('Failed to create attachment directory.'));
 		}
 
 		$destination = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
@@ -740,7 +741,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			// Create target directory if it does not exist.
 			if (!$overwrite && is_file($destination))
 			{
-				throw new RuntimeException(JText::sprintf('Attachment %s already exists.'), $this->filename_real);
+				throw new RuntimeException(Text::sprintf('Attachment %s already exists.'), $this->filename_real);
 			}
 
 			if ($unlink)
@@ -752,7 +753,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			if (!$success)
 			{
-				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $destination));
+				throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $destination));
 			}
 
 			KunenaPath::setPermissions($destination);
@@ -778,7 +779,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Checks if attachment exists
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
 		return;
@@ -797,7 +798,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Checks if attachment exists
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
 		if (!$user->exists())
@@ -806,12 +807,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			if ($this->isImage() && !$config->showimgforguest)
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'), 401);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'), 401);
 			}
 
 			if (!$this->isImage() && !$config->showfileforguest)
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'), 401);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'), 401);
 			}
 		}
 
@@ -829,9 +830,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected function authoriseOwn(KunenaUser $user)
 	{
 		// Checks if attachment is users own or user is moderator in the category (or global)
-		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory()))
+		if ($this->userid != $user->userid && !$user->isModerator($this->getMessage()->getCategory()) || !$user->exists() || $user->isBanned())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
 		return;

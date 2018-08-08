@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 // Kunena 2.0.0: Convert deprecated configuration options
 /**
  * @param $parent
@@ -155,5 +157,5 @@ function kunena_200_2012_05_30_configuration($parent)
 	// Save configuration
 	$config->save();
 
-	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_CONFIGURATION'), 'success' => true);
+	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_CONFIGURATION'), 'success' => true);
 }

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaVersion
@@ -31,36 +32,36 @@ class KunenaVersion
 	{
 		if (strpos(KunenaForum::version(), 'GIT') !== false)
 		{
-			$kn_version_type    = JText::_('COM_KUNENA_VERSION_GIT');
-			$kn_version_warning = JText::_('COM_KUNENA_VERSION_GIT_WARNING');
+			$kn_version_type    = Text::_('COM_KUNENA_VERSION_GIT');
+			$kn_version_warning = Text::_('COM_KUNENA_VERSION_GIT_WARNING');
 		}
 		else
 		{
 			if (strpos(KunenaForum::version(), 'DEV') !== false)
 			{
-				$kn_version_type    = JText::_('COM_KUNENA_VERSION_DEV');
-				$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
+				$kn_version_type    = Text::_('COM_KUNENA_VERSION_DEV');
+				$kn_version_warning = Text::_('COM_KUNENA_VERSION_DEV_WARNING');
 			}
 			else
 			{
 				if (strpos(KunenaForum::version(), 'RC') !== false)
 				{
-					$kn_version_type    = JText::_('COM_KUNENA_VERSION_RC');
-					$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
+					$kn_version_type    = Text::_('COM_KUNENA_VERSION_RC');
+					$kn_version_warning = Text::_('COM_KUNENA_VERSION_RC_WARNING');
 				}
 				else
 				{
 					if (strpos(KunenaForum::version(), 'BETA') !== false)
 					{
-						$kn_version_type    = JText::_('COM_KUNENA_VERSION_BETA');
-						$kn_version_warning = JText::_('COM_KUNENA_VERSION_BETA_WARNING');
+						$kn_version_type    = Text::_('COM_KUNENA_VERSION_BETA');
+						$kn_version_warning = Text::_('COM_KUNENA_VERSION_BETA_WARNING');
 					}
 					else
 					{
 						if (strpos(KunenaForum::version(), 'ALPHA') !== false)
 						{
-							$kn_version_type    = JText::_('COM_KUNENA_VERSION_ALPHA');
-							$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
+							$kn_version_type    = Text::_('COM_KUNENA_VERSION_ALPHA');
+							$kn_version_warning = Text::_('COM_KUNENA_VERSION_ALPHA_WARNING');
 						}
 					}
 				}
@@ -69,7 +70,7 @@ class KunenaVersion
 
 		if (!empty($kn_version_warning) && !empty($kn_version_type))
 		{
-			return JText::sprintf($msg, '<strong>' . strtoupper(KunenaForum::version()), $kn_version_type . '</strong>') . ' ' . $kn_version_warning;
+			return Text::sprintf($msg, '<strong>' . strtoupper(KunenaForum::version()), $kn_version_type . '</strong>') . ' ' . $kn_version_warning;
 		}
 
 		return '';
@@ -151,10 +152,10 @@ class KunenaVersion
 	 */
 	public static function getCopyrightHTML()
 	{
-		return ': &copy; 2008 - 2018 ' . JText::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
-			. JText::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . JText::_('COM_KUNENA_VERSION_LICENSE')
+		return ': &copy; 2008 - 2018 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
+			. Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
 			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
-			. JText::_('COM_KUNENA_VERSION_GPL') . '</a>';
+			. Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
 	}
 
 	/**

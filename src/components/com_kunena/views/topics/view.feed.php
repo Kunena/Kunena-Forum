@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Topics View
@@ -30,7 +31,7 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		KunenaHtmlParser::$relative = false;
@@ -65,26 +66,26 @@ class KunenaViewTopics extends KunenaView
 		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				break;
 			case 'sticky' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
 				break;
 			case 'locked' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
 				break;
 			case 'noreplies' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
 				break;
 			case 'unapproved' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
 				break;
 			case 'deleted' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
 				break;
 			case 'replies' :
 			default :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 		}
 
 		$this->setTitle($title);
@@ -103,7 +104,7 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout = 'user';
@@ -111,25 +112,25 @@ class KunenaViewTopics extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator('Kunena Forum (Joomla)');
 
 		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
 				break;
 			case 'started' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
 				break;
 			case 'favorites' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
 				break;
 			case 'subscriptions' :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
 				break;
 			default :
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
 
 		$this->setTitle($title);
@@ -148,7 +149,7 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout   = 'posts';
@@ -157,26 +158,26 @@ class KunenaViewTopics extends KunenaView
 		$this->total    = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator('Kunena Forum (Joomla)');
 
 		switch ($this->state->get('list.mode'))
 		{
 			case 'unapproved':
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
 				break;
 			case 'deleted':
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
 				break;
 			case 'mythanks':
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
 				break;
 			case 'thankyou':
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
 				break;
 			case 'recent':
 			default:
-				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 		}
 
 		$this->setTitle($title);
@@ -210,7 +211,7 @@ class KunenaViewTopics extends KunenaView
 
 				if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id)
 				{
-					$description = JText::_('COM_KUNENA_TEASER_TEXT');
+					$description = Text::_('COM_KUNENA_TEASER_TEXT');
 				}
 				else
 				{
@@ -251,7 +252,7 @@ class KunenaViewTopics extends KunenaView
 
 			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id)
 			{
-				$description = JText::_('COM_KUNENA_TEASER_TEXT');
+				$description = Text::_('COM_KUNENA_TEASER_TEXT');
 			}
 			else
 			{
@@ -283,21 +284,28 @@ class KunenaViewTopics extends KunenaView
 		if ($this->config->rss_author_in_title)
 		{
 			// We want author in item titles
-			$title .= ' - ' . JText::_('COM_KUNENA_BY') . ': ' . $username;
+			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
 		}
 
-		$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
-		$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
-		$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
-		$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
-
-		if ((bool) $this->config->rss_allow_html)
+		if ((int) $this->config->rss_word_count === -1)
 		{
-			$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+			$description = '';
 		}
 		else
 		{
-			$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+			$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
+			$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
+			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
+			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
+
+			if ((bool) $this->config->rss_allow_html)
+			{
+				$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+			}
+			else
+			{
+				$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+			}
 		}
 
 		// Assign values to feed item

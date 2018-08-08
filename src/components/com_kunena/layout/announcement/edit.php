@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * KunenaLayoutAnnouncementEdit
@@ -50,14 +51,14 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 				return '<input type="text" class="span12" name="publish_down" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->publish_down) . '">' . $attributes;
 			case 'showdate':
 				$options   = array();
-				$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_NO'));
-				$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+				$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
+				$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
 
 				return HTMLHelper::_('select.genericlist', $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id);
 			case 'published':
 				$options   = array();
-				$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_NO'));
-				$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+				$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
+				$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
 
 				return HTMLHelper::_('select.genericlist', $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id);
 		}

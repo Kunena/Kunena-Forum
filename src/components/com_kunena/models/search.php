@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Search Model for Kunena
@@ -52,7 +53,7 @@ class KunenaModelSearch extends KunenaModel
 			$value = Joomla\String\StringHelper::trim($this->app->input->get('q', '', 'string'));
 		}
 
-		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
+		if ($value == Text::_('COM_KUNENA_GEN_SEARCH_BOX'))
 		{
 			$value = '';
 		}
@@ -128,6 +129,7 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$value = Factory::getApplication()->input->getString('ids', '0', 'get');
+			$value = explode(' ', (int) $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
@@ -318,7 +320,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
 
 			return 0;
 		}
@@ -327,12 +329,9 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$this->getResults();
 		}
-
-		// If there are no forums to search in, set error and return
-
-		if ($this->total == 0)
+		else
 		{
-			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'), 'notice');
 
 			return 0;
 		}
@@ -445,7 +444,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (empty($this->messages))
 		{
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'), 'notice');
 		}
 
 		return $this->messages;

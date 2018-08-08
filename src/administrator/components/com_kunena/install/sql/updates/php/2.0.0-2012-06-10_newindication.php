@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Convert new indication into new format
 /**
@@ -149,5 +150,5 @@ function kunena_200_2012_06_10_newindication($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_NEW_INDICATION'), 'success' => true);
+	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_NEW_INDICATION'), 'success' => true);
 }

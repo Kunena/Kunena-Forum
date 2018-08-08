@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -21,19 +22,19 @@ defined('_JEXEC') or die;
 			#
 		</th>
 		<th class="span3">
-			<?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?>
+			<?php echo Text::_('COM_KUNENA_BAN_BANNEDFROM'); ?>
 		</th>
 		<th class="span2">
-			<?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?>
+			<?php echo Text::_('COM_KUNENA_BAN_STARTTIME'); ?>
 		</th>
 		<th class="span2">
-			<?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?>
+			<?php echo Text::_('COM_KUNENA_BAN_EXPIRETIME'); ?>
 		</th>
 		<th class="span2">
-			<?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?>
+			<?php echo Text::_('COM_KUNENA_BAN_CREATEDBY'); ?>
 		</th>
 		<th class="span2">
-			<?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?>
+			<?php echo Text::_('COM_KUNENA_BAN_MODIFIEDBY'); ?>
 		</th>
 	</tr>
 	</thead>
@@ -54,15 +55,15 @@ defined('_JEXEC') or die;
 				</td>
 				<td>
 					<?php echo $banInfo->blocked
-						? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA')
-						: JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?>
+						? Text::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA')
+						: Text::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?>
 				</td>
 				<td>
 					<?php echo $banInfo->getCreationDate()->toKunena('datetime'); ?>
 				</td>
 				<td>
 					<?php echo $banInfo->isLifetime()
-						? JText::_('COM_KUNENA_BAN_LIFETIME')
+						? Text::_('COM_KUNENA_BAN_LIFETIME')
 						: $banInfo->getExpirationDate()->toKunena('datetime'); ?>
 				</td>
 				<td>
@@ -85,7 +86,7 @@ defined('_JEXEC') or die;
 			<tr>
 				<td></td>
 				<td>
-					<b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b>
+					<b><?php echo Text::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b>
 				</td>
 				<td colspan="4">
 					<?php echo KunenaHtmlParser::parseText($banInfo->reason_public); ?>
@@ -99,7 +100,7 @@ defined('_JEXEC') or die;
 			<tr>
 				<td></td>
 				<td>
-					<b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b></td>
+					<b><?php echo Text::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b></td>
 				<td colspan="4">
 					<?php echo KunenaHtmlParser::parseText($banInfo->reason_private); ?>
 				</td>
@@ -116,7 +117,7 @@ defined('_JEXEC') or die;
 						<td></td>
 						<td>
 							<strong>
-								<?php echo JText::sprintf(
+								<?php echo Text::sprintf(
 									'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink()
 								);
 								?>
@@ -139,7 +140,7 @@ defined('_JEXEC') or die;
 
 		<tr>
 			<td colspan="6">
-				<?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->getName())); ?>
+				<?php echo Text::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->getName())); ?>
 			</td>
 		</tr>
 	<?php endif; ?>

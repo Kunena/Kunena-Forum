@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserEditProfileDisplay
@@ -47,9 +48,9 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 			$this->birthdate["day"]   = $bd[2];
 		}
 
-		$this->genders[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-		$this->genders[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-		$this->genders[] = HTMLHelper::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+		$this->genders[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+		$this->genders[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+		$this->genders[] = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$config = KunenaConfig::getInstance();
 
@@ -63,7 +64,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 			$this->social = null;
 		}
 
-		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
+		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
 	}
 
 	/**

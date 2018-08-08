@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.utilities.date');
 
@@ -797,27 +798,27 @@ class KunenaUserBan extends JObject
 
 		if (!$me->isModerator())
 		{
-			throw new Exception(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
+			throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 		}
 
 		if (!$user->exists())
 		{
-			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
+			throw new Exception(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
 		}
 
 		if ($userid == $me->userid)
 		{
-			throw new Exception(JText::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
 		}
 
 		if ($user->isAdmin())
 		{
-			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
+			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
 		}
 
 		if ($user->isModerator() && !$me->isAdmin())
 		{
-			throw new Exception(JText::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
+			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
 		}
 
 		return true;

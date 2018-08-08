@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
@@ -24,18 +25,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 				<div class="modal-header">
 					<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
-					<h3><?php echo JText::_('COM_KUNENA_CONFIG_MODAL_TITLE'); ?></h3>
+					<h3><?php echo Text::_('COM_KUNENA_CONFIG_MODAL_TITLE'); ?></h3>
 				</div>
 				<div class="modal-body span11">
-					<p><?php echo JText::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
+					<p><?php echo Text::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-default" type="button" data-dismiss="modal">
-						<?php echo JText::_('JCANCEL'); ?>
+						<?php echo Text::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-primary" type="submit"
 							onclick="document.getElementById('settingFormModal').submit();">
-						<?php echo JText::_('JSUBMIT'); ?>
+						<?php echo Text::_('JSUBMIT'); ?>
 					</button>
 				</div>
 			</div>

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaControllerDisplay
@@ -212,6 +213,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Executed after display.
 	 * @since Kunena
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function after()
 	{
@@ -224,10 +226,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 * @since Kunena
-	 * @return void
+	 * @return bool
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -324,17 +334,17 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Obey Joomla configuration.
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
 				if ($this->config->board_title == $this->app->get('sitename'))
 				{
-					$title = JText::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
 				}
 				else
 				{
-					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 				}
 			}
 			else
@@ -355,10 +365,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setKeywords($keywords)
 	{
-		if (!empty($keywords))
-		{
-			$this->document->setMetadata('keywords', $keywords);
-		}
+		$this->document->setMetadata('keywords', $keywords);
 	}
 
 	/**
@@ -381,5 +388,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function setRobots($robots)
 	{
 		$this->document->setMetaData('robots', $robots, 'robots');
+	}
+
+	/**
+	 * @param        $name
+	 * @param        $content
+	 * @param string $attribute
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	protected function setMetaData($name, $content, $attribute = 'name')
+	{
+		$this->document->setMetaData($name, $content, $attribute);
 	}
 }

@@ -923,6 +923,9 @@
         <field name="linkedin"
                type="varchar(50)"
                null="1"/>
+        <field name="linkedin_company"
+               type="varchar(50)"
+               null="1"/>
         <field name="delicious"
                type="varchar(50)"
                null="1"/>

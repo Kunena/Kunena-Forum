@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * User Model for Kunena
@@ -70,7 +71,7 @@ class KunenaModelUser extends KunenaModel
 
 		$value = $this->app->input->get('search', null, 'string');
 
-		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH'))
+		if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH'))
 		{
 			$this->setState('list.search', rtrim($value));
 		}
@@ -202,7 +203,8 @@ class KunenaModelUser extends KunenaModel
 			$search = $this->getQuerySearch();
 
 			$query = $db->getQuery(true);
-			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))
+			$query->select('COUNT(*)')
+				->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}");
 			$db->setQuery($query);
@@ -272,7 +274,8 @@ class KunenaModelUser extends KunenaModel
 			$search = $this->getQuerySearch();
 			$query  = $db->getQuery(true);
 
-			$query->select($db->quoteName('u.id'))->from($db->quoteName('#__users', 'u'))
+			$query->select($db->quoteName('u.id'))
+				->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}")
 				->order("{$orderby} {$direction}");

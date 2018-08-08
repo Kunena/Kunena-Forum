@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Class ComponentKunenaControllerStatisticsWhoisonlineDisplay
  *
@@ -45,7 +47,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 
 		if (!$this->config->get('showwhoisonline'))
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		$me        = KunenaUserHelper::getMyself();
@@ -59,26 +61,26 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 
 		if ($onlineusers['user'] == 1)
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
 		}
 		else
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
 		}
 
-		$who .= JText::_('COM_KUNENA_WHO_AND');
+		$who .= Text::_('COM_KUNENA_WHO_AND');
 		$who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
 
 		if ($onlineusers['guest'] == 1)
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
 		}
 		else
 		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
+			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who                 .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
 		$this->onlineList = array();
@@ -117,6 +119,6 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
+		$this->setTitle(Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
 	}
 }

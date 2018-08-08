@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -189,8 +190,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		elseif (!$me->isModerator($this->topic->getCategory()))
 		{
 			// User is not allowed to write a post.
-			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') :
-				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
+			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
+				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
 		}
 
 		$login = KunenaLogin::getInstance();
@@ -201,19 +202,19 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		)
 		{
 			$loginurl  = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance()));
-			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, JText::_('JLOGIN'));
+			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, Text::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())
 			{
-				$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="' . $login->getRegistrationUrl()
-					. '">' . JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+				$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="' . $login->getRegistrationUrl()
+					. '">' . Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
 			else
 			{
 				$register = '';
 			}
 
-			echo '<p>' . JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
+			echo '<p>' . Text::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
 		}
 
 		// Thank you.

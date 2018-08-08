@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerWidgetLoginDisplay
@@ -137,7 +138,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			if ($private)
 			{
 				$this->inboxCountValue = $private->getUnreadCount($this->me->userid);
-				$this->inboxCount      = $this->inboxCountValue ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : JText::_('COM_KUNENA_PMS_INBOX');
+				$this->inboxCount      = $this->inboxCountValue ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : Text::_('COM_KUNENA_PMS_INBOX');
 				$this->pm_link         = $private->getInboxURL();
 			}
 

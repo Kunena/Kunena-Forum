@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Kunena Plugins Controller
@@ -74,7 +75,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function publish()
 	{
 		// Check for request forgeries
-		\Joomla\CMS\Session\Session::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
 		$cid   = Factory::getApplication()->input->get('cid', array(), 'array');
@@ -84,7 +85,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 
 		if (empty($cid))
 		{
-			\Joomla\CMS\Log\Log::add(JText::_($this->text_prefix . '_NO_ITEM_SELECTED'), \Joomla\CMS\Log\Log::WARNING, 'jerror');
+			\Joomla\CMS\Log\Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), \Joomla\CMS\Log\Log::WARNING, 'jerror');
 		}
 		else
 		{
@@ -118,7 +119,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
 				}
 
-				$this->setMessage(JText::plural($ntext, count($cid)));
+				$this->setMessage(Text::plural($ntext, count($cid)));
 			}
 		}
 
@@ -162,7 +163,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function reorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
@@ -173,7 +174,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		if ($return === false)
 		{
 			// Reorder failed.
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
+			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
 
 			return false;
@@ -181,7 +182,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		else
 		{
 			// Reorder succeeded.
-			$message = JText::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
+			$message = Text::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 
 			return true;
@@ -198,7 +199,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function saveorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Get the input
 		$pks   = $this->input->post->get('cid', array(), 'array');
@@ -217,7 +218,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		if ($return === false)
 		{
 			// Reorder failed
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
+			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
 
 			return false;
@@ -225,7 +226,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		else
 		{
 			// Reorder succeeded.
-			$this->setMessage(JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
+			$this->setMessage(Text::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 
 			return true;
@@ -243,7 +244,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function checkin()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 
@@ -253,7 +254,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		if ($return === false)
 		{
 			// Checkin failed.
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
+			$message = Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
 
 			return false;
@@ -264,7 +265,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 			$editor->initializeHMVC();
 
 			// Checkin succeeded.
-			$message = JText::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
+			$message = Text::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 
 			return true;

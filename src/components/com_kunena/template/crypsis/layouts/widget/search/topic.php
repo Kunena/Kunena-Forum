@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
@@ -36,7 +36,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<div class="input-append">
 		<input class="input-medium search-query" type="text" name="query" value=""
-		       placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>"/>
+		       placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>"/>
 		<button class="btn btn-default" type="submit"><?php echo KunenaIcons::search(); ?></button>
 	</div>
 </form>

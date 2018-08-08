@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Kunena Backend Config Controller
  *
@@ -75,7 +77,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -103,7 +105,7 @@ class KunenaAdminControllerConfig extends KunenaController
 				{
 					if (empty($postvalue))
 					{
-						$this->app->enqueueMessage(JText::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'));
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'));
 						$this->setRedirect(KunenaRoute::_($url, false));
 
 						return;
@@ -121,7 +123,7 @@ class KunenaAdminControllerConfig extends KunenaController
 
 		$this->config->save();
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONFIGSAVED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONFIGSAVED'));
 
 		if (empty($url))
 		{
@@ -146,7 +148,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	{
 		if (!\Joomla\CMS\Session\Session::checkToken('post'))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -155,6 +157,6 @@ class KunenaAdminControllerConfig extends KunenaController
 		$this->config->reset();
 		$this->config->save();
 
-		$this->setRedirect('index.php?option=com_kunena&view=config', JText::_('COM_KUNENA_CONFIG_DEFAULT'));
+		$this->setRedirect('index.php?option=com_kunena&view=config', Text::_('COM_KUNENA_CONFIG_DEFAULT'));
 	}
 }

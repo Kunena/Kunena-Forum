@@ -153,7 +153,14 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			$params = '&catid=' . (int) $catid;
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}", $xhtml);
+			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			{
+				return KunenaRoute::_( "index.php?option=com_kunena&view=category&format=feed&layout=default{$params}"). '?format=feed&type=rss';
+			}
+			else
+			{
+				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=default{$params}", $xhtml);
+			}
 		}
 
 		return;

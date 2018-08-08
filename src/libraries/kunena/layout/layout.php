@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Implements Kunena specific functions for all layouts.
@@ -57,7 +58,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function text($key)
 	{
-		return JText::_($key);
+		return Text::_($key);
 	}
 
 	/**
@@ -152,11 +153,11 @@ class KunenaLayout extends KunenaLayoutBase
 		}
 		elseif ($number >= 1000000)
 		{
-			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
+			$output = $number / 1000000 . Text::_('COM_KUNENA_MILLION');
 		}
 		else
 		{
-			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
+			$output = $number / 1000 . Text::_('COM_KUNENA_THOUSAND');
 		}
 
 		return $output;
@@ -186,7 +187,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
+			$title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
 
 			if (strpos($class, 'hasTooltip') !== false)
 			{
@@ -339,7 +340,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if (!$content)
 		{
-			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE') . ' ' : '';
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
 			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
 		}
 

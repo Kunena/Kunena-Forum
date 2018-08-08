@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 // [spoiler="Do not look here!"]I said so![/spoiler]
 
 // Display spoiler text (hidden until you click it open).
@@ -26,13 +26,13 @@ $hidden = !empty($this->hidden);
 		{
 			echo $hide;
 		} ?>>
-			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>
+			<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>
 		</span>
 		<span class="kspoiler-hide"<?php if ($hidden)
 		{
 			echo $hide;
 		} ?>>
-			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'); ?>
+			<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'); ?>
 		</span>
 	</div>
 	<div class="kspoiler-wrapper">

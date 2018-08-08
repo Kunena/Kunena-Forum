@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Utility class for creating HTML Grids
@@ -40,8 +41,8 @@ abstract class JHtmlKunenaGrid
 		self::behavior();
 
 		// Build the title.
-		$title = ($value) ? JText::_('COM_KUNENA_YES') : JText::_('COM_KUNENA_NO');
-		$title .= '::' . JText::_('COM_KUNENA_LIB_CLICK_TO_TOGGLE_STATE');
+		$title = ($value) ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO');
+		$title .= '::' . Text::_('COM_KUNENA_LIB_CLICK_TO_TOGGLE_STATE');
 
 		// Build the <a> tag.
 		$bool   = ($value) ? 'true' : 'false';
@@ -132,8 +133,8 @@ abstract class JHtmlKunenaGrid
 			$direction = ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
-		$html = '<a href="javascript:kunenatableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\',\'' . $form . '\');" title="' . JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN') . '">';
-		$html .= JText::_($title);
+		$html = '<a href="javascript:kunenatableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\',\'' . $form . '\');" title="' . Text::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN') . '">';
+		$html .= Text::_($title);
 
 		if ($order == $selected)
 		{
@@ -194,10 +195,10 @@ abstract class JHtmlKunenaGrid
 		{
 			$text = addslashes(htmlspecialchars($row->editor, ENT_COMPAT, 'UTF-8'));
 
-			$date = HTMLHelper::_('date', $row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
+			$date = HTMLHelper::_('date', $row->checked_out_time, Text::_('DATE_FORMAT_LC1'));
 			$time = HTMLHelper::_('date', $row->checked_out_time, 'H:i');
 
-			$hover = '<span class="editlinktip hasTip" title="' . JText::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
+			$hover = '<span class="editlinktip hasTip" title="' . Text::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
 		}
 
 		$checked = $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
@@ -221,7 +222,7 @@ abstract class JHtmlKunenaGrid
 			return '';
 		}
 
-		return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" title="' . JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
+		return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" title="' . Text::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
 	}
 
 	/**
@@ -242,8 +243,8 @@ abstract class JHtmlKunenaGrid
 		}
 
 		$task   = $value ? 'unpublish' : 'publish';
-		$alt    = $value ? JText::_('COM_KUNENA_PUBLISHED') : JText::_('COM_KUNENA_UNPUBLISHED');
-		$action = $value ? JText::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : JText::_('COM_KUNENA_LIB_PUBLISH_ITEM');
+		$alt    = $value ? Text::_('COM_KUNENA_PUBLISHED') : Text::_('COM_KUNENA_UNPUBLISHED');
+		$action = $value ? Text::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : Text::_('COM_KUNENA_LIB_PUBLISH_ITEM');
 		$class  = $task == 'unpublish' ? 'publish' : 'unpublish';
 
 		$title = $inactive_title = $alt . '::' . $action;
@@ -411,7 +412,7 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
-		$href = '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . JText::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
+		$href = '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 
 		return $href;
 	}
@@ -427,7 +428,7 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
 	{
-		$alt = JText::_($alt);
+		$alt = Text::_($alt);
 
 		if ($enabled)
 		{
@@ -448,7 +449,7 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')
 	{
-		$alt = JText::_($alt);
+		$alt = Text::_($alt);
 
 		if ($enabled)
 		{

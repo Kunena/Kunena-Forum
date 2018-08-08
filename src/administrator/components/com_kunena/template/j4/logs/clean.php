@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 
 ?>
@@ -32,17 +33,17 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_LOG_MANAGER'); ?></legend>
+					<legend><?php echo Text::_('COM_KUNENA_LOG_MANAGER'); ?></legend>
 					<table class="table table-bordered table-striped">
 						<tr>
-							<td colspan="2"><?php echo JText::_('COM_KUNENA_LOG_CLEAN_DESC') ?></td>
+							<td colspan="2"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_DESC') ?></td>
 						</tr>
 						<tr>
-							<td width="20%"><?php echo JText::_('COM_KUNENA_LOG_CLEAN_FROM') ?></td>
+							<td width="20%"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM') ?></td>
 							<td>
 								<div class="input-append">
 									<input class="col-md-3" type="text" name="clean_days" value="30"/>
-									<span class="add-on"><?php echo JText::_('COM_KUNENA_LOG_CLEAN_FROM_DAYS') ?></span>
+									<span class="add-on"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM_DAYS') ?></span>
 								</div>
 							</td>
 						</tr>

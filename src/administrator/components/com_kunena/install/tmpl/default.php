@@ -9,12 +9,15 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Language\Text;
+
 ?>
 <div id="kunena" style="max-width:530px;">
 	<div id="kunena-install">
-		<h2><?php echo JText::_('COM_KUNENA_INSTALL_PLEASE_WAIT'); ?></h2>
+		<h2><?php echo Text::_('COM_KUNENA_INSTALL_PLEASE_WAIT'); ?></h2>
 		<div>
-			<div id="kunena-description"><?php echo JText::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
+			<div id="kunena-description"><?php echo Text::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
 			<div class="progress progress-striped active">
 				<div id="kunena-progress" class="bar" style="width: 0;"></div>
 			</div>
@@ -22,18 +25,18 @@ defined('_JEXEC') or die();
 	</div>
 	<div>
 		<button id="kunena-toggle" class="btn"
-				style="float: left;"><?php echo JText::_('COM_KUNENA_INSTALL_DETAILS'); ?></button>
+				style="float: left;"><?php echo Text::_('COM_KUNENA_INSTALL_DETAILS'); ?></button>
 		<div class="pull-right">
 			<button id="kunena-component" class="btn kunena-close"
-					disabled="disabled"><?php echo JText::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
+					disabled="disabled"><?php echo Text::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
 			<button id="kunena-installer" class="btn kunena-close" disabled="disabled" data-dismiss="modal"
-					aria-hidden="true"><?php echo JText::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
+					aria-hidden="true"><?php echo Text::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
 		</div>
 		<div id="kunena-container" class="hidden">
 			<p class="clr clearfix"></p>
 			<div id="kunena-details" class="well well-small">
-				<h4><?php echo JText::_('COM_KUNENA_INSTALL_DETAILS'); ?></h4>
-				<div><?php echo JText::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
+				<h4><?php echo Text::_('COM_KUNENA_INSTALL_DETAILS'); ?></h4>
+				<div><?php echo Text::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
 			</div>
 		</div>
 	</div>
@@ -55,7 +58,7 @@ defined('_JEXEC') or die();
 			data: '<?php echo \Joomla\CMS\Session\Session::getFormToken(); ?>=1',
 			cache: false,
 			error: function (xhr, ajaxOptions, thrownError) {
-				kunenaInstall.html('<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
+				kunenaInstall.html('<h2><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
 				kunenaProgress.addClass('bar-danger');
 				jQuery('#kunena-installer').show();
 			},
@@ -78,7 +81,7 @@ defined('_JEXEC') or die();
 						window.kunenainstall();
 						return;
 					} else {
-						kunenaInstall.find('h2').text('<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
+						kunenaInstall.find('h2').text('<?php echo Text::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
 						kunenaProgress.parent().removeClass('active');
 						kunenaProgress.addClass('bar-success');
 						jQuery('#kunena-component').addClass('btn-success');
@@ -87,7 +90,7 @@ defined('_JEXEC') or die();
 					jQuery('.kunena-close').removeAttr('disabled');
 				} else {
 					kunenaProgress.parent().removeClass('active');
-					kunenaInstall.find('h2').text('<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
+					kunenaInstall.find('h2').text('<?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
 					kunenaDescription.html(json.error);
 					kunenaProgress.addClass('bar-danger');
 					jQuery('#kunena-installer').removeAttr('disabled');

@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $config          = KunenaConfig::getInstance();
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -25,7 +26,7 @@ $quick           = $this->ktemplate->params->get('quick');
 				   class="btn btn-default Kreplyclick"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
 				   rel="nofollow">
-					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 
@@ -71,12 +72,12 @@ endif; ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
 				   class="btn btn-default Kreplyclick"
 				   data-toggle="modal" rel="nofollow">
-					<?php echo KunenaIcons::undo() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
 				<button class="btn btn-default" data-toggle="dropdown">
-					<?php echo KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
+					<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
 				<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
@@ -94,7 +95,7 @@ endif; ?>
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
 					<button class="btn btn-default" data-toggle="dropdown">
-						<?php echo KunenaIcons::shuffle() . ' ' . JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+						<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
 					<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>

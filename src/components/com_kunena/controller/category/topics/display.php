@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -214,39 +215,38 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$page  = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;
 
-		$pagesText    = ($pages > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$pagesText    = ($pages > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$parentText   = $this->category->getParent()->name;
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
 
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-
-		$doc    = Factory::getDocument();
-		$config = Factory::getConfig();
-		$robots = $config->get('robots');
+		$doc       = Factory::getDocument();
+		$config    = Factory::getConfig();
+		$robots    = $config->get('robots');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
-			$doc->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('og:image', $image, 'property');
 		}
 
 		if ($robots == '' && $this->topics)
 		{
-			$doc->setMetaData('robots', 'index, follow');
+			$this->setMetaData('robots', 'index, follow');
 		}
 		elseif ($robots == 'noindex, follow' && $this->topics)
 		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow' && $this->topics)
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
 		$pagdata = $this->pagination->getData();
@@ -254,12 +254,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($pagdata->previous->link)
 		{
 			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
-			$doc->addHeadLink($pagdata->previous->link, 'prev');
+			$this->addHeadLink($pagdata->previous->link, 'prev');
 		}
 
 		if ($pagdata->next->link)
 		{
-			$doc->addHeadLink($pagdata->next->link, 'next');
+			$this->addHeadLink($pagdata->next->link, 'next');
 		}
 
 		if ($page > 1)
@@ -296,7 +296,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$title = JText::sprintf("{$categoryText}{$pagesText}");
+				$title = Text::sprintf("{$categoryText}{$pagesText}");
 				$this->setTitle($title);
 			}
 
@@ -307,7 +307,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+				$keywords = Text::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
 				$this->setKeywords($keywords);
 			}
 
@@ -332,7 +332,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

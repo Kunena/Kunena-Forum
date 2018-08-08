@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+
 /**
  * Templates view for Kunena backend
  * @since Kunena
@@ -33,7 +35,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	 */
 	protected function setToolBarDefault()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::spacer();
 		JToolbarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
 		JToolbarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
@@ -64,7 +66,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	 */
 	protected function setToolBarAdd()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::spacer();
 		JToolbarHelper::back();
 		JToolbarHelper::spacer();
@@ -107,7 +109,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	 */
 	protected function setToolBarEdit()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::spacer();
 		JToolbarHelper::apply('apply');
 		JToolbarHelper::spacer();
@@ -152,7 +154,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	{
 
 		JToolbarHelper::spacer();
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		JToolbarHelper::spacer();
 		JToolbarHelper::spacer();
@@ -180,7 +182,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	 */
 	protected function setToolBarEditless()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::spacer();
 		JToolbarHelper::apply('applyless');
 		JToolbarHelper::spacer();
@@ -221,7 +223,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	{
 
 		JToolbarHelper::spacer();
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		JToolbarHelper::spacer();
 		JToolbarHelper::spacer();
@@ -248,7 +250,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	 */
 	protected function setToolBarEditcss()
 	{
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolbarHelper::spacer();
 		JToolbarHelper::apply('applycss');
 		JToolbarHelper::spacer();

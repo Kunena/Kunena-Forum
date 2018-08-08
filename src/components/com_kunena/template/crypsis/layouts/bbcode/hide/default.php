@@ -9,15 +9,15 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 // [hide]Hidden from guests[/hide]
 
 // Hide content from guests, on users highlight the contents as being hidden from guests.
 ?>
 
 <?php if ($this->me->exists()) : ?>
-	<strong><?php echo JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
+	<strong><?php echo Text::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
 	<div class="kmsgtext-hide"><?php echo $this->content; ?></div>
 <?php else : ?>
-	<strong><?php echo JText::_('COM_KUNENA_BBCODE_HIDDENTEXT'); ?></strong>
+	<strong><?php echo Text::_('COM_KUNENA_BBCODE_HIDDENTEXT'); ?></strong>
 <?php endif; ?>

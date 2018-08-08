@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -62,7 +63,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 		if (!$this->me->isAdmin())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		require_once KPATH_SITE . '/models/category.php';
@@ -71,7 +72,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 		$this->navigation = '';
 		$this->state      = $this->app->getUserState('com_kunena.category');
-		$header           = JText::_('COM_KUNENA_ADMIN');
+		$header           = Text::_('COM_KUNENA_ADMIN');
 		$this->header     = $header;
 		$this->ktemplate  = KunenaFactory::getTemplate();
 		$this->document   = Factory::getDocument();
@@ -89,8 +90,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$doc = Factory::getDocument();
-		$doc->setMetaData('robots', 'nofollow, noindex');
+		$this->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)
 		{
@@ -106,7 +106,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_ADMIN');
+				$title = Text::_('COM_KUNENA_ADMIN');
 				$this->setTitle($title);
 			}
 
@@ -117,7 +117,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_ADMIN');
+				$keywords = Text::_('COM_KUNENA_ADMIN');
 				$this->setKeywords($keywords);
 			}
 
@@ -128,7 +128,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_ADMIN');
+				$description = Text::_('COM_KUNENA_ADMIN');
 				$this->setDescription($description);
 			}
 		}

@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaControllerApplicationDisplay
@@ -77,7 +78,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		if ($result === false)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Wrapper layout.
@@ -92,7 +93,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->output->setLayout('offline');
 
 			$this->content = KunenaLayout::factory('Widget/Custom')
-				->set('header', JText::_('COM_KUNENA_FORUM_IS_OFFLINE'))
+				->set('header', Text::_('COM_KUNENA_FORUM_IS_OFFLINE'))
 				->set('body', $this->config->offline_message);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
@@ -102,8 +103,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->output->setLayout('offline');
 
 			$this->content = KunenaLayout::factory('Widget/Custom')
-				->set('header', JText::_('COM_KUNENA_LOGIN_NOTIFICATION'))
-				->set('body', JText::_('COM_KUNENA_LOGIN_FORUM'));
+				->set('header', Text::_('COM_KUNENA_LOGIN_NOTIFICATION'))
+				->set('body', Text::_('COM_KUNENA_LOGIN_FORUM'));
 		}
 		else
 		{
@@ -124,7 +125,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
 					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
-					$this->document->setTitle(JText::_('COM_KUNENA_LOGIN_FORUM'));
+					$this->document->setTitle(Text::_('COM_KUNENA_LOGIN_FORUM'));
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}
 				elseif ($banned)
@@ -136,8 +137,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					$bannedtime = KunenaUserBan::getInstanceByUserid(KunenaUserHelper::getMyself()->userid, true);
 
 					$this->content = KunenaLayout::factory('Widget/Custom')
-						->set('header', JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
-						->set('body', JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+						->set('header', Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
+						->set('body', Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
 							KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
 						)
 						);
@@ -227,18 +228,18 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			// Display warnings to the administrator if forum is either offline or debug has been turned on.
 			if ($this->config->board_offline)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
 			}
 
 			if ($this->config->debug)
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
 			}
 		}
 
 		if ($this->config->read_only)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_WARNING_READONLY'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'notice');
 		}
 
 		if ($this->me->isBanned())
@@ -249,7 +250,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			if (!$banned->isLifetime())
 			{
 				$this->app->enqueueMessage(
-					JText::sprintf(
+					Text::sprintf(
 						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
 						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
 					), 'notice'
@@ -257,7 +258,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
 			}
 		}
 
@@ -380,12 +381,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits      = '<div style="text-align:center;">';
 		$credits      .= HTMLHelper::_(
 			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
-			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
+			Text::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			array('style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;')
 		);
 		$credits      .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline !important; visibility: visible !important; text-decoration: none !important;">'
-			. JText::_('COM_KUNENA') . '</a>';
+			. Text::_('COM_KUNENA') . '</a>';
 
 		if (trim($templateText))
 		{
@@ -406,8 +407,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		#kunena + div { display: block !important;}
 EOF;
 
-			$document = Factory::getDocument();
-			$document->addStyleDeclaration($styles);
+			KunenaTemplate::getInstance()->addStyleDeclaration($styles);
 		}
 
 		return $credits;

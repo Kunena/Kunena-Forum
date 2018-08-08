@@ -14,10 +14,18 @@ var previewActive = false;
 
 function kPreviewHelper(previewActive) {
 	var editor = jQuery('#editor');
+	if (Joomla.getOptions('com_kunena.suffixpreview'))
+	{
+		var url = 'index.php?option=com_kunena&view=topic&layout=edit&format=raw';
+	}
+	else
+	{
+		var url = jQuery('#kpreview_url').val();
+	}
 	if (editor.val() !== null) {
 		jQuery.ajax({
 			type: 'POST',
-			url: jQuery('#kpreview_url').val(),
+			url: url,
 			async: true,
 			dataType: 'json',
 			data: {body: editor.val()}
@@ -148,6 +156,7 @@ jQuery(document).ready(function ($) {
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
 		$("#editor").attr('required', 'required');
+		localStorage.removeItem('copyKunenaeditor');
 	});
 
 	var category_template_text;

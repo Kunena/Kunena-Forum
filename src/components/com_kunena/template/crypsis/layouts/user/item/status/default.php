@@ -9,7 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
+use Joomla\CMS\Language\Text;
 $user        = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
 $status      = $user->getStatus();
 $status_text = $user->getStatusText();
@@ -18,30 +18,30 @@ $link        = $user->getURL();
 switch ($status)
 {
 	case 0:
-		$label = JText::_("COM_KUNENA_ONLINE");
+		$label = Text::_("COM_KUNENA_ONLINE");
 		$state = "success";
 		break;
 	case 1:
-		$label = JText::_("COM_KUNENA_AWAY");
+		$label = Text::_("COM_KUNENA_AWAY");
 		$state = "warning";
 		break;
 	case 2:
-		$label = JText::_("COM_KUNENA_BUSY");
+		$label = Text::_("COM_KUNENA_BUSY");
 		$state = "important";
 		break;
 	case 3:
-		$label = JText::_("COM_KUNENA_INVISIBLE");
+		$label = Text::_("COM_KUNENA_INVISIBLE");
 		$state = "default";
 		break;
 	default:
-		$label = JText::_("COM_KUNENA_OFFLINE");
+		$label = Text::_("COM_KUNENA_OFFLINE");
 		$state = "default";
 		break;
 }
 
 if (!$user->showOnline)
 {
-	$label = JText::_("COM_KUNENA_OFFLINE");
+	$label = Text::_("COM_KUNENA_OFFLINE");
 	$state = "default";
 }
 

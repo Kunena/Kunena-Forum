@@ -9,11 +9,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Credits');
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'),
+	Text::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'),
 	'index.php?option=com_kunena&view=credits'
 );
 

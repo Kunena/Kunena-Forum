@@ -15,6 +15,7 @@
 /** @var KunenaForumCategory $subcategory */
 
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 
 if ($this->config->enableforumjump)
 {
@@ -81,7 +82,7 @@ foreach ($this->sections as $section) :
 					<tr>
 						<td>
 							<h4>
-								<?php echo JText::_('COM_KUNENA_GEN_NOFORUMS'); ?>
+								<?php echo Text::_('COM_KUNENA_GEN_NOFORUMS'); ?>
 							</h4>
 						</td>
 					</tr>
@@ -89,10 +90,10 @@ foreach ($this->sections as $section) :
 					<?php if (!empty($this->categories[$section->id])) : ?>
 						<tr>
 							<td colspan="2" class="hidden-xs">
-								<?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?>
+								<?php echo Text::_('COM_KUNENA_GEN_CATEGORY'); ?>
 							</td>
 							<td colspan="1" class="hidden-xs post-info">
-								<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+								<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
 							</td>
 						</tr>
 					<?php endif; ?>
@@ -111,16 +112,16 @@ foreach ($this->sections as $section) :
 											<?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
-													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
+													<sup class="knewchar"> (<?php echo $new . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
 														)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
 													<span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-															title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
+															title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
 													<span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-															title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
+															title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
 												<?php endif; ?>
 
 												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
@@ -158,7 +159,7 @@ foreach ($this->sections as $section) :
 
 													if (($new = $subcategory->getNewCount()) > 0)
 													{
-														echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+														echo '<sup class="knewchar">(' . $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
 													}
 													?>
 												</li>
@@ -166,9 +167,9 @@ foreach ($this->sections as $section) :
 
 											<?php if (!empty($this->more[$category->id])) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE'), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
+													<?php echo $this->getCategoryLink($category, Text::_('COM_KUNENA_SEE_MORE'), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 													<small class="hidden-xs muted">
-														(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>
+														(<?php echo Text::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>
 														)
 													</small>
 												</li>
@@ -189,7 +190,7 @@ foreach ($this->sections as $section) :
 											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, KunenaTemplate::getInstance()->tooltips());
 										}
 
-										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
+										echo Text::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 										?>
 									</div>
 								<?php endif; ?>
@@ -198,8 +199,8 @@ foreach ($this->sections as $section) :
 									<div class="alert alert-warning" role="alert" style="margin-top:10px;">
 										<a class="alert-link"
 										   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
-										   title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
-										   rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
+										   title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
+										   rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
 									</div>
 								<?php endif; ?>
 							</td>
@@ -226,7 +227,7 @@ foreach ($this->sections as $section) :
 													<?php endif; ?>
 													<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 													<br>
-													<span class="lastpostby"><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+													<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
 													<br>
 													<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 												</div>
@@ -236,7 +237,7 @@ foreach ($this->sections as $section) :
 							<?php else : ?>
 								<td class="col-md-3 hidden-xs">
 									<div class="last-post-message">
-										<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
+										<?php echo Text::_('COM_KUNENA_X_TOPICS_0'); ?>
 									</div>
 								</td>
 							<?php endif; ?>
@@ -248,9 +249,9 @@ foreach ($this->sections as $section) :
 					<tr>
 						<td colspan="3">
 							<h4>
-								<?php echo $this->getCategoryLink($section, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
+								<?php echo $this->getCategoryLink($section, Text::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
 								<small>
-									(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]); ?>
+									(<?php echo Text::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]); ?>
 									)
 								</small>
 							</h4>

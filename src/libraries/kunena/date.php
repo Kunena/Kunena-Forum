@@ -10,6 +10,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 jimport('joomla.utilities.date');
 
@@ -69,7 +70,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	{
 		if ($this->format('Y') < 1902)
 		{
-			return JText::_('COM_KUNENA_LIB_DATETIME_UNKNOWN');
+			return Text::_('COM_KUNENA_LIB_DATETIME_UNKNOWN');
 		}
 
 		if (preg_match('/^config_/', $mode) == 1)
@@ -90,14 +91,14 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 				return $this->toTimeAgo();
 			case 'time' :
 				$time            = true;
-				$usertime_format = JText::_('COM_KUNENA_LIB_TIME_FMT');
+				$usertime_format = Text::_('COM_KUNENA_LIB_TIME_FMT');
 				break;
 			case 'date' :
-				$usertime_format = JText::_('COM_KUNENA_LIB_DATE_FMT');
+				$usertime_format = Text::_('COM_KUNENA_LIB_DATE_FMT');
 				break;
 			case 'datetime':
 				$time            = true;
-				$usertime_format = JText::_('COM_KUNENA_LIB_DATETIME_FMT');
+				$usertime_format = Text::_('COM_KUNENA_LIB_DATETIME_FMT');
 				break;
 			default:
 				$usertime_format = $mode;
@@ -146,7 +147,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 				&& $then ['year'] == $now ['year']
 			)
 			{
-				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
+				return trim(Text::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(Text::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}
 
 			// Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
@@ -154,7 +155,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 				|| ($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31
 			)
 			{
-				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
+				return trim(Text::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(Text::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}
 		}
 
@@ -169,12 +170,12 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$chunks = array(
-			'y' => array(JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS')),
-			'm' => array(JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS')),
-			'w' => array(JText::_('COM_KUNENA_DATE_WEEK'), JText::_('COM_KUNENA_DATE_WEEKS')),
-			'd' => array(JText::_('COM_KUNENA_DATE_DAY'), JText::_('COM_KUNENA_DATE_DAYS')),
-			'h' => array(JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS')),
-			'i' => array(JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES')),);
+			'y' => array(Text::_('COM_KUNENA_DATE_YEAR'), Text::_('COM_KUNENA_DATE_YEARS')),
+			'm' => array(Text::_('COM_KUNENA_DATE_MONTH'), Text::_('COM_KUNENA_DATE_MONTHS')),
+			'w' => array(Text::_('COM_KUNENA_DATE_WEEK'), Text::_('COM_KUNENA_DATE_WEEKS')),
+			'd' => array(Text::_('COM_KUNENA_DATE_DAY'), Text::_('COM_KUNENA_DATE_DAYS')),
+			'h' => array(Text::_('COM_KUNENA_DATE_HOUR'), Text::_('COM_KUNENA_DATE_HOURS')),
+			'i' => array(Text::_('COM_KUNENA_DATE_MINUTE'), Text::_('COM_KUNENA_DATE_MINUTES')),);
 
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;
@@ -215,11 +216,11 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 
 		if (!$output)
 		{
-			$output .= JText::_('COM_KUNENA_LIB_TIME_NOW');
+			$output .= Text::_('COM_KUNENA_LIB_TIME_NOW');
 		}
 		else
 		{
-			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
+			$output = Text::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

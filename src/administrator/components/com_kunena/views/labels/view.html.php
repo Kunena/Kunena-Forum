@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Labels view for Kunena backend
@@ -32,7 +33,7 @@ class KunenaAdminViewLabels extends KunenaView
 		$this->pagination = $this->get('Pagination');
 
 		$document = Factory::getDocument();
-		$document->setTitle(JText::_('Forum Labels'));
+		$document->setTitle(Text::_('Forum Labels'));
 
 		$this->setToolbar();
 		$this->display();
@@ -48,7 +49,7 @@ class KunenaAdminViewLabels extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_A_LABELS_MANAGER'));
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_LABELS_MANAGER'));
 
 	}
 }

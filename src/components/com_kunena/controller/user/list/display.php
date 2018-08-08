@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerUserListDisplay
@@ -70,7 +71,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		if (!$config->userlist_allowed && Factory::getUser()->guest)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		require_once KPATH_SITE . '/models/user.php';
@@ -158,7 +159,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
+				$title = Text::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
 				$this->setTitle($title);
 			}
 
@@ -169,7 +170,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_VIEW_USER_LIST');
+				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_VIEW_USER_LIST');
 				$this->setKeywords($keywords);
 			}
 
@@ -180,7 +181,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 		}

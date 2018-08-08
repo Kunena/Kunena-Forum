@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerApplicationAttachmentDefaultDisplay
@@ -90,17 +91,17 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		if ($format != 'raw' || !$id)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
 		$attachment = KunenaAttachmentHelper::get($id);
@@ -116,7 +117,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		if (!$path)
 		{
 			// File doesn't exist.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (headers_sent())

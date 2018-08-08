@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumCategoryHelper
@@ -567,7 +568,7 @@ abstract class KunenaForumCategoryHelper
 				{
 					if ($category->parent_id == $catid)
 					{
-						$category->name = JText::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
+						$category->name = Text::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
 					}
 
 					$list[$category->id] = $category;
@@ -726,6 +727,7 @@ abstract class KunenaForumCategoryHelper
 						}
 						break;
 					case 'name' :
+					case 'p.title' :
 						if ($params['direction'] > 0)
 						{
 							uksort($cats, array(__CLASS__, 'compareByNameAsc'));

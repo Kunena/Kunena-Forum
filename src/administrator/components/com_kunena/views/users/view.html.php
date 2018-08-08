@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * Users view for Kunena backend
@@ -50,7 +51,7 @@ class KunenaAdminViewUsers extends KunenaView
 
 		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
 		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.1.0/js/all.js', array(), array('defer' => true));
+			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
 		}
 
 		$this->display();
@@ -68,7 +69,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_USER_MANAGER'), 'users');
+		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
 		JToolbarHelper::spacer();
 		JToolbarHelper::editList();
 		JToolbarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
@@ -84,7 +85,7 @@ class KunenaAdminViewUsers extends KunenaView
 			HTMLHelper::_('bootstrap.modal', 'moderateModal');
 		}
 
-		$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
+		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
 						$title</button>";
@@ -111,15 +112,15 @@ class KunenaAdminViewUsers extends KunenaView
 	protected function getSortFields()
 	{
 		$sortFields   = array();
-		$sortFields[] = HTMLHelper::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
-		$sortFields[] = HTMLHelper::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
-		$sortFields[] = HTMLHelper::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
-		$sortFields[] = HTMLHelper::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
-		$sortFields[] = HTMLHelper::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
-		$sortFields[] = HTMLHelper::_('select.option', 'ip', JText::_('COM_KUNENA_GEN_IP'));
+		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
+		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'rank', Text::_('COM_KUNENA_A_RANKS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'signature', Text::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'enabled', Text::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'banned', Text::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'moderator', Text::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'ip', Text::_('COM_KUNENA_GEN_IP'));
 
 		return $sortFields;
 	}
@@ -133,8 +134,8 @@ class KunenaAdminViewUsers extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection   = array();
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}
@@ -149,8 +150,8 @@ class KunenaAdminViewUsers extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
-		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}
@@ -165,8 +166,8 @@ class KunenaAdminViewUsers extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -181,8 +182,8 @@ class KunenaAdminViewUsers extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -197,8 +198,8 @@ class KunenaAdminViewUsers extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
-		$options[] = HTMLHelper::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}
@@ -213,8 +214,8 @@ class KunenaAdminViewUsers extends KunenaView
 	{
 		// Build the active state filter options.
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', 'Administrator', JText::_('Administrator'));
-		$options[] = HTMLHelper::_('select.option', 'New Member', JText::_('New Member'));
+		$options[] = HTMLHelper::_('select.option', 'Administrator', Text::_('Administrator'));
+		$options[] = HTMLHelper::_('select.option', 'New Member', Text::_('New Member'));
 
 		return $options;
 	}

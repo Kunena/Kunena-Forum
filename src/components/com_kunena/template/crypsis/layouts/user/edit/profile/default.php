@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Language\Text;
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 $this->addScript('assets/js/profile.js');
@@ -27,28 +27,28 @@ $this->addScript('assets/js/profile.js');
 		<tr>
 			<td class="span3">
 				<label for="personaltext">
-					<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
+					<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
 				</label>
 			</td>
 			<td>
 				<input id="personaltext" type="text" maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
 				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"
-				       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
+				       class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
 	<tr>
 		<td>
 			<label for="birthdate">
-				<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
+				<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
 			</label>
 		</td>
 		<td>
 			<div id="birthdate">
 				<div class="input-append date">
 					<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('mm/dd/yyyy') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
-					       class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
+					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/y') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					       class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="add-on"><?php echo KunenaIcons::grid();?></span>
 				</div>
 			</div>
@@ -57,31 +57,31 @@ $this->addScript('assets/js/profile.js');
 	<tr>
 		<td>
 			<label for="location">
-				<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
+				<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
 			</label>
 		</td>
 		<td>
 			<input id="location" type="text" name="location"
 			       value="<?php echo $this->escape($this->profile->location); ?>" class="hasTooltip"
-			       title="<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
+			       title="<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<label for="gender">
-				<?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
+				<?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
 			</label>
 		</td>
 		<td>
 			<?php
 			// Make the select list for the view type
-			$gender[] = HTMLHelper::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-			$gender[] = HTMLHelper::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-			$gender[] = HTMLHelper::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+			$gender[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+			$gender[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+			$gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 			// Build the html select list
 			echo HTMLHelper::_(
-				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
+				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
 				$this->escape($this->profile->gender), 'gender'
 			);
 			?>
@@ -90,12 +90,12 @@ $this->addScript('assets/js/profile.js');
 	<tr>
 		<td>
 			<label for="social-site">
-				<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
+				<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
 			</label>
 		</td>
 		<td>
-				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-					. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+				<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+					. '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 					<input id="social-site" type="text" maxlength="25" name="websitename"
 					       value="<?php echo $this->escape($this->profile->websitename); ?>"/>
 				</span>
@@ -104,12 +104,12 @@ $this->addScript('assets/js/profile.js');
 	<tr>
 		<td>
 			<label for="social-url">
-				<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
+				<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
 			</label>
 		</td>
 		<td>
 				<span class="hasTooltip"
-				      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+				      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 					<input id="social-url" type="url" name="websiteurl"
 					       value="<?php echo $this->escape($this->profile->getWebsiteURL()); ?>"/>
 				</span>
@@ -121,13 +121,13 @@ $this->addScript('assets/js/profile.js');
 			<tr>
 				<td>
 					<label for="social-<?php echo $key; ?>">
-						<?php echo JText::_('COM_KUNENA_MYPROFILE_' . $key); ?>
+						<?php echo Text::_('COM_KUNENA_MYPROFILE_' . $key); ?>
 					</label>
 				</td>
 				<td>
 					<?php if ($social != 'qq') : ?>
-					<span class="hasTooltip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$key}")
-						. '::' . JText::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
+					<span class="hasTooltip" title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
+						. '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 				<?php endif; ?>
 						<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
 						       value="<?php echo $this->escape($this->profile->$key); ?>"/>
@@ -141,12 +141,12 @@ $this->addScript('assets/js/profile.js');
 		<tr>
 			<td>
 				<label for="signature">
-					<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?>
+					<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?>
 				</label>
 			</td>
 			<td>
-				<span class="hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
-					. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
+				<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
+					. '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
 					<textarea class="input-xxlarge" maxlength="<?php echo (int) $this->config->maxsig; ?>"
 					          name="signature" id="signature" rows="10"
 					          cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>

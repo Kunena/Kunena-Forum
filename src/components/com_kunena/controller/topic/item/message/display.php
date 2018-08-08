@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Class ComponentKunenaControllerTopicItemMessageDisplay
@@ -96,8 +97,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		if ($this->topic->unread)
 		{
-			$doc = Factory::getDocument();
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 
 		$this->captchaEnabled = false;
@@ -172,8 +172,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
 					. '&mesid=' . intval($this->message->id),
-					JText::_('COM_KUNENA_REPORT'),
-					JText::_('COM_KUNENA_REPORT')
+					Text::_('COM_KUNENA_REPORT'),
+					Text::_('COM_KUNENA_REPORT')
 				);
 			}
 		}

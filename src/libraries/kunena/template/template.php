@@ -808,11 +808,13 @@ HTML;
 	}
 
 	/**
+	 * Set the LESS file into the document head
+	 *
 	 * @param   string $filename filename
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
-	 * @since Kunena
+	 * @since Kunena 5.1.3
 	 */
 	public function addLessSheet($filename)
 	{

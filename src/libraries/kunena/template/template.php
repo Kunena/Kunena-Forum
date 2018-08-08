@@ -788,7 +788,7 @@ HTML;
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filename     = preg_replace('/^assets/', '', $filename);
+			$filename     = preg_replace('/^assets\//', '', $filename);
 			$filename     = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);

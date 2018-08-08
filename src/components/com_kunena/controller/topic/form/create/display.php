@@ -113,9 +113,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		}
 
 		// FIXME: We need to proxy this...
-		$this->document = Factory::getDocument();
-		$this->document->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		$this->document->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);

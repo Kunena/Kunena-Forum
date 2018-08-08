@@ -298,7 +298,7 @@ class KunenaTemplate extends JObject
 			if (KunenaConfig::getInstance()->activemenuitem)
 			{
 				$id = KunenaConfig::getInstance()->activemenuitem;
-				Factory::getDocument()->addScriptDeclaration("
+				$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 			}
 			else
@@ -309,7 +309,7 @@ class KunenaTemplate extends JObject
 				if ($items)
 				{
 					$id = '.item-' . $items[0]->id;
-					Factory::getDocument()->addScriptDeclaration("
+					$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 				}
 			}
@@ -462,26 +462,24 @@ class KunenaTemplate extends JObject
 		{
 			$sef = '/index.php?option=com_kunena';
 		}
-		?>
 
-		<script>
-			jQuery(document).ready(function ($) {
-				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
-				{
-					echo "true";
-				}
-				else
-				{
-					echo "false";
-				}?>;
+		if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
+		{
+			$isForumActive = true;
+		}
+		else
+		{
+			$isForumActive = false;
+		}
 
-				if (isForumActive) {
-					$('.current').addClass("active alias-parent-active");
-					$('.alias-parent-active').addClass("active alias-parent-active");
-				}
+		if ($isForumActive)
+		{
+			$this->addScriptDeclaration('jQuery(document).ready(function ($) {
+				$(".current").addClass("active alias-parent-active");
+				$(".alias-parent-active").addClass("active alias-parent-active");
 			});
-		</script>
-		<?php
+			');
+		}
 	}
 
 	/**

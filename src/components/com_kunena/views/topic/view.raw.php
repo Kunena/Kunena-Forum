@@ -193,7 +193,7 @@ class KunenaViewTopic extends KunenaView
 		$response = array();
 		$app      = Factory::getApplication();
 
-		if ($user->id == 0)
+		if ($user->id == 0 || KunenaForumTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
 		{
 			$response = KunenaForumTopicRateHelper::getSelected($topicid);
 		}
@@ -225,8 +225,9 @@ class KunenaViewTopic extends KunenaView
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
 		$app      = Factory::getApplication();
+		$user     = KunenaUserHelper::getMyself();
 
-		if ($this->me->exists() || $this->config->ratingenabled)
+		if ($user->exists() || $this->config->ratingenabled)
 		{
 			$rate           = KunenaForumTopicRateHelper::get($topicid);
 			$rate->stars    = $starid;

@@ -254,12 +254,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($pagdata->previous->link)
 		{
 			$pagdata->previous->link = str_replace('?limitstart=0', '', $pagdata->previous->link);
-			$this->addHeadLink($pagdata->previous->link, 'prev');
+			$doc->addHeadLink($pagdata->previous->link, 'prev');
 		}
 
 		if ($pagdata->next->link)
 		{
-			$this->addHeadLink($pagdata->next->link, 'next');
+			$doc->addHeadLink($pagdata->next->link, 'next');
 		}
 
 		if ($page > 1)

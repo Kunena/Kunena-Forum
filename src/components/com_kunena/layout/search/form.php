@@ -139,10 +139,16 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	{
 		// Limit value list
 		$options   = array();
-		$options[] = HTMLHelper::_('select.option', $this->config->messages_per_page_search, Text::sprintf('COM_KUNENA_SEARCH_LIMIT',
-			$this->config->messages_per_page_search
-		)
-		);
+
+		if ($this->config->messages_per_page_search != 5 && $this->config->messages_per_page_search != 10 &&
+			$this->config->messages_per_page_search != 15 && $this->config->messages_per_page_search != 20)
+		{
+			$options[] = HTMLHelper::_('select.option', $this->config->messages_per_page_search, Text::sprintf('COM_KUNENA_SEARCH_LIMIT',
+				$this->config->messages_per_page_search
+			)
+			);
+		}
+
 		$options[] = HTMLHelper::_('select.option', '5', Text::_('COM_KUNENA_SEARCH_LIMIT5'));
 		$options[] = HTMLHelper::_('select.option', '10', Text::_('COM_KUNENA_SEARCH_LIMIT10'));
 		$options[] = HTMLHelper::_('select.option', '15', Text::_('COM_KUNENA_SEARCH_LIMIT15'));

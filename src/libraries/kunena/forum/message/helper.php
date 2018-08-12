@@ -243,13 +243,25 @@ abstract class KunenaForumMessageHelper
 		$where       = isset($params['where']) ? (string) $params['where'] : '';
 		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
 
-		if ($limit != 0)
+		if ($limit < 1 && empty($params['nolimit']))
 		{
-			$limit = isset($params['nolimit']) ? $params['nolimit'] : KunenaFactory::getConfig()->threads_per_page;
+			$view = Factory::getApplication()->input->getCmd('view');
+
+			if ($view == 'search')
+			{
+				$limit = KunenaFactory::getConfig()->messages_per_page_search;
+			}
+			elseif ($view == 'topics')
+			{
+				$limit = KunenaFactory::getConfig()->threads_per_page;
+			}
+			else
+			{
+				$limit = KunenaFactory::getConfig()->messages_per_page;
+			}
 		}
 
-		$db = Factory::getDBO();
-
+		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from('#__kunena_messages AS m')
@@ -338,7 +350,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$cquery = clone $query;
-		$cquery->clear('SELECT')->clear('order')->select('COUNT(*)');
+		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
 
 		try

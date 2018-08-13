@@ -50,8 +50,19 @@ $this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
+$txt             = '';
+
+if ($topic->ordering)
+{
+	$txt .= ' topic-sticky';
+}
+
+if ($topic->locked)
+{
+	$txt .= ' topic-locked';
+}
 ?>
-<div class="kunena-topic-item">
+<div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>

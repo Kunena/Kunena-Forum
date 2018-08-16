@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+
 $topic = $this->topic;
 $me    = KunenaUserHelper::getMyself();
 
@@ -20,6 +21,7 @@ Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
 Text::script('COM_KUNENA_RATE_ALLREADY');
 Text::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+Text::script('COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED');
 
 Text::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
 Text::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
@@ -49,9 +51,20 @@ if (KunenaConfig::getInstance()->ratingenabled)
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
+$txt             = '';
+
+if ($topic->ordering)
+{
+	$txt .= ' topic-sticky';
+}
+
+if ($topic->locked)
+{
+	$txt .= ' topic-locked';
+}
 ?>
 
-<div class="kunena-topic-item">
+<div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>
@@ -68,7 +81,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config)->set('reviewCount', $this->reviewCount); ?>
+		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $topic)->set('config', $this->config); ?>
 	</h1>
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

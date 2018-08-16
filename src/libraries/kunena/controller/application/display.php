@@ -146,6 +146,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				}
 				elseif (!KunenaUserHelper::get($userid)->exists())
 				{
+					$this->setResponseStatus($e->getResponseCode());
 					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
 				}
 				else

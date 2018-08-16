@@ -298,7 +298,7 @@ class KunenaTemplate extends JObject
 			if (KunenaConfig::getInstance()->activemenuitem)
 			{
 				$id = KunenaConfig::getInstance()->activemenuitem;
-				Factory::getDocument()->addScriptDeclaration("
+				$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 			}
 			else
@@ -309,7 +309,7 @@ class KunenaTemplate extends JObject
 				if ($items)
 				{
 					$id = '.item-' . $items[0]->id;
-					Factory::getDocument()->addScriptDeclaration("
+					$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 				}
 			}
@@ -462,26 +462,24 @@ class KunenaTemplate extends JObject
 		{
 			$sef = '/index.php?option=com_kunena';
 		}
-		?>
 
-		<script>
-			jQuery(document).ready(function ($) {
-				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
-				{
-					echo "true";
-				}
-				else
-				{
-					echo "false";
-				}?>;
+		if (strpos($_SERVER['REQUEST_URI'], $sef) !== false)
+		{
+			$isForumActive = true;
+		}
+		else
+		{
+			$isForumActive = false;
+		}
 
-				if (isForumActive) {
-					$('.current').addClass("active alias-parent-active");
-					$('.alias-parent-active').addClass("active alias-parent-active");
-				}
+		if ($isForumActive)
+		{
+			$this->addScriptDeclaration('jQuery(document).ready(function ($) {
+				$(".current").addClass("active alias-parent-active");
+				$(".alias-parent-active").addClass("active alias-parent-active");
 			});
-		</script>
-		<?php
+			');
+		}
 	}
 
 	/**
@@ -785,7 +783,7 @@ HTML;
 			return;
 		}
 
-		if (!preg_match('|https?://|', $filename))
+		if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
 			$filename     = preg_replace('/^assets\//', '', $filename);
@@ -810,11 +808,13 @@ HTML;
 	}
 
 	/**
+	 * Set the LESS file into the document head
+	 *
 	 * @param   string $filename filename
 	 *
 	 * @return \Joomla\CMS\Document\Document
 	 * @throws Exception
-	 * @since Kunena
+	 * @since Kunena 5.1.3
 	 */
 	public function addLessSheet($filename)
 	{

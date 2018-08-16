@@ -977,7 +977,7 @@ class KunenaControllerTopic extends KunenaController
 				}
 				else
 				{
-					if ($this->config->allow_edit_poll)
+				    if ($this->config->allow_edit_poll || (!$this->config->allow_edit_poll && !$poll->getUserCount()))
 					{
 						// Edit existing poll
 						if (!$topic->isAuthorised('poll.edit'))

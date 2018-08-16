@@ -15,7 +15,7 @@ if ($this->config->ratingenabled && $this->category->allow_ratings)
 	if ($this->topic->rating)
 		:
 		?>
-		<div id="krating-top">
+		<div id="krating-top" title="<?php echo JText::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating,$this->topic->getReviewCount()); ?>" class="hasTooltip">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>
 				<li class="c-rating__item <?php echo $this->topic->rating >= 2 ? 'is-active' : ''; ?>"
@@ -27,7 +27,6 @@ if ($this->config->ratingenabled && $this->category->allow_ratings)
 				<li class="c-rating__item <?php echo $this->topic->rating >= 5 ? 'is-active' : ''; ?>"
 				    data-index="4"></li>
 			</ul>
-			<span><?php echo $this->reviewCount; ?></span>
 		</div>
 	<?php endif;
 endif;

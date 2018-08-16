@@ -783,7 +783,7 @@ HTML;
 			return;
 		}
 
-		if (!preg_match('|https?://|', $filename))
+		if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
 			$filename     = preg_replace('/^assets\//', '', $filename);

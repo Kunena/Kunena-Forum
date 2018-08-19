@@ -355,21 +355,6 @@ class KunenaViewTopic extends KunenaView
 	{
 		$this->setLayout('edit');
 
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$this->captchaHtml = $captcha->getHtml();
-
-			if (!$this->captchaHtml)
-			{
-				$this->app->enqueueMessage($captcha->getError(), 'error');
-				$this->redirectBack();
-
-				return;
-			}
-		}
-
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
 		$this->catid = $this->state->get('item.catid');

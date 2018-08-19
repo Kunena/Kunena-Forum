@@ -53,9 +53,12 @@ class KunenaViewCommon extends KunenaView
 			$this->offline = true;
 		}
 
-		if (!$layout)
+		if ($this->app->scope == 'com_kunena')
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
+			if (!$layout)
+			{
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
+			}
 		}
 
 		return $this->displayLayout($layout, $tpl);

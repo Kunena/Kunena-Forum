@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAvatarEasyprofile
@@ -64,16 +65,16 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 
 			if ($sizex <= 50)
 			{
-				$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/' . $user->getValue('avatar_mini');
+				$avatar = Uri::root(true) . '/' . $user->getValue('avatar_mini');
 			}
 			else
 			{
-				$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/' . $user->getValue('avatar');
+				$avatar = Uri::root(true) . '/' . $user->getValue('avatar');
 			}
 		}
 		elseif ($this->params->get('guestavatar', "easyprofile") == "easyprofile")
 		{
-			$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_jsn/assets/img/default.jpg';
+			$avatar = Uri::root(true) . '/components/com_jsn/assets/img/default.jpg';
 		}
 		else
 		{
@@ -88,11 +89,11 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 
 			if ($params['image_defaultvalue'] <> "")
 			{
-				$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/' . $params['image_defaultvalue'];
+				$avatar = Uri::root(true) . '/' . $params['image_defaultvalue'];
 			}
 			else
 			{
-				$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_jsn/assets/img/default.jpg';
+				$avatar = Uri::root(true) . '/components/com_jsn/assets/img/default.jpg';
 			}
 		}
 

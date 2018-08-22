@@ -11,6 +11,7 @@
  **/
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -91,13 +92,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($bootstrap)
 		{
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
 			if ($ktemplate->params->get('icomoon'))
 			{
-				$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
+				$this->addStyleSheet(Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
 

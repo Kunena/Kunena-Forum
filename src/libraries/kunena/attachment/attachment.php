@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAttachment
@@ -363,7 +364,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			if (!Factory::getApplication()->isClient('administrator'))
 			{
-				$url = \Joomla\CMS\Uri\Uri::base() . $url;
+				$url = Uri::base() . $url;
 			}
 
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 
 /**
@@ -84,7 +85,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				$emojis['key']  = $smiley->code;
 				$emojis['name'] = $smiley->code;
-				$emojis['url']  = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/emoticons/' . $smiley->location;
+				$emojis['url']  = Uri::root() . 'media/kunena/emoticons/' . $smiley->location;
 
 				$response['emojis'][] = $emojis;
 			}
@@ -166,7 +167,7 @@ class KunenaViewTopic extends KunenaView
 					$icon->filename  = (string) $attributes->src;
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
 					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path      = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->path      = Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
 					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false);
 					$topicIcons[]    = $icon;
 				}

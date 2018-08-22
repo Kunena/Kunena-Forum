@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
@@ -39,7 +40,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 			?>
 			<h2 class="filter-time pull-right" id="filter-time">
 				<div class="filter-sel pull-right">
-					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
@@ -175,7 +176,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 <?php if ($view != 'user')
 	:
 	?>
-	<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect"
+	<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
 	      name="timeselect"
 	      method="post" target="_self" class="timefilter pull-right">
 		<?php $this->displayTimeFilter('sel'); ?>

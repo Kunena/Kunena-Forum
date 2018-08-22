@@ -64,7 +64,7 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		$this->SetSmileyDir(JPATH_ROOT);
-		$this->SetSmileyURL($relative ? \Joomla\CMS\Uri\Uri::root(true) : rtrim(\Joomla\CMS\Uri\Uri::root(), '/'));
+		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
 		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
@@ -199,7 +199,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 			if (isset($video))
 			{
-				$uri = \Joomla\CMS\Uri\Uri::getInstance();
+				$uri = Uri::getInstance();
 
 				if ($uri->isSSL())
 				{
@@ -2274,7 +2274,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 		}
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance();
+		$uri = Uri::getInstance();
 
 		if ($uri->isSSL() && $vid ["type"] == 'youtube')
 		{
@@ -2886,7 +2886,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// FIXME: use AJAX instead...
 		jimport('joomla.filesystem.folder');
 		$config          = KunenaFactory::getConfig();
-		$uri             = \Joomla\CMS\Uri\Uri::getInstance();
+		$uri             = Uri::getInstance();
 		$consumer_key    = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 

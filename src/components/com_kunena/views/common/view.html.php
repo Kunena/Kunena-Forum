@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.cache.handler.output');
 jimport('joomla.document.html.html');
@@ -593,7 +594,7 @@ class KunenaViewCommon extends KunenaView
 		switch ($matches[1])
 		{
 			case 'RETURN_URL':
-				return base64_encode(\Joomla\CMS\Uri\Uri::getInstance()->toString(array('path', 'query', 'fragment')));
+				return base64_encode(Uri::getInstance()->toString(array('path', 'query', 'fragment')));
 			case 'TOKEN':
 				return HTMLHelper::_('form.token');
 			case 'MODULE':

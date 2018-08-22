@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaForumCategory
@@ -671,7 +672,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$category = KunenaForumCategoryHelper::get($category);
 		}
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		$uri = Uri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 
 		if ((string) $action === (string) (int) $action)
 		{

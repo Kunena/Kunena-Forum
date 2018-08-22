@@ -11,7 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
-$this->document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/install/media/install.css');
+use Joomla\CMS\Uri\Uri;
+
+$this->document->addStyleSheet(Uri::base(true) . '/components/com_kunena/install/media/install.css');
 ?>
 <div id="right">
 	<div id="rightpad">

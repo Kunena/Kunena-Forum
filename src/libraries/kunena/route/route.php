@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
@@ -205,7 +206,7 @@ abstract class KunenaRoute
 			if (!isset($current[$uri]))
 			{
 				$get = self::$current->getQuery(true);
-				$uri = $current[$uri] = \Joomla\CMS\Uri\Uri::getInstance('index.php?' . http_build_query($get) . $uri);
+				$uri = $current[$uri] = Uri::getInstance('index.php?' . http_build_query($get) . $uri);
 				self::setItemID($uri);
 				$uri->delVar('defaultmenu');
 				$uri->delVar('language');
@@ -225,7 +226,7 @@ abstract class KunenaRoute
 			}
 
 			$item = self::$menu[intval($uri)];
-			$uri  = \Joomla\CMS\Uri\Uri::getInstance("{$item->link}&Itemid={$item->id}");
+			$uri  = Uri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
 		elseif ($uri instanceof \Joomla\CMS\Uri\Uri)
 		{
@@ -694,7 +695,7 @@ abstract class KunenaRoute
 			$host = $uri->toString(array('scheme', 'host', 'port'));
 
 			// Referrer should always have host set and it should come from the same base address.
-			if (empty($host) || stripos($base, \Joomla\CMS\Uri\Uri::base()) !== 0)
+			if (empty($host) || stripos($base, Uri::base()) !== 0)
 			{
 				$uri = null;
 			}
@@ -745,7 +746,7 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				return \Joomla\CMS\Uri\Uri::root(true) . "/{$uri}";
+				return Uri::root(true) . "/{$uri}";
 			}
 		}
 
@@ -979,7 +980,7 @@ abstract class KunenaRoute
 		$active        = self::$menus->getActive();
 
 		// Get the full request URI.
-		$uri = clone \Joomla\CMS\Uri\Uri::getInstance();
+		$uri = clone Uri::getInstance();
 
 		// Get current route.
 		self::$current = new \Joomla\CMS\Uri\Uri('index.php');

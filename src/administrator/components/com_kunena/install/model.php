@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
@@ -2294,7 +2295,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$version->description = $this->getActionText($version, 'desc');
 			$version->hint        = $this->getActionText($version, 'hint');
 			$version->warning     = $this->getActionText($version, 'warn');
-			$version->link        = \Joomla\CMS\Uri\Uri::base(true) . '/index.php?option=com_kunena&view=install&task=' . strtolower($version->action) . '&' . Session::getFormToken() . '=1';
+			$version->link        = Uri::base(true) . '/index.php?option=com_kunena&view=install&task=' . strtolower($version->action) . '&' . Session::getFormToken() . '=1';
 		}
 
 		if ($migrate)

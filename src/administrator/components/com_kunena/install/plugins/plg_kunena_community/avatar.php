@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Uri\Uri;
+
 /**
  * Class KunenaAvatarCommunity
  * @since Kunena
@@ -79,7 +81,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 		if ($kuser->userid == 0)
 		{
-			$avatar = str_replace(\Joomla\CMS\Uri\Uri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
+			$avatar = str_replace(Uri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
 		}
 		elseif ($sizex <= 90)
 		{

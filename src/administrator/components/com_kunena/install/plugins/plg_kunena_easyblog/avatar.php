@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Uri\Uri;
+
 /**
  * Class KunenaAvatarEasyblog
  * @since Kunena
@@ -65,7 +67,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 		}
 		else
 		{
-			$avatar = \Joomla\CMS\Uri\Uri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';
+			$avatar = Uri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';
 		}
 
 		return $avatar;

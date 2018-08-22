@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Topic View
@@ -1102,12 +1103,12 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function redirectBack($anchor = '')
 	{
-		$default  = \Joomla\CMS\Uri\Uri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$default  = Uri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
 		$referrer = $this->app->input->server->getString('HTTP_REFERER');
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance($referrer ? $referrer : $default);
+		$uri = Uri::getInstance($referrer ? $referrer : $default);
 
-		if (\Joomla\CMS\Uri\Uri::isInternal($uri->toString()))
+		if (Uri::isInternal($uri->toString()))
 		{
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
@@ -1120,7 +1121,7 @@ class KunenaViewTopic extends KunenaView
 		}
 		else
 		{
-			$uri = \Joomla\CMS\Uri\Uri::getInstance($default);
+			$uri = Uri::getInstance($default);
 		}
 
 		if ($anchor)

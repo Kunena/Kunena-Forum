@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.utilities.string');
 
@@ -246,7 +247,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 		if (!defined("_AUP_MEDALS_LIVE_PATH"))
 		{
-			define('_AUP_MEDALS_LIVE_PATH', \Joomla\CMS\Uri\Uri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
+			define('_AUP_MEDALS_LIVE_PATH', Uri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
 		}
 
 		$aupmedals = AltaUserPointsHelper::getUserMedals('', $userid);

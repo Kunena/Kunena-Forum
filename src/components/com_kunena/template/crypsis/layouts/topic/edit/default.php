@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -244,7 +245,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								       value="<?php echo $this->escape($this->message->name); ?>"/>
 								<!-- Encourage guest user to login or register -->
 								<?php
-								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
+								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
 								$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . Text::_('JREGISTER') . '</a>';
 								echo Text::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
 								?>

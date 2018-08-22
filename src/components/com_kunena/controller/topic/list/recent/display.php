@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerTopicListRecentDisplay
@@ -343,11 +343,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
-		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:url', Uri::current(), 'property');
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
-			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 

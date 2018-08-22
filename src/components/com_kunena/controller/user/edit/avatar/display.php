@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
@@ -89,7 +90,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
-		$this->galleryUri     = \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryUri     = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}

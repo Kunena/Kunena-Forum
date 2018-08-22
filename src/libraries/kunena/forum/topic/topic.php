@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaForumTopic
@@ -904,7 +905,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$action  = 'post' . $message->id;
 		}
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}&Itemid={$Itemid}");
+		$uri = Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}&Itemid={$Itemid}");
 
 		if ($uri->getVar('action') !== null)
 		{
@@ -1166,7 +1167,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Get permament topic URL without domain.
 	 *
 	 * If you want to add domain (for email etc), you can prepend the output with this:
-	 * \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   KunenaForumCategory $category category
 	 * @param   bool                $xhtml    xhtml

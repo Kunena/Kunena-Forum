@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Kunena User Controller
@@ -531,7 +532,7 @@ class KunenaControllerUser extends KunenaController
 		// Get the return url from the request and validate that it is internal.
 		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
-		if (!$error && $return && \Joomla\CMS\Uri\Uri::isInternal($return))
+		if (!$error && $return && Uri::isInternal($return))
 		{
 			// Redirect the user.
 			$this->setRedirect(JRoute::_($return, false));
@@ -567,7 +568,7 @@ class KunenaControllerUser extends KunenaController
 		// Get the return url from the request and validate that it is internal.
 		$return = base64_decode($this->app->input->getBase64('return'));
 
-		if ($return && \Joomla\CMS\Uri\Uri::isInternal($return))
+		if ($return && Uri::isInternal($return))
 		{
 			// Redirect the user.
 			$this->setRedirect(JRoute::_($return, false));
@@ -1212,11 +1213,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($kuser->avatar))
 		{
-			$avatar->path = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . $kuser->avatar;
+			$avatar->path = Uri::root() . 'media/kunena/avatars/' . $kuser->avatar;
 		}
 		else
 		{
-			$avatar->path = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultavatar;
+			$avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultavatar;
 		}
 
 		header('Content-type: application/json');

@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\String\StringHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 class KunenaActivityEasySocial extends KunenaActivity
 {
@@ -129,7 +130,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return;
 		}
 
-		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
+		$permalink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
 		$options = array(
 			'uid'      => $message->id,

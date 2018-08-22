@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaForumMessage
@@ -428,7 +429,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$url)
 		{
-			$url = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
+			$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
 		}
 
 		// Get all subscribers, moderators and admins who should get the email.
@@ -528,7 +529,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *  Get permament topic URL without domain.
 	 *
 	 * If you want to add domain (for email etc), you can prepend the output with this:
-	 * \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
 	 * @param   bool                     $xhtml    xhtml
@@ -560,7 +561,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return false;
 		}
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
+		$uri = Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
 
 		return $uri;
 	}
@@ -829,7 +830,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		foreach ($attachments as $attachment)
 		{
-			$file = \Joomla\CMS\Uri\Uri::root() . $attachment->filename;
+			$file = Uri::root() . $attachment->filename;
 			KunenaFile::delete($file);
 
 			if (!$attachment->delete())

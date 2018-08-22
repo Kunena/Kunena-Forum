@@ -11,6 +11,8 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\CMS\Uri\Uri;
+
 class KunenaProfileEasySocial extends KunenaProfile
 {
 	protected $params = null;
@@ -63,7 +65,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
 			{
-				$url = rtrim(JURI::root(), '/') . '/' . $user->getAlias(false);
+				$url = rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
 
 				return $url;
 			}

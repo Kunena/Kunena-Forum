@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 require_once KPATH_SITE . '/router.php';
 
@@ -97,7 +98,7 @@ abstract class KunenaRouteLegacy
 	 */
 	public static function convertMenuItem($item)
 	{
-		$uri  = \Joomla\CMS\Uri\Uri::getInstance($item->link);
+		$uri  = Uri::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
 		$params = new \Joomla\Registry\Registry($item->params);

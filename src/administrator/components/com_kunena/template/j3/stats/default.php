@@ -12,16 +12,16 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Uri\Uri;
 
 $document = Factory::getDocument();
 /** @noinspection PhpDeprecationInspection */
-$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.css');
+$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
 if (Factory::getLanguage()->isRTL())
 {
 	/** @noinspection PhpDeprecationInspection */
-	$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+	$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }
 ?>
 <div id="j-sidebar-container" class="span2">
@@ -110,7 +110,7 @@ if (Factory::getLanguage()->isRTL())
 							</td>
 							<td>
 								<img class="kstats-bar"
-								     src="<?php echo \Joomla\CMS\Uri\Uri::root(true) . '/media/kunena/images/bar.png' ?>"
+								     src="<?php echo Uri::root(true) . '/media/kunena/images/bar.png' ?>"
 								     alt="stats" height="15"
 								     width="<?php echo $item->percent ?>%"/>
 							</td>

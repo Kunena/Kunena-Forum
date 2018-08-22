@@ -803,7 +803,7 @@ HTML;
 				$filename = $filemin;
 			}
 
-			$filename = Uri::root(true) . "/{$filename}";
+			$filename = Uri::root(false) . $filename;
 		}
 
 		return HTMLHelper::_('stylesheet', $filename);
@@ -992,16 +992,10 @@ HTML;
 				$filename = $filemin;
 			}
 
-			$filename = Uri::root(true) . "/{$filename}";
+			$filename = Uri::root(false) . $filename;
 		}
 
-		return Factory::getDocument()->addScript($filename, $options, $attribs);
-
-		/*
-		 * Remove comment when its working.
-		 * return HTMLHelper::_('script', $filename, $options, $attribs);
-		 *
-		 */
+		return HTMLHelper::_('script', $filename, $options, $attribs);
 	}
 
 	/**

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
@@ -686,7 +687,7 @@ abstract class KunenaRoute
 
 			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
 			$uri->delVar('task');
-			$uri->delVar(\Joomla\CMS\Session\Session::getFormToken());
+			$uri->delVar(Session::getFormToken());
 
 			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
 			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));

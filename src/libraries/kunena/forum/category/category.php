@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class KunenaForumCategory
@@ -617,7 +618,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$children = $children ? "&children=1" : '';
 		$catid    = $this->id ? "&catid={$this->id}" : '';
-		$token    = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$token    = '&' . Session::getFormToken() . '=1';
 
 		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$children}{$token}", $xhtml);
 	}

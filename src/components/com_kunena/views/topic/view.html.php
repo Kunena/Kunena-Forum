@@ -15,7 +15,7 @@ use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Session\Session;
 
 /**
  * Topic View
@@ -526,8 +526,8 @@ class KunenaViewTopic extends KunenaView
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$this->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$this->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$this->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$this->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 
@@ -614,7 +614,7 @@ class KunenaViewTopic extends KunenaView
 		$catid = $this->state->get('item.catid');
 		$id    = $this->state->get('item.id');
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
 		$this->topicButtons = new JObject;
@@ -672,7 +672,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->enable_threaded_layouts)
 		{
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . Session::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
 			{
@@ -714,7 +714,7 @@ class KunenaViewTopic extends KunenaView
 		$mesid        = $this->message->id;
 		$targetuserid = $this->me->userid;
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new JObject;
@@ -816,7 +816,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			if ($this->config->showthankyou && $this->profile->userid)
 			{
-				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . Session::getFormToken() . '=1';
 
 				if (count($message->thankyou) > $this->config->thankyou_max)
 				{
@@ -1116,7 +1116,7 @@ class KunenaViewTopic extends KunenaView
 
 			// Make sure we do not return into a task.
 			$uri->delVar('task');
-			$uri->delVar(\Joomla\CMS\Session\Session::getFormToken());
+			$uri->delVar(Session::getFormToken());
 		}
 		else
 		{

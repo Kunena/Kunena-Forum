@@ -9,7 +9,10 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+
 $this->addScript('assets/js/poll.js');
 ?>
 
@@ -118,7 +121,7 @@ $this->addScript('assets/js/poll.js');
 						<a data-dismiss="modal" aria-hidden="true" class="btn">
 							<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 						</a>
-						<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . \Joomla\CMS\Session\Session::getFormToken() . '=1') ?>"
+						<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . Session::getFormToken() . '=1') ?>"
 						   class="btn btn-primary">
 							<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
 						</a>

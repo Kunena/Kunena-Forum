@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class ComponentKunenaControllerTopicItemActionsDisplay
@@ -55,7 +56,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$this->topic = KunenaForumTopic::getInstance($id);
 
 		$catid = $this->topic->category_id;
-		$token = \Joomla\CMS\Session\Session::getFormToken();
+		$token = Session::getFormToken();
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";

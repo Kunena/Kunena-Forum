@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class KunenaForumAnnouncement
@@ -192,7 +193,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 		if ($task)
 		{
-			$uri->setVar(\Joomla\CMS\Session\Session::getFormToken(), 1);
+			$uri->setVar(Session::getFormToken(), 1);
 		}
 
 		return $uri;

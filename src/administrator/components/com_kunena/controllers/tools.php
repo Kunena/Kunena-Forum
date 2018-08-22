@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Cpanel Controller
@@ -424,7 +425,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$msg = Text::_('COM_KUNENA_AJAX_RECOUNT_CONTINUE');
 		}
 
-		$token    = \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$token    = Session::getFormToken() . '=1';
 		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
 			array(
@@ -625,7 +626,7 @@ class KunenaAdminControllerTools extends KunenaController
 			);
 		}
 
-		$token    = \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$token    = Session::getFormToken() . '=1';
 		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
 			array(
@@ -925,7 +926,7 @@ class KunenaAdminControllerTools extends KunenaController
 		{
 			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 
-			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=uninstall&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=uninstall&' . Session::getFormToken() . '=1', false));
 
 			return;
 		}

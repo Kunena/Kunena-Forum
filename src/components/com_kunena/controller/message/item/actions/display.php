@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -64,7 +65,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$id     = $this->message->thread;
 		$catid  = $this->message->catid;
-		$token  = \Joomla\CMS\Session\Session::getFormToken();
+		$token  = Session::getFormToken();
 		$config = KunenaConfig::getInstance();
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";

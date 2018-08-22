@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Session\Session;
+
 /**
  * KunenaLayoutCategoryIndex
  *
@@ -126,7 +128,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		// Is user allowed to mark forums as read?
 		if (KunenaUserHelper::getMyself()->exists() && $numTopics)
 		{
-			$token = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+			$token = '&' . Session::getFormToken() . '=1';
 
 			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
 

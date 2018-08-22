@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * KunenaLayoutCategoryItem
@@ -62,7 +63,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	public function getCategoryActions()
 	{
 		$category = $this->category;
-		$token    = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$token    = '&' . Session::getFormToken() . '=1';
 		$actions  = array();
 
 		// Is user allowed to post new topic?

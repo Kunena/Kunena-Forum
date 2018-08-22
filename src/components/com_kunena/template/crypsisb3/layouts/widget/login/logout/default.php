@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
@@ -71,7 +72,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-online" class="hide" type="radio" value="0" name="status"/>
 									<label for="status-online" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::online(); ?>
 											<?php echo Text::_('COM_KUNENA_ONLINE') ?>
@@ -82,7 +83,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-away" class="hide" type="radio" value="1" name="status"/>
 									<label for="status-away" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::away(); ?>
 											<?php echo Text::_('COM_KUNENA_AWAY') ?>
@@ -92,7 +93,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
 									<label for="status-busy" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . \Joomla\CMS\Session\Session::getFormToken() . '=1');
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1');
 										?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::busy(); ?>
@@ -103,7 +104,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
 									<label for="status-invisible" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::invisible(); ?>
 											<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>

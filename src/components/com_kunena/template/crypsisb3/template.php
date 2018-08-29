@@ -145,8 +145,8 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		if ($fontawesome)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.3.1/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.3.1/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		$icons = $this->ktemplate->params->get('icons');

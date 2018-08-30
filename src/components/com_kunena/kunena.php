@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Log\Log;
 
 // Display offline message if Kunena hasn't been fully installed.
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
@@ -42,13 +43,13 @@ if (!KunenaConfig::getInstance()->get('access_component', 1))
 	if (!$active)
 	{
 		// Prevent access without using a menu item.
-		\Joomla\CMS\Log\Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(array('path', 'query')), \Joomla\CMS\Log\Log::WARNING, 'kunena');
+		Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(array('path', 'query')), Log::WARNING, 'kunena');
 		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 	elseif ($active->type != 'component' || $active->component != 'com_kunena')
 	{
 		// Prevent spoofed access by using random menu item.
-		\Joomla\CMS\Log\Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(array('path', 'query')), \Joomla\CMS\Log\Log::WARNING, 'kunena');
+		Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(array('path', 'query')), Log::WARNING, 'kunena');
 		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 }

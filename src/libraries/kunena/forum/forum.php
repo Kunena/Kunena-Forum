@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 
 /**
  * class KunenaForum
@@ -221,9 +222,9 @@ abstract class KunenaForum
 		jimport('joomla.error.log');
 		$options    = array('logger' => 'w3c', 'text_file' => 'kunena.php');
 		$categories = array('kunena');
-		$levels     = JDEBUG || $config->debug ? \Joomla\CMS\Log\Log::ALL :
-			\Joomla\CMS\Log\Log::EMERGENCY | \Joomla\CMS\Log\Log::ALERT | \Joomla\CMS\Log\Log::CRITICAL | \Joomla\CMS\Log\Log::ERROR;
-		\Joomla\CMS\Log\Log::addLogger($options, $levels, $categories);
+		$levels     = JDEBUG || $config->debug ? Log::ALL :
+			Log::EMERGENCY | Log::ALERT | Log::CRITICAL | Log::ERROR;
+		Log::addLogger($options, $levels, $categories);
 	}
 
 	/**

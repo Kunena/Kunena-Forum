@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Log\Log;
 
 jimport('joomla.application.component.helper');
 
@@ -388,7 +389,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 				// FIXME: check possible redirect loops!
 				$route    = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
-				\Joomla\CMS\Log\Log::add("Redirect from " . Uri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
+				Log::add("Redirect from " . Uri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
 				$this->app->redirect($route);
 			}
 
@@ -399,7 +400,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 				$language = Factory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
 					$route = KunenaRoute::_(null, false);
-					\Joomla\CMS\Log\Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
+					Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", Log::DEBUG, 'kunena');
 					$this->redirect ($route);
 				}
 			}

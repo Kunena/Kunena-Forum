@@ -8,6 +8,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 
 /**
  * Finder Kunena Plugin
@@ -33,12 +34,12 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
-		\Joomla\CMS\Log\Log::add('onKunenaAfterSave context: ' . $context, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaAfterSave context: ' . $context, Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		\Joomla\CMS\Log\Log::add('onKunenaAfterSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
-		\Joomla\CMS\Log\Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaAfterSave table: ' . $table_content, Log::INFO);
+		Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
@@ -61,12 +62,12 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
-		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave context: ' . $context, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaBeforeSave context: ' . $context, Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
-		\Joomla\CMS\Log\Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaBeforeSave table: ' . $table_content, Log::INFO);
+		Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
@@ -87,11 +88,11 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
-		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete context: ' . $context, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaAfterDelete context: ' . $context, Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		\Joomla\CMS\Log\Log::add('onKunenaAfterDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaAfterDelete table: ' . $table_content, Log::INFO);
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
@@ -111,11 +112,11 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{
-		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete context: ' . $context, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaBeforeDelete context: ' . $context, Log::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		\Joomla\CMS\Log\Log::add('onKunenaBeforeDelete table: ' . $table_content, \Joomla\CMS\Log\Log::INFO);
+		Log::add('onKunenaBeforeDelete table: ' . $table_content, Log::INFO);
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 
 /**
  * Implements Kunena layouts for the views.
@@ -347,7 +348,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$error .= " called from {$caller['file']} on line {$caller['line']}";
 		}
 
-		\Joomla\CMS\Log\Log::add($error, \Joomla\CMS\Log\Log::CRITICAL, 'kunena');
+		Log::add($error, Log::CRITICAL, 'kunena');
 
 		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
 

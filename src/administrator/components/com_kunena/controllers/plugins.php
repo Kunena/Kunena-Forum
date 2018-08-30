@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 
 /**
  * Kunena Plugins Controller
@@ -85,7 +86,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 
 		if (empty($cid))
 		{
-			\Joomla\CMS\Log\Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), \Joomla\CMS\Log\Log::WARNING, 'jerror');
+			Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), Log::WARNING, 'jerror');
 		}
 		else
 		{
@@ -98,7 +99,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 			// Publish the items.
 			if (!$model->publish($cid, $value))
 			{
-				\Joomla\CMS\Log\Log::add($model->getError(), \Joomla\CMS\Log\Log::WARNING, 'jerror');
+				Log::add($model->getError(), Log::WARNING, 'jerror');
 			}
 			else
 			{

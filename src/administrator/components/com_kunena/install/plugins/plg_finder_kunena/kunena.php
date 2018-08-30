@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 
 jimport('joomla.application.component.helper');
 
@@ -233,7 +234,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 */
 	public function onBuildIndex()
 	{
-		\Joomla\CMS\Log\Log::add('FinderIndexerAdapter::onBuildIndex', \Joomla\CMS\Log\Log::INFO);
+		Log::add('FinderIndexerAdapter::onBuildIndex', Log::INFO);
 
 		// Get the indexer and adapter state.
 		$iState = FinderIndexer::getState();
@@ -359,7 +360,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 */
 	protected function getContentCount()
 	{
-		\Joomla\CMS\Log\Log::add('FinderIndexerAdapter::getContentCount', \Joomla\CMS\Log\Log::INFO);
+		Log::add('FinderIndexerAdapter::getContentCount', Log::INFO);
 
 		// Get the list query.
 		$sql = $this->db->getQuery(true);
@@ -393,7 +394,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 */
 	protected function getItem($id)
 	{
-		\Joomla\CMS\Log\Log::add('FinderIndexerAdapter::getItem', \Joomla\CMS\Log\Log::INFO);
+		Log::add('FinderIndexerAdapter::getItem', Log::INFO);
 
 		$message = KunenaForumMessageHelper::get($id);
 
@@ -422,7 +423,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 */
 	protected function getItems($offset, $limit, $sql = null)
 	{
-		\Joomla\CMS\Log\Log::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", \Joomla\CMS\Log\Log::INFO);
+		Log::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", Log::INFO);
 
 		// Get the list query.
 		$sql = $this->db->getQuery(true);

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Trash Controller
@@ -61,7 +62,7 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		$type = $this->app->input->getCmd('type', 'topics', 'post');
 		$md5  = $this->app->input->getString('md5', null);
@@ -179,7 +180,7 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		$type = $this->app->input->getCmd('type', 'topics', 'post');
 

@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Announcements Controller
@@ -49,7 +50,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->post->get('cid', array(), 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -114,7 +115,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -171,7 +172,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	public function edit()
 	{
 		$cid = $this->app->input->post->get('cid', array(), 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
@@ -194,7 +195,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{

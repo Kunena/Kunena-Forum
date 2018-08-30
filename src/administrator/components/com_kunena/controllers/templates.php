@@ -16,6 +16,7 @@ jimport('joomla.filesystem.archive');
 use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Backend Templates Controller
@@ -647,7 +648,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($menus);
+		ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
 		{
@@ -846,7 +847,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($menus);
+		ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
 		{

@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Users Controller
@@ -63,7 +64,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -108,7 +109,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
+		ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -208,7 +209,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
+		ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -301,7 +302,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		if ($cid)
 		{
@@ -348,7 +349,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -455,7 +456,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$id = array_shift($cid);
 
 		if ($id <= 0)
@@ -494,7 +495,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -574,7 +575,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -635,7 +636,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -696,7 +697,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -757,7 +758,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -818,9 +819,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 		$catids = $this->app->input->get('catid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($catids);
+		ArrayHelper::toInteger($catids);
 
 		if (empty($cid))
 		{

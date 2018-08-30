@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
@@ -187,7 +188,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catids = $catid
 			? array($catid)
 			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($catids);
+		ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
 

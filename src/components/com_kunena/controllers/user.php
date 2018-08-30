@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena User Controller
@@ -1265,7 +1266,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		if (!empty($cid))
 		{
@@ -1278,7 +1279,7 @@ class KunenaControllerUser extends KunenaController
 				$attachments = array($attachment->id, 1);
 				$attach      = array();
 				$removeList  = array_keys(array_diff_key($attachments, $attach));
-				Joomla\Utilities\ArrayHelper::toInteger($removeList);
+				ArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 
 				$topic = $message->getTopic();

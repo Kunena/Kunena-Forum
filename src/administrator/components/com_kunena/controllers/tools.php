@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Cpanel Controller
@@ -108,7 +109,7 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		$ids = $this->app->input->get('prune_forum', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
 

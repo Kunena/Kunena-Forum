@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena User Controller
@@ -123,7 +124,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function change()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -165,7 +166,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		$return = null;
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
@@ -262,7 +263,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-		if (!$user->exists() || !\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!$user->exists() || !Session::checkToken('post'))
 		{
 			$this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
@@ -510,7 +511,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function login()
 	{
-		if (!Factory::getUser()->guest || !\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Factory::getUser()->guest || !Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -550,7 +551,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function logout()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -589,7 +590,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function status()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -628,7 +629,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function statusText()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -668,7 +669,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function karma($karmaDelta)
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1154,7 +1155,7 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
@@ -1200,7 +1201,7 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
@@ -1255,7 +1256,7 @@ class KunenaControllerUser extends KunenaController
 
 	public function delfile()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();

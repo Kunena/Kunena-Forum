@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Topic Controller
@@ -53,7 +54,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
@@ -107,7 +108,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
@@ -150,7 +151,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
@@ -195,7 +196,7 @@ class KunenaControllerTopic extends KunenaController
 		// We are converting all exceptions into JSON.
 		try
 		{
-			if (!\Joomla\CMS\Session\Session::checkToken('request'))
+			if (!Session::checkToken('request'))
 			{
 				throw new RuntimeException(Text::_('Forbidden'), 403);
 			}
@@ -356,7 +357,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -747,7 +748,7 @@ class KunenaControllerTopic extends KunenaController
 			'subscribe'         => Factory::getApplication()->input->getInt('subscribeMe', 0),
 		);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -1176,7 +1177,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	protected function setThankyou($type)
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1271,7 +1272,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function subscribe()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1304,7 +1305,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unsubscribe()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1337,7 +1338,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function favorite()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1370,7 +1371,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unfavorite()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1403,7 +1404,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function sticky()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1451,7 +1452,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unsticky()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1499,7 +1500,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function lock()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1547,7 +1548,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function unlock()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1595,7 +1596,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1666,7 +1667,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function undelete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1722,7 +1723,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function permdelete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1795,7 +1796,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function approve()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1865,7 +1866,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function move()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -1992,7 +1993,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function report()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -2166,7 +2167,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function vote()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -2224,7 +2225,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function resetvotes()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();

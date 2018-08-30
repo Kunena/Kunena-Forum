@@ -24,6 +24,7 @@ if (version_compare(PHP_VERSION, '5.3.1', '<'))
 define('_JEXEC', 1);
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 
 // Set base directory. This should usually work even with symbolic linked Kunena.
 define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
@@ -147,13 +148,13 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		// Get the session handler from the configuration.
 		$handler = $this->get('session_handler', 'none');
 
-		// Initialize the options for \Joomla\CMS\Session\Session.
+		// Initialize the options for Session.
 		$options = array(
 			'name'   => $name,
 			'expire' => $lifetime,
 		);
 
-		$session = \Joomla\CMS\Session\Session::getInstance($handler, $options);
+		$session = Session::getInstance($handler, $options);
 		$session->initialise($this->input, $this->dispatcher);
 
 		if ($session->getState() == 'expired')

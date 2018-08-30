@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Plugins Controller
@@ -76,7 +77,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function publish()
 	{
 		// Check for request forgeries
-		\Joomla\CMS\Session\Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
 		$cid   = Factory::getApplication()->input->get('cid', array(), 'array');
@@ -164,7 +165,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function reorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
@@ -200,7 +201,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function saveorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Get the input
 		$pks   = $this->input->post->get('cid', array(), 'array');
@@ -245,7 +246,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function checkin()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 

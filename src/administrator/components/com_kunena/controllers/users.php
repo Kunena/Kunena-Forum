@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Users Controller
@@ -53,7 +54,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function edit()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -90,7 +91,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function save()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -191,7 +192,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function apply()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
@@ -291,7 +292,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function trashusermessages()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -338,7 +339,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function move()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -374,7 +375,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function movemessages()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -445,7 +446,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function logout()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -484,7 +485,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function remove()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -564,7 +565,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function ban()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -625,7 +626,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function unban()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -686,7 +687,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function block()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -747,7 +748,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function unblock()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -808,7 +809,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function batch_moderators()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -888,7 +889,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function removecatsubscriptions()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -934,7 +935,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function removetopicsubscriptions()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

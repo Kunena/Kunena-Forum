@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Announcements Controller
@@ -39,7 +40,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function publish()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -104,7 +105,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function unpublish()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -184,7 +185,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -241,7 +242,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function save()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();

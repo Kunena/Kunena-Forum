@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * The Kunena Installer Controller
@@ -89,7 +90,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function run()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			echo json_encode(array('success' => false, 'html' => 'Invalid token!'));
 
@@ -190,7 +191,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function uninstall()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->setRedirect('index.php?option=com_kunena');
 

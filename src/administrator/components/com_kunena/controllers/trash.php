@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Kunena Trash Controller
@@ -51,7 +52,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 */
 	public function purge()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -169,7 +170,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 */
 	public function restore()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

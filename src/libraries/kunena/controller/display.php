@@ -226,7 +226,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 * @since Kunena
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	protected function prepareDocument()
@@ -393,7 +393,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @param        $name
 	 * @param        $content
-	 * @param string $attribute
+	 * @param   string $attribute attribute
 	 *
 	 * @return void
 	 * @since Kunena

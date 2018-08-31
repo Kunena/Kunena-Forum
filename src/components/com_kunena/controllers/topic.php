@@ -484,8 +484,8 @@ class KunenaControllerTopic extends KunenaController
 		$duplicatetimewindow = Factory::getDate()->toUnix() - 1 * 60;
 		$lastTopic           = $topic->getCategory()->getLastTopic();
 
-		if ($lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow &&
-			$lastTopic->category_id == $topic->category_id && $lastTopic->last_post_id == $topic->last_post_id
+		if ($lastTopic->subject == $topic->subject && $lastTopic->last_post_time >= $duplicatetimewindow
+			&& $lastTopic->category_id == $topic->category_id && $lastTopic->last_post_id == $topic->last_post_id
 			&& $lastTopic->id == $topic->id && $lastTopic->last_post_message == $message->message)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
@@ -979,7 +979,7 @@ class KunenaControllerTopic extends KunenaController
 				}
 				else
 				{
-				    if ($this->config->allow_edit_poll || (!$this->config->allow_edit_poll && !$poll->getUserCount()))
+					if ($this->config->allow_edit_poll || (!$this->config->allow_edit_poll && !$poll->getUserCount()))
 					{
 						// Edit existing poll
 						if (!$topic->isAuthorised('poll.edit'))

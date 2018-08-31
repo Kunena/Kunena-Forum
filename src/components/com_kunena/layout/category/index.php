@@ -157,7 +157,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 
 			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
-				return KunenaRoute::_( "index.php?option=com_kunena&view=category&format=feed&layout=default{$params}"). '?format=feed&type=rss';
+				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}") . '?format=feed&type=rss';
 			}
 			else
 			{

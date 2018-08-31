@@ -1767,7 +1767,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				if ($ids && $this->first_post_id)
 				{
 					$this->poll_id = 0;
-			 	}
+				}
 			}
 		}
 
@@ -2088,13 +2088,13 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Return the number of rating given to the topic
 	 *
-	 * @return int
+	 * @return integer
 	 * @since Kunena 5.1.3
 	 *
 	 */
 	public function getReviewCount()
 	{
-	    return KunenaForumTopicRateHelper::getCount($this->id);
+		return KunenaForumTopicRateHelper::getCount($this->id);
 	}
 
 	/**

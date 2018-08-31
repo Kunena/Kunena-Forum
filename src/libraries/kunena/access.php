@@ -962,7 +962,8 @@ window.addEvent('domready', function(){
 			$query->where("u.id IN ({$userlist})");
 
 			// Only send to users whose Joomla account is enabled to Receive System Emails
-			if (KunenaConfig::getInstance()->get('use_system_emails')) {
+			if (KunenaConfig::getInstance()->get('use_system_emails'))
+			{
 				$query->where("u.sendEmail = 1");
 			}
 
@@ -1019,7 +1020,7 @@ window.addEvent('domready', function(){
 			// Get category subscriptions
 			$querycat = $db->getQuery(true);
 			$querycat->select($db->quoteName('user_id'));
-			$querycat->from($db->quoteName('#__kunena_user_categories'). 'AS ut');
+			$querycat->from($db->quoteName('#__kunena_user_categories') . 'AS ut');
 			$querycat->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
 			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
 			$querycat->andWhere('ut.subscribed=1');

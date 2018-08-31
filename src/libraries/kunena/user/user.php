@@ -620,7 +620,6 @@ class KunenaUser extends JObject
 					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 				}
 			}
-
 		}
 
 		return $avatars->getLink($this, $class, $sizex, $sizey);

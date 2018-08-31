@@ -850,9 +850,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$ktemplate_params = '[table]';
 
-		foreach($template_params as $param=>$value)
+		foreach ($template_params as $param => $value)
 		{
-			$ktemplate_params .= '[tr][td][b]'.$param.'[/b][/td][td]'.$value.'[/td][/tr]';
+			$ktemplate_params .= '[tr][td][b]' . $param . '[/b][/td][td]' . $value . '[/td][/tr]';
 		}
 
 		$ktemplate_params .= '[table]';

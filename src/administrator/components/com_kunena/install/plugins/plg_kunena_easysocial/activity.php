@@ -39,7 +39,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * @param      $command
 	 * @param      $message
-	 * @param null $target
+	 * @param   null $target target
 	 *
 	 * @return mixed
 	 * @since       Kunena
@@ -55,7 +55,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param      $command
-	 * @param null $target
+	 * @param   null $target target
 	 *
 	 * @return mixed
 	 * @since       Kunena
@@ -165,7 +165,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 * @throws Exception
 	 * @internal  param $string
 	 */
@@ -240,9 +240,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor actor
+	 * @param   int $target target
+	 * @param   int $message message
 	 *
 	 * @since       Kunena
 	 *

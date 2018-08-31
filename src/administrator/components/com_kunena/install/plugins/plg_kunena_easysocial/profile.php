@@ -34,10 +34,10 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action action
+	 * @param   bool $xhtml xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 * @since       Kunena
 	 */
@@ -56,8 +56,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param        $userid
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task task
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return string
 	 * @since       Kunena
@@ -81,7 +81,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 			// If it's not configured for simple urls, just set the alias
 			$alias = $user->getAlias();
-
 		}
 		else
 		{
@@ -101,7 +100,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit limit
 	 *
 	 * @return array|void
 	 * @since       Kunena
@@ -172,7 +171,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml xhtml
 	 *
 	 * @return mixed
 	 * @since       Kunena

@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
-	 * @var null
+	 * @var null|KunenaLayout
 	 * @since Kunena
 	 */
 	public $output = null;

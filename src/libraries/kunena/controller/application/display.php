@@ -57,7 +57,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $template;
 
 	/**
-	 * @var \Joomla\CMS\Document\Document
+	 * @var \Joomla\CMS\Document\HtmlDocument
 	 * @since Kunena
 	 */
 	protected $document;

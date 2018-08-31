@@ -23,6 +23,11 @@ if (!JFile::exists($file))
 require_once($file);
 require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
 	/**
@@ -30,6 +35,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
+	 * @since       Kunena
+	 *
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -48,6 +56,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena login integration object.
 	 *
 	 * @return KunenaLogin
+	 * @since       Kunena
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -65,6 +74,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 * @since       Kunena
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -82,6 +92,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 * @since       Kunena
+	 *
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -99,6 +111,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena private message integration object.
 	 *
 	 * @return KunenaPrivate
+	 * @since       Kunena
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -116,6 +129,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 * @since       Kunena
 	 */
 	public function onKunenaGetActivity()
 	{

@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.modeladmin');
 
@@ -85,8 +86,8 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		}
 		else
 		{
-			$folder  = Joomla\Utilities\ArrayHelper::getValue($data, 'folder', '', 'cmd');
-			$element = Joomla\Utilities\ArrayHelper::getValue($data, 'element', '', 'cmd');
+			$folder  = ArrayHelper::getValue($data, 'folder', '', 'cmd');
+			$element = ArrayHelper::getValue($data, 'element', '', 'cmd');
 		}
 
 		// These variables are used to add data from the plugin XML files.
@@ -152,7 +153,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 
 			// Convert to the JObject before adding other data.
 			$properties        = $table->getProperties(1);
-			$this->_cache[$pk] = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
+			$this->_cache[$pk] = ArrayHelper::toObject($properties, 'JObject');
 
 			// Convert the params field to an array.
 			$registry = new \Joomla\Registry\Registry;
@@ -197,6 +198,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	public function save($data)

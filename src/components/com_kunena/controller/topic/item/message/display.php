@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class ComponentKunenaControllerTopicItemMessageDisplay
@@ -133,7 +134,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			{
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}"
 					. "&id={$this->topic->id}&mesid={$this->message->id}&"
-					. \Joomla\CMS\Session\Session::getFormToken() . '=1';
+					. Session::getFormToken() . '=1';
 
 				if (count($this->message->thankyou) > $this->config->thankyou_max)
 				{

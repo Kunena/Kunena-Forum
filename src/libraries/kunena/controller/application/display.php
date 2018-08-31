@@ -57,7 +57,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $template;
 
 	/**
-	 * @var \Joomla\CMS\Document\Document
+	 * @var \Joomla\CMS\Document\HtmlDocument
 	 * @since Kunena
 	 */
 	protected $document;
@@ -146,8 +146,19 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				}
 				elseif (!KunenaUserHelper::get($userid)->exists())
 				{
+					$layout = $this->input->getCmd('layout');
+
+					if ($layout == 'default')
+					{
+						$this->content = KunenaLayout::factory('Widget/Error')->set('header', $e->getResponseStatus());
+					}
+					else
+					{
+						$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
+					}
+
 					$this->setResponseStatus($e->getResponseCode());
-					$this->content = KunenaLayout::factory('Widget/Login/Login')->setLayout('login');
+					$this->document->setTitle($e->getResponseCode());
 				}
 				else
 				{
@@ -372,6 +383,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	final public function poweredBy()

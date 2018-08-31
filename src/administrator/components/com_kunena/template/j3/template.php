@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAdminTemplate
@@ -26,9 +27,9 @@ class KunenaAdminTemplate3
 	{
 		$document = Factory::getDocument();
 		/** @noinspection PhpDeprecationInspection */
-		$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/layout.css');
+		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/layout.css');
 		/** @noinspection PhpDeprecationInspection */
-		$document->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/components/com_kunena/media/css/styles.css');
+		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}
 
 	/**

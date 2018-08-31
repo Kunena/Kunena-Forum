@@ -13,7 +13,13 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\String\StringHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	protected $params = null;
@@ -22,6 +28,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
+	 * @since       Kunena
+	 *
 	 */
 	public function __construct($params)
 	{
@@ -31,9 +39,11 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * @param      $command
 	 * @param      $message
-	 * @param null $target
+	 * @param   null $target target
 	 *
 	 * @return mixed
+	 * @since       Kunena
+	 *
 	 */
 	public function assignBadge($command, $message, $target = null)
 	{
@@ -45,9 +55,10 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param      $command
-	 * @param null $target
+	 * @param   null $target target
 	 *
 	 * @return mixed
+	 * @since       Kunena
 	 */
 	public function assignPoints($command, $target = null)
 	{
@@ -60,6 +71,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
+	 * @since       Kunena
 	 */
 	public function onAfterPost($message)
 	{
@@ -93,6 +105,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @internal  param $string
 	 */
 	public function onAfterReply($message)
@@ -129,7 +142,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return;
 		}
 
-		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
+		$permalink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
 		$options = array(
 			'uid'      => $message->id,
@@ -152,7 +165,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param $message
 	 *
-	 * @return array|bool
+	 * @return array|boolean
+	 * @throws Exception
 	 * @internal  param $string
 	 */
 	public function getSubscribers($message)
@@ -226,9 +240,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param int $actor
-	 * @param int $target
-	 * @param int $message
+	 * @param   int $actor actor
+	 * @param   int $target target
+	 * @param   int $message message
+	 *
+	 * @since       Kunena
+	 *
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -252,6 +269,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $target
+	 *
+	 * @since       Kunena
+	 *
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -260,6 +280,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $topic
+	 *
+	 * @since       Kunena
+	 *
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

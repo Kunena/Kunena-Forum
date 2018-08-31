@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
@@ -445,7 +446,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	{
 		$image = '';
 		$doc   = Factory::getDocument();
-		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'article', 'property');
 		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
 		$this->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
@@ -630,17 +631,17 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
 		{
-			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
+			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
 		}
 		elseif ($this->topic->getAuthor()->avatar == null)
 		{
 			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
-				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+				$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}
 			else
 			{
-				$image = \Joomla\CMS\Uri\Uri::base() . '/media/kunena/email/hero-wide.png';
+				$image = Uri::base() . '/media/kunena/email/hero-wide.png';
 			}
 		}
 		else

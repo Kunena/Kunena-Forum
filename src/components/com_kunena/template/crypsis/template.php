@@ -11,6 +11,7 @@
  **/
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -77,7 +78,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		if (file_exists($filenameless) && 0 != filesize($filenameless))
 		{
 			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
-			$this->addStyleSheet('kunena-custom.css');
+			$this->addLessSheet('kunena-custom.css');
 		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css';
@@ -91,13 +92,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($bootstrap)
 		{
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap.min.css');
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
-			$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap-extended.css');
+			$this->addStyleSheet(Uri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
 
 			if ($ktemplate->params->get('icomoon'))
 			{
-				$this->addStyleSheet(\Joomla\CMS\Uri\Uri::base(true) . '/media/jui/css/icomoon.css');
+				$this->addStyleSheet(Uri::base(true) . '/media/jui/css/icomoon.css');
 			}
 		}
 

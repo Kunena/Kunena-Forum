@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerUserItemDisplay
@@ -164,19 +165,19 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$robots    = $config->get('robots');
 		$image     = '';
 
-		$this->setMetaData('og:url', \Joomla\CMS\Uri\Uri::current(), 'property');
+		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'profile', 'property');
 		$this->setMetaData('og:author', $this->profile->name, 'property');
 
 		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
 		{
-			$image = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
+			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
 		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
 		{
 			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
-				$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+				$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}
 		}
 		else

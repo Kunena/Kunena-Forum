@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+
 Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
@@ -25,8 +27,8 @@ $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/upload.avatar.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
-$this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 ?>
 <h3>

@@ -17,6 +17,10 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaUserBan
+ *
+ * @property    integer $expiration
+ * @property    integer $created_time
+ *
  * @since Kunena
  */
 class KunenaUserBan extends JObject

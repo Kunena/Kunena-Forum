@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /*
  ************************/
@@ -31,7 +32,7 @@ if ($view != 'install' && class_exists('KunenaForum') && KunenaForum::isDev())
 
 	if (!$kversion->checkVersion())
 	{
-		Factory::getApplication()->redirect(\Joomla\CMS\Uri\Uri::base(true) . '/index.php?option=com_kunena&view=install');
+		Factory::getApplication()->redirect(Uri::base(true) . '/index.php?option=com_kunena&view=install');
 	}
 
 	return;

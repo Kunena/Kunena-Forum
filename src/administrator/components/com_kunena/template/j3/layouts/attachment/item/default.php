@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Uri\Uri;
+
 $attachment = $this->attachment;
 $config     = KunenaFactory::getConfig();
 
@@ -20,7 +22,7 @@ if ($config->attachment_protection)
 }
 else
 {
-	$url = \Joomla\CMS\Uri\Uri::root() . $attachment->getUrl();
+	$url = Uri::root() . $attachment->getUrl();
 	$src = $url;
 }
 

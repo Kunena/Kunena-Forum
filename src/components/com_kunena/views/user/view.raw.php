@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Users View
@@ -115,7 +116,7 @@ class KunenaViewUser extends KunenaView
 		foreach ($list_files as $key => $file)
 		{
 			$response[$key]['filename'] = $file;
-			$response[$key]['url']      = \Joomla\CMS\Uri\Uri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
+			$response[$key]['url']      = Uri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
 		}
 
 		// Set the MIME type and header for JSON output.

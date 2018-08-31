@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Log\Log;
+
 /**
  * Class KunenaEmail
  * @since Kunena
@@ -83,7 +85,7 @@ abstract class KunenaEmail
 			catch (Exception $e)
 			{
 				$success = false;
-				\Joomla\CMS\Log\Log::add($e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'kunena');
+				Log::add($e->getMessage(), Log::ERROR, 'kunena');
 			}
 		}
 

@@ -12,6 +12,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
@@ -61,7 +63,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	public function markread()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -136,7 +138,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	public function subscribe()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('get'))
+		if (!Session::checkToken('get'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -174,7 +176,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 */
 	public function unsubscribe()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -186,7 +188,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catids = $catid
 			? array($catid)
 			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($catids);
+		ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
 

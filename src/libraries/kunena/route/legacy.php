@@ -12,6 +12,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Log\Log;
 
 require_once KPATH_SITE . '/router.php';
 
@@ -97,7 +99,7 @@ abstract class KunenaRouteLegacy
 	 */
 	public static function convertMenuItem($item)
 	{
-		$uri  = \Joomla\CMS\Uri\Uri::getInstance($item->link);
+		$uri  = Uri::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
 		$params = new \Joomla\Registry\Registry($item->params);
@@ -747,7 +749,7 @@ abstract class KunenaRouteLegacy
 
 		if ($changed)
 		{
-			\Joomla\CMS\Log\Log::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", \Joomla\CMS\Log\Log::DEBUG, 'kunena');
+			Log::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", Log::DEBUG, 'kunena');
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

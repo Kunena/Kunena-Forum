@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class KunenaTableMap
@@ -379,7 +380,7 @@ class KunenaTableMap
 	 */
 	public function setMapped(array $list)
 	{
-		Joomla\Utilities\ArrayHelper::toInteger($list);
+		ArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
 	}
 

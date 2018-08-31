@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Announcements Controller
@@ -39,7 +41,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function publish()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -48,7 +50,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->post->get('cid', array(), 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -104,7 +106,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function unpublish()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -113,7 +115,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -170,7 +172,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	public function edit()
 	{
 		$cid = $this->app->input->post->get('cid', array(), 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
@@ -184,7 +186,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('request'))
+		if (!Session::checkToken('request'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -193,7 +195,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -241,7 +243,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function save()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();

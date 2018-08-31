@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class JHtmlKunenaForum
@@ -175,7 +176,7 @@ abstract class JHtmlKunenaForum
 
 		if (is_array($attribs))
 		{
-			$attribs = Joomla\Utilities\ArrayHelper::toString($attribs);
+			$attribs = ArrayHelper::toString($attribs);
 		}
 
 		$id = $name;

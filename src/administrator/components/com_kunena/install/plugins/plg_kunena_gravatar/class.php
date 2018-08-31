@@ -16,6 +16,14 @@
  * @copyright gravatar
  * @since     Kunena
  */
+
+use Joomla\CMS\Uri\Uri;
+
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaGravatar
 {
 	/**
@@ -214,7 +222,7 @@ class KunenaGravatar
 	 */
 	public function usingSecureURL()
 	{
-		$uri = \Joomla\CMS\Uri\Uri::getInstance();
+		$uri = Uri::getInstance();
 
 		if ($uri->isSSL())
 		{

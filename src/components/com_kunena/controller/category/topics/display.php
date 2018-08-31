@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -228,7 +229,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
-			$image = \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader;
+			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 

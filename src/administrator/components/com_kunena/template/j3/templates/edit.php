@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Uri\Uri;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
@@ -87,7 +87,7 @@ HTMLHelper::_('dropdown.init');
 	?>
 														<div>
 															<img
-																	src="<?php echo \Joomla\CMS\Uri\Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
+																	src="<?php echo Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
 																	alt="<?php echo $this->escape($this->templatename); ?>"/>
 														</div>
 												<?php endif; ?>

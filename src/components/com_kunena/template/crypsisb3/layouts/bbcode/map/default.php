@@ -9,7 +9,9 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 // [map type=roadmap zoom=10 control=0]London, UK[/map]
 
@@ -29,7 +31,7 @@ if (!empty($this->config->google_map_api_key))
 // Load JavaScript API.
 if (!isset($id))
 {
-	$uri = \Joomla\CMS\Uri\Uri::getInstance();
+	$uri = Uri::getInstance();
 
 	if ($uri->isSSL())
 	{

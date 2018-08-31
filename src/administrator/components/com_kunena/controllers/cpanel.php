@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Kunena Cpanel Controller
@@ -120,7 +121,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 			$link = '#';
 		}
 
-		return '<a href="' . $link . '"><img src="' . \Joomla\CMS\Uri\Uri::root() . $icon . '"/></a>';
+		return '<a href="' . $link . '"><img src="' . Uri::root() . $icon . '"/></a>';
 	}
 
 	/**

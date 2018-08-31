@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 if (defined('KUNENA_LOADED'))
 {
@@ -33,8 +34,8 @@ define('KPATH_MEDIA', JPATH_ROOT . '/media/' . KUNENA_NAME);
 
 // URLs
 define('KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME);
-define('KURL_SITE', \Joomla\CMS\Uri\Uri::Root() . KPATH_COMPONENT_RELATIVE . '/');
-define('KURL_MEDIA', \Joomla\CMS\Uri\Uri::Root() . 'media/' . KUNENA_NAME . '/');
+define('KURL_SITE', Uri::Root() . KPATH_COMPONENT_RELATIVE . '/');
+define('KURL_MEDIA', Uri::Root() . 'media/' . KUNENA_NAME . '/');
 
 $libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
 

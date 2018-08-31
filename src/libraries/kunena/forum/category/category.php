@@ -12,6 +12,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaForumCategory
@@ -617,7 +619,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$children = $children ? "&children=1" : '';
 		$catid    = $this->id ? "&catid={$this->id}" : '';
-		$token    = '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1';
+		$token    = '&' . Session::getFormToken() . '=1';
 
 		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$children}{$token}", $xhtml);
 	}
@@ -641,7 +643,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
-				return KunenaRoute::_( "/index.php?option=com_kunena&view=rss{$params}"). '?format=feed&type=rss';
+				return KunenaRoute::_("/index.php?option=com_kunena&view=rss{$params}") . '?format=feed&type=rss';
 			}
 			else
 			{
@@ -670,7 +672,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$category = KunenaForumCategoryHelper::get($category);
 		}
 
-		$uri = \Joomla\CMS\Uri\Uri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		$uri = Uri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 
 		if ((string) $action === (string) (int) $action)
 		{

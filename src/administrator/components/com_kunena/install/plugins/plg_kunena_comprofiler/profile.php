@@ -43,6 +43,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param $event
 	 * @param $params
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public static function trigger($event, &$params)

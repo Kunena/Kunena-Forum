@@ -43,6 +43,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $userid userid
 	 *
 	 * @return null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function getUserPoints($userid)
@@ -57,6 +58,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onBeforePost($message)
@@ -68,6 +70,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onBeforeReply($message)
@@ -79,6 +82,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onBeforeEdit($message)
@@ -90,6 +94,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterPost($message)
@@ -101,6 +106,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterReply($message)
@@ -112,6 +118,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterEdit($message)
@@ -123,6 +130,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterDelete($message)
@@ -135,6 +143,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param $message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterUndelete($message)
@@ -149,6 +158,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $target  target
 	 * @param   int $message message
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterThankyou($actor, $target, $message)
@@ -161,6 +171,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $topic  topic
 	 * @param   int $action action
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterSubscribe($topic, $action)
@@ -174,6 +185,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $topic  topic
 	 * @param   int $action action
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterFavorite($topic, $action)
@@ -187,6 +199,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $topic  topic
 	 * @param   int $action action
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterSticky($topic, $action)
@@ -200,6 +213,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $topic  topic
 	 * @param   int $action action
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterLock($topic, $action)
@@ -214,6 +228,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int $actor  actor
 	 * @param   int $delta  delta
 	 *
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onAfterKarma($target, $actor, $delta)

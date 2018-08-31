@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * Class KunenaForumMessageFinder
  * @since Kunena
@@ -240,7 +242,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 
 		if (!empty($this->hold))
 		{
-			Joomla\Utilities\ArrayHelper::toInteger($this->hold, 0);
+			ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");
 		}

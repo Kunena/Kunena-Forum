@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * User view for Kunena backend
@@ -131,7 +132,7 @@ class KunenaAdminViewUser extends KunenaView
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');
 		$this->social      = $this->user->socialButtons();
-		$this->social      = Joomla\Utilities\ArrayHelper::toObject($this->social);
+		$this->social      = ArrayHelper::toObject($this->social);
 		$this->display();
 	}
 

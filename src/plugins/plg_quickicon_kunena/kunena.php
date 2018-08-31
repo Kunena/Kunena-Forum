@@ -15,9 +15,17 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class plgQuickiconKunena
+ * @since       Kunena
  */
 class plgQuickiconKunena extends JPlugin
 {
+	/**
+	 * plgQuickiconKunena constructor.
+	 *
+	 * @param $subject
+	 * @param $config
+	 * @since       Kunena
+	 */
 	public function __construct(& $subject, $config)
 	{
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
@@ -38,6 +46,7 @@ class plgQuickiconKunena extends JPlugin
 	 * @param   string $context context
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function onGetIcons($context)

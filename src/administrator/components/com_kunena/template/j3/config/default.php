@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Uri\Uri;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -919,7 +919,7 @@ HTMLHelper::_('behavior.tabstate');
 												<tr>
 													<td><?php echo Text::_('COM_KUNENA_A_ATTACHMENT_PROTECTION') ?></td>
 													<td><?php echo $this->lists ['attachment_protection'] ?></td>
-													<td><?php echo Text::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', \Joomla\CMS\Uri\Uri::root(false) . 'media/kunena/attachments/image.png') ?></td>
+													<td><?php echo Text::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', Uri::root(false) . 'media/kunena/attachments/image.png') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8') ?></td>

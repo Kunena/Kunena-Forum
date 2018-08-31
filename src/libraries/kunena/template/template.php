@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 jimport('joomla.html.parameter');
 
@@ -647,7 +649,7 @@ HTML;
 			}
 		}
 
-		return ($url ? \Joomla\CMS\Uri\Uri::root(true) . '/' : '') . $this->filecache[$filepath];
+		return ($url ? Uri::root(true) . '/' : '') . $this->filecache[$filepath];
 	}
 
 	/**
@@ -769,7 +771,7 @@ HTML;
 	 * @param   string $filename filename
 	 * @param   string $group    group
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -801,10 +803,10 @@ HTML;
 				$filename = $filemin;
 			}
 
-			$filename = \Joomla\CMS\Uri\Uri::root(true) . "/{$filename}";
+			$filename = Uri::root(false) . $filename;
 		}
 
-		return Factory::getDocument()->addStyleSheet($filename);
+		return HTMLHelper::_('stylesheet', $filename);
 	}
 
 	/**
@@ -812,7 +814,7 @@ HTML;
 	 *
 	 * @param   string $filename filename
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return mixed
 	 * @throws Exception
 	 * @since Kunena 5.1.3
 	 */
@@ -828,7 +830,7 @@ HTML;
 
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
-		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+		return HTMLHelper::_('stylesheet', $filename);
 	}
 
 	/**
@@ -975,18 +977,25 @@ HTML;
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^js/|u', '', $filename);
+			$filename     = preg_replace('/^assets\//', '', $filename);
+			$filename     = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/media/kunena/$filemin_path"))
+			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
-				// If we are in debug more, make sure we load the unpacked css
-				$filename = preg_replace('/\.js$/u', '-min.js', $filename);
+				$filemin = preg_replace('/\.js$/u', '-min.js', $filename);
 			}
 
-			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
+			if (file_exists(JPATH_ROOT . "/$filemin"))
+			{
+				$filename = $filemin;
+			}
+
+			$filename = Uri::root(false) . $filename;
 		}
 
-		return Factory::getDocument()->addScript($filename, $options, $attribs);
+		return HTMLHelper::_('script', $filename, $options, $attribs);
 	}
 
 	/**
@@ -1324,7 +1333,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'image')
 			{
-				return '<img src="' . \Joomla\CMS\Uri\Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
+				return '<img src="' . Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
@@ -1688,8 +1697,9 @@ HTML;
 	 * @param   string $inputFile  input
 	 * @param   string $outputFile output
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function compileLess($inputFile, $outputFile)
 	{

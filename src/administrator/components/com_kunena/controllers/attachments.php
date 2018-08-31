@@ -12,6 +12,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Attachments Controller
@@ -53,7 +55,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 */
 	public function delete()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -62,7 +64,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		ArrayHelper::toInteger($cid);
 
 		if (!$cid)
 		{
@@ -80,7 +82,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$attachments = array($attachment->id, 1);
 			$attach      = array();
 			$removeList  = array_keys(array_diff_key($attachments, $attach));
-			Joomla\Utilities\ArrayHelper::toInteger($removeList);
+			ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 			$message->save();
 

@@ -14,6 +14,11 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaProfileEasyblog extends KunenaProfile
 {
 	protected $params = null;

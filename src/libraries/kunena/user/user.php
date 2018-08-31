@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 jimport('joomla.utilities.date');
 
@@ -179,6 +180,7 @@ class KunenaUser extends JObject
 	 * @param   mixed $id The user id of the user to load.
 	 *
 	 * @return    boolean            True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($id)
@@ -618,7 +620,6 @@ class KunenaUser extends JObject
 					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 				}
 			}
-
 		}
 
 		return $avatars->getLink($this, $class, $sizex, $sizey);
@@ -1207,8 +1208,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaMinusIcon);
+				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 
@@ -1262,8 +1263,8 @@ class KunenaUser extends JObject
 					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
-				$view->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaMinusIcon);
-				$view->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', $karmaPlusIcon);
+				$view->userkarma_minus = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaMinusIcon);
+				$view->userkarma_plus  = ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaPlusIcon);
 			}
 		}
 

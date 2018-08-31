@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
@@ -51,7 +52,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		<?php if ($view != 'user') : ?>
 			<div class="pull-right" id="filter-time">
 				<h2 class="filter-sel pull-right">
-					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>

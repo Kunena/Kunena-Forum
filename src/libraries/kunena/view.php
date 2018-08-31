@@ -622,7 +622,10 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		{
 			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
+			if ($this->app->scope == 'com_kunena')
+			{
+				throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
+			}
 		}
 	}
 

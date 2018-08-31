@@ -12,9 +12,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
-
-$iconPath = json_encode(\Joomla\CMS\Uri\Uri::root(true) . '/');
+$iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
 	"function update_rank(newimage) {
 	document.rank_image.src = {$iconPath} + newimage;

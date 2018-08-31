@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -76,9 +78,9 @@ $this->addStyleSheet('assets/css/fileupload.css');
 
 $this->k = 0;
 
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 $this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
@@ -194,7 +196,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input type="hidden" id="kunena_upload" name="kunena_upload"
 		       value="<?php echo intval($this->message->catid) ?>"/>
 		<input type="hidden" id="kunena_upload_files_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . \Joomla\CMS\Session\Session::getFormToken() . '=1', false) ?>"/>
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . Session::getFormToken() . '=1', false) ?>"/>
 		<?php if ($this->me->exists())
 			:
 			?>
@@ -251,7 +253,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								       value="<?php echo $this->escape($this->message->name); ?>"/>
 								<!-- Encourage guest user to login or register -->
 								<?php
-								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
+								$login    = '<a class="btn-link" href="' . JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
 								$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . Text::_('JREGISTER') . '</a>';
 								echo Text::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
 								?>

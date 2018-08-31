@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 
 /**
  * Class ComponentKunenaControllerCategoryIndexActionsDisplay
@@ -54,7 +55,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 
 		$this->category = KunenaForumCategory::getInstance($catid);
 
-		$token = \Joomla\CMS\Session\Session::getFormToken();
+		$token = Session::getFormToken();
 
 		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";

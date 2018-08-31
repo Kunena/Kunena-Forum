@@ -11,6 +11,11 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaLoginEasySocial
 {
 	protected $params = null;
@@ -19,6 +24,9 @@ class KunenaLoginEasySocial
 	 * KunenaLoginEasySocial constructor.
 	 *
 	 * @param $params
+	 *
+	 * @since       Kunena
+	 *
 	 */
 	public function __construct($params)
 	{
@@ -27,6 +35,8 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
+	 * @since       Kunena
+	 *
 	 */
 	public function getLoginURL()
 	{
@@ -35,6 +45,8 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return mixed
+	 * @since       Kunena
+	 *
 	 */
 	public function getLogoutURL()
 	{
@@ -43,6 +55,7 @@ class KunenaLoginEasySocial
 
 	/**
 	 * @return null
+	 * @since       Kunena
 	 */
 	public function getRegistrationURL()
 	{

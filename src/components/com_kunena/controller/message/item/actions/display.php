@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -64,7 +66,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$id     = $this->message->thread;
 		$catid  = $this->message->catid;
-		$token  = \Joomla\CMS\Session\Session::getFormToken();
+		$token  = Session::getFormToken();
 		$config = KunenaConfig::getInstance();
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
@@ -201,7 +203,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$me->userid && !$this->message->hold && !$config->read_only
 		)
 		{
-			$loginurl  = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) \Joomla\CMS\Uri\Uri::getInstance()));
+			$loginurl  = JRoute::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance()));
 			$logintext = sprintf('<a class="btn-link" href="%s" rel="nofollow">%s</a>', $loginurl, Text::_('JLOGIN'));
 
 			if ($login->getRegistrationUrl())

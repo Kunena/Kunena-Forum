@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Access Control for Joomla 2.5+
@@ -381,7 +382,7 @@ class KunenaAccessJoomla
 		$result = (array) $db->loadColumn();
 
 		// Clean up any NULL values, just in case
-		Joomla\Utilities\ArrayHelper::toInteger($result);
+		ArrayHelper::toInteger($result);
 
 		return $result;
 	}

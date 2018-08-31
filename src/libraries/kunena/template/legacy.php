@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
@@ -68,7 +69,7 @@ define('KUNENA_VERSION_NAME', KunenaForum::versionName());
 define('KUNENA_VERSION_BUILD', 0);
 
 // Joomla URL
-define('KUNENA_JLIVEURL', \Joomla\CMS\Uri\Uri::base(true) . '/');
+define('KUNENA_JLIVEURL', Uri::base(true) . '/');
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . "/templates/{$app->getTemplate()}");

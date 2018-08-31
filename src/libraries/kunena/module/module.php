@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaModule
@@ -62,7 +63,7 @@ abstract class KunenaModule
 		if (static::$css)
 		{
 			/** @noinspection PhpDeprecationInspection */
-			$this->document->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . static::$css);
+			$this->document->addStyleSheet(Uri::root(true) . static::$css);
 			static::$css = null;
 		}
 

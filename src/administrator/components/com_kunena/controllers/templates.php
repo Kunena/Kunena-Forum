@@ -15,6 +15,8 @@ jimport('joomla.filesystem.archive');
 
 use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Backend Templates Controller
@@ -65,7 +67,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$cid = $this->app->input->get('cid', array(), 'method', 'array');
 		$id  = array_shift($cid);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -97,7 +99,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function add()
 	{
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -160,7 +162,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$dest       = KPATH_SITE . '/template/';
 		$file       = $this->app->input->files->get('install_package', null, 'raw');
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -284,7 +286,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$id       = array_shift($cid);
 		$template = $id;
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -430,7 +432,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->post->get('filecontent', '', 'raw');
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -478,7 +480,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -557,7 +559,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -602,7 +604,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -646,9 +648,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($menus);
+		ArrayHelper::toInteger($menus);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -845,9 +847,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		Joomla\Utilities\ArrayHelper::toInteger($menus);
+		ArrayHelper::toInteger($menus);
 
-		if (!\Joomla\CMS\Session\Session::checkToken('post'))
+		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -874,6 +876,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since 5.1
 	 */
 	public function restore()

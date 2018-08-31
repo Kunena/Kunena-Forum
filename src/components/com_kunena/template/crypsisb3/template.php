@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * Crypsis template.
@@ -129,7 +130,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		if (file_exists($filenameless) && 0 != filesize($filenameless))
 		{
 			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
-			$this->addStyleSheet('kunena-custom.css');
+			$this->addLessSheet('kunena-custom.css');
 		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';

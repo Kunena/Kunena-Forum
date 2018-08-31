@@ -13,6 +13,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Kunena Plugins Controller
@@ -75,17 +78,17 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function publish()
 	{
 		// Check for request forgeries
-		\Joomla\CMS\Session\Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
 		$cid   = Factory::getApplication()->input->get('cid', array(), 'array');
 		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task  = $this->getTask();
-		$value = Joomla\Utilities\ArrayHelper::getValue($data, $task, 0, 'int');
+		$value = ArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid))
 		{
-			\Joomla\CMS\Log\Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), \Joomla\CMS\Log\Log::WARNING, 'jerror');
+			Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), Log::WARNING, 'jerror');
 		}
 		else
 		{
@@ -93,12 +96,12 @@ class KunenaAdminControllerPlugins extends KunenaController
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			Joomla\Utilities\ArrayHelper::toInteger($cid);
+			ArrayHelper::toInteger($cid);
 
 			// Publish the items.
 			if (!$model->publish($cid, $value))
 			{
-				\Joomla\CMS\Log\Log::add($model->getError(), \Joomla\CMS\Log\Log::WARNING, 'jerror');
+				Log::add($model->getError(), Log::WARNING, 'jerror');
 			}
 			else
 			{
@@ -163,7 +166,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function reorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
@@ -199,15 +202,15 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function saveorder()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Get the input
 		$pks   = $this->input->post->get('cid', array(), 'array');
 		$order = $this->input->post->get('order', array(), 'array');
 
 		// Sanitize the input
-		Joomla\Utilities\ArrayHelper::toInteger($pks);
-		Joomla\Utilities\ArrayHelper::toInteger($order);
+		ArrayHelper::toInteger($pks);
+		ArrayHelper::toInteger($order);
 
 		// Get the model
 		$model = $this->getModel();
@@ -244,7 +247,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function checkin()
 	{
 		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
 

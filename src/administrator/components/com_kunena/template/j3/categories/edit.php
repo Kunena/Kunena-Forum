@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -22,7 +23,7 @@ HTMLHelper::_('behavior.tabstate');
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
 /** @noinspection PhpDeprecationInspection */
-Factory::getDocument()->addScript(\Joomla\CMS\Uri\Uri::root() . 'administrator\components\com_kunena\template\j3\categories\edit.js');
+Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\j3\categories\edit.js');
 ?>
 
 <div id="kunena" class="admin override">

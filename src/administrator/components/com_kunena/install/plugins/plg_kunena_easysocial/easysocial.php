@@ -23,6 +23,11 @@ if (!JFile::exists($file))
 require_once($file);
 require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
 	/**

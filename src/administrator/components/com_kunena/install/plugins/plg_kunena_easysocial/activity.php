@@ -15,6 +15,11 @@ use Joomla\String\StringHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	protected $params = null;

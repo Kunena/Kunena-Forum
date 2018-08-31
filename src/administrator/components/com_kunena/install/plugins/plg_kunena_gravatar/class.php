@@ -19,6 +19,11 @@
 
 use Joomla\CMS\Uri\Uri;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaGravatar
 {
 	/**

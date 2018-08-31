@@ -972,6 +972,11 @@ class KunenaAdminControllerUsers extends KunenaController
 
 	/**
 	 * Clean social items
+	 *
+	 * @param $user
+	 * @param $app
+	 *
+	 * @since Kunena
 	 */
 	protected function cleanSocial(&$user, $app)
 	{

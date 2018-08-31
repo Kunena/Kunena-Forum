@@ -11,6 +11,11 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaLoginEasySocial
 {
 	protected $params = null;

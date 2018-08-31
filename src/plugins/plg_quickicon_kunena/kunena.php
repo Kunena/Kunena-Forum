@@ -18,6 +18,12 @@ use Joomla\CMS\Language\Text;
  */
 class plgQuickiconKunena extends JPlugin
 {
+	/**
+	 * plgQuickiconKunena constructor.
+	 *
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(& $subject, $config)
 	{
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected

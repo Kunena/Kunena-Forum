@@ -13,6 +13,11 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Language\Text;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
 	protected $loaded = false;

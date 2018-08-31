@@ -13,6 +13,11 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Uri\Uri;
 
+/**
+ * @package     Kunena
+ *
+ * @since       Kunena
+ */
 class KunenaProfileEasySocial extends KunenaProfile
 {
 	protected $params = null;

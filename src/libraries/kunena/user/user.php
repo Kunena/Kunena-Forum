@@ -180,6 +180,7 @@ class KunenaUser extends JObject
 	 * @param   mixed $id The user id of the user to load.
 	 *
 	 * @return    boolean            True on success
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	public function load($id)

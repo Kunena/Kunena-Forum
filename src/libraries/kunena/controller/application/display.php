@@ -383,6 +383,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena
 	 */
 	final public function poweredBy()

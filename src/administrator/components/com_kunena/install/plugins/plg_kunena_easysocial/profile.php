@@ -26,6 +26,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * KunenaProfileEasySocial constructor.
 	 *
 	 * @param $params
+	 * @since       Kunena
 	 */
 	public function __construct($params)
 	{
@@ -37,6 +38,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return bool
+	 * @throws Exception
+	 * @since       Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -57,6 +60,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return string
+	 * @since       Kunena
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
@@ -100,6 +104,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param int $limit
 	 *
 	 * @return array|void
+	 * @since       Kunena
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -108,6 +113,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 * @since       Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -154,6 +160,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param $birthday
 	 *
 	 * @return mixed
+	 * @since       Kunena
 	 */
 	public function getLegacyDate($birthday)
 	{
@@ -168,6 +175,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param bool $xhtml
 	 *
 	 * @return mixed
+	 * @since       Kunena
+	 *
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

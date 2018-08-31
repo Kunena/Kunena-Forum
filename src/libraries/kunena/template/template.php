@@ -1697,8 +1697,9 @@ HTML;
 	 * @param   string $inputFile  input
 	 * @param   string $outputFile output
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function compileLess($inputFile, $outputFile)
 	{

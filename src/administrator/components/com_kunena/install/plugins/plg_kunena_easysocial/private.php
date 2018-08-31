@@ -28,6 +28,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
+	 * @since       Kunena
 	 */
 	public function __construct($params)
 	{
@@ -41,6 +42,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since       Kunena
 	 */
 	protected function getOnClick($userid)
 	{
@@ -53,6 +55,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
+	 * @since       Kunena
 	 */
 	protected function getURL($userid)
 	{
@@ -63,6 +66,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return string
+	 * @since       Kunena
 	 */
 	public function getInboxLink($text)
 	{
@@ -78,6 +82,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 
 	/**
 	 * @return mixed
+	 * @since       Kunena
 	 */
 	public function getInboxURL()
 	{

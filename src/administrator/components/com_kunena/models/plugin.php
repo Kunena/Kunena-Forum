@@ -198,6 +198,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws Exception
 	 * @since   1.6
 	 */
 	public function save($data)

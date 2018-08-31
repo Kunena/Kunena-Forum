@@ -178,6 +178,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return  object
 	 *
+	 * @throws Exception
 	 * @since    3.0.2
 	 */
 	public static function getBase(&$params)
@@ -208,6 +209,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return  object
 	 *
+	 * @throws Exception
 	 * @since    3.0.2
 	 */
 	public static function getActive(&$params)
@@ -221,6 +223,9 @@ abstract class KunenaMenuHelper
 	 * Get default menu item (home page) for current language.
 	 *
 	 * @return  object
+	 * @throws Exception
+	 * @since       Kunena
+	 *
 	 */
 	public static function getDefault()
 	{

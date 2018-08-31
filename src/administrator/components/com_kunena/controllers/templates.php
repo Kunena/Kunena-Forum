@@ -876,6 +876,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since 5.1
 	 */
 	public function restore()

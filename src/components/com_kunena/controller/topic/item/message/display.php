@@ -105,21 +105,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
-			{
-				$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
-				$params = new \Joomla\Registry\Registry($plugin[0]->params);
-
-				$captcha_pubkey = $params->get('public_key');
-				$catcha_privkey = $params->get('private_key');
-
-				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
-				{
-					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-					$result               = Factory::getApplication()->triggerEvent('onInit', array("dynamic_recaptcha_{$this->message->id}"));
-					$this->captchaEnabled = $result[0];
-				}
-			}
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaEnabled = true;
+		}
+		else
+		{
+			$this->captchaEnabled = false;
 		}
 
 		// Thank you info and buttons.

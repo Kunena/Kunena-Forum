@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Plugin\PluginHelper;
 
 jimport('joomla.html.parameter');
 
@@ -1917,6 +1918,36 @@ HTML;
 			{
 				return 'hasTooltip';
 			}
+		}
+	}
+
+	/**
+	 * @param bool $topic_ids
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public function recaptcha($topic_ids = false)
+	{
+		if (PluginHelper::isEnabled('captcha'))
+		{
+			PluginHelper::importPlugin('captcha');
+
+			if ($topic_ids)
+			{
+				PluginHelper::importPlugin('captcha');
+				Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $topic_ids));
+				$display = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $topic_ids, 'controls g-recaptcha'));
+			}
+			else
+			{
+				Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
+				$display = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'controls g-recaptcha'));
+			}
+
+			return $display[0];
 		}
 	}
 }

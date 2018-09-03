@@ -41,33 +41,15 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('assets/js/sisyphus.js');
 }
 
-if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
-{
-	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
-	{
-		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
-		$params = new \Joomla\Registry\Registry($plugin[0]->params);
-
-		$captcha_pubkey = $params->get('public_key');
-		$catcha_privkey = $params->get('private_key');
-
-		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
-		{
-			\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-
-			$result                    = Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $this->message->id));
-			$output                    = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
-					'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"',)
-			);
-			$this->quickcaptchaDisplay = $output[0];
-			$this->quickcaptchaEnabled = $result[0];
-		}
-	}
-}
-
 $template = KunenaTemplate::getInstance();
 $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
+
+if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
+{
+	$this->captchaDisplay = $template->recaptcha($message->id);
+	$this->captchaEnabled = true;
+}
 ?>
 
 <div class="kreply span12 well" id="kreply<?php echo $message->displayField('id'); ?>_form"
@@ -187,11 +169,9 @@ $editor   = $template->params->get('editor');
 			   role="button" class="btn btn-small btn-link pull-right"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
-		<?php if (!empty($this->quickcaptchaEnabled))
-			:
-			?>
+		<?php if (!empty($this->captchaEnabled)): ?>
 			<div class="control-group">
-				<?php echo $this->quickcaptchaDisplay; ?>
+				<?php echo $this->captchaDisplay; ?>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

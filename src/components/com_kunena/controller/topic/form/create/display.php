@@ -129,23 +129,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
-			{
-				$plugin         = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
-				$params         = new \Joomla\Registry\Registry($plugin[0]->params);
-				$captcha_pubkey = $params->get('public_key');
-				$catcha_privkey = $params->get('private_key');
-
-				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
-				{
-					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
-					$result               = Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
-					$output               = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-						. $captcha_pubkey . '" data-theme="light"',));
-					$this->captchaDisplay = $output[0];
-					$this->captchaEnabled = $result[0];
-				}
-			}
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaEnabled = true;
 		}
 		else
 		{

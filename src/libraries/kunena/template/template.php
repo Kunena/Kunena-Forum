@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Plugin\PluginHelper;
+use Leafo\ScssPhp\Compiler;
 
 jimport('joomla.html.parameter');
 
@@ -820,6 +821,30 @@ HTML;
 	 * @since Kunena 5.1.3
 	 */
 	public function addLessSheet($filename)
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+
+		return HTMLHelper::_('stylesheet', $filename);
+	}
+
+	/**
+	 * Set the Scss file into the document head
+	 *
+	 * @param   string $filename filename
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 * @since Kunena 5.1.3
+	 */
+	public function addScssSheet($filename)
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -1748,6 +1773,67 @@ HTML;
 		);
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
+
+		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
+		{
+			$cache = serialize($newCache);
+			KunenaFile::write($cacheFile, $cache);
+			KunenaFile::write($outputFile, $newCache['compiled']);
+		}
+	}
+
+	/**
+	 * @param   string $inputFile  input
+	 * @param   string $outputFile output
+	 *
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function compileScss($inputFile, $outputFile)
+	{
+		require_once KPATH_FRAMEWORK . '/external/scss/scss.inc.php';
+
+		// Load the cache.
+		$cacheDir = JPATH_CACHE . '/kunena';
+
+		if (!is_dir($cacheDir))
+		{
+			KunenaFolder::create($cacheDir);
+		}
+
+		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
+
+		if (is_file($cacheFile))
+		{
+			$cache = unserialize(file_get_contents($cacheFile));
+		}
+		else
+		{
+			$cache = JPATH_SITE . '/' . $this->getFile($inputFile, false, 'scss');
+		}
+
+		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
+
+		if (!is_dir($outputDir))
+		{
+			KunenaFolder::create($outputDir);
+		}
+
+		$outputFile = "{$outputDir}/{$outputFile}";
+
+		$scss = new Compiler();
+		$class = $this;
+		$scss->registerFunction('url', function ($arg) use ($class) {
+			list($type, $q, $values) = $arg;
+			$value = reset($values);
+
+			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
+		}
+		);
+
+		$scss->setVariables($this->style_variables);
+		$newCache = $scss->compile($cache);
 
 		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
 		{

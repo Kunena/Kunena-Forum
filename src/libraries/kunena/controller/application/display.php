@@ -158,7 +158,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					}
 
 					$this->setResponseStatus($e->getResponseCode());
-					$this->document->setTitle($e->getResponseCode());
+					$this->document->setTitle($e->getResponseStatus());
 				}
 				else
 				{

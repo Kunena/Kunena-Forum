@@ -159,6 +159,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 					$this->setResponseStatus($e->getResponseCode());
 					$this->document->setTitle($e->getResponseStatus());
+
+					if ($e->getResponseCode() == 401 || $e->getResponseCode() == 403)
+					{
+						$this->document->setMetaData('robots', 'noindex, nofollow');
+					}
 				}
 				else
 				{

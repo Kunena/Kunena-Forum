@@ -81,7 +81,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid   = Factory::getApplication()->input->get('cid', array(), 'array');
+		$cid   = $this->input->get('cid', array(), 'array');
+		$cid   = ArrayHelper::toInteger($cid, array());
 		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task  = $this->getTask();
 		$value = ArrayHelper::getValue($data, $task, 0, 'int');
@@ -168,7 +169,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$ids = $this->input->get('cid', array(), 'array');
+		$ids = ArrayHelper::toInteger($ids, array());
+
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
 		$model  = $this->getModel();
@@ -205,12 +208,11 @@ class KunenaAdminControllerPlugins extends KunenaController
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Get the input
-		$pks   = $this->input->post->get('cid', array(), 'array');
-		$order = $this->input->post->get('order', array(), 'array');
+		$pks = $this->input->get('cid', array(), 'array');
+		$pks = ArrayHelper::toInteger($pks, array());
 
-		// Sanitize the input
-		ArrayHelper::toInteger($pks);
-		ArrayHelper::toInteger($order);
+		$order = $this->input->get('order', array(), 'array');
+		$order = ArrayHelper::toInteger($order, array());
 
 		// Get the model
 		$model = $this->getModel();
@@ -249,7 +251,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$ids = Factory::getApplication()->input->post->get('cid', array(), 'array');
+		$cid = $this->input->get('cid', array(), 'array');
+		$ids = ArrayHelper::toInteger($cid, array());
 
 		$model  = $this->getModel();
 		$return = $model->checkin($ids);

@@ -63,8 +63,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -301,8 +301,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if ($cid)
 		{
@@ -348,8 +348,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if (empty($cid))
 		{
@@ -455,8 +455,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$id = array_shift($cid);
 
 		if ($id <= 0)
@@ -494,8 +494,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if (empty($cid))
 		{
@@ -574,8 +574,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -635,8 +635,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -696,8 +696,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -757,8 +757,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -818,10 +818,10 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
-		$catids = $this->app->input->get('catid', array(), 'post', 'array');
-		ArrayHelper::toInteger($catids);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
+		$catids = $this->input->get('catid', array(), 'array');
+		$catids = ArrayHelper::toInteger($catids, array());
 
 		if (empty($cid))
 		{
@@ -899,7 +899,8 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$db  = Factory::getDbo();
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if (!empty($cid))
 		{
@@ -945,7 +946,8 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$db  = Factory::getDBO();
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if (!empty($cid))
 		{

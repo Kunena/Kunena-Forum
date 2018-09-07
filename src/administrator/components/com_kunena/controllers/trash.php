@@ -61,11 +61,11 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
-		$type = $this->app->input->getCmd('type', 'topics', 'post');
-		$md5  = $this->app->input->getString('md5', null);
+		$type = $this->input->getCmd('type', 'topics', 'post');
+		$md5  = $this->input->getString('md5', null);
 
 		if (!empty($cid))
 		{
@@ -179,10 +179,10 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
-		$type = $this->app->input->getCmd('type', 'topics', 'post');
+		$type = $this->input->getCmd('type', 'topics');
 
 		if (empty($cid))
 		{

@@ -49,8 +49,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->post->get('cid', array(), 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		foreach ($cid as $id)
 		{
@@ -114,8 +114,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		foreach ($cid as $id)
 		{
@@ -171,8 +171,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid = $this->app->input->post->get('cid', array(), 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 

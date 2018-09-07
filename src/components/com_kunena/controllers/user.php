@@ -1265,8 +1265,8 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = $this->input->get('cid', array(), 'array');
+		$cid = ArrayHelper::toInteger($cid, array());
 
 		if (!empty($cid))
 		{

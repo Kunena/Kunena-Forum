@@ -125,26 +125,17 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 			$this->addScript('assets/js/localstorage.js');
 		}
 
-		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less';
-
-		if (file_exists($filenameless) && 0 != filesize($filenameless))
-		{
-			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
-			$this->addLessSheet('kunena-custom.css');
-		}
-
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';
 
-		if (file_exists($filename))
+		if (file_exists($filename) && filesize($filename) != 0)
 		{
-			$this->addStyleSheet('assets/css/custom.css');
+			$this->addLessSheet('assets/css/custom.css');
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 
 		if ($fontawesome)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$this->addScript('https://use.fontawesome.com/releases/v5.3.1/js/all.js', array(), array('defer' => true));
 			$this->addScript('https://use.fontawesome.com/releases/v5.3.1/js/v4-shims.js', array(), array('defer' => true));
 		}
@@ -153,7 +144,6 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		if ($icons)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$this->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 

@@ -1,3 +1,0 @@
-[submodule ".travis/phpcs/Joomla"]
-	path = .travis/phpcs/Joomla
-	url = https://github.com/joomla/coding-standards.git

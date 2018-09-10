@@ -125,6 +125,7 @@ class KunenaViewTopic extends KunenaView
 			// Set the MIME type and header for JSON output.
 			$this->document->setMimeEncoding('application/json');
 			$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+			Factory::getApplication()->sendHeaders();
 
 			echo json_encode($response);
 		}
@@ -177,6 +178,7 @@ class KunenaViewTopic extends KunenaView
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		Factory::getApplication()->sendHeaders();
 
 		echo json_encode($topicIcons);
 	}
@@ -200,14 +202,13 @@ class KunenaViewTopic extends KunenaView
 		}
 		else
 		{
-			$rating = KunenaForumTopicRate::getInstance($topicid);
-
-			$response = $rating->getTopicUserRate();
+			$response = KunenaForumTopicRateHelper::getRate($topicid, $user->id);
 		}
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}
@@ -246,6 +247,7 @@ class KunenaViewTopic extends KunenaView
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		Factory::getApplication()->sendHeaders();
 
 		echo $response;
 	}
@@ -271,6 +273,7 @@ class KunenaViewTopic extends KunenaView
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		$app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		Factory::getApplication()->sendHeaders();
 
 		echo json_encode($response);
 	}

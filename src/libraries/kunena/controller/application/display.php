@@ -346,6 +346,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			default:
 				Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
 		}
+
+		Factory::getApplication()->sendHeaders();
 	}
 
 	/**

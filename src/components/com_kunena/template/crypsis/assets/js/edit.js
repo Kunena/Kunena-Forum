@@ -86,9 +86,9 @@ jQuery(document).ready(function ($) {
 	};
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if ($('#kemojis_allowed').val() === 1) {
+	if ($('#kemojis_allowed').val() == 1) {
 		var item = '';
-		if (editor.length > 0 && qreply.length === 0) {
+		if (editor.length > 0 && qreply.length == 0) {
 			item = '#editor';
 		}
 		else if (qreply.length > 0) {
@@ -99,7 +99,7 @@ jQuery(document).ready(function ($) {
 			item = '#wysibb-body';
 		}
 
-		if (item !== undefined) {
+		if (item != undefined) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",

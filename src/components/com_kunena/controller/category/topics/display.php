@@ -125,6 +125,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			case 'creation':
 				$params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . $direction;
 				break;
+			case 'views':
+				$params['orderby'] = 'tt.ordering DESC, tt.hits ' . $direction;
+				break;
+			case 'posts':
+				$params['orderby'] = 'tt.ordering DESC, tt.posts ' . $direction;
+				break;
 			case 'lastpost':
 			default:
 				$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;

@@ -2,11 +2,11 @@
 /**
  * Kunena Package
  *
- * @package    Kunena.Package
+ * @package        Kunena.Package
  *
  * @copyright      Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
- * @license    https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link           https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,7 +22,7 @@ class Pkg_KunenaInstallerScript
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $versions = array(
 		'PHP'     => array(
 			'7.2' => '7.2.0',
@@ -37,10 +37,11 @@ class Pkg_KunenaInstallerScript
 			'0'   => '5.5' // Preferred version
 		),
 		'Joomla!' => array(
-			'3.8' => '3.8.0',
-			'3.9' => '3.9.0',
-			'4.0' => '4.0.0',
-			'0'   => '3.8.0' // Preferred version
+			'3.8'  => '3.8.0',
+			'3.9'  => '3.9.0',
+			'3.10' => '3.10.0',
+			'4.0'  => '4.0.0',
+			'0'    => '3.8.0' // Preferred version
 		)
 	);
 
@@ -49,7 +50,7 @@ class Pkg_KunenaInstallerScript
 	 *
 	 * @var array
 	 * @since Kunena
- 	 */
+	 */
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent)
@@ -208,9 +209,9 @@ EOS;
 
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
-            $name, $version, $name, $minor, $name, $recommended
-        ), 'notice'
-        );
+			$name, $version, $name, $minor, $name, $recommended
+		), 'notice'
+		);
 
 		return false;
 	}
@@ -313,8 +314,8 @@ EOS;
 		}
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version),
-            'notice'
-        );
+			'notice'
+		);
 
 		return false;
 	}

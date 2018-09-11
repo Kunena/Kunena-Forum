@@ -100,4 +100,27 @@ abstract class KunenaForumTopicRateHelper
 
 		return round($db->loadResult());
 	}
+
+	/**
+	 * Return rate by id and userid
+	 *
+	 * @param   integer $id id
+	 *
+	 * @param           $userid
+	 *
+	 * @return float
+	 * @since Kunena
+	 */
+	public static function getRate($id, $userid)
+	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select("rate")
+			->from('#__kunena_rate')
+			->where('topic_id = ' . $db->escape($id))
+			->andWhere('userid = ' . $db->escape($userid));
+		$db->setQuery($query);
+
+		return round($db->loadResult());
+	}
 }

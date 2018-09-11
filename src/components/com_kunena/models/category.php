@@ -330,6 +330,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				case 'creation':
 					$params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . strtoupper($this->getState('list.direction'));
 					break;
+				case 'views':
+					$params['orderby'] = 'tt.ordering DESC, tt.hits ' . strtoupper($this->getState('list.direction'));
+					break;
+				case 'posts':
+					$params['orderby'] = 'tt.ordering DESC, tt.posts ' . strtoupper($this->getState('list.direction'));
+					break;
 				case 'lastpost':
 				default:
 					$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState('list.direction'));

@@ -84,6 +84,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$document = Factory::getDocument();
 			$document->setTitle($e->getResponseStatus());
 			Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
+			Factory::getApplication()->sendHeaders();
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
@@ -99,6 +100,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$document = Factory::getDocument();
 			$document->setTitle($title);
 			Factory::getApplication()->setHeader('Status', $title, true);
+			Factory::getApplication()->sendHeaders();
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());

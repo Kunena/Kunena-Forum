@@ -71,14 +71,14 @@ jQuery(document).ready(function ($) {
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();
-		if (id_item_selected !== 0) {
+		if (id_item_selected == 0) {
 			$('#kmod_subject').hide();
 		}
 		else {
 			$('#kmod_subject').show();
 		}
 
-		if (id_item_selected === -1) {
+		if (id_item_selected == -1) {
 			$('#kmod_targetid').show();
 		}
 		else {

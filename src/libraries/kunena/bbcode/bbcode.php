@@ -3148,6 +3148,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
 			}
 
+			$before = $content;
 			$content = strip_tags($content);
 
 			$content = trim($content);
@@ -3172,6 +3173,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				}
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+
+			if (!empty($content))
+			{
+				return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+			else
+			{
+				return $before;
 			}
 		}
 	}

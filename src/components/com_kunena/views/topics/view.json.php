@@ -13,15 +13,25 @@ defined('_JEXEC') or die;
 class KunenaViewTopics extends KunenaView
 {
 
+	/**
+	 * @param null $tpl
+	 *
+	 * @return mixed|void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	function display($tpl = null)
 	{
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 55);
+
 		$template = KunenaFactory::getTemplate();
-		$list = array();
+		$list     = array();
+
 		foreach ($topics as $topic)
 		{
 			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users = KunenaUserHelper::get($lastuser);
+			$users    = KunenaUserHelper::get($lastuser);
 
 			$response           = new stdClass();
 			$response->id       = $topic->id;
@@ -49,11 +59,12 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		$json2 = array(
-			'Count'        => $count,
-			'Topics'       => $list
+			'Count'  => $count,
+			'Topics' => $list
 		);
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
 		echo $json;
 	}
 }

@@ -10,37 +10,49 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 class KunenaViewTopic extends KunenaView
 {
 
+	/**
+	 * @param null $tpl
+	 *
+	 * @return mixed|void
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	function display($tpl = null)
 	{
-		$topic = KunenaForumTopicHelper::get(9);
-
+		$id       = Factory::getApplication()->input->getInt('id');
+		$topic    = KunenaForumTopicHelper::get($id);
 		$messages = KunenaForumMessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
-		$list = array();
+
+		$list     = array();
 		$template = KunenaFactory::getTemplate();
 
 		foreach ($messages as $message)
 		{
-			$user = KunenaUserHelper::get($message->userid);
-			$response           = new stdClass();
-			$response->id       = $message->id;
-			$response->message  = KunenaHtmlParser::stripBBCode(KunenaForumMessageHelper::get($message->id)->message);
-			$response->author   = $user->username;
-			$response->avatar   = $user->getAvatarImage($template->params->get('avatarType'), 'thumb');
-			$response->rank     = $user->getRank($topic->getCategory()->id, 'title');
-			$response->time     = KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat');
+			$user              = KunenaUserHelper::get($message->userid);
+			$response          = new stdClass();
+			$response->id      = $message->id;
+			$response->message = KunenaHtmlParser::stripBBCode(KunenaForumMessageHelper::get($message->id)->message);
+			$response->author  = $user->username;
+			$response->avatar  = $user->getAvatarImage($template->params->get('avatarType'), 'thumb');
+			$response->rank    = $user->getRank($topic->getCategory()->id, 'title');
+			$response->time    = KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat');
 
 			$list[] = $response;
 		}
 
 		$json2 = array(
-			'Count'        => $topic,
-			'Messages'     => $list
+			'Count'    => $topic,
+			'Messages' => $list
 		);
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
 		echo $json;
 	}
 }

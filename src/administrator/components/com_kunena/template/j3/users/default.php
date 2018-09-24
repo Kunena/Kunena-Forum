@@ -227,6 +227,7 @@ HTMLHelper::_('dropdown.init');
 							:
 							$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
 							$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
+							$userModerateTask = $user->isModerator() ? 'unmoderate' : '';
 							?>
 							<tr>
 								<td>
@@ -289,9 +290,17 @@ HTMLHelper::_('dropdown.init');
 									</a>
 								</td>
 								<td class="center hidden-phone hidden-tablet">
-									<span class="btn btn-micro <?php echo $user->moderator ? 'active' : ''; ?>">
-										<?php echo $user->moderator ? $img_yes : $img_no; ?>
+									<?php if ($user->moderator) :?>
+										<a class="btn btn-micro active"
+										   href="javascript: void(0);"
+										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
+											<?php echo $img_yes; ?>
+										</a>
+									<?php else : ?>
+										<span class="btn btn-micro">
+										<?php echo $img_no; ?>
 									</span>
+									<?php endif; ?>
 								</td>
 								<td class="center"><?php echo $this->escape($user->userid); ?></td>
 							</tr>

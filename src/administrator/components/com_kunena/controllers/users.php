@@ -677,6 +677,84 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Unmoderate
+	 *
+	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 * @throws null
+	 */
+	public function unmoderate()
+	{
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$cid = $this->app->input->get('cid', array(), 'post', 'array');
+		ArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
+
+		if ($userid <= 0)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$user = KunenaUserHelper::get($userid);
+		$category = null;
+
+		if ($category instanceof KunenaForumCategory)
+		{
+			$category = $category->id;
+		}
+
+		$category = intval($category);
+
+		$usercategory = KunenaForumCategoryUserHelper::get($category, $user);
+
+		if ($usercategory->role == 1)
+		{
+			$usercategory->role = false;
+			$success            = $usercategory->save();
+
+			// Clear role cache
+			KunenaAccess::getInstance()->clearCache();
+
+			// Change user moderator status
+			$moderator = KunenaAccess::getInstance()->getModeratorStatus($user);
+
+			if ($user->moderator != !empty($moderator))
+			{
+				$user->moderator = intval(!empty($moderator));
+				$success         = $user->save();
+			}
+		}
+
+
+
+		$message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');
+
+		if (!$success)
+		{
+			$this->app->enqueueMessage($user->getError(), 'error');
+		}
+		else
+		{
+			$this->app->enqueueMessage($message);
+		}
+
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
 	 * Block
 	 *
 	 * @throws Exception

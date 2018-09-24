@@ -165,6 +165,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 
 		Factory::getDocument()->setMimeEncoding('application/json');
 		Factory::getApplication()->setHeader('Content-Disposition', 'attachment;filename="kunena-install.json"');
+		Factory::getApplication()->sendHeaders();
 
 		$percent = intval(99 * $this->step / count($this->steps));
 

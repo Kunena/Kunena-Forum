@@ -118,6 +118,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 		Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
 		Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
 		Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		Factory::getApplication()->sendHeaders();
 	}
 
 	/**
@@ -169,6 +170,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			{
 				// Forum is offline
 				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				Factory::getApplication()->sendHeaders();
 				$this->common->header = Text::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body   = $this->config->offline_message;
 				$this->common->html   = true;
@@ -181,6 +183,7 @@ class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
 			{
 				// Forum is for registered users only
 				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				Factory::getApplication()->sendHeaders();
 				$this->common->header = Text::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body   = Text::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');

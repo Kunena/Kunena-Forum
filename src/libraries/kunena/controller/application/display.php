@@ -346,6 +346,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			default:
 				Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
 		}
+
+		Factory::getApplication()->sendHeaders();
 	}
 
 	/**
@@ -377,6 +379,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
 		Factory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
 		Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
+		Factory::getApplication()->sendHeaders();
 
 		if ($this->config->get('credits', 1))
 		{

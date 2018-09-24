@@ -25,9 +25,12 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function display($tpl = null)
 	{
-		$id       = Factory::getApplication()->input->getInt('id');
-		$topic    = KunenaForumTopicHelper::get($id);
-		$messages = KunenaForumMessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
+		$id                        = Factory::getApplication()->input->getInt('id');
+		$topic                     = KunenaForumTopicHelper::get($id);
+		$topic->subject            = KunenaHtmlParser::parseText($topic->subject);
+		$topic->first_post_message = KunenaHtmlParser::stripBBCode($topic->first_post_message);
+		$topic->last_post_message  = KunenaHtmlParser::stripBBCode($topic->last_post_message);
+		$messages                  = KunenaForumMessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
 
 		$list     = array();
 		$template = KunenaFactory::getTemplate();

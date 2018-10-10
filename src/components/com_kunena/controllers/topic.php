@@ -584,6 +584,14 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		if (!$this->catid)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 

@@ -502,7 +502,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			{
 				if (!$this->topic->subject)
 				{
-					echo '<script type="text/javascript">document.postform.subject.focus();</script>';
+					if ($this->config->allow_change_subject)
+					{
+						echo '<script type="text/javascript">document.postform.subject.focus();</script>';
+					}
 				}
 				else
 				{

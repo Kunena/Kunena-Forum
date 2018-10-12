@@ -380,7 +380,7 @@ class KunenaTableMap
 	 */
 	public function setMapped(array $list)
 	{
-		ArrayHelper::toInteger($list);
+		$list = ArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
 	}
 

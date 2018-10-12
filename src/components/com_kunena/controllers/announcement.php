@@ -195,7 +195,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{

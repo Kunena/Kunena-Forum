@@ -799,9 +799,9 @@ class KunenaControllerTopic extends KunenaController
 		$attachment  = Factory::getApplication()->input->get('attachment', array(), 'post', 'array');
 
 		$addList = array_keys(array_intersect_key($attachments, $attachment));
-		ArrayHelper::toInteger($addList);
+		$addList = ArrayHelper::toInteger($addList);
 		$removeList = array_keys(array_diff_key($attachments, $attachment));
-		ArrayHelper::toInteger($removeList);
+		$removeList = ArrayHelper::toInteger($removeList);
 
 		$message->addAttachments($addList);
 		$message->removeAttachments($removeList);

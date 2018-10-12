@@ -106,13 +106,13 @@ class KunenaModelSearch extends KunenaModel
 		if (isset($_POST ['query']) || isset($_POST ['searchword']))
 		{
 			$value = Factory::getApplication()->input->get('catids', array(0), 'post', 'array');
-			ArrayHelper::toInteger($value);
+			$value = ArrayHelper::toInteger($value);
 		}
 		else
 		{
 			$value = Factory::getApplication()->input->getString('catids', '0', 'get');
 			$value = explode(' ', $value);
-			ArrayHelper::toInteger($value);
+			$value = ArrayHelper::toInteger($value);
 		}
 
 		$this->setState('query.catids', $value);
@@ -120,7 +120,7 @@ class KunenaModelSearch extends KunenaModel
 		if (isset($_POST ['q']) || isset($_POST ['searchword']))
 		{
 			$value = Factory::getApplication()->input->get('ids', array(0), 'post', 'array');
-			ArrayHelper::toInteger($value);
+			$value = ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
 			{
@@ -131,7 +131,7 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$value = Factory::getApplication()->input->getString('ids', '0', 'get');
 			$value = explode(' ', (int) $value);
-			ArrayHelper::toInteger($value);
+			$value = ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
 			{

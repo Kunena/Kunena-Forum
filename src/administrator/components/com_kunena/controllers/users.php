@@ -109,7 +109,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		ArrayHelper::toInteger($modCatids);
+		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -209,7 +209,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		ArrayHelper::toInteger($modCatids);
+		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -697,7 +697,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)

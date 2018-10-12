@@ -188,7 +188,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catids = $catid
 			? array($catid)
 			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
-		ArrayHelper::toInteger($catids);
+		$catids = ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
 

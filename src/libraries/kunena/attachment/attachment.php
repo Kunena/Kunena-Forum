@@ -381,6 +381,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 			$url = preg_replace('/.html/', '', $url);
 		}
 
+		if ($protect && $inline && $this->isPdf())
+		{
+			$url = $this->folder . '/' . $this->filename_real;
+		}
+
 		return $url;
 	}
 

@@ -97,7 +97,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			ArrayHelper::toInteger($cid);
+			$cid = ArrayHelper::toInteger($cid);
 
 			// Publish the items.
 			if (!$model->publish($cid, $value))

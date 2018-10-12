@@ -411,14 +411,14 @@ abstract class KunenaUserHelper
 
 		if ($groupIds)
 		{
-			ArrayHelper::toInteger($groupIds);
+			$groupIds  = ArrayHelper::toInteger($groupIds);
 			$groupList = implode(',', $groupIds);
 			$query->where("ug1.id IN ({$groupList})");
 		}
 
 		if ($userIds)
 		{
-			ArrayHelper::toInteger($userIds);
+			$userIds  = ArrayHelper::toInteger($userIds);
 			$userList = implode(',', $userIds);
 			$query->where("user_id IN ({$userList})");
 		}

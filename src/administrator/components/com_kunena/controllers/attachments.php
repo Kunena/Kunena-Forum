@@ -64,7 +64,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		if (!$cid)
 		{
@@ -82,7 +82,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$attachments = array($attachment->id, 1);
 			$attach      = array();
 			$removeList  = array_keys(array_diff_key($attachments, $attach));
-			ArrayHelper::toInteger($removeList);
+			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 			$message->save();
 

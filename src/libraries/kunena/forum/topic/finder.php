@@ -354,7 +354,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		if (!empty($this->hold))
 		{
-			ArrayHelper::toInteger($this->hold, 0);
+			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");
 		}

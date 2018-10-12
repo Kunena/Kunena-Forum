@@ -54,7 +54,7 @@ class KunenaControllerTopics extends KunenaController
 
 		$message = '';
 		$ids     = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids     = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -152,7 +152,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -216,7 +216,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -280,7 +280,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -345,12 +345,12 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$topics_ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($topics_ids);
+		$topics_ids = ArrayHelper::toInteger($topics_ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($topics_ids);
 
 		$messages_ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
-		ArrayHelper::toInteger($messages_ids);
+		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
 		$messages = KunenaForumMessageHelper::getMessages($messages_ids);
 
@@ -450,7 +450,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -497,7 +497,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -529,7 +529,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -578,7 +578,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -626,7 +626,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -674,7 +674,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);

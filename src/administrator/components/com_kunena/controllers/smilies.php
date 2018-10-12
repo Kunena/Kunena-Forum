@@ -86,7 +86,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
 
@@ -235,7 +235,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
 

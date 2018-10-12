@@ -109,7 +109,7 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		$ids = $this->app->input->get('prune_forum', array(), 'post', 'array');
-		ArrayHelper::toInteger($ids);
+		$ids = ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
 

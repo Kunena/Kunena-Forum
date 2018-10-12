@@ -1266,7 +1266,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		if (!empty($cid))
 		{
@@ -1279,7 +1279,7 @@ class KunenaControllerUser extends KunenaController
 				$attachments = array($attachment->id, 1);
 				$attach      = array();
 				$removeList  = array_keys(array_diff_key($attachments, $attach));
-				ArrayHelper::toInteger($removeList);
+				$removeList  = ArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 
 				$topic = $message->getTopic();

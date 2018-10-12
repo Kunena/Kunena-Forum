@@ -382,7 +382,7 @@ class KunenaAccessJoomla
 		$result = (array) $db->loadColumn();
 
 		// Clean up any NULL values, just in case
-		ArrayHelper::toInteger($result);
+		$result = ArrayHelper::toInteger($result);
 
 		return $result;
 	}

@@ -648,7 +648,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		ArrayHelper::toInteger($menus);
+		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
 		{
@@ -847,7 +847,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		ArrayHelper::toInteger($menus);
+		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
 		{

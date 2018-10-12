@@ -64,7 +64,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -109,7 +109,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		ArrayHelper::toInteger($modCatids);
+		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -209,7 +209,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
-		ArrayHelper::toInteger($modCatids);
+		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -302,7 +302,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		if ($cid)
 		{
@@ -349,7 +349,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -456,7 +456,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$id = array_shift($cid);
 
 		if ($id <= 0)
@@ -495,7 +495,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -575,7 +575,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -636,7 +636,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -697,7 +697,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -775,7 +775,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -836,7 +836,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -897,9 +897,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 
 		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		ArrayHelper::toInteger($cid);
+		$cid = ArrayHelper::toInteger($cid);
 		$catids = $this->app->input->get('catid', array(), 'post', 'array');
-		ArrayHelper::toInteger($catids);
+		$catids = ArrayHelper::toInteger($catids);
 
 		if (empty($cid))
 		{

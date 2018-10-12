@@ -615,7 +615,7 @@ window.addEvent('domready', function(){
 
 				// Clean up and filter the resulting list by using only array keys.
 				$list = array_keys($list);
-				ArrayHelper::toInteger($list);
+				$list = ArrayHelper::toInteger($list);
 				$read[$id] = array_combine($list, $list);
 				unset($read[$id][0]);
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);

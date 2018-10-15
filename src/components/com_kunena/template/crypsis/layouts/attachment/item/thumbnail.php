@@ -20,15 +20,15 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
-$name           = preg_replace('/.html/', '', $attachment->getUrl());
+$name           = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 
 if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
 {
-	$name = preg_replace('/.html/', '', $attachment->getUrl());
+	$name = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 }
 else
 {
-	$name = $attachment->getUrl();
+	$name = $attachment->getUrl(false, false, true);
 }
 
 if ($attachment->isImage())
@@ -44,7 +44,7 @@ if ($attachment->isImage())
 else
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>"
+	<a href="<?php echo $attachment->getUrl(false, false, true); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<?php echo KunenaIcons::file(); ?>
 	</a>

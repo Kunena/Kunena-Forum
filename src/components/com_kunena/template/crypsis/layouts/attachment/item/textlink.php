@@ -22,7 +22,7 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
 <a class="btn btn-small" rel="popover" data-placement="bottom" data-trigger="hover" target="_blank"
    rel="noopener noreferrer"
    data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
-" data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(); ?>"
+" data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(false, false, true); ?>"
    title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), $config->attach_start, $config->attach_end); ?>" <?php echo $attributesLink;?>>
 	<?php echo KunenaIcons::info(); ?>
 </a>

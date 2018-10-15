@@ -383,7 +383,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($protect && $inline && $this->isPdf())
 		{
-			$url = $this->folder . '/' . $this->filename_real;
+			$url = Uri::base() . $this->folder . '/' . $this->filename_real;
 		}
 
 		return $url;

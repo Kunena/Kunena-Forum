@@ -22,12 +22,6 @@ $config         = KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
-	<div class="nav navbar-nav pull-left visible-xs-block">
-		<div><a class="btn btn-link" data-toggle="collapse"
-		        data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a></div>
-		<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-	</div>
-
 	<?php if ($config->get('displayDropdownMenu')) : ?>
 		<ul class="nav pull-right">
 			<li class="dropdown mobile-user">

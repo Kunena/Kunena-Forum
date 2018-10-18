@@ -18,11 +18,6 @@ $config = KunenaFactory::getTemplate()->params;
 	<?php endif; ?>
 </div>
 <div class="hidden-desktop">
-	<div class="nav navbar-nav pull-left">
-		<div><a class="btn btn-link" data-toggle="collapse"
-		        data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a></div>
-		<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-	</div>
 	<?php if ($config->get('displayDropdownMenu')) : ?>
 		<?php echo $this->setLayout('mobile'); ?>
 	<?php endif; ?>

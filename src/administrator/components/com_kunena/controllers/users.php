@@ -683,7 +683,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since    2.0
+	 * @since    5.1
 	 * @throws null
 	 */
 	public function unmoderate()

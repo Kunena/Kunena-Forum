@@ -41,7 +41,7 @@ class KunenaAdminViewUser extends KunenaView
 
 		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
 		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.4.1/js/all.js', array(), array('defer' => true));
+			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.4.2/js/all.js', array(), array('defer' => true));
 		}
 
 		// Make the select list for the moderator flag

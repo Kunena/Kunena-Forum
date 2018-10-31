@@ -227,4 +227,30 @@ EOF;
 
 		return $text;
 	}
+
+	/**
+	 * Adds the Kunena Privacy Information to Joomla Privacy plugin.
+	 *
+	 * @return array
+	 *
+	 * @since Kunena 5.1.6
+	 */
+	public function onPrivacyCollectAdminCapabilities()
+	{
+		$capabilities = array(
+			'Kunena' => array(
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_EMAIL'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_IP_ADDRESS'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_USERPROFILE'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_POSTS'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_RATINGS'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_STATISTICS'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_COOKIES'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_LOGS'),
+				JText::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_SOCIAL')
+			),
+		);
+
+		return $capabilities;
+	}
 }

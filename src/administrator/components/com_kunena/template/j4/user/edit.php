@@ -160,7 +160,7 @@ jQuery(function($) {
 																<div class="input-append date">
 																	<input type="text" name="birthdate"
 																	       data-date-format="mm/dd/yyyy"
-																	       value="<?php echo $this->user->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/Y') : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y');; ?>">
+																	       value="<?php echo $this->user->birthdate == '0000-00-00' ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
 																</div>
 															</div>
 														</td>

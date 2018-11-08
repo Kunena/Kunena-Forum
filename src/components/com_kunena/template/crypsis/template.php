@@ -84,13 +84,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($bootstrap)
 		{
-			$this->addStyleSheet(Uri::base() . '/media/jui/css/bootstrap.min.css');
-			$this->addStyleSheet(Uri::base() . '/media/jui/css/bootstrap-extended.css');
-			$this->addStyleSheet(Uri::base() . '/media/jui/css/bootstrap-responsive.min.css');
+			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap.min.css');
+			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap-extended.css');
+			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap-responsive.min.css');
 
 			if ($ktemplate->params->get('icomoon'))
 			{
-				$this->addStyleSheet(Uri::base() . '/media/jui/css/icomoon.css');
+				$this->addStyleSheet(Uri::base() . 'media/jui/css/icomoon.css');
 			}
 		}
 
@@ -98,8 +98,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.4.0/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.4.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.5.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.5.0/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings

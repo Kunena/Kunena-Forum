@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
   `created_by`   int(11)    NOT NULL default '0',
   `sdescription` text       NOT NULL,
   `description`  text       NOT NULL,
-  `created`      datetime   NOT NULL default '0000-00-00 00:00:00',
+  `created`      datetime   NOT NULL default '1000-01-01 00:00:00',
   `published`    tinyint(1) NOT NULL default '0',
-  `publish_up`   datetime   NOT NULL default '0000-00-00 00:00:00',
-  `publish_down` datetime   NOT NULL default '0000-00-00 00:00:00',
+  `publish_up`   datetime   NOT NULL default '1000-01-01 00:00:00',
+  `publish_down` datetime   NOT NULL default '1000-01-01 00:00:00',
   `ordering`     tinyint(4) NOT NULL default '0',
   `showdate`     tinyint(1) NOT NULL default '1',
   PRIMARY KEY (id)
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
   `published`        tinyint(4)   NOT NULL default '0',
   `channels`         text         NULL,
   `checked_out`      int(11)      NOT NULL default '0',
-  `checked_out_time` datetime     NOT NULL default '0000-00-00 00:00:00',
+  `checked_out_time` datetime     NOT NULL default '1000-01-01 00:00:00',
   `review`           tinyint(4)   NOT NULL default '0',
   `allow_anonymous`  tinyint(4)   NOT NULL default '0',
   `post_anonymous`   tinyint(4)   NOT NULL default '0',
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users` (
   `pollid`   int(11)   NULL,
   `userid`   int(11)   NULL,
   `votes`    int(11)   NULL,
-  `lasttime` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `lasttime` timestamp NOT NULL default '1000-01-01 00:00:00',
   `lastvote` int(11)   NULL,
   UNIQUE KEY `pollid` (pollid, userid)
 )

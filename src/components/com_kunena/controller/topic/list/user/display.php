@@ -302,5 +302,91 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
+
+		$page       = $this->pagination->pagesCurrent;
+		$total      = $this->pagination->pagesTotal;
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+
+		$config    = Factory::getConfig();
+		$robots    = $config->get('robots');
+		$app       = Factory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
+
+		$this->setMetaData('og:url', Uri::current(), 'property');
+
+		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+		{
+			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
+			$this->setMetaData('og:image', $image, 'property');
+		}
+
+		if ($robots == '')
+		{
+			$this->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$this->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$this->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$this->setMetaData('robots', 'nofollow, noindex');
+		}
+
+		if ($menu_item)
+		{
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
+
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->title = $this->headerText;
+				$this->setTitle($headerText);
+			}
+
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $headerText, 'property');
+			$this->setMetaData('og:title', $headerText, 'property');
+
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title;
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$this->setMetaData('robots', $robots);
+			}
+		}
 	}
 }

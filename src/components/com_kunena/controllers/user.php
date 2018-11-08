@@ -409,7 +409,7 @@ class KunenaControllerUser extends KunenaController
 		if (!empty($DelProfileInfo))
 		{
 			$user->personalText     = '';
-			$user->birthdate        = '0000-00-00';
+			$user->birthdate        = '1000-01-01';
 			$user->location         = '';
 			$user->gender           = 0;
 			$user->icq              = '';

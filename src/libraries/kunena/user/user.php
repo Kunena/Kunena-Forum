@@ -780,7 +780,7 @@ class KunenaUser extends JObject
 	 */
 	public function getLastVisitDate()
 	{
-		if (!$this->lastvisitDate || $this->lastvisitDate == "0000-00-00 00:00:00")
+		if (!$this->lastvisitDate || $this->lastvisitDate == "1000-01-01 00:00:00")
 		{
 			$date = KunenaDate::getInstance($this->registerDate);
 		}

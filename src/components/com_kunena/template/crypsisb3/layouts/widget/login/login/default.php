@@ -19,11 +19,6 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 </div>
 <div class="visible-xs-block">
-	<div class="nav navbar-nav pull-left">
-		<div><a class="btn btn-link" data-toggle="collapse"
-		        data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a></div>
-		<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-	</div>
 	<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
 		:
 		?>

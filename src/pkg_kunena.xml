@@ -3,9 +3,9 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.1.6-DEV2</version>
-	<versionname>Internal</versionname>
-	<creationDate>2018-10-14</creationDate>
+	<version>5.1.6</version>
+	<versionname>Ganymede</versionname>
+	<creationDate>2018-11-09</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>https://www.kunena.org</authorUrl>

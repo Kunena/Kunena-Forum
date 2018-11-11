@@ -28,22 +28,22 @@ class Com_KunenaInstallerScript
 	protected $versions = array(
 		'PHP'     => array(
 			'7.2' => '7.2.0',
-			'7.1' => '7.1.0',
+			'7.1' => '7.1.9',
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
 			'0'   => '7.1.9', // Preferred version
 		),
 		'MySQL'   => array(
-			'5.5' => '5.5',
+			'5.5' => '5.5.3',
 			'5.1' => '5.1',
-			'0'   => '5.5', // Preferred version
+			'0'   => '5.5.3', // Preferred version
 		),
 		'Joomla!' => array(
-			'3.8'  => '3.8.0',
+			'3.8'  => '3.8.13',
 			'3.9'  => '3.9.0',
 			'3.10' => '3.10.0',
 			'4.0'  => '4.0.0',
-			'0'    => '3.8.0', // Preferred version
+			'0'    => '3.9.0', // Preferred version
 		),
 	);
 

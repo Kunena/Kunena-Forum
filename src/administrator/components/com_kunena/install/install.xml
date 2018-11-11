@@ -48,7 +48,7 @@
         <field name="created"
                type="datetime"
                null="0"
-               default="1000-01-01 00:00:00"/>
+               default="0000-00-00 00:00:00"/>
         <field name="published"
                type="tinyint(1)"
                null="0"
@@ -56,11 +56,11 @@
         <field name="publish_up"
                type="datetime"
                null="0"
-               default="1000-01-01 00:00:00"/>
+               default="0000-00-00 00:00:00"/>
         <field name="publish_down"
                type="datetime"
                null="0"
-               default="1000-01-01 00:00:00"/>
+               default="0000-00-00 00:00:00"/>
         <field name="ordering"
                type="tinyint(4)"
                null="0"
@@ -201,7 +201,7 @@
         <field name="checked_out_time"
                type="datetime"
                null="0"
-               default="1000-01-01 00:00:00"/>
+               default="0000-00-00 00:00:00"/>
         <field name="review"
                type="tinyint(4)"
                null="0"
@@ -570,7 +570,7 @@
         <field name="lasttime"
                type="timestamp"
                null="0"
-               default="1000-01-01 00:00:00"/>
+               default="0000-00-00 00:00:00"/>
         <field name="lastvote"
                type="int(11)"
                null="1"/>

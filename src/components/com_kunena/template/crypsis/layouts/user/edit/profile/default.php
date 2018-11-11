@@ -98,7 +98,7 @@ Text::script('COM_KUNENA_BOOTSTRAP_DATEPICKER_CLEAR');
 			<div id="birthdate">
 				<div class="input-append date">
 					<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					       value="<?php echo $this->profile->birthdate == '0000-00-00' ? '' : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
 					       class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="add-on"><?php echo KunenaIcons::grid();?></span>
 				</div>

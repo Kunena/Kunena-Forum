@@ -290,7 +290,7 @@ class KunenaAdminControllerTools extends KunenaController
 				"DELETE a
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
-			WHERE banned='1000-01-01 00:00:00'"
+			WHERE banned='0000-00-00 00:00:00'"
 			);
 			$db->execute();
 
@@ -340,7 +340,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='0000-00-00 00:00:00'");
 			$db->execute();
 
 			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");

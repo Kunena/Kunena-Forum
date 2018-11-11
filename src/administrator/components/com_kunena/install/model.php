@@ -138,7 +138,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// TODO: move to migration
 		$this->_sbVersions = array(
-			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '1000-01-01',
+			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '0000-00-00',
 			      'table'     => 'sb_messages',),
 			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null),);
 

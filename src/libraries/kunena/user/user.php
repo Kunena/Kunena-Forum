@@ -879,6 +879,17 @@ class KunenaUser extends JObject
 		// Are we creating a new user
 		$isnew = !$this->_exists;
 
+		$moderator = KunenaUserHelper::getMyself()->isModerator();
+		$my        = Factory::getUser();
+
+		if (!$moderator)
+		{
+			if ($this->userid != $my->id)
+			{
+				return false;
+			}
+		}
+
 		// If we aren't allowed to create new users return
 		if (!$this->userid || ($isnew && $updateOnly))
 		{

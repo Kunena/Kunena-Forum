@@ -182,9 +182,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			if ($userid != $my->id)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
-
-				return false;
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 			}
 		}
 

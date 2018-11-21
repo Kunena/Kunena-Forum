@@ -1049,6 +1049,62 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Subscribe users to categories selected
+	 *
+	 * @since 5.1.8
+	 *
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena
+	 * @throws null
+	 */
+	public function subscribeuserstocategories()
+	{
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$userids = $this->app->input->get('cid', array(), 'post', 'array');
+		$userids = ArrayHelper::toInteger($userids);
+		$catids = $this->app->input->get('catid', array(), 'post', 'array');
+		$catids = ArrayHelper::toInteger($catids);
+
+		if (empty($userids))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (empty($catids))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
+		foreach ($userids as $userid)
+		{
+			foreach ($categories as $category)
+			{
+				$category->subscribe(true, $userid);
+			}
+		}
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+	}
+
+	/**
 	 * Clean social items
 	 *
 	 * @param $user

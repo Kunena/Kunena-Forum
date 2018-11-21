@@ -323,6 +323,7 @@ HTMLHelper::_('dropdown.init');
 					<?php endif; ?>
 					</tbody>
 				</table>
+				<?php echo $this->loadTemplateFile('subscribecatsusers'); ?>
 				<?php echo $this->loadTemplateFile('moderators'); ?>
 			</form>
 			<div class="clearfix"></div>

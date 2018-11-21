@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
+$this->addScript('assets/js/locales/bootstrap-datepicker.kunena.js');
 $this->addScript('assets/js/profile.js');
 ?>
 <h3>

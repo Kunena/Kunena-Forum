@@ -166,10 +166,24 @@ class KunenaControllerUser extends KunenaController
 	public function save()
 	{
 		$return = null;
+		$errors = 0;
+		$userid = $this->app->input->getInt('userid');
 
 		if (!Session::checkToken('post'))
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+		}
+
+		// Check permission
+		$moderator = KunenaUserHelper::getMyself()->isModerator();
+		$my        = Factory::getUser();
+
+		if (!$moderator)
+		{
+			if ($userid != $my->id)
+			{
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			}
 		}
 
 		// Make sure that the user exists.
@@ -177,9 +191,6 @@ class KunenaControllerUser extends KunenaController
 		{
 			throw new KunenaExceptionAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
-
-		$errors = 0;
-		$userid = $this->app->input->getInt('userid');
 
 		if (!$userid)
 		{

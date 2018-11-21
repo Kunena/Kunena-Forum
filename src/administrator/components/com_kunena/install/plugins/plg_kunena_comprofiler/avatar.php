@@ -79,7 +79,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
 		if ($cbUser === null)
 		{
-			if ($sizex <= 90)
+			if ($sizex <= 144)
 			{
 				return selectTemplate() . 'images/avatar/tnnophoto_n.png';
 			}
@@ -87,7 +87,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
 		}
 
-		if ($sizex <= 90)
+		if ($sizex <= 144)
 		{
 			return $cbUser->getField('avatar', null, 'csv');
 		}

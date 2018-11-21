@@ -99,6 +99,22 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolbarHelper::spacer();
+
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+		    HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
+		}
+		else
+		{
+		    HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
+		}
+
+		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES');
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#subscribecatsusersModal\" class=\"btn btn-small\">
+					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
+						$title</button>";
+						$bar->appendButton('Custom', $dhtml, 'batch');
+
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}

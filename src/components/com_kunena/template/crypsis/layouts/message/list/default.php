@@ -150,7 +150,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php endif; ?>
 		</tfoot>
 
-		<tbody>
+		<tbody class="message-list">
 		<?php
 		foreach ($this->messages as $i => $message)
 		{

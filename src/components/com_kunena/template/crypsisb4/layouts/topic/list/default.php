@@ -150,7 +150,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 			</td>
 		</tr>
 		</tfoot>
-		<tbody>
+		<tbody class="topic-list">
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
 				<td colspan="4" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>

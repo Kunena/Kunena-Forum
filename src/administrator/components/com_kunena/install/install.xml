@@ -956,6 +956,9 @@
         <field name="yim"
                type="varchar(50)"
                null="1"/>
+        <field name="vimeo"
+               type="varchar(50)"
+               null="1"/>
         <field name="whatsapp"
                type="varchar(50)"
                null="1"/>

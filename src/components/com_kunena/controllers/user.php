@@ -1023,6 +1023,7 @@ class KunenaControllerUser extends KunenaController
 		$user->weibo            = str_replace(' ', '', trim($input->$method->get('weibo', '', 'string')));
 		$user->wechat           = str_replace(' ', '', trim($input->$method->get('wechat', '', 'string')));
 		$user->apple            = str_replace(' ', '', trim($input->$method->get('apple', '', 'string')));
+		$user->vimeo            = str_replace(' ', '', trim($input->$method->get('vimeo', '', 'string')));
 		$user->vk               = str_replace(' ', '', trim($input->$method->get('vk', '', 'string')));
 		$user->whatsapp         = str_replace(' ', '', trim($input->$method->get('whatsapp', '', 'string')));
 		$user->telegram         = str_replace(' ', '', trim($input->$method->get('telegram', '', 'string')));

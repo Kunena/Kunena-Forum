@@ -88,6 +88,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				<?php endif; ?>
 			</tr>
 			</thead>
+			<tbody class="category-item">
 			<?php
 			/** @var KunenaForumTopic $previous */
 			$previous = null;
@@ -103,6 +104,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				$previous = $topic;
 			}
 			?>
+			</tbody>
 			<tfoot>
 			<?php if ($this->topics) : ?>
 				<tr>

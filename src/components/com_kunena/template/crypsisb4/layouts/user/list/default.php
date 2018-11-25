@@ -137,7 +137,7 @@ $this->addScript('assets/js/search.js');
 			<?php endif; ?>
 		</tr>
 		</thead>
-		<tbody>
+		<tbody class="user-list">
 		<?php
 		$i               = $this->pagination->limitstart;
 		$this->ktemplate = KunenaFactory::getTemplate();

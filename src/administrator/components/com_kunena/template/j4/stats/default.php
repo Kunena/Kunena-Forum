@@ -22,12 +22,7 @@ if (Factory::getLanguage()->isRTL())
 	$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }
 ?>
-<div id="j-sidebar-container" class="col-md-2">
-	<div id="sidebar">
-		<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/j4/common/menu.php'; ?></div>
-	</div>
-</div>
-<div id="j-main-container" class="col-md-10">
+<div id="j-main-container" class="col-md-12">
 
 	<div class="kadmin-functitle icon-stats"><?php echo Text::_('COM_KUNENA_STATS_GEN_STATS'); ?></div>
 	<div class="kadmin-statscover">

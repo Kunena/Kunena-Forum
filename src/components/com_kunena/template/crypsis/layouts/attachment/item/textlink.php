@@ -14,6 +14,11 @@ use Joomla\CMS\Language\Text;
 
 $attachment = $this->attachment;
 
+if (!$attachment->getPath())
+{
+	return;
+}
+
 $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="none"' : '';

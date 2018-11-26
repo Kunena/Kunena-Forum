@@ -358,14 +358,17 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-			// Version warning
+			// Version warning, disable J4 for now.
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
-
-			if (!empty($version_warning))
+			
+			if (version_compare(JVERSION, '4.0', '<'))
 			{
-				$this->app->enqueueMessage($version_warning, 'notice');
+				if (!empty($version_warning))
+				{
+					$this->app->enqueueMessage($version_warning, 'notice');
+				}
 			}
 		}
 		else

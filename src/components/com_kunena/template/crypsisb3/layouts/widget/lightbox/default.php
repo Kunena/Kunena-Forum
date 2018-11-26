@@ -10,7 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
-$template = KunenaTemplate::getInstance();
+if (KunenaConfig::getInstance()->lightbox != 1)
+{
+	return false;
+}
 
 $this->addStyleSheet('assets/css/fancybox.css');
 $this->addScript('assets/js/fancybox-min.js');

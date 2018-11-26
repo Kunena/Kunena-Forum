@@ -17,10 +17,10 @@ use Joomla\CMS\Language\Text;
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
-				<h3><?php echo Text::_('COM_KUNENA_BATCH_USERS_OPTIONS'); ?></h3>
+				<h3><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'); ?></h3>
 			</div>
 			<div class="modal-body span11">
-				<p><?php echo Text::_('COM_KUNENA_BATCH_USERS_TIP'); ?></p>
+				<p><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_TIP'); ?></p>
 				<div class="control-group">
 					<div class="controls">
 						<?php echo $this->modcatlist; ?>

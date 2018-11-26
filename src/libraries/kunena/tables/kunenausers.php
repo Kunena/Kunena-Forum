@@ -417,6 +417,13 @@ class TableKunenaUsers extends KunenaTable
 	/**
 	 * what's app
 	 * @var integer
+	 * @since Kunena 6.0.0
+	 */
+	public $vimeo = null;
+
+	/**
+	 * what's app
+	 * @var integer
 	 * @since Kunena
 	 */
 	public $whatsapp = null;

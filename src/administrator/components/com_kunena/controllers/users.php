@@ -1137,6 +1137,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$user->apple            = str_replace(' ', '', trim($app->input->getString('apple', '')));
 		$user->vk               = str_replace(' ', '', trim($app->input->getString('vk', '')));
 		$user->telegram         = str_replace(' ', '', trim($app->input->getString('telegram', '')));
+		$user->vimeo            = str_replace(' ', '', trim($app->input->getString('vimeo', '')));
 		$user->whatsapp         = str_replace(' ', '', trim($app->input->getString('whatsapp', '')));
 		$user->youtube          = str_replace(' ', '', trim($app->input->getString('youtube', '')));
 		$user->ok               = str_replace(' ', '', trim($app->input->getString('ok', '')));

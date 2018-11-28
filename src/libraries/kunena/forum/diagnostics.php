@@ -71,10 +71,10 @@ abstract class KunenaForumDiagnostics
 			$query = self::$function();
 
 			// @var KunenaDatabaseQuery $query
+			$db = Factory::getDBO();
 
-			$query->select("COUNT(*)");
-			$db = Factory::getDbo();
-			$db->setQuery($query);
+			$query->select('COUNT(*)');
+			$db->setQuery((string) $query);
 
 			return (int) $db->loadResult();
 		}

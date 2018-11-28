@@ -11,9 +11,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-
-jimport('joomla.filesystem.folder');
-jimport('joomla.filesystem.file');
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Class Com_KunenaInstallerScript
@@ -42,7 +41,7 @@ class Com_KunenaInstallerScript
 			'3.8'  => '3.8.13',
 			'3.9'  => '3.9.0',
 			'3.10' => '3.10.0',
-			'4.0'  => '4.0.0',
+			'4.0'  => '4.0.0-alpha6-dev',
 			'0'    => '3.9.0', // Preferred version
 		),
 	);
@@ -66,10 +65,10 @@ class Com_KunenaInstallerScript
 
 		if (is_dir($cacheDir))
 		{
-			JFolder::delete($cacheDir);
+			Folder::delete($cacheDir);
 		}
 
-		JFolder::create($cacheDir);
+		Folder::create($cacheDir);
 
 		return true;
 	}
@@ -166,15 +165,15 @@ class Com_KunenaInstallerScript
 		}
 
 		// Delete languages files related to blue eagle in en-gb and others languages
-		if (JFolder::exists($sitePath . '/language'))
+		if (Folder::exists($sitePath . '/language'))
 		{
-			$kunena_language_folders = JFolder::folders($sitePath . '/language');
+			$kunena_language_folders = Folder::folders($sitePath . '/language');
 
 			foreach ($kunena_language_folders as $folder)
 			{
-				if (JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+				if (File::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
 				{
-					JFile::delete($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+					File::delete($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
 				}
 			}
 		}
@@ -187,7 +186,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsis/assets/less');
+				Folder::create($sitePath . '/template/crypsis/assets/less');
 				$src  = $sitePath . '/template/crypsis/less/custom.less';
 				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
@@ -203,7 +202,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsis/assets/css');
+				Folder::create($sitePath . '/template/crypsis/assets/css');
 				$src  = $sitePath . '/template/crypsis/css/custom.css';
 				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
@@ -219,7 +218,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsis/config');
+				Folder::create($sitePath . '/template/crypsis/config');
 				$src  = $sitePath . '/template/crypsis/params.ini';
 				$dest = $sitePath . '/template/crypsis/config/params.ini';
 				KunenaFile::copy($src, $dest);
@@ -236,7 +235,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsisb3/assets/less');
+				Folder::create($sitePath . '/template/crypsisb3/assets/less');
 				$src  = $sitePath . '/template/crypsisb3/less/custom.less';
 				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
@@ -252,7 +251,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsisb3/assets/css');
+				Folder::create($sitePath . '/template/crypsisb3/assets/css');
 				$src  = $sitePath . '/template/crypsisb3/css/custom.css';
 				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
@@ -268,7 +267,7 @@ class Com_KunenaInstallerScript
 
 			if (!empty($file) && !$filenew)
 			{
-				JFolder::create($sitePath . '/template/crypsisb3/config');
+				Folder::create($sitePath . '/template/crypsisb3/config');
 				$src  = $sitePath . '/template/crypsisb3/params.ini';
 				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
 				KunenaFile::copy($src, $dest);
@@ -301,13 +300,13 @@ class Com_KunenaInstallerScript
 			$this->deleteFile($sitePath . '/template/crypsisb3/template.xml');
 		}
 
-		$language_folders = JFolder::folders(JPATH_ROOT . '/language');
+		$language_folders = Folder::folders(JPATH_ROOT . '/language');
 
 		foreach ($language_folders as $folder)
 		{
-			if (JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			if (File::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
 			{
-				JFile::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				File::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
 			}
 		}
 
@@ -316,19 +315,19 @@ class Com_KunenaInstallerScript
 		{
 			if (!is_file(JPATH_ROOT . '/media/kunena/archive/topic_icons/system/topicicons.xml'))
 			{
-				JFolder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
+				Folder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
 				$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
 				$foldernew = JPATH_ROOT . '/media/kunena/archive/topic_icons/system';
-				JFolder::copy($folder, $foldernew);
-				JFolder::delete($folder);
+				Folder::copy($folder, $foldernew);
+				Folder::delete($folder);
 			}
 
 			if (!is_file(JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml'))
 			{
-				JFolder::create(JPATH_ROOT . '/media/kunena/topic_icons/systemold');
+				Folder::create(JPATH_ROOT . '/media/kunena/topic_icons/systemold');
 				$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
 				$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
-				JFile::copy($file, $filenew);
+				File::copy($file, $filenew);
 			}
 
 			$db    = Factory::getDBO();
@@ -380,7 +379,10 @@ class Com_KunenaInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$this->convertTablesToUtf8mb4();
+		if (version_compare(JVERSION, '4.0', '<'))
+		{
+			$this->convertTablesToUtf8mb4();
+		}
 
 		return true;
 	}
@@ -596,9 +598,9 @@ class Com_KunenaInstallerScript
 	 */
 	public function deleteFile($path)
 	{
-		if (JFile::exists($path))
+		if (File::exists($path))
 		{
-			JFile::delete($path);
+			File::delete($path);
 		}
 	}
 
@@ -612,13 +614,13 @@ class Com_KunenaInstallerScript
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::files($path, '.', false, true, $ignore) as $file)
+			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
 			{
-				if (JFile::exists($file))
+				if (File::exists($file))
 				{
-					JFile::delete($file);
+					File::delete($file);
 				}
 			}
 		}
@@ -634,13 +636,13 @@ class Com_KunenaInstallerScript
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder)
+			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
 			{
-				if (JFolder::exists($folder))
+				if (Folder::exists($folder))
 				{
-					JFolder::delete($folder);
+					Folder::delete($folder);
 				}
 			}
 		}
@@ -666,7 +668,7 @@ class Com_KunenaInstallerScript
 	 */
 	public function deleteKfolder($path)
 	{
-		JFolder::delete($path);
+		Folder::delete($path);
 	}
 
 	/**

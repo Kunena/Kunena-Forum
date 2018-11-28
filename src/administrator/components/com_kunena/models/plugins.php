@@ -286,6 +286,8 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 			$query->where('a.extension_id = ' . (int) substr($search, 3));
 		}
 
+		$db->setQuery($query);
+
 		return $query;
 	}
 }

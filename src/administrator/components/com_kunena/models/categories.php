@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 jimport('joomla.application.component.model');
 jimport('joomla.html.pagination');
@@ -67,6 +68,8 @@ class KunenaAdminModelCategories extends KunenaModel
 		{
 			return false;
 		}
+
+		$category->params = new Registry($category->params);
 
 		$catList    = array();
 		$catList [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_TOPLEVEL'));

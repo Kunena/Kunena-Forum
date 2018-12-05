@@ -33,7 +33,11 @@ class KunenaLoginJoomla
 	public function __construct($params)
 	{
 		$this->params = $params;
-		require_once JPATH_SITE . '/components/com_users/helpers/route.php';
+
+		if (version_compare(JVERSION, '4.0', '<'))
+		{
+			require_once JPATH_SITE . '/components/com_users/helpers/route.php';
+		}
 	}
 
 	/**
@@ -90,7 +94,14 @@ class KunenaLoginJoomla
 	 */
 	public function getLoginURL()
 	{
-		$Itemid = UsersHelperRoute::getLoginRoute();
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			$Itemid = '';
+		}
+		else
+		{
+			$Itemid = UsersHelperRoute::getLoginRoute();
+		}
 
 		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
@@ -101,7 +112,14 @@ class KunenaLoginJoomla
 	 */
 	public function getLogoutURL()
 	{
-		$Itemid = UsersHelperRoute::getLoginRoute();
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			$Itemid = '';
+		}
+		else
+		{
+			$Itemid = UsersHelperRoute::getLoginRoute();
+		}
 
 		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
@@ -116,7 +134,14 @@ class KunenaLoginJoomla
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
-			$Itemid = UsersHelperRoute::getRegistrationRoute();
+			if (version_compare(JVERSION, '4.0', '>'))
+			{
+				$Itemid = '';
+			}
+			else
+			{
+				$Itemid = UsersHelperRoute::getRegistrationRoute();
+			}
 
 			return JRoute::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 		}
@@ -130,7 +155,14 @@ class KunenaLoginJoomla
 	 */
 	public function getResetURL()
 	{
-		$Itemid = UsersHelperRoute::getResetRoute();
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			$Itemid = '';
+		}
+		else
+		{
+			$Itemid = UsersHelperRoute::getResetRoute();
+		}
 
 		return JRoute::_('index.php?option=com_users&view=reset' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
@@ -141,7 +173,14 @@ class KunenaLoginJoomla
 	 */
 	public function getRemindURL()
 	{
-		$Itemid = UsersHelperRoute::getRemindRoute();
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+			$Itemid = '';
+		}
+		else
+		{
+			$Itemid = UsersHelperRoute::getRemindRoute();
+		}
 
 		return JRoute::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}

@@ -697,10 +697,12 @@ abstract class KunenaAttachmentHelper
 	{
 		$attachments = null;
 
-		$db = Factory::getDBO();
-		$db->getQuery(true)
-			->select('*')
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query
+			->select('COUNT(*)')
 			->from($db->quoteName('#__kunena_attachments'));
+		$db->setQuery($query);
 
 		try
 		{

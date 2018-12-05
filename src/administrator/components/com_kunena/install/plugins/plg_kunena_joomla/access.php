@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Kunena Access Control for Joomla 2.5+
@@ -78,7 +79,7 @@ class KunenaAccessJoomla
 			$accessname = Text::sprintf($category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_($groupname) : Text::_('COM_KUNENA_NOBODY'));
 
 			$list["joomla.group.{$category->pub_access}"] = array('type'  => 'joomla.group', 'id' => $category->pub_access, 'alias' => $accessname,
-																  'title' => $accessname,);
+			                                                      'title' => $accessname,);
 
 			$groupname = $this->getGroupName($category->accesstype, $category->admin_access);
 
@@ -86,14 +87,14 @@ class KunenaAccessJoomla
 			{
 				$accessname                                     = Text::sprintf($category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_($groupname));
 				$list["joomla.group.{$category->admin_access}"] = array('type'  => 'joomla.group', 'id' => $category->admin_access, 'alias' => $accessname,
-																		'title' => $accessname,);
+				                                                        'title' => $accessname,);
 			}
 		}
 		else
 		{
 			$groupname                                = $this->getGroupName($category->accesstype, $category->access);
 			$list["joomla.level.{$category->access}"] = array('type'  => 'joomla.level', 'id' => $category->access, 'alias' => $groupname,
-															  'title' => $groupname,);
+			                                                  'title' => $groupname,);
 		}
 
 		return $list;
@@ -400,6 +401,7 @@ class KunenaAccessJoomla
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
+		$category->params = new Registry($category->params);
 		$groups = (array) \Joomla\CMS\Access\Access::getGroupsByUser($userid, true);
 		$post   = array_intersect($groups, (array) $category->params->get('access_post', array(2, 6, 8)));
 		$reply  = array_intersect($groups, (array) $category->params->get('access_reply', array(2, 6, 8)));

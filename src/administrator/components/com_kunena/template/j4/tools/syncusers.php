@@ -18,12 +18,7 @@ use Joomla\CMS\Language\Text;
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
-		<div class="col-md-2 d-none d-md-block sidebar">
-			<div id="sidebar">
-				<nav class="sidebar-nav"><?php include KPATH_ADMIN . '/template/j4/common/menu.php'; ?></nav>
-			</div>
-		</div>
-		<div id="j-main-container" class="col-md-10" role="main">
+		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
 					  method="post" id="adminForm"

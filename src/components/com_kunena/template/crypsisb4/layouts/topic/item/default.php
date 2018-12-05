@@ -107,6 +107,8 @@ $quick           = $this->ktemplate->params->get('quick');
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 	}
 
+	echo '<div class="topic-item-messages">';
+
 	$count = 1;
 	foreach ($this->messages as $id => $message)
 	{
@@ -120,6 +122,8 @@ $quick           = $this->ktemplate->params->get('quick');
 				->set('position', 'kunena_msg_row_' . $count++);
 		}
 	}
+
+	echo '</div>';
 
 	if ($quick == 2 && KunenaConfig::getInstance()->quickreply)
 	{

@@ -328,6 +328,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
+		if (KunenaConfig::getInstance()->allow_change_subject || KunenaUserHelper::getMyself()->isModerator())
+		{
+			$topic->subject = $fields['subject'];
+		}
+
 		if ($topic->hold)
 		{
 			// If topic was unapproved or deleted, use the same state for the new message

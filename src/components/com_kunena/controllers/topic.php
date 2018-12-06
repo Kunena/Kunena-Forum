@@ -839,7 +839,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Check if we are editing first post and update topic if we are!
-		if ($topic->first_post_id == $message->id)
+		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allow_change_subject || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
 		}

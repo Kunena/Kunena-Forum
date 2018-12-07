@@ -37,7 +37,7 @@ use Joomla\CMS\Language\Text;
 								</label>
 							</span>
 							<input id="kmobile-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+							       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,7 @@ use Joomla\CMS\Language\Text;
 								</label>
 							</span>
 							<input id="kmobile-passwd" type="password" name="password" class="input-small" tabindex="2"
-							       size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+							       size="18" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 						</div>
 					</div>
 				</div>

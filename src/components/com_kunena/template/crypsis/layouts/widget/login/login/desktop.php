@@ -37,7 +37,7 @@ use Joomla\CMS\Language\Text;
 								</label>
 							</span>
 							<input id="klogin-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+							       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -51,7 +51,7 @@ use Joomla\CMS\Language\Text;
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
 							</span>
-							<input id="klogin-passwd" type="password" name="password" class="input-small" tabindex="2"
+							<input id="klogin-passwd" autocomplete="current-password" type="password" name="password" class="input-small" tabindex="2"
 							       size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 						</div>
 					</div>

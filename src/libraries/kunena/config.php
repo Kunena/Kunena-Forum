@@ -667,6 +667,12 @@ class KunenaConfig extends JObject
 	public $pollresultsuserslist = 1;
 
 	/**
+	 * @var    integer  Poll result user list; select, boolean
+	 * @since  1.6.0
+	 */
+	public $allow_user_edit_poll = 0;
+
+	/**
 	 * @var    integer  Max person text; input, number
 	 * @since  1.6.0
 	 */

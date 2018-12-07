@@ -265,3 +265,11 @@ dt {
 .invalid-border {
 	border-color: red !important;
 }
+
+.table-striped>tbody>tr.changed:nth-child(odd)>td,
+.table-striped>tbody>tr.changed:nth-child(odd)>th,
+.table-striped>tbody>tr.changed:nth-child(even)>td,
+.table-striped>tbody>tr.changed:nth-child(even)>th
+{
+	background-color: lightyellow;
+}

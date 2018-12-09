@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-mobile">
 			<?php echo KunenaIcons::user(); ?>
 			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>

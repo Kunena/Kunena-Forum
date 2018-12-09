@@ -3,7 +3,7 @@
  * Kunena Component
  * @package        Kunena.Framework
  *
- * @copyright      Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
@@ -362,7 +362,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
-			
+
 			if (version_compare(JVERSION, '4.0', '<'))
 			{
 				if (!empty($version_warning))

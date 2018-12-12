@@ -340,7 +340,7 @@ class BBCodeLexer
 								{
 									return $this->token = BBCODE_TEXT;
 								}
-								continue;
+								continue 2;
 							}
 						default:
 							$this->tag   = false;
@@ -354,12 +354,12 @@ class BBCodeLexer
 							if (preg_match($this->pat_comment, $this->text))
 							{
 								$this->state = BBCODE_LEXSTATE_TEXT;
-								continue;
+								continue 2;
 							}
 							if (preg_match($this->pat_comment2, $this->text))
 							{
 								$this->state = BBCODE_LEXSTATE_TEXT;
-								continue;
+								continue 2;
 							}
 							if (preg_match($this->pat_wiki, $this->text, $matches))
 							{

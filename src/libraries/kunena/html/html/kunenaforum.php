@@ -218,9 +218,9 @@ abstract class JHtmlKunenaForum
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
-		if (!empty($uri[0]))
+		if (!empty($uri))
 		{
-			if (is_string($uri))
+			if (is_string($uri) && $uri[0] == '/')
 			{
 				$list['href'] = $uri;
 			}

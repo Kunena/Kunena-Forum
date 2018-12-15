@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $topic  = KunenaForumTopicHelper::get($this->id);
@@ -30,44 +31,143 @@ $config = KunenaFactory::getConfig();
 		<div class="well-small">
 			<ul class="unstyled span6">
 				<li>
-					<?php if ($topic->getCategory()->getNewTopicCategory()->exists())
+					<?php
+					if ($topic->getCategory()->isAuthorised('topic.create'))
 					{ ?>
-						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
-					<?php }
-					else
-					{ ?>
+				<li>
+					<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
+				</li>
+				<?php }
+				else
+				{ ?>
+					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
-					<?php } ?>
-				</li>
-				<li>
-					<?php if ($topic->isAuthorised('reply'))
-					{ ?>
+					</li>
+				<?php }
+
+				if ($topic->isAuthorised('reply', KunenaUserHelper::getMyself()))
+				{ ?>
+					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
-					<?php }
-					else
-					{ ?>
+					</li>
+				<?php }
+				else
+				{ ?>
+					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
-					<?php } ?>
-				</li>
-				<li>
-					<?php if ($topic->isAuthorised('reply') && $config->file_upload !== 'nobody' || $topic->isAuthorised('reply') && $config->file_upload = 'everybody')
-					{ ?>
-						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-					<?php }
+					</li>
+				<?php }
+
+				if ($topic->isAuthorised('edit') || $topic->isAuthorised('reply'))
+				{
+					if ($config->image_upload == '')
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+						</li> <?php
+					}
+					elseif ($config->image_upload == 'everybody')
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+						</li> <?php
+					}
+					elseif ($config->image_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
+						$config->image_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
+						$config->image_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+						</li> <?php
+					}
 					else
-					{ ?>
-						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-					<?php } ?>
-				</li>
-				<li>
-					<?php if ($topic->isAuthorised('edit'))
-					{ ?>
-						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-					<?php }
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+						</li> <?php
+					}
+
+					if ($config->file_upload == '')
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						</li> <?php
+					}
+					elseif ($config->file_upload == 'everybody')
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						</li> <?php
+					}
+					elseif ($config->file_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
+							$config->file_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
+							$config->file_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						</li> <?php
+					}
 					else
-					{ ?>
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+						</li> <?php
+					}
+				}
+
+				if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->useredit)
+				{
+					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+						</li>
+						<?php
+					}
+					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					{
+						if (KunenaUserHelper::getMyself()->isAdmin())
+						{
+							?>
+							<li>
+								<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+							</li>
+							<?php
+						}
+						else
+						{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+						</li>
+						<?php
+						}
+					}
+					else
+					{
+						?>
+						<li>
+							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+						</li>
+						<?php
+					}
+				}
+				else
+				{ ?>
+					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-					<?php } ?>
+					</li>
+				<?php }
+				?>
 				</li>
 			</ul>
 		</div>

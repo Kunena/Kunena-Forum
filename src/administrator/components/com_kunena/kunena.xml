@@ -7,7 +7,7 @@
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>
     <authorUrl>https://www.kunena.org</authorUrl>
-    <copyright>(C) 2008 - 2018 Kunena Team. All rights reserved.</copyright>
+    <copyright>(C) 2008 - 2019 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <scriptfile>install/install.script.php</scriptfile>

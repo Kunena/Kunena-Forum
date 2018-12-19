@@ -5,7 +5,7 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -530,7 +530,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$value = $this->getUserStateFromRequest($this->context . ".filter.levels", 'levellimit', 10, 'int');
 		$this->setState('filter.levels', $value);
 
-		$catid     = $this->getUserStateFromRequest($this->context . '.filter.catid', 'catid', 0, 'int');
+		$catid     = $this->getUserStateFromRequest($this->context . '.filter.catid', 'catid', 1, 'int');
 		$layout    = $this->getWord('layout', 'edit');
 		$parent_id = 0;
 

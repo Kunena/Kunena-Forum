@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -98,8 +98,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.5.0/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.5.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.6.1/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.6.1/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings

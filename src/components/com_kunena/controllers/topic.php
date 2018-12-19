@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Controllers
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -839,7 +839,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Check if we are editing first post and update topic if we are!
-		if ($topic->first_post_id == $message->id)
+		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allow_change_subject || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
 		}

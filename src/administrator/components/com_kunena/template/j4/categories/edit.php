@@ -4,7 +4,7 @@
  * @package         Kunena.Administrator.Template
  * @subpackage      Categories
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -22,7 +22,6 @@ HTMLHelper::_('behavior.tabstate');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-/** @noinspection PhpDeprecationInspection */
 Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\j4\categories\edit.js');
 ?>
 
@@ -47,35 +46,35 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 							<div class="tabbable-panel">
 								<div class="tabbable-line">
 									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#tab-general" data-toggle="tab">
+										<li class="nav-item active">
+											<a class="nav-link" href="#tab-general" data-toggle="tab">
 												<?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?>
 											</a>
 										</li>
-										<li>
-											<a href="#tab-access" data-toggle="tab">
+										<li class="nav-item">
+											<a class="nav-link" href="#tab-access" data-toggle="tab">
 												<?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
 											</a>
 										</li>
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-											<li>
-												<a href="#tab-settings" data-toggle="tab">
+											<li class="nav-item">
+												<a class="nav-link" href="#tab-settings" data-toggle="tab">
 													<?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
 												</a>
 											</li>
 										<?php endif; ?>
-										<li>
-											<a href="#tab-display" data-toggle="tab">
+										<li class="nav-item">
+											<a class="nav-link" href="#tab-display" data-toggle="tab">
 												<?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
 											</a>
 										</li>
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-											<li>
-												<a href="#tab-mods" data-toggle="tab">
+											<li class="nav-item">
+												<a class="nav-link" href="#tab-mods" data-toggle="tab">
 													<?php echo Text::_('COM_KUNENA_MODHEADER'); ?>
 												</a>
 											</li>

@@ -4,7 +4,7 @@
  * @package       Kunena.Framework
  * @subpackage    HTML
  *
- * @copyright     Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
@@ -218,7 +218,21 @@ abstract class JHtmlKunenaForum
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
-		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
+		if (!empty($uri))
+		{
+			if (is_string($uri) && $uri[0] == '/')
+			{
+				$list['href'] = $uri;
+			}
+			else
+			{
+				$list['href'] = KunenaRoute::_($uri);
+			}
+		}
+		else
+		{
+			$list['href'] = KunenaRoute::_($uri);
+		}
 
 		if ($title)
 		{

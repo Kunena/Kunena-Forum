@@ -5,7 +5,7 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -327,7 +327,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		else
 		{
-			$this->mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
+			$this->mbstring = '[u]mbstring:[/u] ❌ [color=#FF0000]Not installed[/color]';
 		}
 
 		if (extension_loaded('gd'))
@@ -337,7 +337,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		else
 		{
-			$this->gd_support = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
+			$this->gd_support = '[u]GD:[/u] ❌ [color=#FF0000]Not installed[/color]';
 		}
 
 		$this->maxExecTime       = ini_get('max_execution_time');
@@ -608,7 +608,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -618,7 +618,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -628,7 +628,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (empty($collation))
 		{
-			$collation = 'The collation of your table fields are correct';
+			$collation = '✔ The collation of your table fields are correct';
 		}
 
 		return $collation;

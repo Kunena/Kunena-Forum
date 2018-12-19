@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright   (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -30,8 +30,8 @@ use Joomla\CMS\Language\Text;
 							<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 						</label>
 					</span>
-					<input id="klogin-username" type="text" name="username" class="input-small" tabindex="1"
-					       size="18" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+					<input id="klogin-username-full" type="text" name="username" class="input-small" tabindex="1"
+					       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 				</div>
 			</div>
 		</div>
@@ -45,8 +45,8 @@ use Joomla\CMS\Language\Text;
 							<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 						</label>
 					</span>
-					<input id="klogin-passwd" type="password" name="password" class="input-small" tabindex="2"
-					       size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+					<input id="klogin-passwd-full" type="password" name="password" class="input-small" tabindex="2"
+					       size="18" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 				</div>
 			</div>
 		</div>

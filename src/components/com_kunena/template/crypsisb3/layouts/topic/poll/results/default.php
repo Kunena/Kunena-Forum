@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -24,7 +24,7 @@ $this->addScript('assets/js/poll.js');
 		&times;
 	</button>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 <?php endif; ?>
 

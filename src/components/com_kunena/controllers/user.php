@@ -428,6 +428,7 @@ class KunenaControllerUser extends KunenaController
 			$user->microsoft        = '';
 			$user->skype            = '';
 			$user->google           = '';
+			$user->github           = '';
 			$user->twitter          = '';
 			$user->facebook         = '';
 			$user->myspace          = '';
@@ -445,6 +446,7 @@ class KunenaControllerUser extends KunenaController
 			$user->whatsapp         = '';
 			$user->youtube          = '';
 			$user->ok               = '';
+			$user->vimeo            = '';
 			$user->weibo            = '';
 			$user->wechat           = '';
 			$user->apple            = '';
@@ -1006,6 +1008,7 @@ class KunenaControllerUser extends KunenaController
 		$user->microsoft        = str_replace(' ', '', trim($input->$method->get('microsoft', '', 'string')));
 		$user->skype            = str_replace(' ', '', trim($input->$method->get('skype', '', 'string')));
 		$user->google           = str_replace(' ', '', trim($input->$method->get('google', '', 'string')));
+		$user->github           = str_replace(' ', '', trim($input->$method->get('github', '', 'string')));
 		$user->twitter          = str_replace(' ', '', trim($input->$method->get('twitter', '', 'string')));
 		$user->facebook         = str_replace(' ', '', trim($input->$method->get('facebook', '', 'string')));
 		$user->myspace          = str_replace(' ', '', trim($input->$method->get('myspace', '', 'string')));

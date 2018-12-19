@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS `#__kunena_aliases` (
+CREATE TABLE IF NOT EXISTS `#__kunena_aliases`
+(
   `alias` varchar(255) NOT NULL,
   `type`  varchar(10)  NOT NULL,
   `item`  varchar(32)  NOT NULL,
@@ -10,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_aliases` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
+CREATE TABLE IF NOT EXISTS `#__kunena_announcement`
+(
   `id`           int(3)     NOT NULL auto_increment,
   `title`        tinytext   NOT NULL,
   `created_by`   int(11)    NOT NULL default '0',
@@ -26,7 +28,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
+CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
+(
   `id`            int(11)      NOT NULL auto_increment,
   `mesid`         int(11)      NOT NULL default '0',
   `userid`        int(11)      NOT NULL default '0',
@@ -37,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
   `filetype`      varchar(20)  NOT NULL,
   `filename`      varchar(190) NOT NULL,
   `filename_real` varchar(190) NOT NULL default ''
-  COMMENT 'Filename for downloads',
+    COMMENT 'Filename for downloads',
   `caption`       varchar(255) NOT NULL default '',
   `inline`        tinyint(4)   NOT NULL default '0',
   PRIMARY KEY (id),
@@ -49,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
+CREATE TABLE IF NOT EXISTS `#__kunena_categories`
+(
   `id`               int(11)      NOT NULL auto_increment,
   `parent_id`        int(11)      NULL     default '0',
   `name`             tinytext     NULL,
@@ -93,14 +97,16 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_configuration` (
+CREATE TABLE IF NOT EXISTS `#__kunena_configuration`
+(
   `id`     int(11) NOT NULL default '0',
   `params` text    NULL,
   PRIMARY KEY (id)
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
+CREATE TABLE IF NOT EXISTS `#__kunena_topics`
+(
   `id`                    int(11)    NOT NULL auto_increment,
   `category_id`           int(11)    NOT NULL default '0',
   `subject`               tinytext   NULL,
@@ -140,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
+CREATE TABLE IF NOT EXISTS `#__kunena_messages`
+(
   `id`              int(11)      NOT NULL auto_increment,
   `parent`          int(11)      NULL     default '0',
   `thread`          int(11)      NULL     default '0',
@@ -172,14 +179,16 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
+CREATE TABLE IF NOT EXISTS `#__kunena_messages_text`
+(
   `mesid`   int(11)    NOT NULL default '0',
   `message` mediumtext NOT NULL,
   PRIMARY KEY (mesid)
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_polls` (
+CREATE TABLE IF NOT EXISTS `#__kunena_polls`
+(
   `id`             int(11)      NOT NULL auto_increment,
   `title`          varchar(150) NOT NULL,
   `threadid`       int(11)      NOT NULL,
@@ -189,7 +198,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_polls_options` (
+CREATE TABLE IF NOT EXISTS `#__kunena_polls_options`
+(
   `id`     int(11)      NOT NULL auto_increment,
   `pollid` int(11)      NULL,
   `text`   varchar(100) NULL,
@@ -199,7 +209,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_options` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_polls_users` (
+CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
+(
   `pollid`   int(11)   NULL,
   `userid`   int(11)   NULL,
   `votes`    int(11)   NULL,
@@ -209,7 +220,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_ranks` (
+CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
+(
   `rank_id`      mediumint(8) unsigned NOT NULL auto_increment,
   `rank_title`   varchar(255)          NOT NULL default '',
   `rank_min`     mediumint(8) unsigned NOT NULL default '0',
@@ -219,7 +231,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_ranks` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_rate` (
+CREATE TABLE IF NOT EXISTS `#__kunena_rate`
+(
   `id`       int(11)               NOT NULL auto_increment,
   `topic_id` int(11)               NULL,
   `userid`   int(11)               NULL,
@@ -229,7 +242,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_rate` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_sessions` (
+CREATE TABLE IF NOT EXISTS `#__kunena_sessions`
+(
   `userid`     int(11) NOT NULL default '0',
   `allowed`    text    NULL,
   `lasttime`   int(11) NOT NULL default '0',
@@ -240,7 +254,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_sessions` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_smileys` (
+CREATE TABLE IF NOT EXISTS `#__kunena_smileys`
+(
   `id`           int(4)      NOT NULL auto_increment,
   `code`         varchar(12) NOT NULL default '',
   `location`     varchar(50) NOT NULL default '',
@@ -250,7 +265,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_smileys` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_thankyou` (
+CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
+(
   `postid`       int(11)  NOT NULL,
   `userid`       int(11)  NOT NULL,
   `targetuserid` int(11)  NOT NULL,
@@ -261,7 +277,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_user_categories` (
+CREATE TABLE IF NOT EXISTS `#__kunena_user_categories`
+(
   `user_id`     int(11)    NOT NULL,
   `category_id` int(11)    NOT NULL,
   `role`        tinyint(4) NOT NULL default '0',
@@ -274,7 +291,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_user_read` (
+CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
+(
   `user_id`     int(11) NOT NULL,
   `topic_id`    int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -286,7 +304,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_read` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_user_topics` (
+CREATE TABLE IF NOT EXISTS `#__kunena_user_topics`
+(
   `user_id`      int(11)      NOT NULL default '0',
   `topic_id`     int(11)      NOT NULL default '0',
   `category_id`  int(11)      NOT NULL,
@@ -305,62 +324,64 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_users` (
-  `userid`       int(11)      NOT NULL default '0',
-  `status`       tinyint(1)   NOT NULL DEFAULT '0',
-  `status_text`  varchar(255) NOT NULL DEFAULT '',
-  `view`         varchar(8)   NOT NULL default '',
-  `signature`    text         NULL,
-  `moderator`    int(11)      NULL     default '0',
-  `banned`       datetime     NULL,
-  `ordering`     int(11)      NULL     default '0',
-  `posts`        int(11)      NULL     default '0',
-  `avatar`       varchar(255) NULL,
-  `timestamp`    int(11)      NULL     default '0',
-  `karma`        int(11)      NULL     default '0',
-  `karma_time`   int(11)      NULL     default '0',
-  `group_id`     int(4)       NULL     default '1',
-  `uhits`        int(11)      NULL     default '0',
-  `personalText` tinytext     NULL,
-  `gender`       tinyint(4)   NOT NULL default '0',
-  `birthdate`    date         NOT NULL default '0001-01-01',
-  `location`     varchar(50)  NULL,
-  `friendfeed`   varchar(50)  NULL,
-  `icq`          varchar(50)  NULL,
-  `bebo`         varchar(50)  NULL,
-  `digg`         varchar(50)  NULL,
-  `telegram`     varchar(50)  NULL,
-  `vk`           varchar(50)  NULL,
-  `microsoft`    varchar(50)  NULL,
-  `skype`        varchar(50)  NULL,
-  `twitter`      varchar(50)  NULL,
-  `facebook`     varchar(50)  NULL,
-  `google`       varchar(50)  NULL,
-  `myspace`      varchar(50)  NULL,
-  `linkedin`     varchar(50)  NULL,
-  `linkedin_company`     varchar(50)  NULL,
-  `delicious`    varchar(50)  NULL,
-  `instagram`    varchar(50)  NULL,
-  `qq`           varchar(50)  NULL,
-  `blogspot`     varchar(50)  NULL,
-  `flickr`       varchar(50)  NULL,
-  `apple`        varchar(50)  NULL,
-  `qzone`        varchar(50)  NULL,
-  `vimeo`        varchar(25)  NULL,
-  `whatsapp`     varchar(25)  NULL,
-  `weibo`        varchar(50)  NULL,
-  `wechat`       varchar(50)  NULL,
-  `yim`          varchar(50)  NULL,
-  `websitename`  varchar(50)  NULL,
-  `websiteurl`   varchar(50)  NULL,
-  `rank`         tinyint(4)   NOT NULL default '0',
-  `hideEmail`    tinyint(1)   NOT NULL default '1',
-  `showOnline`   tinyint(1)   NOT NULL default '1',
-  `canSubscribe` tinyint(1)   NOT NULL default '-1',
-  `userListtime` int(11)      NULL     default '-2',
-  `thankyou`     int(11)      NULL     default '0',
-  `ip`           varchar(128) NOT NULL,
-  `socialshare`  tinyint(1)   NOT NULL default '1',
+CREATE TABLE IF NOT EXISTS `#__kunena_users`
+(
+  `userid`           int(11)      NOT NULL default '0',
+  `status`           tinyint(1)   NOT NULL DEFAULT '0',
+  `status_text`      varchar(255) NOT NULL DEFAULT '',
+  `view`             varchar(8)   NOT NULL default '',
+  `signature`        text         NULL,
+  `moderator`        int(11)      NULL     default '0',
+  `banned`           datetime     NULL,
+  `ordering`         int(11)      NULL     default '0',
+  `posts`            int(11)      NULL     default '0',
+  `avatar`           varchar(255) NULL,
+  `timestamp`        int(11)      NULL     default '0',
+  `karma`            int(11)      NULL     default '0',
+  `karma_time`       int(11)      NULL     default '0',
+  `group_id`         int(4)       NULL     default '1',
+  `uhits`            int(11)      NULL     default '0',
+  `personalText`     tinytext     NULL,
+  `gender`           tinyint(4)   NOT NULL default '0',
+  `birthdate`        date         NOT NULL default '0001-01-01',
+  `location`         varchar(50)  NULL,
+  `friendfeed`       varchar(50)  NULL,
+  `icq`              varchar(50)  NULL,
+  `bebo`             varchar(50)  NULL,
+  `digg`             varchar(50)  NULL,
+  `telegram`         varchar(50)  NULL,
+  `vk`               varchar(50)  NULL,
+  `microsoft`        varchar(50)  NULL,
+  `skype`            varchar(50)  NULL,
+  `twitter`          varchar(50)  NULL,
+  `facebook`         varchar(50)  NULL,
+  `google`           varchar(50)  NULL,
+  `github`           varchar(50)  NULL,
+  `myspace`          varchar(50)  NULL,
+  `linkedin`         varchar(50)  NULL,
+  `linkedin_company` varchar(50)  NULL,
+  `delicious`        varchar(50)  NULL,
+  `instagram`        varchar(50)  NULL,
+  `qq`               varchar(50)  NULL,
+  `blogspot`         varchar(50)  NULL,
+  `flickr`           varchar(50)  NULL,
+  `apple`            varchar(50)  NULL,
+  `qzone`            varchar(50)  NULL,
+  `vimeo`            varchar(25)  NULL,
+  `whatsapp`         varchar(25)  NULL,
+  `weibo`            varchar(50)  NULL,
+  `wechat`           varchar(50)  NULL,
+  `yim`              varchar(50)  NULL,
+  `websitename`      varchar(50)  NULL,
+  `websiteurl`       varchar(50)  NULL,
+  `rank`             tinyint(4)   NOT NULL default '0',
+  `hideEmail`        tinyint(1)   NOT NULL default '1',
+  `showOnline`       tinyint(1)   NOT NULL default '1',
+  `canSubscribe`     tinyint(1)   NOT NULL default '-1',
+  `userListtime`     int(11)      NULL     default '-2',
+  `thankyou`         int(11)      NULL     default '0',
+  `ip`               varchar(128) NOT NULL,
+  `socialshare`      tinyint(1)   NOT NULL default '1',
   PRIMARY KEY (userid),
   KEY `group_id` (group_id),
   KEY `posts` (posts),
@@ -370,7 +391,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_users_banned` (
+CREATE TABLE IF NOT EXISTS `#__kunena_users_banned`
+(
   `id`             int(11)      NOT NULL auto_increment,
   `userid`         int(11)      NULL,
   `ip`             varchar(128) NULL,
@@ -392,7 +414,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned` (
 )
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_version` (
+CREATE TABLE IF NOT EXISTS `#__kunena_version`
+(
   `id`          int(11)     NOT NULL auto_increment,
   `version`     varchar(20) NOT NULL,
   `versiondate` date        NOT NULL,

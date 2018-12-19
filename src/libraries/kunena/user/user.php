@@ -57,6 +57,7 @@ jimport('joomla.utilities.date');
  * @property    string $twitter
  * @property    string $facebook
  * @property    string $google
+ * @property    string $github
  * @property    string $myspace
  * @property    string $linkedin
  * @property    string $linkedin_company
@@ -2136,6 +2137,7 @@ class KunenaUser extends JObject
 						'skype'              => array('url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
 						'yim'                => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
 						'google'             => array('url' => 'https://plus.google.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '0'),
+						'github'             => array('url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'),
 						'microsoft'          => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
 						'icq'                => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),
 						'blogspot'           => array('url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'),

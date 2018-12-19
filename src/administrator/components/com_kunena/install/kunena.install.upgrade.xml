@@ -849,6 +849,13 @@
                 AFTER `whatsapp`;
                  </query>
          </version>
+        <version version="6.0.0-ALPHA1"
+                 versiondate="2018-19-12"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `github` varchar(50) NULL
+                AFTER `google`;
+            </query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

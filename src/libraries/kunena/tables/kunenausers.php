@@ -254,6 +254,13 @@ class TableKunenaUsers extends KunenaTable
 	public $google = null;
 
 	/**
+	 * Github ID
+	 * @var string
+	 * @since Kunena
+	 */
+	public $github = null;
+
+	/**
 	 * MYSPACE ID
 	 * @var string
 	 * @since Kunena

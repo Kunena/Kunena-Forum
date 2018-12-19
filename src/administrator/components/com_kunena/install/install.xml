@@ -917,6 +917,9 @@
         <field name="google"
                type="varchar(50)"
                null="1"/>
+        <field name="github"
+               type="varchar(50)"
+               null="1"/>
         <field name="myspace"
                type="varchar(50)"
                null="1"/>

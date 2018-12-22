@@ -30,6 +30,11 @@ if (is_file(__DIR__ . '/install.php'))
 	}
 }
 
+// Display time it took to create the entire page in the footer.
+$kunena_profiler = KunenaProfiler::instance('Kunena');
+$kunena_profiler->start('Total Time');
+KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+
 $app = Factory::getApplication();
 
 // Safety check to prevent fatal error if 'System - Kunena Forum' plug-in has been disabled.
@@ -77,3 +82,21 @@ $controller->redirect();
 
 // Remove custom error handlers.
 KunenaError::cleanup();
+
+// Display profiler information.
+$kunena_time = $kunena_profiler->stop('Total Time');
+
+if (KUNENA_PROFILER)
+{
+	echo '<div class="kprofiler">';
+	echo "<h3>Kunena Profile Information</h3>";
+
+	foreach ($kunena_profiler->getAll() as $item)
+	{
+		echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
+			$item->getTotalTime(), $item->calls
+		);
+	}
+
+	echo '</div>';
+}

@@ -147,10 +147,10 @@ echo $contents;
 KunenaError::cleanup();
 
 // Display profiler information.
-$kunena_time = $kunena_profiler->stop('Total Time');
-
 if (KUNENA_PROFILER)
 {
+	$kunena_profiler->stop('Total Time');
+
 	echo '<div class="kprofiler">';
 	echo "<h3>Kunena Profile Information</h3>";
 

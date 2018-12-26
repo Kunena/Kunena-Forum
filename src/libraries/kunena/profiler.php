@@ -90,9 +90,13 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 	{
 		$item = array_pop($this->_heap);
 
-		if (!$item || $item->name != $name)
+		if (!$item)
 		{
 			trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
+		}
+		elseif($item->name != $name)
+		{
+			$item->start(microtime(true));
 		}
 
 		$delta = $item->stop(microtime(true));

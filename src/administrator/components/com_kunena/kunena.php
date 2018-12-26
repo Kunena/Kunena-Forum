@@ -84,7 +84,7 @@ $controller->redirect();
 KunenaError::cleanup();
 
 // Display profiler information.
-$kunena_time = $kunena_profiler->stop('Total Time');
+$kunena_profiler->stop('Total Time');
 
 if (KUNENA_PROFILER)
 {

@@ -52,7 +52,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler'))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('comprofiler'));

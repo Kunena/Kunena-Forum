@@ -12,6 +12,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class plgKunenaCommunity
  * @since Kunena
@@ -41,7 +43,7 @@ class plgKunenaCommunity extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));

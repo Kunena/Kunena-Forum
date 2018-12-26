@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * plgKunenaAltaUserPoints class to handle integration with AltaUserPoints
  *
@@ -40,7 +42,7 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'altauserpoints'))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('altauserpoints'));

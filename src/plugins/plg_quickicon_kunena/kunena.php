@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * Class plgQuickiconKunena
@@ -51,7 +52,7 @@ class plgQuickiconKunena extends JPlugin
 	 */
 	public function onGetIcons($context)
 	{
-		if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise('core.manage', 'com_kunena'))
+		if ($context != $this->params->get('context', 'mod_quickicon') || !Factory::getUser()->authorise('core.manage', 'com_kunena'))
 		{
 			return null;
 		}
@@ -60,10 +61,10 @@ class plgQuickiconKunena extends JPlugin
 
 		$updateInfo = null;
 
-		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer'))
+		if (KunenaForum::installed() && Factory::getUser()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
-			$db         = JFactory::getDbo();
+			$db         = Factory::getDbo();
 
 			$query = $db->getQuery(true)
 				->select('*')

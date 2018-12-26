@@ -13,12 +13,13 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
  * Class plgQuickiconKunena
  * @since       Kunena
  */
-class plgQuickiconKunena extends JPlugin
+class plgQuickiconKunena extends CMSPlugin
 {
 	/**
 	 * plgQuickiconKunena constructor.

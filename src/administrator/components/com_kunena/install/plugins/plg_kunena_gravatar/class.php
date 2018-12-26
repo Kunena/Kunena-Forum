@@ -111,7 +111,7 @@ class KunenaGravatar
 	 *
 	 * @param   integer $size - The avatar size to use, must be less than 512 and greater than 0.
 	 *
-	 * @return \emberlabs\GravatarLib\Gravatar|KunenaGravatar
+	 * @return KunenaGravatar
 	 *
 	 * @throws \InvalidArgumentException
 	 * @since Kunena
@@ -275,7 +275,7 @@ class KunenaGravatar
 	 *
 	 * @param   string $rating - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
 	 *
-	 * @return \emberlabs\GravatarLib\Gravatar|KunenaGravatar
+	 * @return KunenaGravatar
 	 *
 	 * @throws \InvalidArgumentException
 	 * @since Kunena
@@ -315,7 +315,7 @@ class KunenaGravatar
 	 * @param   mixed $image - The default image to use. Use boolean false for the gravatar default, a string containing
 	 *                       a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
-	 * @return \emberlabs\GravatarLib\Gravatar|KunenaGravatar
+	 * @return KunenaGravatar
 	 *
 	 * @throws \InvalidArgumentException
 	 * @since Kunena

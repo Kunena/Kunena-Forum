@@ -739,8 +739,6 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 		}
 
-
-
 		$message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');
 
 		if (!$success)
@@ -1089,7 +1087,9 @@ class KunenaAdminControllerUsers extends KunenaController
 
 			return;
 		}
+
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
 		foreach ($userids as $userid)
 		{
 			foreach ($categories as $category)

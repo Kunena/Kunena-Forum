@@ -102,11 +102,11 @@ class KunenaAdminViewUsers extends KunenaView
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-		    HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
+			HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
 		}
 		else
 		{
-		    HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
+			HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
 		}
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES');

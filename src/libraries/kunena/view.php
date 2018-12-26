@@ -12,12 +12,13 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * Kunena View Class
  * @since Kunena
  */
-class KunenaView extends \Joomla\CMS\MVC\View\HtmlView
+class KunenaView extends HtmlView
 {
 	/**
 	 * @var \Joomla\CMS\Document\Document|null

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
 
 /**
  * @package     Kunena

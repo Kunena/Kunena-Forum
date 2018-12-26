@@ -12,13 +12,14 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Kunena Forum Topic Rate Class
  *
  * @since 5.0
  */
-class KunenaForumTopicRate extends JObject
+class KunenaForumTopicRate extends CMSObject
 {
 	/**
 	 * @var integer

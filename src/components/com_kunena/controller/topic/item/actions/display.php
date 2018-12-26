@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class ComponentKunenaControllerTopicItemActionsDisplay
@@ -63,7 +64,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 		$userTopic          = $this->topic->getUserTopic();
 		$this->template     = KunenaFactory::getTemplate();
-		$this->topicButtons = new JObject;
+		$this->topicButtons = new CMSObject;
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$fullactions     = $this->ktemplate->params->get('fullactions');

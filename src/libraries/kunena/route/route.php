@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Component\ComponentHelper;
 
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
@@ -1131,7 +1132,7 @@ abstract class KunenaRoute
 	 */
 	public static function fixMissingItemID()
 	{
-		$component = JComponentHelper::getComponent('com_kunena');
+		$component = ComponentHelper::getComponent('com_kunena');
 		$items     = Factory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
 
 		if ($items)

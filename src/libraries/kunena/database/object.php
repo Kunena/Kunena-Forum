@@ -11,12 +11,13 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaDatabaseObject
  * @since Kunena
  */
-abstract class KunenaDatabaseObject extends JObject
+abstract class KunenaDatabaseObject extends CMSObject
 {
 	/**
 	 * @var null

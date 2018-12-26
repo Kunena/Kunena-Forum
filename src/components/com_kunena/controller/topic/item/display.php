@@ -14,7 +14,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Object\CMSObject;
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
  *
@@ -82,7 +83,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
-			$controller = JControllerLegacy::getInstance("kunena");
+			$controller = BaseController::getInstance("kunena");
 			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
@@ -210,19 +211,19 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 
-		$data                           = new JObject;
+		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
 		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
 		$data->author                   = array();
-		$tmp                            = new JObject;
+		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
 		$data->author                   = $tmp;
 		$data->interactionStatistic     = array();
-		$tmp2                           = new JObject;
+		$tmp2                           = new CMSObject;
 		$tmp2->{'@type'}                = "InteractionCounter";
 		$tmp2->{'interactionType'}      = "InteractionCounter";
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
@@ -231,7 +232,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($this->category->allow_ratings && KunenaConfig::getInstance()->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
 		{
 			$data->aggregateRating  = array();
-			$tmp3                   = new JObject;
+			$tmp3                   = new CMSObject;
 			$tmp3->{'@type'}        = "AggregateRating";
 			$tmp3->{'itemReviewed'} = $this->headerText;
 			$tmp3->{'ratingValue'}  = KunenaForumTopicRateHelper::getSelected($this->topic->id) > 0 ? KunenaForumTopicRateHelper::getSelected($this->topic->id) : 5;

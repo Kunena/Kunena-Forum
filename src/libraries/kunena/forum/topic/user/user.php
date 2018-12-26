@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaForumTopicUser
@@ -26,7 +27,7 @@ use Joomla\CMS\Factory;
  * @property string $params
  * @since Kunena
  */
-class KunenaForumTopicUser extends JObject
+class KunenaForumTopicUser extends CMSObject
 {
 	/**
 	 * @var boolean

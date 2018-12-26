@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -73,7 +74,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->messageButtons = new JObject;
+		$this->messageButtons = new CMSObject;
 		$this->message_closed = null;
 
 		$ktemplate     = KunenaFactory::getTemplate();

@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Object\CMSObject;
 
 jimport('joomla.utilities.date');
 
@@ -81,7 +82,7 @@ jimport('joomla.utilities.date');
  * @property    int    $socialshare
  * @since Kunena
  */
-class KunenaUser extends JObject
+class KunenaUser extends CMSObject
 {
 	/**
 	 * @var null

@@ -17,6 +17,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Table\Table;
 
 /**
  * Kunena User Controller
@@ -802,7 +804,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			// If we have parameters from com_users, use those instead.
 			// Some of these may be empty for legacy reasons.
-			$params = JComponentHelper::getParams('com_users');
+			$params = ComponentHelper::getParams('com_users');
 
 			// Do a password safety check.
 			if ($post_password != $post_password2)
@@ -967,7 +969,7 @@ class KunenaControllerUser extends KunenaController
 			// Update session if username has been changed
 			if ($username && $username != $this->user->username)
 			{
-				$table = JTable::getInstance('session', 'JTable');
+				$table = Table::getInstance('session', 'JTable');
 				$table->load($session->getId());
 
 				$table->username = $this->user->username;

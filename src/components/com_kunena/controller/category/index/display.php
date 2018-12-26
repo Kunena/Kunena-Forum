@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\MVC\Controller\BaseController;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -81,7 +82,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
 		{
-			$controller = JControllerLegacy::getInstance("kunena");
+			$controller = BaseController::getInstance("kunena");
 
 			if (KunenaConfig::getInstance()->index_id)
 			{

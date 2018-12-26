@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\PluginHelper;
 
 // Display offline message if Kunena hasn't been fully installed.
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
@@ -136,7 +137,7 @@ $params       = new stdClass;
 $params->text = '';
 $topics       = new stdClass;
 $topics->text = '';
-JPluginHelper::importPlugin('content');
+PluginHelper::importPlugin('content');
 Factory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
 Factory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;

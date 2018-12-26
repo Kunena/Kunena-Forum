@@ -12,6 +12,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Date\Date;
+use \Joomla\CMS\Table\Table;
 
 jimport('joomla.utilities.date');
 
@@ -23,7 +26,7 @@ jimport('joomla.utilities.date');
  *
  * @since Kunena
  */
-class KunenaUserBan extends JObject
+class KunenaUserBan extends CMSObject
 {
 	/**
 	 * @since Kunena
@@ -60,7 +63,7 @@ class KunenaUserBan extends JObject
 	protected static $_useridcache = array();
 
 	/**
-	 * @var \Joomla\CMS\Date\Date|null
+	 * @var Date|null
 	 * @since Kunena
 	 */
 	protected static $_now = null;
@@ -96,7 +99,7 @@ class KunenaUserBan extends JObject
 	{
 		if (self::$_now === null)
 		{
-			self::$_now = new \Joomla\CMS\Date\Date;
+			self::$_now = new Date;
 		}
 
 		if (self::$_my === null)
@@ -160,7 +163,7 @@ class KunenaUserBan extends JObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype['name'], $tabletype['prefix']);
+		return Table::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
 	/**
@@ -263,7 +266,7 @@ class KunenaUserBan extends JObject
 			return true;
 		}
 
-		$expiration = new \Joomla\CMS\Date\Date($this->expiration);
+		$expiration = new Date($this->expiration);
 
 		if ($expiration->toUnix() > self::$_now->toUnix())
 		{
@@ -354,7 +357,7 @@ class KunenaUserBan extends JObject
 	{
 		$c   = __CLASS__;
 		$db  = Factory::getDBO();
-		$now = new \Joomla\CMS\Date\Date;
+		$now = new Date;
 
 		$query = $db->getQuery(true);
 		$query->select('b.*')
@@ -628,7 +631,7 @@ class KunenaUserBan extends JObject
 		}
 		else
 		{
-			$date             = new \Joomla\CMS\Date\Date($expiration);
+			$date             = new Date($expiration);
 			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
 		}
 
@@ -710,7 +713,7 @@ class KunenaUserBan extends JObject
 			// If we have new ban, add creation date and user if they do not exist
 			if (!$this->created_time)
 			{
-				$now                = new \Joomla\CMS\Date\Date;
+				$now                = new Date;
 				$this->created_time = $now->toSql();
 			}
 

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Multilanguage;
 
 /**
  * Class KunenaMenuHelper
@@ -234,7 +235,7 @@ abstract class KunenaMenuHelper
 		$lang = Factory::getLanguage();
 
 		// Look for the home menu
-		if (JLanguageMultilang::isEnabled())
+		if (Multilanguage::isEnabled())
 		{
 			return $menu->getDefault($lang->getTag());
 		}

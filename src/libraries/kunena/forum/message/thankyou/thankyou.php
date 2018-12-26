@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaForumMessageThankyou
@@ -22,7 +23,7 @@ use Joomla\CMS\Language\Text;
  * @property string $time
  * @since Kunena
  */
-class KunenaForumMessageThankyou extends JObject
+class KunenaForumMessageThankyou extends CMSObject
 {
 	/**
 	 * @var integer

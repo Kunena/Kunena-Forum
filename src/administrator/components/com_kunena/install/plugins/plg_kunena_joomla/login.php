@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaLoginJoomla
@@ -103,7 +104,7 @@ class KunenaLoginJoomla
 			$Itemid = UsersHelperRoute::getLoginRoute();
 		}
 
-		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	/**
@@ -121,7 +122,7 @@ class KunenaLoginJoomla
 			$Itemid = UsersHelperRoute::getLoginRoute();
 		}
 
-		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	/**
@@ -143,7 +144,7 @@ class KunenaLoginJoomla
 				$Itemid = UsersHelperRoute::getRegistrationRoute();
 			}
 
-			return JRoute::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+			return Route::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 		}
 
 		return;
@@ -164,7 +165,7 @@ class KunenaLoginJoomla
 			$Itemid = UsersHelperRoute::getResetRoute();
 		}
 
-		return JRoute::_('index.php?option=com_users&view=reset' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=reset' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	/**
@@ -182,6 +183,6 @@ class KunenaLoginJoomla
 			$Itemid = UsersHelperRoute::getRemindRoute();
 		}
 
-		return JRoute::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 }

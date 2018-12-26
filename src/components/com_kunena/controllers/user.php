@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
@@ -548,7 +549,7 @@ class KunenaControllerUser extends KunenaController
 		if (!$error && $return && Uri::isInternal($return))
 		{
 			// Redirect the user.
-			$this->setRedirect(JRoute::_($return, false));
+			$this->setRedirect(Route::_($return, false));
 
 			return;
 		}
@@ -584,7 +585,7 @@ class KunenaControllerUser extends KunenaController
 		if ($return && Uri::isInternal($return))
 		{
 			// Redirect the user.
-			$this->setRedirect(JRoute::_($return, false));
+			$this->setRedirect(Route::_($return, false));
 
 			return;
 		}

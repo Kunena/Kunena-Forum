@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Router\Route;
 
 /**
  * Kunena Backend Logs Controller
@@ -52,7 +53,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 */
 	public function cleanentries()
 	{
-		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=logs&layout=clean", false));
+		$this->setRedirect(Route::_("index.php?option=com_kunena&view=logs&layout=clean", false));
 	}
 
 	/**

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaAvatarEasyprofile
@@ -44,7 +45,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	 */
 	public function getEditURL()
 	{
-		return JRoute::_('index.php?option=com_jsn&view=profile');
+		return Route::_('index.php?option=com_jsn&view=profile');
 	}
 
 	/**

@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class plgQuickiconKunena
@@ -202,7 +203,7 @@ class plgQuickiconKunena extends CMSPlugin
 		}
 
 		return array(array(
-			'link'   => JRoute::_($link),
+			'link'   => Route::_($link),
 			'image'  => $img,
 			'text'   => $text,
 			'icon'   => $icon,

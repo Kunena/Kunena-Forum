@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
@@ -140,6 +141,6 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		$userid     = $my->id != $user->userid ? '&userid=' . AltaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
 		$AUP_itemid = AltaUserPointsHelper::getItemidAupProfil();
 
-		return JRoute::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
+		return Route::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
 }

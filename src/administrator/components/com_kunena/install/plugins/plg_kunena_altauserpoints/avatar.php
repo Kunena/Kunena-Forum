@@ -12,6 +12,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+
 
 /**
  * Class KunenaAvatarAltaUserPoints
@@ -43,7 +45,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 */
 	public function getEditURL()
 	{
-		return JRoute::_('index.php?option=com_altauserpoints&view=account');
+		return Route::_('index.php?option=com_altauserpoints&view=account');
 	}
 
 	/**

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaProfileEasyprofile
@@ -61,7 +62,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 		}
 		else
 		{
-			return JRoute::_('index.php?option=com_jsn&view=list&Itemid=' . $this->params->get('menuitem', ''), false);
+			return Route::_('index.php?option=com_jsn&view=list&Itemid=' . $this->params->get('menuitem', ''), false);
 		}
 	}
 

@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -1129,7 +1130,7 @@ class KunenaViewTopic extends KunenaView
 			$uri->setFragment($anchor);
 		}
 
-		$this->app->redirect(JRoute::_($uri->toString()));
+		$this->app->redirect(Route::_($uri->toString()));
 	}
 
 	/**

@@ -13,6 +13,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 /**
  * @package     Kunena
@@ -73,7 +74,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 			return false;
 		}
 
-		return JRoute::_('index.php?option=com_easyblog&view=blogger&layout=listings&id=' . $userid, false);
+		return Route::_('index.php?option=com_easyblog&view=blogger&layout=listings&id=' . $userid, false);
 	}
 
 	/**

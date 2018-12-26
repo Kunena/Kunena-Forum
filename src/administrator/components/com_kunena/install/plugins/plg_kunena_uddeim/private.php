@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaPrivateUddeIM
@@ -77,7 +78,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
-		return '<a href="' . JRoute::_($this->uddeim->getLinkToBox('inbox', false)) . '" rel="follow">' . $text . '</a>';
+		return '<a href="' . Route::_($this->uddeim->getLinkToBox('inbox', false)) . '" rel="follow">' . $text . '</a>';
 	}
 
 	/**
@@ -86,7 +87,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	 */
 	public function getInboxURL()
 	{
-		return JRoute::_($this->uddeim->getLinkToBox('inbox', false));
+		return Route::_($this->uddeim->getLinkToBox('inbox', false));
 	}
 
 	/**
@@ -118,6 +119,6 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 			}
 		}
 
-		return JRoute::_('index.php?option=com_uddeim&task=new&recip=' . (int) $userid . $itemid);
+		return Route::_('index.php?option=com_uddeim&task=new&recip=' . (int) $userid . $itemid);
 	}
 }

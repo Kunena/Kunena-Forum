@@ -57,6 +57,10 @@ jQuery(document).ready(function ($) {
 			);
 		}
 
+		$('#modal-map-city').val('');
+		$('#modal-map-type').val('');
+		$('#modal-map-zoomlevel').val('');
+
 		return false;
 	});
 
@@ -83,8 +87,13 @@ jQuery(document).ready(function ($) {
 					closeWith: '[/img]'
 				}
 			);
-			return false;
 		}
+
+		$('#modal-picture-url').val('');
+		$("#kpicture-size-list-modal option:selected").val('');
+		$('#modal-picture-alt').val('');
+
+		return false;
 	});
 
 	//For link settings
@@ -107,9 +116,12 @@ jQuery(document).ready(function ($) {
 					closeWith: '[/url]'
 				}
 			);
-
-			return false;
 		}
+
+		$('#modal-link-url').val('');
+		$('#modal-link-text').val('');
+
+		return false;
 	});
 
 	// For video settings
@@ -144,7 +156,6 @@ jQuery(document).ready(function ($) {
 						closeWith: '[/video]'
 					}
 				);
-				return false;
 			}
 		}
 		else {
@@ -154,8 +165,16 @@ jQuery(document).ready(function ($) {
 					closeWith: '[/video]'
 				}
 			);
-			return false;
 		}
+
+		$('#kvideoprovider-modal').val('');
+		$('#modal-video-id').val('');
+		$('#modal-video-width').val('');
+		$('#modal-video-height').val('');
+		$('#modal-video-size').val('');
+		$("#kvideoprovider-list-modal option:selected").val('');
+
+		return false;
 	});
 
 	// For video provider URL
@@ -168,6 +187,9 @@ jQuery(document).ready(function ($) {
 				closeWith: '[/video]'
 			}
 		);
+
+		$('#modal-video-urlprovider-input').val('');
+
 		return false;
 	});
 

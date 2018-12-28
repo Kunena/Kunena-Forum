@@ -11,8 +11,10 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Component\ComponentHelper;
 
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
@@ -742,7 +744,7 @@ abstract class KunenaRoute
 			if (substr($uri, 0, 14) == 'administrator/')
 			{
 				// Use default routing in administration
-				return JRoute::_(substr($uri, 14), $xhtml, $ssl);
+				return Route::_(substr($uri, 14), $xhtml, $ssl);
 			}
 			else
 			{
@@ -782,7 +784,7 @@ abstract class KunenaRoute
 
 		$fragment = $uri->getFragment();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
-		self::$uris[$key] = JRoute::_('index.php?' . $uri->getQuery(), $xhtml, $ssl) . ($fragment ? '#' . $fragment : '');
+		self::$uris[$key] = Route::_('index.php?' . $uri->getQuery(), $xhtml, $ssl) . ($fragment ? '#' . $fragment : '');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
 		self::$urisSave = true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -1130,7 +1132,7 @@ abstract class KunenaRoute
 	 */
 	public static function fixMissingItemID()
 	{
-		$component = JComponentHelper::getComponent('com_kunena');
+		$component = ComponentHelper::getComponent('com_kunena');
 		$items     = Factory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
 
 		if ($items)

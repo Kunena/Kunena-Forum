@@ -11,12 +11,14 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Topic View
@@ -618,7 +620,7 @@ class KunenaViewTopic extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
-		$this->topicButtons = new JObject;
+		$this->topicButtons = new CMSObject;
 
 		// Reply topic
 		if ($this->topic->isAuthorised('reply'))
@@ -718,7 +720,7 @@ class KunenaViewTopic extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->messageButtons = new JObject;
+		$this->messageButtons = new CMSObject;
 		$this->message_closed = null;
 
 		// Reply / Quote
@@ -1129,7 +1131,7 @@ class KunenaViewTopic extends KunenaView
 			$uri->setFragment($anchor);
 		}
 
-		$this->app->redirect(JRoute::_($uri->toString()));
+		$this->app->redirect(Route::_($uri->toString()));
 	}
 
 	/**

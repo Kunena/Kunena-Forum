@@ -15,6 +15,7 @@ use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
@@ -1261,13 +1262,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (preg_match('#^(index.php?)#uim', $url))
 		{
-			$url = JRoute::_($url, false);
+			$url = Route::_($url, false);
 		}
 
 		if (preg_match('#^(/index.php?)#uim', $url))
 		{
 			$str = substr($url, 1);
-			$url = JRoute::_($str, false);
+			$url = Route::_($str, false);
 		}
 
 		if (!preg_match('#^(/|https?:|ftp:)#uim', $url))
@@ -1898,7 +1899,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 			$article->slug    = !empty($article->alias) ? ($article->id . ':' . $article->alias) : $article->id;
 			$article->catslug = !empty($article->category_alias) ? ($article->catid . ':' . $article->category_alias) : $article->catid;
-			$url              = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
+			$url              = Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 
 			if (!$default)
 			{

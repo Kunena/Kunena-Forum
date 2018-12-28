@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * KunenaLayoutTopicEditEditor
@@ -47,14 +48,14 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 			$files     = KunenaFolder::files($path, ".php");
 			$options   = array();
-			$options[] = JHtml::_('select.option', '', Text::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
 			{
-				$options[] = JHtml::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
+				$options[] = HTMLHelper::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = JHtml::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
+			$list = HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 
 			return $list;
 		}

@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
@@ -354,7 +355,7 @@ class KunenaPagination
 		{
 			$this->uri->delVar($limitstartKey);
 			$data->all->base = '0';
-			$data->all->link = JRoute::_((string) $this->uri);
+			$data->all->link = Route::_((string) $this->uri);
 		}
 
 		// Set the start and previous data objects.
@@ -367,11 +368,11 @@ class KunenaPagination
 
 			$this->uri->setVar($limitstartKey, '0');
 			$data->start->base = '0';
-			$data->start->link = JRoute::_((string) $this->uri);
+			$data->start->link = Route::_((string) $this->uri);
 
 			$this->uri->setVar($limitstartKey, $page);
 			$data->previous->base = $page;
-			$data->previous->link = JRoute::_((string) $this->uri);
+			$data->previous->link = Route::_((string) $this->uri);
 		}
 
 		// Set the next and end data objects.
@@ -385,11 +386,11 @@ class KunenaPagination
 
 			$this->uri->setVar($limitstartKey, $next);
 			$data->next->base = $next;
-			$data->next->link = JRoute::_((string) $this->uri);
+			$data->next->link = Route::_((string) $this->uri);
 
 			$this->uri->setVar($limitstartKey, $end);
 			$data->end->base = $end;
-			$data->end->link = JRoute::_((string) $this->uri);
+			$data->end->link = Route::_((string) $this->uri);
 		}
 
 		$data->pages = array();
@@ -409,7 +410,7 @@ class KunenaPagination
 			{
 				$this->uri->setVar($limitstartKey, $offset);
 				$data->pages[$i]->base = $offset;
-				$data->pages[$i]->link = JRoute::_((string) $this->uri);
+				$data->pages[$i]->link = Route::_((string) $this->uri);
 			}
 			elseif ($i == $this->pagesCurrent)
 			{

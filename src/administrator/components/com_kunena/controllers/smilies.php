@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 
@@ -62,7 +63,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=smiley&layout=add', false));
+		$this->setRedirect(Route::_('index.php?option=com_kunena&view=smiley&layout=add', false));
 	}
 
 	/**
@@ -98,7 +99,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
+		$this->setRedirect(Route::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
 	}
 
 	/**

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 
 ?>
@@ -55,7 +56,7 @@ use Joomla\CMS\Session\Session;
 			type: 'POST',
 			dataType: 'json',
 			timeout: '180000', // 3 minutes
-			url: '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
+			url: '<?php echo Route::_('index.php?option=com_kunena&view=install&task=run', false)?>',
 			data: '<?php echo Session::getFormToken(); ?>=1',
 			cache: false,
 			error: function (xhr, ajaxOptions, thrownError) {
@@ -86,7 +87,7 @@ use Joomla\CMS\Session\Session;
 						kunenaProgress.parent().removeClass('active');
 						kunenaProgress.addClass('bar-success');
 						jQuery('#kunena-component').addClass('btn-success');
-						window.location.href = '<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
+						window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
 					}
 					jQuery('.kunena-close').removeAttr('disabled');
 				} else {
@@ -107,7 +108,7 @@ use Joomla\CMS\Session\Session;
 			e.preventDefault();
 		});
 		jQuery('#kunena-component').click(function (e) {
-			window.location.href = '<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
+			window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
 			e.preventDefault();
 		});
 		jQuery('#kunena-installer').click(function (e) {

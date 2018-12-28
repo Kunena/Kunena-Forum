@@ -10,12 +10,13 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaSession
  * @since Kunena
  */
-class KunenaSession extends JObject
+class KunenaSession extends CMSObject
 {
 	/**
 	 * @var mixed

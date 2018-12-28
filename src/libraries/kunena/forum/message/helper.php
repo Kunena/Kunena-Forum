@@ -261,7 +261,7 @@ abstract class KunenaForumMessageHelper
 			}
 		}
 
-		$db    = JFactory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from('#__kunena_messages AS m')

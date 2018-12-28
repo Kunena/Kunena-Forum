@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaForumTopicUserRead
@@ -22,7 +23,7 @@ use Joomla\CMS\Factory;
  * @property int $time
  * @since Kunena
  */
-class KunenaForumTopicUserRead extends JObject
+class KunenaForumTopicUserRead extends CMSObject
 {
 	/**
 	 * @var boolean

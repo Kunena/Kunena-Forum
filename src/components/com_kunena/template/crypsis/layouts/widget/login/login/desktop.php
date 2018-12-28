@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
@@ -22,7 +24,7 @@ use Joomla\CMS\Language\Text;
 		</a>
 
 		<div class="dropdown-menu" id="userdropdown">
-			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+			<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user"/>
 				<input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>

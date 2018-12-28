@@ -15,12 +15,13 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaConfig
  * @since Kunena
  */
-class KunenaConfig extends JObject
+class KunenaConfig extends CMSObject
 {
 	/**
 	 * @var    integer  ID; input, hidden

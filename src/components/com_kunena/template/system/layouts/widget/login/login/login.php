@@ -12,11 +12,12 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 ?>
 <div class="kloginform center">
 	<h1><?php echo Text::_('COM_KUNENA_LOGIN_FORUM'); ?></h1>
-	<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+	<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 		<input type="hidden" name="view" value="user"/>
 		<input type="hidden" name="task" value="login"/>
 		<?php echo HTMLHelper::_('form.token'); ?>

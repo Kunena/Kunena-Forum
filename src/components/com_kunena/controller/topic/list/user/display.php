@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\MVC\Controller\BaseController;
 
 /**
  * Class ComponentKunenaControllerTopicListUserDisplay
@@ -134,7 +135,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		if (!$Itemid && $format != 'feed')
 		{
-			$controller = JControllerLegacy::getInstance("kunena");
+			$controller = BaseController::getInstance("kunena");
 
 			if (KunenaConfig::getInstance()->profile_id)
 			{

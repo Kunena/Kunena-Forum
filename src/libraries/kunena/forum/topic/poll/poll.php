@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaForumTopicPoll
@@ -22,7 +23,7 @@ use Joomla\CMS\Language\Text;
  * @property string $polltimetolive
  * @since Kunena
  */
-class KunenaForumTopicPoll extends JObject
+class KunenaForumTopicPoll extends CMSObject
 {
 	/**
 	 * @var boolean

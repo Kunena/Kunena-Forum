@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class plgKunenaEasyprofile
  * @since Kunena
@@ -40,7 +42,7 @@ class plgKunenaEasyprofile extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyprofile'))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('easyprofile'));

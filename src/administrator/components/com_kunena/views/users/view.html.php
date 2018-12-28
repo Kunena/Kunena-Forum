@@ -51,7 +51,7 @@ class KunenaAdminViewUsers extends KunenaView
 
 		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
 		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.6.1/js/all.js', array(), array('defer' => true));
+			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.6.3/js/all.js', array(), array('defer' => true));
 		}
 
 		$this->display();
@@ -102,11 +102,11 @@ class KunenaAdminViewUsers extends KunenaView
 
 		if (version_compare(JVERSION, '4.0', '>'))
 		{
-		    HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
+			HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
 		}
 		else
 		{
-		    HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
+			HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
 		}
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES');

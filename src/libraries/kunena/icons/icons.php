@@ -975,20 +975,20 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="far fa-image fa-3x'.$big.'" aria-hidden="true"></i>';
+			return '<i class="far fa-image fa-3x' . $big . '" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-picture'.$big.'" aria-hidden="true"></i>';
+			return '<i class="large-kicon icon icon-picture' . $big . '" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-picture'.$big.'" aria-hidden="true"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-picture' . $big . '" aria-hidden="true"></span>';
 		}
 
-		return '<i class="large-kicon icon icon-picture'.$big.'" aria-hidden="true"></i>';
+		return '<i class="large-kicon icon icon-picture' . $big . '" aria-hidden="true"></i>';
 	}
 
 	/**
@@ -1011,20 +1011,20 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-file fa-3x'.$big.'" aria-hidden="true"></i>';
+			return '<i class="fa fa-file fa-3x' . $big . '" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')
 		{
-			return '<i class="large-kicon icon icon-file'.$big.'" aria-hidden="true"></i>';
+			return '<i class="large-kicon icon icon-file' . $big . '" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B3')
 		{
-			return '<span class="large-kicon glyphicon glyphicon-file'.$big.'" aria-hidden="true"></span>';
+			return '<span class="large-kicon glyphicon glyphicon-file' . $big . '" aria-hidden="true"></span>';
 		}
 
-		return '<i class="large-kicon icon icon-file'.$big.'" aria-hidden="true"></i>';
+		return '<i class="large-kicon icon icon-file' . $big . '" aria-hidden="true"></i>';
 	}
 
 	/**

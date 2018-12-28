@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Plugin\PluginHelper;
 use Leafo\ScssPhp\Compiler;
+use Joomla\CMS\Object\CMSObject;
 
 jimport('joomla.html.parameter');
 
@@ -25,7 +26,7 @@ jimport('joomla.html.parameter');
  * Provides access to the #__kunena_users table
  * @since Kunena
  */
-class KunenaTemplate extends JObject
+class KunenaTemplate extends CMSObject
 {
 	/**
 	 * @var array

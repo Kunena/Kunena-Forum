@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 
@@ -77,7 +78,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$this->app->setUserState('kunena.user.userid', $userid);
 
-		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=edit&userid={$userid}", false));
+		$this->setRedirect(Route::_("index.php?option=com_kunena&view=user&layout=edit&userid={$userid}", false));
 	}
 
 	/**
@@ -361,7 +362,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$this->app->setUserState('kunena.usermove.userids', $cid);
 
-		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=move", false));
+		$this->setRedirect(Route::_("index.php?option=com_kunena&view=user&layout=move", false));
 	}
 
 	/**
@@ -738,8 +739,6 @@ class KunenaAdminControllerUsers extends KunenaController
 			}
 		}
 
-
-
 		$message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');
 
 		if (!$success)
@@ -1090,7 +1089,9 @@ class KunenaAdminControllerUsers extends KunenaController
 
 			return;
 		}
+
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
 		foreach ($userids as $userid)
 		{
 			foreach ($categories as $category)

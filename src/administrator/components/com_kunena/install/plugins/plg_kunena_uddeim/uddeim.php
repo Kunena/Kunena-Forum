@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+
 /**
  * Class PlgKunenaUddeIM
  * @since Kunena
@@ -39,7 +41,7 @@ class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'uddeim'))
 			{
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('uddeim'));

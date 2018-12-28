@@ -11,6 +11,8 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\CMS\Component\ComponentHelper;
+
 /**
  * @package     Kunena
  *
@@ -59,7 +61,7 @@ class KunenaLoginEasySocial
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = JComponentHelper::getParams('com_users');
+		$usersConfig = ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{

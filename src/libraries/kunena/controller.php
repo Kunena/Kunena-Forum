@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Router\Route;
 
 jimport('joomla.application.component.helper');
 
@@ -252,7 +253,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 				// Only allow internal urls to be used.
 				if ($return && Uri::isInternal($return))
 				{
-					$redirect = JRoute::_($return, false);
+					$redirect = Route::_($return, false);
 				}
 				// Otherwise return back to the referrer.
 				else

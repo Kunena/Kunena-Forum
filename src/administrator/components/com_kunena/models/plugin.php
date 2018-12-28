@@ -11,7 +11,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Form\Form;
 
 jimport('joomla.application.component.modeladmin');
 
@@ -336,7 +338,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 		if (empty($folder) || empty($element))
 		{
 			$app = Factory::getApplication();
-			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
+			$app->redirect(Route::_('index.php?option=com_kunena&view=plugins', false));
 		}
 
 		$formFile = KunenaPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');

@@ -186,10 +186,24 @@ jQuery(function ($) {
 			}
 
 			insertInMessage(file_id, filename, $this);
+
+			$.ajax({
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
+				type: 'POST'
+			})
+				.done(function (data) {
+					data.inline = 1;
+
+					$('#removeInline').show();
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		});
 
 	var removeInline = $('<button>')
 		.addClass("btn btn-primary")
+		.attr("id","removeInline")
 		.html(Joomla.getOptions('com_kunena.icons.trash') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_REMOVE_INLINE'))
 		.on('click', function (e) {
 			// Make sure the button click doesn't submit the form:
@@ -214,7 +228,8 @@ jQuery(function ($) {
 				type: 'POST'
 			})
 			.done(function (data) {
-				$this.parent().remove();
+				data.inline = 0;
+				$this.hide();
 			})
 			.fail(function () {
 				//TODO: handle the error of ajax request
@@ -414,7 +429,11 @@ jQuery(function ($) {
 			}
 
 			data.context.append(removeButton.clone(true).data(data));
-			data.context.append(removeInline.clone(true).data(data));
+
+			if (data.inline)
+			{
+				data.context.append(removeInline.clone(true).data(data));
+			}
 		}
 		else if (data.result.message) {
 			$('#form_submit_button').prop('disabled', false);
@@ -471,6 +490,11 @@ jQuery(function ($) {
 
 						object.append(insertButton.clone(true).data(file));
 						object.append(removeButton.clone(true).data(data));
+
+						if (file.inline === true)
+						{
+							object.append(removeInline.clone(true).data(data));
+						}
 
 						object.appendTo("#files");
 					});

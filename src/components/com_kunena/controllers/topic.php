@@ -75,6 +75,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->type    = $attach->filetype;
 			$object->path    = $attach->getUrl();
 			$object->image   = $attach->isImage();
+			$object->inline  = $attach->isInline();
 			$list['files'][] = $object;
 		}
 
@@ -115,11 +116,27 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attach_id = $this->input->getInt('file_id', 0);
+		$instance  = KunenaAttachmentHelper::get($attach_id);
+		$response  = array();
 
-		$success           = array();
-		$instance          = KunenaAttachmentHelper::get($attach_id);
-		$success['result'] = $instance->setInline(0);
-		unset($instance);
+		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		{
+			if ($instance->inline)
+			{
+				$response['result'] = $instance->setInline(0);
+				$response['value']  = 0;
+			}
+			else
+			{
+				$response['result'] = $instance->setInline(1);
+				$response['value']  = 1;
+			}
+			unset($instance);
+		}
+		else
+		{
+			throw new RuntimeException(Text::_('Forbidden'), 403);
+		}
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -132,7 +149,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 		}
 
-		echo json_encode($success);
+		echo json_encode($response);
 
 		jexit();
 	}
@@ -157,11 +174,20 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$attach_id         = $this->input->getInt('file_id', 0);
-		$success           = array();
-		$instance          = KunenaAttachmentHelper::get($attach_id);
-		$success['result'] = $instance->delete();
-		unset($instance);
+		$attach_id = $this->input->getInt('file_id', 0);
+		$success   = array();
+		$instance  = KunenaAttachmentHelper::get($attach_id);
+
+		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		{
+			$success['result'] = $instance->delete();
+			unset($instance);
+		}
+		else
+		{
+			throw new RuntimeException(Text::_('Forbidden'), 403);
+		}
+
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -798,8 +824,8 @@ class KunenaControllerTopic extends KunenaController
 		$attachments = Factory::getApplication()->input->get('attachments', array(), 'post', 'array');
 		$attachment  = Factory::getApplication()->input->get('attachment', array(), 'post', 'array');
 
-		$addList = array_keys(array_intersect_key($attachments, $attachment));
-		$addList = ArrayHelper::toInteger($addList);
+		$addList    = array_keys(array_intersect_key($attachments, $attachment));
+		$addList    = ArrayHelper::toInteger($addList);
 		$removeList = array_keys(array_diff_key($attachments, $attachment));
 		$removeList = ArrayHelper::toInteger($removeList);
 
@@ -1136,7 +1162,7 @@ class KunenaControllerTopic extends KunenaController
 			// Ignore internal links
 			foreach ($matches[1] as $link)
 			{
-				$uri = Uri::getInstance($link);
+				$uri  = Uri::getInstance($link);
 				$host = $uri->getHost();
 
 				// The cms will catch most of these well

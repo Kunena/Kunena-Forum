@@ -1180,13 +1180,20 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$success = array();
+		$kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-		$this->deleteOldAvatars();
+		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		{
+			$this->deleteOldAvatars();
 
-		// Save in the table KunenaUser
-		$kuser         = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
-		$kuser->avatar = '';
-		$success       = $kuser->save();
+			// Save in the table KunenaUser
+			$kuser->avatar = '';
+			$success       = $kuser->save();
+		}
+		else
+		{
+			throw new RuntimeException(Text::_('Forbidden'), 403);
+		}
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -1225,7 +1232,7 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$userid = $this->input->getInt('userid', 0);
+		$userid = $this->input->getInt('userid');
 		$kuser  = KunenaFactory::getUser($userid);
 
 		$avatar       = new stdClass;

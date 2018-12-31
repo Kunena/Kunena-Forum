@@ -276,6 +276,25 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Check if attachment is inline.
+	 *
+	 * @return  boolean  True if attachment is inline.
+	 *
+	 * @since  K5.1.9
+	 */
+	public function isInline()
+	{
+		if ($this->inline)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * Get extension of file for output.
 	 *
 	 * @param   bool $escape escape

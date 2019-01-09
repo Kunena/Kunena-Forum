@@ -199,6 +199,7 @@
 	<target name="minify" depends="build">
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
 			<exclude name="**/*-min.js" />
+			<exclude name="**/markitup.editor.js" />
 			<exclude name="**/*.min.js" />
 			<exclude name="**/*-min.css" />
 			<exclude name="**/*.min.css" />

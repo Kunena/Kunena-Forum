@@ -356,6 +356,17 @@ class Com_KunenaInstallerScript
 			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
 		}
 
+		// Copy files to new dir for Crypsis
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js'))
+		{
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/js/markitup.editor-min.js'))
+		{
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/js/markitup.editor-min.js');
+		}
+
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
 

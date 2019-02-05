@@ -23,5 +23,8 @@
         <label id="8" name="COM_KUNENA_LABELS_SOLVED" b2="ok" b3="ok" fa="check" labeltype="success"/>
         <label id="9" name="COM_KUNENA_LABELS_MERGED" b2="contract" b3="resize-small" fa="compress" labeltype="info"/>
         <label id="10" name="COM_KUNENA_LABELS_DELETED" b2="remove" b3="remove" fa="times" labeltype="primary"/>
+        <label id="11" name="COM_KUNENA_LABELS_STICKY" b2="pin" b3="pushpin" fa="map-pin" labeltype="info"/>
+        <label id="12" name="COM_KUNENA_LABELS_LOCKED" b2="lock" b3="file" fa="lock" labeltype="info"/>
+        <label id="13" name="COM_KUNENA_LABELS_MOVED" b2="contract" b3="contract" fa="compress" labeltype="info"/>
     </labels>
 </kunena-topiclabels>

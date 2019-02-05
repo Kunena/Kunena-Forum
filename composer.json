@@ -13,7 +13,7 @@
         "joomla-projects/jorobo": "^0.7.0",
         "joomla-projects/joomla-browser": "dev-develop",
         "joomla-projects/selenium-server-standalone": "dev-master",
-        "Behat/Gherkin": "^4.4.1",
+        "behat/gherkin": "^4.4.1",
         "phing/phing": "2.*"
     }
 }

@@ -116,7 +116,13 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = false;
+		$this->canSubscribe         = false;
 		$usertopic                  = $this->topic->getUserTopic();
+
+		if ($this->config->allowsubscriptions)
+		{
+			$this->canSubscribe = true;
+		}
 
 		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
 		{
@@ -135,8 +141,6 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
-
-		$this->canSubscribe = false;
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}

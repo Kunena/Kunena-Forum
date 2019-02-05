@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 		<div class="visible-lg">
 			<?php echo $this->subRequest('Widget/Menu'); ?>
 		</div>
-		<div class="hidden-desktop">
+		<div class="hidden-lg">
 			<div class="nav navbar-nav pull-left">
 				<div>
 					<a class="btn btn-link" data-toggle="collapse" data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a>

@@ -168,7 +168,6 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'profile', 'property');
-		$this->setMetaData('og:author', $this->profile->name, 'property');
 
 		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
 		{

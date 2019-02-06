@@ -328,7 +328,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaConfig::getInstance()->allow_change_subject || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
 		}

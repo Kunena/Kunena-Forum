@@ -450,7 +450,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'article', 'property');
 		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
-		$this->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
+		$this->setMetaData('profile:username', $this->topic->getAuthor()->username, 'property');
 
 		$image = $this->docImage();
 

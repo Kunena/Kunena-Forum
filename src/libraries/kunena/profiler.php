@@ -18,20 +18,20 @@ jimport('joomla.error.profiler');
 class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 {
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected $_kstart = array();
 
 	/**
-	 * @var array|KunenaProfilerItem[]
 	 * @since Kunena
+	 * @var array|KunenaProfilerItem[]
 	 */
 	protected $_heap = array();
 
@@ -57,8 +57,8 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 	/**
 	 * @param   string $name name
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function start($name)
 	{
@@ -94,7 +94,7 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 		{
 			trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
 		}
-		elseif($item->name != $name)
+		elseif ($item->name != $name)
 		{
 			$item->start(microtime(true));
 		}
@@ -149,14 +149,14 @@ class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
 class KunenaProfilerItem
 {
 	/**
-	 * @var array|KunenaProfilerItem[]
 	 * @since Kunena
+	 * @var array|KunenaProfilerItem[]
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	public $start = array();
 
@@ -228,8 +228,8 @@ class KunenaProfilerItem
 	/**
 	 * @param   boolean $starttime start time
 	 *
-	 * @since Kunena
 	 * @return mixed
+	 * @since Kunena
 	 */
 	public function start($starttime)
 	{
@@ -263,8 +263,8 @@ class KunenaProfilerItem
 	/**
 	 * @param   void $delta delta
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function external($delta)
 	{

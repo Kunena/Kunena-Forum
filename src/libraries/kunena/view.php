@@ -21,64 +21,64 @@ use Joomla\CMS\MVC\View\HtmlView;
 class KunenaView extends HtmlView
 {
 	/**
-	 * @var \Joomla\CMS\Document\Document|null
 	 * @since Kunena
+	 * @var \Joomla\CMS\Document\Document|null
 	 */
 	public $document = null;
 
 	/**
-	 * @var \Joomla\CMS\Application\CMSApplication|null
 	 * @since Kunena
+	 * @var \Joomla\CMS\Application\CMSApplication|null
 	 */
 	public $app = null;
 
 	/**
-	 * @var KunenaUser|null
 	 * @since Kunena
+	 * @var KunenaUser|null
 	 */
 	public $me = null;
 
 	/**
-	 * @var KunenaConfig|null
 	 * @since Kunena
+	 * @var KunenaConfig|null
 	 */
 	public $config = null;
 
 	/**
-	 * @var boolean
 	 * @since Kunena
+	 * @var boolean
 	 */
 	public $embedded = false;
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	public $templatefiles = array();
 
 	/**
-	 * @var null
 	 * @since Kunena
+	 * @var null
 	 */
 	public $teaser = null;
 
 	/**
-	 * @var integer
 	 * @since Kunena
+	 * @var integer
 	 */
 	protected $inLayout = 0;
 
 	/**
-	 * @var integer
 	 * @since Kunena
+	 * @var integer
 	 */
 	protected $_row = 0;
 
 	/**
 	 * @param   array $config config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -123,9 +123,9 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayAll()
 	{
@@ -142,8 +142,8 @@ class KunenaView extends HtmlView
 	 * @param   null $tpl    tmpl
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayLayout($layout = null, $tpl = null)
 	{
@@ -228,9 +228,9 @@ class KunenaView extends HtmlView
 	 * @param   array $messages messages
 	 * @param   int   $code     code
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayError($messages = array(), $code = 404)
 	{
@@ -289,9 +289,9 @@ class KunenaView extends HtmlView
 	 *
 	 * @param   string $title Show the title on the browser
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function setTitle($title)
 	{
@@ -332,9 +332,9 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   array $errors errors
 	 *
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -350,8 +350,8 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   mixed $position position
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function displayModulePosition($position)
 	{
@@ -400,8 +400,8 @@ class KunenaView extends HtmlView
 	 * @param   mixed  $parent parent
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function parse($text, $len = 0, $parent)
 	{
@@ -424,10 +424,10 @@ class KunenaView extends HtmlView
 	 * @param   string $tpl        tmpl
 	 * @param   array  $hmvcParams params
 	 *
-	 * @throws LogicException
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
+	 * @throws LogicException
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
 	{
@@ -487,8 +487,8 @@ class KunenaView extends HtmlView
 	 * @param   null   $template template
 	 *
 	 * @return KunenaLayout|KunenaView
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayTemplateFile($view, $layout, $template = null)
 	{
@@ -547,8 +547,8 @@ class KunenaView extends HtmlView
 	 * @param   array  $hmvcParams Extra parameters for HMVC.
 	 *
 	 * @return string The output of the the template script.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
 	{
@@ -675,8 +675,8 @@ class KunenaView extends HtmlView
 	 * @param   KunenaForumCategory|null $category category
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)

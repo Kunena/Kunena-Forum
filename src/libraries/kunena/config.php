@@ -4,12 +4,12 @@
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           http://www.bestofjoomla.com
  **/
 defined('_JEXEC') or die();
@@ -121,8 +121,8 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @var    string  Category image path; input, text
-	 * @deprecated 4.0
 	 * @since      1.0.0
+	 * @deprecated 4.0
 	 */
 	public $catimagepath = 'category_images';
 
@@ -1382,9 +1382,9 @@ class KunenaConfig extends CMSObject
 	/**
 	 * Load config settings from database table.
 	 *
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function load()
 	{
@@ -1434,8 +1434,8 @@ class KunenaConfig extends CMSObject
 	/**
 	 * @param   mixed $properties properties
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function bind($properties)
 	{
@@ -1444,8 +1444,8 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * Messages per page
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function check()
 	{
@@ -1458,9 +1458,9 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function save()
 	{
@@ -1489,8 +1489,8 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -1499,11 +1499,12 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
+	 * @internal
+	 *
 	 * @param   string $name Name of the plugin
 	 *
 	 * @return \Joomla\Registry\Registry
 	 *
-	 * @internal
 	 * @since Kunena
 	 */
 	public function getPlugin($name)
@@ -1515,8 +1516,8 @@ class KunenaConfig extends CMSObject
 	 * Email set for the configuration
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getEmail()
 	{

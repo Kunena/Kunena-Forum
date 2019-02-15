@@ -19,26 +19,26 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaSession extends CMSObject
 {
 	/**
-	 * @var mixed
 	 * @since Kunena
+	 * @var mixed
 	 */
 	private static $_instance;
 
 	/**
-	 * @var boolean
 	 * @since Kunena
+	 * @var boolean
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var boolean
 	 * @since Kunena
+	 * @var boolean
 	 */
 	protected $_sessiontimeout = false;
 
 	/**
-	 * @var int|string
 	 * @since Kunena
+	 * @var int|string
 	 */
 	protected $allreadtime;
 
@@ -154,9 +154,9 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function updateSessionInfo()
 	{
@@ -297,8 +297,8 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function markAllCategoriesRead()
 	{

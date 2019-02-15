@@ -19,50 +19,50 @@ use Joomla\CMS\Factory;
 class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
-	 * @var  string JSite|JAdministrator
 	 * @since Kunena
+	 * @var  string JSite|JAdministrator
 	 */
 	public $app = null;
 
 	/**
-	 * @var KunenaUser
 	 * @since Kunena
+	 * @var KunenaUser
 	 */
 	public $me = null;
 
 	/**
-	 * @var KunenaConfig
 	 * @since Kunena
+	 * @var KunenaConfig
 	 */
 	public $config = null;
 
 	/**
-	 * @var string \Joomla\Registry\Registry
 	 * @since Kunena
+	 * @var string \Joomla\Registry\Registry
 	 */
 	public $params = null;
 
 	/**
-	 * @var \Joomla\Input\Input
 	 * @since Kunena
+	 * @var \Joomla\Input\Input
 	 */
 	protected $input = null;
 
 	/**
-	 * @var \Joomla\CMS\Filter\InputFilter
 	 * @since Kunena
+	 * @var \Joomla\CMS\Filter\InputFilter
 	 */
 	protected $filter = null;
 
 	/**
-	 * @var JObject
 	 * @since Kunena
+	 * @var JObject
 	 */
 	protected $state = null;
 
 	/**
-	 * @var boolean
 	 * @since Kunena
+	 * @var boolean
 	 */
 	protected $embedded = false;
 
@@ -70,8 +70,8 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   array               $config config
 	 * @param   \Joomla\Input\Input $input  input
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), Joomla\Input\Input $input = null)
 	{
@@ -88,8 +88,8 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   array $params   params
 	 * @param   bool  $embedded embedded
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function initialize($params = array(), $embedded = true)
 	{

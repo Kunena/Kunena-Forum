@@ -127,9 +127,9 @@ class KunenaAccess
 	}
 
 	/**
-	 * @throws Exception
-	 * @since Kunena
 	 * @return mixed
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function clearCache()
 	{
@@ -190,8 +190,8 @@ class KunenaAccess
 	/**
 	 * @param   array $list list
 	 *
-	 * @since Kunena
 	 * @return mixed
+	 * @since Kunena
 	 */
 	protected function storeRoles(array $list = null)
 	{
@@ -381,7 +381,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name,);
+			                                     'title' => $name,);
 		}
 
 		return $list;
@@ -395,8 +395,8 @@ window.addEvent('domready', function(){
 	 *
 	 * @return string|null
 	 *
-	 * @deprecated 6.0.0
 	 * @since      Kunena
+	 * @deprecated 6.0.0
 	 */
 	public function getGroupName($accesstype, $id)
 	{
@@ -463,8 +463,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user user
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAdminStatus($user = null)
 	{
@@ -485,9 +485,9 @@ window.addEvent('domready', function(){
 	 *
 	 * @return boolean
 	 *
+	 * @since   Kunena
 	 * @throws Exception
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
-	 * @since   Kunena
 	 */
 	public function setModerator($category, $user = null, $status = true)
 	{
@@ -539,8 +539,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user user
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getModeratorStatus($user = null)
 	{
@@ -556,8 +556,8 @@ window.addEvent('domready', function(){
 	 * @param   mixed $user user
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAllowedCategories($user = null)
 	{
@@ -614,8 +614,8 @@ window.addEvent('domready', function(){
 				}
 
 				// Clean up and filter the resulting list by using only array keys.
-				$list = array_keys($list);
-				$list = ArrayHelper::toInteger($list);
+				$list      = array_keys($list);
+				$list      = ArrayHelper::toInteger($list);
 				$read[$id] = array_combine($list, $list);
 				unset($read[$id][0]);
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);
@@ -677,8 +677,8 @@ window.addEvent('domready', function(){
 	 * @param   int   $catid catid
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isAdmin($user = null, $catid = 0)
 	{

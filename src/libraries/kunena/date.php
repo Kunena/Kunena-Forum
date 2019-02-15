@@ -50,8 +50,8 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	 * @param   string $class  class
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')
 	{
@@ -63,8 +63,8 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 	 * @param   bool   $offset offset
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{

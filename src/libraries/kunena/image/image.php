@@ -20,6 +20,8 @@ define('MIME_PNG', 'image/png');
 class KunenaImage extends \Joomla\Image\Image
 {
 	/**
+	 * Copies a rectangular portion of an image to another image. Used when imagecopyresampled isn't available
+	 * 
 	 * @param   mixed $dst_image dst image
 	 * @param   mixed $src_image src image
 	 * @param   mixed $dst_x     dst x

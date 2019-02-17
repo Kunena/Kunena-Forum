@@ -173,6 +173,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								</a>
 							</div>
 						<?php endif ?>
+						<?php if ($this->plglogin): ?>
 						<div class="divider"></div>
 
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
@@ -189,6 +190,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<input type="hidden" name="task" value="logout"/>
 							<?php echo HTMLHelper::_('form.token'); ?>
 						</form>
+						<?php endif; ?>
 					<?php endif; ?>
 					<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
 				</div>

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 ?>
+
+<?php if ($this->plglogin): ?>
 <div class="hidden-xs">
 	<?php
 	if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
@@ -25,3 +27,4 @@ defined('_JEXEC') or die;
 		<?php echo $this->setLayout('mobile'); ?>
 	<?php endif; ?>
 </div>
+<?php endif; ?>

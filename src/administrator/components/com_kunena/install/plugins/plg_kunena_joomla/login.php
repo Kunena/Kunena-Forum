@@ -185,4 +185,15 @@ class KunenaLoginJoomla
 
 		return Route::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
+	
+	/**
+	 * Return the parameters of the plugin
+	 * 
+	 * @return JRegistry
+	 * @since Kunena 5.1
+	 */
+	public function getParams()
+	{
+	    return $this->params;
+	}
 }

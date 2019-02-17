@@ -277,4 +277,23 @@ class KunenaLogin
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
 	}
+	
+	/**
+	 * Return the parameters of the plugin
+	 * 
+	 * @return JRegistry
+	 * @since Kunena 5.1
+	 */
+	public function getParams()
+	{
+	    foreach ($this->instances as $login)
+	    {
+	        if (method_exists($login, 'getParams'))
+	        {
+	            return $login->getParams();
+	        }
+	    }
+	    
+	    return false;
+	}
 }

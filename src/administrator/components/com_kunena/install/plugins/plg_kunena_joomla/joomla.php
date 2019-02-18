@@ -58,11 +58,6 @@ class plgKunenaJoomla extends \Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-		if (!$this->params->get('login', 1))
-		{
-			return;
-		}
-
 		require_once __DIR__ . "/login.php";
 
 		return new KunenaLoginJoomla($this->params);

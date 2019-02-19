@@ -3,7 +3,7 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.1.9</version>
+	<version>5.1.10-DEV</version>
 	<versionname>Kerberos</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>

@@ -11,9 +11,11 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 /**
  * Kunena package installer script.
+ * @since Kunena
  */
 class Pkg_KunenaInstallerScript
 {
@@ -25,24 +27,24 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
-		    '7.3' => '7.3.0',
-		    '7.2' => '7.2.0',
+			'7.3' => '7.3.0',
+			'7.2' => '7.2.0',
 			'7.1' => '7.1.9',
 			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
-			'0'   => '7.1.9' // Preferred version
+			'0'   => '7.1.9', // Preferred version
 		),
 		'MySQL'   => array(
 			'5.5' => '5.5.3',
 			'5.1' => '5.1',
-			'0'   => '5.5.3' // Preferred version
+			'0'   => '5.5.3', // Preferred version
 		),
 		'Joomla!' => array(
-		    '4.0'  => '4.0.0-alpha6-dev',
-		    '3.10' => '3.10.0',
-		    '3.9'  => '3.9.0',
-			'0'    => '3.9.0' // Preferred version
-		)
+			'4.0'  => '4.0.0-alpha6-dev',
+			'3.10' => '3.10.0',
+			'3.9'  => '3.9.0',
+			'0'    => '3.9.0', // Preferred version
+		),
 	);
 
 	/**
@@ -53,26 +55,62 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
+	/**
+	 * @param   string $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
 	public function install($parent)
 	{
 		return true;
 	}
 
+	/**
+	 * @param   string $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since Kunena
+	 */
 	public function discover_install($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param   string $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
 	public function update($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param   string $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
 	public function uninstall($parent)
 	{
 		return true;
 	}
 
+	/**
+	 * @param   string $type   type
+	 * @param   string $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
 	public function preflight($type, $parent)
 	{
 		/** @var JInstallerComponent $parent */
@@ -85,7 +123,7 @@ class Pkg_KunenaInstallerScript
 		}
 
 		// Remove old log file before installation.
-		$logFile = JFactory::getConfig()->get('log_path') . '/kunena.php';
+		$logFile = Factory::getConfig()->get('log_path') . '/kunena.php';
 
 		if (is_file($logFile))
 		{
@@ -95,18 +133,33 @@ class Pkg_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param   string $uri uri
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function makeRoute($uri)
 	{
-		return JRoute::_($uri, false);
+		return Route::_($uri, false);
 	}
 
+	/**
+	 * @param   string  $type   type
+	 * @param   string  $parent parent
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function postflight($type, $parent)
 	{
 		$this->fixUpdateSite();
 
 		// Clear Joomla system cache.
-		/** @var JCache|JCacheController $cache */
-		$cache = JFactory::getCache();
+		$cache = Factory::getCache();
 		$cache->clean('_system');
 
 		// Remove all compiled files from APC cache.
@@ -125,7 +178,7 @@ class Pkg_KunenaInstallerScript
 
 		if (version_compare(JVERSION, '4.0', '<'))
 		{
-			$app   = JFactory::getApplication();
+			$app   = Factory::getApplication();
 			$modal = <<<EOS
 			<div id="kunena-modal" class="modal hide fade" style="width:auto;min-width:32%;margin-left:-13%;top:25%;padding:10px;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
@@ -134,15 +187,23 @@ EOS;
 		else
 		{
 			$app = Factory::getApplication();
-			$app->redirect(JRoute::_('index.php?option=com_kunena&view=install', false));
+			$app->redirect(Route::_('index.php?option=com_kunena&view=install', false));
 		}
 
 		return true;
 	}
 
-	function enablePlugin($group, $element)
+	/**
+	 * @param   string $group   group
+	 * @param   string $element element
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
+	public function enablePlugin($group, $element)
 	{
-		$plugin = JTable::getInstance('extension');
+		$plugin = Joomla\CMS\Table\Table::getInstance('extension');
 
 		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
 		{
@@ -154,9 +215,16 @@ EOS;
 		return $plugin->store();
 	}
 
+	/**
+	 * @param   string $version version
+	 *
+	 * @return boolean|integer
+	 *
+	 * @since version
+	 */
 	public function checkRequirements($version)
 	{
-		$db   = JFactory::getDbo();
+		$db   = Factory::getDbo();
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
@@ -172,7 +240,9 @@ EOS;
 	/**
 	 *  On some hosting the PHP version given with the version of the packet in the distribution
 	 *
-	 * @param   string $version The PHP version to clean
+	 * @return string
+	 *
+	 * @since Kunena
 	 */
 	protected function getCleanPhpVersion()
 	{
@@ -181,9 +251,18 @@ EOS;
 		return $version;
 	}
 
+	/**
+	 * @param   string $name    name
+	 * @param   string $version version
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkVersion($name, $version)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		$major = $minor = 0;
 
@@ -216,9 +295,18 @@ EOS;
 		return false;
 	}
 
+	/**
+	 * @param   string $name  name
+	 * @param   array  $types types
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkDbo($name, $types)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		if (in_array($name, $types))
 		{
@@ -230,9 +318,17 @@ EOS;
 		return false;
 	}
 
+	/**
+	 * @param   array $extensions extensions
+	 *
+	 * @return integer
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkExtensions($extensions)
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 
 		$pass = 1;
 
@@ -248,10 +344,18 @@ EOS;
 		return $pass;
 	}
 
+	/**
+	 * @param   string $version version
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkKunena($version)
 	{
-		$app = JFactory::getApplication();
-		$db  = JFactory::getDbo();
+		$app = Factory::getApplication();
+		$db  = Factory::getDbo();
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -262,10 +366,9 @@ EOS;
 		}
 
 		// Do not install over Git repository (K1.6+).
-		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
-			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()))
+		if (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
 		{
-			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
+			$app->enqueueMessage('Oops! You should not install Kunena over your Git repository!', 'notice');
 
 			return false;
 		}
@@ -320,9 +423,16 @@ EOS;
 		return false;
 	}
 
+	/**
+	 *
+	 *
+	 * @return void
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function fixUpdateSite()
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Find all update sites.
 		$query = $db->getQuery(true)

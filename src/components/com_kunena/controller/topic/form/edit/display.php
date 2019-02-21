@@ -124,7 +124,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			$this->canSubscribe = true;
 		}
 
-		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
+		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists() && $this->action == 'edit')
 		{
 			if ($usertopic->subscribed == 1)
 			{

@@ -496,18 +496,20 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
+		$userid = $this->app->input->getInt('userid');
+		
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
-		if (KunenaForumTopicHelper::subscribe(array_keys($topics), 0))
+		if (KunenaForumTopicHelper::subscribe(array_keys($topics), 0, $userid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'));
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC'), 'notice');
 		}
 
 		$this->setRedirectBack();

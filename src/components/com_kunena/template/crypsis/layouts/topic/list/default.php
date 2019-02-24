@@ -83,6 +83,9 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
       id="ktopicsform">
 	<?php echo HTMLHelper::_('form.token'); ?>
+	<?php if($view == 'user'): ?>
+		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
+	<?php endif; ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<tr>

@@ -58,6 +58,11 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	{
 		parent::before();
 
+		require_once KPATH_SITE . '/models/category.php';
+		$this->model = new KunenaModelCategory(array(), $this->input);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state   = $this->model->getState();
+		
 		$me = KunenaUserHelper::getMyself();
 
 		if (!$me->exists())
@@ -79,7 +84,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			$limitstart = 0;
 		}
 
-		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
+		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($this->state->get('user'));
 
 		$topicIds = array();
 		$userIds  = array();

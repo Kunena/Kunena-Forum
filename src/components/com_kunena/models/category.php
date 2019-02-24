@@ -63,6 +63,26 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		$layout = $this->getCmd('layout', 'default');
 		$this->setState('layout', $layout);
 
+		$params = $this->getParameters();
+		$this->setState('params', $params);
+		
+		$userid = $this->getInt('userid', -1);
+		
+		if ($userid < 0)
+		{
+		    $userid = $this->me->userid;
+		}
+		elseif ($userid > 0)
+		{
+		    $userid = KunenaFactory::getUser($userid)->userid;
+		}
+		else
+		{
+		    $userid = 0;
+		}
+		
+		$this->setState('user', $userid);
+		
 		// Administrator state
 		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit')
 		{

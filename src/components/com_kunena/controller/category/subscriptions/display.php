@@ -69,7 +69,9 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
-
+		
+		$this->user = KunenaUserHelper::get($this->state->get('user'));
+		
 		$limit = $this->input->getInt('limit', 0);
 
 		if ($limit < 1 || $limit > 100)

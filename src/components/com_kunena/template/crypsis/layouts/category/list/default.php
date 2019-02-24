@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
       name="kcategoryform" id="kcategoryform">
+	<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<h3>

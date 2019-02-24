@@ -183,7 +183,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			return;
 		}
+		
+		$me = KunenaUserHelper::getMyself();
 
+		$userid = $this->app->input->getInt('userid');
+		
 		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
@@ -202,11 +206,15 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			if ($this->me->exists())
 			{
-				$success = $category->subscribe(0);
+				$success = $category->subscribe(0, $userid);
 
-				if ($success)
+				if ($success && $userid==$me->userid)
 				{
 					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name));
+				}
+				else
+				{
+				    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name));
 				}
 			}
 		}

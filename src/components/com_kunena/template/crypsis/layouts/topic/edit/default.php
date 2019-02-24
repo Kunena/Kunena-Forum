@@ -136,6 +136,8 @@ $this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_
 
 $this->addScript('assets/js/edit.js');
 
+echo $this->subLayout('Widget/Lightbox');
+
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('assets/js/sisyphus.js');

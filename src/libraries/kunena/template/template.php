@@ -1835,12 +1835,7 @@ HTML;
 					$id = 12;
 				}
 
-				if ($topic->hold == 2)
-				{
-					$id = 10;
-				}
-
-				if ($topic->hold == 3)
+				if ($topic->hold == 2 || $topic->hold == 3)
 				{
 					$id = 10;
 				}

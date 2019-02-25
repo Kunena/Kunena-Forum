@@ -229,7 +229,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
 		$data->interactionStatistic     = $tmp2;
 
-		if ($this->category->allow_ratings && KunenaConfig::getInstance()->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
+		if ($this->category->allow_ratings && $this->config->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
 		{
 			$data->aggregateRating  = array();
 			$tmp3                   = new CMSObject;

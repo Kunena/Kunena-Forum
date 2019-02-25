@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 $topic = $this->topic;
-$me    = KunenaUserHelper::getMyself();
 
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
@@ -34,16 +33,6 @@ Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
-
-if (KunenaConfig::getInstance()->ratingenabled)
-{
-	$this->addStyleSheet('assets/css/rating.css');
-	$this->addScript('assets/js/rating.js');
-	$this->addScript('assets/js/krating.js');
-
-	Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
-	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
-}
 
 $this->addScript('assets/js/topic.js');
 
@@ -75,7 +64,7 @@ if ($topic->locked)
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
 		{
-			echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+		    echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->set('ktemplate', $this->ktemplate)->setLayout('default');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
@@ -98,11 +87,11 @@ if ($topic->locked)
 
 	<div class="clearfix"></div>
 
-	<?php if ($social == 1 && $me->socialshare != 0 || $social == 1 && !$me->exists()) : ?>
-		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+	<?php if ($social == 1 && $this->me->socialshare != 0 || $social == 1 && !$this->me->exists()) : ?>
+		<div><?php echo $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate); ?></div>
 	<?php endif; ?>
 
-	<?php if ($social == 2 && $me->socialshare != 0 || $social == 2 && !$me->exists()) : ?>
+	<?php if ($social == 2 && $this->me->socialshare != 0 || $social == 2 && !$this->me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 

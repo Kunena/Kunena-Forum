@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
+$this->ktemplate = KunenaFactory::getTemplate();
 $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $class           = ' class="' . ' label label-' . $icon->labeltype . '"';

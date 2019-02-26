@@ -492,15 +492,15 @@ class KunenaIcons
 
 		if ($topicicontype == 'B2')
 		{
-			return 'b2';
+			return '<span class="icon icon-compress" aria-hidden="true"></span>';
 		}
 
 		if ($topicicontype == 'B3')
 		{
-			return 'b3';
+			return '<span class="glyphicon glyphicon-sort" aria-hidden="true"></span>';
 		}
 
-		return 'b3';
+		return '<span class="icon icon-compress" aria-hidden="true"></span>';
 	}
 
 	/**

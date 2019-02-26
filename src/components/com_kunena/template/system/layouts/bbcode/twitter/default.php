@@ -110,5 +110,6 @@ use Joomla\CMS\Language\Text;
 					</li>
 				</ul>
 			</div>
+		</div>
 	</blockquote>
 </div>

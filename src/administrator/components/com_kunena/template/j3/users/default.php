@@ -301,8 +301,7 @@ HTMLHelper::_('dropdown.init');
 										   href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
 											<?php echo $img_no; ?>
-										</a>
-									</span>
+										</a>									
 									<?php endif; ?>
 								</td>
 								<td class="center"><?php echo $this->escape($user->userid); ?></td>

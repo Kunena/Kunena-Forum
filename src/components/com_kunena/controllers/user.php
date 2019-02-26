@@ -319,7 +319,7 @@ class KunenaControllerUser extends KunenaController
 			$success = $ban->save();
 
 			// Send report to stopforumspam
-			$this->report($user->userid);
+			$this->report($user->userid, $reason_private);
 		}
 		else
 		{
@@ -1343,11 +1343,12 @@ class KunenaControllerUser extends KunenaController
 	 * Reports a user to stopforumspam.com
 	 *
 	 * @param $userid
+	 * @param $reason
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($userid)
+	protected function report($userid, $reason)
 	{
 		if (!$this->config->stopforumspam_key || !$userid)
 		{
@@ -1369,9 +1370,9 @@ class KunenaControllerUser extends KunenaController
 		// Create a 'stream' transport.
 		$http = new \Joomla\CMS\Http\Http($options, $transport);
 
-		$data = "username[]=" . $spammer->username . "&ip_addr[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key;
+		$data = "username[]=" . $spammer->username . "&ip_addr[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key . '&evidence=' . $reason;
 
-		$response = $http->post('https://api.stopforumspam.com/add', $data);
+		$response = $http->post('https://www.stopforumspam.com/add', $data);
 
 		if ($response->code == '200')
 		{

@@ -31,7 +31,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 <div class="row">
 	<div class="col-md-12">
 		<?php if ($social == 1 && $me->socialshare != 0) : ?>
-			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+			<div><?php echo $this->subLayout('Widget/Social')->set('me', $me)->set('ktemplate', $this->ktemplate); ?></div>
 		<?php endif; ?>
 		<?php if ($social == 2 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>

@@ -319,7 +319,7 @@ class KunenaControllerUser extends KunenaController
 			$success = $ban->save();
 
 			// Send report to stopforumspam
-			$this->report($user->userid, $reason_private);
+			$this->report($user, $reason_private);
 		}
 		else
 		{
@@ -1342,26 +1342,27 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param $userid
+	 * @param $user
 	 * @param $reason
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($userid, $reason)
+	protected function report($user, string $reason)
 	{
-		if (!$this->config->stopforumspam_key || !$userid)
+		if (!$this->config->stopforumspam_key || !$user)
 		{
 			return false;
 		}
 
-		$spammer = Factory::getUser($userid);
+		$spammer = Factory::getUser($user->userid);
 
+		// TODO: remove this query by getting the ip of user by an anotehr way
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $user->userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
 		$ip = $db->loadResult();
 
-		// Check if mail adress is valid before to send the report
+		// TODO: check if ip is correct or not empty before to send the report
 
 		$options = new \Joomla\Registry\Registry;
 
@@ -1370,7 +1371,7 @@ class KunenaControllerUser extends KunenaController
 		// Create a 'stream' transport.
 		$http = new \Joomla\CMS\Http\Http($options, $transport);
 
-		$data = "username[]=" . $spammer->username . "&ip_addr[]=" . $ip . "&email[]=" . $spammer->email . "&api_key[]=" . $this->config->stopforumspam_key . '&evidence=' . $reason;
+		$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' . $this->config->stopforumspam_key . '&evidence=' . $reason;
 
 		$response = $http->post('https://www.stopforumspam.com/add', $data);
 

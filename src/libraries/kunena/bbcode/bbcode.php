@@ -31,25 +31,26 @@ jimport('joomla.utilities.string');
 class KunenaBbcode extends NBBC_BBCode
 {
 	/**
-	 * @since Kunena
 	 * @var integer
+	 * @since Kunena
 	 */
 	public $autolink_disable = 0;
 
 	/**
-	 * @since Kunena
 	 * @var object
+	 * @since Kunena
 	 */
 	public $parent = null;
 
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
+	 * @internal
+	 *
 	 * @param   bool $relative relative
 	 *
 	 * @since Kunena
 	 * @throws Exception
-	 * @internal
 	 */
 	public function __construct($relative = true)
 	{
@@ -175,7 +176,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 			if (strstr($params['host'], 'instagram.') && !empty($path[1]))
 			{
-				return '<div class="embed-container"><iframe src="' . rtrim($params['url'], '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+				return KunenaBbcodeLibrary::DoInstagram('', '', '', '', '', rtrim($params['url']));
 			}
 		}
 
@@ -511,26 +512,26 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	/**
 	 * The bearer token to get tweet data
 	 *
-	 * @since  K4.0
 	 * @var string
+	 * @since  K4.0
 	 */
 	public $token = null;
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $default_smileys = array();
 
 	/**
-	 * @since Kunena
 	 * @var integer
+	 * @since Kunena
 	 */
 	public $mapid = 0;
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $default_tag_rules = array(
 		'b' => array(
@@ -3134,7 +3135,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	public function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
 		{

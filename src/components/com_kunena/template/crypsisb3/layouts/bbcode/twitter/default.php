@@ -109,5 +109,6 @@ use Joomla\CMS\Factory;
 					</li>
 				</ul>
 			</div>
+		</div>
 	</blockquote>
 </div>

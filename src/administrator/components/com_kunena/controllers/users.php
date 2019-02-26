@@ -678,6 +678,70 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Set an user as global moderator, works only if you are an admin
+	 *
+	 * @return void
+	 *
+	 * @since    5.1
+	 * @throws null
+	 */
+	public function moderate()
+	{
+	    if (!Session::checkToken('post'))
+	    {
+	        $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	        
+	        return;
+	    }
+	    
+	    $modCatids    = $this->app->input->get('catid', array(), 'post', 'array');
+	    $modCatids    = ArrayHelper::toInteger($modCatids);
+	    
+	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
+	    $cid = ArrayHelper::toInteger($cid);
+	    $userid = array_shift($cid);
+	    
+	    if ($userid <= 0)
+	    {
+	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	        
+	        return;
+	    }
+	    
+	    if ($userid <= 0)
+	    {
+	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	        
+	        return;
+	    }
+	    
+	    $user = KunenaUserHelper::get($userid);
+	    
+	    // Update moderator rights
+	    $categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+	    
+	    foreach ($categories as $category)
+	    {
+	        $category->setModerator($user, in_array($category->id, $modCatids));
+	    }
+	    
+	    // Global moderator is a special case
+	    if ($this->me->isAdmin())
+	    {
+	        echo 'result' . KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+	    }
+	    else
+	    {
+	        
+	    }	    
+	    
+	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+	
+	/**
 	 * Unmoderate
 	 *
 	 * @throws Exception

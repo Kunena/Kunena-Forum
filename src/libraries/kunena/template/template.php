@@ -300,7 +300,7 @@ class KunenaTemplate extends CMSObject
 			// Set active class on menu item alias.
 			if (KunenaConfig::getInstance()->activemenuitem)
 			{
-				$id = KunenaConfig::getInstance()->activemenuitem;
+				$id = htmlspecialchars(KunenaConfig::getInstance()->activemenuitem, ENT_COMPAT, 'UTF-8');
 				$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 			}
@@ -311,7 +311,7 @@ class KunenaTemplate extends CMSObject
 
 				if ($items)
 				{
-					$id = '.item-' . $items[0]->id;
+					$id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
 					$this->addScriptDeclaration("
 		jQuery(function($){ $(\"$id\").addClass('active')});");
 				}

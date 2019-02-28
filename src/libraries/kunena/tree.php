@@ -16,50 +16,50 @@ defined('_JEXEC') or die();
 class KunenaTree implements Iterator
 {
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected $_instances = array();
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected $_tree = array();
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected $_parents = array();
 
 	/**
-	 * @var array
 	 * @since Kunena
+	 * @var array
 	 */
 	protected $_levels = array();
 
 	/**
-	 * @var null|string
 	 * @since Kunena
+	 * @var null|string
 	 */
 	protected $_id = null;
 
 	/**
-	 * @var null|string
 	 * @since Kunena
+	 * @var null|string
 	 */
 	protected $_parent = null;
 
 	/**
-	 * @var null|string
 	 * @since Kunena
+	 * @var null|string
 	 */
 	protected $_level = null;
 
 	/**
-	 * @var null
 	 * @since Kunena
+	 * @var null
 	 */
 	protected $heap = null;
 
@@ -86,8 +86,8 @@ class KunenaTree implements Iterator
 	/**
 	 * @param   mixed $items items
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function add(&$items)
 	{
@@ -149,8 +149,8 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function rewind()
 	{
@@ -163,8 +163,8 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function next()
 	{

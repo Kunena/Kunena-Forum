@@ -44,8 +44,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * @param   array $config config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -74,8 +74,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   mixed  $config config
 	 *
 	 * @return KunenaController
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
 	{
@@ -177,8 +177,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string $task Task to be run.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function execute($task)
@@ -294,9 +294,9 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string $task task
 	 *
 	 * @return mixed
+	 * @since Kunena
 	 * @throws Exception
 	 *
-	 * @since Kunena
 	 */
 	protected function executeTask($task)
 	{
@@ -333,8 +333,8 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -504,10 +504,10 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string $default default
 	 * @param   string $anchor  anchor
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
 	 * @return void
+	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

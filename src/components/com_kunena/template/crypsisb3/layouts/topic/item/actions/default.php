@@ -54,7 +54,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 
 <?php if ($fullactions) : ?>
 	<div class="clearfix"></div>
-	<div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions">
+	<div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions-toolbar">
 		<div>
 			<?php if ($this->topicButtons->get('reply')
 				|| $this->topicButtons->get('subscribe')

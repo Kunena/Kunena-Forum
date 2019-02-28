@@ -26,6 +26,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',
 			'7.1' => '7.1.9',
 			'7.0' => '7.0.4',
@@ -37,9 +38,9 @@ class Com_KunenaInstallerScript
 			'0'   => '5.7', // Preferred version
 		),
 		'Joomla!' => array(
-			'3.9'  => '3.9.0',
-			'3.10' => '3.10.0',
 			'4.0'  => '4.0.0-alpha6-dev',
+			'3.10' => '3.10.0',
+			'3.9'  => '3.9.0',
 			'0'    => '3.9.0', // Preferred version
 		),
 	);
@@ -51,7 +52,7 @@ class Com_KunenaInstallerScript
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
-	 * @param $parent
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -72,7 +73,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $parent
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -83,7 +84,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $parent
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -94,11 +95,11 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $parent
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function uninstall($parent)
 	{
@@ -116,12 +117,12 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $type
-	 * @param $parent
+	 * @param   string $type   type
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function preflight($type, $parent)
 	{
@@ -187,7 +188,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsis/assets/less');
 				$src  = $sitePath . '/template/crypsis/less/custom.less';
 				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
@@ -203,7 +204,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsis/assets/css');
 				$src  = $sitePath . '/template/crypsis/css/custom.css';
 				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
@@ -219,7 +220,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsis/config');
 				$src  = $sitePath . '/template/crypsis/params.ini';
 				$dest = $sitePath . '/template/crypsis/config/params.ini';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
@@ -236,7 +237,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsisb3/assets/less');
 				$src  = $sitePath . '/template/crypsisb3/less/custom.less';
 				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
@@ -252,7 +253,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsisb3/assets/css');
 				$src  = $sitePath . '/template/crypsisb3/css/custom.css';
 				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
@@ -268,7 +269,7 @@ class Com_KunenaInstallerScript
 				Folder::create($sitePath . '/template/crypsisb3/config');
 				$src  = $sitePath . '/template/crypsisb3/params.ini';
 				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
-				KunenaFile::copy($src, $dest);
+				File::copy($src, $dest);
 			}
 
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
@@ -380,8 +381,8 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $type
-	 * @param $parent
+	 * @param   string $type   type
+	 * @param   string $parent parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -397,11 +398,11 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $version
+	 * @param   string $version version
 	 *
 	 * @return boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function checkRequirements($version)
 	{
@@ -420,8 +421,8 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
-	 * @return string
 	 * @internal param string $version The PHP version to clean
+	 * @return string
 	 * @since    Kunena
 	 */
 	protected function getCleanPhpVersion()
@@ -432,13 +433,13 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $name
-	 * @param $version
+	 * @param   string $name    name
+	 * @param   string $version version
 	 *
 	 * @return boolean
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkVersion($name, $version)
 	{
@@ -473,13 +474,13 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $name
-	 * @param $types
+	 * @param   string $name  name
+	 * @param   array  $types types
 	 *
 	 * @return boolean
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkDbo($name, $types)
 	{
@@ -496,12 +497,12 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $extensions
+	 * @param   array $extensions extensions
 	 *
 	 * @return integer
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkExtensions($extensions)
 	{
@@ -522,12 +523,12 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param $version
+	 * @param   string $version version
 	 *
 	 * @return boolean
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkKunena($version)
 	{
@@ -544,7 +545,7 @@ class Com_KunenaInstallerScript
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()))
 		{
-			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
+			$app->enqueueMessage('Oops! You should not install Kunena over your Git repository!', 'notice');
 
 			return false;
 		}
@@ -600,10 +601,10 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param         $path
+	 * @param   string $path   path
 	 *
-	 * @internal param array $ignore
-	 * @since    Kunena
+	 * @return void
+	 * @since Kunena
 	 */
 	public function deleteFile($path)
 	{
@@ -614,9 +615,10 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param         $path
-	 * @param   array $ignore ignore
+	 * @param   string $path   path
+	 * @param   array  $ignore ignore
 	 *
+	 * @return void
 	 * @since Kunena
 	 */
 	public function deleteFiles($path, $ignore = array())
@@ -636,9 +638,10 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param         $path
-	 * @param   array $ignore ignore
+	 * @param   string $path   path
+	 * @param   array  $ignore ignore
 	 *
+	 * @return void
 	 * @since Kunena
 	 */
 	public function deleteFolders($path, $ignore = array())
@@ -658,9 +661,10 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param         $path
-	 * @param   array $ignore ignore
+	 * @param   string $path   path
+	 * @param   array  $ignore ignore
 	 *
+	 * @return void
 	 * @since Kunena
 	 */
 	public function deleteFolder($path, $ignore = array())
@@ -670,9 +674,11 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param         $path
-	 *
 	 * @internal param array $ignore
+	 *
+	 * @param   string $path path
+	 *
+	 * @return void
 	 * @since    Kunena
 	 */
 	public function deleteKfolder($path)

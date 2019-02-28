@@ -19,11 +19,11 @@ if ($this->config->enableforumjump)
 }
 
 $mmm    = 0;
-$config = KunenaFactory::getTemplate()->params;
+$config = $this->ktemplate->params;
 
 if ($config->get('socialshare') == 1)
 {
-	echo "<div>" . $this->subLayout('Widget/Social') . "</div>";
+    echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
 }
 
 if ($config->get('socialshare') == 2)

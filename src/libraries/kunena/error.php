@@ -49,9 +49,9 @@ abstract class KunenaError
 	public static $format;
 
 	/**
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function initialize()
 	{
@@ -86,8 +86,8 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -105,9 +105,9 @@ abstract class KunenaError
 	 * @param   string $msg   msg
 	 * @param   string $where where
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function error($msg, $where = 'default')
 	{
@@ -122,9 +122,9 @@ abstract class KunenaError
 	 * @param   string $msg   msg
 	 * @param   string $where where
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function warning($msg, $where = 'default')
 	{
@@ -141,8 +141,8 @@ abstract class KunenaError
 	 * @param   void $exception exception
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since 5.0
+	 * @throws Exception
 	 */
 	public static function displayDatabaseError($exception)
 	{
@@ -240,8 +240,8 @@ abstract class KunenaError
 	 * @param   mixed $debug debug
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function shutdownHandler($debug)
 	{

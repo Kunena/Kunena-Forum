@@ -34,5 +34,4 @@ use Joomla\CMS\Language\Text;
 	<?php else: ?>
 		<?php echo Text::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
 	<?php endif; ?>
-	</div>
 <?php endif;

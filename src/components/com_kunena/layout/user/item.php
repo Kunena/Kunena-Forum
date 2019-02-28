@@ -36,7 +36,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		// Decide which tabs to display.
 		$showPosts         = true;
-		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
+		$showSubscriptions = $this->config->allowsubscriptions && ($myProfile || $moderator);
 		$showFavorites     = $this->config->allowfavorites && $myProfile;
 		$showThankYou      = $this->config->showthankyou && $this->me->exists();
 		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());

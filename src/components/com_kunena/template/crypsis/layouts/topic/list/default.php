@@ -30,7 +30,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 <div class="row-fluid">
 	<div class="span12">
 		<?php if ($social == 1 && $me->socialshare != 0) : ?>
-			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+			<div><?php echo $this->subLayout('Widget/Social')->set('me', $me)->set('ktemplate', $this->ktemplate); ?></div>
 		<?php endif; ?>
 		<?php if ($social == 2 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
@@ -83,6 +83,9 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
       id="ktopicsform">
 	<?php echo HTMLHelper::_('form.token'); ?>
+	<?php if($view == 'user'): ?>
+		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
+	<?php endif; ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<tr>

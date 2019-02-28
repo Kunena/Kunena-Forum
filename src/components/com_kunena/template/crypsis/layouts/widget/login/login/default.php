@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 $config = KunenaFactory::getTemplate()->params;
 ?>
 
+<?php if ($this->plglogin): ?>
 <div class="visible-desktop">
 	<?php if ($config->get('displayDropdownMenu')) : ?>
 		<?php echo $this->setLayout('desktop'); ?>
@@ -22,3 +23,4 @@ $config = KunenaFactory::getTemplate()->params;
 		<?php echo $this->setLayout('mobile'); ?>
 	<?php endif; ?>
 </div>
+<?php endif; ?>

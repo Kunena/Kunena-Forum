@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
       name="kcategoryform" id="kcategoryform">

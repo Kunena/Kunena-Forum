@@ -239,17 +239,17 @@ class KunenaLog
 	/**
 	 * @since Kunena 5.0
 	 */
-	Const LOG_USER_EDIT = 'LOG_USER_EDIT';
+	const LOG_USER_EDIT = 'LOG_USER_EDIT';
 
 	/**
 	 * @since Kunena 5.0
 	 */
-	Const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
+	const LOG_USER_BLOCK = 'LOG_USER_BLOCK';
 
 	/**
 	 * @since Kunena 5.0
 	 */
-	Const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
+	const LOG_USER_UNBLOCK = 'LOG_USER_UNBLOCK';
 
 	/**
 	 * @since Kunena 5.0
@@ -259,7 +259,7 @@ class KunenaLog
 	/**
 	 * @since Kunena 5.0
 	 */
-	Const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
+	const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
 	/**
 	 * @since Kunena

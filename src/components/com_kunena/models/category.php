@@ -65,9 +65,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		$params = $this->getParameters();
 		$this->setState('params', $params);
-		
+
 		$userid = $this->getInt('userid', -1);
-		
+
 		if ($userid < 0)
 		{
 		    $userid = $this->me->userid;
@@ -80,9 +80,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		{
 		    $userid = 0;
 		}
-		
+
 		$this->setState('user', $userid);
-		
+
 		// Administrator state
 		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit')
 		{
@@ -340,7 +340,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'  => $hold,
-				'moved' => $moved,);
+				'moved' => $moved, );
 
 			switch ($topic_ordering)
 			{

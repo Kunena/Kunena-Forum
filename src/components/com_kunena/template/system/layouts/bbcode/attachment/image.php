@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die();
 
-
 $attachment = $this->attachment;
 ?>
 <div id="results1" class="kmsgimage">

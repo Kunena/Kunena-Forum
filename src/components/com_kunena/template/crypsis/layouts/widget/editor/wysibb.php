@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
+
 $this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
 

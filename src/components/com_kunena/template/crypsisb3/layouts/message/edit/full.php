@@ -58,7 +58,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 
 			$result                    = Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $this->message->id));
 			$output                    = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
-					'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"',)
+					'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"', )
 			);
 			$this->quickcaptchaDisplay = $output[0];
 			$this->quickcaptchaEnabled = $result[0];

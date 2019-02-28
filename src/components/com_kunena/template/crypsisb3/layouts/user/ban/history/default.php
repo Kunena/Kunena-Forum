@@ -46,7 +46,6 @@ use Joomla\CMS\Language\Text;
 		:
 		$i = count($this->banHistory);
 
-
 		foreach ($this->banHistory as $banInfo)
 			:
 			?>

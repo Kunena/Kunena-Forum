@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -44,7 +45,6 @@ use Joomla\CMS\Language\Text;
 	if (!empty($this->banHistory))
 		:
 		$i = count($this->banHistory);
-
 
 		foreach ($this->banHistory as $banInfo)
 			:

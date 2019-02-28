@@ -497,7 +497,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$userid = $this->app->input->getInt('userid');
-		
+
 		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 

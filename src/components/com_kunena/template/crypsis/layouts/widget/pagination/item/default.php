@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $item = $this->item;
 
 if ($item->base !== null)

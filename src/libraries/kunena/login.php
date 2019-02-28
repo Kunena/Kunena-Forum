@@ -277,7 +277,7 @@ class KunenaLogin
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
 	}
-	
+
 	/**
 	 * Return the parameters of the plugin
 	 * 
@@ -293,7 +293,7 @@ class KunenaLogin
 	            return $login->getParams();
 	        }
 	    }
-	    
+
 	    return false;
 	}
 }

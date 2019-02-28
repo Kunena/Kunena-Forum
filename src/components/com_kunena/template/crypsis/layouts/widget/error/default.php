@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 ?>
 <h1><?php echo $this->header; ?></h1>
 <p><strong><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></strong></p>

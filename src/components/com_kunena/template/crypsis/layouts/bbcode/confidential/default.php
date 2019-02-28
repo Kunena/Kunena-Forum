@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 // [confidential]For moderators only[/confidential]
 
 // Hide content from everyone except the author and moderators.

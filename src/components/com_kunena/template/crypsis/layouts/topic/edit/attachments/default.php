@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
+
 ?>
 <ul class="thumbnails">
 	<?php foreach ($this->attachments as $attachment)

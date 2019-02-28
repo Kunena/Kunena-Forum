@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $this->addStyleSheet('assets/css/rating.css');
 
 $message   = $this->message;

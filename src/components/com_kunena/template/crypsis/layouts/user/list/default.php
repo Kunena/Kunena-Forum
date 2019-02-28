@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+
 $config = $this->config;
 
 $cols = 1;
@@ -138,7 +139,6 @@ $this->addScript('assets/js/search.js');
 		<tbody class="user-list">
 		<?php
 		$i = $this->pagination->limitstart;
-
 
 		foreach ($this->users as $user) :
 			$avatar = $config->userlist_avatar ? $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;

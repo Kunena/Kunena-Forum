@@ -103,7 +103,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 * @since Kunena 5.1
 	 */
 	public $plglogin;
-	
+
 	/**
 	 * Prepare login display.
 	 *
@@ -119,8 +119,8 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 		$login = KunenaLogin::getInstance();
 
 		$params = new JRegistry($login->getParams());
-		$this->plglogin = $params->get('login','1');
-		
+		$this->plglogin = $params->get('login', '1');
+
 		if (!$login->enabled())
 		{
 			return false;

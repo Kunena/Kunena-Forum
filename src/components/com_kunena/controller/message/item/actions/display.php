@@ -612,7 +612,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,)
+								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, )
 			);
 	}
 }

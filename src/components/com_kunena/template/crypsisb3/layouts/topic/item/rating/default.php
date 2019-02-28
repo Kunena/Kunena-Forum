@@ -13,6 +13,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+
 ?>
 
 <?php if ($this->category->allow_ratings && $this->config->ratingenabled)

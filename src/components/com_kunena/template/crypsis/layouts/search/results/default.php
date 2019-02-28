@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 if (empty($this->results))
 {
 	return;

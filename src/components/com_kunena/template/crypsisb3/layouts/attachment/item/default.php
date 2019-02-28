@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-
 $attachment = $this->attachment;
 
 echo $attachment->isImage() ? $this->render('image') : $this->render('general');

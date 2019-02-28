@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
+
 $k = 0;
 ?>
 <div class="pull-right">

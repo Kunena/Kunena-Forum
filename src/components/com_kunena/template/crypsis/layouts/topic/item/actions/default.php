@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 ?>

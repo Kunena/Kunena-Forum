@@ -73,7 +73,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
-		
+
 		// Get sections to display.
 		$catid       = $this->input->getInt('catid', 0);
 		$view        = $this->input->getInt('view');

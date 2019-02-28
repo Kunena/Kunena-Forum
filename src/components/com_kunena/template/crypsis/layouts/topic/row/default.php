@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $topic      = $this->topic;
 $userTopic  = $topic->getUserTopic();
 $template   = KunenaFactory::getTemplate();

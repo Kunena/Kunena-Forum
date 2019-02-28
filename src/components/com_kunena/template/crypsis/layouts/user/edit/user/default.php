@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 ?>
 	<h3>
 		<?php echo $this->headerText; ?>

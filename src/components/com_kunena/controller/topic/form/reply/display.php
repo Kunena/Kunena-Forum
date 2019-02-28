@@ -109,7 +109,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 					$result               = Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
 					$output               = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
-							. $captcha_pubkey . '" data-theme="light"',)
+							. $captcha_pubkey . '" data-theme="light"', )
 					);
 					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];

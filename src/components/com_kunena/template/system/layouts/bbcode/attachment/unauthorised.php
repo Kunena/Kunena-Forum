@@ -10,9 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
-
 $attachment = $this->attachment;
-
 
 $user = isset($this->user) ? $this->user : null;
 

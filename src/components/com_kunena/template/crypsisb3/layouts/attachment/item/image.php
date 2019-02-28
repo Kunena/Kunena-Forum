@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-
 $attachment = $this->attachment;
 
 $location = $attachment->getUrl();

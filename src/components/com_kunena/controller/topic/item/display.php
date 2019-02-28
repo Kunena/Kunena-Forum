@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Object\CMSObject;
+
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
  *

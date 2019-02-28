@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 // [spoiler="Do not look here!"]I said so![/spoiler]
 
 // Display spoiler text (hidden until you click it open).

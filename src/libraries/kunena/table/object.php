@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
-
 /**
  * Abstract Table Object class
  *

@@ -12,7 +12,6 @@
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 
-
 $attachment = $this->attachment;
 
 $config = KunenaConfig::getInstance();

@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-
 ?>
 <div id="kunena" class="container-fluid">
 	<div class="row">

@@ -679,42 +679,42 @@ class KunenaAdminControllerUsers extends KunenaController
 	    {
 	        $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	        
+
 	        return;
 	    }
-	    
+
 	    $modCatids    = $this->app->input->get('catid', array(), 'post', 'array');
 	    $modCatids    = ArrayHelper::toInteger($modCatids);
-	    
+
 	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
 	    $cid = ArrayHelper::toInteger($cid);
 	    $userid = array_shift($cid);
-	    
+
 	    if ($userid <= 0)
 	    {
 	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
 	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	        
+
 	        return;
 	    }
-	    
+
 	    if ($userid <= 0)
 	    {
 	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
 	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	        
+
 	        return;
 	    }
-	    
+
 	    $user = KunenaUserHelper::get($userid);
-	    
-	    $this->setModerate($user, $modCatids);	    	    
-	    
+
+	    $this->setModerate($user, $modCatids);
+
 	    $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'));
-	    
+
 	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-	
+
 	/**
 	 * Unmoderate
 	 *
@@ -1178,7 +1178,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$user->youtube          = str_replace(' ', '', trim($app->input->getString('youtube', '')));
 		$user->ok               = str_replace(' ', '', trim($app->input->getString('ok', '')));
 	}
-	
+
 	/**
 	 * Set moderator rights on the user given
 	 *
@@ -1191,18 +1191,18 @@ class KunenaAdminControllerUsers extends KunenaController
 	{
 	    // Update moderator rights
 	    $categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
-	    
+
 	    foreach ($categories as $category)
 	    {
 	        $category->setModerator($user, in_array($category->id, $modCatids));
 	    }
-	    
+
 	    // Global moderator is a special case
 	    if ($this->me->isAdmin())
 	    {
-	        KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));	        
+	        KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 	    }
-	    
+
 	    return true;
 	}
 }

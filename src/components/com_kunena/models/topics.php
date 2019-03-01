@@ -107,11 +107,14 @@ class KunenaModelTopics extends KunenaModel
 			{
 				$cat_excluded = explode(',', $this->config->rss_excluded_categories);
 
-				if (in_array($catid, $cat_excluded))
+				if (count( $cat_excluded ) === count( array_filter( $cat_excluded, 'is_int' )))
 				{
-					$latestcategory    = $this->config->rss_excluded_categories;
-					$latestcategory_in = 0;
-					$this->setState('list.categories.exclude', 1);
+					if (in_array($catid, $cat_excluded))
+					{
+						$latestcategory    = $this->config->rss_excluded_categories;
+						$latestcategory_in = 0;
+						$this->setState('list.categories.exclude', 1);
+					}
 				}
 			}
 		}
@@ -145,8 +148,13 @@ class KunenaModelTopics extends KunenaModel
 				// Use RSS configuration.
 				if (!empty($this->config->rss_excluded_categories))
 				{
-					$latestcategory    = $this->config->rss_excluded_categories;
-					$latestcategory_in = 0;
+					$cat_excluded = explode(',', $this->config->rss_excluded_categories);
+
+					if (count( $cat_excluded ) === count( array_filter( $cat_excluded, 'is_int' )))
+					{
+						$latestcategory    = $this->config->rss_excluded_categories;
+						$latestcategory_in = 0;
+					}
 				}
 				else
 				{

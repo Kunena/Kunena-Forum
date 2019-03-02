@@ -146,11 +146,6 @@ abstract class KunenaError
 	 */
 	public static function displayDatabaseError($exception)
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			return false;
-		}
-
 		$app = Factory::getApplication();
 
 		if (Factory::getApplication()->isClient('administrator'))

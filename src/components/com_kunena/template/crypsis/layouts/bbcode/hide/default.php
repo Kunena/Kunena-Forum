@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 // [hide]Hidden from guests[/hide]
 
 // Hide content from guests, on users highlight the contents as being hidden from guests.

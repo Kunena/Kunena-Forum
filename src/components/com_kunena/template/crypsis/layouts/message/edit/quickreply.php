@@ -21,7 +21,6 @@ if (!$message->isAuthorised('reply'))
 	return;
 }
 
-
 $author = isset($this->author) ? $this->author : $message->getAuthor();
 
 $topic = isset($this->topic) ? $this->topic : $message->getTopic();

@@ -217,7 +217,7 @@ $user = Factory::getUser();
 														. \Joomla\CMS\Language\Text::_("JSAVE") . '</button>'
 														. '<button type="button" class="btn btn-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
-														. \Joomla\CMS\Language\Text::_("JAPPLY") . '</button>'
+														. \Joomla\CMS\Language\Text::_("JAPPLY") . '</button>',
 												)
 											); ?>
 										<?php else : ?>

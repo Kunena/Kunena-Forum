@@ -11,7 +11,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
-
 /**
  * Class pkg_kunena_languagesInstallerScript
  * @since Kunena

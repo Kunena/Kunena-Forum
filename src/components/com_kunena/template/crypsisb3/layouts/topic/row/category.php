@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
-
 $topic           = $this->topic;
 $category        = $topic->getCategory();
 $userTopic       = $topic->getUserTopic();

@@ -150,7 +150,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			'title'    => '',
 			'type'     => 'post',
 			'url'      => $permalink,
-			'image'    => ''
+			'image'    => '',
 		);
 
 		// Add notifications in EasySocial

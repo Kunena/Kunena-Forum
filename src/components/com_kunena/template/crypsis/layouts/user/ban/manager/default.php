@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -40,7 +41,6 @@ use Joomla\CMS\Language\Text;
 	if ($this->userBans)
 		:
 		$i = 0;
-
 
 		foreach ($this->userBans as $banInfo)
 			:

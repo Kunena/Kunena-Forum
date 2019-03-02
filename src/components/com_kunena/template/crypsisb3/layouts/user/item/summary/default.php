@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
-
 $profile             = $this->profile;
 $socials             = $this->profile->socialButtons();
 $socials             = ArrayHelper::toObject($socials);

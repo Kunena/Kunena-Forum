@@ -36,7 +36,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 		$paths = array(
 			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi'
+			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi',
 		);
 
 		foreach ($paths as $path)

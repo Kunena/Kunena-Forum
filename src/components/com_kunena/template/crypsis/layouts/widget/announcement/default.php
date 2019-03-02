@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
 <div class="collapse in" id="announcement<?php echo $this->announcement->id; ?>">

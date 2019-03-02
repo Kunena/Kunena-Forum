@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 // [ebay]112233445566[/ebay]
 
 // Display ebay item.

@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
-
 $user              = $this->user;
 $this->ktemplate   = KunenaFactory::getTemplate();
 $avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');

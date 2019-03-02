@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
 

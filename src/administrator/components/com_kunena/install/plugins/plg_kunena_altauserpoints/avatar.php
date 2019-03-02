@@ -14,7 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 
-
 /**
  * Class KunenaAvatarAltaUserPoints
  * @since Kunena

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+
 $this->document->addScript('includes/js/joomla.javascript.js');
 ?>
 <div class="kblock kmanage">

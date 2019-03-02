@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $user        = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
 $status      = $user->getStatus();
 $status_text = $user->getStatusText();

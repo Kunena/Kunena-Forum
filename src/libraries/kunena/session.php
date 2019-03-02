@@ -245,6 +245,7 @@ class KunenaSession extends CMSObject
 
 		if ($userCategory->allreadtime != $this->allreadtime)
 		{
+			$userCategory->params = '';
 			$userCategory->allreadtime = $this->allreadtime;
 			$userCategory->save();
 		}

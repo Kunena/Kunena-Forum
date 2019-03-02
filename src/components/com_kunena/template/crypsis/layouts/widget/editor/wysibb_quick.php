@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
+
 $this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
 $this->addScript('assets/js/jquery.caret.js');

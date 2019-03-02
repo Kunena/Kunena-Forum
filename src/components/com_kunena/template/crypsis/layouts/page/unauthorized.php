@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-
 ?>
 <div id="kunena" class="layout">
 	<?php

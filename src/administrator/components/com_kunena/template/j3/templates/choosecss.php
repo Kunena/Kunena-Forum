@@ -11,7 +11,6 @@
 defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 
-
 ?>
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">

@@ -42,7 +42,6 @@ use Joomla\CMS\Language\Text;
 		:
 		$i = 0;
 
-
 		foreach ($this->userBans as $banInfo)
 			:
 			$bantext = $banInfo->blocked

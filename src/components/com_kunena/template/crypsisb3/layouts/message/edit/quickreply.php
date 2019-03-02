@@ -14,14 +14,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-
 $message = $this->message;
 
 if (!$message->isAuthorised('reply'))
 {
 	return;
 }
-
 
 $author = isset($this->author) ? $this->author : $message->getAuthor();
 

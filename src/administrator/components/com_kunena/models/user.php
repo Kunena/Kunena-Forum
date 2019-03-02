@@ -158,7 +158,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 		$params  = array(
 			'sections' => false,
-			'action'   => 'read',);
+			'action'   => 'read', );
 		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;

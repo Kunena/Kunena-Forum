@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 $state      = isset($this->state) ? ' ' . $this->state : ' hide';
 $transition = isset($this->transition) ? ' ' . $this->transition : ' fade';
 

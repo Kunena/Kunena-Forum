@@ -17,7 +17,6 @@ $content = $this->execute('Topic/Report');
 $parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-
 foreach ($parents as $parent)
 {
 	$this->addBreadcrumb(

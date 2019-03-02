@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
+
 Text::script('COM_KUNENA_CLEARED');
 ?>
 <h3>

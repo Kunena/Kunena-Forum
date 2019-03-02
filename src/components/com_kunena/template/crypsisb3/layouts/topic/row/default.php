@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
-
 $topic           = $this->topic;
 $userTopic       = $topic->getUserTopic();
 $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);

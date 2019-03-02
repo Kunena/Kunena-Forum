@@ -183,11 +183,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			return;
 		}
-		
+
 		$me = KunenaUserHelper::getMyself();
 
 		$userid = $this->app->input->getInt('userid');
-		
+
 		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)

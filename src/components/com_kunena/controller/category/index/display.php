@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -63,15 +64,15 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * Prepare category index display.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me        = KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Get sections to display.
@@ -162,10 +163,19 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$this->categories[$category->id] = array();
 			$this->more[$category->id]       = 0;
 
-			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 0)
+			$registry = new Registry;
+
+			if (!empty($registry->params))
 			{
-				if ($catid || $category->params->get('display.index.children', 3) > 1)
+				$registry->loadString($category->params);
+			}
+
+			$params = $registry->loadString($category->params);
+
+			// Display only categories which are supposed to show up.
+			if ($catid || $params->get('display.index.parent', 3) > 0)
+			{
+				if ($catid || $params->get('display.index.children', 3) > 1)
 				{
 					$sectionIds[] = $category->id;
 				}
@@ -205,11 +215,29 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		{
 			$this->more[$category->id] = 0;
 
+			$registry = new Registry;
+
+			if (!empty($registry->params))
+			{
+				$registry->loadString($category->params);
+			}
+
+			$params = $registry->loadString($category->params);
+
+			$subregistry = new Registry;
+
+			if (!empty($subregistry->params))
+			{
+				$subregistry->loadString($category->getParent()->params);
+			}
+
+			$subparams = $subregistry->loadString($category->getParent()->params);
+
 			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 1)
+			if ($catid || $params->get('display.index.parent', 3) > 1)
 			{
 				if ($catid
-					|| ($category->getParent()->params->get('display.index.children', 3) > 2 && $category->params->get('display.index.children', 3) > 2)
+					|| ($subparams->get('display.index.children', 3) > 2 && $params->get('display.index.children', 3) > 2)
 				)
 				{
 					$categoryIds[] = $category->id;
@@ -368,8 +396,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

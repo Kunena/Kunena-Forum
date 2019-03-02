@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Credits
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -67,7 +67,7 @@ use Joomla\CMS\Language\Text;
 		</p>
 
 		<p class="center">
-			<?php echo Text::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2018 <a href="https://www.kunena.org"
+			<?php echo Text::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2019 <a href="https://www.kunena.org"
 			                                                                      target="_blank">Kunena</a>,
 			<?php echo Text::_('COM_KUNENA_LICENSE'); ?>: <a href="https://www.gnu.org/copyleft/gpl.html"
 			                                                  target="_blank">GNU GPL</a>

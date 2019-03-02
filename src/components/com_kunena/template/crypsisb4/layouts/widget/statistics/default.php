@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 <div class="kfrontend">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-sm" data-toggle="collapse"
+			<div class="btn btn-default btn-sm" data-toggle="collapse"
 			     data-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@ use Joomla\CMS\Language\Text;
 		<?php endif; ?>
 	</h2>
 	<div class="card collapse in" id="kstats">
-		<div class="ard-body">
+		<div class="card-body">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-1">

@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -13,12 +13,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 $topic = $this->topic;
-$me    = KunenaUserHelper::getMyself();
 
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
 Text::script('COM_KUNENA_RATE_ALLREADY');
 Text::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+Text::script('COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED');
 
 Text::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
 Text::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
@@ -34,23 +34,24 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
-if (KunenaConfig::getInstance()->ratingenabled)
-{
-	$this->addStyleSheet('assets/css/rating.css');
-	$this->addScript('assets/js/rating.js');
-	$this->addScript('assets/js/krating.js');
-
-	Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
-	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
-}
-
 $this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
+$txt             = '';
+
+if ($topic->ordering)
+{
+	$txt .= ' topic-sticky';
+}
+
+if ($topic->locked)
+{
+	$txt .= ' topic-locked';
+}
 ?>
-<div class="kunena-topic-item">
+<div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>
@@ -63,7 +64,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
 		{
-			echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+		    echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
@@ -86,11 +87,11 @@ $quick           = $this->ktemplate->params->get('quick');
 
 	<div class="clearfix"></div>
 
-	<?php if ($social == 1 && $me->socialshare != 0 || $social == 1 && !$me->exists()) : ?>
-		<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+	<?php if ($social == 1 && $this->me->socialshare != 0 || $social == 1 && !$this->me->exists()) : ?>
+		<div><?php echo $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate); ?></div>
 	<?php endif; ?>
 
-	<?php if ($social == 2 && $me->socialshare != 0 || $social == 2 && !$me->exists()) : ?>
+	<?php if ($social == 2 && $this->me->socialshare != 0 || $social == 2 && !$this->me->exists()) : ?>
 		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 
@@ -107,6 +108,8 @@ $quick           = $this->ktemplate->params->get('quick');
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 	}
 
+	echo '<div class="topic-item-messages">';
+
 	$count = 1;
 	foreach ($this->messages as $id => $message)
 	{
@@ -120,6 +123,8 @@ $quick           = $this->ktemplate->params->get('quick');
 				->set('position', 'kunena_msg_row_' . $count++);
 		}
 	}
+
+	echo '</div>';
 
 	if ($quick == 2 && KunenaConfig::getInstance()->quickreply)
 	{

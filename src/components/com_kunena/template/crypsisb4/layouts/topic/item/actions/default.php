@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -54,7 +54,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 
 <?php if ($fullactions) : ?>
 	<div class="clearfix"></div>
-	<div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions">
+	<div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions-toolbar">
 		<div>
 			<?php if ($this->topicButtons->get('reply')
 				|| $this->topicButtons->get('subscribe')

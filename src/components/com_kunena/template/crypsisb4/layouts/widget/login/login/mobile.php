@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -12,18 +12,19 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 ?>
 <ul class="nav float-right">
 	<li class="dropdown mobile-user">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-mobile">
 			<?php echo KunenaIcons::user(); ?>
 			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>
 
 		<div class="dropdown-menu" id="userdropdown">
-			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+			<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user"/>
 				<input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -38,7 +39,7 @@ use Joomla\CMS\Language\Text;
 								</label>
 							</span>
 							<input id="kmobile-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+							       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -53,7 +54,7 @@ use Joomla\CMS\Language\Text;
 								</label>
 							</span>
 							<input id="kmobile-passwd" type="password" name="password" class="input-small" tabindex="2"
-							       size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+							       size="18" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 						</div>
 					</div>
 				</div>

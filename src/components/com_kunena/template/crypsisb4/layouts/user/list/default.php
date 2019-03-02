@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -137,7 +137,7 @@ $this->addScript('assets/js/search.js');
 			<?php endif; ?>
 		</tr>
 		</thead>
-		<tbody>
+		<tbody class="user-list">
 		<?php
 		$i               = $this->pagination->limitstart;
 		$this->ktemplate = KunenaFactory::getTemplate();

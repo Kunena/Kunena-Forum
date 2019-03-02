@@ -5,12 +5,11 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
-
 
 $attachment = $this->attachment;
 
@@ -43,6 +42,17 @@ if ($config->lightbox == 1)
 		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width; ?>"
 		     height="<?php echo $height; ?>"
 		     alt="<?php echo $attachment->getFilename(); ?>"/>
+	</a>
+	<?php
+}
+else
+{
+	?>
+	<a href="<?php echo $name; ?>"
+	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		<img class="kmsimage" src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
+		     width="<?php echo $config->thumbwidth; ?>"
+		     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
 	<?php
 }

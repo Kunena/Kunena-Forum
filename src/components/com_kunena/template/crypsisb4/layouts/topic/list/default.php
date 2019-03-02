@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -13,9 +13,10 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
-$cols            = empty($this->actions) ? 5 : 6;
-$colspan         = empty($this->actions) ? 3 : 4;
+$cols            = !empty($this->actions) ? 6 : 7;
+$colspan         = !empty($this->actions) ? 4 : 3;
 $view            = Factory::getApplication()->input->getWord('view');
 $layout          = Factory::getApplication()->input->getWord('layout');
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -30,7 +31,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 <div class="row">
 	<div colspan="12">
 		<?php if ($social == 1 && $me->socialshare != 0) : ?>
-			<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+			<div><?php echo $this->subLayout('Widget/Social')->set('me', $me)->set('ktemplate', $this->ktemplate); ?></div>
 		<?php endif; ?>
 		<?php if ($social == 2 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
@@ -51,7 +52,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		<?php if ($view != 'user') : ?>
 			<div class="float-right" id="filter-time">
 				<h2 class="filter-sel float-right">
-					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs-down">
 						<?php $this->displayTimeFilter('sel'); ?>
@@ -84,6 +85,9 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
       id="ktopicsform">
 	<?php echo HTMLHelper::_('form.token'); ?>
+	<?php if($view == 'user'): ?>
+		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
+	<?php endif; ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 		<thead>
 		<tr>
@@ -150,7 +154,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 			</td>
 		</tr>
 		</tfoot>
-		<tbody>
+		<tbody class="topic-list">
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
 				<td colspan="4" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>

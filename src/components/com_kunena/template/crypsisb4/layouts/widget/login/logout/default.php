@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
@@ -21,12 +22,6 @@ $config         = KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
-	<div class="nav navbar-nav float-left d-md-none">
-		<div><a class="btn btn-link" data-toggle="collapse"
-		        data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a></div>
-		<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-	</div>
-
 	<?php if ($config->get('displayDropdownMenu')) : ?>
 		<ul class="nav float-right">
 			<li class="dropdown mobile-user">
@@ -71,7 +66,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-online" class="hide" type="radio" value="0" name="status"/>
 									<label for="status-online" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::online(); ?>
 											<?php echo Text::_('COM_KUNENA_ONLINE') ?>
@@ -82,7 +77,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-away" class="hide" type="radio" value="1" name="status"/>
 									<label for="status-away" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::away(); ?>
 											<?php echo Text::_('COM_KUNENA_AWAY') ?>
@@ -92,7 +87,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
 									<label for="status-busy" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . \Joomla\CMS\Session\Session::getFormToken() . '=1');
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1');
 										?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::busy(); ?>
@@ -103,7 +98,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
 									<label for="status-invisible" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
 											<?php echo KunenaIcons::invisible(); ?>
 											<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>
@@ -175,6 +170,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								</a>
 							</div>
 						<?php endif ?>
+						<?php if ($this->plglogin): ?>
 						<div class="dropdown-divider"></div>
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
@@ -189,6 +185,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<input type="hidden" name="task" value="logout"/>
 							<?php echo HTMLHelper::_('form.token'); ?>
 						</form>
+						<?php endif ?>
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
 					<?php endif ?>
 				</div>

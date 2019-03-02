@@ -5,12 +5,11 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      BBCode
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
-
 
 $attachment = $this->attachment;
 
@@ -20,19 +19,20 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
-$name           = preg_replace('/.html/', '', $attachment->getUrl());
+$name           = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 
 if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
 {
-	$name = preg_replace('/.html/', '', $attachment->getUrl());
+	$name = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 }
 else
 {
-	$name = $attachment->getUrl();
+	$name = $attachment->getUrl(false, false, true);
 }
 
 if ($attachment->isImage())
 {
+	if ($attachment->getPath()) :
 	?>
 	<a href="<?php echo $name; ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
@@ -40,11 +40,14 @@ if ($attachment->isImage())
 		     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
 	<?php
+	else:
+		echo KunenaIcons::picture();
+	endif;
 }
 else
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>"
+	<a href="<?php echo $attachment->getUrl(false, false, true); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<?php echo KunenaIcons::file(); ?>
 	</a>

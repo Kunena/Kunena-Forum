@@ -4,17 +4,17 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
-
+use Joomla\Utilities\ArrayHelper;
 
 $profile             = $this->profile;
 $socials             = $this->profile->socialButtons();
-$socials             = Joomla\Utilities\ArrayHelper::toObject($socials);
+$socials             = ArrayHelper::toObject($socials);
 $me                  = KunenaUserHelper::getMyself();
 $avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 $banInfo             = $this->config->showbannedreason

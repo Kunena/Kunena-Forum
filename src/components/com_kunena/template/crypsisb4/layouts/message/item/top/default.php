@@ -4,13 +4,12 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
-
 
 $message              = $this->message;
 $topic                = $message->getTopic();
@@ -89,7 +88,7 @@ else
 	echo KunenaLayout::factory('Widget/Button')
 		->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
 		                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-		                      'modal' => 'modal', 'pullright' => 'pullright',));
+		                      'modal' => 'modal', 'pullright' => 'pullright', ));
 	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
 		     aria-hidden="true" data-backdrop="false">

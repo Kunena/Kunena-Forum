@@ -4,18 +4,18 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
+$this->addScript('assets/js/locales/bootstrap-datepicker.kunena.js');
 $this->addScript('assets/js/profile.js');
 ?>
 <h3>
@@ -49,7 +49,7 @@ $this->addScript('assets/js/profile.js');
 			<div id="birthdate">
 				<div class="input-group date">
 					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-					       value="<?php echo $this->profile->birthdate == '0001-01-01' ? Factory::getDate()->format('m/d/y') : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					       value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
 					       title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>

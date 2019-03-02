@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -88,6 +88,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				<?php endif; ?>
 			</tr>
 			</thead>
+			<tbody class="category-item">
 			<?php
 			/** @var KunenaForumTopic $previous */
 			$previous = null;
@@ -103,6 +104,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				$previous = $topic;
 			}
 			?>
+			</tbody>
 			<tfoot>
 			<?php if ($this->topics) : ?>
 				<tr>

@@ -4,13 +4,12 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
-
 
 $topic           = $this->topic;
 $userTopic       = $topic->getUserTopic();
@@ -19,7 +18,8 @@ $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $category        = $this->topic->getCategory();
-$cols            = empty($this->checkbox) ? 5 : 6;
+$cols            = empty($this->checkbox) ? 4 : 5;
+$category        = $this->topic->getCategory();
 $config          = KunenaConfig::getInstance();
 $txt             = '';
 
@@ -76,7 +76,7 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink($topic, null, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
 			}
-			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
+			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->set('reviewCount', $this->topic->getReviewCount())->setLayout('default'); ?>
 		</div>
 		<div class="float-right">
 			<?php if ($userTopic->favorite) : ?>

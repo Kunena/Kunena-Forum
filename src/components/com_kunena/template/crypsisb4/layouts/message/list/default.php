@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
@@ -39,7 +40,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 			?>
 			<h2 class="filter-time float-right" id="filter-time">
 				<div class="filter-sel float-right">
-					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
+					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs-down">
 						<?php $this->displayTimeFilter('sel'); ?>
@@ -149,7 +150,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php endif; ?>
 		</tfoot>
 
-		<tbody>
+		<tbody class="message-list">
 		<?php
 		foreach ($this->messages as $i => $message)
 		{
@@ -172,7 +173,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 <?php if ($view != 'user')
 	:
 	?>
-	<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect"
+	<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
 	      name="timeselect"
 	      method="post" target="_self" class="timefilter float-right">
 		<?php $this->displayTimeFilter('sel'); ?>

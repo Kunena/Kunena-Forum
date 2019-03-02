@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Pagination
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -24,7 +24,7 @@ elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
 
-<nav class="hidden-xs-down-down">
+<nav class="hidden-xs-down">
 	<ul class="pagination">
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
@@ -34,7 +34,7 @@ $last = 0;
 		{
 			if ($last + 1 != $k)
 			{
-				echo '<li class="page-item"><a class="page-link disabled">...</a></li>';
+				echo '<li class="page-item"><a class="disabled">...</a></li>';
 			}
 
 			$last = $k;

@@ -5,17 +5,19 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Email
  *
- * @copyright   (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $author            = $this->message->getAuthor();
 $config            = KunenaConfig::getInstance();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
-$this->messageLink = \Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
 if (empty($this->message->modified_time))
 {
@@ -151,7 +153,7 @@ if (!$config->plain_email) :
 							    style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
 							    class="hero"><a target="_blank" style="text-decoration: none;"
 							                    href="#"><img border="0" vspace="0" hspace="0"
-							                                  src="<?php echo \Joomla\CMS\Uri\Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
+							                                  src="<?php echo Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
 							                                  alt="Please enable images to view this content"
 							                                  title="Forum"
 							                                  width="560" style="

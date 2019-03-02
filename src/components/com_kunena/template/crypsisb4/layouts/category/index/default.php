@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
- * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -23,11 +23,11 @@ if ($this->config->enableforumjump)
 }
 
 $mmm    = 0;
-$config = KunenaFactory::getTemplate()->params;
+$config = $this->ktemplate->params;
 
 if ($config->get('socialshare') == 1)
 {
-	echo "<div>" . $this->subLayout('Widget/Social') . "</div>";
+    echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
 }
 
 if ($config->get('socialshare') == 2)
@@ -51,7 +51,7 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend">
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 1) : ?>
-				<button class="btn btn-sm" type="button"
+				<button class="btn btn-default btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
@@ -65,9 +65,9 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> card"
+		<div class="collapse in section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> in collapse card"
 		     id="section<?php echo $section->id; ?>">
-			<table class="table table-responsive w-100 d-block d-md-table">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>
 					<thead>
 					<tr>

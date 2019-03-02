@@ -135,12 +135,11 @@ class KunenaAdminControllerRanks extends KunenaController
 
 		if (!$rankid)
 		{
-			$db->setQuery("INSERT INTO #__kunena_ranks SET
-					rank_title={$db->quote($rank_title)},
-					rank_image={$db->quote($rank_image)},
-					rank_special={$db->quote($rank_special)},
-					rank_min={$db->quote($rank_min)}"
-			);
+			$query  = $db->getQuery(true)
+				->insert("{$db->qn('#__kunena_ranks')}")
+				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}");
+
+			$db->setQuery($query);
 
 			try
 			{
@@ -155,13 +154,12 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 		else
 		{
-			$db->setQuery("UPDATE #__kunena_ranks SET
-					rank_title={$db->quote($rank_title)},
-					rank_image={$db->quote($rank_image)},
-					rank_special={$db->quote($rank_special)},
-					rank_min={$db->quote($rank_min)}
-				WHERE rank_id={$db->quote($rankid)}"
-			);
+			$query  = $db->getQuery(true)
+				->update("{$db->qn('#__kunena_ranks')}")
+				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}")
+				->where("rank_id={$db->quote($rankid)}");
+
+			$db->setQuery($query);
 
 			try
 			{
@@ -247,7 +245,12 @@ class KunenaAdminControllerRanks extends KunenaController
 
 		if ($cids)
 		{
-			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
+			$query  = $db->getQuery(true)
+				->delete()
+				->from("{$db->qn('#__kunena_ranks')}")
+				->where("rank_id IN ($cids)");
+
+			$db->setQuery($query);
 
 			try
 			{

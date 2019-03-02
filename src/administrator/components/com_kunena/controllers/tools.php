@@ -263,12 +263,13 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdel)
 		{
-			$db->setQuery(
-				"DELETE a
-					FROM #__kunena_users AS a
-					LEFT JOIN #__users AS b ON a.userid=b.id
-					WHERE b.username IS NULL"
-			);
+			$query  = $db->getQuery(true)
+				->delete('a')
+				->from("{$db->qn('#__kunena_users')} AS a")
+				->leftJoin("{$db->qn('#__users')} AS b ON a.userid=b.id")
+				->where('b.username IS NULL');
+
+			$db->setQuery($query);
 
 			try
 			{
@@ -318,10 +319,12 @@ class KunenaAdminControllerTools extends KunenaController
 		{
 			$queryName = $this->config->username ? "username" : "name";
 
-			$query = "UPDATE #__kunena_messages AS m
-					INNER JOIN #__users AS u
-					SET m.name = u.{$queryName}
-					WHERE m.userid = u.id";
+			$query  = $db->getQuery(true)
+				->update("{$db->qn('#__kunena_messages')} AS m")
+				->innerJoin("{$db->qn('#__users')} AS u")
+				->set("m.name = u.{$queryName}")
+				->where('m.userid = u.id');
+
 			$db->setQuery($query);
 
 			try
@@ -754,7 +757,12 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($re_string != null)
 		{
 			$db    = Factory::getDbo();
-			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string . '%')}";
+			
+			$query  = $db->getQuery(true)
+				->update("{$db->qn('#__kunena_messages')}")
+				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
+				->where("subject LIKE {$db->quote($re_string.'%')}");
+			
 			$db->setQuery($query);
 
 			try
@@ -818,7 +826,10 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		$db    = Factory::getDbo();
-		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
+		
+		$query  = $db->getQuery(true)
+			->update("{$db->qn('#__kunena_messages')}")->set('ip=NULL')->where($where);
+		
 		$db->setQuery($query);
 
 		try

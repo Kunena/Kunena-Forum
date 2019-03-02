@@ -193,7 +193,15 @@ class KunenaAdminModelCategories extends KunenaModel
 			{
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = Factory::getDBO();
-				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
+				
+				$query  = $db->getQuery(true)
+					->select('a.id, a.name')
+					->from("{$db->qn('#__kunena_categories')} AS a")
+					->where("parent_id={$db->Quote('0')}")
+					->where("id!={$db->Quote($category->id)}")
+					->order('ordering');
+				
+				$db->setQuery($query);
 
 				try
 				{

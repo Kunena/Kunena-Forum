@@ -35,7 +35,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		<?php if ($social == 2 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 		<?php endif; ?>
-		<div class="pull-left">
+		<div class="float-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 
@@ -49,8 +49,8 @@ if (KunenaConfig::getInstance()->ratingenabled)
 		</div>
 
 		<?php if ($view != 'user') : ?>
-			<div class="pull-right" id="filter-time">
-				<h2 class="filter-sel pull-right">
+			<div class="float-right" id="filter-time">
+				<h2 class="filter-sel float-right">
 					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs-down">
@@ -69,13 +69,13 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 } ?>
 
-<div class="pull-right">
+<div class="float-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>
 </div>
 
-<div class="pull-left">
+<div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -131,7 +131,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 								<label>
 									<?php if (!empty($this->topics) && !empty($this->moreUri))
 									{
-										echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'follow');
+										echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary float-left', 'follow');
 									} ?>
 									<?php if (!empty($this->actions)) : ?>
 										<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
@@ -150,7 +150,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 			</td>
 		</tr>
 		</tfoot>
-		<tbody class="topic-list">
+		<tbody>
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
 				<td colspan="4" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
@@ -178,7 +178,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 	</table>
 </form>
 
-<div class="pull-left">
+<div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>

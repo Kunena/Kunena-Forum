@@ -16,7 +16,7 @@ $config = KunenaFactory::getConfig();
 ?>
 
 <div class="kfrontend">
-	<div class="btn-toolbar pull-right">
+	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-default btn-sm" data-toggle="collapse"
 			     data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
@@ -29,7 +29,7 @@ $config = KunenaFactory::getConfig();
 
 	<div class="row-fluid collapse in" id="writeaccess">
 		<div class="card card-block bg-faded p-2">
-			<ul class="unstyled col-md-6">
+			<ul class="unstyled col-lg-6">
 				<li>
 					<?php if ($topic->getCategory()->getNewTopicCategory()->exists())
 					{ ?>

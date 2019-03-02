@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
-<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search pull-right form-inline my-2 my-lg-0">
+<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search float-right form-inline my-2 my-lg-0">
 	<input type="hidden" name="view" value="search"/>
 	<input type="hidden" name="task" value="results"/>
 

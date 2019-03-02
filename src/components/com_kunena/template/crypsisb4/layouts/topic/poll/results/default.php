@@ -17,7 +17,7 @@ $this->addScript('assets/js/poll.js');
 <?php if ($this->show_title)
 	:
 	?>
-	<button class="btn btn-default pull-right" type="button" data-toggle="collapse" data-target="#poll-results"
+	<button class="btn btn-default float-right" type="button" data-toggle="collapse" data-target="#poll-results"
 	        aria-expanded="false"
 	        aria-controls="poll-results">
 		&times;
@@ -39,7 +39,7 @@ $this->addScript('assets/js/poll.js');
 				<td>
 					<?php echo KunenaHtmlParser::parseText($option->text); ?>
 				</td>
-				<td class="col-md-8">
+				<td class="col-lg-8">
 					<div class="progress progress-striped">
 						<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentage; ?>"
 						     aria-valuemin="0" aria-valuemax="100"

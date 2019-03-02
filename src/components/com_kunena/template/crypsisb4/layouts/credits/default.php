@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 </h1>
 
 <div class="well well-small" id="credits">
-	<h2 class="container-fluid pull-left">
+	<h2 class="container-fluid float-left">
 		<img src="<?php echo $this->logo; ?>" width="48" height="48" alt="Kunena"/>
 	</h2>
 	<p class="intro">

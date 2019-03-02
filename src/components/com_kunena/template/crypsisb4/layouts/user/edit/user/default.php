@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 	<table class="table table-bordered table-striped table-hover">
 		<tbody>
 		<tr>
-			<td class="col-md-3">
+			<td class="col-lg-3">
 				<label for="username"><?php echo Text::_('COM_KUNENA_UNAME'); ?></label>
 			</td>
 			<td>
@@ -89,7 +89,7 @@ use Joomla\CMS\Language\Text;
 			:
 			?>
 			<tr>
-				<td class="col-md-3">
+				<td class="col-lg-3">
 					<?php echo $field->label; ?>
 				</td>
 				<td>

@@ -14,10 +14,10 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<div class="card">
-	<div class="btn-toolbar pull-right">
+<div class="kfrontend">
+	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-sm" data-toggle="collapse"
+			<div class="btn btn-sm" data-toggle="collapse"
 			     data-target="#kwho"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
@@ -36,12 +36,12 @@ use Joomla\CMS\Language\Text;
 		<?php endif; ?>
 	</h2>
 
-	<div class="collapse in" id="kwho">
+	<div class="card collapse in" id="kwho">
 		<div class="card-body">
 			<div class="container">
 				<div class="row">
 
-					<div class="col-md-1">
+					<div class="col-lg-1">
 						<ul class="list-unstyled">
 							<li class="btn-link">
 								<?php echo KunenaIcons::members(); ?>
@@ -49,7 +49,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-md-11">
+					<div class="col-lg-11">
 						<ul class="list-unstyled">
 							<span>
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>

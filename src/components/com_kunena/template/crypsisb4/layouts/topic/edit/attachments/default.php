@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 	<?php foreach ($this->attachments as $attachment)
 		:
 		?>
-		<li class="col-md-6">
+		<li class="col-lg-6">
 			<div class="thumbnail">
 				<input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
 				       value="<?php echo $attachment->getFilename() ?>"/>
@@ -27,7 +27,7 @@ use Joomla\CMS\Language\Text;
 				<?php echo $attachment->getFilename(); ?>
 				<?php echo '(' . number_format(intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>
 			</span>
-				<a href="#" class="btn pull-right">
+				<a href="#" class="btn float-right">
 					<?php echo Text::_('COM_KUNENA_EDITOR_INSERT'); ?>
 				</a>
 			</div>

@@ -95,7 +95,7 @@ defined('_JEXEC') or die;
 			}
 			else
 			{
-				echo '<li class="divider"></li>';
+				echo '<li class="dropdown-divider"></li>';
 			}
 		}
 		elseif ($item->deeper)

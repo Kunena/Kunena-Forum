@@ -71,7 +71,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.avatar_delete', KunenaIcons
 		:
 		?>
 		<tr>
-			<td class="col-md-3">
+			<td class="col-lg-3">
 				<label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
 				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
@@ -97,7 +97,7 @@ Factory::getDocument()->addScriptOptions('com_kunena.avatar_delete', KunenaIcons
 						<?php foreach ($this->galleryImages as $image)
 							:
 							?>
-							<li class="col-md-2">
+							<li class="col-lg-2">
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
 								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">

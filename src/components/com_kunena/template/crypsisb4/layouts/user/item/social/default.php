@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
-<div class="inline pull-right">
+<div class="inline float-right">
 	<?php foreach ($this->socials as $key => $social)
 	{
 		if (!empty($this->profile->$key))

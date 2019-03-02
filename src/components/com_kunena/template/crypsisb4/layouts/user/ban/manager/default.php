@@ -19,19 +19,19 @@ use Joomla\CMS\Language\Text;
 <table class="table table-bordered table-striped table-hover">
 	<thead>
 	<tr>
-		<th class="col-md-1 center">
+		<th class="col-lg-1 center">
 			#
 		</th>
-		<th class="col-md-4">
+		<th class="col-lg-4">
 			<?php echo Text::_('COM_KUNENA_BAN_BANNEDUSER'); ?>
 		</th>
-		<th class="col-md-3">
+		<th class="col-lg-3">
 			<?php echo Text::_('COM_KUNENA_BAN_BANNEDFROM'); ?>
 		</th>
-		<th class="col-md-2">
+		<th class="col-lg-2">
 			<?php echo Text::_('COM_KUNENA_BAN_STARTTIME'); ?>
 		</th>
-		<th class="col-md-2">
+		<th class="col-lg-2">
 			<?php echo Text::_('COM_KUNENA_BAN_EXPIRETIME'); ?>
 		</th>
 	</tr>

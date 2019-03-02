@@ -21,14 +21,14 @@ $config         = KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
-	<div class="nav navbar-nav pull-left d-md-none">
+	<div class="nav navbar-nav float-left d-md-none">
 		<div><a class="btn btn-link" data-toggle="collapse"
 		        data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a></div>
 		<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
 	</div>
 
 	<?php if ($config->get('displayDropdownMenu')) : ?>
-		<ul class="nav pull-right">
+		<ul class="nav float-right">
 			<li class="dropdown mobile-user">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<?php
@@ -63,7 +63,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 							</p>
 						</div>
-						<div class="divider"></div>
+						<div class="dropdown-divider"></div>
 
 						<?php if ($status) : ?>
 							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
@@ -114,7 +114,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<input type="hidden" name="task" value="status"/>
 								<?php echo HTMLHelper::_('form.token'); ?>
 							</form>
-							<div class="divider"></div>
+							<div class="dropdown-divider"></div>
 
 							<div id="statustext">
 								<?php
@@ -132,7 +132,7 @@ $config         = KunenaFactory::getTemplate()->params;
 									<?php echo Text::_('COM_KUNENA_STATUS') ?>
 								</a>
 							</div>
-							<div class="divider"></div>
+							<div class="dropdown-divider"></div>
 						<?php endif; ?>
 
 						<?php if (!empty($this->announcementsUrl))
@@ -163,7 +163,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<?php echo Text::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 							</a>
 						</div>
-						<div class="divider"></div>
+						<div class="dropdown-divider"></div>
 
 						<?php if ($markAllReadUrl)
 							:
@@ -175,7 +175,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								</a>
 							</div>
 						<?php endif ?>
-						<div class="divider"></div>
+						<div class="dropdown-divider"></div>
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
 						      id="logout-form" class="form-inline">

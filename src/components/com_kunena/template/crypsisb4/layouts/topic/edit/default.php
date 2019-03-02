@@ -210,7 +210,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 		<div class="well">
 			<div class="row-fluid column-row">
-				<div class="col-md-12 column-item">
+				<div class="col-lg-12 column-item">
 					<fieldset>
 						<?php if (isset($this->selectcatlist))
 							:
@@ -263,7 +263,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							?>
 							<div class="control-group">
 								<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_EMAIL'); ?></label>
-								<div class="col-md-10">
+								<div class="col-lg-10">
 									<input type="text" id="email" name="email" size="35"
 									       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
 									       class="form-control" maxlength="45" tabindex="5"
@@ -276,8 +276,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 
 						<div class="form-group" id="kpost-subject">
-							<label class="control-label col-md-4"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
-							<div class="col-md-10">
+							<label class="control-label col-lg-4"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
+							<div class="col-lg-10">
 								<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory()))
 									:
 									?>
@@ -300,7 +300,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							:
 							?>
 							<div class="form-group" id="kpost-topicicons">
-								<label class="col-md-3 control-label"><?php echo Text::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
+								<label class="col-lg-3 control-label"><?php echo Text::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon)

@@ -36,7 +36,7 @@ else
 $list = array();
 ?>
 
-	<small class="text-muted pull-right">
+	<small class="text-muted float-right">
 		<?php if ($this->ipLink && !empty($this->message->ip)) : ?>
 			<?php echo KunenaIcons::ip(); ?>
 			<span class="ip"> <?php echo $this->ipLink; ?> </span>
@@ -101,7 +101,7 @@ $list = array();
 				<?php elseif ($attachment->isVideo()) :
 					echo $attachment->getLayout()->render('video'); ?>
 				<?php else : ?>
-					<li class="col-md-3 text-center">
+					<li class="col-lg-3 text-center">
 						<div class="thumbnail">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 							<?php echo $attachment->getLayout()->render('textlink'); ?>

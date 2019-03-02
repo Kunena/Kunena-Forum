@@ -67,17 +67,17 @@ $quick           = $this->ktemplate->params->get('quick');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config)->set('reviewCount', $this->reviewCount); ?>
+		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $topic)->set('config', $this->config); ?>
 	</h1>
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
-	<div class="pull-left">
+	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
-	<h2 class="pull-right">
+	<h2 class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -107,8 +107,6 @@ $quick           = $this->ktemplate->params->get('quick');
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 	}
 
-	echo '<div class="topic-item-messages">';
-
 	$count = 1;
 	foreach ($this->messages as $id => $message)
 	{
@@ -123,8 +121,6 @@ $quick           = $this->ktemplate->params->get('quick');
 		}
 	}
 
-	echo '</div>';
-
 	if ($quick == 2 && KunenaConfig::getInstance()->quickreply)
 	{
 		echo $this->subLayout('Message/Edit')
@@ -133,12 +129,12 @@ $quick           = $this->ktemplate->params->get('quick');
 	}
 	?>
 
-	<div class="pull-left">
+	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
-	<div class="pull-right">
+	<div class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -157,5 +153,5 @@ $quick           = $this->ktemplate->params->get('quick');
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>
 	<div class="clearfix"></div>
-	<div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+	<div class="float-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
 </div>

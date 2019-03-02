@@ -27,10 +27,10 @@ use Joomla\CMS\Language\Text;
 	<table class="table table-bordered table-striped table-hover">
 		<tbody>
 		<tr>
-			<td class="col-md-4">
+			<td class="col-lg-4">
 				<label><?php echo Text::_('COM_KUNENA_BAN_USERNAME'); ?></label>
 			</td>
-			<td class="col-md-8">
+			<td class="col-lg-8">
 				<?php echo $this->escape($this->profile->username); ?>
 			</td>
 		</tr>

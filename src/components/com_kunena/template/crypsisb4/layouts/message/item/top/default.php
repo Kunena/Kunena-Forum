@@ -34,7 +34,7 @@ else
 }
 ?>
 
-	<small class="text-muted pull-right">
+	<small class="text-muted float-right">
 		<?php if ($this->ipLink && !empty($this->message->ip))
 			:
 			?>
@@ -121,7 +121,7 @@ else
 
 				:
 				?>
-				<li class="col-md-3 text-center">
+				<li class="col-lg-3 text-center">
 					<div class="thumbnail">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 						<?php echo $attachment->getLayout()->render('textlink'); ?>

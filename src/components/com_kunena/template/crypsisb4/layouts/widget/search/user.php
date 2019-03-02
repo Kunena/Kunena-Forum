@@ -18,7 +18,7 @@ $state = $this->state;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
-      name="usrlform" id="usrlform" class="form-search pull-right">
+      name="usrlform" id="usrlform" class="form-search float-right">
 	<input type="hidden" name="view" value="user"/>
 	<?php if ($me->exists())
 		:

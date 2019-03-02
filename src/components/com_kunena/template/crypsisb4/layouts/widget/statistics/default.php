@@ -13,10 +13,10 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<div class="card">
-	<div class="btn-toolbar pull-right">
+<div class="kfrontend">
+	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-sm" data-toggle="collapse"
+			<div class="btn btn-sm" data-toggle="collapse"
 			     data-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
@@ -34,17 +34,17 @@ use Joomla\CMS\Language\Text;
 			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
 	</h2>
-	<div class="collapse in" id="kstats">
+	<div class="card collapse in" id="kstats">
 		<div class="ard-body">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-1">
+					<div class="col-lg-1">
 						<ul class="list-unstyled">
 							<li class="btn-link text-center"><?php echo KunenaIcons::stats(); ?></li>
 						</ul>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-lg-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -65,7 +65,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-lg-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
@@ -86,7 +86,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-lg-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:

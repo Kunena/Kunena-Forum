@@ -79,7 +79,7 @@ if (!empty($this->spacing)) : ?>
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
-		<div class="pull-right">
+		<div class="float-right">
 			<?php if ($userTopic->favorite) : ?>
 				<span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
 						title="<?php echo Text::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
@@ -108,7 +108,7 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') ?>
 			<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
-			<div class="pull-right">
+			<div class="float-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
 				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
@@ -128,7 +128,7 @@ if (!empty($this->spacing)) : ?>
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
-			<div class="pull-right">
+			<div class="float-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
 				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
@@ -142,7 +142,7 @@ if (!empty($this->spacing)) : ?>
 			</div>
 		</div>
 
-		<div class="pull-left">
+		<div class="float-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
@@ -158,12 +158,12 @@ if (!empty($this->spacing)) : ?>
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
-				<div class="col-md-3">
+				<div class="col-lg-3">
 					<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
 				</div>
-				<div class="col-md-9">
+				<div class="col-lg-9">
 					<?php else : ?>
-					<div class="col-md-12">
+					<div class="col-lg-12">
 						<?php endif; ?>
 						<span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
 							<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>

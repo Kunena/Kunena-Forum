@@ -44,7 +44,7 @@ $this->addScript('assets/js/search.js');
 	<?php endif; ?>
 	<?php echo HTMLHelper::_('form.token'); ?>
 
-	<div class="btn-toolbar pull-right">
+	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<button class="btn btn-default btn-sm" type="button"
 			        data-toggle="collapse"
@@ -58,18 +58,18 @@ $this->addScript('assets/js/search.js');
 	<div class="collapse in" id="search">
 		<div class="well">
 			<div class="row">
-				<fieldset class="col-md-6">
+				<fieldset class="col-lg-6">
 					<legend>
 						<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
 					</legend>
-					<div class="col-md-6">
+					<div class="col-lg-6">
 						<div class="form-group">
 							<input type="text" name="query" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
 							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-lg-6">
 						<div class="form-group">
 							<?php $this->displayModeList('mode'); ?>
 						</div>
@@ -79,7 +79,7 @@ $this->addScript('assets/js/search.js');
 				<?php if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
 					:
 					?>
-					<fieldset class="col-md-6">
+					<fieldset class="col-lg-6">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
 						</legend>
@@ -103,7 +103,7 @@ $this->addScript('assets/js/search.js');
 			</div>
 		</div>
 
-		<button type="button" class="btn btn-default btn-sm pull-right"
+		<button type="button" class="btn btn-default btn-sm float-right"
 		        data-toggle="collapse"
 		        data-target="#search-options" aria-expanded="false" aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
 		<h2>
@@ -113,7 +113,7 @@ $this->addScript('assets/js/search.js');
 		<div class="collapse in" id="search-options">
 			<div class="well">
 				<div class="row">
-					<fieldset class="col-md-4">
+					<fieldset class="col-lg-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
@@ -123,7 +123,7 @@ $this->addScript('assets/js/search.js');
 						</div>
 					</fieldset>
 
-					<fieldset class="col-md-4">
+					<fieldset class="col-lg-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
@@ -137,7 +137,7 @@ $this->addScript('assets/js/search.js');
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>
-						<div class="col-md-6">
+						<div class="col-lg-6">
 							<div class="form-group" id="searchatdate">
 								<div class="input-group date">
 									<input class="form-control" type="text" name="searchatdate"
@@ -151,16 +151,16 @@ $this->addScript('assets/js/search.js');
 				</div>
 
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-lg-6">
 						<fieldset class="form-group">
 							<legend>
 								<?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
-							<div class="col-md-6">
+							<div class="col-lg-6">
 								<input type="text" name="limitstart" class="form-control"
 								       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							</div>
-							<div class="col-md-6">
+							<div class="col-lg-6">
 								<?php $this->displayLimitlist('limit'); ?>
 							</div>
 						</fieldset>
@@ -208,7 +208,7 @@ $this->addScript('assets/js/search.js');
 						<?php endif; ?>
 					</div>
 
-					<fieldset class="col-md-6">
+					<fieldset class="col-lg-6">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
 						</legend>

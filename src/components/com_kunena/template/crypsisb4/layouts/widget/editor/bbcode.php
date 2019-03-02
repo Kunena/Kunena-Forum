@@ -22,7 +22,7 @@ $this->getBBcodesEnabled();
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <div class="form-group">
-	<label class="control-label col-md-4"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
+	<label class="control-label col-lg-4"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs">
 			<li class="active"><a href="#write"
@@ -279,10 +279,10 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-body">
 					<div id="kbbcode-poll-options">
-						<div class="input-group col-md-12" style="padding: 0;">
+						<div class="input-group col-lg-12" style="padding: 0;">
 							<label class="kpoll-title-lbl"
 							       for="kpoll-title"><?php echo Text::_('COM_KUNENA_POLL_TITLE'); ?></label>
-							<input type="text" class="inputbox form-control col-md-12" name="poll_title"
+							<input type="text" class="inputbox form-control col-lg-12" name="poll_title"
 							       id="kpoll-title"
 							       maxlength="150" size="40"
 							       value="<?php echo $this->escape($this->poll->title) ?>"

@@ -25,7 +25,7 @@ if ($item)
 		<?php foreach ($pathway as $item)
 			:
 			?>
-			<li class="divider"><?php echo KunenaIcons::chevronright(); ?></li>
+			<li class="dropdown-divider"><?php echo KunenaIcons::chevronright(); ?></li>
 			<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 				<a itemprop="item" href="<?php echo $item->link; ?>"><?php echo $this->escape($item->name); ?></a>
 			</li>

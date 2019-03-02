@@ -32,14 +32,14 @@ $this->addStyleSheet('assets/css/rating.css');
 
 	<?php if (!empty($this->topics)) : ?>
 		<div class="row">
-			<div class="col-md-12">
-				<h2 class="pull-right">
+			<div class="col-lg-12">
+				<h2 class="float-right">
 					<?php echo $this->subLayout('Widget/Search')
 						->set('catid', $this->category->id)
 						->setLayout('topic'); ?>
 				</h2>
 
-				<div class="pull-left">
+				<div class="float-left">
 					<?php echo $this->subLayout('Widget/Pagination/List')
 						->set('pagination', $this->pagination)
 						->set('display', true); ?>
@@ -64,23 +64,23 @@ $this->addStyleSheet('assets/css/rating.css');
 		<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 			<thead>
 			<tr>
-				<td class="col-md-1 center hidden-xs-down">
+				<td class="col-lg-1 center hidden-xs-down">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
 				</td>
-				<td class="col-md-<?php echo $cols ?>">
+				<td class="col-lg-<?php echo $cols ?>">
 					<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="col-md-2 hidden-xs-down">
+				<td class="col-lg-2 hidden-xs-down">
 					<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
 				</td>
-				<td class="col-md-3 hidden-xs-down">
+				<td class="col-lg-3 hidden-xs-down">
 					<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php if (!empty($this->topicActions)) : ?>
-					<td class="col-md-1 center">
+					<td class="col-lg-1 center">
 						<label>
 							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
 						</label>
@@ -88,7 +88,6 @@ $this->addStyleSheet('assets/css/rating.css');
 				<?php endif; ?>
 			</tr>
 			</thead>
-			<tbody class="category-item">
 			<?php
 			/** @var KunenaForumTopic $previous */
 			$previous = null;
@@ -104,14 +103,13 @@ $this->addStyleSheet('assets/css/rating.css');
 				$previous = $topic;
 			}
 			?>
-			</tbody>
 			<tfoot>
 			<?php if ($this->topics) : ?>
 				<tr>
 					<td class="center hidden-xs-down">
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
-							<span class="divider"></span>
+							<span class="dropdown-divider"></span>
 							<?php echo KunenaIcons::arrowup(); ?>
 						</a>
 					</td>
@@ -156,7 +154,7 @@ $this->addStyleSheet('assets/css/rating.css');
 	</form>
 
 	<?php if ($this->topics) : ?>
-		<div class="pull-left">
+		<div class="float-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
 				->set('pagination', $this->pagination)
 				->set('display', true); ?>

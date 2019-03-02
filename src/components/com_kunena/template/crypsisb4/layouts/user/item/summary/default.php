@@ -38,9 +38,9 @@ if ($this->config->showuserstats)
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-lg-12">
 			<?php if ($avatar) : ?>
-				<div class="col-md-2">
+				<div class="col-lg-2">
 					<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
 						<?php echo $this->profile->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, KunenaConfig::getInstance()->avataredit); ?>
 					</div>
@@ -51,10 +51,10 @@ if ($this->config->showuserstats)
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
-			<div class="col-md-10">
+			<div class="col-lg-10">
 				<div class="row">
-					<div class="col-md-12">
-						<ul class="list-unstyled col-md-3">
+					<div class="col-lg-12">
+						<ul class="list-unstyled col-lg-3">
 							<li>
 								<strong> <?php echo Text::_('COM_KUNENA_USERTYPE'); ?>:</strong>
 								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo Text::_($profile->getType()); ?> </span>
@@ -75,7 +75,7 @@ if ($this->config->showuserstats)
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="list-unstyled col-md-3">
+						<ul class="list-unstyled col-lg-3">
 							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
@@ -102,7 +102,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo $profile->getTime()->toKunena('time'); ?> </span>
 							</li>
 						</ul>
-						<ul class="list-unstyled col-md-3">
+						<ul class="list-unstyled col-lg-3">
 							<?php if (!empty($profile->posts))
 								:
 								?>
@@ -148,7 +148,7 @@ if ($this->config->showuserstats)
 								</li>
 							<?php endif; ?>
 						</ul>
-						<ul class="list-unstyled col-md-3">
+						<ul class="list-unstyled col-lg-3">
 							<?php if (!empty($profile->location))
 								:
 								?>
@@ -199,11 +199,11 @@ if ($this->config->showuserstats)
 							<?php endif; ?>
 						</ul>
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-9">
+					<div class="col-lg-12">
+						<div class="col-lg-9">
 							<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('socials', $socials); ?>
 						</div>
-						<div class="col-md-3 pull-right">
+						<div class="col-lg-3 float-right">
 							<?php if ($private)
 								:
 								?>
@@ -240,7 +240,7 @@ if ($this->config->showuserstats)
 	</div>
 </div>
 <br/>
-<div class="col-md-12">
+<div class="col-lg-12">
 	<?php if ($signature)
 		:
 		?>

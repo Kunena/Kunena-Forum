@@ -14,12 +14,12 @@ use Joomla\CMS\Language\Text;
 $tabs = $this->getTabs();
 ?>
 
-<h1 class="pull-left">
+<h1 class="float-left">
 	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 </h1>
 
-<h2 class="pull-right">
+<h2 class="float-right">
 	<?php if ($this->profile->isAuthorised('edit'))
 		:
 		?>

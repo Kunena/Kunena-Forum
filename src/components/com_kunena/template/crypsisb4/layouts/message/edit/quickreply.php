@@ -48,15 +48,33 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('assets/js/sisyphus.js');
 }
 
+// Fixme: can't get the controller working on this
+if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
+{
+	if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
+	{
+		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
+		$params = new \Joomla\Registry\Registry($plugin[0]->params);
+
+		$captcha_pubkey = $params->get('public_key');
+		$catcha_privkey = $params->get('private_key');
+
+		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+		{
+			\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
+
+			$result                    = Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $this->message->id));
+			$output                    = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
+				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"',));
+			$this->quickcaptchaDisplay = $output[0];
+			$this->quickcaptchaEnabled = $result[0];
+		}
+	}
+}
+
 $template = KunenaTemplate::getInstance();
 $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
-
-if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
-{
-	$this->captchaDisplay = $template->recaptcha($message->id);
-	$this->captchaEnabled = true;
-}
 ?>
 
 <?php if ($quick == 1) : ?>
@@ -66,11 +84,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<?php elseif ($quick == 0) : ?>
-			<div class="col-md-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"
+			<div class="col-lg-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"
 			     style="position: relative; top: 10px; left: -20px; right: -10px; width:100%; z-index: 1;display: none;"
 			     data-backdrop="false">
-				<div class="panel panel-default">
-					<div class="panel-body">
+				<div class="card card-default">
+					<div class="card-body">
 						<?php endif; ?>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>"
 						      method="post"
@@ -100,7 +118,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 							<div class="modal-body">
 								<?php if (!$me->exists()) : ?>
 									<div class="form-group">
-										<label class="col-md-12 control-label" style="padding:0;">
+										<label class="col-lg-12 control-label" style="padding:0;">
 											<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
 										</label>
 										<input type="text" name="authorname" class="form-control" maxlength="35"
@@ -114,14 +132,14 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 										<?php echo $config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 										<input type="text" id="email" name="email"
 										       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
-										       class="inputbox col-md-12 form-control" maxlength="45" value=""
+										       class="inputbox col-lg-12 form-control" maxlength="45" value=""
 										       required/>
 									</div>
 								<?php endif; ?>
 
 								<div class="form-group">
 									<label for="kanonymous<?php echo intval($message->id); ?>"
-									       class="col-md-12 control-label" style="padding:0;">
+									       class="col-lg-12 control-label" style="padding:0;">
 										<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 									</label>
 									<input type="text" id="subject" name="subject" class="form-control"
@@ -130,7 +148,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 									       value="<?php echo $message->displayField('subject'); ?>"/>
 								</div>
 								<div class="form-group">
-									<label class="col-md-12 control-label" style="padding:0;">
+									<label class="col-lg-12 control-label" style="padding:0;">
 										<?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
 									</label>
 									<?php if ($editor == 1)
@@ -153,7 +171,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 											{
 												echo 'checked="checked"';
 											} ?> />
-											<label class="string optional col-md-12 control-label" style="padding:0;"
+											<label class="string optional col-lg-12 control-label" style="padding:0;"
 											       for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 										</div>
 									</div>
@@ -173,13 +191,13 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 									</div>
 								<?php endif; ?>
 								<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
-								   role="button" class="btn btn-default btn-small btn-link pull-right"
+								   role="button" class="btn btn-default btn-small btn-link float-right"
 								   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 								<br/>
 							</div>
-							<?php if (!empty($this->captchaEnabled)): ?>
+							<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 								<div class="control-group">
-									<?php echo $this->captchaDisplay; ?>
+									<?php echo $this->quickcaptchaDisplay; ?>
 								</div>
 							<?php endif; ?>
 							<div class="modal-footer">

@@ -48,10 +48,10 @@ foreach ($this->sections as $section) :
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
 
-	<div class="card">
-		<h2 class="btn-toolbar pull-right">
+	<div class="kfrontend">
+		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 1) : ?>
-				<button class="btn btn-default btn-sm" type="button"
+				<button class="btn btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
@@ -65,7 +65,7 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?>"
+		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> card"
 		     id="section<?php echo $section->id; ?>">
 			<table class="table table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>
@@ -221,12 +221,12 @@ foreach ($this->sections as $section) :
 									<div class="container-fluid">
 										<div class="row-fluid">
 											<?php if ($avatar) : ?>
-											<div class="col-md-3">
+											<div class="col-lg-3">
 												<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
 											</div>
-											<div class="col-md-9">
+											<div class="col-lg-9">
 												<?php else : ?>
-												<div class="col-md-12">
+												<div class="col-lg-12">
 													<?php endif; ?>
 													<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 													<br>

@@ -125,7 +125,7 @@ $labels          = $this->ktemplate->params->get('labels');
 					<?php if (isset($this->message)) : ?>
 						<hr/>
 						<h3>
-							<div class="pull-left">
+							<div class="float-left">
 								<?php echo $this->message->getAuthor()->getAvatarImage('img-thumbnail', 'list'); ?>
 							</div>
 							<?php echo $this->message->displayField('subject'); ?>

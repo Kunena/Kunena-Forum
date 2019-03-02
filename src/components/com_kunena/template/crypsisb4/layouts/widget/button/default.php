@@ -20,7 +20,7 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
 }
 
 $modal   = isset($this->modal) ? 'data-toggle="modal" data-backdrop="false"' : '';
-$right   = isset($this->pullright) ? ' pull-right' : '';
+$right   = isset($this->pullright) ? ' float-right' : '';
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';

@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 
 $k = 0;
 ?>
-<div class="pull-right">
+<div class="float-right">
 	<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#history">X</div>
 </div>
 <h3>
@@ -31,7 +31,7 @@ $k = 0;
 		?>
 
 		<div class="row">
-			<div class="col-md-2 center">
+			<div class="col-lg-2 center">
 				<ul class="unstyled center profilebox">
 					<li>
 						<strong><?php echo $this->message->getAuthor()->getLink(null, null, '', '', null, $this->topic->getcategory()->id) ?></strong>
@@ -49,8 +49,8 @@ $k = 0;
 					</li>
 				</ul>
 			</div>
-			<div class="col-md-10">
-				<small class="text-muted pull-right hidden-xs-down" style="margin-top:-5px;">
+			<div class="col-lg-10">
+				<small class="text-muted float-right hidden-xs-down" style="margin-top:-5px;">
 					<?php echo KunenaIcons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory"
@@ -64,13 +64,13 @@ $k = 0;
 					if (!empty($attachments))
 						:
 						?>
-						<div class="kattach col-md-12">
+						<div class="kattach col-lg-12">
 							<h4><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
 							<ul class="thumbnails">
 								<?php foreach ($attachments as $attachment)
 									:
 									?>
-									<li class="col-md-4">
+									<li class="col-lg-4">
 										<div class="thumbnail">
 											<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 											<?php echo $attachment->getLayout()->render('textlink'); ?>

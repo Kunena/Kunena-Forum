@@ -21,8 +21,8 @@ $view    = Factory::getApplication()->input->getWord('view');
 ?>
 
 <div class="row">
-	<div class="col-md-12">
-		<div class="pull-left">
+	<div class="col-lg-12">
+		<div class="float-left">
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs-down">
@@ -37,8 +37,8 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php if ($view != 'user')
 			:
 			?>
-			<h2 class="filter-time pull-right" id="filter-time">
-				<div class="filter-sel pull-right">
+			<h2 class="filter-time float-right" id="filter-time">
+				<div class="filter-sel float-right">
 					<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs-down">
@@ -51,13 +51,13 @@ $view    = Factory::getApplication()->input->getWord('view');
 	</div>
 </div>
 
-<div class="pull-right">
+<div class="float-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>
 </div>
 
-<div class="pull-left">
+<div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -125,7 +125,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 							<div class="input-group-btn">
 								<?php if (!empty($this->moreUri))
 								{
-									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
+									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary float-left', 'nofollow');
 								} ?>
 								<?php
 								if (!empty($this->actions))
@@ -149,7 +149,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php endif; ?>
 		</tfoot>
 
-		<tbody class="message-list">
+		<tbody>
 		<?php
 		foreach ($this->messages as $i => $message)
 		{
@@ -163,7 +163,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 	</table>
 </form>
 
-<div class="pull-left">
+<div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -174,7 +174,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 	?>
 	<form action="<?php echo $this->escape(\Joomla\CMS\Uri\Uri::getInstance()->toString()); ?>" id="timeselect"
 	      name="timeselect"
-	      method="post" target="_self" class="timefilter pull-right">
+	      method="post" target="_self" class="timefilter float-right">
 		<?php $this->displayTimeFilter('sel'); ?>
 	</form>
 <?php endif; ?>

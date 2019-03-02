@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
 
 		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<div class="form-group">
-				<div class="input-append pull-right">
+				<div class="input-append float-right">
 					<div class="input-group-btn">
 						<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 							'kchecktask'); ?>
@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 		<?php endif; ?>
 
 		<?php if (!empty($this->embedded)) : ?>
-			<div class="pull-right">
+			<div class="float-right">
 				<?php echo $this->subLayout('Widget/Pagination/List')
 					->set('pagination', $this->pagination)
 					->set('display', true); ?>

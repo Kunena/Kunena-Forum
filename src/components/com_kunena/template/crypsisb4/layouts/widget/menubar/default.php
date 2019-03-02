@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<?php echo $this->subRequest('Widget/Menu'); ?>
 	</div>

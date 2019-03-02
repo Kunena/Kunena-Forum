@@ -23,19 +23,19 @@ HTMLHelper::_('behavior.core');
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="row">
-		<div class="col-md-7">
+		<div class="col-lg-7">
 			<h2>
 				<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 			</h2>
 		</div>
-		<div class="col-md-5">
+		<div class="col-lg-5">
 			<?php if (!empty($options))
 				:
 				?>
 				<div class="form-group">
-					<div class="input-group pull-right" role="group">
+					<div class="input-group float-right" role="group">
 						<div class="input-group-btn">
-							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-left"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-default"
 							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-primary"
@@ -52,38 +52,38 @@ HTMLHelper::_('behavior.core');
 	<table class="table table-striped table-bordered">
 		<thead>
 		<tr>
-			<th class="col-md-1">
+			<th class="col-lg-1">
 				<?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
 			</th>
-			<th class="col-md-5">
+			<th class="col-lg-5">
 				<?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
 			</th>
 
 			<?php if ($options)
 				:
 				?>
-				<th class="col-md-1 center">
+				<th class="col-lg-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
-				<th class="col-md-1 center">
+				<th class="col-lg-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_EDIT'); ?>
 				</th>
-				<th class="col-md-1 center">
+				<th class="col-lg-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
-				<th class="col-md-1">
+				<th class="col-lg-1">
 					<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 			<?php endif; ?>
 
-			<th class="col-md-1 center">
+			<th class="col-lg-1 center">
 				<?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
 			<?php if ($options)
 				:
 				?>
-				<th class="col-md-1 center">
+				<th class="col-lg-1 center">
 					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 				</th>
 			<?php endif; ?>
@@ -97,7 +97,7 @@ HTMLHelper::_('behavior.core');
 			<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
-					<div class="pull-right">
+					<div class="float-right">
 						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 				</td>

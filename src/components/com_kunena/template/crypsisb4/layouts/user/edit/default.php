@@ -23,7 +23,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default pull-right'
+		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default float-right'
 	); ?>
 </h2>
 

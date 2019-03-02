@@ -26,9 +26,9 @@ use Joomla\CMS\Language\Text;
 		<table class="table table-striped table-bordered">
 			<thead>
 			<tr>
-				<th class="col-md-1 center">#</th>
-				<th class="col-md-5"><?php echo $top[0]->titleName; ?></th>
-				<th class="col-md-6"><?php echo $top[0]->titleCount; ?></th>
+				<th class="col-lg-1 center">#</th>
+				<th class="col-lg-5"><?php echo $top[0]->titleName; ?></th>
+				<th class="col-lg-6"><?php echo $top[0]->titleCount; ?></th>
 			</tr>
 			</thead>
 			<tbody>

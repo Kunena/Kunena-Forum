@@ -152,27 +152,26 @@ abstract class KunenaError
 		}
 
 		$app = Factory::getApplication();
-		$db  = Factory::getDBO();
 
 		if (Factory::getApplication()->isClient('administrator'))
 		{
-			$app->enqueueMessage($exception->getMessage(), 'error');
+		    $app->enqueueMessage('Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage(), 'error');
 		}
-		elseif (self::$debug || self::$admin)
+		elseif (!JDEBUG && !KunenaFactory::getConfig()->debug && !self::$admin)
 		{
 			$app->enqueueMessage('Kunena ' . Text::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
 					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
 		}
 		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
 		{
-			$app->enqueueMessage($exception->getMessage(), 'error');
+		    $app->enqueueMessage('Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage(), 'error');
 		}
 		else
 		{
 			$app->enqueueMessage('Kunena ' . Text::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
 		}
 
-		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, $exception);
+		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, 'Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage());
 	}
 
 	/**

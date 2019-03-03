@@ -53,7 +53,7 @@ HTMLHelper::_('behavior.multiselect');
 						</td>
 						<td width="80%">
 							<input class="post" type="text" name="rank_title"
-							       value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>"/>
+							       value="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
 						</td>
 					</tr>
 					<tr>
@@ -67,14 +67,14 @@ HTMLHelper::_('behavior.multiselect');
 								:
 								?>
 								<img name="rank_image" src="" border="0"
-								     alt="<?php echo $this->rank_selected->title; ?>"/>
+								     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
 							<?php else
 								:
 								?>
 								<img name="rank_image"
 								     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
 								     border="0"
-								     alt="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : 'rank' ?>"/>
+								     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : 'rank' ?>"/>
 							<?php endif; ?>
 						</td>
 					</tr>

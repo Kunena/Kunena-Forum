@@ -934,8 +934,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if (!$parent->exists())
 		{
-			$parent->name    = Text::_('COM_KUNENA_TOPLEVEL');
-			$parent->_exists = true;
+			return false;
 		}
 
 		return $parent;

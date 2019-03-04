@@ -231,27 +231,30 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				$subregistry->loadString($category->getParent()->params);
 			}
 
-			$subparams = $subregistry->loadString($category->getParent()->params);
-
-			// Display only categories which are supposed to show up.
-			if ($catid || $params->get('display.index.parent', 3) > 1)
+			if ($category->getParent())
 			{
-				if ($catid
-					|| ($subparams->get('display.index.children', 3) > 2 && $params->get('display.index.children', 3) > 2)
-				)
+				$subparams = $subregistry->loadString($category->getParent()->params);
+
+				// Display only categories which are supposed to show up.
+				if ($catid || $params->get('display.index.parent', 3) > 1)
 				{
-					$categoryIds[] = $category->id;
+					if ($catid
+						|| ($subparams->get('display.index.children', 3) > 2 && $params->get('display.index.children', 3) > 2)
+					)
+					{
+						$categoryIds[] = $category->id;
+					}
+					else
+					{
+						$this->more[$category->id]++;
+					}
 				}
 				else
 				{
-					$this->more[$category->id]++;
+					$this->more[$category->parent_id]++;
+					unset($categories[$key]);
+					continue;
 				}
-			}
-			else
-			{
-				$this->more[$category->parent_id]++;
-				unset($categories[$key]);
-				continue;
 			}
 
 			// Get list of topics.

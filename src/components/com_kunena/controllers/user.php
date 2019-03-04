@@ -28,12 +28,12 @@ use Joomla\CMS\Table\Table;
 class KunenaControllerUser extends KunenaController
 {
 	/**
-	 * @param   bool $cachable  cachable
-	 * @param   bool $urlparams urlparams
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -102,7 +102,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		$model = $this->getModel('user');
 
-		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=list');
+		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=list');
 
 		$state      = $model->getState();
 		$search     = $state->get('list.search');
@@ -122,8 +122,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function change()
@@ -163,8 +163,8 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @return array|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save()
 	{
@@ -270,8 +270,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function ban()
@@ -522,8 +522,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function login()
@@ -562,8 +562,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function logout()
@@ -601,8 +601,8 @@ class KunenaControllerUser extends KunenaController
 	 * Save online status for user
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function status()
@@ -640,8 +640,8 @@ class KunenaControllerUser extends KunenaController
 	 * Set online status text for user
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function statusText()
@@ -680,8 +680,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @param $karmaDelta
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function karma($karmaDelta)
@@ -780,8 +780,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @return boolean
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function saveUser()
 	{
@@ -947,7 +947,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-		$user     = new \Joomla\CMS\User\User($this->user->id);
+		$user     = new Joomla\CMS\User\User($this->user->id);
 
 		// Bind the form fields to the user table and save.
 		try
@@ -1052,8 +1052,8 @@ class KunenaControllerUser extends KunenaController
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -1085,8 +1085,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload avatar with AJAX.
 	 *
-	 * @throws null
 	 * @since 5.1
+	 * @throws null
 	 */
 	public function upload()
 	{
@@ -1216,8 +1216,8 @@ class KunenaControllerUser extends KunenaController
 	 * Get avatar attached to a profile with AJAX.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since 5.1
+	 * @throws Exception
 	 */
 	public function loadAvatar()
 	{
@@ -1346,13 +1346,13 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param $user
-	 * @param $evidence
+	 * @param   mixed   $user      user
+	 * @param   string  $evidence  evidence
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($user, string $evidence)
+	protected function report($user, string $evidence = '')
 	{
 		if (!$this->config->stopforumspam_key || !$user)
 		{
@@ -1368,39 +1368,40 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($ip))
 		{
-    		$options = new \Joomla\Registry\Registry;
+			$options = new Joomla\Registry\Registry;
 
-    		$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
 
-    		// Create a 'stream' transport.
-    		$http = new \Joomla\CMS\Http\Http($options, $transport);
+			// Create a 'stream' transport.
+			$http = new Joomla\CMS\Http\Http($options, $transport);
 
-    		$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' . $this->config->stopforumspam_key . '&evidence=' . $evidence;
+			$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' .
+				$this->config->stopforumspam_key . '&evidence=' . $evidence;
 
-    		$response = $http->post('https://www.stopforumspam.com/add', $data);
+			$response = $http->post('https://www.stopforumspam.com/add', $data);
 
-    		if ($response->code == '200')
-    		{
-    			// Report accepted. There is no need to display the reason
-    			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			if ($response->code == '200')
+			{
+				// Report accepted. There is no need to display the reason
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
 
-    			return true;
-    		}
-    		else
-    		{
-    			// Report failed or refused
-    			$reasons = array();
-    			preg_match('/<p>.*<\/p>/', $response->body, $reasons);
+				return true;
+			}
+			else
+			{
+				// Report failed or refused
+				$reasons = array();
+				preg_match('/<p>.*<\/p>/', $response->body, $reasons);
 
-    			// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-    			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
 
-    			return false;
-    		}
+				return false;
+			}
 		}
 		else
 		{
-		    $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
 		}
 	}
 }

@@ -1348,7 +1348,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($user, string $evidenc = '')
+	protected function report($user, string $evidence = '')
 	{
 		if (!$this->config->stopforumspam_key || !$user)
 		{

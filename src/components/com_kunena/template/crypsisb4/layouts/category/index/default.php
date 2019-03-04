@@ -47,10 +47,9 @@ foreach ($this->sections as $section) :
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
-
 	<div class="kfrontend">
 		<h2 class="btn-toolbar float-right">
-			<?php if (count($this->sections) > 1) : ?>
+			<?php if (count($this->sections) > 0) : ?>
 				<button class="btn btn-default btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
@@ -65,7 +64,7 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="collapse in section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> in collapse card"
+		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show card"
 		     id="section<?php echo $section->id; ?>">
 			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>

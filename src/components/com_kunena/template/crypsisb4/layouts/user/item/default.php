@@ -39,16 +39,13 @@ echo $this->subLayout('User/Item/Summary')
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-	<br/>
-	<br/>
-
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab)
 			:
 			?>
-			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-				<a href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+			<li class="nav-item">
+				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
 		<?php endforeach; ?>
 

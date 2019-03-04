@@ -193,14 +193,14 @@ class KunenaAdminModelCategories extends KunenaModel
 			{
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = Factory::getDBO();
-				
+
 				$query  = $db->getQuery(true)
 					->select('a.id, a.name')
 					->from("{$db->qn('#__kunena_categories')} AS a")
 					->where("parent_id={$db->Quote('0')}")
 					->where("id!={$db->Quote($category->id)}")
 					->order('ordering');
-				
+
 				$db->setQuery($query);
 
 				try
@@ -418,9 +418,19 @@ class KunenaAdminModelCategories extends KunenaModel
 				// TODO: Following is needed for J!2.5 only:
 				$parent            = $category->getParent();
 				$siblings          = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
-				$category->up      = $this->me->isAdmin($parent) && reset($siblings) != $category->id;
-				$category->down    = $this->me->isAdmin($parent) && end($siblings) != $category->id;
-				$category->reorder = $this->me->isAdmin($parent);
+
+				if ($parent)
+				{
+					$category->up      = $this->me->isAdmin($parent) && reset($siblings) != $category->id;
+					$category->down    = $this->me->isAdmin($parent) && end($siblings) != $category->id;
+					$category->reorder = $this->me->isAdmin($parent);
+				}
+				else
+				{
+					$category->up      = $this->me->isAdmin($category) && reset($siblings) != $category->id;
+					$category->down    = $this->me->isAdmin($category) && end($siblings) != $category->id;
+					$category->reorder = $this->me->isAdmin($category);
+				}
 
 				// Get ACL groups for the category.
 				$access               = $acl->getCategoryAccess($category);

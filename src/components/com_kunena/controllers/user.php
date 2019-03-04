@@ -319,7 +319,7 @@ class KunenaControllerUser extends KunenaController
 			$success = $ban->save();
 
 			// Send report to stopforumspam
-			$this->report($user, $reason_public);
+			$this->report($user);
 		}
 		else
 		{
@@ -1348,7 +1348,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($user, string $evidence)
+	protected function report($user, string $evidenc = '')
 	{
 		if (!$this->config->stopforumspam_key || !$user)
 		{

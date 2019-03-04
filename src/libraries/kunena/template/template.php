@@ -1829,16 +1829,6 @@ HTML;
 			if ($topiclabels == 1)
 			{
 				$id = $topic->icon_id;
-
-				if ($topic->locked)
-				{
-					$id = 12;
-				}
-
-				if ($topic->hold == 2 || $topic->hold == 3)
-				{
-					$id = 10;
-				}
 			}
 			else
 			{

@@ -23,8 +23,11 @@ if (version_compare(PHP_VERSION, '5.3.1', '<'))
  */
 define('_JEXEC', 1);
 
+use Joomla\Application\Web\WebClient;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
+use Joomla\Input\Input;
+use Joomla\Registry\Registry;
 
 // Set base directory. This should usually work even with symbolic linked Kunena.
 define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
@@ -65,7 +68,7 @@ require_once JPATH_BASE . '/includes/framework.php';
  *
  * @since    K2.0
  */
-class KunenaApplication extends \Joomla\CMS\Application\WebApplication
+class KunenaApplication extends Joomla\CMS\Application\WebApplication
 {
 	/**
 	 * @var string
@@ -86,13 +89,13 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	protected $userstate = array();
 
 	/**
-	 * @param   \Joomla\Input\Input               $input  input
-	 * @param   \Joomla\Registry\Registry         $config config
-	 * @param   \Joomla\Application\Web\WebClient $client client
+	 * @param Input     $input  input
+	 * @param Registry  $config config
+	 * @param WebClient $client client
 	 *
 	 * @since Kunena
 	 */
-	public function __construct(Joomla\Input\Input $input = null, \Joomla\Registry\Registry $config = null, \Joomla\Application\Web\WebClient $client = null)
+	public function __construct(Joomla\Input\Input $input = null, Joomla\Registry\Registry $config = null, Joomla\Application\Web\WebClient $client = null)
 	{
 		parent::__construct($input, $config, $client);
 
@@ -125,7 +128,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   \JSession $session session
+	 * @param \JSession $session session
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -134,7 +137,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	{
 		if ($session !== null)
 		{
-			$this->session = $session;
+			$this['session'] = $session;
 
 			return $this;
 		}
@@ -155,7 +158,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		);
 
 		$session = Session::getInstance($handler, $options);
-		$session->initialise($this->input, $this->dispatcher);
+		$session->initialise($this->input, $this['dispatcher']);
 
 		if ($session->getState() == 'expired')
 		{
@@ -167,7 +170,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 		}
 
 		// Set the session object.
-		$this->session = $session;
+		$this['session'] = $session;
 
 		return $this;
 	}
@@ -217,7 +220,7 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   bool $params params
+	 * @param bool $params params
 	 *
 	 * @return string
 	 * @since Kunena
@@ -228,8 +231,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   string  $name  name
-	 * @param   boolean $value value
+	 * @param string  $name  name
+	 * @param boolean $value value
 	 *
 	 * @return void
 	 * @since Kunena
@@ -240,8 +243,8 @@ class KunenaApplication extends \Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   null   $default default
+	 * @param string $name    name
+	 * @param null   $default default
 	 *
 	 * @return null
 	 * @since Kunena

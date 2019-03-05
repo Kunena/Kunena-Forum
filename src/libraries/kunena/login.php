@@ -51,7 +51,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param   null $integration integration
+	 * @param null $integration integration
 	 *
 	 * @return boolean|KunenaLogin
 	 * @since Kunena
@@ -91,10 +91,10 @@ class KunenaLogin
 	/**
 	 * Method to login user by leverage Kunena plugin enabled
 	 *
-	 * @param   string $username   The username of user which need to be logged
-	 * @param   string $password   The password of user which need to be logged
-	 * @param   int    $rememberme If the user want to be remembered the next time it want to log
-	 * @param   string $secretkey  The secret key for the TFA feature
+	 * @param string $username   The username of user which need to be logged
+	 * @param string $password   The password of user which need to be logged
+	 * @param int    $rememberme If the user want to be remembered the next time it want to log
+	 * @param string $secretkey  The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -113,7 +113,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param   null $return logout user
+	 * @param null $return logout user
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -238,7 +238,7 @@ class KunenaLogin
 	 * user has enabled a specific TFA method on their account. Only if both conditions
 	 * are met will this method return true;
 	 *
-	 * @param   integer $userId The user ID to check. Skip to use the current user.
+	 * @param integer $userId The user ID to check. Skip to use the current user.
 	 *
 	 * @return boolean True if TFA is enabled for this user
 	 * @since Kunena
@@ -286,14 +286,14 @@ class KunenaLogin
 	 */
 	public function getParams()
 	{
-	    foreach ($this->instances as $login)
-	    {
-	        if (method_exists($login, 'getParams'))
-	        {
-	            return $login->getParams();
-	        }
-	    }
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getParams'))
+			{
+				return $login->getParams();
+			}
+		}
 
-	    return false;
+		return false;
 	}
 }

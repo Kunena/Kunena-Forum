@@ -10,6 +10,7 @@
  **/
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseDriver;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -41,7 +42,7 @@ abstract class KunenaDatabaseObjectFinder
 	protected $query;
 
 	/**
-	 * @var JDatabase
+	 * @var DatabaseDriver
 	 * @since Kunena
 	 */
 	protected $db;

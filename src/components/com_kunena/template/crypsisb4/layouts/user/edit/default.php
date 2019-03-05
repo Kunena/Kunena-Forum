@@ -42,8 +42,8 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				?>
 				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
-				<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-					<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+				<li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
+					<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 				</li>
 			<?php endif; ?>
 			<?php endforeach; ?>

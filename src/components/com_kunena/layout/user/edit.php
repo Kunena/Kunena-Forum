@@ -74,7 +74,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 			$tabs['settings'] = $tab;
 		}
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabsEdit', array($tabs));
 
